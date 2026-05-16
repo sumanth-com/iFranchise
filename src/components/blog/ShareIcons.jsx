@@ -1,10 +1,10 @@
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 
 const iconMap = {
-  facebook: { label: 'Facebook', Icon: FaFacebookF, color: 'hover:text-blue-600' },
-  instagram: { label: 'Instagram', Icon: FaInstagram, color: 'hover:text-pink-600' },
-  x: { label: 'X', Icon: FaXTwitter, color: 'hover:text-slate-950' },
-  linkedin: { label: 'LinkedIn', Icon: FaLinkedinIn, color: 'hover:text-sky-700' },
+  facebook: { label: 'Facebook', Icon: FaFacebookF, colorLight: 'hover:text-blue-600', colorDark: 'hover:text-sky-300' },
+  instagram: { label: 'Instagram', Icon: FaInstagram, colorLight: 'hover:text-pink-600', colorDark: 'hover:text-pink-300' },
+  x: { label: 'X', Icon: FaXTwitter, colorLight: 'hover:text-slate-950', colorDark: 'hover:text-white' },
+  linkedin: { label: 'LinkedIn', Icon: FaLinkedinIn, colorLight: 'hover:text-sky-700', colorDark: 'hover:text-sky-300' },
 };
 
 function encode(value) {
@@ -22,16 +22,22 @@ function buildShareUrl(platform, url, title) {
     case 'linkedin':
       return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
     case 'instagram':
-      // Instagram does not support direct web share URL for arbitrary links.
       return `https://www.instagram.com/`;
     default:
       return encodedUrl;
   }
 }
 
-function ShareIcons({ url, title }) {
+/** @param {{ url: string, title?: string, variant?: 'light' | 'dark', className?: string }} props */
+function ShareIcons({ url, title, variant = 'light', className = '' }) {
+  const isDark = variant === 'dark';
+
+  const baseBtn = isDark
+    ? 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-violet-400/40 bg-white/10 text-white transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-violet-300 hover:bg-white/20'
+    : 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-slate-300';
+
   return (
-    <div className="mt-4 flex items-center gap-2.5">
+    <div className={`flex items-center gap-2.5 ${className}`}>
       {Object.entries(iconMap).map(([key, value]) => (
         <a
           key={key}
@@ -39,7 +45,7 @@ function ShareIcons({ url, title }) {
           target="_blank"
           rel="noreferrer"
           aria-label={`Share on ${value.label}`}
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-slate-300 ${value.color}`}
+          className={`${baseBtn} ${isDark ? value.colorDark : value.colorLight}`}
         >
           <value.Icon className="h-4 w-4" />
         </a>

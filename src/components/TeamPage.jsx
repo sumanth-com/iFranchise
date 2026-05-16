@@ -1,4 +1,4 @@
-﻿const teamGridMembers = [
+const teamGridMembers = [
   {
     name: 'John Doe',
     role: 'Founder & CEO',
@@ -79,14 +79,13 @@ function TeamPage() {
   const cultureLoopImages = [...cultureImages, ...cultureImages];
 
   return (
-    <main className="w-full py-10 lg:py-16">
-      <section className="relative overflow-hidden bg-[#F6F9F4] py-20">
-        <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.12]" />
+    <main className="relative z-10 w-full py-10 lg:py-16 text-slate-100">
+      <section className="relative overflow-hidden bg-transparent py-20">
         <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between gap-8">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
-              <h2 className="mt-4 text-5xl font-extrabold uppercase leading-tight tracking-tight text-[#2d1b7f] sm:text-6xl">
+              <h2 className="mt-4 text-5xl font-extrabold uppercase leading-tight tracking-tight text-white sm:text-6xl">
                 Small team with
                 <br />
                 millions of ideas
@@ -103,17 +102,17 @@ function TeamPage() {
         <div className="grid items-stretch gap-10 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Team of experts</p>
-            <h1 className="mt-4 text-4xl font-extrabold uppercase leading-tight tracking-tight text-[#201646] sm:text-5xl">
+            <h1 className="mt-4 text-4xl font-extrabold uppercase leading-tight tracking-tight text-white sm:text-5xl">
               We have a kick-ass
               <br />
               team for you
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-slate-600">
+            <p className="mt-6 text-lg leading-relaxed text-slate-300">
               With years of franchise and growth experience, our team helps investors and brands turn ambition into
               measurable expansion.
             </p>
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-              <p className="text-base leading-relaxed text-slate-700">
+            <div className="mt-8 rounded-2xl border border-violet-500/25 card-premium-dark p-6">
+              <p className="text-base leading-relaxed text-slate-200">
                 &quot;I have always believed in prioritizing both our clients and our team equally. This approach ensures
                 exceptional outcomes for every project.&quot;
               </p>
@@ -125,14 +124,14 @@ function TeamPage() {
                   loading="lazy"
                 />
                 <div>
-                  <p className="text-sm font-semibold text-[#201646]">Kimberly Mastrangelo</p>
+                  <p className="text-sm font-semibold text-white">Kimberly Mastrangelo</p>
                   <p className="text-xs text-slate-500">CEO & Founder</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-slate-200">
+          <div className="overflow-hidden rounded-3xl border border-violet-500/25">
             <img
               src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80"
               alt="Team collaboration"
@@ -144,10 +143,10 @@ function TeamPage() {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {featureCards.map((item) => (
-            <article key={item.title} className="rounded-2xl border border-slate-200 bg-white p-6">
+            <article key={item.title} className="rounded-2xl border border-violet-500/25 card-premium-dark p-6">
               <span className="text-2xl text-violet-600">{item.icon}</span>
-              <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#221B4B]">{item.title}</h3>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">{item.description}</p>
+              <h3 className="mt-4 text-2xl font-bold tracking-tight text-white">{item.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-slate-300">{item.description}</p>
             </article>
           ))}
         </div>
@@ -156,18 +155,18 @@ function TeamPage() {
       <section className="mx-auto w-full max-w-[1200px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
-          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-[#221B4B] sm:text-5xl">
+          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">
             Let&apos;s meet our awesome team
           </h2>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {teamGridMembers.map((member) => (
-            <article key={member.name} className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-3">
+            <article key={member.name} className="overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-3">
               <div className="overflow-hidden rounded-xl">
                 <img src={member.image} alt={member.name} className="aspect-[4/5] w-full object-cover" loading="lazy" />
               </div>
               <div className="px-2 pb-2 pt-4">
-                <p className="text-3xl font-semibold tracking-tight text-[#221B4B]">{member.name}</p>
+                <p className="text-3xl font-semibold tracking-tight text-white">{member.name}</p>
                 <p className="mt-1 text-2xl text-slate-500">{member.role}</p>
                 <div className="mt-4 flex items-center gap-2">
                   <a
@@ -182,7 +181,7 @@ function TeamPage() {
                   <a
                     href="#"
                     aria-label={`${member.name} X`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition duration-200 hover:-translate-y-0.5 hover:bg-slate-100"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-slate-200 transition duration-200 hover:-translate-y-0.5 hover:bg-white/10"
                   >
                     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
                       <path d="M18.9 3h2.92l-6.38 7.3L23 21h-5.88l-4.6-6.01L7.3 21H4.37l6.82-7.8L1 3h6.03l4.15 5.42L18.9 3zm-1.03 16.22h1.62L6.16 4.7H4.42l13.45 14.52z" />
@@ -207,7 +206,7 @@ function TeamPage() {
       <section className="mx-auto w-full max-w-[1320px] px-0 pb-20 sm:px-0 lg:px-0">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Culture</p>
-          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-[#221B4B] sm:text-5xl">
+          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">
             Our culture, keeping us fresh
           </h2>
         </div>
@@ -215,7 +214,7 @@ function TeamPage() {
         <div className="mt-10 overflow-hidden">
           <div className="animate-marquee-left flex w-max items-center gap-6 py-2">
             {cultureLoopImages.map((image, idx) => (
-              <div key={`${image}-${idx}`} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <div key={`${image}-${idx}`} className="overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark">
                 <img src={image} alt="Team culture moment" className="h-64 w-[320px] object-cover" loading="lazy" />
               </div>
             ))}

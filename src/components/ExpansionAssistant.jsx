@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ── Navigation helper ─────────────────────────────────────────────────────────
@@ -8,18 +8,112 @@ const navTo = (path, setIsOpen) => {
   setIsOpen(false);
 };
 
-// ── Shared SVG icons ──────────────────────────────────────────────────────────
-const SparkIcon = ({ size = 14 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <path
-      d="M12 2L13.5 8.5L20 7L14.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L9.5 12L4 7L10.5 8.5L12 2Z"
-      stroke="rgba(167,139,250,0.9)"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-      fill="rgba(139,92,246,0.15)"
-    />
-  </svg>
-);
+const PURPLE_BRAND = '#6d28d9';
+const PURPLE_BRIGHT = '#7c3aed';
+
+/** Stylised globe glyph—bold strokes read clearly at small sizes */
+function GlobeGlyph({ size = 18, emphasis }) {
+  const s = size;
+  const bold = emphasis === true || emphasis === 'strong';
+  const sw = bold
+    ? { o: 2.05, m: 1.85, a: 1.65 }
+    : { o: 1.65, m: 1.4, a: 1.25 };
+  const op = bold ? { o: 1, m: 0.96, a: 0.88 } : { o: 1, m: 0.88, a: 0.78 };
+  return (
+    <svg width={s} height={s} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="9.35" stroke="currentColor" strokeWidth={sw.o} opacity={op.o} strokeLinecap="round" />
+      <ellipse cx="12" cy="12" rx="4" ry="9.35" stroke="currentColor" strokeWidth={sw.m} opacity={op.m} strokeLinecap="round" />
+      <path d="M2.6 12h18.8" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
+      <path d="M12 2.7c3.15 4 3.15 14.6 0 18.6" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
+      <path d="M12 2.7c-3.15 4-3.15 14.6 0 18.6" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Pulsing “live” cue for header status */
+function LiveStatusPulse({ label = 'Live' }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ position: 'relative', width: 12, height: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <motion.span
+          style={{
+            position: 'absolute',
+            inset: -2,
+            borderRadius: '50%',
+            background: '#22c55e',
+          }}
+          animate={{ scale: [1, 2.4], opacity: [0.4, 0] }}
+          transition={{ duration: 1.85, repeat: Infinity, ease: 'easeOut' }}
+        />
+        <motion.span
+          style={{
+            position: 'absolute',
+            inset: -2,
+            borderRadius: '50%',
+            border: '2px solid rgba(34,197,94,0.45)',
+          }}
+          animate={{ scale: [1, 1.9], opacity: [0.7, 0] }}
+          transition={{ duration: 1.85, repeat: Infinity, ease: 'easeOut', delay: 0.35 }}
+        />
+        <motion.span
+          style={{
+            width: 7,
+            height: 7,
+            borderRadius: '50%',
+            background: '#16a34a',
+            boxShadow: '0 0 0 2px rgba(255,255,255,1), 0 0 12px rgba(22,163,74,0.55)',
+          }}
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ duration: 1.25, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </span>
+      <motion.span
+        style={{ color: '#334155', fontSize: 11, fontWeight: 700, letterSpacing: '-0.01em' }}
+        animate={{ opacity: [1, 0.72, 1] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {label}
+      </motion.span>
+    </div>
+  );
+}
+
+/** Squircle tile: crisp purple globe on white—reads clearly on light chrome */
+function AssistantGlyphTile({ dimension = 34 }) {
+  const glyph = Math.round(dimension * 0.52);
+  return (
+    <motion.div
+      aria-hidden
+      animate={{
+        boxShadow: [
+          '0 2px 8px rgba(124,58,237,0.12), 0 0 0 0 rgba(124,58,237,0.2)',
+          '0 4px 16px rgba(124,58,237,0.18), 0 0 0 4px rgba(124,58,237,0.06)',
+          '0 2px 8px rgba(124,58,237,0.12), 0 0 0 0 rgba(124,58,237,0.2)',
+        ],
+      }}
+      transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+      style={{
+        width: dimension,
+        height: dimension,
+        borderRadius: Math.max(9, Math.round(dimension * 0.31)),
+        background: '#ffffff',
+        border: `1px solid rgba(124,58,237,0.38)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: PURPLE_BRAND,
+      }}
+    >
+      <motion.span
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        animate={{ scale: [1, 1.06, 1] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <GlobeGlyph size={glyph} emphasis />
+      </motion.span>
+    </motion.div>
+  );
+}
 
 const ChevronRight = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -94,7 +188,7 @@ function ChipSelect({ options, value, onChange, multi = false }) {
             fontWeight: 500,
             border: isSelected(opt) ? '1px solid rgba(124,58,237,0.4)' : '1px solid rgba(0,0,0,0.1)',
             background: isSelected(opt) ? 'rgba(124,58,237,0.08)' : 'rgba(0,0,0,0.03)',
-            color: isSelected(opt) ? 'rgba(109,40,217,1)' : 'rgba(71,85,105,0.8)',
+            color: isSelected(opt) ? 'rgba(109,40,217,1)' : 'rgba(71,85,105,0.85)',
             cursor: 'pointer',
             transition: 'all 0.12s ease',
           }}
@@ -116,18 +210,18 @@ function TextInput({ placeholder, value, onChange, type = 'text' }) {
       placeholder={placeholder}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
+      className="mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] text-slate-900/90 outline-none transition-all duration-150 placeholder:text-slate-400/90"
       style={{
-        width: '100%',
-        marginTop: 14,
-        padding: '10px 14px',
-        borderRadius: 10,
-        background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.1)', color: 'rgba(15,23,42,0.9)', fontSize: 13, outline: 'none', boxSizing: 'border-box', transition: 'all 0.15s ease',
+        border: '1px solid rgba(0,0,0,0.1)',
+        background: 'rgba(0,0,0,0.03)',
       }}
-      onFocus={e => {
-        e.target.style.border = '1px solid rgba(124,58,237,0.4)'; e.target.style.background = 'rgba(124,58,237,0.03)';
+      onFocus={(e) => {
+        e.target.style.border = '1px solid rgba(124,58,237,0.4)';
+        e.target.style.background = 'rgba(124,58,237,0.03)';
       }}
-      onBlur={e => {
-        e.target.style.border = '1px solid rgba(0,0,0,0.1)'; e.target.style.background = 'rgba(0,0,0,0.03)';
+      onBlur={(e) => {
+        e.target.style.border = '1px solid rgba(0,0,0,0.1)';
+        e.target.style.background = 'rgba(0,0,0,0.03)';
       }}
     />
   );
@@ -160,7 +254,7 @@ function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
         padding: '12px',
         borderRadius: 12,
         background: disabled ? 'rgba(124,58,237,0.2)' : 'linear-gradient(135deg,#7c3aed,#6366f1)',
-        color: disabled ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.95)',
+        color: disabled ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.96)',
         fontSize: 13.5,
         fontWeight: 600,
         border: 'none',
@@ -182,6 +276,7 @@ function FlowHeader({ title, onBack, step, total }) {
   return (
     <div style={{ padding: '13px 14px 12px', borderBottom: '1px solid rgba(0,0,0,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, background: 'rgba(248,249,252,1)' }}>
       <button
+        type="button"
         onClick={onBack}
         style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(71,85,105,0.7)', cursor: 'pointer', transition: 'all 0.15s ease' }}
         onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.07)'; e.currentTarget.style.color = 'rgba(15,23,42,0.8)'; }}
@@ -191,7 +286,7 @@ function FlowHeader({ title, onBack, step, total }) {
       </button>
       <span style={{ color: 'rgba(15,23,42,0.9)', fontSize: 13.5, fontWeight: 600, letterSpacing: '-0.02em' }}>{title}</span>
       {total ? (
-        <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 11, fontWeight: 500, background: 'rgba(255,255,255,0.05)', padding: '3px 8px', borderRadius: 20, border: '1px solid rgba(0,0,0,0.08)' }}>{step}/{total}</span>
+        <span style={{ color: 'rgba(71,85,105,0.85)', fontSize: 11, fontWeight: 600, background: 'rgba(0,0,0,0.04)', padding: '3px 8px', borderRadius: 20, border: '1px solid rgba(0,0,0,0.08)' }}>{step}/{total}</span>
       ) : (
         <div style={{ width: 30 }} />
       )}
@@ -203,12 +298,13 @@ function FlowHeader({ title, onBack, step, total }) {
 function SummaryCard({ rows }) {
   return (
     <div style={{ background: 'rgba(124,58,237,0.04)', border: '1px solid rgba(124,58,237,0.12)', borderRadius: 12, padding: 16 }}>
-      {rows.map(({ label, value }, i) => value && (
-        <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 6, paddingBottom: 6, borderBottom: i < rows.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
-          <span style={{ color: 'rgba(100,116,139,0.8)', fontSize: 11 }}>{label}</span>
-          <span style={{ color: 'rgba(15,23,42,0.88)', fontSize: 12, fontWeight: 500 }}>{value}</span>
-        </div>
-      ))}
+      {rows.map(({ label, value }, i) =>
+        value && (
+          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 6, paddingBottom: 6, borderBottom: i < rows.length - 1 ? '1px solid rgba(0,0,0,0.06)' : 'none' }}>
+            <span style={{ color: 'rgba(100,116,139,0.85)', fontSize: 11 }}>{label}</span>
+            <span style={{ color: 'rgba(15,23,42,0.9)', fontSize: 12, fontWeight: 500 }}>{value}</span>
+          </div>
+        ))}
     </div>
   );
 }
@@ -275,16 +371,16 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         padding: secondary ? '10px 13px' : '11px 13px',
         borderRadius: 14,
         background: hovered
-          ? secondary ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.07)'
-          : secondary ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.04)',
+          ? secondary ? 'rgba(0,0,0,0.04)' : 'rgba(248,246,255,0.92)'
+          : secondary ? 'rgba(249,250,251,0.92)' : 'rgba(255,255,255,0.94)',
         border: hovered
-          ? `1px solid ${secondary ? 'rgba(255,255,255,0.1)' : 'rgba(139,92,246,0.3)'}`
-          : `1px solid ${secondary ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.07)'}`,
+          ? `1px solid ${secondary ? 'rgba(148,163,184,0.35)' : 'rgba(167,139,250,0.45)'}`
+          : `1px solid ${secondary ? 'rgba(226,232,240,1)' : 'rgba(237,233,254,0.9)'}`,
         cursor: 'pointer',
         textAlign: 'left',
         transform: hovered ? 'translateX(3px)' : 'translateX(0)',
         transition: 'all 0.18s cubic-bezier(0.22,1,0.36,1)',
-        boxShadow: hovered && !secondary ? '0 2px 12px rgba(124,58,237,0.08)' : 'none',
+        boxShadow: hovered && !secondary ? '0 2px 14px rgba(139,92,246,0.12)' : 'none',
       }}
     >
       {/* Icon */}
@@ -298,7 +394,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        color: secondary ? 'rgba(100,116,139,0.7)' : row.iconColor,
+        color: secondary ? 'rgba(100,116,139,0.75)' : row.iconColor,
         transition: 'transform 0.18s ease',
         transform: hovered ? 'scale(1.05)' : 'scale(1)',
       }}>
@@ -312,7 +408,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
           fontWeight: 700,
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          color: secondary ? 'rgba(148,163,184,0.9)' : 'rgba(124,58,237,0.7)',
+          color: secondary ? 'rgba(100,116,139,0.88)' : 'rgba(124,58,237,0.85)',
           marginBottom: 3,
         }}>
           {row.label}
@@ -320,7 +416,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         <div style={{
           fontSize: 13.5,
           fontWeight: 500,
-          color: secondary ? 'rgba(71,85,105,0.85)' : 'rgba(15,23,42,0.88)',
+          color: secondary ? 'rgba(71,85,105,0.88)' : 'rgba(15,23,42,0.9)',
           letterSpacing: '-0.015em',
           lineHeight: 1.3,
         }}>
@@ -330,7 +426,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
 
       {/* Arrow */}
       <div style={{
-        color: hovered ? 'rgba(124,58,237,0.6)' : 'rgba(148,163,184,0.6)',
+        color: hovered ? 'rgba(124,58,237,0.65)' : 'rgba(148,163,184,0.65)',
         flexShrink: 0,
         transition: 'color 0.15s ease, transform 0.18s ease',
         transform: hovered ? 'translateX(2px)' : 'translateX(0)',
@@ -351,30 +447,27 @@ function HomeView({ setView, setIsOpen }) {
       transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
       style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
     >
-      {/* Welcome header */}
-      <div style={{ padding: '16px 16px 12px', flexShrink: 0 }}>
+      {/* Welcome */}
+      <div style={{ padding: '16px 16px 10px', flexShrink: 0 }}>
         <div style={{
-          fontSize: 15,
-          fontWeight: 650,
-          color: 'rgba(15,23,42,0.92)', letterSpacing: '-0.025em',
-          lineHeight: 1.3,
-          marginBottom: 4,
+          fontSize: 15.5,
+          fontWeight: 700,
+          color: '#0f172a',
+          letterSpacing: '-0.03em',
+          lineHeight: 1.35,
         }}>
-          How can iFranchise help<br />you grow today?
-        </div>
-        <div style={{ fontSize: 11.5, color: 'rgba(100,116,139,0.8)', letterSpacing: '-0.01em' }}>
-          Select an option to get started
+          How can we help you expand today?
         </div>
       </div>
 
       {/* Action rows */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 10px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 10px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         {PRIMARY_ROWS.map((row, i) => (
           <ActionRow key={row.id} row={row} onClick={() => setView(row.id)} index={i} />
         ))}
 
         {/* Thin divider */}
-        <div style={{ height: 1, background: 'rgba(0,0,0,0.06)', margin: '2px 4px' }} />
+        <div style={{ height: 1, background: 'rgba(226,232,240,1)', margin: '2px 4px' }} />
 
         {SECONDARY_ROWS.map((row, i) => (
           <ActionRow
@@ -437,7 +530,7 @@ function BrandsView({ setView, setIsOpen }) {
             { label: 'Contact', value: data.contactName },
             { label: 'Phone', value: data.contactPhone },
           ]} />
-          <p style={{ color: 'rgba(100,116,139,0.7)', fontSize: 12, textAlign: 'center', margin: 0 }}>
+          <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
             Our expansion team will reach out within 24 hours.
           </p>
           <ContinueBtn onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')} label="Schedule Expansion Consultation" />
@@ -532,7 +625,7 @@ function InvestorsView({ setView, setIsOpen }) {
             { label: 'Expected ROI', value: data.roi },
             { label: 'Timeline', value: data.timeline },
           ]} />
-          <p style={{ color: 'rgba(100,116,139,0.7)', fontSize: 12, textAlign: 'center', margin: 0 }}>
+          <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
             We have curated opportunities matching your profile.
           </p>
           <ContinueBtn onClick={() => navTo('/franchise-opportunities', setIsOpen)} label="Browse Matching Opportunities" />
@@ -599,7 +692,7 @@ function StrategyView({ setView, setIsOpen }) {
       <FlowHeader title="Book Strategy Call" onBack={() => setView('home')} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div style={{ background: 'rgba(59,130,246,0.04)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: 12, padding: 16 }}>
-          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(37,99,235,0.8)', marginBottom: 10 }}>
+          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(37,99,235,0.82)', marginBottom: 10 }}>
             Strategy Consultation
           </div>
           <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(15,23,42,0.9)', letterSpacing: '-0.02em', marginBottom: 14 }}>
@@ -620,15 +713,15 @@ function StrategyView({ setView, setIsOpen }) {
                   flexShrink: 0,
                   marginTop: 1,
                 }}>
-                  <span style={{ color: 'rgba(96,165,250,0.9)', fontSize: 9, fontWeight: 700 }}>{label}</span>
+                  <span style={{ color: 'rgba(37,99,235,0.88)', fontSize: 9, fontWeight: 700 }}>{label}</span>
                 </div>
-                <p style={{ color: 'rgba(71,85,105,0.85)', fontSize: 12, lineHeight: 1.5, margin: 0 }}>{text}</p>
+                <p style={{ color: 'rgba(71,85,105,0.88)', fontSize: 12, lineHeight: 1.5, margin: 0 }}>{text}</p>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 7 }}>
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(226,232,240,0.9)', display: 'flex', alignItems: 'center', gap: 7 }}>
             <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 6px rgba(52,211,153,0.6)' }} />
-            <span style={{ color: 'rgba(52,211,153,0.9)', fontSize: 11, fontWeight: 500 }}>Response within 24 hours</span>
+            <span style={{ color: 'rgba(52,211,153,0.95)', fontSize: 11, fontWeight: 500 }}>Response within 24 hours</span>
           </div>
         </div>
         <button
@@ -651,9 +744,9 @@ function StrategyView({ setView, setIsOpen }) {
         >
           Schedule Now
         </button>
-        <p style={{ color: 'rgba(100,116,139,0.7)', fontSize: 12, textAlign: 'center', margin: 0 }}>
+        <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
           Or call us directly:{' '}
-          <a href="tel:+919876543210" style={{ color: 'rgba(15,23,42,0.7)', textDecoration: 'none', fontWeight: 500 }}>
+          <a href="tel:+919876543210" style={{ color: 'rgba(15,23,42,0.75)', textDecoration: 'none', fontWeight: 500 }}>
             +91 98765 43210
           </a>
         </p>
@@ -749,8 +842,8 @@ function ServicesView({ setView, setIsOpen }) {
                 gap: 12,
                 padding: '12px 14px',
                 borderRadius: 12,
-                background: hovered ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)',
-                border: hovered ? '1px solid rgba(139,92,246,0.2)' : '1px solid rgba(255,255,255,0.05)',
+                background: hovered ? 'rgba(248,250,252,1)' : 'rgba(255,255,255,1)',
+                border: hovered ? '1px solid rgba(196,181,253,0.55)' : '1px solid rgba(226,232,240,0.98)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transform: hovered ? 'translateX(2px)' : 'translateX(0)',
@@ -761,10 +854,10 @@ function ServicesView({ setView, setIsOpen }) {
                 {svc.icon}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.85)', letterSpacing: '-0.01em' }}>{svc.title}</div>
-                <div style={{ fontSize: 11, color: 'rgba(100,116,139,0.7)', marginTop: 2 }}>{svc.desc}</div>
+                <div style={{ fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.88)', letterSpacing: '-0.01em' }}>{svc.title}</div>
+                <div style={{ fontSize: 11, color: 'rgba(100,116,139,0.78)', marginTop: 2 }}>{svc.desc}</div>
               </div>
-              <span style={{ color: 'rgba(148,163,184,0.7)', fontSize: 14, flexShrink: 0 }}>→</span>
+              <span style={{ color: 'rgba(148,163,184,0.82)', fontSize: 14, flexShrink: 0 }}>→</span>
             </motion.button>
           );
         })}
@@ -825,7 +918,7 @@ function SupportView({ setView, setIsOpen }) {
     >
       <FlowHeader title="Quick Support" onBack={() => setView('home')} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '12px 12px 16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <p style={{ color: 'rgba(100,116,139,0.7)', fontSize: 12, margin: '4px 2px 8px', letterSpacing: '-0.01em' }}>
+        <p style={{ color: 'rgba(100,116,139,0.78)', fontSize: 12, margin: '4px 2px 8px', letterSpacing: '-0.01em' }}>
           Where would you like to go?
         </p>
         {SUPPORT_LINKS.map((link, i) => {
@@ -846,19 +939,19 @@ function SupportView({ setView, setIsOpen }) {
                 gap: 12,
                 padding: '12px 14px',
                 borderRadius: 12,
-                background: hovered ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)',
-                border: hovered ? '1px solid rgba(139,92,246,0.2)' : '1px solid rgba(255,255,255,0.05)',
+                background: hovered ? 'rgba(248,250,252,1)' : 'rgba(255,255,255,1)',
+                border: hovered ? '1px solid rgba(196,181,253,0.55)' : '1px solid rgba(226,232,240,0.98)',
                 cursor: 'pointer',
                 textAlign: 'left',
                 transform: hovered ? 'translateX(2px)' : 'translateX(0)',
                 transition: 'all 0.15s ease',
               }}
             >
-              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'rgba(100,116,139,0.7)' }}>
+              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(249,250,251,1)', border: '1px solid rgba(226,232,240,1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'rgba(100,116,139,0.78)' }}>
                 {link.icon}
               </div>
-              <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.85)', letterSpacing: '-0.01em' }}>{link.title}</span>
-              <span style={{ color: 'rgba(148,163,184,0.7)', fontSize: 14, flexShrink: 0 }}>→</span>
+              <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.88)', letterSpacing: '-0.01em' }}>{link.title}</span>
+              <span style={{ color: 'rgba(148,163,184,0.82)', fontSize: 14, flexShrink: 0 }}>→</span>
             </motion.button>
           );
         })}
@@ -897,11 +990,11 @@ export default function ExpansionAssistant() {
         height: '78vh',
         borderRadius: '20px 20px 0 0',
         zIndex: 9999,
-        background: 'rgba(255,255,255,0.98)',
+        background: 'rgba(255,255,255,0.99)',
         backdropFilter: 'blur(40px)',
         WebkitBackdropFilter: 'blur(40px)',
-        border: '1px solid rgba(0,0,0,0.08)',
-        boxShadow: '0 0 0 1px rgba(0,0,0,0.06), 0 -20px 60px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.06)',
+        border: '1px solid rgba(0,0,0,0.07)',
+        boxShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 -20px 60px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06)',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -914,11 +1007,11 @@ export default function ExpansionAssistant() {
         maxHeight: 520,
         borderRadius: 16,
         zIndex: 9999,
-        background: 'rgba(255,255,255,0.98)',
+        background: 'rgba(255,255,255,0.99)',
         backdropFilter: 'blur(40px)',
         WebkitBackdropFilter: 'blur(40px)',
         border: '1px solid rgba(0,0,0,0.08)',
-        boxShadow: '0 0 0 1px rgba(0,0,0,0.06), 0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06)',
+        boxShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 20px 60px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06)',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -936,7 +1029,7 @@ export default function ExpansionAssistant() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={handleClose}
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9998 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.28)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9998 }}
           />
         )}
       </AnimatePresence>
@@ -953,41 +1046,58 @@ export default function ExpansionAssistant() {
             style={panelStyle}
           >
             {/* Header */}
-            <div style={{ padding: '14px 16px 13px', borderBottom: '1px solid rgba(0,0,0,0.07)', flexShrink: 0, background: 'rgba(248,249,252,1)' }}>
+            <div
+              style={{
+                padding: '14px 16px 13px',
+                flexShrink: 0,
+                background: 'rgba(248,249,252,1)',
+                borderBottom: '1px solid rgba(0,0,0,0.07)',
+              }}
+            >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-                  <div style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: 10,
-                    background: 'linear-gradient(135deg,rgba(139,92,246,0.25),rgba(99,102,241,0.12))',
-                    border: '1px solid rgba(139,92,246,0.25)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 0 12px rgba(139,92,246,0.15)',
-                  }}>
-                    <SparkIcon size={13} />
-                  </div>
+                  <AssistantGlyphTile dimension={36} />
                   <div>
-                    <div style={{ color: 'rgba(15,23,42,0.92)', fontSize: 13.5, fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.2 }}>
-                      Expansion Intelligence
+                    <div
+                      style={{
+                        color: '#0f172a',
+                        fontSize: 14,
+                        fontWeight: 700,
+                        letterSpacing: '-0.03em',
+                        lineHeight: 1.2,
+                      }}
+                    >
+                      Strategic Franchise Desk
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 3 }}>
-                      <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 8px rgba(52,211,153,0.7)' }} />
-                      <span style={{ color: 'rgba(100,116,139,1)', fontSize: 10.5, fontWeight: 500, letterSpacing: '0.01em' }}>iFranchise AI · Online</span>
+                    <div style={{ marginTop: 5 }}>
+                      <LiveStatusPulse />
                     </div>
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={handleClose}
                   style={{
                     width: 30,
                     height: 30,
                     borderRadius: 9,
-                    background: 'rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(71,85,105,0.7)', cursor: 'pointer', transition: 'all 0.15s ease', }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.07)'; e.currentTarget.style.color = 'rgba(15,23,42,0.8)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; e.currentTarget.style.color = 'rgba(71,85,105,0.7)'; }}
+                    background: 'rgba(255,255,255,1)',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'rgba(71,85,105,0.75)',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(248,250,252,1)';
+                    e.currentTarget.style.color = 'rgba(15,23,42,0.88)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,1)';
+                    e.currentTarget.style.color = 'rgba(71,85,105,0.75)';
+                  }}
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M18 6L6 18M6 6l12 12" />
@@ -1023,33 +1133,48 @@ export default function ExpansionAssistant() {
               transition={{ duration: 0.18 }}
               style={{ position: 'relative' }}
             >
-              {/* Ambient glow */}
+              {/* Live pulse halo around launcher */}
               <motion.div
-                animate={{ opacity: [0.15, 0.35, 0.15] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                aria-hidden
+                animate={{ opacity: [0.45, 0.85, 0.45], scale: [1, 1.12, 1] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
                 style={{
                   position: 'absolute',
-                  inset: -8,
+                  inset: -12,
                   borderRadius: 24,
-                  background: 'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)',
+                  background: `radial-gradient(circle at 50% 50%, ${PURPLE_BRIGHT}22 0%, transparent 72%)`,
                   pointerEvents: 'none',
                 }}
               />
+              <motion.span
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  inset: -4,
+                  borderRadius: 20,
+                  border: `2px solid ${PURPLE_BRIGHT}`,
+                  pointerEvents: 'none',
+                  opacity: 0.55,
+                }}
+                animate={{ scale: [1, 1.12, 1], opacity: [0.48, 0.12, 0.48] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
+              />
               <motion.button
                 onClick={handleOpen}
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.06 }}
+                animate={{ scale: [1, 1.025, 1] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+                whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
-                aria-label="Open Expansion Assistant"
+                aria-label="Open iFranchise assistant"
                 style={{
                   position: 'relative',
                   width: 48,
                   height: 48,
                   borderRadius: 16,
-                  background: 'linear-gradient(135deg,#0f1629 0%,#1a1040 100%)',
-                  border: '1px solid rgba(139,92,246,0.2)',
-                  boxShadow: '0 0 0 1px rgba(139,92,246,0.1), 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(139,92,246,0.15)',
+                  background: 'linear-gradient(180deg,#ffffff 0%,#faf8ff 100%)',
+                  border: `1.5px solid rgba(124,58,237,0.42)`,
+                  boxShadow:
+                    '0 8px 28px rgba(124,58,237,0.22), 0 2px 8px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1057,15 +1182,23 @@ export default function ExpansionAssistant() {
                   transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'rgba(139,92,246,0.5)';
-                  e.currentTarget.style.boxShadow = '0 0 0 1px rgba(139,92,246,0.2), 0 8px 32px rgba(0,0,0,0.5), 0 0 60px rgba(139,92,246,0.25)';
+                  e.currentTarget.style.borderColor = 'rgba(109,40,217,0.65)';
+                  e.currentTarget.style.boxShadow =
+                    '0 12px 36px rgba(124,58,237,0.32), 0 2px 10px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,1)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(139,92,246,0.2)';
-                  e.currentTarget.style.boxShadow = '0 0 0 1px rgba(139,92,246,0.1), 0 8px 32px rgba(0,0,0,0.4), 0 0 40px rgba(139,92,246,0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(124,58,237,0.42)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 28px rgba(124,58,237,0.22), 0 2px 8px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1)';
                 }}
               >
-                <SparkIcon size={18} />
+                <motion.span
+                  style={{ display: 'flex', color: PURPLE_BRIGHT }}
+                  animate={{ rotate: [0, 8, -6, 0] }}
+                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.8 }}
+                >
+                  <GlobeGlyph size={22} emphasis />
+                </motion.span>
               </motion.button>
             </motion.div>
           ) : (
@@ -1078,19 +1211,19 @@ export default function ExpansionAssistant() {
               onClick={handleClose}
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.95 }}
-              aria-label="Close Expansion Assistant"
+              aria-label="Close iFranchise assistant"
               style={{
                 width: 48,
                 height: 48,
                 borderRadius: 16,
-                background: 'linear-gradient(135deg,#0f1629 0%,#1a1040 100%)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                background: 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)',
+                border: '1px solid rgba(148,163,184,0.38)',
+                boxShadow: '0 6px 20px rgba(15,23,42,0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                color: 'rgba(255,255,255,0.4)',
+                color: 'rgba(71,85,105,0.9)',
               }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

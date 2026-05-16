@@ -1,9 +1,14 @@
-﻿import { useEffect, useState, lazy, Suspense } from 'react';
+﻿import { useEffect, useState, lazy, Suspense, Component } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
 import FloatingContactCTA from './components/FloatingContactCTA';
 import PreFooterCTA from './components/PreFooterCTA';
-import ExpansionAssistant from './components/ExpansionAssistant';
+import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
+import { useScrollPastHero } from './hooks/useScrollPastHero';
+import { logger } from './lib/logger';
+
+const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
 // ── Lazy-load all pages — only load what's needed ─────────────────────────────
 const Hero                    = lazy(() => import('./components/Hero'));
@@ -23,13 +28,52 @@ const CareersPage             = lazy(() => import('./components/CareersPage'));
 const CareerDetailPage        = lazy(() => import('./components/CareerDetailPage'));
 const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPage'));
 
+class PageErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error) {
+    logger.error('Page failed to load:', error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="relative z-10 flex min-h-[50vh] flex-col items-center justify-center gap-4 px-6 text-center">
+          <p className="text-sm font-medium text-violet-200/80">Something went wrong loading this page.</p>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="rounded-xl bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-violet-500"
+          >
+            Reload page
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // ── Minimal page-level skeleton ───────────────────────────────────────────────
 function PageSkeleton() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-white">
+    <div
+      className="relative z-10 flex min-h-screen w-full items-center justify-center bg-transparent"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="Loading page"
+    >
       <div className="flex flex-col items-center gap-4">
-        <div className="w-10 h-10 rounded-full border-2 border-slate-200 border-t-violet-600 animate-spin" />
-        <p className="text-xs text-slate-400 font-medium tracking-widest uppercase">Loading</p>
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-violet-500/30 border-t-violet-400" />
+        <p className="text-xs font-medium uppercase tracking-widest text-violet-200/70">Loading</p>
       </div>
     </div>
   );
@@ -78,6 +122,10 @@ const getPathname = () => {
 function App() {
   const [pathname, setPathname] = useState(getPathname);
   const [pagePhase, setPagePhase] = useState('idle');
+  const assistantEligible =
+    pathname !== '/404' && pathname !== '/contact' && pathname !== '/franchise-opportunities';
+  const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
+  const showExpansionAssistant = assistantEligible && scrolledPastHero;
 
   // Save scroll position
   useEffect(() => {
@@ -136,21 +184,41 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [pathname]);
 
-  // data-reveal IntersectionObserver
+  // data-reveal IntersectionObserver — deferred to avoid blocking route paint
   useEffect(() => {
-    const revealElements = document.querySelectorAll('[data-reveal]');
-    if (!revealElements.length) return undefined;
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
-        }
-      }),
-      { threshold: 0.12, rootMargin: '0px 0px -4% 0px' }
-    );
-    revealElements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    let observer;
+    let cancelled = false;
+
+    const setup = () => {
+      if (cancelled) return;
+      const revealElements = document.querySelectorAll('[data-reveal]:not(.is-revealed)');
+      if (!revealElements.length) return;
+
+      observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        }),
+        { threshold: 0.1, rootMargin: '0px 0px -3% 0px' },
+      );
+      revealElements.forEach((el) => observer.observe(el));
+    };
+
+    let idleId;
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(setup, { timeout: 400 });
+    } else {
+      idleId = window.setTimeout(setup, 0);
+    }
+
+    return () => {
+      cancelled = true;
+      if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+      else window.clearTimeout(idleId);
+      observer?.disconnect();
+    };
   }, [pathname]);
 
   const isAboutPage               = pathname === '/about';
@@ -169,22 +237,16 @@ function App() {
   const isBlogDetailPage          = pathname === '/blog-detail';
   const isListYourBrandPage       = pathname === '/list-your-brand';
 
-  if (isNotFoundPage) {
-    return (
-      <Suspense fallback={<PageSkeleton />}>
-        <NotFoundPage />
-      </Suspense>
-    );
-  }
-
   return (
-    <div className="relative min-h-screen scroll-smooth bg-slate-50">
-      <div className="pointer-events-none absolute inset-0 bg-dot-grid opacity-[0.16]" />
-      <Navbar />
+    <FranchiseOpportunityNavbarFiltersProvider>
+      <div className="relative min-h-screen scroll-smooth bg-transparent text-slate-100">
+        <AnimatedSiteBackdrop />
+        <Navbar />
 
       {/* Page transition wrapper */}
-      <div
-        className={`${isCareerDetailPage ? '' : 'pt-20'}`}
+      <main
+        id="main-content"
+        className={`relative z-10 ${isCareerDetailPage ? '' : 'pt-20'}`}
         style={{
           opacity: pagePhase === 'idle' ? 1 : 0,
           transition: pagePhase === 'idle'
@@ -192,8 +254,10 @@ function App() {
             : 'opacity 0.08s ease',
         }}
       >
+        <PageErrorBoundary>
         <Suspense fallback={<PageSkeleton />}>
-          {isTermsPage ? <TermsConditionsPage />
+          {isNotFoundPage ? <NotFoundPage />
+          : isTermsPage ? <TermsConditionsPage />
           : isLicensesPage ? <LicensesPage />
           : isPrivacyPolicyPage ? <PrivacyPolicyPage />
           : isServicesPage ? <ServicesPage />
@@ -209,17 +273,23 @@ function App() {
           : isListYourBrandPage ? <ForBrandOwnersPage />
           : <Hero />}
         </Suspense>
-      </div>
+        </PageErrorBoundary>
+      </main>
 
       <PreFooterCTA />
       <Footer />
 
-      {(isFranchiseDetailsPage || isFranchiseOpportunitiesPage) && (
+      {!isNotFoundPage && (isFranchiseDetailsPage || isFranchiseOpportunitiesPage) && (
         <FloatingContactCTA franchiseName="franchise opportunities" />
       )}
 
-      {!isContactPage && !isFranchiseOpportunitiesPage && <ExpansionAssistant />}
-    </div>
+        {showExpansionAssistant && (
+          <Suspense fallback={null}>
+            <ExpansionAssistant />
+          </Suspense>
+        )}
+      </div>
+    </FranchiseOpportunityNavbarFiltersProvider>
   );
 }
 

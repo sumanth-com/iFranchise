@@ -1,4 +1,4 @@
-﻿import { createPortal } from 'react-dom';
+import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BlogCard from './blog/BlogCard';
 import ShareIcons from './blog/ShareIcons';
@@ -104,10 +104,10 @@ function StatCard({ value, label }) {
 
   return (
     <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
-      className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm"
+      className="rounded-2xl border border-violet-500/25 card-premium-dark-inner p-6 text-center shadow-inner"
       style={{ transition: 'transform 0.18s ease', willChange: 'transform' }}>
-      <p ref={numRef} className="text-3xl font-extrabold text-slate-900">{value}</p>
-      <p className="mt-1 text-sm text-slate-500">{label}</p>
+      <p ref={numRef} className="text-3xl font-extrabold text-white">{value}</p>
+      <p className="mt-1 text-sm text-violet-200/90">{label}</p>
     </div>
   );
 }
@@ -131,30 +131,30 @@ function DoubleSectionImage({ src1, src2, alt }) {
 function ArticleSection({ section, index }) {
   return (
     <div data-reveal style={{ '--reveal-delay': `${index * 50}ms` }}>
-      <h2 id={section.id} className="scroll-mt-28 text-2xl font-bold leading-tight text-slate-900 md:text-3xl">
+      <h2 id={section.id} className="scroll-mt-28 text-2xl font-bold leading-tight text-white md:text-3xl">
         {section.heading}
       </h2>
       <div className="mt-5 space-y-5">
         {section.body.map((p, pi) => (
-          <p key={pi} className="text-[16.5px] leading-[1.9] text-slate-700">{p}</p>
+          <p key={pi} className="text-[16.5px] leading-[1.9] text-white/92">{p}</p>
         ))}
         {section.points && (
           <ul className="mt-4 space-y-3">
             {section.points.map((pt) => (
-              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-slate-700">
-                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-indigo-500" />
+              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-white/90">
+                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-violet-400" />
                 {pt}
               </li>
             ))}
           </ul>
         )}
         {section.insight && (
-          <div className="my-6 rounded-xl border-l-4 border-indigo-500 bg-indigo-50/60 p-5">
-            <p className="text-[15.5px] font-medium leading-relaxed text-indigo-900">{section.insight}</p>
+          <div className="my-6 rounded-xl border-l-4 border-violet-400 bg-violet-500/15 p-5">
+            <p className="text-[15.5px] font-medium leading-relaxed text-white">{section.insight}</p>
           </div>
         )}
         {section.quote && (
-          <blockquote className="my-6 rounded-2xl border border-violet-200/70 bg-violet-50 px-6 py-5 text-[18px] italic leading-relaxed text-slate-800">
+          <blockquote className="my-6 rounded-2xl border border-violet-400/35 bg-violet-500/10 px-6 py-5 text-[18px] italic leading-relaxed text-white/95">
             &ldquo;{section.quote}&rdquo;
           </blockquote>
         )}
@@ -195,32 +195,32 @@ function OverviewDropdown({ headings, onHeadingClick }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm transition hover:shadow-md"
+        className="group flex w-full items-center justify-between rounded-2xl border border-violet-500/25 card-premium-dark px-6 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition hover:border-violet-400/40"
       >
         <div className="flex items-center gap-3">
           <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-indigo-500" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-400 opacity-60" />
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-violet-500" />
           </span>
-          <span className="text-base font-bold text-slate-900">Overview</span>
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-500">{headings.length} sections</span>
+          <span className="text-base font-bold text-white">Overview</span>
+          <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-200">{headings.length} sections</span>
         </div>
-        <svg className={`h-5 w-5 text-slate-400 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+        <svg className={`h-5 w-5 text-violet-300 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       <div className="overflow-hidden transition-all duration-300 ease-in-out"
         style={{ maxHeight: open ? `${headings.length * 52 + 24}px` : '0px', opacity: open ? 1 : 0 }}>
-        <div className="mt-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+        <div className="mt-2 rounded-2xl border border-violet-500/25 card-premium-dark px-4 py-3 shadow-inner">
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
             {headings.map((h, i) => (
               <button key={h.id} type="button"
                 onClick={() => { onHeadingClick(h.id); setOpen(false); }}
                 className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all duration-200 ${
-                  highlighted === h.id ? 'bg-indigo-500 text-white scale-[1.02]' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  highlighted === h.id ? 'bg-violet-600 text-white scale-[1.02]' : 'text-white/95 hover:bg-violet-500/15 hover:text-white'
                 }`}>
-                <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/25 text-[10px] font-bold text-violet-100">
                   {i + 1}
                 </span>
                 {h.label}
@@ -253,7 +253,7 @@ function AuthorModal({ author, onClose }) {
     <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', overflowY: 'auto' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)' }} onClick={onClose} />
-      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '480px', borderRadius: '24px', background: '#fff', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', animation: 'modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both', margin: 'auto' }}>
+      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '480px', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', animation: 'modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both', margin: 'auto' }}>
         <div style={{ background: 'linear-gradient(135deg,#1e293b 0%,#312e81 50%,#0f172a 100%)', padding: '24px 24px 32px', position: 'relative' }}>
           <button type="button" onClick={onClose}
             style={{ position: 'absolute', right: 16, top: 16, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -269,27 +269,27 @@ function AuthorModal({ author, onClose }) {
           </div>
         </div>
         <div style={{ padding: 24 }}>
-          <p style={{ fontSize: 14.5, lineHeight: 1.75, color: '#475569', margin: '0 0 20px' }}>{author.bio}</p>
-          <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#94a3b8', marginBottom: 12 }}>Highlights</p>
+          <p style={{ fontSize: 14.5, lineHeight: 1.75, color: 'rgba(255,255,255,0.92)', margin: '0 0 20px' }}>{author.bio}</p>
+          <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a78bfa', marginBottom: 12 }}>Highlights</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
             {highlights.map((item) => (
-              <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#334155', lineHeight: 1.5 }}>
-                <span style={{ marginTop: 5, width: 7, height: 7, borderRadius: '50%', background: '#6366f1', flexShrink: 0 }} />{item}
+              <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>
+                <span style={{ marginTop: 5, width: 7, height: 7, borderRadius: '50%', background: '#8b5cf6', flexShrink: 0 }} />{item}
               </li>
             ))}
           </ul>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 24 }}>
             {[{ v: '200+', l: 'Clients advised' }, { v: '10yr', l: 'Experience' }, { v: '3M+', l: 'Readers reached' }].map((s) => (
-              <div key={s.l} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 14, padding: '14px 8px', textAlign: 'center' }}>
-                <p style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#0f172a' }}>{s.v}</p>
-                <p style={{ margin: '3px 0 0', fontSize: 11, color: '#94a3b8' }}>{s.l}</p>
+              <div key={s.l} style={{ background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(167,139,250,0.35)', borderRadius: 14, padding: '14px 8px', textAlign: 'center' }}>
+                <p style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#fff' }}>{s.v}</p>
+                <p style={{ margin: '3px 0 0', fontSize: 11, color: '#c4b5fd' }}>{s.l}</p>
               </div>
             ))}
           </div>
           <button type="button" onClick={onClose}
-            style={{ width: '100%', padding: 14, borderRadius: 14, background: '#0f172a', border: 'none', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#1e293b'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#0f172a'; }}>
+            style={{ width: '100%', padding: 14, borderRadius: 14, background: '#7c3aed', border: 'none', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = '#8b5cf6'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = '#7c3aed'; }}>
             Close
           </button>
         </div>
@@ -342,9 +342,9 @@ function BlogDetailPage() {
 
   if (!article) {
     return (
-      <main className="mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center">
-          <h1 className="text-2xl font-semibold text-slate-900">Blog post unavailable</h1>
+      <main className="relative z-10 mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6 lg:px-8 text-white">
+        <div className="rounded-2xl border border-violet-500/25 card-premium-dark p-8 text-center">
+          <h1 className="text-2xl font-semibold text-white">Blog post unavailable</h1>
         </div>
       </main>
     );
@@ -354,41 +354,41 @@ function BlogDetailPage() {
   const heroImages = article.heroImages || [article.image];
 
   return (
-    <main className="w-full">
+    <main className="relative z-10 w-full text-white pb-24">
 
       <div className="mx-auto max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
-        <div data-reveal className="mb-8 border-b border-slate-200 pb-8">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
-            <span className="rounded-full bg-slate-900 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">{article.category}</span>
-            <span>&#183;</span><span>{article.readTime}</span>
-            <span>&#183;</span><span>{formatDisplayDate(article.date)}</span>
+        <div data-reveal className="mb-8 border-b border-violet-500/25 pb-8">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-violet-200/95">
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900">{article.category}</span>
+            <span className="text-white/50">&#183;</span><span>{article.readTime}</span>
+            <span className="text-white/50">&#183;</span><span>{formatDisplayDate(article.date)}</span>
           </div>
-          <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 md:text-5xl lg:text-6xl">{article.title}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">{article.excerpt}</p>
+          <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">{article.title}</h1>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/90">{article.excerpt}</p>
 
           {/* Author / Read time / Date — 3 columns like reference */}
-          <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-100 pt-6">
+          <div className="mt-8 grid grid-cols-3 gap-4 border-t border-violet-500/20 pt-6">
             <div className="flex items-center gap-3">
-              <img src={author?.avatar} alt={author?.name} className="h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2 ring-slate-200" />
+              <img src={author?.avatar} alt={author?.name} className="h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2 ring-violet-400/40" />
               <div>
-                <p className="text-[11px] text-slate-400">Written by</p>
-                <p className="text-sm font-semibold text-slate-900">{author?.name}</p>
+                <p className="text-[11px] text-violet-300/90">Written by</p>
+                <p className="text-sm font-semibold text-white">{author?.name}</p>
               </div>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-[11px] text-slate-400">Read Time</p>
-              <p className="text-sm font-semibold text-slate-900">{article.readTime}</p>
+              <p className="text-[11px] text-violet-300/90">Read Time</p>
+              <p className="text-sm font-semibold text-white">{article.readTime}</p>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-[11px] text-slate-400">Posted on</p>
-              <p className="text-sm font-semibold text-slate-900">{formatDisplayDate(article.date)}</p>
+              <p className="text-[11px] text-violet-300/90">Posted on</p>
+              <p className="text-sm font-semibold text-white">{formatDisplayDate(article.date)}</p>
             </div>
           </div>
 
           {/* Share this post — centered on its own line */}
-          <div className="mt-6 flex items-center justify-center gap-4 border-t border-slate-100 pt-6">
-            <span className="text-sm font-semibold text-slate-600">Share this post</span>
-            <ShareIcons url={articleUrl} title={article.title} />
+          <div className="mt-6 flex items-center justify-center gap-4 border-t border-violet-500/20 pt-6">
+            <span className="text-sm font-semibold text-white">Share this post</span>
+            <ShareIcons url={articleUrl} title={article.title} variant="dark" />
           </div>
         </div>
         <div data-reveal><HeroCarousel images={heroImages} /></div>
@@ -402,26 +402,26 @@ function BlogDetailPage() {
           {sections.map((section, i) => (
             <ArticleSection key={section.id} section={section} index={i} />
           ))}
-          <blockquote data-reveal className="rounded-2xl border border-violet-200/70 bg-gradient-to-br from-violet-50 to-indigo-50 px-8 py-7 text-[19px] italic leading-relaxed text-slate-800 shadow-sm">
+          <blockquote data-reveal className="rounded-2xl border border-violet-400/35 bg-violet-500/10 px-8 py-7 text-[19px] italic leading-relaxed text-white/95 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
             &ldquo;{article.quote}&rdquo;
           </blockquote>
         </div>
       </div>
 
-      <div className="mt-16 border-t border-slate-200 bg-white">
+      <div className="mt-16 border-t border-violet-500/25 bg-transparent">
         <div className="mx-auto max-w-[1240px] px-4 py-12 sm:px-6 lg:px-8">
           {author && (
-            <div data-reveal className="flex flex-col gap-6 sm:flex-row sm:items-center">
+            <div data-reveal className="flex flex-col gap-6 rounded-3xl border border-violet-500/25 card-premium-dark p-6 sm:flex-row sm:items-center sm:p-8">
               <img src={author.avatar} alt={author.name}
-                className="h-20 w-20 flex-shrink-0 rounded-2xl object-cover shadow-lg ring-4 ring-slate-100" />
+                className="h-20 w-20 flex-shrink-0 rounded-2xl object-cover shadow-lg ring-4 ring-violet-500/25" />
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">About The Author</p>
-                <h3 className="mt-1 text-2xl font-extrabold text-slate-900">{author.name}</h3>
-                <p className="text-sm font-medium text-indigo-600">{author.role}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-slate-600">{author.bio}</p>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-300/90">About The Author</p>
+                <h3 className="mt-1 text-2xl font-extrabold text-white">{author.name}</h3>
+                <p className="text-sm font-medium text-violet-300">{author.role}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-white/90">{author.bio}</p>
               </div>
               <button type="button" onClick={() => setShowAuthorModal(true)}
-                className="flex-shrink-0 self-start rounded-xl border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 sm:self-center">
+                className="flex-shrink-0 self-start rounded-xl border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-500/25 sm:self-center">
                 More about {author.name.split(' ')[0]}
               </button>
             </div>
@@ -430,13 +430,13 @@ function BlogDetailPage() {
       </div>
 
       {/* ══ PREV / NEXT — animated attention cards ══ */}
-      <div className="border-t border-slate-100">
+      <div className="border-t border-violet-500/20">
         <div className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {prevPost ? (
               <a href={`/blog/${prevPost.slug}`}
                 onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', `/blog/${prevPost.slug}`); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-200 hover:shadow-[0_20px_50px_rgba(99,102,241,0.15)]"
+                className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
               >
                 {/* Animated shimmer bar on hover */}
                 <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />
@@ -448,10 +448,10 @@ function BlogDetailPage() {
                     <div className="absolute inset-0 rounded-xl ring-2 ring-indigo-400 ring-offset-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
                   <div className="min-w-0">
-                    <p className="flex items-center gap-1 text-xs font-semibold text-slate-400 transition-colors group-hover:text-indigo-500">
+                    <p className="flex items-center gap-1 text-xs font-semibold text-violet-300 transition-colors group-hover:text-violet-200">
                       <span className="transition-transform duration-200 group-hover:-translate-x-1">&#8592;</span> Previous Post
                     </p>
-                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-800 transition-colors group-hover:text-indigo-700">{prevPost.title}</p>
+                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{prevPost.title}</p>
                   </div>
                 </div>
               </a>
@@ -459,15 +459,15 @@ function BlogDetailPage() {
             {nextPost ? (
               <a href={`/blog/${nextPost.slug}`}
                 onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', `/blog/${nextPost.slug}`); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-200 hover:shadow-[0_20px_50px_rgba(99,102,241,0.15)]"
+                className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
               >
                 <div className="absolute inset-x-0 top-0 h-0.5 origin-right scale-x-0 bg-gradient-to-l from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />
                 <div className="flex items-center justify-end gap-4">
                   <div className="min-w-0">
-                    <p className="flex items-center justify-end gap-1 text-xs font-semibold text-slate-400 transition-colors group-hover:text-indigo-500">
+                    <p className="flex items-center justify-end gap-1 text-xs font-semibold text-violet-300 transition-colors group-hover:text-violet-200">
                       Next Post <span className="transition-transform duration-200 group-hover:translate-x-1">&#8594;</span>
                     </p>
-                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-800 transition-colors group-hover:text-indigo-700">{nextPost.title}</p>
+                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{nextPost.title}</p>
                   </div>
                   <div className="relative flex-shrink-0">
                     <img src={nextPost.thumbnail} alt={nextPost.title}
@@ -492,11 +492,11 @@ function BlogDetailPage() {
       </div>
 
       {relatedPosts.length > 0 && (
-        <div className="bg-slate-50">
+        <div className="bg-transparent border-t border-violet-500/20">
           <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8">
             <div data-reveal>
-              <p className="text-sm font-medium text-slate-500">You may also like these</p>
-              <h2 className="mt-1 text-4xl font-extrabold tracking-tight text-slate-900">Related Post</h2>
+              <p className="text-sm font-medium text-violet-300/90">You may also like these</p>
+              <h2 className="mt-1 text-4xl font-extrabold tracking-tight text-white">Related Post</h2>
             </div>
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {relatedPosts.map((post, i) => (
@@ -514,7 +514,7 @@ function BlogDetailPage() {
           <div data-reveal className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
             <div className="flex-1">
               <h3 className="text-2xl font-extrabold text-white md:text-3xl">Never miss an insight</h3>
-              <p className="mt-2 text-slate-400">Join 1,000,000+ subscribers getting expert tips every week.</p>
+              <p className="mt-2 text-slate-300">Join 1,000,000+ subscribers getting expert tips every week.</p>
             </div>
             <form className="flex w-full max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
               <input type="email" required placeholder="name@email.com"

@@ -1,6 +1,5 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import PremiumHeroBackground from './PremiumHeroBackground';
 import AboutHeroImage from '../assets/AboutHero.png';
 import LeadershipSection from './LeadershipSection';
 
@@ -22,11 +21,11 @@ function PremiumTeamCard({ member }) {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className={`relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border-2 border-purple-400 bg-white shadow-2xl flex flex-col`}
+        className={`relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border border-violet-400/45 card-premium-dark shadow-2xl flex flex-col`}
       >
         <button
           onClick={() => setShowDetails(false)}
-          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-lg text-slate-600 transition-colors hover:bg-slate-100"
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-violet-500/25 text-white shadow-lg transition-colors hover:bg-violet-500/40"
         >
           ✕
         </button>
@@ -38,10 +37,10 @@ function PremiumTeamCard({ member }) {
             alt={member.name}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0618] via-[#0a0618]/85 to-transparent" />
           <div className="absolute bottom-2 left-4">
-            <h3 className="text-lg font-black text-slate-900">{member.name}</h3>
-            <p className="mt-0.5 text-xs font-semibold text-slate-700">{member.role}</p>
+            <h3 className="text-lg font-black text-white">{member.name}</h3>
+            <p className="mt-0.5 text-xs font-semibold text-violet-200">{member.role}</p>
           </div>
         </div>
 
@@ -54,19 +53,19 @@ function PremiumTeamCard({ member }) {
         >
           <div className="space-y-4">
             <div>
-              <p className="text-base font-bold text-slate-900">{member.intro}</p>
+              <p className="text-base font-bold text-white">{member.intro}</p>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">About</h4>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">About</h4>
+              <p className="mt-2 text-sm leading-relaxed text-white/90">
                 {member.about}
               </p>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Expertise</h4>
-              <ul className="mt-2 space-y-1 text-sm text-slate-700">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Expertise</h4>
+              <ul className="mt-2 space-y-1 text-sm text-white/90">
                 {member.expertise.map((item, idx) => (
                   <li key={idx}>• {item}</li>
                 ))}
@@ -74,13 +73,13 @@ function PremiumTeamCard({ member }) {
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Education</h4>
-              <p className="mt-2 text-sm text-slate-700">{member.education}</p>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Education</h4>
+              <p className="mt-2 text-sm text-white/90">{member.education}</p>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Awards & Recognition</h4>
-              <ul className="mt-2 space-y-1 text-sm text-slate-700">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Awards & Recognition</h4>
+              <ul className="mt-2 space-y-1 text-sm text-white/90">
                 {member.awards.map((award, idx) => (
                   <li key={idx}>• {award}</li>
                 ))}
@@ -90,7 +89,7 @@ function PremiumTeamCard({ member }) {
             <div className="pt-2 pb-2">
               <a
                 href="#"
-                className="flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:bg-blue-700"
+                className="flex items-center justify-center gap-2 rounded-full bg-violet-600 px-4 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:bg-violet-500"
               >
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
@@ -106,7 +105,7 @@ function PremiumTeamCard({ member }) {
 
   // DEFAULT VIEW - Normal card
   return (
-    <div className={`group relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border-2 border-slate-200 bg-white shadow-lg transition-all duration-200 hover:border-purple-300 hover:shadow-2xl flex flex-col`}>
+    <div className={`group relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border border-violet-500/25 card-premium-dark shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.35)] flex flex-col`}>
       <div className="relative h-[320px] w-full flex-shrink-0 overflow-hidden">
         <img
           src={member.image}
@@ -119,14 +118,14 @@ function PremiumTeamCard({ member }) {
       
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-2xl font-bold tracking-tight text-slate-900">{member.name}</h3>
-          <p className="mt-1 text-sm font-medium text-slate-600">{member.role}</p>
+          <h3 className="text-2xl font-bold tracking-tight text-white">{member.name}</h3>
+          <p className="mt-1 text-sm font-medium text-violet-200">{member.role}</p>
         </div>
         
         <div className="mt-4 flex items-center justify-between gap-3">
           <a
             href="#"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700 hover:scale-110"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white transition-all duration-300 hover:bg-violet-500 hover:scale-110"
             aria-label="LinkedIn Profile"
           >
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -136,7 +135,7 @@ function PremiumTeamCard({ member }) {
           
           <button 
             onClick={() => setShowDetails(true)}
-            className="flex-1 rounded-full border-2 border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-900 transition-all duration-300 hover:border-purple-400 hover:bg-purple-50 hover:text-purple-700"
+            className="flex-1 rounded-full border border-violet-400/45 bg-violet-500/15 px-4 py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-violet-500/25 hover:border-violet-300"
           >
             Know More
           </button>
@@ -270,11 +269,9 @@ function AboutPage() {
   };
 
   return (
-    <main className="w-full bg-white">
+    <main className="relative z-10 w-full bg-transparent text-white">
       {/* HERO SECTION */}
       <section className="relative w-full py-20 sm:py-28 lg:py-32 overflow-hidden min-h-[85vh] flex items-center">
-        <PremiumHeroBackground />
-        
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 lg:px-8">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
             <motion.div
@@ -283,7 +280,7 @@ function AboutPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="flex flex-col gap-8 text-center lg:text-left"
             >
-              <h1 className="text-[clamp(36px,7vw,64px)] font-black leading-[1.08] tracking-tight text-slate-900">
+              <h1 className="text-[clamp(36px,7vw,64px)] font-black leading-[1.08] tracking-tight text-white">
                 Building Franchise
                 <br />
                 <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
@@ -291,7 +288,7 @@ function AboutPage() {
                 </span>
               </h1>
 
-              <p className="text-[clamp(17px,4vw,20px)] leading-relaxed text-slate-600 max-w-[560px] mx-auto lg:mx-0">
+              <p className="text-[clamp(17px,4vw,20px)] leading-relaxed text-white max-w-[560px] mx-auto lg:mx-0">
                 We engineer scalable franchise growth systems powered by data intelligence, strategic execution, and investor alignment.
               </p>
 
@@ -394,16 +391,16 @@ function AboutPage() {
               transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
               className="space-y-6"
             >
-              <div className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-4 py-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
-                <span className="text-xs font-bold uppercase tracking-wider text-violet-700">Our Story</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+                <span className="text-xs font-bold uppercase tracking-wider text-violet-200">Our Story</span>
               </div>
 
-              <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+              <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
                 iFranchise History
               </h2>
 
-              <div className="space-y-4 text-slate-600 leading-relaxed">
+              <div className="space-y-4 text-white leading-relaxed">
                 <p className="text-lg">
                   Founded with a vision to revolutionize India's franchise ecosystem, iFranchise emerged from a critical gap in the market — the absence of a structured, transparent, and intelligence-driven platform connecting ambitious entrepreneurs with verified franchise opportunities.
                 </p>
@@ -422,7 +419,7 @@ function AboutPage() {
               { num: '01', title: 'Our Foundation', desc: 'Built on transparency, data intelligence, and strategic execution to transform franchise growth.', bgColor: 'bg-gradient-to-br from-violet-50 to-purple-50', textColor: 'text-violet-600' },
               { num: '02', title: 'Our Approach', desc: 'Data-driven matching, rigorous brand validation, and investor-first advisory for sustainable growth.', bgColor: 'bg-gradient-to-br from-indigo-50 to-blue-50', textColor: 'text-indigo-600' },
               { num: '03', title: 'Our Edge', desc: 'Proprietary intelligence systems, verified opportunities, and end-to-end franchise expansion support.', bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50', textColor: 'text-purple-600' },
-              { num: '04', title: 'Vision & Mission', desc: "To become India's most trusted franchise intelligence platform, powering 10,000+ success stories.", bgColor: 'bg-gradient-to-br from-slate-50 to-gray-50', textColor: 'text-slate-700' },
+              { num: '04', title: 'Vision & Mission', desc: "To become India's most trusted franchise intelligence platform, powering 10,000+ success stories.", bgColor: 'bg-gradient-to-br from-violet-500/20 to-indigo-500/10', textColor: 'text-violet-200' },
             ].map((card, idx) => (
               <motion.div
                 key={card.num}
@@ -430,13 +427,13 @@ function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.25, delay: idx * 0.05 }}
-                className="group relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-white p-6 transition-all duration-300 hover:border-violet-300 hover:shadow-lg hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-2xl card-premium-dark border border-violet-500/20 p-6 transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.35)] hover:-translate-y-1"
               >
                 <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${card.bgColor} text-lg font-bold ${card.textColor}`}>
                   {card.num}
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{card.title}</h3>
-                <p className="text-sm leading-relaxed text-slate-600">{card.desc}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
+                <p className="text-sm leading-relaxed text-white/90">{card.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -447,7 +444,7 @@ function AboutPage() {
       <LeadershipSection />
 
       {/* TEAM SECTION */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-white via-slate-50/30 to-white py-24">
+      <section className="relative w-full overflow-hidden bg-transparent py-24">
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -456,16 +453,16 @@ function AboutPage() {
             transition={{ duration: 0.3 }}
             className="mb-10 text-center"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-slate-700">Our Team</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+              <span className="text-xs font-bold uppercase tracking-[0.15em] text-violet-200">Our Team</span>
             </div>
 
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
               Meet Our Strategic Leadership Team
             </h2>
 
-            <p className="mt-6 mx-auto max-w-3xl text-lg leading-relaxed text-slate-700">
+            <p className="mt-6 mx-auto max-w-3xl text-lg leading-relaxed text-white/90">
               With over a decade in business, we've empowered countless dreams and transformed them into tangible realities for hundreds of our clients. We're not just consultants — we're your partners in building something extraordinary. It's time for you to join the tribe of digitally empowered, strategically positioned, and unstoppable franchise businesses.
             </p>
           </motion.div>
@@ -487,7 +484,7 @@ function AboutPage() {
       </section>
 
       {/* OUR ADVANTAGES SECTION */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-white via-slate-50/30 to-white py-24">
+      <section className="relative w-full overflow-hidden bg-transparent py-24">
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
           <div className="mx-auto max-w-4xl text-center">
             <motion.div
@@ -495,10 +492,10 @@ function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3 }}
-              className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-white px-4 py-1.5 shadow-sm"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm"
             >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-purple-600" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-purple-700">Our Advantages</span>
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-violet-200">Our Advantages</span>
             </motion.div>
 
             <motion.h2
@@ -506,7 +503,7 @@ function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.05 }}
-              className="mt-6 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+              className="mt-6 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
             >
               Benefits That Define the
               <br />
@@ -518,7 +515,7 @@ function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="mt-6 text-lg leading-relaxed text-slate-600 sm:text-xl"
+              className="mt-6 text-lg leading-relaxed text-white/90 sm:text-xl"
             >
               We don't just connect brands and investors — we deliver intelligence, systems, and strategic infrastructure that accelerate franchise expansion.
             </motion.p>
@@ -538,16 +535,16 @@ function AboutPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.25, delay: idx * 0.05 }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-lg transition-all duration-300 hover:border-purple-300 hover:shadow-2xl"
+                className="group relative overflow-hidden rounded-3xl card-premium-dark border border-violet-500/20 p-8 shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_24px_60px_rgba(109,40,217,0.35)]"
               >
                 <div className="relative z-10">
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-100 to-violet-100 text-purple-600 shadow-sm">
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/20 text-violet-300 shadow-inner border border-violet-400/25">
                     <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{card.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-slate-600">{card.desc}</p>
+                  <h3 className="mt-6 text-xl font-bold tracking-tight text-white sm:text-2xl">{card.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-white/90">{card.desc}</p>
                 </div>
               </motion.article>
             ))}
@@ -560,7 +557,7 @@ function AboutPage() {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="mt-16 text-center"
           >
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-300/90">
               Built for founders. Trusted by investors. Designed for scale.
             </p>
           </motion.div>
@@ -571,12 +568,12 @@ function AboutPage() {
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <section className="pb-12 lg:pb-16">
           <div className="mx-auto max-w-[760px] text-center">
-            <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 shadow-lg">
+            <p className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-violet-200 shadow-lg">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               Customers
             </p>
-            <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-[#0b0f19] sm:text-5xl">Our customers love us</h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
+            <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Our customers love us</h2>
+            <p className="mt-4 text-base leading-relaxed text-white/90">
               Real feedback from teams and individuals who rely on iFranchise to power growth with practical analytics.
             </p>
           </div>
@@ -586,28 +583,28 @@ function AboutPage() {
               {[...customerTestimonials, ...customerTestimonials].map((testimonial, idx) => (
                 <article
                   key={`${testimonial.name}-${idx}`}
-                  className="w-[420px] rounded-3xl border border-slate-200 bg-white p-5 shadow-lg"
+                  className="w-[420px] rounded-3xl card-premium-dark border border-violet-500/25 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
                 >
                   <div className="flex items-center gap-3">
                     <img src={testimonial.avatar} alt={testimonial.name} className="h-14 w-14 rounded-xl object-cover" loading="lazy" />
                     <div className="flex-1">
-                      <p className="text-2xl font-semibold tracking-tight text-[#0b0f19]">{testimonial.name}</p>
-                      <p className="text-sm text-slate-500">{testimonial.company}</p>
+                      <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
+                      <p className="text-sm text-violet-200">{testimonial.company}</p>
                     </div>
-                    <span className="text-3xl text-violet-700">{testimonial.icon}</span>
+                    <span className="text-3xl text-violet-300">{testimonial.icon}</span>
                   </div>
-                  <div className="mt-4 border-t border-slate-200 pt-4">
-                    <p className="text-base leading-relaxed text-slate-700">{testimonial.quote}</p>
+                  <div className="mt-4 border-t border-violet-500/25 pt-4">
+                    <p className="text-base leading-relaxed text-white/95">{testimonial.quote}</p>
                   </div>
                 </article>
               ))}
             </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-slate-600">
+          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white/90">
             <div className="flex -space-x-2">
               {['https://i.pravatar.cc/40?img=12', 'https://i.pravatar.cc/40?img=18', 'https://i.pravatar.cc/40?img=26', 'https://i.pravatar.cc/40?img=32'].map((avatar) => (
-                <img key={avatar} src={avatar} alt="Reviewer avatar" className="h-8 w-8 rounded-full border-2 border-white object-cover" loading="lazy" />
+                <img key={avatar} src={avatar} alt="Reviewer avatar" className="h-8 w-8 rounded-full border-2 border-violet-500/40 object-cover" loading="lazy" />
               ))}
             </div>
             <p>Over 15,725+ people gave us review</p>

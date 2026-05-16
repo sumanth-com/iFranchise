@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { formatDisplayDate } from '../blogData';
 
 function navigateTo(path) {
   window.history.pushState({}, '', path);
@@ -14,7 +13,7 @@ function BlogCard({ post, priority = false }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
       transition={{ duration: 0.24, ease: 'easeOut' }}
-      className="group overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_18px_44px_rgba(15,23,42,0.14)]"
+      className="group overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
     >
       <a
         href={`/blog/${post.slug}`}
@@ -33,15 +32,15 @@ function BlogCard({ post, priority = false }) {
           />
         </div>
         <div className="space-y-3 px-5 pb-6 pt-4">
-          <div className="flex items-center gap-3 text-xs text-slate-500">
-            <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 font-medium text-slate-600">
+          <div className="flex items-center gap-3 text-xs text-violet-200/95">
+            <span className="rounded-full border border-violet-400/35 bg-violet-500/15 px-2.5 py-1 font-medium text-white">
               {post.category}
             </span>
             <span>·</span>
             <span>{post.readTime}</span>
           </div>
           <h3
-            className="text-2xl font-bold leading-tight text-slate-900"
+            className="text-2xl font-bold leading-tight text-white"
             style={{
               display: '-webkit-box',
               WebkitLineClamp: 2,

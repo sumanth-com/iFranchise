@@ -1,7 +1,7 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import contactImage2 from '../assets/contact2.png';
-import { submitContactForm } from '@/lib';
+import { submitContactForm } from '@/lib/forms';
 
 function ContactPage() {
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ function ContactPage() {
     setIsSubmitting(true);
     setSubmitError('');
 
-    const result = await submitContactForm(formData);
+    const result = await submitContactForm(formData, 'contact_page');
 
     setIsSubmitting(false);
 
@@ -79,27 +79,19 @@ function ContactPage() {
   ];
 
   return (
-    <main className="relative bg-transparent">
-      {/* ── Unified ambient background ── */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, #fafbff 0%, #f8f9fe 30%, #f5f3ff 60%, #f0f7ff 100%)' }} />
-        <div className="absolute" style={{ top: '5%', left: '8%', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'ambientOrb1 18s ease-in-out infinite' }} />
-        <div className="absolute" style={{ top: '0%', right: '5%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)', filter: 'blur(90px)', animation: 'ambientOrb2 22s ease-in-out infinite' }} />
-        <div className="absolute" style={{ top: '40%', left: '50%', transform: 'translateX(-50%)', width: '800px', height: '400px', background: 'radial-gradient(ellipse, rgba(16,185,129,0.04) 0%, transparent 70%)', filter: 'blur(100px)', animation: 'ambientOrb3 26s ease-in-out infinite' }} />
-        <div className="absolute" style={{ bottom: '10%', right: '10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)', filter: 'blur(80px)', animation: 'ambientOrb4 20s ease-in-out infinite' }} />
-      </div>
+    <main className="relative z-10 bg-transparent text-white">
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1 — HERO (CENTERED, CLEAN)
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center overflow-hidden bg-white" id="hero-section">
+      <section className="relative w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center overflow-hidden bg-transparent" id="hero-section">
 
         {/* ── Background layer ── */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-50/40 via-white to-indigo-50/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
           <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-900" />
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white/15" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#hero-grid)" />
@@ -119,10 +111,10 @@ function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-1.5 shadow-sm"
+            className="mb-7 inline-flex items-center gap-2 rounded-full border border-violet-500/35 bg-violet-500/15 px-4 py-1.5 backdrop-blur-sm"
           >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-500" />
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-700">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-200">
               India's Trusted Franchise Growth Platform
             </span>
           </motion.div>
@@ -132,22 +124,22 @@ function ContactPage() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl xl:text-6xl mb-4"
+            className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl xl:text-6xl mb-4"
           >
             Build Smarter.{' '}
             <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
                 Scale Faster.
               </span>
               <motion.span
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.7, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-violet-500 to-indigo-500"
+                className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-violet-400 to-indigo-400"
               />
             </span>
             <br />
-            <span className="text-slate-700">Win with Precision.</span>
+            <span className="text-white">Win with Precision.</span>
           </motion.h1>
 
           {/* Sub-headline */}
@@ -155,7 +147,7 @@ function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.3, ease: 'easeOut' }}
-            className="text-base sm:text-lg text-slate-500 max-w-xl leading-relaxed mb-8"
+            className="text-base sm:text-lg text-white max-w-xl leading-relaxed mb-8"
           >
             Strategic franchise intelligence for founders who think in systems, move with conviction, and build for legacy.
           </motion.p>
@@ -226,8 +218,8 @@ function ContactPage() {
                 transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
                 className="flex flex-col items-center"
               >
-                <span className="text-xl font-extrabold text-slate-900">{stat.value}</span>
-                <span className="text-xs text-slate-400 font-medium mt-0.5">{stat.label}</span>
+                <span className="text-xl font-extrabold text-white">{stat.value}</span>
+                <span className="text-xs text-white font-medium mt-0.5">{stat.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -235,7 +227,7 @@ function ContactPage() {
       </section>
 
       {/* SECTION 2 - CONTACT FORM (FULL VIEWPORT FIT) */}
-      <section className="w-full bg-gradient-to-br from-slate-50/30 via-white to-purple-50/20 min-h-[calc(100vh-80px)] flex items-center overflow-hidden">
+      <section className="w-full bg-transparent min-h-[calc(100vh-80px)] flex items-center overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-8">
           <div id="contact-form" className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left Side - Large Image + Social Links */}
@@ -267,9 +259,9 @@ function ContactPage() {
                     transition={{ duration: 0.5, ease: "easeOut", delay: 0.8 }}
                     className="absolute -top-8 left-1/2 transform -translate-x-1/2 lg:-top-12 lg:left-2/3 lg:-translate-x-1/2"
                   >
-                    <div className="bg-white rounded-2xl px-5 py-3 shadow-xl border border-slate-200/50 relative">
-                      <p className="text-base font-medium text-slate-700">Let's Connect!</p>
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
+                    <div className="card-premium-dark-inner rounded-2xl px-5 py-3 shadow-xl relative">
+                      <p className="text-base font-medium text-white">Let's Connect!</p>
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[rgba(139,92,246,0.25)]" />
                     </div>
                   </motion.div>
                   
@@ -284,7 +276,7 @@ function ContactPage() {
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
                 className="flex flex-col items-center space-y-4"
               >
-                <p className="text-sm font-medium text-slate-600">Connect with iFranchise</p>
+                <p className="text-sm font-medium text-white">Connect with iFranchise</p>
                 
                 <div className="flex items-center gap-4">
                   {/* Instagram */}
@@ -292,9 +284,9 @@ function ContactPage() {
                     href="#"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group flex items-center justify-center w-12 h-12 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300"
+                    className="group flex items-center justify-center w-12 h-12 rounded-xl border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.12)] shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 hover:border-[rgba(139,92,246,0.55)] hover:bg-[rgba(139,92,246,0.22)]"
                   >
-                    <svg className="w-5 h-5 text-slate-600 group-hover:text-purple-600 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-violet-200 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                   </motion.a>
@@ -304,9 +296,9 @@ function ContactPage() {
                     href="#"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group flex items-center justify-center w-12 h-12 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300"
+                    className="group flex items-center justify-center w-12 h-12 rounded-xl border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.12)] shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 hover:border-[rgba(139,92,246,0.55)] hover:bg-[rgba(139,92,246,0.22)]"
                   >
-                    <svg className="w-5 h-5 text-slate-600 group-hover:text-purple-600 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-violet-200 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                   </motion.a>
@@ -316,9 +308,9 @@ function ContactPage() {
                     href="#"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group flex items-center justify-center w-12 h-12 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300"
+                    className="group flex items-center justify-center w-12 h-12 rounded-xl border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.12)] shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 hover:border-[rgba(139,92,246,0.55)] hover:bg-[rgba(139,92,246,0.22)]"
                   >
-                    <svg className="w-4 h-4 text-slate-600 group-hover:text-purple-600 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-violet-200 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
                   </motion.a>
@@ -328,9 +320,9 @@ function ContactPage() {
                     href="#"
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group flex items-center justify-center w-12 h-12 bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300"
+                    className="group flex items-center justify-center w-12 h-12 rounded-xl border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.12)] shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 hover:border-[rgba(139,92,246,0.55)] hover:bg-[rgba(139,92,246,0.22)]"
                   >
-                    <svg className="w-5 h-5 text-slate-600 group-hover:text-purple-600 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-violet-200 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
                   </motion.a>
@@ -345,12 +337,13 @@ function ContactPage() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               className="order-first lg:order-last"
             >
-              <div className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/50 shadow-xl p-6 lg:p-8">
-                <div className="mb-6">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-3">
+              <div className="card-premium-dark rounded-2xl p-6 lg:p-8 relative overflow-hidden transition-all duration-300 hover:border-[rgba(139,92,246,0.45)] hover:shadow-[0_20px_50px_rgba(109,40,217,0.25)]">
+                <div className="absolute top-0 left-0 right-0 h-px opacity-60 pointer-events-none bg-gradient-to-r from-transparent via-violet-500/70 to-transparent" />
+                <div className="mb-6 relative z-10">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3">
                     Send Message
                   </h2>
-                  <p className="text-slate-600 leading-relaxed">
+                  <p className="text-white leading-relaxed">
                     Ready to scale your business? Fill out the form and we'll get back to you within 24 hours.
                   </p>
                 </div>
@@ -361,19 +354,19 @@ function ContactPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center py-8"
                   >
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-emerald-400/35">
+                      <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-1">Message Sent!</h3>
-                    <p className="text-slate-600 text-sm">Thank you for reaching out. We'll be in touch soon.</p>
+                    <h3 className="text-lg font-semibold text-white mb-1">Message Sent!</h3>
+                    <p className="text-white text-sm">Thank you for reaching out. We'll be in touch soon.</p>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Full Name *</label>
+                        <label className="block text-xs font-medium text-white mb-1">Full Name *</label>
                         <input
                           type="text"
                           required
@@ -384,7 +377,7 @@ function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Contact Number *</label>
+                        <label className="block text-xs font-medium text-white mb-1">Contact Number *</label>
                         <input
                           type="tel"
                           required
@@ -398,7 +391,7 @@ function ContactPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Email Address *</label>
+                        <label className="block text-xs font-medium text-white mb-1">Email Address *</label>
                         <input
                           type="email"
                           required
@@ -409,7 +402,7 @@ function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-slate-700 mb-1">Website / Portfolio</label>
+                        <label className="block text-xs font-medium text-white mb-1">Website / Portfolio</label>
                         <input
                           type="url"
                           value={formData.website}
@@ -421,7 +414,7 @@ function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-slate-700 mb-1">Company Name</label>
+                      <label className="block text-xs font-medium text-white mb-1">Company Name</label>
                       <input
                         type="text"
                         value={formData.company}
@@ -432,7 +425,7 @@ function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-medium text-slate-700 mb-1">Message *</label>
+                      <label className="block text-xs font-medium text-white mb-1">Message *</label>
                       <textarea
                         rows={4}
                         required
@@ -448,7 +441,7 @@ function ContactPage() {
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02, y: -1 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                      className="w-full bg-[#0B1220] hover:bg-[#1a2332] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed border border-white/10"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center justify-center gap-2">
@@ -481,15 +474,16 @@ function ContactPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-8"
           >
-            <div className="inline-flex items-center px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-medium text-slate-600 mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-200 mb-4 border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.15)] backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               OUR LOCATION
             </div>
             
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
               Built in Bangalore. Scaling Across India.
             </h2>
             
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed">
               Strategically positioned in India's innovation capital to connect founders, investors, and franchise ecosystems.
             </p>
           </motion.div>
@@ -500,7 +494,7 @@ function ContactPage() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="relative group"
           >
-            <div className="relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500">
+            <div className="relative overflow-hidden rounded-2xl border border-[rgba(139,92,246,0.25)] shadow-[0_20px_50px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(109,40,217,0.2)] transition-all duration-500">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d77.49085452148437!3d12.953945614117967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4aa0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
                 width="100%"
@@ -513,7 +507,7 @@ function ContactPage() {
                 title="Bangalore Location Map"
               ></iframe>
               
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-200/30 transition-all duration-300 pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-violet-500/30 transition-all duration-300 pointer-events-none" />
             </div>
           </motion.div>
         </div>
@@ -528,10 +522,10 @@ function ContactPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-lg text-white max-w-2xl mx-auto">
               Everything founders, investors, and franchise partners need to know.
             </p>
           </motion.div>
@@ -547,22 +541,23 @@ function ContactPage() {
               className="h-full"
             >
               <div className="relative group h-full">
-                <div className="relative bg-white rounded-3xl p-8 lg:p-10 shadow-[0_4px_32px_rgba(11,15,25,0.08)] group-hover:shadow-[0_8px_48px_rgba(11,15,25,0.12)] transition-all duration-500 border border-slate-100 h-full flex flex-col justify-between">
-                  <div className="space-y-2">
+                <div className="relative card-premium-dark rounded-2xl p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(109,40,217,0.25)] transition-all duration-500 h-full flex flex-col justify-between border border-[rgba(139,92,246,0.18)]">
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent opacity-70" aria-hidden />
+                  <div className="space-y-2 relative z-10">
                     {/* Email */}
                     <motion.a href="mailto:hello@ifranchise.in" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-200">
-                        <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center border border-slate-200">
-                          <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
+                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
+                          <svg className="w-5 h-5 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-slate-400 font-medium mb-0.5 uppercase tracking-wide">Email</p>
-                          <p className="text-slate-800 font-semibold group-hover/item:text-indigo-600 transition-colors duration-300">hello@ifranchise.in</p>
+                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Email</p>
+                          <p className="text-white font-semibold group-hover/item:text-violet-200 transition-colors duration-300">hello@ifranchise.in</p>
                         </div>
                         <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-violet-300/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </div>
@@ -571,18 +566,18 @@ function ContactPage() {
 
                     {/* Phone */}
                     <motion.a href="tel:+919876543210" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-200">
-                        <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center border border-slate-200">
-                          <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
+                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
+                          <svg className="w-5 h-5 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-slate-400 font-medium mb-0.5 uppercase tracking-wide">Phone</p>
-                          <p className="text-slate-800 font-semibold group-hover/item:text-indigo-600 transition-colors duration-300">+91 98765 43210</p>
+                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Phone</p>
+                          <p className="text-white font-semibold group-hover/item:text-violet-200 transition-colors duration-300">+91 98765 43210</p>
                         </div>
                         <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-violet-300/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </div>
@@ -591,19 +586,19 @@ function ContactPage() {
 
                     {/* Address */}
                     <motion.a href="https://maps.google.com/?q=Bangalore,Karnataka,India" target="_blank" rel="noopener noreferrer" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-200">
-                        <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center border border-slate-200">
-                          <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
+                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
+                          <svg className="w-5 h-5 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-slate-400 font-medium mb-0.5 uppercase tracking-wide">Address</p>
-                          <p className="text-slate-800 font-semibold group-hover/item:text-indigo-600 transition-colors duration-300">Bangalore, Karnataka, India</p>
+                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Address</p>
+                          <p className="text-white font-semibold group-hover/item:text-violet-200 transition-colors duration-300">Bangalore, Karnataka, India</p>
                         </div>
                         <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-violet-300/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                         </div>
@@ -612,15 +607,15 @@ function ContactPage() {
 
                     {/* Availability */}
                     <motion.div whileHover={{ x: 4 }} className="group/item">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 transition-all duration-300 border border-transparent hover:border-slate-200">
-                        <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center border border-slate-200">
-                          <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
+                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
+                          <svg className="w-5 h-5 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-slate-400 font-medium mb-0.5 uppercase tracking-wide">Availability</p>
-                          <p className="text-slate-800 font-semibold">Monday to Saturday, 9 AM – 7 PM IST</p>
+                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Availability</p>
+                          <p className="text-white font-semibold">Monday to Saturday, 9 AM – 7 PM IST</p>
                         </div>
                       </div>
                     </motion.div>
@@ -645,11 +640,11 @@ function ContactPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.07 }}
                     onClick={() => setOpenFaq(prev => prev === index ? -1 : index)}
-                    className="text-left rounded-xl border border-slate-200 bg-white p-5 transition duration-300 hover:border-slate-300 hover:shadow-md"
+                    className="text-left card-premium-dark rounded-xl p-5 transition duration-300 hover:border-[rgba(139,92,246,0.45)] hover:shadow-[0_12px_40px_rgba(109,40,217,0.2)]"
                   >
                     <div className="flex items-start justify-between gap-4">
-                      <p className="font-semibold text-slate-900 pr-2">{item.question}</p>
-                      <span className="text-lg font-semibold text-purple-600 flex-shrink-0">
+                      <p className="font-semibold text-white pr-2">{item.question}</p>
+                      <span className="text-lg font-semibold text-violet-300 flex-shrink-0">
                         {isOpen ? '−' : '+'}
                       </span>
                     </div>
@@ -657,7 +652,7 @@ function ContactPage() {
                       isOpen ? 'mt-3 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                     }`}>
                       <div className="overflow-hidden">
-                        <p className="text-sm leading-relaxed text-slate-600">{item.answer}</p>
+                        <p className="text-sm leading-relaxed text-white">{item.answer}</p>
                       </div>
                     </div>
                   </motion.button>

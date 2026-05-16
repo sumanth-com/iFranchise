@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from './Button';
 import BlogCard from './blog/BlogCard';
@@ -60,8 +60,8 @@ function BlogPage() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-[1240px] px-4 pb-20 pt-12 sm:px-6 lg:px-8">
-      <section className="grid gap-10 rounded-[28px] bg-[#f3f5f7] p-6 md:grid-cols-[1.02fr_0.98fr] md:p-10">
+    <main className="relative z-10 mx-auto w-full max-w-[1240px] px-4 pb-20 pt-12 sm:px-6 lg:px-8 text-slate-100">
+      <section className="grid gap-10 rounded-[28px] card-premium-dark p-6 md:grid-cols-[1.02fr_0.98fr] md:p-10">
         <div className="overflow-hidden rounded-3xl">
           {featuredPost ? (
             <img
@@ -73,15 +73,15 @@ function BlogPage() {
               fetchPriority="high"
             />
           ) : (
-            <div className="h-full min-h-[360px] w-full bg-slate-200" />
+            <div className="h-full min-h-[360px] w-full bg-violet-950/40" />
           )}
         </div>
         <div className="flex flex-col justify-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Blog & Insights</p>
-          <h1 className="mt-4 max-w-[480px] text-4xl font-black uppercase leading-[1.02] text-slate-900 md:text-5xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-300/70">Blog & Insights</p>
+          <h1 className="mt-4 max-w-[480px] text-4xl font-black uppercase leading-[1.02] text-white md:text-5xl">
             Stay Updated With Our Latest Blogs
           </h1>
-          <p className="mt-8 max-w-[460px] text-base leading-relaxed text-slate-600">
+          <p className="mt-8 max-w-[460px] text-base leading-relaxed text-slate-300/90">
             We provide expert financial guidance, strategic planning, and business consulting insights to help
             companies grow with confidence.
           </p>
@@ -110,7 +110,7 @@ function BlogPage() {
               className={`rounded-full px-4 py-2 text-sm font-semibold transition duration-200 ${
                 activeCategory === category
                   ? 'bg-violet-600 text-white shadow-[0_10px_24px_rgba(124,58,237,0.35)]'
-                  : 'border border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900'
+                  : 'border border-violet-500/25 bg-white/5 text-slate-200 hover:border-violet-400/50 hover:text-white'
               }`}
             >
               {category}
@@ -140,7 +140,7 @@ function BlogPage() {
               disabled={isLoadingMore}
               className="group inline-flex min-w-[180px] items-center justify-center gap-3 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.24)] disabled:cursor-not-allowed disabled:opacity-80"
             >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-lg text-slate-900 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-400/45 bg-white/15 text-lg text-white transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                 →
               </span>
               {isLoadingMore ? 'Loading...' : 'Load More'}
@@ -150,7 +150,7 @@ function BlogPage() {
       </section>
 
       {/* PREMIUM BLOG DISCOVERY SECTION */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-white via-slate-50/30 to-white py-20 lg:py-28">
+      <section className="relative z-10 w-full overflow-hidden bg-transparent py-20 lg:py-28 text-slate-100">
         {/* Subtle Background Elements */}
         <div className="pointer-events-none absolute inset-0">
           {/* Soft Purple Gradient Orb Left */}
@@ -212,10 +212,10 @@ function BlogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 rounded-full border border-purple-600/20 bg-white px-4 py-1.5 shadow-sm"
+              className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm backdrop-blur-sm"
             >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-purple-600" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-purple-600">Strategic Insights</span>
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-violet-200">Strategic Insights</span>
             </motion.div>
 
             <motion.h2
@@ -223,7 +223,7 @@ function BlogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-6 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+              className="mt-6 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
             >
               Insights That Shape
               <br />
@@ -235,7 +235,7 @@ function BlogPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-6 text-lg leading-relaxed text-slate-600 sm:text-xl"
+              className="mt-6 text-lg leading-relaxed text-white/90 sm:text-xl"
             >
               Discover market trends, founder strategies, franchise opportunities, and expansion intelligence through expert-driven editorial content.
             </motion.p>
@@ -251,7 +251,7 @@ function BlogPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="space-y-4"
             >
-              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-purple-600">
+              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-violet-300">
                 Trending Blog Categories
               </h3>
               
@@ -641,7 +641,7 @@ function BlogPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="space-y-4"
             >
-              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-purple-600">
+              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-violet-300">
                 Featured Strategic Reads
               </h3>
               
@@ -718,9 +718,9 @@ function BlogPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="mx-auto mt-20 max-w-5xl text-center"
           >
-            <p className="text-2xl font-bold leading-relaxed text-slate-900 sm:text-3xl lg:text-4xl">
+            <p className="text-2xl font-bold leading-relaxed text-white sm:text-3xl lg:text-4xl">
               iFranchise transforms knowledge into{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">
                 strategic momentum
               </span>
               {' '}— empowering founders and investors through content that scales.

@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const STEPS = [
@@ -142,15 +142,21 @@ export default function BrandApplicationForm() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    await new Promise(r => setTimeout(r, 1600));
+    const result = await submitBrandApplication(form, 'brand_owners_page');
+    
     setSubmitting(false);
-    setSubmitted(true);
+    
+    if (result.success) {
+      setSubmitted(true);
+    } else {
+      console.error('[BrandApplicationForm] Submission failed:', result.error);
+      alert(result.error || 'Submission failed. Please try again.');
+    }
   };
 
   if (submitted) {
     return (
-      <section className="relative overflow-hidden bg-white py-20 lg:py-28">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-50/40 via-white to-indigo-50/30" />
+      <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
         <div className="relative z-10 max-w-2xl mx-auto px-6 text-center">
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20 }}
             className="w-20 h-20 rounded-full bg-violet-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-violet-200">
@@ -159,9 +165,9 @@ export default function BrandApplicationForm() {
             </svg>
           </motion.div>
           <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-3xl font-extrabold text-slate-900 mb-3">Application Received</motion.h2>
+            className="text-3xl font-extrabold text-white mb-3">Application Received</motion.h2>
           <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="text-slate-500 text-base mb-10 leading-relaxed">
+            className="text-slate-300 text-base mb-10 leading-relaxed">
             Thank you, <span className="text-slate-900 font-semibold">{form.name}</span>. Our expansion team will review{" "}
             <span className="text-violet-600 font-semibold">{form.brandName}</span> and reach out within 24 hours.
           </motion.p>
@@ -181,30 +187,20 @@ export default function BrandApplicationForm() {
   }
 
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-20">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-50/30 via-white to-indigo-50/20" />
-        <svg className="absolute inset-0 h-full w-full opacity-[0.025]">
-          <defs><pattern id="form-grid" width="28" height="28" patternUnits="userSpaceOnUse">
-            <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#6366f1" strokeWidth="0.5"/>
-          </pattern></defs>
-          <rect width="100%" height="100%" fill="url(#form-grid)"/>
-        </svg>
-      </div>
-
-      <div className="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10">
+    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
+      <motion.div className="relative z-10 max-w-[1100px] mx-auto px-6 lg:px-10">
 
         <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }}
           className="text-center mb-10">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-[0.68rem] font-bold uppercase tracking-widest text-violet-600 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Brand Application
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-white leading-[1.1] mb-3">
             List Your Brand on{" "}
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">iFranchise</span>
           </h2>
-          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-slate-300 text-base max-w-xl mx-auto leading-relaxed">
             Complete this 4-step application. Our expansion team reviews every submission personally.
           </p>
         </motion.div>
@@ -405,7 +401,7 @@ export default function BrandApplicationForm() {
           </motion.div>
 
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

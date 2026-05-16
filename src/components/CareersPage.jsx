@@ -1,4 +1,4 @@
-﻿import { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import careerImage from '../assets/carrer.png';
 import { ROLES, DEPT_COLORS, MODE_COLORS } from './careersData.jsx';
@@ -115,8 +115,8 @@ function RevealSection({ children, className = '', delay = 0 }) {
 
 function SectionLabel({ text }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-600 mb-4">
-      <span className="w-1.5 h-1.5 rounded-full bg-violet-500 inline-block" />
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-300 mb-4">
+      <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
       {text}
     </span>
   );
@@ -133,14 +133,14 @@ function BenefitCard({ icon, title, desc, delay }) {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-      className="group bg-white border border-slate-100 rounded-2xl p-6 flex flex-col items-center text-center gap-3 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-violet-100 transition-all duration-300"
+      className="group card-premium-dark border border-violet-500/20 rounded-2xl p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(109,40,217,0.28)] hover:-translate-y-1 hover:border-violet-400/35 transition-all duration-300"
     >
-      <div className="w-12 h-12 rounded-xl bg-slate-50 group-hover:bg-violet-50 flex items-center justify-center text-slate-600 group-hover:text-violet-600 transition-colors duration-300">
+      <div className="w-12 h-12 rounded-xl bg-violet-500/15 border border-violet-400/25 flex items-center justify-center text-violet-300 group-hover:text-white group-hover:bg-violet-500/25 transition-colors duration-300">
         {icon}
       </div>
       <div>
-        <h3 className="text-sm font-bold text-slate-900 mb-1">{title}</h3>
-        <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+        <h3 className="text-sm font-bold text-white mb-1">{title}</h3>
+        <p className="text-xs text-violet-200/90 leading-relaxed">{desc}</p>
       </div>
     </motion.div>
   );
@@ -158,36 +158,36 @@ function RoleCard({ role, index, onApply }) {
       initial={{ opacity: 0, y: 18 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.07 }}
-      className="group bg-white border border-slate-100 rounded-2xl p-6 flex flex-col gap-5 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-violet-200 transition-all duration-300 cursor-pointer"
+      className="group card-premium-dark border border-violet-500/20 rounded-2xl p-6 flex flex-col gap-5 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_50px_rgba(109,40,217,0.3)] hover:-translate-y-1 hover:border-violet-400/40 transition-all duration-300 cursor-pointer"
       onClick={() => onApply(role)}
     >
       {/* Top row: icon + dept badge */}
       <div className="flex items-start justify-between">
-        <div className="w-14 h-14 rounded-2xl bg-slate-50 group-hover:bg-violet-50 flex items-center justify-center text-slate-600 group-hover:text-violet-600 transition-colors duration-300 shadow-sm border border-slate-100">
+        <div className="w-14 h-14 rounded-2xl bg-violet-500/15 flex items-center justify-center text-violet-300 group-hover:text-white transition-colors duration-300 shadow-inner border border-violet-400/25">
           {role.icon}
         </div>
-        <span className={`text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full ${DEPT_COLORS[role.dept] || 'bg-slate-50 text-slate-500'}`}>
+        <span className={`text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full ${DEPT_COLORS[role.dept] || 'bg-violet-500/15 text-white border border-violet-400/35'}`}>
           {role.dept}
         </span>
       </div>
 
       {/* Title + tagline */}
       <div>
-        <h3 className="text-xl font-extrabold text-slate-900 mb-2 group-hover:text-violet-700 transition-colors duration-200 leading-tight">
+        <h3 className="text-xl font-extrabold text-white mb-2 group-hover:text-violet-100 transition-colors duration-200 leading-tight">
           {role.title}
         </h3>
-        <p className="text-sm text-slate-500 leading-relaxed">{role.tagline}</p>
+        <p className="text-sm text-violet-200/90 leading-relaxed">{role.tagline}</p>
       </div>
 
       {/* Meta chips */}
       <div className="flex flex-wrap gap-2">
-        <span className="text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-full">
+        <span className="text-xs font-semibold text-white bg-violet-500/15 border border-violet-400/30 px-3 py-1.5 rounded-full">
           {role.type}
         </span>
-        <span className={`text-xs font-semibold px-3 py-1.5 rounded-full border ${MODE_COLORS[role.mode]}`}>
+        <span className={`text-xs font-semibold px-3 py-1.5 rounded-full ${MODE_COLORS[role.mode]}`}>
           {role.mode}
         </span>
-        <span className="text-xs font-medium text-slate-500 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-full flex items-center gap-1">
+        <span className="text-xs font-medium text-violet-200 bg-violet-500/10 border border-violet-400/25 px-3 py-1.5 rounded-full flex items-center gap-1">
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -197,13 +197,13 @@ function RoleCard({ role, index, onApply }) {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-slate-100" />
+      <div className="border-t border-violet-500/20" />
 
       {/* Salary + CTA */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400 mb-0.5">Salary</p>
-          <p className="text-base font-bold text-slate-900">{role.salary}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-violet-300/70 mb-0.5">Salary</p>
+          <p className="text-base font-bold text-white">{role.salary}</p>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onApply(role); }}
@@ -224,15 +224,15 @@ function RoleCard({ role, index, onApply }) {
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`rounded-2xl border transition-all duration-300 ${open ? 'border-violet-200 bg-violet-50/40' : 'border-slate-100 bg-white hover:border-slate-200 hover:bg-slate-50/50'}`}>
+    <div className={`rounded-2xl border transition-all duration-300 ${open ? 'border-violet-400/45 bg-violet-500/15' : 'border-violet-500/20 card-premium-dark hover:border-violet-400/35'}`}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left group"
       >
-        <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${open ? 'text-violet-700' : 'text-slate-800 group-hover:text-slate-900'}`}>
+        <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${open ? 'text-white' : 'text-white/95 group-hover:text-white'}`}>
           {q}
         </span>
-        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'bg-violet-600 text-white rotate-45' : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'}`}>
+        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'bg-violet-600 text-white rotate-45' : 'bg-violet-500/20 text-violet-200 group-hover:bg-violet-500/30'}`}>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
@@ -248,7 +248,7 @@ function FaqItem({ q, a }) {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-slate-600 leading-relaxed px-6 pb-5">{a}</p>
+            <p className="text-sm text-white/90 leading-relaxed px-6 pb-5">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -261,7 +261,7 @@ function FaqItem({ q, a }) {
 function PageCurtain({ onDone }) {
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-white origin-top"
+      className="fixed inset-0 z-[9999] bg-[#0a0618] origin-top"
       initial={{ scaleY: 1 }}
       animate={{ scaleY: 0 }}
       transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
@@ -282,25 +282,25 @@ function CareersPage() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="relative z-10 bg-transparent text-white min-h-screen">
       {/* Page-entry curtain */}
       <PageCurtain onDone={() => setCurtainDone(true)} />
 
       {/* ── HERO ── */}
       <section
         ref={heroRef}
-        className="relative overflow-hidden bg-white"
+        className="relative overflow-hidden bg-transparent"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 20% 50%, rgba(139,92,246,0.04) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.05) 0%, transparent 55%)',
+            'radial-gradient(circle at 20% 50%, rgba(139,92,246,0.12) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.1) 0%, transparent 55%)',
         }}
       >
         {/* Subtle dot grid */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          className="pointer-events-none absolute inset-0 opacity-[0.4]"
           style={{
             backgroundImage:
-              'radial-gradient(circle, #cbd5e1 1px, transparent 1px)',
+              'radial-gradient(circle, rgba(167,139,250,0.35) 1px, transparent 1px)',
             backgroundSize: '28px 28px',
           }}
         />
@@ -311,19 +311,19 @@ function CareersPage() {
             animate={curtainDone ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           >
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-600 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-500 inline-block" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-300 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
               We're Hiring
             </span>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.05] mb-4">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] mb-4">
               Be part of<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-500">
                 something bold.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto leading-relaxed mb-8">
               At iFranchise, we build category-defining growth systems, creative ecosystems, and careers that matter.
             </p>
           </motion.div>
@@ -335,7 +335,7 @@ function CareersPage() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
             className="relative mx-auto max-w-4xl"
           >
-            <div className="rounded-2xl overflow-hidden shadow-xl shadow-slate-200/60 border border-slate-100">
+            <div className="rounded-2xl overflow-hidden shadow-[0_24px_80px_rgba(0,0,0,0.45)] border border-violet-500/25 card-premium-dark">
               <img
                 src={careerImage}
                 alt="iFranchise Careers"
@@ -343,7 +343,7 @@ function CareersPage() {
                 loading="eager"
               />
             </div>
-            <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-b from-violet-100/30 to-transparent blur-2xl" />
+            <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-b from-violet-600/25 to-transparent blur-2xl" />
           </motion.div>
         </div>
       </section>
@@ -354,10 +354,10 @@ function CareersPage() {
           <div className="flex justify-center">
             <SectionLabel text="Benefits" />
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
             This is the vibe that drives us.
           </h2>
-          <p className="text-sm sm:text-base text-slate-500 max-w-lg mx-auto">
+          <p className="text-sm sm:text-base text-violet-200/90 max-w-lg mx-auto">
             Performance, ownership, growth, creativity, and balance — not just words on a wall.
           </p>
         </RevealSection>
@@ -370,16 +370,16 @@ function CareersPage() {
       </section>
 
       {/* ── OPEN ROLES ── */}
-      <section className="bg-slate-50/60 border-y border-slate-100">
+      <section className="border-y border-violet-500/20 bg-violet-950/10">
         <div className="max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
           <RevealSection className="text-center mb-10">
             <div className="flex justify-center">
               <SectionLabel text="Open Roles" />
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
               Join the Creative Force.
             </h2>
-            <p className="text-sm sm:text-base text-slate-500 max-w-lg mx-auto">
+            <p className="text-sm sm:text-base text-violet-200/90 max-w-lg mx-auto">
               {ROLES.length} open positions across design, growth, and strategy.
             </p>
           </RevealSection>
@@ -393,19 +393,19 @@ function CareersPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="bg-white py-14 sm:py-20">
+      <section className="bg-transparent py-14 sm:py-20">
         <div className="max-w-2xl mx-auto px-6 sm:px-8">
           <RevealSection className="text-center mb-8">
             <div className="flex justify-center">
               <SectionLabel text="FAQ" />
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
               Got a question?{' '}
-              <span className="text-slate-400 font-semibold">We've got answers.</span>
+              <span className="text-violet-300/80 font-semibold">We've got answers.</span>
             </h2>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-violet-200/90">
               Still unsure? Email{' '}
-              <a href="mailto:careers@ifranchise.in" className="text-violet-600 hover:underline font-medium">
+              <a href="mailto:careers@ifranchise.in" className="text-violet-300 hover:text-white hover:underline font-medium">
                 careers@ifranchise.in
               </a>
             </p>

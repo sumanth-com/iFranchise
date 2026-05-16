@@ -52,7 +52,7 @@ export default {
     },
   },
   plugins: [
-    function ({ addUtilities }) {
+    function ({ addUtilities, addComponents }) {
       addUtilities({
         '.scrollbar-hide': {
           /* Firefox */
@@ -61,6 +61,24 @@ export default {
           '&::-webkit-scrollbar': {
             display: 'none',
           },
+        },
+      });
+      addComponents({
+        /* Homepage dark grid cards — reuse site-wide */
+        '.card-premium-dark': {
+          background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: 'rgba(139,92,246,0.18)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+        },
+        '.card-premium-dark-inner': {
+          backgroundColor: 'rgba(255,255,255,0.06)',
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: 'rgba(139,92,246,0.22)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
         },
       });
     },

@@ -2,11 +2,18 @@
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import TestimonialCard from './TestimonialCard';
-import processImg from '../assets/process.png';
 import contactImg from '../assets/contact.png';
 import homeHeroBg from '../assets/HomeHero.png';
 import homeBg from '../assets/HomeBG.png';
 import industriesBg from '../assets/Industries.png';
+import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
+import foodImg from '../assets/IndImgs/Food & Beverage.png';
+import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
+import educationImg from '../assets/IndImgs/Education & Training.png';
+import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
+import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
+import forInvestorsImg from '../assets/ForInvestors.png';
+import forBrandsImg from '../assets/ForBrands.png';
 import brandLogo from '../assets/BrandLogo.png';
 import home2Bg from '../assets/Home2.png';
 import home3Bg from '../assets/Home3.png';
@@ -27,6 +34,29 @@ import {
 
 // ── Lightweight scroll-triggered visibility hook ──────────────────────────────
 // Returns [ref, isVisible] — isVisible toggles true/false on every enter/leave
+function HeroIndustryCardImg({ src, alt }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0618]" aria-hidden>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500/25 border-t-violet-400" />
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        className={`h-full w-full object-contain object-center transition-opacity duration-300 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+    </>
+  );
+}
+
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -1066,7 +1096,6 @@ function FranchiseCard({ franchise }) {
 
   const handleCardClick = () => {
     // Navigate to dedicated franchise page by slug
-    console.log('Navigating to franchise page:', franchise.slug);
     window.history.pushState({}, '', `/franchise/${franchise.slug}`);
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
@@ -1134,17 +1163,17 @@ function FranchiseCard({ franchise }) {
       <div className="flex flex-1 flex-col p-5">
         {/* Title and Description */}
         <h3 className="text-xl font-bold tracking-tight text-white">{franchise.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-white/65">{franchise.description}</p>
+        <p className="mt-2 text-sm leading-relaxed text-white">{franchise.description}</p>
 
         {/* Tags Row */}
         <div className="mt-4 flex flex-wrap gap-2">
           <span className="rounded-full px-3 py-1 text-xs font-semibold text-violet-300" style={{ background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.3)' }}>
             {franchise.tags.investment}
           </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white/70" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
             {franchise.tags.model}
           </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white/70" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
             {franchise.tags.expansion}
           </span>
         </div>
@@ -1152,11 +1181,11 @@ function FranchiseCard({ franchise }) {
         {/* Metrics Row */}
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <p className="text-xs font-medium text-white/45">ROI</p>
+            <p className="text-xs font-medium text-white">ROI</p>
             <p className="text-lg font-bold text-white">{franchise.metrics.roi}</p>
           </div>
           <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <p className="text-xs font-medium text-white/45">Payback</p>
+            <p className="text-xs font-medium text-white">Payback</p>
             <p className="text-lg font-bold text-white">{franchise.metrics.payback}</p>
           </div>
         </div>
@@ -1164,20 +1193,20 @@ function FranchiseCard({ franchise }) {
         {/* Details Grid */}
         <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
           <div>
-            <p className="font-medium text-white/40">Industry</p>
-            <p className="text-white/80">{franchise.details.industry}</p>
+            <p className="font-medium text-white">Industry</p>
+            <p className="text-white">{franchise.details.industry}</p>
           </div>
           <div>
-            <p className="font-medium text-white/40">Segment</p>
-            <p className="text-white/80">{franchise.details.segment}</p>
+            <p className="font-medium text-white">Segment</p>
+            <p className="text-white">{franchise.details.segment}</p>
           </div>
           <div>
-            <p className="font-medium text-white/40">Investment</p>
-            <p className="text-white/80">{franchise.details.investment}</p>
+            <p className="font-medium text-white">Investment</p>
+            <p className="text-white">{franchise.details.investment}</p>
           </div>
           <div>
-            <p className="font-medium text-white/40">Space</p>
-            <p className="text-white/80">{franchise.details.space}</p>
+            <p className="font-medium text-white">Space</p>
+            <p className="text-white">{franchise.details.space}</p>
           </div>
         </div>
 
@@ -1941,7 +1970,7 @@ function MarketIntelligenceSection() {
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight mb-2">
             Inside India&apos;s Franchise Growth Engine
           </h2>
-          <p className="text-sm text-white/60 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm text-white max-w-xl mx-auto leading-relaxed">
             Real-time market insights, investor patterns, and expansion trends shaping India&apos;s franchise future.
           </p>
         </div>
@@ -1963,7 +1992,7 @@ function MarketIntelligenceSection() {
               {/* Duplicated text for seamless RIGHT→LEFT loop */}
               <div className="flex w-max animate-marquee-left">
                 {[0, 1].map((n) => (
-                  <p key={n} className="text-xs text-white/70 font-medium whitespace-nowrap pr-16">
+                  <p key={n} className="text-xs text-white font-medium whitespace-nowrap pr-16">
                     24 verified franchise opportunities across India &nbsp;&middot;&nbsp;
                     Operating in 8 major cities including Mumbai, Delhi, Bengaluru &nbsp;&middot;&nbsp;
                     Average ROI of 34% across all franchise brands &nbsp;&middot;&nbsp;
@@ -1990,7 +2019,7 @@ function MarketIntelligenceSection() {
                 transition: `opacity 0.5s ease ${i * 0.08}s, transform 0.5s ease ${i * 0.08}s`,
               }}
             >
-              <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-1.5">{k.label}</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-white mb-1.5">{k.label}</p>
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="w-2 h-2 rounded-full shrink-0" style={{ background: k.dotColor }} />
                 <p className="text-xl font-extrabold text-white tabular-nums leading-none">{k.value}</p>
@@ -2010,7 +2039,7 @@ function MarketIntelligenceSection() {
               {/* Chart header row */}
               <div className="flex items-start justify-between mb-4 gap-3 flex-wrap">
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-white/40 mb-0.5">Revenue Growth Index</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-white mb-0.5">Revenue Growth Index</p>
                   <p className="text-sm font-extrabold text-white">India Franchise Market Expansion</p>
                 </div>
                 {/* More prominent tab buttons */}
@@ -2022,7 +2051,7 @@ function MarketIntelligenceSection() {
                       className={`text-xs font-bold px-4 py-2 rounded-lg transition-all duration-200 ${
                         tab === t
                           ? 'bg-gradient-to-br from-violet-600 to-violet-700 text-white shadow-md'
-                          : 'text-white/60 hover:text-white hover:bg-white/10'
+                          : 'text-white hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {t}
@@ -2237,7 +2266,7 @@ function MarketIntelligenceSection() {
                 {/* X-axis labels - Clear and visible */}
                 <div className="absolute left-9 right-0 bottom-0 flex justify-between px-1">
                   {dataset.labels.map((l) => (
-                    <span key={l} className="text-[10px] text-white/40 font-semibold flex-1 text-center">{l}</span>
+                    <span key={l} className="text-[10px] text-white font-semibold flex-1 text-center">{l}</span>
                   ))}
                 </div>
               </div>
@@ -2249,11 +2278,11 @@ function MarketIntelligenceSection() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-sm" style={{ background: 'linear-gradient(to top, #7c3aed, #a78bfa)' }} />
-                      <span className="text-[10px] text-white/50 font-medium">Market Growth</span>
+                      <span className="text-[10px] text-white font-medium">Market Growth</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-4 h-0.5 bg-emerald-500 rounded" />
-                      <span className="text-[10px] text-white/50 font-medium">CAGR Trend</span>
+                      <span className="text-[10px] text-white font-medium">CAGR Trend</span>
                     </div>
                   </div>
                   {/* Key insight */}
@@ -2272,7 +2301,7 @@ function MarketIntelligenceSection() {
 
               {/* Compact Donut */}
               <div className="p-4">
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-0.5">Investor Preference</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-white mb-0.5">Investor Preference</p>
                 <p className="text-xs font-bold text-white mb-3">Franchise vs Independent</p>
                 <div className="flex items-center gap-3">
                   <div className="w-[75px] h-[75px] shrink-0">
@@ -2286,19 +2315,19 @@ function MarketIntelligenceSection() {
                       <div key={s.label} className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full shrink-0" style={{ background: s.color }} />
                         <div>
-                          <p className="text-[10px] font-semibold text-white/80 leading-tight">{s.label}</p>
+                          <p className="text-[10px] font-semibold text-white leading-tight">{s.label}</p>
                           <p className="text-[9px] text-slate-400">{s.pct}</p>
                         </div>
                       </div>
                     ))}
-                    <p className="text-[9px] text-white/40 italic">3&times; since 2020</p>
+                    <p className="text-[9px] text-white italic">3&times; since 2020</p>
                   </div>
                 </div>
               </div>
 
               {/* Compact Category bars */}
               <div className="p-4 flex-1">
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/40 mb-0.5">Top Sectors</p>
+                <p className="text-[9px] font-bold uppercase tracking-widest text-white mb-0.5">Top Sectors</p>
                 <p className="text-xs font-bold text-white mb-3">Fastest Growing Categories</p>
                 <div className="space-y-2.5">
                   {CATEGORIES.map((cat, i) => (
@@ -2331,7 +2360,7 @@ function MarketIntelligenceSection() {
           <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
             <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Verified Sources:</span>
             {SOURCES.map((s) => (
-              <span key={s} className="text-[11px] font-semibold text-white/60 px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>{s}</span>
+              <span key={s} className="text-[11px] font-semibold text-white px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>{s}</span>
             ))}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
@@ -2418,10 +2447,219 @@ const PROCESS_FLOWS = {
   ],
 };
 
+const PROCESS_VISUAL_STATS = {
+  Investors: [
+    { label: 'Opportunities', value: '500+' },
+    { label: 'Avg. match time', value: '14d' },
+    { label: 'Verified brands', value: '120+' },
+  ],
+  Brands: [
+    { label: 'Investor reach', value: '50K+' },
+    { label: 'Markets mapped', value: '28' },
+    { label: 'Launch support', value: '360°' },
+  ],
+};
+
+function ProcessCinematicVisual({ mode, visible }) {
+  const stats = PROCESS_VISUAL_STATS[mode];
+  const nodes = [
+    { x: '18%', y: '28%', delay: '0s', size: 'h-3 w-3' },
+    { x: '78%', y: '22%', delay: '0.6s', size: 'h-2.5 w-2.5' },
+    { x: '82%', y: '62%', delay: '1.1s', size: 'h-3.5 w-3.5' },
+    { x: '22%', y: '68%', delay: '0.3s', size: 'h-2.5 w-2.5' },
+    { x: '50%', y: '18%', delay: '0.9s', size: 'h-2 w-2' },
+  ];
+
+  return (
+    <div
+      className="process-cinematic-panel relative flex h-full min-h-[420px] flex-1 flex-col overflow-hidden rounded-2xl"
+      style={{
+        background:
+          'linear-gradient(145deg, rgba(109,40,217,0.18) 0%, rgba(15,10,35,0.92) 45%, rgba(10,6,24,0.98) 100%)',
+        border: '1px solid rgba(167,139,250,0.35)',
+        boxShadow: '0 8px 40px rgba(109,40,217,0.22), inset 0 1px 0 rgba(255,255,255,0.06)',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(16px)',
+        transition: 'opacity 0.5s ease, transform 0.5s ease',
+      }}
+    >
+      <div className="process-cinematic-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 50% 45%, rgba(139,92,246,0.35) 0%, transparent 70%)',
+        }}
+        aria-hidden
+      />
+
+      <div
+        className="absolute top-5 left-5 z-10 inline-flex items-center gap-2 rounded-full px-3 py-1.5"
+        style={{
+          background: 'rgba(109,40,217,0.35)',
+          border: '1px solid rgba(167,139,250,0.45)',
+          backdropFilter: 'blur(10px)',
+        }}
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+        </span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-violet-200">
+          Live growth engine
+        </span>
+      </div>
+
+      <div className="relative z-[1] flex flex-1 items-center justify-center p-8 pt-14">
+        <div className="relative h-[220px] w-full max-w-[320px]">
+          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 320 220" fill="none" aria-hidden>
+            <path
+              d="M40 110 Q 100 40, 160 110 T 280 110"
+              stroke="url(#processFlowGrad)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className="process-flow-line"
+            />
+            <path
+              d="M60 160 Q 160 60, 260 80"
+              stroke="rgba(167,139,250,0.25)"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+              className="process-flow-line-alt"
+            />
+            <defs>
+              <linearGradient id="processFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="rgba(167,139,250,0.2)" />
+                <stop offset="50%" stopColor="#c4b5fd" />
+                <stop offset="100%" stopColor="rgba(99,102,241,0.5)" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          <div
+            className="process-hub-pulse absolute left-1/2 top-1/2 z-10 flex h-[72px] w-[72px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(124,58,237,0.5), rgba(79,70,229,0.35))',
+              border: '1px solid rgba(196,181,253,0.5)',
+              boxShadow: '0 0 40px rgba(124,58,237,0.45)',
+            }}
+          >
+            <svg
+              className="h-8 w-8 text-violet-100"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={1.6}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+
+          {nodes.map((node, i) => (
+            <span
+              key={i}
+              className={`process-orbit-node absolute ${node.size} rounded-full bg-violet-300`}
+              style={{ left: node.x, top: node.y, animationDelay: node.delay }}
+            />
+          ))}
+
+          <div
+            className="process-float-badge absolute left-[8%] top-[42%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-violet-200/90"
+            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(167,139,250,0.25)' }}
+          >
+            {mode === 'Investors' ? 'Match' : 'List'}
+          </div>
+          <div
+            className="process-float-badge absolute right-[6%] top-[48%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-violet-200/90"
+            style={{
+              background: 'rgba(255,255,255,0.08)',
+              border: '1px solid rgba(167,139,250,0.25)',
+              animationDelay: '0.5s',
+            }}
+          >
+            {mode === 'Investors' ? 'Scale' : 'Expand'}
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="relative z-10 grid grid-cols-3 gap-2 border-t border-violet-500/20 px-5 py-4"
+        style={{ background: 'rgba(0,0,0,0.25)' }}
+      >
+        {stats.map((stat) => (
+          <div key={stat.label} className="text-center">
+            <p className="text-sm font-extrabold text-white">{stat.value}</p>
+            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-violet-300/80">
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProcessStepCard({ step, index, visible }) {
+  return (
+    <div
+      className="relative flex-1"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        transition: `opacity 0.45s ease ${index * 0.1}s, transform 0.45s ease ${index * 0.1}s`,
+      }}
+    >
+      <div
+        className="group relative flex h-full min-h-[118px] overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
+        style={{
+          background: 'rgba(109,40,217,0.22)',
+          border: '1px solid rgba(167,139,250,0.42)',
+          boxShadow: '0 8px 32px rgba(109,40,217,0.28)',
+          backdropFilter: 'blur(12px)',
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 rounded-2xl"
+          style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.18) 0%, transparent 60%)' }}
+        />
+        <div
+          className="pointer-events-none absolute top-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(167,139,250,0.85), transparent)' }}
+        />
+        <div className="relative z-10 flex w-full items-start gap-4">
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+            style={{
+              background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+              border: '2px solid rgba(167,139,250,0.55)',
+              boxShadow: '0 0 0 4px rgba(139,92,246,0.2), 0 4px 16px rgba(109,40,217,0.4)',
+            }}
+          >
+            <span className="text-xs font-extrabold text-white">{step.num}</span>
+          </div>
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+            style={{
+              background: 'rgba(139,92,246,0.32)',
+              border: '1px solid rgba(167,139,250,0.45)',
+              color: '#c4b5fd',
+            }}
+          >
+            {step.icon}
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="mb-1.5 text-[0.95rem] font-bold leading-snug text-white">{step.title}</h3>
+            <p className="text-[0.78rem] leading-relaxed text-white/65">{step.desc}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProcessTimeline() {
   const [mode, setMode] = useState('Investors');
   const [visible, setVisible] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
   const ref = useRef(null);
   const hasShown = useRef(false);
 
@@ -2441,160 +2679,84 @@ function ProcessTimeline() {
     return () => obs.disconnect();
   }, []);
 
-  // Auto-advance active step
-  useEffect(() => {
-    if (!visible) return;
-    setActiveStep(0);
-    const steps = PROCESS_FLOWS[mode];
-    let i = 0;
-    const id = setInterval(() => {
-      i = (i + 1) % steps.length;
-      setActiveStep(i);
-    }, 2200);
-    return () => clearInterval(id);
-  }, [visible, mode]);
-
   const steps = PROCESS_FLOWS[mode];
 
   return (
-    <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+    <>
+      <style>{`
+        .process-cinematic-grid {
+          background-image:
+            linear-gradient(rgba(139,92,246,0.08) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139,92,246,0.08) 1px, transparent 1px);
+          background-size: 28px 28px;
+          animation: processGridDrift 24s linear infinite;
+        }
+        @keyframes processGridDrift {
+          0% { background-position: 0 0, 0 0; }
+          100% { background-position: 28px 28px, 28px 28px; }
+        }
+        .process-hub-pulse { animation: processHubPulse 3.2s ease-in-out infinite; }
+        @keyframes processHubPulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 40px rgba(124,58,237,0.4); }
+          50% { transform: translate(-50%, -50%) scale(1.06); box-shadow: 0 0 56px rgba(167,139,250,0.55); }
+        }
+        .process-orbit-node {
+          animation: processOrbitFloat 3.5s ease-in-out infinite;
+          box-shadow: 0 0 12px rgba(196,181,253,0.8);
+        }
+        @keyframes processOrbitFloat {
+          0%, 100% { transform: translateY(0); opacity: 0.65; }
+          50% { transform: translateY(-10px); opacity: 1; }
+        }
+        .process-flow-line { stroke-dasharray: 400; animation: processFlowDraw 4s ease-in-out infinite; }
+        .process-flow-line-alt { animation: processFlowDash 6s linear infinite; }
+        @keyframes processFlowDraw {
+          0% { stroke-dashoffset: 400; opacity: 0.35; }
+          50% { stroke-dashoffset: 0; opacity: 1; }
+          100% { stroke-dashoffset: -400; opacity: 0.35; }
+        }
+        @keyframes processFlowDash {
+          0% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -80; }
+        }
+        .process-float-badge { animation: processBadgeFloat 4s ease-in-out infinite; }
+        @keyframes processBadgeFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+      `}</style>
 
-      {/* LEFT — Visual panel (no tab, no number counter) */}
-      <div className="flex flex-col gap-0">
-        {/* Visual card with process image */}
-        <div className="relative overflow-hidden rounded-2xl"
-          style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(139,92,246,0.2)', minHeight: '340px' }}>
-          {/* Ambient glow */}
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(139,92,246,0.2) 0%, transparent 65%)' }} />
-
-          {/* Process image — static, no animation */}
-          <div className="relative z-10 flex items-center justify-center p-8 h-full">
-            <img src={processImg} alt="iFranchise Process"
-              className="w-full max-w-[300px] object-contain"
-              style={{ filter: 'drop-shadow(0 20px 40px rgba(139,92,246,0.3))' }}
-              loading="eager"
-            />
-          </div>
-
-          {/* Floating badge */}
-          <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full px-3 py-1.5"
-            style={{ background: 'rgba(139,92,246,0.25)', border: '1px solid rgba(167,139,250,0.4)', backdropFilter: 'blur(8px)' }}>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-400" />
-            </span>
-            <span className="text-[10px] font-bold text-violet-300 uppercase tracking-wider">Growth Signal</span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="absolute bottom-5 left-5 right-5">
-            <div className="flex gap-1.5">
-              {steps.map((_, i) => (
-                <div key={i} className="h-1 rounded-full transition-all duration-500 cursor-pointer"
-                  style={{ background: i === activeStep ? '#a78bfa' : 'rgba(255,255,255,0.2)', flex: i === activeStep ? 2 : 1 }}
-                  onClick={() => setActiveStep(i)} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* RIGHT — Tab toggle + Steps */}
-      <div className="flex flex-col gap-5">
-        {/* Tab toggle — right side only */}
-        <div className="inline-flex items-center gap-1 p-1 rounded-2xl w-fit"
-          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
-          {['Investors', 'Brands'].map((m) => (
-            <button key={m}
-              onClick={() => { setMode(m); setActiveStep(0); }}
-              className="relative text-sm font-bold px-6 py-2.5 rounded-xl transition-all duration-300"
-              style={{
-                background: mode === m ? 'linear-gradient(135deg, #6d28d9, #4f46e5)' : 'transparent',
-                color: mode === m ? '#ffffff' : 'rgba(255,255,255,0.45)',
-                boxShadow: mode === m ? '0 4px 16px rgba(109,40,217,0.4)' : 'none',
-              }}
-            >
-              For {m}
-            </button>
-          ))}
-        </div>
-        {/* Vertical connector */}
-        <div className="absolute left-5 top-6 bottom-6 w-px hidden sm:block"
-          style={{ background: 'linear-gradient(to bottom, rgba(139,92,246,0.5), rgba(99,102,241,0.2), transparent)' }} />
-
-        <div className="space-y-4">
-          {steps.map((step, i) => {
-            const isActive = i === activeStep;
-            return (
-              <div key={`${mode}-${step.num}`} className="relative sm:pl-16 cursor-pointer"
-                style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transition: `opacity 0.4s ease ${i * 0.12}s, transform 0.4s ease ${i * 0.12}s` }}
-                onClick={() => setActiveStep(i)}
+      <div ref={ref} className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
+        <ProcessCinematicVisual mode={mode} visible={visible} />
+        <div className="flex min-h-[420px] flex-col gap-5">
+          <div
+            className="inline-flex w-fit items-center gap-1 rounded-2xl p-1"
+            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+          >
+            {['Investors', 'Brands'].map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setMode(m)}
+                className="relative rounded-xl px-6 py-2.5 text-sm font-bold transition-all duration-300"
+                style={{
+                  background: mode === m ? 'linear-gradient(135deg, #6d28d9, #4f46e5)' : 'transparent',
+                  color: mode === m ? '#ffffff' : 'rgba(255,255,255,0.45)',
+                  boxShadow: mode === m ? '0 4px 16px rgba(109,40,217,0.4)' : 'none',
+                }}
               >
-                {/* Step node */}
-                <div className="hidden sm:flex absolute left-0 top-5 w-10 h-10 rounded-full items-center justify-center z-10 transition-all duration-300"
-                  style={{
-                    background: isActive ? 'linear-gradient(135deg, #7c3aed, #4f46e5)' : 'rgba(255,255,255,0.06)',
-                    border: isActive ? '2px solid rgba(167,139,250,0.6)' : '2px solid rgba(255,255,255,0.12)',
-                    boxShadow: isActive ? '0 0 0 4px rgba(139,92,246,0.2), 0 4px 16px rgba(109,40,217,0.4)' : 'none',
-                  }}>
-                  <span className="text-xs font-extrabold" style={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.4)' }}>{step.num}</span>
-                </div>
-
-                {/* Card */}
-                <div className="group relative overflow-hidden rounded-2xl p-5 transition-all duration-300"
-                  style={{
-                    background: isActive ? 'rgba(109,40,217,0.2)' : 'rgba(255,255,255,0.04)',
-                    border: isActive ? '1px solid rgba(167,139,250,0.4)' : '1px solid rgba(255,255,255,0.08)',
-                    boxShadow: isActive ? '0 8px 32px rgba(109,40,217,0.25)' : 'none',
-                    backdropFilter: 'blur(12px)',
-                  }}>
-                  {/* Active glow */}
-                  {isActive && (
-                    <div className="absolute inset-0 pointer-events-none rounded-2xl"
-                      style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, transparent 60%)' }} />
-                  )}
-                  {/* Active top border */}
-                  {isActive && (
-                    <div className="absolute top-0 left-0 right-0 h-[1px]"
-                      style={{ background: 'linear-gradient(90deg, transparent, rgba(167,139,250,0.8), transparent)' }} />
-                  )}
-
-                  <div className="relative z-10 flex items-start gap-4">
-                    {/* Mobile number */}
-                    <div className="sm:hidden flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ background: isActive ? 'linear-gradient(135deg,#7c3aed,#4f46e5)' : 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}>
-                      <span className="text-xs font-extrabold text-white">{step.num}</span>
-                    </div>
-
-                    {/* Icon */}
-                    <div className="hidden sm:flex w-10 h-10 rounded-xl items-center justify-center shrink-0 transition-all duration-300"
-                      style={{
-                        background: isActive ? 'rgba(139,92,246,0.3)' : 'rgba(255,255,255,0.07)',
-                        border: isActive ? '1px solid rgba(167,139,250,0.4)' : '1px solid rgba(255,255,255,0.1)',
-                        color: isActive ? '#c4b5fd' : 'rgba(255,255,255,0.4)',
-                      }}>
-                      {step.icon}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-[0.95rem] font-bold mb-1.5 leading-snug transition-colors duration-300"
-                        style={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.6)' }}>
-                        {step.title}
-                      </h3>
-                      <p className="text-[0.78rem] leading-relaxed transition-colors duration-300"
-                        style={{ color: isActive ? 'rgba(255,255,255,0.65)' : 'rgba(255,255,255,0.35)' }}>
-                        {step.desc}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                For {m}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-1 flex-col justify-between gap-4">
+            {steps.map((step, i) => (
+              <ProcessStepCard key={`${mode}-${step.num}`} step={step} index={i} visible={visible} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -2704,7 +2866,7 @@ function PremiumFAQItem({ faq, index }) {
 }
 
 // ── Hero CTA Button — white bg, purple on hover ───────────────────────────────
-function HeroCtaButton({ label, path }) {
+function HeroCtaButton({ label, path, className = '' }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button
@@ -2715,6 +2877,7 @@ function HeroCtaButton({ label, path }) {
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className={className}
       style={{
         backgroundColor: hovered ? '#7c3aed' : '#ffffff',
         color: hovered ? '#ffffff' : '#0b0f19',
@@ -2724,13 +2887,14 @@ function HeroCtaButton({ label, path }) {
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         transition: 'background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease',
         borderRadius: '10px',
-        padding: '10px 24px',
+        padding: '12px 20px',
         fontSize: '14px',
         fontWeight: 700,
         border: 'none',
         cursor: 'pointer',
         display: 'inline-flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '8px',
       }}
     >
@@ -2948,18 +3112,21 @@ function Hero() {
     <main className="relative isolate overflow-x-hidden bg-transparent">
       {/* -- HERO SECTION -- */}
       <section
-        className="relative w-full flex flex-col overflow-hidden"
+        className="relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden"
         style={{
-          height: 'calc(100dvh - 80px)',
           backgroundImage: `url(${homeHeroBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       >
-        {/* Centre content — slightly above center */}
-        <div className="flex-1 flex items-center justify-center min-h-0" style={{ paddingBottom: '8%' }}>
-          <div className="relative z-10 flex w-full max-w-[900px] flex-col items-center text-center px-8 mx-auto">
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-t from-[#0a0618]/90 via-[#0a0618]/40 to-transparent sm:hidden"
+          aria-hidden
+        />
+
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-5 pt-6 sm:items-center sm:justify-center sm:px-8 sm:pb-[8%] sm:pt-0">
+          <div className="mx-auto flex min-h-0 w-full max-w-[900px] flex-1 flex-col items-center text-center sm:flex-none sm:justify-center">
 
             {/* Animated pill badge */}
             <div
@@ -2985,43 +3152,34 @@ function Hero() {
               </span>
             </div>
 
-            {/* Headline — exactly 2 lines */}
             <h1
-              className="mb-4 font-extrabold leading-[1.18] tracking-tight"
+              className="mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
               style={{
-                fontSize: '2.2rem',
-                color: '#ffffff',
                 letterSpacing: '-0.01em',
                 textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
-                whiteSpace: 'nowrap',
               }}
             >
               Where <span style={{ color: '#c084fc' }}>Brands</span> Expand
-              <br />
+              <br className="hidden sm:block" />
+              <span className="sm:hidden"> </span>
               and <span style={{ color: '#c084fc' }}>Investors</span> Discover What&apos;s Next
             </h1>
 
-            {/* Sub-copy — 2 lines */}
             <p
-              className="mb-7 text-[14px] leading-relaxed"
+              className="max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
               style={{
                 color: 'rgba(255,255,255,0.92)',
                 textShadow: '0 1px 8px rgba(0,0,0,0.65)',
-                maxWidth: '420px',
               }}
             >
-              iFranchise connects growing businesses with serious investors
-              <br />
-              through a smarter ecosystem built for long-term growth.
+              iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
-
-            {/* CTA buttons */}
-            <div className="flex flex-row justify-center gap-3">
+            <div className="mt-auto flex w-full max-w-md flex-col gap-3 pt-5 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
               {[
                 { label: 'Explore Opportunities', path: '/franchise-opportunities' },
                 { label: 'List Your Brand', path: '/list-your-brand' },
               ].map(({ label, path }) => (
-                <HeroCtaButton key={label} label={label} path={path} />
+                <HeroCtaButton key={label} label={label} path={path} className="w-full sm:w-auto" />
               ))}
             </div>
           </div>
@@ -3041,28 +3199,153 @@ function Hero() {
 
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          CONTINUOUS DARK SECTION: Services → Who We Serve → Process
-          One living animated background, no dividers, no gaps
-      ═══════════════════════════════════════════════════════════════ */}
-      <div className="relative w-full overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0618 0%, #0f0a1e 30%, #130a2e 60%, #0a0618 100%)' }}>
+      {/* ── FEATURED OPPORTUNITIES (after hero) ── */}
+      <div className="relative w-full overflow-hidden bg-transparent">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4"
+              style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+              Opportunities
+            </span>
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Featured Franchises</h2>
+            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+              Curated, high-performing brands ready for expansion and investment.
+            </p>
+          </div>
 
-        {/* ── Shared living animated orbs ── */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-          <div className="absolute" style={{ top: '-5%', left: '-8%', width: '65vw', height: '65vw', background: 'radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(109,40,217,0.2) 40%, transparent 70%)', filter: 'blur(90px)', animation: 'sharedOrb1 16s ease-in-out infinite' }} />
-          <div className="absolute" style={{ top: '10%', right: '-10%', width: '55vw', height: '55vw', background: 'radial-gradient(circle, rgba(99,102,241,0.45) 0%, rgba(67,56,202,0.18) 45%, transparent 70%)', filter: 'blur(100px)', animation: 'sharedOrb2 20s ease-in-out infinite' }} />
-          <div className="absolute" style={{ top: '40%', left: '20%', width: '60vw', height: '50vw', background: 'radial-gradient(ellipse, rgba(168,85,247,0.4) 0%, rgba(124,58,237,0.15) 45%, transparent 70%)', filter: 'blur(110px)', animation: 'sharedOrb3 24s ease-in-out infinite' }} />
-          <div className="absolute" style={{ bottom: '5%', right: '5%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(79,70,229,0.38) 0%, rgba(37,99,235,0.12) 50%, transparent 70%)', filter: 'blur(80px)', animation: 'sharedOrb1 18s ease-in-out infinite reverse' }} />
-          <div className="absolute" style={{ bottom: '30%', left: '-5%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(192,132,252,0.3) 0%, rgba(139,92,246,0.1) 50%, transparent 70%)', filter: 'blur(85px)', animation: 'sharedOrb2 22s ease-in-out infinite reverse' }} />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredFranchises.slice(0, 3).map((franchise, i) => (
+              <div key={franchise.id} className="group relative overflow-hidden rounded-2xl flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease', animation: `cardReveal 0.4s ease ${i*0.08+0.1}s both` }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}>
+                <FranchiseCard franchise={franchise} darkMode />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <button type="button"
+              onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}
+              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 30px rgba(124,58,237,0.6)'}
+              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,58,237,0.4)'}>
+              View All Opportunities
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1"><FiArrowRight className="h-3 w-3" /></span>
+            </button>
+          </div>
         </div>
 
-        <style>{`
-          @keyframes sharedOrb1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(4%,7%) scale(1.1)} 66%{transform:translate(-3%,3%) scale(0.93)} }
-          @keyframes sharedOrb2 { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(-6%,4%) scale(1.12)} 70%{transform:translate(4%,-4%) scale(0.9)} }
-          @keyframes sharedOrb3 { 0%,100%{transform:translate(0,0) scale(1)} 30%{transform:translate(3%,-6%) scale(1.08)} 65%{transform:translate(-5%,4%) scale(0.95)} }
-          @keyframes cardReveal { to{opacity:1;transform:translateY(0)} } @keyframes iconPulse { 0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0.4)} 50%{box-shadow:0 0 0 6px rgba(139,92,246,0)} }          @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-          @keyframes stepPulse { 0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0.4)} 50%{box-shadow:0 0 0 8px rgba(139,92,246,0)} }
-        `}</style>
+        {/* ── thin divider line replaced by gradient fade ── */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          CONTINUOUS DARK SECTION: Who We Serve → Services → Process
+          One living animated background, no dividers, no gaps
+      ═══════════════════════════════════════════════════════════════ */}
+      <div className="relative w-full overflow-hidden bg-transparent">
+
+        {/* ── WHO WE SERVE ── */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+              Who We Serve
+            </span>
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Built for Investors and Growing Brands</h2>
+            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+              Whether investing in franchise businesses or expanding your brand — iFranchise provides the infrastructure for long-term growth.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {[
+              {
+                tag: 'For Investors',
+                img: forInvestorsImg,
+                heading: 'Invest in Businesses Built for Long-Term Growth',
+                points: ['Explore verified franchise opportunities', 'Compare business models & investment requirements', 'Discover opportunities across multiple industries', 'Connect directly with franchise brands'],
+                cta: 'Explore Opportunities',
+                path: '/franchise-opportunities',
+                delay: '0.1s',
+              },
+              {
+                tag: 'For Brands',
+                img: forBrandsImg,
+                heading: 'Turn Your Brand Into a Scalable Franchise Network',
+                points: ['Reach serious investors actively looking for opportunities', 'Expand into new markets and cities', 'Generate qualified franchise leads', 'Build a stronger brand presence'],
+                cta: 'List Your Brand',
+                path: '/list-your-brand',
+                delay: '0.18s',
+              },
+            ].map((card, ci) => (
+              <div key={card.tag} className="group relative overflow-hidden rounded-2xl flex flex-col"
+                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease', animation: `fadeUp 0.4s ease ${card.delay} both` }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 24px 60px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
+              >
+                {/* Hover top glow line */}
+                <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)' }} />
+
+                {/* Image — full card width, natural height */}
+                <div className="relative w-full overflow-hidden leading-none">
+                  <img
+                    src={card.img}
+                    alt={card.tag}
+                    className="block h-auto w-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {/* Tag badge */}
+                  <span className="absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white"
+                    style={{ background: 'rgba(109,40,217,0.75)', backdropFilter: 'blur(10px)', border: '1px solid rgba(167,139,250,0.3)' }}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-300" />{card.tag}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 flex flex-col p-6">
+                  <h3 className="text-[1.05rem] font-extrabold text-white mb-4 leading-snug">{card.heading}</h3>
+                  <ul className="space-y-2.5 mb-6 flex-1">
+                    {card.points.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-[0.8rem] text-white leading-snug">
+                        <svg className="w-3.5 h-3.5 text-violet-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Premium CTA button */}
+                  <button
+                    type="button"
+                    onClick={() => { window.history.pushState({}, '', card.path); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                    className="group/btn relative w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold text-white"
+                    style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)', transition: 'box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 35px rgba(109,40,217,0.55)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(109,40,217,0.35)'; }}
+                  >
+                    {/* Shine sweep */}
+                    <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"
+                      style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }} />
+                    <span className="relative z-10 inline-flex items-center justify-center gap-2.5">
+                      {card.cta}
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
+                        <FiArrowRight className="h-3 w-3" />
+                      </span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── thin gradient divider ── */}
+        <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
         {/* ── SERVICES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12">
@@ -3074,7 +3357,7 @@ function Hero() {
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl mb-4">
               Complete Franchise Growth &amp; Expansion Services
             </h2>
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">
+            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white sm:text-base">
               End-to-end franchise services — from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </div>
@@ -3172,12 +3455,12 @@ function Hero() {
                   <h3 className="text-[1rem] font-bold text-white mb-2 leading-snug tracking-[-0.01em]">{s.title}</h3>
 
                   {/* Description */}
-                  <p className="text-[0.78rem] text-white/75 leading-relaxed mb-5">{s.desc}</p>
+                  <p className="text-[0.78rem] text-white leading-relaxed mb-5">{s.desc}</p>
 
                   {/* Points */}
                   <ul className="space-y-2 flex-1 mt-auto">
                     {s.points.map((p, j) => (
-                      <li key={j} className="flex items-center gap-2.5 text-[0.76rem] text-white/80 font-medium leading-snug">
+                      <li key={j} className="flex items-center gap-2.5 text-[0.76rem] text-white font-medium leading-snug">
                         <span className="flex-shrink-0 w-1 h-1 rounded-full bg-violet-400/60" />{p}
                       </li>
                     ))}
@@ -3210,146 +3493,7 @@ function Hero() {
         {/* ── thin divider line replaced by gradient fade ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
-        {/* ── FEATURED OPPORTUNITIES ── */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4"
-              style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-              Opportunities
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Featured Franchises</h2>
-            <p className="mx-auto max-w-xl text-sm text-white/55 sm:text-base leading-relaxed">
-              Curated, high-performing brands ready for expansion and investment.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredFranchises.slice(0, 3).map((franchise, i) => (
-              <div key={franchise.id} className="group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease', animation: `cardReveal 0.4s ease ${i*0.08+0.1}s both` }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}>
-                <FranchiseCard franchise={franchise} darkMode />
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <button type="button"
-              onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 30px rgba(124,58,237,0.6)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,58,237,0.4)'}>
-              View All Opportunities
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1"><FiArrowRight className="h-3 w-3" /></span>
-            </button>
-          </div>
-        </div>
-
         {/* ── thin divider line replaced by gradient fade ── */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
-
-        {/* ── WHO WE SERVE ── */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              Who We Serve
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Built for Investors and Growing Brands</h2>
-            <p className="mx-auto max-w-xl text-sm text-white/55 sm:text-base leading-relaxed">
-              Whether investing in franchise businesses or expanding your brand — iFranchise provides the infrastructure for long-term growth.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {[
-              {
-                tag: 'For Investors',
-                img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80',
-                imgPos: 'object-[center_20%]',
-                heading: 'Invest in Businesses Built for Long-Term Growth',
-                points: ['Explore verified franchise opportunities', 'Compare business models & investment requirements', 'Discover opportunities across multiple industries', 'Connect directly with franchise brands'],
-                cta: 'Explore Opportunities',
-                path: '/franchise-opportunities',
-                delay: '0.1s',
-              },
-              {
-                tag: 'For Brands',
-                img: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80',
-                imgPos: 'object-[center_30%]',
-                heading: 'Turn Your Brand Into a Scalable Franchise Network',
-                points: ['Reach serious investors actively looking for opportunities', 'Expand into new markets and cities', 'Generate qualified franchise leads', 'Build a stronger brand presence'],
-                cta: 'List Your Brand',
-                path: '/list-your-brand',
-                delay: '0.18s',
-              },
-            ].map((card, ci) => (
-              <div key={card.tag} className="group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease', animation: `fadeUp 0.4s ease ${card.delay} both` }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 24px 60px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
-              >
-                {/* Hover top glow line */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)' }} />
-
-                {/* Image */}
-                <div className="relative h-56 overflow-hidden">
-                  <img src={card.img} alt={card.tag}
-                    className={`w-full h-full object-cover ${card.imgPos}`}
-                    style={{ transition: 'transform 0.5s cubic-bezier(0.22,1,0.36,1)' }}
-                    ref={el => { if (!el) return; const p = el.closest('.group'); p.addEventListener('mouseenter', () => { el.style.transform = 'scale(1.06)'; }); p.addEventListener('mouseleave', () => { el.style.transform = 'scale(1)'; }); }}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(10,6,24,0.15) 0%, rgba(10,6,24,0.75) 100%)' }} />
-                  {/* Tag badge */}
-                  <span className="absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white"
-                    style={{ background: 'rgba(109,40,217,0.75)', backdropFilter: 'blur(10px)', border: '1px solid rgba(167,139,250,0.3)' }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-300" />{card.tag}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col p-6">
-                  <h3 className="text-[1.05rem] font-extrabold text-white mb-4 leading-snug">{card.heading}</h3>
-                  <ul className="space-y-2.5 mb-6 flex-1">
-                    {card.points.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[0.8rem] text-white/65 leading-snug">
-                        <svg className="w-3.5 h-3.5 text-violet-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Premium CTA button */}
-                  <button
-                    type="button"
-                    onClick={() => { window.history.pushState({}, '', card.path); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                    className="group/btn relative w-full overflow-hidden rounded-xl py-3.5 text-sm font-bold text-white"
-                    style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)', transition: 'box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)' }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 35px rgba(109,40,217,0.55)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(109,40,217,0.35)'; }}
-                  >
-                    {/* Shine sweep */}
-                    <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"
-                      style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }} />
-                    <span className="relative z-10 inline-flex items-center justify-center gap-2.5">
-                      {card.cta}
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
-                        <FiArrowRight className="h-3 w-3" />
-                      </span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── thin gradient divider ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
         {/* ── PROCESS ── */}
@@ -3360,7 +3504,7 @@ function Hero() {
               iFranchise Process
             </span>
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Two Strategic Paths. One Growth Engine.</h2>
-            <p className="mx-auto max-w-xl text-sm text-white/55 sm:text-base leading-relaxed">
+            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
               Whether scaling a franchise brand or investing in the right opportunity — iFranchise simplifies every critical step.
             </p>
           </div>
@@ -3378,7 +3522,7 @@ function Hero() {
             ].map((m, i) => (
               <div key={i} className="flex flex-col items-center py-5 px-4 rounded-2xl text-center" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(139,92,246,0.2)', backdropFilter: 'blur(8px)' }}>
                 <p className="text-xl font-extrabold text-white mb-1">{m.value}</p>
-                <p className="text-[0.7rem] text-white/50 font-medium">{m.label}</p>
+                <p className="text-[0.7rem] text-white font-medium">{m.label}</p>
               </div>
             ))}
           </div>
@@ -3401,15 +3545,7 @@ function Hero() {
           CONTINUOUS DARK SECTION: Industries → Featured Opportunities
           Same living animated background, seamless flow
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="relative w-full overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0618 0%, #0f0a1e 35%, #130a2e 65%, #0a0618 100%)' }}>
-
-        {/* Shared animated orbs */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-          <div className="absolute" style={{ top: '-8%', right: '-5%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(139,92,246,0.48) 0%, rgba(109,40,217,0.18) 42%, transparent 70%)', filter: 'blur(90px)', animation: 'sharedOrb2 18s ease-in-out infinite' }} />
-          <div className="absolute" style={{ top: '30%', left: '-8%', width: '55vw', height: '55vw', background: 'radial-gradient(circle, rgba(99,102,241,0.42) 0%, rgba(67,56,202,0.15) 45%, transparent 70%)', filter: 'blur(100px)', animation: 'sharedOrb1 22s ease-in-out infinite' }} />
-          <div className="absolute" style={{ bottom: '10%', right: '15%', width: '50vw', height: '50vw', background: 'radial-gradient(ellipse, rgba(168,85,247,0.38) 0%, rgba(124,58,237,0.12) 45%, transparent 70%)', filter: 'blur(110px)', animation: 'sharedOrb3 26s ease-in-out infinite' }} />
-          <div className="absolute" style={{ bottom: '-5%', left: '30%', width: '45vw', height: '40vw', background: 'radial-gradient(circle, rgba(79,70,229,0.35) 0%, rgba(37,99,235,0.1) 50%, transparent 70%)', filter: 'blur(80px)', animation: 'sharedOrb2 20s ease-in-out infinite reverse' }} />
-        </div>
+      <div className="relative w-full overflow-hidden bg-transparent">
 
         {/* ── INDUSTRIES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
@@ -3422,7 +3558,7 @@ function Hero() {
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">
               Opportunities Across High-Growth Industries
             </h2>
-            <p className="mx-auto max-w-xl text-sm text-white/55 sm:text-base leading-relaxed">
+            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
               Franchise opportunities across India's most dynamic sectors — each with proven models and qualified investors.
             </p>
           </div>
@@ -3432,38 +3568,32 @@ function Hero() {
               {
                 label: 'Retail & Jewelry', accent: '#f59e0b',
                 desc: 'Growing consumer demand and scalable business models.',
-                img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>,
+                img: retailImg,
               },
               {
                 label: 'Food & Beverage', accent: '#f97316',
                 desc: 'Proven concepts with strong customer loyalty and repeat business.',
-                img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>,
+                img: foodImg,
               },
               {
                 label: 'Healthcare & Wellness', accent: '#10b981',
                 desc: 'Rising health consciousness driving sustainable growth.',
-                img: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>,
+                img: healthcareImg,
               },
               {
                 label: 'Education & Training', accent: '#3b82f6',
                 desc: 'Lifelong learning trends creating consistent demand.',
-                img: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>,
+                img: educationImg,
               },
               {
                 label: 'Logistics & Infrastructure', accent: '#94a3b8',
                 desc: 'E-commerce boom fueling supply chain opportunities.',
-                img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>,
+                img: logisticsImg,
               },
               {
                 label: 'Beauty & Lifestyle', accent: '#ec4899',
                 desc: 'Premium services with high customer retention rates.',
-                img: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
-                icon: <svg className="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>,
+                img: beautyImg,
               },
             ].map((ind, i) => (
               <div key={ind.label} className="group relative overflow-hidden rounded-2xl cursor-pointer flex flex-col"
@@ -3472,21 +3602,14 @@ function Hero() {
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
                 onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
               >
-                <div className="relative h-52 overflow-hidden">
-                  <img src={ind.img} alt={ind.label} className="w-full h-full object-cover" loading="lazy"
-                    style={{ transition: 'transform 0.4s cubic-bezier(0.22,1,0.36,1)' }}
-                    ref={el => { if (!el) return; const c = el.closest('.group'); c.addEventListener('mouseenter', () => { el.style.transform = 'scale(1.08)'; }); c.addEventListener('mouseleave', () => { el.style.transform = 'scale(1)'; }); }}
-                  />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,6,24,0.85) 0%, rgba(10,6,24,0.3) 60%, transparent 100%)' }} />
+                <div className="relative h-52 overflow-hidden bg-[#0a0618]">
+                  <HeroIndustryCardImg src={ind.img} alt={ind.label} />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent" aria-hidden />
                   <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)` }} />
-                  <div className="absolute top-4 left-4 w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: 'rgba(139,92,246,0.2)', backdropFilter: 'blur(8px)', border: '1px solid rgba(139,92,246,0.35)', color: '#c4b5fd' }}>
-                    {ind.icon}
-                  </div>
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-base font-bold text-white mb-1.5 leading-snug">{ind.label}</h3>
-                  <p className="text-[0.78rem] text-white/75 leading-relaxed flex-1">{ind.desc}</p>
+                  <p className="text-[0.78rem] text-white leading-relaxed flex-1">{ind.desc}</p>
                   <div className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: '#c4b5fd' }}>
                     Explore opportunities <FiArrowRight className="h-3 w-3" />
                   </div>
@@ -3516,15 +3639,7 @@ function Hero() {
       {/* ═══════════════════════════════════════════════════════════════
           CONTINUOUS DARK SECTION: Why iFranchise → Testimonials → Market Intelligence → FAQ
       ═══════════════════════════════════════════════════════════════ */}
-      <div className="relative w-full overflow-hidden" style={{ background: 'linear-gradient(180deg, #0a0618 0%, #0f0a1e 30%, #130a2e 65%, #0a0618 100%)' }}>
-
-        {/* Shared animated orbs */}
-        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-          <div className="absolute" style={{ top: '-5%', left: '-8%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(139,92,246,0.45) 0%, rgba(109,40,217,0.18) 42%, transparent 70%)', filter: 'blur(90px)', animation: 'sharedOrb1 18s ease-in-out infinite' }} />
-          <div className="absolute" style={{ top: '20%', right: '-8%', width: '55vw', height: '55vw', background: 'radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(67,56,202,0.15) 45%, transparent 70%)', filter: 'blur(100px)', animation: 'sharedOrb2 22s ease-in-out infinite' }} />
-          <div className="absolute" style={{ top: '55%', left: '15%', width: '60vw', height: '50vw', background: 'radial-gradient(ellipse, rgba(168,85,247,0.35) 0%, rgba(124,58,237,0.12) 45%, transparent 70%)', filter: 'blur(110px)', animation: 'sharedOrb3 26s ease-in-out infinite' }} />
-          <div className="absolute" style={{ bottom: '5%', right: '10%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(79,70,229,0.32) 0%, rgba(37,99,235,0.1) 50%, transparent 70%)', filter: 'blur(80px)', animation: 'sharedOrb1 20s ease-in-out infinite reverse' }} />
-        </div>
+      <div className="relative w-full overflow-hidden bg-transparent">
 
       {/* -- WHY iFRANCHISE SECTION -- */}
       <section className="relative w-full py-12 sm:py-16 lg:py-20 overflow-hidden">
@@ -3539,7 +3654,7 @@ function Hero() {
             <h2 className="text-[clamp(1.5rem,4.5vw,2.25rem)] font-extrabold tracking-tight text-white leading-[1.15] mb-3 px-4 max-w-3xl mx-auto">
               Why Investors and Brands Choose iFranchise
             </h2>
-            <p className="text-sm text-white/55 leading-relaxed max-w-2xl mx-auto px-4">
+            <p className="text-sm text-white leading-relaxed max-w-2xl mx-auto px-4">
               Built to simplify franchise discovery, expansion, and investment through structured business intelligence.
             </p>
           </div>
@@ -3600,7 +3715,7 @@ function Hero() {
                   {/* Content */}
                   <div className="p-6 pt-2 flex flex-col flex-1">
                     <h3 className="text-[1rem] font-bold text-white leading-snug mb-2">{card.title}</h3>
-                    <p className="text-[0.8rem] text-white/65 leading-relaxed">{card.desc}</p>
+                    <p className="text-[0.8rem] text-white leading-relaxed">{card.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -3720,7 +3835,7 @@ function Hero() {
                   </p>
 
                   {/* Description */}
-                  <p className="text-[0.75rem] text-white/50 leading-relaxed flex-1">
+                  <p className="text-[0.75rem] text-white leading-relaxed flex-1">
                     {stat.description}
                   </p>
                 </div>
@@ -3735,7 +3850,7 @@ function Hero() {
                 { label: '72% investor preference', color: '#60a5fa' },
                 { label: '30% CAGR aligned', color: '#fb923c' },
               ].map((item) => (
-                <div key={item.label} className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-white/70"
+                <div key={item.label} className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-white"
                   style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
                   <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: item.color }} />
                   {item.label}
@@ -3745,7 +3860,7 @@ function Hero() {
           </div>
           {/* Brand Trust Rail */}
           <div className="text-center">
-            <p className="text-sm font-medium text-white/50 mb-6 sm:mb-8">
+            <p className="text-sm font-medium text-white mb-6 sm:mb-8">
               Trusted across franchise, strategy & enterprise ecosystems
             </p>
             
@@ -3755,7 +3870,7 @@ function Hero() {
                 {['Tata', 'Reliance', 'Infosys', 'Shopify', 'Stripe', 'Microsoft', 'Google', 'Amazon', 'Tata', 'Reliance', 'Infosys', 'Shopify', 'Stripe', 'Microsoft', 'Google', 'Amazon'].map((brand, idx) => (
                   <div
                     key={`${brand}-${idx}`}
-                    className="group inline-flex items-center gap-2 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white/25 hover:text-white/70 transition-colors duration-300"
+                    className="group inline-flex items-center gap-2 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white/25 hover:text-white transition-colors duration-300"
                   >
                     <span className="text-lg sm:text-xl md:text-2xl leading-none opacity-30 group-hover:opacity-60 transition-opacity duration-300">*</span>
                     <span className="group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">{brand}</span>
@@ -3811,7 +3926,7 @@ function Hero() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
               Helpful Franchise Questions & Answers
             </h2>
-            <p className="text-base text-white/55 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base text-white leading-relaxed max-w-2xl mx-auto">
               Everything founders, investors, and franchise buyers need to know before making expansion decisions.
             </p>
           </div>

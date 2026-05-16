@@ -48,7 +48,7 @@ const ONBOARDING = [
 ];
 
 const STATUS_COLOR = { live: 'bg-emerald-500', progress: 'bg-amber-400', pending: 'bg-slate-500' };
-const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-slate-500' };
+const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-violet-200/65' };
 const STATUS_LABEL = { live: 'Live', progress: 'In Progress', pending: 'Pending' };
 
 export default function BrandsSection() {
@@ -61,34 +61,8 @@ export default function BrandsSection() {
   const maxCount    = useMemo(() => Math.max(...markets.map(m => m.count)), [markets]);
 
   return (
-    <section
-      className="relative overflow-hidden bg-white"
-      style={{ height: 'calc(100vh - 0px)' }}
-    >
-      {/* background */}
-      <div className="pointer-events-none absolute inset-0">
-        <svg className="absolute inset-0 h-full w-full opacity-[0.04]">
-          <defs>
-            <pattern id="brand-sec-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#brand-sec-grid)"/>
-        </svg>
-        <motion.div
-          animate={{ x: [0, 50, 0], opacity: [0.08, 0.18, 0.08] }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-0 top-1/3 h-80 w-80 rounded-full bg-violet-600/20 blur-[100px]"
-        />
-        <motion.div
-          animate={{ x: [0, -40, 0], opacity: [0.06, 0.14, 0.06] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-          className="absolute right-0 bottom-1/3 h-72 w-72 rounded-full bg-indigo-600/20 blur-[90px]"
-        />
-      </div>
-
-      {/* content — fills height, vertically centred */}
-      <div className="relative z-10 h-full flex items-center">
+    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
+      <div className="relative z-10">
         <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
@@ -101,17 +75,17 @@ export default function BrandsSection() {
               className="flex flex-col gap-5"
             >
               <div>
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[0.65rem] font-bold uppercase tracking-widest text-violet-600 mb-4 block w-fit">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.65rem] font-bold uppercase tracking-widest text-violet-300 mb-4 block w-fit">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
                   For Brand Owners
                 </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.3rem] font-extrabold text-slate-900 leading-[1.1] tracking-tight mb-3">
+                <h2 className="text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.3rem] font-extrabold text-white leading-[1.1] tracking-tight mb-3">
                   Everything Your Brand Needs to{' '}
                   <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
                     Franchise at Scale
                   </span>
                 </h2>
-                <p className="text-slate-400 text-[0.88rem] leading-relaxed max-w-md">
+                <p className="text-violet-100/85 text-[0.88rem] leading-relaxed max-w-md">
                   From franchise model design to investor acquisition — we handle the full expansion infrastructure so you focus on building your brand.
                 </p>
               </div>
@@ -125,16 +99,16 @@ export default function BrandsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.35, delay: i * 0.07 }}
-                    className="flex items-start gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200"
+                    className="card-premium-dark-inner flex items-start gap-2 p-3 rounded-xl"
                   >
                     <div className="w-5 h-5 rounded-md bg-violet-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                       </svg>
                     </div>
                     <div>
-                      <p className="text-[0.75rem] font-bold text-slate-900 leading-snug">{b.title}</p>
-                      <p className="text-[0.65rem] text-slate-500 mt-0.5">{b.desc}</p>
+                      <p className="text-[0.75rem] font-bold text-white leading-snug">{b.title}</p>
+                      <p className="text-[0.65rem] text-violet-200/70 mt-0.5">{b.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -142,7 +116,7 @@ export default function BrandsSection() {
 
               <button
                 onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                className="group self-start inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 text-slate-900 text-sm font-bold hover:bg-violet-500 transition-colors duration-200 shadow-lg shadow-violet-900/40"
+                className="group self-start inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-slate-900 text-sm font-bold hover:bg-violet-50 transition-colors duration-200 shadow-lg shadow-violet-900/40"
               >
                 List Your Brand Today
                 <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -158,20 +132,20 @@ export default function BrandsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="rounded-2xl border border-slate-200 bg-white border border-slate-200 shadow-xl overflow-hidden">
+              <motion.div className="card-premium-dark rounded-2xl overflow-hidden shadow-xl">
 
                 {/* header */}
-                <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100 bg-slate-50/60">
+                <div className="flex items-center justify-between px-4 py-2.5 border-b border-violet-500/25 bg-violet-950/40">
                   <div>
-                    <p className="text-[0.72rem] font-bold text-slate-900">Brand Expansion Dashboard</p>
-                    <p className="text-[0.6rem] text-slate-500">Operational intelligence · Live data</p>
+                    <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
+                    <p className="text-[0.6rem] text-violet-200/70">Operational intelligence · Live data</p>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"/>
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"/>
                     </span>
-                    <span className="text-[0.58rem] font-bold text-emerald-600 uppercase tracking-wider">Live</span>
+                    <span className="text-[0.58rem] font-bold text-emerald-400 uppercase tracking-wider">Live</span>
                   </div>
                 </div>
 
@@ -184,9 +158,9 @@ export default function BrandsSection() {
                       { label: 'Cities',         value: `${cityCount}+`,  color: 'text-indigo-400'  },
                       { label: 'Avg ROI',        value: `${avgROI}%`,     color: 'text-emerald-400' },
                     ].map((k, i) => (
-                      <div key={i} className="flex flex-col items-center py-2 rounded-xl bg-slate-50 border border-slate-200">
+                      <div key={i} className="flex flex-col items-center py-2 rounded-xl bg-violet-950/50 border border-violet-500/25">
                         <p className={`text-lg font-extrabold ${k.color} tabular-nums`}>{k.value}</p>
-                        <p className="text-[0.58rem] text-slate-500 mt-0.5">{k.label}</p>
+                        <p className="text-[0.58rem] text-violet-200/65 mt-0.5">{k.label}</p>
                       </div>
                     ))}
                   </div>
@@ -195,14 +169,14 @@ export default function BrandsSection() {
                   <div className="grid grid-cols-2 gap-2">
 
                     {/* market tracker */}
-                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-slate-400 mb-2">Market Tracker</p>
+                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Market Tracker</p>
                       <div className="space-y-1.5">
                         {markets.slice(0, 4).map((m, i) => (
                           <div key={i} className="space-y-0.5">
                             <div className="flex items-center justify-between">
-                              <span className="text-[0.62rem] text-slate-700 truncate max-w-[80px]">{m.industry}</span>
-                              <span className="text-[0.58rem] text-slate-500">{m.count}</span>
+                              <span className="text-[0.62rem] text-white/90 truncate max-w-[80px]">{m.industry}</span>
+                              <span className="text-[0.58rem] text-violet-200/65">{m.count}</span>
                             </div>
                             <MiniBar value={m.count} max={maxCount} color={i % 2 === 0 ? 'violet' : 'emerald'} delay={i * 0.08} />
                           </div>
@@ -211,8 +185,8 @@ export default function BrandsSection() {
                     </div>
 
                     {/* onboarding pipeline */}
-                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-slate-400 mb-2">Onboarding Pipeline</p>
+                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Onboarding Pipeline</p>
                       <div className="space-y-1.5">
                         {ONBOARDING.map((o, i) => (
                           <motion.div
@@ -223,7 +197,7 @@ export default function BrandsSection() {
                             transition={{ duration: 0.3, delay: i * 0.05 }}
                             className="flex items-center justify-between"
                           >
-                            <span className="text-[0.62rem] text-slate-600 truncate max-w-[90px]">{o.label}</span>
+                            <span className="text-[0.62rem] text-violet-100/80 truncate max-w-[90px]">{o.label}</span>
                             <div className="flex items-center gap-1 shrink-0">
                               <span className={`w-1.5 h-1.5 rounded-full ${STATUS_COLOR[o.status]}`} />
                               <span className={`text-[0.58rem] font-bold ${STATUS_TEXT[o.status]}`}>{STATUS_LABEL[o.status]}</span>
@@ -238,12 +212,12 @@ export default function BrandsSection() {
                   <div className="grid grid-cols-2 gap-2">
 
                     {/* top cities */}
-                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-slate-400 mb-2">Top Cities</p>
+                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Top Cities</p>
                       <div className="space-y-1">
                         {topCities.map((c, i) => (
                           <div key={i} className="flex items-center justify-between">
-                            <span className="text-[0.65rem] text-slate-700 truncate">{c.city}</span>
+                            <span className="text-[0.65rem] text-white/90 truncate">{c.city}</span>
                             <span className="text-[0.6rem] font-bold text-violet-400">{c.count}</span>
                           </div>
                         ))}
@@ -251,23 +225,23 @@ export default function BrandsSection() {
                     </div>
 
                     {/* growth analytics */}
-                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-2.5 flex flex-col gap-2">
+                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5 flex flex-col gap-2">
                       <p className="text-[0.6rem] font-bold uppercase tracking-wider text-slate-400">Growth Analytics</p>
                       <div className="flex flex-col gap-2 flex-1 justify-center">
-                        <div className="flex flex-col p-2 rounded-lg bg-slate-50">
+                        <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
                           <span className="text-base font-extrabold text-emerald-400 tabular-nums">{growth.growthRate}%</span>
-                          <span className="text-[0.58rem] text-slate-500">Growth Rate</span>
+                          <span className="text-[0.58rem] text-violet-200/65">Growth Rate</span>
                         </div>
-                        <div className="flex flex-col p-2 rounded-lg bg-slate-50">
+                        <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
                           <span className="text-base font-extrabold text-violet-400 tabular-nums">{growth.recentCount}</span>
-                          <span className="text-[0.58rem] text-slate-500">New This Quarter</span>
+                          <span className="text-[0.58rem] text-violet-200/65">New This Quarter</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
           </div>

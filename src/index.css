@@ -1,4 +1,4 @@
-﻿/* Font loaded via <link> in index.html — non-blocking */
+/* Font loaded via <link> in index.html — non-blocking */
 
 @tailwind base;
 @tailwind components;
@@ -27,13 +27,13 @@
   }
 
   body {
-    @apply m-0 text-slate-900 antialiased;
+    @apply m-0 text-slate-100 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #f8f8f6;
+    background: #0a0618;
     /* Prevent layout shift from scrollbar */
     scrollbar-gutter: stable;
     /* NOTE: overflow-x:hidden removed — it breaks position:sticky on child elements */
@@ -44,7 +44,7 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle at 1px 1px, rgba(15,23,42,0.012) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, rgba(167,139,250,0.06) 1px, transparent 0);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: -1;
@@ -95,6 +95,28 @@ img.loaded {
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* Homepage / shared motion — injected once (Hero formerly duplicated these) */
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -325,6 +347,28 @@ img.loaded {
     scrollbar-width: none;
   }
   .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* Franchise navbar filter panel — single scroll region */
+  .franchise-filter-scroll {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 58, 237, 0.38) transparent;
+  }
+  .franchise-filter-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .franchise-filter-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+  }
+  .franchise-filter-scroll::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(167, 139, 250, 0.45), rgba(124, 58, 237, 0.35));
+    border-radius: 999px;
+  }
+  .franchise-filter-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(167, 139, 250, 0.65), rgba(124, 58, 237, 0.5));
+  }
 
   /* ── Motion tokens ── */
   .motion-micro {
@@ -1746,4 +1790,136 @@ img[loading="lazy"]:not([src=""]) {
   30%  { transform: translate(25px, -35px) scale(1.05); }
   65%  { transform: translate(-30px, -15px) scale(1.04); }
   100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* ─── Skip link (accessibility) ─────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  z-index: 9999;
+  padding: 0.75rem 1.25rem;
+  background: #6d28d9;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ─── Site backdrop (AnimatedSiteBackdrop) ──────────────────────────────────── */
+.site-backdrop {
+  contain: strict;
+  isolation: isolate;
+}
+.site-backdrop__orbs {
+  contain: layout style paint;
+}
+.site-backdrop__orb {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.site-backdrop__orb--a {
+  top: -5%;
+  left: -8%;
+  width: 65vw;
+  height: 65vw;
+  background: radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(109,40,217,0.2) 40%, transparent 70%);
+  filter: blur(72px);
+  animation: siteOrbA 16s ease-in-out infinite;
+}
+.site-backdrop__orb--b {
+  top: 10%;
+  right: -10%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, rgba(99,102,241,0.45) 0%, rgba(67,56,202,0.18) 45%, transparent 70%);
+  filter: blur(80px);
+  animation: siteOrbB 20s ease-in-out infinite;
+}
+.site-backdrop__orb--c {
+  top: 40%;
+  left: 20%;
+  width: 60vw;
+  height: 50vw;
+  background: radial-gradient(ellipse, rgba(168,85,247,0.4) 0%, rgba(124,58,237,0.15) 45%, transparent 70%);
+  filter: blur(88px);
+  animation: siteOrbC 24s ease-in-out infinite;
+}
+.site-backdrop__orb--d {
+  bottom: 5%;
+  right: 5%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(79,70,229,0.38) 0%, rgba(37,99,235,0.12) 50%, transparent 70%);
+  filter: blur(64px);
+  animation: siteOrbA 18s ease-in-out infinite reverse;
+}
+.site-backdrop__orb--e {
+  bottom: 30%;
+  left: -5%;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, rgba(192,132,252,0.3) 0%, rgba(139,92,246,0.1) 50%, transparent 70%);
+  filter: blur(68px);
+  animation: siteOrbB 22s ease-in-out infinite reverse;
+}
+.site-backdrop__grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+@keyframes siteOrbA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(4%, 7%, 0) scale(1.08); }
+  66% { transform: translate3d(-3%, 3%, 0) scale(0.95); }
+}
+@keyframes siteOrbB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  40% { transform: translate3d(-6%, 4%, 0) scale(1.1); }
+  70% { transform: translate3d(4%, -4%, 0) scale(0.92); }
+}
+@keyframes siteOrbC {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  30% { transform: translate3d(3%, -6%, 0) scale(1.06); }
+  65% { transform: translate3d(-5%, 4%, 0) scale(0.96); }
+}
+@media (max-width: 768px) {
+  .site-backdrop__orb--a,
+  .site-backdrop__orb--b,
+  .site-backdrop__orb--c,
+  .site-backdrop__orb--d,
+  .site-backdrop__orb--e {
+    filter: blur(48px);
+    opacity: 0.85;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-backdrop__orb {
+    animation: none !important;
+  }
+}
+
+/* ─── Premium interaction utilities ─────────────────────────────────────────── */
+.gpu-transform {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.interactive-lift {
+  transition: transform var(--motion-standard) var(--ease-standard),
+    box-shadow var(--motion-standard) var(--ease-standard);
+}
+.interactive-lift:hover {
+  transform: translateY(-4px);
+}
+.interactive-press:active {
+  transform: scale(0.98);
+  transition-duration: var(--motion-micro);
 }

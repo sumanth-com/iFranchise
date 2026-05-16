@@ -240,14 +240,7 @@ export default function PreFooterCTA() {
   });
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, #0a0618 0%, #0f0a1e 40%, #130a2e 100%)' }}>
-
-      {/* Living animated orbs — same as page sections */}
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: '55vw', height: '55vw', background: 'radial-gradient(circle, rgba(139,92,246,0.45) 0%, rgba(109,40,217,0.18) 42%, transparent 70%)', filter: 'blur(90px)', animation: 'footerBlob1 16s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', top: '10%', right: '-8%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(67,56,202,0.15) 45%, transparent 70%)', filter: 'blur(100px)', animation: 'footerBlob2 20s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', bottom: '5%', left: '25%', width: '50vw', height: '40vw', background: 'radial-gradient(ellipse, rgba(168,85,247,0.35) 0%, rgba(124,58,237,0.12) 45%, transparent 70%)', filter: 'blur(110px)', animation: 'footerBlob3 24s ease-in-out infinite' }} />
-      </div>
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
 
       {/* ── Unified card ── */}
       <div

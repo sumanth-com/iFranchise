@@ -1,5 +1,7 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { franchiseOpportunities } from '../data/franchiseData';
+import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
+import { matchesNavbarFilters } from '../lib/franchiseNavbarFilters';
 
 // Use centralized data source
 const opportunities = franchiseOpportunities;
@@ -35,41 +37,41 @@ const parseSelectedRange = (selectedRange) => {
 // Skeleton Loading Component
 function OpportunityCardSkeleton() {
   return (
-    <article className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 overflow-hidden">
+    <article className="card-premium-dark rounded-xl overflow-hidden">
       {/* Image Skeleton */}
-      <div className="h-48 bg-slate-200 animate-pulse"></div>
+      <div className="h-48 bg-violet-950/60 animate-pulse"></div>
       
       {/* Content Skeleton */}
       <div className="p-5">
         {/* Category Skeleton */}
-        <div className="h-3 bg-slate-200 rounded w-16 mb-2 animate-pulse"></div>
+        <div className="h-3 bg-violet-900/40 rounded w-16 mb-2 animate-pulse"></div>
         
         {/* Brand Name Skeleton */}
-        <div className="h-6 bg-slate-200 rounded w-3/4 mb-3 animate-pulse"></div>
+        <div className="h-6 bg-violet-900/40 rounded w-3/4 mb-3 animate-pulse"></div>
 
         {/* Info Section Skeleton */}
         <div className="space-y-2 mb-4">
           <div className="flex items-center text-sm">
-            <div className="h-4 bg-slate-200 rounded w-20 mr-2 animate-pulse"></div>
-            <div className="h-4 bg-slate-200 rounded w-24 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-20 mr-2 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-24 animate-pulse"></div>
           </div>
           <div className="flex items-center text-sm">
-            <div className="h-4 bg-slate-200 rounded w-20 mr-2 animate-pulse"></div>
-            <div className="h-4 bg-slate-200 rounded w-16 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-20 mr-2 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-16 animate-pulse"></div>
           </div>
           <div className="flex items-center text-sm">
-            <div className="h-4 bg-slate-200 rounded w-20 mr-2 animate-pulse"></div>
-            <div className="h-4 bg-slate-200 rounded w-32 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-20 mr-2 animate-pulse"></div>
+            <div className="h-4 bg-violet-900/40 rounded w-32 animate-pulse"></div>
           </div>
         </div>
 
         {/* ROI Badge Skeleton */}
         <div className="mb-4">
-          <div className="h-6 bg-slate-200 rounded-full w-16 animate-pulse"></div>
+          <div className="h-6 bg-violet-900/40 rounded-full w-16 animate-pulse"></div>
         </div>
 
         {/* CTA Button Skeleton */}
-        <div className="h-10 bg-slate-200 rounded-lg animate-pulse"></div>
+        <div className="h-10 bg-violet-900/40 rounded-lg animate-pulse"></div>
       </div>
     </article>
   );
@@ -81,7 +83,7 @@ function OpportunityCard({ opportunity }) {
     switch (badge) {
       case 'HOT MARKET': return 'bg-red-500 text-white';
       case 'HIGH ROI': return 'bg-green-500 text-white';
-      case 'NEW': return 'bg-blue-500 text-white';
+      case 'NEW': return 'bg-violet-500 text-white';
       case 'TRENDING': return 'bg-purple-500 text-white';
       case 'GROWING': return 'bg-orange-500 text-white';
       case 'POPULAR': return 'bg-pink-500 text-white';
@@ -97,7 +99,7 @@ function OpportunityCard({ opportunity }) {
   return (
     <article 
       onClick={handleViewDetails}
-      className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+      className="card-premium-dark rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_20px_50px_rgba(109,40,217,0.35)] hover:-translate-y-1 hover:border-[rgba(139,92,246,0.45)] cursor-pointer"
     >
       {/* Image with Badge */}
       <div className="relative h-48 overflow-hidden">
@@ -129,52 +131,52 @@ function OpportunityCard({ opportunity }) {
       {/* Content */}
       <div className="p-5">
         {/* Category */}
-        <div className="text-xs text-slate-500 font-medium mb-1">{opportunity.category}</div>
+        <div className="text-xs text-violet-200/90 font-medium mb-1">{opportunity.category}</div>
         
         {/* Brand Name */}
-        <h3 className="text-lg font-bold text-slate-900 mb-3">{opportunity.brandName}</h3>
+        <h3 className="text-lg font-bold text-white mb-3">{opportunity.brandName}</h3>
 
         {/* Info Section */}
         <div className="space-y-3 mb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center text-sm">
-              <svg className="w-4 h-4 text-slate-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-slate-500">Investment:</span>
-              <span className="font-semibold text-slate-900 ml-2">{opportunity.investment}</span>
+              <span className="text-white">Investment:</span>
+              <span className="font-semibold text-white ml-2">{opportunity.investment}</span>
             </div>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center text-sm">
-              <svg className="w-4 h-4 text-slate-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
               </svg>
-              <span className="text-slate-500">Model:</span>
-              <span className="font-semibold text-slate-900 ml-2">{opportunity.model}</span>
+              <span className="text-white">Model:</span>
+              <span className="font-semibold text-white ml-2">{opportunity.model}</span>
             </div>
             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-              opportunity.model === 'FOCO' ? 'bg-blue-100 text-blue-800' :
-              opportunity.model === 'FOFO' ? 'bg-green-100 text-green-800' :
-              'bg-purple-100 text-purple-800'
+              opportunity.model === 'FOCO' ? 'bg-violet-500/25 text-violet-100 border border-violet-400/35' :
+              opportunity.model === 'FOFO' ? 'bg-emerald-500/25 text-emerald-100 border border-emerald-400/35' :
+              'bg-violet-500/25 text-violet-100 border border-violet-400/35'
             }`}>
               {opportunity.model === 'FOCO' ? 'Passive' : 
                opportunity.model === 'FOFO' ? 'Owner-Op' : 'Hybrid'}
             </span>
           </div>
           <div className="flex items-center text-sm">
-            <svg className="w-4 h-4 text-slate-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="text-slate-500">Locations:</span>
-            <span className="font-semibold text-slate-900 ml-2">{opportunity.locations}</span>
+            <span className="text-white">Locations:</span>
+            <span className="font-semibold text-white ml-2">{opportunity.locations}</span>
           </div>
         </div>
 
         {/* ROI Badge */}
         <div className="mb-4">
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-100 border border-emerald-400/35">
             {opportunity.roi} ROI
           </span>
         </div>
@@ -185,7 +187,7 @@ function OpportunityCard({ opportunity }) {
             e.stopPropagation();
             handleViewDetails();
           }}
-          className="w-full bg-slate-900 text-white py-2 px-4 rounded-lg text-sm font-semibold transition-colors duration-200 hover:bg-slate-800"
+          className="w-full bg-[#0B1220] text-white py-2 px-4 rounded-lg text-sm font-semibold transition-colors duration-200 hover:bg-[#1a2332] border border-white/10"
         >
           View Details
         </button>
@@ -216,7 +218,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 disabled:text-slate-400 disabled:cursor-not-allowed"
+        className="px-3 py-2 text-sm text-white/80 hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
       >
         Previous
       </button>
@@ -226,11 +228,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         <>
           <button
             onClick={() => onPageChange(1)}
-            className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900"
+            className="px-3 py-2 text-sm text-white/80 hover:text-white"
           >
             1
           </button>
-          {startPage > 2 && <span className="px-2 text-slate-400">...</span>}
+          {startPage > 2 && <span className="px-2 text-violet-300/70">...</span>}
         </>
       )}
 
@@ -240,8 +242,8 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           onClick={() => onPageChange(page)}
           className={`px-3 py-2 text-sm rounded-md transition-colors ${
             page === currentPage
-              ? 'bg-slate-900 text-white'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-violet-600 text-white'
+              : 'text-white/80 hover:text-white'
           }`}
         >
           {page}
@@ -250,10 +252,10 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
       {endPage < totalPages && (
         <>
-          {endPage < totalPages - 1 && <span className="px-2 text-slate-400">...</span>}
+          {endPage < totalPages - 1 && <span className="px-2 text-violet-300/70">...</span>}
           <button
             onClick={() => onPageChange(totalPages)}
-            className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900"
+            className="px-3 py-2 text-sm text-white/80 hover:text-white"
           >
             {totalPages}
           </button>
@@ -264,7 +266,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-sm text-slate-600 hover:text-slate-900 disabled:text-slate-400 disabled:cursor-not-allowed"
+        className="px-3 py-2 text-sm text-white/80 hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
       >
         Next
       </button>
@@ -285,9 +287,28 @@ function FranchiseOpportunitiesPage() {
     models: [],
     location: ''
   });
+
+  const {
+    brands: navBrands,
+    investmentBucketKeys: navInvestKeys,
+    locations: navLocations,
+    franchiseModels: navModels,
+    clearNavbarFilters,
+  } = useFranchiseOpportunityNavbarFilters();
+
+  const navbarFilterSnapshot = useMemo(
+    () => ({
+      brands: navBrands,
+      investmentBucketKeys: navInvestKeys,
+      locations: navLocations,
+      franchiseModels: navModels,
+    }),
+    [navBrands, navInvestKeys, navLocations, navModels]
+  );
   
   const itemsPerPage = 9;
   const clearAllFilters = () => {
+    clearNavbarFilters();
     setFilters({
       industries: [],
       investment: '',
@@ -295,6 +316,9 @@ function FranchiseOpportunitiesPage() {
       location: ''
     });
   };
+
+  const navFilterChipCount =
+    navBrands.length + navInvestKeys.length + navLocations.length + navModels.length;
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -314,7 +338,7 @@ function FranchiseOpportunitiesPage() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters]);
+  }, [filters, navBrands, navInvestKeys, navLocations, navModels]);
 
   const filteredAndSortedOpportunities = useMemo(() => {
     const searchLower = searchTerm.trim().toLowerCase();
@@ -343,7 +367,16 @@ function FranchiseOpportunitiesPage() {
       const matchesLocation =
         !locationLower || opportunity.locations.toLowerCase().includes(locationLower);
 
-      return matchesSearch && matchesIndustry && matchesInvestment && matchesModel && matchesLocation;
+      const matchesNavbar = matchesNavbarFilters(opportunity, navbarFilterSnapshot);
+
+      return (
+        matchesSearch &&
+        matchesIndustry &&
+        matchesInvestment &&
+        matchesModel &&
+        matchesLocation &&
+        matchesNavbar
+      );
     });
 
     const sorted = [...filtered];
@@ -356,7 +389,7 @@ function FranchiseOpportunitiesPage() {
     }
 
     return sorted;
-  }, [searchTerm, sortBy, filters]);
+  }, [searchTerm, sortBy, filters, navbarFilterSnapshot]);
 
   const totalPages = Math.max(1, Math.ceil(filteredAndSortedOpportunities.length / itemsPerPage));
   const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -372,13 +405,13 @@ function FranchiseOpportunitiesPage() {
   }, [currentPage, totalPages]);
 
   return (
-    <main className="min-h-screen">
+    <main className="relative z-10 min-h-screen bg-transparent text-white">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200">
+      <div className="border-b border-violet-500/25 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
           <div className="max-w-3xl">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2 sm:text-3xl md:text-4xl sm:mb-3">Explore Franchise Opportunities</h1>
-            <p className="text-base text-slate-600 sm:text-lg">
+            <h1 className="text-2xl font-bold tracking-tight text-white mb-2 sm:text-3xl md:text-4xl sm:mb-3">Explore Franchise Opportunities</h1>
+            <p className="text-base text-white sm:text-lg leading-relaxed">
               Browse our curated list of vetted franchise brands actively seeking expansion partners. Filter by your investment criteria to find the perfect match.
             </p>
           </div>
@@ -394,19 +427,19 @@ function FranchiseOpportunitiesPage() {
           {/* sticky + self-start: sidebar stays pinned while right column scrolls.
               No overflow, no max-height — filter expands naturally with content. */}
           <div className="sticky top-24 self-start">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-sm">
+            <div className="card-premium-dark rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
               {/* Header */}
-              <div className="border-b border-slate-200 p-5">
+              <div className="border-b border-violet-500/25 p-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
-                    <h2 className="text-lg font-bold text-slate-900">Filters</h2>
+                    <h2 className="text-lg font-bold text-white">Filters</h2>
                   </div>
                   <button
                     onClick={clearAllFilters}
-                    className="text-xs uppercase tracking-wide text-blue-600 hover:text-blue-700 font-semibold transition-colors"
+                    className="text-xs uppercase tracking-wide text-violet-300 hover:text-white font-semibold transition-colors"
                   >
                     Clear All
                   </button>
@@ -416,9 +449,9 @@ function FranchiseOpportunitiesPage() {
               {/* Filter Content - No Scroll, All Visible */}
               <div className="p-4 space-y-4">
                 {/* Industry Filters */}
-                <div className="border border-slate-200 rounded-xl p-4">
-                  <h3 className="text-sm font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="card-premium-dark-inner rounded-xl p-4">
+                  <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     Industry
@@ -435,18 +468,18 @@ function FranchiseOpportunitiesPage() {
                               : [...filters.industries, industry];
                             setFilters({ ...filters, industries: newIndustries });
                           }}
-                          className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                          className="w-4 h-4 text-violet-500 border-violet-400/40 rounded focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                         />
-                        <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{industry}</span>
+                        <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{industry}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 {/* Investment Filters */}
-                <div className="border border-slate-200 rounded-xl p-4">
-                  <h3 className="text-sm font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="card-premium-dark-inner rounded-xl p-4">
+                  <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Min Investment
@@ -459,18 +492,18 @@ function FranchiseOpportunitiesPage() {
                           name="investment"
                           checked={filters.investment === range}
                           onChange={() => setFilters({ ...filters, investment: range })}
-                          className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                          className="w-4 h-4 text-violet-500 border-violet-400/40 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                         />
-                        <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{range}</span>
+                        <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{range}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 {/* Operating Model Filters */}
-                <div className="border border-slate-200 rounded-xl p-4">
-                  <h3 className="text-sm font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="card-premium-dark-inner rounded-xl p-4">
+                  <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                     </svg>
                     Operating Model
@@ -487,18 +520,18 @@ function FranchiseOpportunitiesPage() {
                               : [...filters.models, model];
                             setFilters({ ...filters, models: newModels });
                           }}
-                          className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                          className="w-4 h-4 text-violet-500 border-violet-400/40 rounded focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                         />
-                        <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{model}</span>
+                        <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{model}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 {/* Location Filter */}
-                <div className="border border-slate-200 rounded-xl p-4">
-                  <h3 className="text-sm font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="card-premium-dark-inner rounded-xl p-4">
+                  <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -510,14 +543,14 @@ function FranchiseOpportunitiesPage() {
                       placeholder="e.g. Texas, New York, California"
                       value={filters.location}
                       onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                      className="w-full px-4 py-3 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      className="w-full px-4 py-3 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
                     <div className="flex flex-wrap gap-1.5">
                       {LOCATION_OPTIONS.map(location => (
                         <button
                           key={location}
                           onClick={() => setFilters({ ...filters, location: location })}
-                          className="px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-full hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all"
+                          className="px-2.5 py-1.5 text-xs bg-violet-500/15 border border-violet-400/35 text-white rounded-full hover:bg-violet-500/25 hover:border-violet-300 transition-all"
                         >
                           {location}
                         </button>
@@ -536,11 +569,11 @@ function FranchiseOpportunitiesPage() {
           <div className="min-w-0">
             {/* Search and Sort */}
             <div className="pb-3 mb-1">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 shadow-sm p-4">
+              <div className="card-premium-dark rounded-xl p-4 shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
                 <div className="flex gap-3">
                   {/* Search Bar */}
                   <div className="flex-1 relative">
-                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-violet-400/70 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <input
@@ -548,7 +581,7 @@ function FranchiseOpportunitiesPage() {
                       placeholder="Search brands, industries..."
                       value={searchTerm}
                       onChange={handleSearch}
-                      className="w-full pl-9 pr-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      className="w-full pl-9 pr-4 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
                   </div>
                   {/* Sort Dropdown */}
@@ -556,7 +589,7 @@ function FranchiseOpportunitiesPage() {
                     <select
                       value={sortBy}
                       onChange={handleSort}
-                      className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                      className="w-full px-3 py-2.5 border border-violet-500/30 rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all bg-white text-slate-900"
                     >
                       <option value="newest">Newest Added</option>
                       <option value="roi">High ROI</option>
@@ -571,50 +604,50 @@ function FranchiseOpportunitiesPage() {
             {(filters.industries.length > 0 || filters.investment || filters.models.length > 0 || filters.location) && (
               <div className="mb-4 flex flex-wrap gap-2">
                 {filters.industries.map(industry => (
-                  <span key={industry} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                  <span key={industry} className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                     {industry}
                     <button
                       onClick={() => {
                         const newIndustries = filters.industries.filter(i => i !== industry);
                         setFilters({ ...filters, industries: newIndustries });
                       }}
-                      className="ml-1 text-blue-600 hover:text-blue-800"
+                      className="ml-1 text-violet-300 hover:text-white"
                     >
                       ×
                     </button>
                   </span>
                 ))}
                 {filters.investment && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                     {filters.investment}
                     <button
                       onClick={() => setFilters({ ...filters, investment: '' })}
-                      className="ml-1 text-blue-600 hover:text-blue-800"
+                      className="ml-1 text-violet-300 hover:text-white"
                     >
                       ×
                     </button>
                   </span>
                 )}
                 {filters.models.map(model => (
-                  <span key={model} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                  <span key={model} className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                     {model}
                     <button
                       onClick={() => {
                         const newModels = filters.models.filter(m => m !== model);
                         setFilters({ ...filters, models: newModels });
                       }}
-                      className="ml-1 text-blue-600 hover:text-blue-800"
+                      className="ml-1 text-violet-300 hover:text-white"
                     >
                       ×
                     </button>
                   </span>
                 ))}
                 {filters.location && (
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                     {filters.location}
                     <button
                       onClick={() => setFilters({ ...filters, location: '' })}
-                      className="ml-1 text-blue-600 hover:text-blue-800"
+                      className="ml-1 text-violet-300 hover:text-white"
                     >
                       ×
                     </button>
@@ -625,7 +658,7 @@ function FranchiseOpportunitiesPage() {
 
             {/* Results Count */}
             <div className="mb-4">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-white">
                 Showing <span className="font-semibold">{paginatedOpportunities.length}</span> of{' '}
                 <span className="font-semibold">{filteredAndSortedOpportunities.length}</span> opportunities
               </p>
@@ -638,6 +671,13 @@ function FranchiseOpportunitiesPage() {
                 Array.from({ length: itemsPerPage }).map((_, index) => (
                   <OpportunityCardSkeleton key={`skeleton-${index}`} />
                 ))
+              ) : paginatedOpportunities.length === 0 ? (
+                <div className="col-span-full flex flex-col items-center justify-center rounded-xl border border-violet-500/25 bg-violet-950/20 py-16 px-6 text-center">
+                  <p className="text-base font-semibold text-white">No franchise opportunities found</p>
+                  <p className="mt-2 max-w-md text-sm text-white/70">
+                    Adjust filters from the Franchise Opportunities menu in the navbar, or choose Clear All in the filters panel here.
+                  </p>
+                </div>
               ) : (
                 // Show actual opportunities
                 paginatedOpportunities.map((opportunity) => (
@@ -659,28 +699,32 @@ function FranchiseOpportunitiesPage() {
         {/* ── MOBILE LAYOUT ── */}
         <div className="lg:hidden max-w-7xl mx-auto px-4 sm:px-6 py-6">
           {/* Mobile top bar — sticky: filter button + search + sort */}
-          <div className="sticky top-16 z-20 bg-slate-50/95 backdrop-blur-sm pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6">
+          <div className="sticky top-16 z-20 bg-[#0a0618]/92 backdrop-blur-md border-b border-violet-500/20 pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6">
             <div className="flex gap-2 pt-4">
               {/* Filter toggle */}
               <button
                 onClick={() => setIsFilterDrawerOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-all shrink-0 min-h-[44px]"
+                className="flex items-center gap-2 px-4 py-2.5 border border-violet-500/35 rounded-lg text-sm font-semibold text-white bg-violet-500/15 hover:bg-violet-500/25 transition-all shrink-0 min-h-[44px]"
                 aria-label="Open filters"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
                 Filters
-                {(filters.industries.length > 0 || filters.investment || filters.models.length > 0 || filters.location) && (
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
-                    {filters.industries.length + (filters.investment ? 1 : 0) + filters.models.length + (filters.location ? 1 : 0)}
+                {(filters.industries.length > 0 || filters.investment || filters.models.length > 0 || filters.location || navFilterChipCount > 0) && (
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600 text-[10px] font-bold text-white">
+                    {filters.industries.length +
+                      (filters.investment ? 1 : 0) +
+                      filters.models.length +
+                      (filters.location ? 1 : 0) +
+                      navFilterChipCount}
                   </span>
                 )}
               </button>
 
               {/* Search */}
               <div className="flex-1 relative">
-                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-violet-400/70 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -688,7 +732,7 @@ function FranchiseOpportunitiesPage() {
                   placeholder="Search brands..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all min-h-[44px]"
+                  className="w-full pl-9 pr-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
                 />
               </div>
 
@@ -697,7 +741,7 @@ function FranchiseOpportunitiesPage() {
                 <select
                   value={sortBy}
                   onChange={handleSort}
-                  className="h-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all min-h-[44px]"
+                  className="h-full px-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
                 >
                   <option value="newest">Newest</option>
                   <option value="roi">High ROI</option>
@@ -711,50 +755,50 @@ function FranchiseOpportunitiesPage() {
           {(filters.industries.length > 0 || filters.investment || filters.models.length > 0 || filters.location) && (
             <div className="mt-3 mb-2 flex flex-wrap gap-2">
               {filters.industries.map(industry => (
-                <span key={industry} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <span key={industry} className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                   {industry}
                   <button
                     onClick={() => {
                       const newIndustries = filters.industries.filter(i => i !== industry);
                       setFilters({ ...filters, industries: newIndustries });
                     }}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-violet-300 hover:text-white"
                   >
                     ×
                   </button>
                 </span>
               ))}
               {filters.investment && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                   {filters.investment}
                   <button
                     onClick={() => setFilters({ ...filters, investment: '' })}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-violet-300 hover:text-white"
                   >
                     ×
                   </button>
                 </span>
               )}
               {filters.models.map(model => (
-                <span key={model} className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <span key={model} className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                   {model}
                   <button
                     onClick={() => {
                       const newModels = filters.models.filter(m => m !== model);
                       setFilters({ ...filters, models: newModels });
                     }}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-violet-300 hover:text-white"
                   >
                     ×
                   </button>
                 </span>
               ))}
               {filters.location && (
-                <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                <span className="inline-flex items-center gap-1 px-3 py-1 bg-violet-500/20 text-white border border-violet-400/40 rounded-full text-sm">
                   {filters.location}
                   <button
                     onClick={() => setFilters({ ...filters, location: '' })}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-violet-300 hover:text-white"
                   >
                     ×
                   </button>
@@ -765,7 +809,7 @@ function FranchiseOpportunitiesPage() {
 
           {/* Results Count — mobile */}
           <div className="mt-3 mb-4">
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-white">
               Showing <span className="font-semibold">{paginatedOpportunities.length}</span> of{' '}
               <span className="font-semibold">{filteredAndSortedOpportunities.length}</span> opportunities
             </p>
@@ -778,6 +822,13 @@ function FranchiseOpportunitiesPage() {
               Array.from({ length: itemsPerPage }).map((_, index) => (
                 <OpportunityCardSkeleton key={`skeleton-${index}`} />
               ))
+            ) : paginatedOpportunities.length === 0 ? (
+              <div className="col-span-full flex flex-col items-center justify-center rounded-xl border border-violet-500/25 bg-violet-950/20 py-16 px-6 text-center">
+                <p className="text-base font-semibold text-white">No franchise opportunities found</p>
+                <p className="mt-2 max-w-md text-sm text-white/70">
+                  Adjust filters from the Franchise Opportunities menu in the navbar, or choose Clear All in the filters panel here.
+                </p>
+              </div>
             ) : (
               // Show actual opportunities
               paginatedOpportunities.map((opportunity) => (
@@ -805,30 +856,25 @@ function FranchiseOpportunitiesPage() {
           />
           
           {/* Drawer */}
-          <div className="fixed inset-y-0 left-0 w-[min(320px,85vw)] bg-white z-50 transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto">
+          <div className="fixed inset-y-0 left-0 w-[min(320px,85vw)] bg-[#12082a] border-r border-violet-500/25 z-50 transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-5 border-b border-slate-200">
+            <div className="flex items-center justify-between p-5 border-b border-violet-500/25">
               <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
-                <h2 className="text-lg font-bold text-slate-900">Filters</h2>
+                <h2 className="text-lg font-bold text-white">Filters</h2>
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setFilters({
-                    industries: [],
-                    investment: '',
-                    models: [],
-                    location: ''
-                  })}
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  onClick={() => clearAllFilters()}
+                  className="text-sm text-violet-300 hover:text-white font-medium transition-colors"
                 >
                   Clear All
                 </button>
                 <button
                   onClick={() => setIsFilterDrawerOpen(false)}
-                  className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="p-2 text-violet-400 hover:text-white transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -840,9 +886,9 @@ function FranchiseOpportunitiesPage() {
             {/* Drawer Content */}
             <div className="p-5 pb-24 space-y-6">
               {/* Industry Filters */}
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="card-premium-dark-inner rounded-xl p-4">
+                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                   Industry
@@ -859,18 +905,18 @@ function FranchiseOpportunitiesPage() {
                             : [...filters.industries, industry];
                           setFilters({ ...filters, industries: newIndustries });
                         }}
-                        className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                        className="w-4 h-4 text-violet-500 border-violet-400/40 rounded focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                       />
-                      <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{industry}</span>
+                      <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{industry}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Investment Filters */}
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="card-premium-dark-inner rounded-xl p-4">
+                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Min Investment
@@ -883,18 +929,18 @@ function FranchiseOpportunitiesPage() {
                         name="investment-mobile"
                         checked={filters.investment === range}
                         onChange={() => setFilters({ ...filters, investment: range })}
-                        className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                        className="w-4 h-4 text-violet-500 border-violet-400/40 focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                       />
-                      <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{range}</span>
+                      <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{range}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Operating Model Filters */}
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="card-premium-dark-inner rounded-xl p-4">
+                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                   </svg>
                   Operating Model
@@ -911,18 +957,18 @@ function FranchiseOpportunitiesPage() {
                             : [...filters.models, model];
                           setFilters({ ...filters, models: newModels });
                         }}
-                        className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                        className="w-4 h-4 text-violet-500 border-violet-400/40 rounded focus:ring-2 focus:ring-violet-500 focus:ring-offset-0"
                       />
-                      <span className="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors">{model}</span>
+                      <span className="ml-3 text-sm text-white group-hover:text-violet-100 transition-colors">{model}</span>
                     </label>
                   ))}
                 </div>
               </div>
 
               {/* Location Filter */}
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="card-premium-dark-inner rounded-xl p-4">
+                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
@@ -934,14 +980,14 @@ function FranchiseOpportunitiesPage() {
                     placeholder="e.g. Texas, New York, California"
                     value={filters.location}
                     onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    className="w-full px-4 py-2 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                   />
                   <div className="flex flex-wrap gap-2 mt-3">
                     {LOCATION_OPTIONS.map(location => (
                       <button
                         key={location}
                         onClick={() => setFilters({ ...filters, location: location })}
-                        className="px-3 py-1 text-xs bg-white border border-slate-300 rounded-full hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 transition-all"
+                        className="px-3 py-1 text-xs bg-violet-500/15 border border-violet-400/35 text-white rounded-full hover:bg-violet-500/25 hover:border-violet-300 transition-all"
                       >
                         {location}
                       </button>

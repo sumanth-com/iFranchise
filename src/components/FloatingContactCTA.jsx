@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiPhoneCall } from 'react-icons/fi';
+import brandLogo from '../assets/BrandNav.png';
+import { submitFranchiseInquiry } from '@/lib/forms';
 
 export default function FloatingContactCTA({ franchiseName = 'this opportunity' }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,26 +47,31 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setIsSubmitted(true);
+    const result = await submitFranchiseInquiry(formData, 'floating_cta');
     
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setIsOpen(false);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        investmentRange: '',
-        state: '',
-        city: '',
-        website: '',
-        message: '',
-      });
-    }, 3000);
+    if (result.success) {
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setIsOpen(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          phone: '',
+          email: '',
+          investmentRange: '',
+          state: '',
+          city: '',
+          website: '',
+          message: '',
+        });
+      }, 3000);
+    } else {
+      console.error('[FloatingContactCTA] Submission failed:', result.error);
+      alert(result.error || 'Submission failed. Please try again.');
+    }
   };
 
   const handleClose = () => {
@@ -75,7 +82,6 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
   const handleButtonClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Button clicked - opening modal');
     setIsOpen(true);
   };
 
@@ -134,7 +140,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
             {[0, 0.6, 1.2].map((delay, i) => (
               <motion.span
                 key={i}
-                className="absolute inset-0 rounded-full bg-violet-500"
+                className="absolute inset-0 rounded-xl bg-violet-500"
                 animate={{ scale: [1, 1.7], opacity: [0.28, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut', delay }}
                 style={{ pointerEvents: 'none' }}
@@ -142,10 +148,10 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
             ))}
 
             {/* Main pill */}
-            <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-[0_8px_24px_rgba(99,102,241,0.45)] transition-shadow duration-300 hover:shadow-[0_12px_32px_rgba(99,102,241,0.55)]">
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 shadow-[0_8px_24px_rgba(99,102,241,0.45)] transition-shadow duration-300 hover:shadow-[0_12px_32px_rgba(99,102,241,0.55)]">
               {/* Shimmer sweep */}
               <motion.span
-                className="absolute inset-0 rounded-full overflow-hidden"
+                className="absolute inset-0 rounded-xl overflow-hidden"
                 style={{ pointerEvents: 'none' }}
               >
                 <motion.span
@@ -155,13 +161,17 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                 />
               </motion.span>
 
-              {/* Icon — phone call, crisp and small */}
+              {/* Logo image */}
               <motion.div
                 animate={{ rotate: [0, -12, 12, -8, 8, 0] }}
                 transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 3.5, ease: 'easeInOut' }}
                 className="relative z-10"
               >
-                <FiPhoneCall className="h-5 w-5 text-white drop-shadow" strokeWidth={2.2} />
+                <img 
+                  src={brandLogo} 
+                  alt="iFranchise" 
+                  className="h-8 w-8 rounded-lg"
+                />
               </motion.div>
             </div>
 

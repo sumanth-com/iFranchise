@@ -79,7 +79,7 @@ function WhyCard({ block, index }) {
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className={`group relative bg-white rounded-2xl border ${c.border} ${c.hover} shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden`}
+      className={`group relative card-premium-dark rounded-2xl border ${c.border} ${c.hover} shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden`}
     >
       {/* animated top border */}
       <motion.div
@@ -116,11 +116,11 @@ function WhyCard({ block, index }) {
         </div>
 
         {/* title + tagline */}
-        <h3 className="text-base font-extrabold text-slate-900 mb-0.5 leading-snug">{block.title}</h3>
+        <h3 className="text-base font-extrabold text-white mb-0.5 leading-snug">{block.title}</h3>
         <p className={`text-[0.7rem] font-semibold uppercase tracking-wider mb-3 ${c.stat}`}>{block.tagline}</p>
 
         {/* description */}
-        <p className="text-[0.8rem] text-slate-500 leading-relaxed mb-5 flex-1">{block.desc}</p>
+        <p className="text-[0.8rem] text-slate-400 leading-relaxed mb-5 flex-1">{block.desc}</p>
 
         {/* bullet points */}
         <div className="space-y-1.5 pt-4 border-t border-slate-100">
@@ -134,7 +134,7 @@ function WhyCard({ block, index }) {
               className="flex items-center gap-2"
             >
               <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />
-              <span className="text-[0.75rem] text-slate-600 font-medium">{pt}</span>
+              <span className="text-[0.75rem] text-slate-300 font-medium">{pt}</span>
             </motion.div>
           ))}
         </div>
@@ -146,13 +146,7 @@ function WhyCard({ block, index }) {
 
 export default function WhyChooseSection() {
   return (
-    <section className="relative overflow-hidden bg-white py-16 lg:py-20">
-
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-white" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-violet-50/60 blur-[120px]" />
-      </div>
-
+    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10">
 
         {/* header */}
@@ -161,19 +155,19 @@ export default function WhyChooseSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-[0.68rem] font-bold uppercase tracking-widest text-violet-600 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Why iFranchise
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.4rem] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.4rem] font-extrabold tracking-tight text-white leading-[1.1] mb-3">
             The Strategic Advantage That{' '}
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
               Sets Us Apart
             </span>
           </h2>
-          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-slate-300 text-base max-w-xl mx-auto leading-relaxed">
             We're not a listing platform. We're the operating system behind India's fastest-growing franchise brands.
           </p>
         </motion.div>
@@ -191,7 +185,7 @@ export default function WhyChooseSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-200 rounded-2xl overflow-hidden border border-slate-200"
+          className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-violet-500/20"
         >
           {[
             { value: '200+',  label: 'Brands Scaled'        },
@@ -199,9 +193,9 @@ export default function WhyChooseSection() {
             { value: '17+',   label: 'Cities Active'        },
             { value: '94%',   label: 'Investor Engagement'  },
           ].map((s, i) => (
-            <div key={i} className="flex flex-col items-center py-6 bg-white hover:bg-violet-50/40 transition-colors duration-200">
-              <p className="text-2xl font-extrabold text-slate-900 mb-1">{s.value}</p>
-              <p className="text-[0.7rem] text-slate-500">{s.label}</p>
+            <div key={i} className="card-premium-dark-inner flex flex-col items-center py-6 transition-colors duration-200 hover:border-violet-400/35">
+              <p className="text-2xl font-extrabold text-white mb-1">{s.value}</p>
+              <p className="text-[0.7rem] text-slate-300">{s.label}</p>
             </div>
           ))}
         </motion.div>

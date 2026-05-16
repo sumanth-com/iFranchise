@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { franchiseOpportunities } from '../../data/franchiseData';
-import industriesBg from '../../assets/Industries.png';
 
 const INDUSTRIES = [
   {
@@ -149,7 +148,7 @@ function IndustryCard({ ind, index }) {
       transition={{ duration: 0.5, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className={`relative rounded-2xl border ${ind.border} bg-white overflow-hidden cursor-pointer group transition-all duration-300 ${
+      className={`relative rounded-2xl border ${ind.border} card-premium-dark overflow-hidden cursor-pointer group transition-all duration-300 ${
         hovered ? `shadow-2xl ${ind.glow} -translate-y-2` : 'shadow-sm'
       }`}
       style={{ transform: hovered ? 'translateY(-8px)' : 'translateY(0)', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
@@ -242,21 +241,8 @@ function IndustryCard({ ind, index }) {
 
 export default function IndustriesSection() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-28">
-
-      {/* Industries.png background */}
-      <div className="pointer-events-none absolute inset-0">
-        <img
-          src={industriesBg}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        {/* light overlay to keep text readable */}
-        <div className="absolute inset-0 bg-white/60" />
-      </div>
-
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10">
+    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
+      <motion.div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10">
 
         {/* header */}
         <motion.div
@@ -264,19 +250,19 @@ export default function IndustriesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="text-center mb-14"
+          className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-[0.68rem] font-bold uppercase tracking-widest text-violet-600 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Industries We Support
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-white leading-[1.1] mb-4">
             Franchise Expansion Across{' '}
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
               Every High-Growth Sector
             </span>
           </h2>
-          <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-300 text-base max-w-2xl mx-auto leading-relaxed">
             We operate across India's most dynamic industries — each with proven franchise models, qualified investors, and structured expansion systems.
           </p>
         </motion.div>
@@ -296,7 +282,7 @@ export default function IndustriesSection() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="text-center mt-14"
         >
-          <p className="text-slate-500 text-sm mb-5">Don't see your industry? We work across all sectors.</p>
+          <p className="text-slate-400 text-sm mb-5">Don't see your industry? We work across all sectors.</p>
           <button
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-violet-700 transition-colors duration-200 shadow-lg"
@@ -308,7 +294,7 @@ export default function IndustriesSection() {
           </button>
         </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

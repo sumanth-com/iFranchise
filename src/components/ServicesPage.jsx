@@ -8,14 +8,46 @@ import {
   FiDollarSign, FiUserCheck, FiBookOpen, FiUserPlus, FiCompass, FiMap,
   FiChevronDown, FiPlus, FiMinus, FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
-import PremiumHeroBackground from './PremiumHeroBackground';
 import BrandLogo from '../assets/BrandLogo.png';
-import iFranchiseHero from '../assets/iFranchise.png';
 import serviceHero from '../assets/serviceHero.png';
-import service2 from '../assets/service2.png';
-import processImg from '../assets/process.png';
-import service4 from '../assets/service4.png';
-import service5 from '../assets/service5.png';
+import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
+import foodImg from '../assets/IndImgs/Food & Beverage.png';
+import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
+import educationImg from '../assets/IndImgs/Education & Training.png';
+import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
+import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
+
+function ServicesIndustryCardImg({ src, alt }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0618]" aria-hidden>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500/25 border-t-violet-400" />
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        className={`h-full w-full object-contain object-center transition-opacity duration-300 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+    </>
+  );
+}
+
+const SERVICES_INDUSTRIES = [
+  { label: 'Retail & Jewelry', accent: '#f59e0b', desc: 'Scale your retail brand with proven franchise models', img: retailImg },
+  { label: 'Food & Beverage', accent: '#f97316', desc: 'Expand your F&B concept across multiple locations', img: foodImg },
+  { label: 'Healthcare & Wellness', accent: '#10b981', desc: 'Grow your wellness business with franchise support', img: healthcareImg },
+  { label: 'Education & Training', accent: '#3b82f6', desc: 'Build an education empire through franchising', img: educationImg },
+  { label: 'Beauty & Lifestyle', accent: '#ec4899', desc: 'Transform beauty concepts into franchise networks', img: beautyImg },
+  { label: 'Logistics & Infrastructure', accent: '#94a3b8', desc: 'Scale logistics operations with franchise models', img: logisticsImg },
+];
 
 // â”€â”€ Lightweight CSS-only reveal â€” no framer-motion per element â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Reveal({ children, delay = 0, className = '' }) {
@@ -233,7 +265,7 @@ function FAQItem({ question, answer, index }) {
   return (
     <Reveal delay={index * 0.08}>
       <motion.div
-        className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-sm transition-all duration-300"
+        className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300"
         animate={{
           borderColor: isOpen ? 'rgba(15, 23, 42, 0.2)' : 'rgba(148, 163, 184, 0.6)',
         }}
@@ -244,7 +276,7 @@ function FAQItem({ question, answer, index }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-gradient-to-r from-indigo-50/50 via-violet-50/30 to-purple-50/50 pointer-events-none"
+            className="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-purple-600/5 to-indigo-600/10 pointer-events-none"
           />
         )}
 
@@ -254,7 +286,7 @@ function FAQItem({ question, answer, index }) {
           className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
         >
           <span className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-            isOpen ? 'text-slate-900' : 'text-slate-800'
+            isOpen ? 'text-white' : 'text-white/90'
           }`}>
             {question}
           </span>
@@ -297,8 +329,8 @@ function FAQItem({ question, answer, index }) {
               className="relative overflow-hidden"
             >
               <div className="px-6 pb-6 sm:px-8 sm:pb-8">
-                <div className="pt-2 border-t border-slate-100">
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-4">
+                <div className="pt-2 border-t border-violet-500/20">
+                  <p className="text-sm sm:text-base text-white/70 leading-relaxed mt-4">
                     {answer}
                   </p>
                 </div>
@@ -381,7 +413,7 @@ function InvestorDashboardContent({ navigateTo }) {
             className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer hover:scale-105 ${
               selectedFilter === tag.value
                 ? 'bg-violet-600 text-white shadow-md' 
-                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-slate-600 hover:border-violet-300 hover:text-violet-600'
+                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-slate-600 hover:border-violet-300 hover:text-violet-400'
             }`}
           >
             {tag.label}
@@ -411,11 +443,11 @@ function InvestorDashboardContent({ navigateTo }) {
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <span className="text-[9px] text-slate-500">{opp.industry}</span>
                   <span className="text-[9px] text-slate-300">Â·</span>
-                  <span className="text-[9px] font-semibold text-emerald-600">{opp.roi}</span>
+                  <span className="text-[9px] font-semibold text-emerald-400">{opp.roi}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[9px] text-slate-600">{opp.investment}</span>
-                  <FiArrowRight className="h-3 w-3 text-indigo-600 group-hover:translate-x-1 transition-transform" />
+                  <FiArrowRight className="h-3 w-3 text-indigo-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -452,9 +484,9 @@ function InvestorDashboardContent({ navigateTo }) {
             <span className="text-[11px] font-bold text-slate-900">Market Trends</span>
           </div>
           <div className="relative flex items-center gap-1">
-            <div className="absolute h-1 w-1 rounded-full bg-emerald-500 animate-ping" />
-            <div className="h-1 w-1 rounded-full bg-emerald-500" />
-            <span className="text-[8px] font-semibold text-emerald-600">Live</span>
+            <div className="absolute h-1 w-1 rounded-full bg-emerald-500/200 animate-ping" />
+            <div className="h-1 w-1 rounded-full bg-emerald-500/200" />
+            <span className="text-[8px] font-semibold text-emerald-400">Live</span>
           </div>
         </div>
         
@@ -541,10 +573,10 @@ const PROCESS_STEPS = [
 ];
 
 const STEP_COLORS = {
-  violet: { bg: 'bg-violet-600', ring: 'ring-violet-200', text: 'text-violet-600', bar: 'from-violet-400 to-indigo-400', glow: 'shadow-violet-500/30' },
-  indigo: { bg: 'bg-indigo-600', ring: 'ring-indigo-200', text: 'text-indigo-600', bar: 'from-indigo-400 to-violet-400', glow: 'shadow-indigo-500/30' },
-  emerald:{ bg: 'bg-emerald-600', ring: 'ring-emerald-200', text: 'text-emerald-600', bar: 'from-emerald-400 to-teal-400', glow: 'shadow-emerald-500/30' },
-  amber:  { bg: 'bg-amber-500', ring: 'ring-amber-200', text: 'text-amber-600', bar: 'from-amber-400 to-orange-400', glow: 'shadow-amber-500/30' },
+  violet: { bg: 'bg-violet-600', ring: 'ring-violet-200', text: 'text-violet-400', bar: 'from-violet-400 to-indigo-400', glow: 'shadow-violet-500/30' },
+  indigo: { bg: 'bg-indigo-600', ring: 'ring-indigo-200', text: 'text-indigo-400', bar: 'from-indigo-400 to-violet-400', glow: 'shadow-indigo-500/30' },
+  emerald:{ bg: 'bg-emerald-600', ring: 'ring-emerald-200', text: 'text-emerald-400', bar: 'from-emerald-400 to-teal-400', glow: 'shadow-emerald-500/30' },
+  amber:  { bg: 'bg-amber-500', ring: 'ring-amber-200', text: 'text-amber-400', bar: 'from-amber-400 to-orange-400', glow: 'shadow-amber-500/30' },
   teal:   { bg: 'bg-teal-600', ring: 'ring-teal-200', text: 'text-teal-600', bar: 'from-teal-400 to-cyan-400', glow: 'shadow-teal-500/30' },
 };
 
@@ -567,7 +599,7 @@ function ProcessStepNode({ step, index, total }) {
       {/* connector line */}
       {!isLast && (
         <div className="absolute top-[22px] left-[calc(50%+22px)] right-[calc(-50%+22px)] h-px z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-slate-200" />
+          <div className="absolute inset-0 bg-violet-500/30" />
           <div
             className={`absolute inset-0 bg-gradient-to-r ${c.bar} transition-all duration-300`}
             style={{ width: visible ? '100%' : '0%', transitionDelay: `${index * 100 + 200}ms` }}
@@ -609,8 +641,8 @@ function ProcessStepNode({ step, index, total }) {
         className={`text-center px-2 transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
         style={{ transitionDelay: `${index * 80 + 100}ms` }}
       >
-        <p className="text-[0.82rem] font-bold text-slate-900 mb-1.5 leading-snug">{step.title}</p>
-        <p className="text-[0.72rem] text-slate-500 leading-relaxed">{step.desc}</p>
+        <p className="text-[0.82rem] font-bold text-white mb-1.5 leading-snug">{step.title}</p>
+        <p className="text-[0.72rem] text-white/85 leading-relaxed">{step.desc}</p>
       </div>
     </div>
   );
@@ -645,143 +677,21 @@ export default function ServicesPage() {
       }}
     >
 
-      {/* -----------------------------------------------------------------------
-          GLOBAL LIVING BACKGROUND â€“ One continuous animated ecosystem
-          Absolute positioned, full page height, behind all content
-          Seamlessly integrated with Hero atmosphere
-      ----------------------------------------------------------------------- */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0, contain: 'paint' }}>
-        {/* Base canvas - soft atmospheric foundation */}
-        <div className="absolute inset-0" style={{ 
-          background: 'linear-gradient(160deg, #ede8ff 0%, #f5f3ff 25%, #eef4ff 55%, #f0ebff 100%)',
-          opacity: 0.95
-        }} />
-
-        {/* Orb 1 â€” top-left violet */}
-        <div className="absolute" style={{
-          top: '-5%', left: '-8%',
-          width: '70vw', height: '70vw',
-          background: 'radial-gradient(circle, rgba(167,139,250,0.45) 0%, rgba(139,92,246,0.18) 40%, transparent 68%)',
-          filter: 'blur(70px)',
-          animation: 'globalOrb1 25s ease-in-out infinite',
-          willChange: 'transform',
-        }} />
-
-        {/* Orb 2 â€” top-right indigo */}
-        <div className="absolute" style={{
-          top: '3%', right: '-8%',
-          width: '60vw', height: '60vw',
-          background: 'radial-gradient(circle, rgba(147,197,253,0.38) 0%, rgba(99,102,241,0.14) 42%, transparent 68%)',
-          filter: 'blur(70px)',
-          animation: 'globalOrb2 30s ease-in-out infinite',
-          willChange: 'transform',
-        }} />
-
-        {/* Orb 3 â€” mid-page center */}
-        <div className="absolute" style={{
-          top: '28%', left: '15%',
-          width: '65vw', height: '55vw',
-          background: 'radial-gradient(ellipse, rgba(196,181,253,0.32) 0%, rgba(139,92,246,0.10) 48%, transparent 70%)',
-          filter: 'blur(80px)',
-          animation: 'globalOrb3 35s ease-in-out infinite',
-          willChange: 'transform',
-        }} />
-
-        {/* Orb 4 â€” lower-left blue */}
-        <div className="absolute" style={{
-          top: '52%', left: '-6%',
-          width: '55vw', height: '55vw',
-          background: 'radial-gradient(circle, rgba(165,180,252,0.36) 0%, rgba(99,102,241,0.12) 42%, transparent 68%)',
-          filter: 'blur(65px)',
-          animation: 'globalOrb1 28s ease-in-out infinite reverse',
-          willChange: 'transform',
-        }} />
-
-        {/* Orb 5 â€” lower-right purple */}
-        <div className="absolute" style={{
-          top: '60%', right: '-6%',
-          width: '58vw', height: '58vw',
-          background: 'radial-gradient(circle, rgba(233,213,255,0.40) 0%, rgba(168,85,247,0.13) 42%, transparent 68%)',
-          filter: 'blur(70px)',
-          animation: 'globalOrb2 32s ease-in-out infinite reverse',
-          willChange: 'transform',
-        }} />
-
-        {/* Orb 6 â€” bottom center */}
-        <div className="absolute" style={{
-          bottom: '0%', left: '25%',
-          width: '50vw', height: '40vw',
-          background: 'radial-gradient(ellipse, rgba(167,139,250,0.30) 0%, rgba(139,92,246,0.10) 45%, transparent 70%)',
-          filter: 'blur(75px)',
-          animation: 'globalOrb3 38s ease-in-out infinite reverse',
-          willChange: 'transform',
-        }} />
-
-        {/* Global dot grid â€” full page, fades at edges */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(109,40,217,0.14) 1px, transparent 1px)',
-          backgroundSize: '44px 44px',
-          maskImage: 'linear-gradient(180deg, transparent 0%, black 8%, black 92%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(180deg, transparent 0%, black 8%, black 92%, transparent 100%)',
-        }} />
-      </div>
-
-      {/* HERO â€“ Clean immersive layout with serviceHero.png background */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pb-8">
-        
-        {/* Background Layer - serviceHero.png clearly visible */}
-        <div className="absolute inset-0 overflow-hidden">
-          
-          {/* ServiceHero Image - Clear and visible */}
-          <div className="absolute inset-0">
-            <img 
-              src={serviceHero} 
-              alt="" 
-              className="w-full h-full object-cover"
-              style={{
-                opacity: 0.75,
-                filter: 'brightness(1.05)',
-                transform: 'scale(1.02)'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#ede8ff]/40 via-transparent to-[#f5f3ff]/30" />
-            
-            {/* Soft fade at bottom for seamless transition - INCREASED */}
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient orbs - don't overpower the image */}
-          <div className="absolute top-[-5%] left-[-5%] w-[40vw] h-[40vw] opacity-15"
-            style={{
-              background: 'radial-gradient(circle, rgba(167,139,250,0.2) 0%, transparent 70%)',
-              filter: 'blur(40px)',
-              animation: 'float-slow 25s ease-in-out infinite'
-            }} />
-          
-          <div className="absolute top-[10%] right-[-5%] w-[35vw] h-[35vw] opacity-12"
-            style={{
-              background: 'radial-gradient(circle, rgba(147,197,253,0.15) 0%, transparent 70%)',
-              filter: 'blur(50px)',
-              animation: 'float-slower 30s ease-in-out infinite'
-            }} />
-
-          {/* Premium Hero Background component - reduced opacity */}
-          <div style={{ opacity: 0.3 }}>
-            <PremiumHeroBackground />
-          </div>
+      {/* HERO */}
+      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-8 pt-24 sm:px-6 lg:px-8">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+          <img src={serviceHero} alt="" className="h-full w-full object-cover opacity-20" />
+          <motion.div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,6,24,0.88) 0%, rgba(10,6,24,0.72) 45%, rgba(10,6,24,0.92) 100%)' }} />
         </div>
 
-        {/* Hero content - centered */}
-        <div className="relative z-20 mx-auto max-w-[900px] text-center">
+        <div className="relative z-10 mx-auto max-w-[900px] text-center">
 
           {/* Headline - shorter and clearer like home hero */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, ease: [0.22,1,0.36,1] }}
-            className="text-[clamp(2.75rem,8vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-slate-900 mb-6"
+            className="text-[clamp(2.75rem,8vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-white mb-6"
           >
             Franchise Growth Services
           </motion.h1>
@@ -791,7 +701,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, delay: 0.05, ease: [0.22,1,0.36,1] }}
-            className="mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed text-slate-600 mb-8"
+            className="mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed text-white/70 mb-8"
           >
             End-to-end franchise expansion services for growing brands. From onboarding and documentation to investor acquisition and strategic scaling.
           </motion.p>
@@ -806,7 +716,7 @@ export default function ServicesPage() {
             <button 
               type="button" 
               onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
-              className="group relative overflow-hidden rounded-2xl bg-slate-900 px-8 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-slate-800 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(15,23,42,0.25)]"
+              className="group relative overflow-hidden rounded-2xl bg-violet-600 px-8 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-violet-500 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(15,23,42,0.25)]"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Schedule a Consultation
@@ -854,75 +764,41 @@ export default function ServicesPage() {
               <div className="flex flex-col items-start">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-4 w-4 fill-slate-900" viewBox="0 0 20 20">
+                    <svg key={i} className="h-4 w-4 fill-amber-400" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-slate-500">From 150+ reviews</p>
+                <p className="text-sm font-medium text-white/50">From 150+ reviews</p>
               </div>
             </div>
 
             {/* Trust Text */}
-            <p className="text-sm font-medium text-slate-500">
+            <p className="text-sm font-medium text-white/50">
               Helping brands expand and investors connect through a smarter franchise ecosystem
             </p>
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* SERVICES OVERVIEW */}
-      <div className="relative z-10 py-12 -mt-16">
-        
-        {/* Background Layer - service2.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service2 Image - Full coverage, no white sides */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service2} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#f5f3ff]/50 via-transparent to-[#eef4ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
+      <section className="relative z-10 py-16">
         {/* Content Container */}
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
         <div className="relative z-10 text-center mb-16">
           <Reveal>
-            <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 mb-5 shadow-sm">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
               Our Services
             </span>
-            <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-5">
+            <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
               Complete Franchise Growth & Expansion Services
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mx-auto max-w-3xl text-base leading-relaxed text-white/70 sm:text-lg">
               We provide end-to-end franchise services designed to help businesses scale efficiently and connect with the right investors. Our process covers every stage of franchise growth â€” from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </Reveal>
@@ -932,7 +808,7 @@ export default function ServicesPage() {
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICE_CARDS.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.08}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-md p-8 transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15)] hover:border-violet-200/70 h-full flex flex-col" style={{ boxShadow: '0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04)' }}>
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15)] hover:border-violet-200/70 h-full flex flex-col" style={{ boxShadow: '0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04)' }}>
                 
                 {/* Animated line background - flows on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -967,18 +843,18 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 transition-colors duration-300 group-hover:text-slate-800">
+                  <h3 className="text-xl font-bold text-white mb-4">
                     {service.title}
                   </h3>
 
                   {/* Service Points - flex-1 to push content to fill space */}
                   <ul className="space-y-3 flex-1">
                     {service.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm text-slate-600 leading-relaxed">
+                      <li key={idx} className="flex items-start gap-3 text-sm text-white/65 leading-relaxed">
                         <span className="flex-shrink-0 mt-0.5">
-                          <FiCheck className="h-4 w-4 text-emerald-600" />
+                          <FiCheck className="h-4 w-4 text-emerald-400" />
                         </span>
-                        <span className="transition-colors duration-300 group-hover:text-slate-700">
+                        <span className="text-white/80">
                           {point}
                         </span>
                       </li>
@@ -1009,40 +885,25 @@ export default function ServicesPage() {
         
         </div>
         {/* End Content Container */}
-      </div>
+      </section>
 
       {/* HOW IT WORKS — franchise expansion process flow */}
-      <div className="relative z-10 py-16 overflow-hidden">
-
-        {/* service2.png background — same as surrounding sections */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute inset-0 w-full h-full">
-            <img src={service2} alt="" className="w-full h-full"
-              style={{ opacity: 0.65, filter: 'brightness(1.08)', objectFit: 'cover', objectPosition: 'center' }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#f5f3ff]/50 via-transparent to-[#eef4ff]/40" />
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-          </div>
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-        </div>
-
+      <section className="relative z-10 py-16 overflow-hidden">
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
 
           {/* header */}
           <div className="text-center mb-14">
             <Reveal>
-              <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 mb-5 shadow-sm">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2 align-middle" />
+              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                 How It Works
               </span>
-              <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-4">
+              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-4">
                 Our Franchise Expansion Process
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
                 A structured, repeatable system engineered to take your brand from concept to scaled franchise network.
               </p>
             </Reveal>
@@ -1060,10 +921,10 @@ export default function ServicesPage() {
                 { value: '6 Months',  label: 'First Unit Live'       },
                 { value: '12 Months', label: 'Multi-City Expansion'  },
               ].map((m, i) => (
-                <div key={i} className="flex flex-col items-center py-4 px-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                  <p className="text-lg font-extrabold text-slate-900 mb-0.5">{m.value}</p>
-                  <p className="text-[0.68rem] text-slate-500 font-medium">{m.label}</p>
-                </div>
+                <motion.div key={i} className="group flex flex-col items-center py-4 px-3 rounded-xl border border-white/20 bg-white/10 text-center backdrop-blur-sm transition-colors duration-200 hover:bg-white/15 hover:border-white/30">
+                  <p className="text-lg font-extrabold text-white mb-0.5 group-hover:text-white">{m.value}</p>
+                  <p className="text-[0.68rem] text-white/90 font-medium group-hover:text-white">{m.label}</p>
+                </motion.div>
               ))}
             </div>
           </Reveal>
@@ -1074,7 +935,7 @@ export default function ServicesPage() {
               <button
                 type="button"
                 onClick={() => navigateTo('/contact')}
-                className="group relative overflow-hidden rounded-xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
               >
                 <span className="relative z-10 flex items-center gap-2.5">
                   Start Your Expansion Journey
@@ -1085,44 +946,10 @@ export default function ServicesPage() {
           </Reveal>
 
         </div>
-      </div>
+      </section>
 
       {/* SERVICES FOR BRANDS */}
       <div className="relative z-10 overflow-hidden py-12">
-        
-        {/* Background Layer - service2.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service2 Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service2} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#f5f3ff]/50 via-transparent to-[#eef4ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -1130,17 +957,17 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div>
               <Reveal>
-                <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 mb-6 shadow-sm">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   For Brands
                 </span>
-                <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-6 leading-tight">
+                <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-6 leading-tight">
                   Franchise Services for Brands Looking to Expand
                 </h2>
               </Reveal>
               
               <Reveal delay={0.1}>
-                <p className="text-lg text-slate-600 leading-relaxed mb-8">
+                <p className="text-lg text-white/90 leading-relaxed mb-8">
                   We help businesses transform into scalable franchise models with the right structure, strategy, and investor network.
                 </p>
               </Reveal>
@@ -1159,7 +986,7 @@ export default function ServicesPage() {
                       <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600">
                         <FiCheck className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-base text-slate-700">
+                      <span className="text-base text-white">
                         {benefit}
                       </span>
                     </div>
@@ -1172,7 +999,7 @@ export default function ServicesPage() {
                 <button
                   type="button"
                   onClick={() => navigateTo('/contact')}
-                  className="group relative overflow-hidden rounded-xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                  className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                 >
                   <span className="relative z-10 flex items-center gap-2.5">
                     Grow Your Brand with iFranchise
@@ -1187,7 +1014,7 @@ export default function ServicesPage() {
               <div className="relative max-w-md mx-auto lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/50 bg-white/50 backdrop-blur-xl p-5 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-5 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
                   
                   {/* Animated glow effects */}
                   <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl animate-pulse-slow" />
@@ -1246,7 +1073,7 @@ export default function ServicesPage() {
                     <div className="rounded-lg bg-white/70 backdrop-blur-sm p-3 shadow-lg border border-slate-200/60">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-1.5">
-                          <FiMap className="h-3 w-3 text-indigo-600" />
+                          <FiMap className="h-3 w-3 text-indigo-400" />
                           <div>
                             <span className="text-xs font-bold text-slate-800 block">Franchise Locations</span>
                             <span className="text-[8px] text-slate-500">Active expansion cities</span>
@@ -1372,9 +1199,9 @@ export default function ServicesPage() {
                           <span className="text-xs font-bold text-slate-900">Growth Trajectory</span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping absolute" />
-                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                          <span className="text-[10px] font-semibold text-emerald-600">+92% YoY</span>
+                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/200 animate-ping absolute" />
+                          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/200" />
+                          <span className="text-[10px] font-semibold text-emerald-400">+92% YoY</span>
                         </div>
                       </div>
                       
@@ -1482,40 +1309,6 @@ export default function ServicesPage() {
 
       {/* SERVICES FOR INVESTORS */}
       <div className="relative z-10 overflow-hidden py-12">
-        
-        {/* Background Layer - service2.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service2 Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service2} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#eef4ff]/50 via-transparent to-[#f5f3ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -1525,7 +1318,7 @@ export default function ServicesPage() {
               <div className="relative max-w-md mx-auto lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/50 bg-white/50 backdrop-blur-xl p-4 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
 
                   {/* Dashboard Content */}
                   <div className="relative space-y-2.5">
@@ -1568,11 +1361,11 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div className="order-1 lg:order-2">
               <div>
-                <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 mb-6 shadow-sm">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   For Investors
                 </span>
-                <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-6 leading-tight">
+                <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-6 leading-tight">
                   Helping Investors<br />
                   Discover the Right<br />
                   Franchise Opportunities
@@ -1580,7 +1373,7 @@ export default function ServicesPage() {
               </div>
               
               <div>
-                <p className="text-base text-slate-600 leading-relaxed mb-8">
+                <p className="text-base text-white/70 leading-relaxed mb-8">
                   We help investors explore verified franchise opportunities across industries with transparent business information and structured support.
                 </p>
               </div>
@@ -1599,7 +1392,7 @@ export default function ServicesPage() {
                       <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600">
                         <FiCheck className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-base text-slate-700">
+                      <span className="text-base text-white">
                         {benefit}
                       </span>
                     </div>
@@ -1612,7 +1405,7 @@ export default function ServicesPage() {
                 <button
                   type="button"
                   onClick={() => navigateTo('/franchise-opportunities')}
-                  className="group relative overflow-hidden rounded-xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                  className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                 >
                   <span className="relative z-10 flex items-center gap-2.5">
                     Explore Franchise Opportunities
@@ -1629,199 +1422,88 @@ export default function ServicesPage() {
 
       {/* INDUSTRIES WE SUPPORT */}
       <div className="relative z-10 overflow-hidden py-12">
-        
-        {/* Background Layer - serviceHero.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* ServiceHero Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={serviceHero} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#eef4ff]/50 via-transparent to-[#f5f3ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           
 
           {/* Section Header */}
           <div className="text-center mb-16">
             <Reveal>
-              <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 mb-5 shadow-sm">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                 Industries
               </span>
-              <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-5">
+              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
                 Industries We Help Scale Through Franchising
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base text-slate-600 leading-relaxed">
+              <p className="mx-auto max-w-2xl text-base text-white/70 leading-relaxed">
                 Our franchise services are designed to support businesses across industries looking to expand through scalable franchise models.
               </p>
             </Reveal>
           </div>
 
-          {/* Premium Industry Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            {[
-              {
-                title: 'Retail & Jewelry',
-                image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-blue-500 to-cyan-600',
-                accentColor: '#3b82f6',
-                description: 'Scale your retail brand with proven franchise models',
-                delay: 0
-              },
-              {
-                title: 'Food & Beverage',
-                image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-emerald-500 to-teal-600',
-                accentColor: '#10b981',
-                description: 'Expand your F&B concept across multiple locations',
-                delay: 0.05
-              },
-              {
-                title: 'Healthcare & Wellness',
-                image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-rose-500 to-pink-600',
-                accentColor: '#f43f5e',
-                description: 'Grow your wellness business with franchise support',
-                delay: 0.1
-              },
-              {
-                title: 'Education & Training',
-                image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-violet-500 to-purple-600',
-                accentColor: '#8b5cf6',
-                description: 'Build an education empire through franchising',
-                delay: 0.15
-              },
-              {
-                title: 'Beauty & Lifestyle',
-                image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-orange-500 to-amber-600',
-                accentColor: '#f97316',
-                description: 'Transform beauty concepts into franchise networks',
-                delay: 0.2
-              },
-              {
-                title: 'Logistics & Infrastructure',
-                image: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=800&q=80',
-                gradient: 'from-indigo-500 to-blue-600',
-                accentColor: '#6366f1',
-                description: 'Scale logistics operations with franchise models',
-                delay: 0.25
-              }
-            ].map((industry, index) => (
-              <Reveal key={industry.title} delay={industry.delay}>
-                <div className="group relative h-full">
-                  {/* Main Card */}
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-white/70 backdrop-blur-sm border border-slate-200/50/60 transition-all duration-200 hover:border-slate-300 hover:shadow-[0_20px_60px_rgba(15,23,42,0.15)] hover:-translate-y-2">
-                    
-                    {/* Image Container */}
-                    <div className="relative h-48 overflow-hidden">
-                      {/* Image */}
-                      <img 
-                        src={industry.image} 
-                        alt={industry.title}
-                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
-                        loading="lazy"
-                      />
-                      
-                      {/* Gradient Overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${industry.gradient} opacity-20 group-hover:opacity-30 transition-opacity duration-200`} />
-                      
-                      {/* Shimmer Effect */}
-                      <div className="absolute inset-0 overflow-hidden">
-                        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:translate-x-full transition-transform duration-1000" />
-                      </div>
-                      
-                      {/* Top Accent Bar */}
-                      <div 
-                        className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                        style={{ background: `linear-gradient(to right, ${industry.accentColor}, transparent)` }}
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative p-6">
-                      {/* Accent Line */}
-                      <div 
-                        className="absolute top-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-all duration-200"
-                        style={{ background: `linear-gradient(to right, ${industry.accentColor}, transparent)` }}
-                      />
-                      
-                      {/* Title */}
-                      <h3 className="text-lg font-bold text-slate-900 mb-2 transition-colors duration-300 group-hover:text-slate-700">
-                        {industry.title}
-                      </h3>
-                      
-                      {/* Description */}
-                      <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                        {industry.description}
-                      </p>
-                      
-                      {/* CTA Button */}
-                      <button 
-                        className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 group-hover:gap-3"
-                        style={{ color: industry.accentColor }}
-                      >
-                        <span>Explore Opportunities</span>
-                        <FiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </button>
-                    </div>
-
-                    {/* Bottom Glow on Hover */}
-                    <div 
-                      className="absolute bottom-0 left-0 right-0 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none blur-2xl"
-                      style={{ background: `linear-gradient(to top, ${industry.accentColor}15, transparent)` }}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {SERVICES_INDUSTRIES.map((ind, i) => (
+              <Reveal key={ind.label} delay={i * 0.05}>
+                <div
+                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl"
+                  style={{
+                    background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
+                    border: '1px solid rgba(139,92,246,0.18)',
+                    boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+                    transition:
+                      'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-6px)';
+                    e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+                    e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
+                  }}
+                  onClick={() => navigateTo('/franchise-opportunities')}
+                >
+                  <div className="relative h-52 overflow-hidden bg-[#0a0618]">
+                    <ServicesIndustryCardImg src={ind.img} alt={ind.label} />
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
+                      aria-hidden
+                    />
+                    <div
+                      className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)`,
+                      }}
                     />
                   </div>
-
-                  {/* Floating Background Glow */}
-                  <div 
-                    className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 blur-xl -z-10"
-                    style={{ background: `linear-gradient(135deg, ${industry.accentColor}20, transparent)` }}
-                  />
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="mb-1.5 text-base font-bold leading-snug text-white">{ind.label}</h3>
+                    <p className="flex-1 text-[0.78rem] leading-relaxed text-white">{ind.desc}</p>
+                    <div
+                      className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                      style={{ color: '#c4b5fd' }}
+                    >
+                      Explore opportunities <FiArrowRight className="h-3 w-3" />
+                    </div>
+                  </div>
                 </div>
               </Reveal>
             ))}
-
           </div>
 
           {/* Bottom CTA */}
           <Reveal delay={0.6} className="text-center mt-16">
-            <p className="text-sm text-slate-500 mb-4">
+            <p className="text-sm text-white/50 mb-4">
               Don't see your industry? We work with businesses across all sectors.
             </p>
             <button
               type="button"
               onClick={() => navigateTo('/contact')}
-              className="group inline-flex items-center gap-2.5 rounded-xl bg-slate-900 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              className="group inline-flex items-center gap-2.5 rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
             >
               <span>Discuss Your Industry</span>
               <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -1832,62 +1514,28 @@ export default function ServicesPage() {
       </div>
 
       {/* BENEFITS â€“ More than just a franchise platform */}
-      <div className="relative z-10 w-full py-12 overflow-hidden">
-        
-        {/* Background Layer - service5.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service5 Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service5} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#eef4ff]/50 via-transparent to-[#f5f3ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-        
+      <section className="relative z-10 w-full py-12 overflow-hidden">
         <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[680px] text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3 }}
-              className="text-xs font-bold uppercase tracking-[0.18em] text-slate-700 mb-5"
+              className="text-xs font-bold uppercase tracking-[0.18em] text-violet-300 mb-5"
             >
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
               Benefits
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.05 }}
-              className="text-4xl font-extrabold tracking-tight text-[#0b0f19] sm:text-5xl mb-6"
+              className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl mb-6"
             >
               More than just a franchise platform
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.1 }}
-              className="text-base leading-relaxed text-slate-500 sm:text-lg"
+              className="text-base leading-relaxed text-white/65 sm:text-lg"
             >
               iFranchise helps you discover verified opportunities, make confident investment decisions, and scale smarter with real data and insights.
             </motion.p>
@@ -1901,7 +1549,7 @@ export default function ServicesPage() {
                 Book a Call
               </button>
               <button type="button" onClick={() => navigateTo('/franchise-opportunities')}
-                className="rounded-full border border-slate-200 bg-white px-8 py-3.5 text-sm font-semibold text-[#0b0f19] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
+                className="rounded-full border border-violet-500/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white/90 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
                 View More
               </button>
             </motion.div>
@@ -1912,7 +1560,7 @@ export default function ServicesPage() {
 
             {/* Animated gradient background */}
             <div className="absolute inset-0 overflow-hidden rounded-3xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/20 to-violet-50/20 rounded-3xl" />
+              <div className="absolute inset-0 rounded-3xl border border-slate-200/90 bg-white shadow-[0_8px_40px_rgba(0,0,0,0.1)]" />
               <div className="absolute inset-0 opacity-[0.03] rounded-3xl" style={{
                 backgroundImage: `linear-gradient(rgba(15,23,42,1) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,1) 1px, transparent 1px)`,
                 backgroundSize: '48px 48px'
@@ -1922,10 +1570,10 @@ export default function ServicesPage() {
             {/* Center orbit graphic â€” refined size for better balance */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" width="300" height="300">
-                <circle cx="150" cy="150" r="140" stroke="rgba(148,163,184,0.18)" strokeWidth="1.5" fill="none" />
-                <circle cx="150" cy="150" r="100" stroke="rgba(148,163,184,0.14)" strokeWidth="1.5" fill="none" strokeDasharray="5 8" />
-                <circle cx="150" cy="150" r="65" stroke="rgba(148,163,184,0.11)" strokeWidth="1.5" fill="none" />
-                <circle cx="150" cy="150" r="32" stroke="rgba(148,163,184,0.08)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="140" stroke="rgba(139,92,246,0.2)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="100" stroke="rgba(139,92,246,0.16)" strokeWidth="1.5" fill="none" strokeDasharray="5 8" />
+                <circle cx="150" cy="150" r="65" stroke="rgba(139,92,246,0.12)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="32" stroke="rgba(139,92,246,0.1)" strokeWidth="1.5" fill="none" />
               </svg>
               
               {/* Animated glow rings behind logo */}
@@ -1959,12 +1607,12 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[6%] left-[40%]"
               initial={{ opacity: 0, y: -12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.2 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50">
-                    <FiCheckCircle className="h-3.5 w-3.5 text-emerald-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
+                    <FiCheckCircle className="h-3.5 w-3.5 text-emerald-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Verified Franchise Listings</p>
+                  <p className="text-sm font-medium text-white">Verified Franchise Listings</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -1973,12 +1621,12 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.25 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-50">
-                    <FiBarChart2 className="h-3.5 w-3.5 text-indigo-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
+                    <FiBarChart2 className="h-3.5 w-3.5 text-indigo-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Data-Driven Insights</p>
+                  <p className="text-sm font-medium text-white">Data-Driven Insights</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -1987,12 +1635,12 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 right-[6%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.3 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-50">
-                    <FiTarget className="h-3.5 w-3.5 text-violet-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/20">
+                    <FiTarget className="h-3.5 w-3.5 text-violet-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Smart Investment Decisions</p>
+                  <p className="text-sm font-medium text-white">Smart Investment Decisions</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2001,12 +1649,12 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.35 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-amber-50">
-                    <FiAward className="h-3.5 w-3.5 text-amber-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20">
+                    <FiAward className="h-3.5 w-3.5 text-amber-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Expert Guidance & Support</p>
+                  <p className="text-sm font-medium text-white">Expert Guidance & Support</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2015,12 +1663,12 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[6%] left-[37%]"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.4 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-50">
-                    <FiRefreshCw className="h-3.5 w-3.5 text-blue-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500/20">
+                    <FiRefreshCw className="h-3.5 w-3.5 text-blue-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Real-Time Opportunity Updates</p>
+                  <p className="text-sm font-medium text-white">Real-Time Opportunity Updates</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2029,12 +1677,12 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.45 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full">
-                    <FiFileText className="h-3.5 w-3.5 text-slate-600" />
+                    <FiFileText className="h-3.5 w-3.5 text-slate-300" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Transparent Deal Information</p>
+                  <p className="text-sm font-medium text-white">Transparent Deal Information</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2043,12 +1691,12 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 left-[6%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.5 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-rose-50">
-                    <FiUsers className="h-3.5 w-3.5 text-rose-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-rose-500/20">
+                    <FiUsers className="h-3.5 w-3.5 text-rose-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Investor-Centric Platform</p>
+                  <p className="text-sm font-medium text-white">Investor-Centric Platform</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2057,12 +1705,12 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.55 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-200/80 bg-white px-5 py-2.5 shadow-[0_4px_16px_rgba(15,23,42,0.06)]">
+                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-purple-50">
-                    <FiTarget className="h-3.5 w-3.5 text-purple-600" />
+                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-purple-500/20">
+                    <FiTarget className="h-3.5 w-3.5 text-purple-400" />
                   </span>
-                  <p className="text-sm font-medium text-slate-800">Strategic Planning</p>
+                  <p className="text-sm font-medium text-white">Strategic Planning</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -2086,69 +1734,35 @@ export default function ServicesPage() {
               <motion.div key={item.title}
                 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.25, delay: i * 0.02 }}
-                className="rounded-2xl border border-slate-100 bg-white px-5 py-4 shadow-[0_4px_16px_rgba(15,23,42,0.06)]"
+                className="rounded-2xl border border-slate-800/90 bg-slate-900 px-5 py-4 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
               >
                 <div className="flex items-center gap-3">
                   <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-${item.color}-50`}>
                     <item.Icon className={`h-4 w-4 text-${item.color}-600`} />
                   </span>
-                  <p className="text-sm font-medium text-slate-700">{item.title}</p>
+                  <p className="text-sm font-medium text-white">{item.title}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
         </div>
-      </div>
+      </section>
 
       {/* WHY CHOOSE iFRANCHISE */}
       <div className="relative z-10 w-full pt-8 pb-12 overflow-hidden">
-        
-        {/* Background Layer - service2.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service2 Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service2} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#f5f3ff]/50 via-transparent to-[#eef4ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] right-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
           <div className="text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-block rounded-full border border-slate-200 bg-white px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 shadow-sm">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   Why iFranchise
                 </span>
               </div>
-              <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-5 leading-tight">
+              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
                 Why Businesses Choose iFranchise
               </h2>
             </Reveal>
@@ -2159,7 +1773,7 @@ export default function ServicesPage() {
             
             {/* Card 1: End-to-End Support */}
             <Reveal delay={0}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-md p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(99,102,241,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(99,102,241,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(99,102,241,0.3), inset 0 0 20px rgba(99,102,241,0.08)' }} />
@@ -2174,12 +1788,12 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 transition-colors duration-300 group-hover:text-indigo-700">
+                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-indigo-700">
                     End-to-End Support
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-600 leading-relaxed transition-colors duration-300 group-hover:text-slate-700">
+                  <p className="text-sm text-white/85 leading-relaxed">
                     From onboarding to investor acquisition, we manage every stage of franchise growth.
                   </p>
                 </div>
@@ -2191,7 +1805,7 @@ export default function ServicesPage() {
 
             {/* Card 2: Expansion-Focused Strategy */}
             <Reveal delay={0.1}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-md p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(16,185,129,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(16,185,129,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(16,185,129,0.3), inset 0 0 20px rgba(16,185,129,0.08)' }} />
@@ -2206,12 +1820,12 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 transition-colors duration-300 group-hover:text-emerald-700">
+                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-emerald-700">
                     Expansion-Focused Strategy
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-600 leading-relaxed transition-colors duration-300 group-hover:text-slate-700">
+                  <p className="text-sm text-white/85 leading-relaxed">
                     Our approach is built around scalable business expansion and market reach.
                   </p>
                 </div>
@@ -2223,7 +1837,7 @@ export default function ServicesPage() {
 
             {/* Card 3: Investor Network */}
             <Reveal delay={0.2}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-md p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(139,92,246,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(139,92,246,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(139,92,246,0.3), inset 0 0 20px rgba(139,92,246,0.08)' }} />
@@ -2238,12 +1852,12 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 transition-colors duration-300 group-hover:text-violet-700">
+                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-violet-700">
                     Investor Network
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-600 leading-relaxed transition-colors duration-300 group-hover:text-slate-700">
+                  <p className="text-sm text-white/85 leading-relaxed">
                     Access investors actively searching for franchise business opportunities.
                   </p>
                 </div>
@@ -2255,7 +1869,7 @@ export default function ServicesPage() {
 
             {/* Card 4: Structured Franchise Ecosystem */}
             <Reveal delay={0.3}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/55 backdrop-blur-md p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(249,115,22,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(249,115,22,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(249,115,22,0.3), inset 0 0 20px rgba(249,115,22,0.08)' }} />
@@ -2270,12 +1884,12 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 transition-colors duration-300 group-hover:text-orange-700">
+                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-orange-700">
                     Structured Franchise Ecosystem
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-slate-600 leading-relaxed transition-colors duration-300 group-hover:text-slate-700">
+                  <p className="text-sm text-white/85 leading-relaxed">
                     Clear processes, transparent communication, and growth-focused execution.
                   </p>
                 </div>
@@ -2292,52 +1906,18 @@ export default function ServicesPage() {
 
       {/* FAQ SECTION */}
       <div className="relative z-10 w-full py-12 overflow-hidden">
-        
-        {/* Background Layer - service2.png full width coverage */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          
-          {/* Service2 Image - Full coverage */}
-          <div className="absolute inset-0 w-full h-full">
-            <img 
-              src={service2} 
-              alt="" 
-              className="w-full h-full"
-              style={{
-                opacity: 0.65,
-                filter: 'brightness(1.08)',
-                objectFit: 'cover',
-                objectPosition: 'center'
-              }}
-            />
-            
-            {/* Light gradient overlay - minimal to keep image visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#eef4ff]/50 via-transparent to-[#f5f3ff]/40" />
-            
-            {/* Soft fade at top and bottom for seamless transitions */}
-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#eef4ff] via-[#eef4ff]/90 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#f5f3ff] via-[#f5f3ff]/90 to-transparent" />
-          </div>
-
-          {/* Subtle ambient glow */}
-          <div className="absolute top-[20%] left-[10%] w-[30vw] h-[30vw] opacity-10"
-            style={{
-              background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)',
-              filter: 'blur(40px)'
-            }} />
-        </div>
-
         <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
           <div className="text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-block rounded-full border border-slate-200 bg-white px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 shadow-sm">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2"></span>
+                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   FAQ
                 </span>
               </div>
-              <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl mb-5 leading-tight">
+              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
                 Frequently Asked Questions
               </h2>
             </Reveal>

@@ -2,10 +2,8 @@
  * rateLimiter.js
  * ─────────────────────────────────────────────────────────────────────────────
  * Client-side rate limiting using sessionStorage.
- * This is a first line of defence — the real rate limiting lives in Supabase
- * RLS policies and Edge Functions.
- *
- * Prevents accidental double-submits and basic abuse from the same browser tab.
+ * This is a first line of defence to prevent accidental double-submits and
+ * basic abuse from the same browser tab.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

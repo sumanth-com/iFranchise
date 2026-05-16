@@ -43,7 +43,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/70 backdrop-blur-sm transition-all duration-300"
+      className="group relative overflow-hidden rounded-2xl border border-violet-500/25 bg-white/5 backdrop-blur-sm transition-all duration-300"
       style={{ borderColor: isOpen ? 'rgba(15,23,42,0.18)' : undefined }}
     >
       {/* active glow */}
@@ -61,7 +61,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
         className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
       >
         <span className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-          isOpen ? 'text-slate-900' : 'text-slate-800'
+          isOpen ? 'text-white' : 'text-slate-200'
         }`}>
           {question}
         </span>
@@ -105,7 +105,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
           >
             <div className="relative px-6 pb-6 sm:px-8 sm:pb-7">
               <div className="h-px bg-gradient-to-r from-slate-200 via-slate-300/50 to-transparent mb-4" />
-              <p className="text-[0.88rem] text-slate-600 leading-relaxed">{answer}</p>
+              <p className="text-[0.88rem] text-slate-300 leading-relaxed">{answer}</p>
             </div>
           </motion.div>
         )}
@@ -118,23 +118,7 @@ export default function FAQSection() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="relative overflow-hidden bg-white py-20 lg:py-28">
-
-      {/* soft ambient background — white only */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/30 to-white" />
-        <motion.div
-          animate={{ x: [0, 30, 0], y: [0, -20, 0], opacity: [0.12, 0.22, 0.12] }}
-          transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute left-1/4 top-1/4 h-80 w-80 rounded-full bg-violet-100/50 blur-[100px]"
-        />
-        <motion.div
-          animate={{ x: [0, -30, 0], y: [0, 20, 0], opacity: [0.08, 0.16, 0.08] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
-          className="absolute right-1/4 bottom-1/4 h-72 w-72 rounded-full bg-indigo-100/40 blur-[90px]"
-        />
-      </div>
-
+    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14 pb-16">
       <div className="relative z-10 max-w-[860px] mx-auto px-6 lg:px-10">
 
         {/* header */}
@@ -146,12 +130,12 @@ export default function FAQSection() {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center justify-center mb-5">
-            <span className="inline-block rounded-full border border-slate-200 bg-white px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-700 shadow-sm">
+            <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2 align-middle" />
               FAQ
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.4rem] font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.4rem] font-extrabold tracking-tight text-white leading-[1.1] mb-3">
             Everything You Need to Know About{' '}
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
               Listing Your Brand
@@ -184,7 +168,7 @@ export default function FAQSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mt-10"
         >
-          <p className="text-slate-500 text-sm mb-4">Still have questions? Our expansion team is ready to help.</p>
+          <p className="text-slate-300 text-sm mb-4">Still have questions? Our expansion team is ready to help.</p>
           <button
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-violet-700 transition-colors duration-200 shadow-md"

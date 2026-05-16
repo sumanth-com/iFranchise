@@ -45,7 +45,7 @@ function LeadershipSection() {
   return (
     <>
       {/* LEADERSHIP & VISION SECTION - REFINED & OPTIMIZED */}
-      <section className="relative w-full overflow-hidden bg-white py-12 lg:py-16">
+      <section className="relative w-full overflow-hidden bg-transparent py-12 lg:py-16">
         {/* Atmospheric Background */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-violet-100/20 via-transparent to-transparent" />
@@ -72,11 +72,11 @@ function LeadershipSection() {
             transition={{ duration: 0.7 }}
             className="mb-10 text-center"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-slate-700">From Our Founders</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
+              <span className="text-xs font-bold uppercase tracking-[0.15em] text-violet-200">From Our Founders</span>
             </div>
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
               What iFranchise Means to Us
             </h2>
           </motion.div>
@@ -87,7 +87,7 @@ function LeadershipSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="group relative mb-8 overflow-hidden rounded-[28px] border border-slate-200/60 bg-gradient-to-br from-white via-slate-50/30 to-white shadow-[0_8px_40px_rgba(15,23,42,0.08)] transition-all duration-500 hover:shadow-[0_16px_60px_rgba(15,23,42,0.12)] hover:-translate-y-1"
+            className="group relative mb-8 overflow-hidden rounded-[28px] card-premium-dark border border-violet-500/20 shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:shadow-[0_16px_60px_rgba(109,40,217,0.28)] hover:-translate-y-1"
           >
             <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-indigo-500/5" />
@@ -99,7 +99,7 @@ function LeadershipSection() {
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[320px] lg:h-full lg:max-h-[480px]">
                   <div className="absolute -inset-4 bg-gradient-to-br from-violet-300/30 via-purple-200/20 to-indigo-300/30 blur-3xl opacity-60" />
                   
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200">
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <img
                       src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
                       alt="Arjun Malhotra"
@@ -122,31 +122,31 @@ function LeadershipSection() {
                   className="space-y-4"
                 >
                   {/* PERSONAL GREETING */}
-                  <p className="text-lg font-bold text-slate-900 lg:text-xl">
+                  <p className="text-lg font-bold text-white lg:text-xl">
                     Hello, I'm Arjun Malhotra
                   </p>
 
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     I started iFranchise with a simple belief: every entrepreneur deserves a fair shot at building something extraordinary. Too many brilliant business ideas die not from lack of potential, but from lack of the right guidance, capital, and strategic support.
                   </p>
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     We're not just connecting brands with investors — we're building dreams into empires. Every franchise we validate, every partnership we forge, and every expansion we architect is driven by one mission: turning your vision into a legacy that outlasts us all.
                   </p>
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     Your success is our legacy. Let's build something India will remember.
                   </p>
                   
                   {/* PREMIUM QUOTE CARD */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="relative overflow-hidden rounded-xl border border-violet-200/60 bg-gradient-to-br from-violet-50/50 via-purple-50/30 to-indigo-50/50 p-4 shadow-lg backdrop-blur-sm mt-4"
+                    className="relative overflow-hidden rounded-xl border border-violet-400/35 bg-violet-500/10 p-4 shadow-lg backdrop-blur-sm mt-4"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-indigo-500/5" />
                     <div className="relative">
                       <svg className="mb-2 h-4 w-4 text-violet-400" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                       </svg>
-                      <p className="text-[14px] font-semibold italic leading-[1.65] text-slate-800 lg:text-[15px] lg:leading-[1.7]">
+                      <p className="text-[14px] font-semibold italic leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
                         We're not building a marketplace. We're building the operating system for India's next generation of business empires.
                       </p>
                     </div>
@@ -159,18 +159,18 @@ function LeadershipSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-between border-t border-slate-200 pt-4 mt-4"
+                  className="flex items-center justify-between border-t border-violet-500/25 pt-4 mt-4"
                 >
                   <div className="flex items-center gap-3">
                     {/* iFranchise logo box */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 shadow-inner overflow-hidden">
                       <img src={BrandLogo} alt="iFranchise" className="h-9 w-9 object-contain" />
                     </div>
                     <div>
-                      <p className="text-2xl text-slate-900 lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+                      <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
                         Arjun Malhotra
                       </p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
                         Founder & Director
                       </p>
                     </div>
@@ -179,7 +179,7 @@ function LeadershipSection() {
                   <div className="flex items-center gap-3">
                     <a
                       href="#"
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700 hover:scale-110"
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white transition-all duration-300 hover:bg-violet-500 hover:scale-110"
                       aria-label="LinkedIn Profile"
                     >
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -189,7 +189,7 @@ function LeadershipSection() {
                     
                     <button
                       onClick={() => setFounderModalOpen(true)}
-                      className="group flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-sm transition-all duration-300 hover:border-violet-400 hover:bg-violet-50 hover:shadow-md cursor-pointer"
+                      className="group flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:border-violet-300 hover:bg-violet-500/25 hover:shadow-md cursor-pointer"
                     >
                       Explore His Journey
                       <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -212,7 +212,7 @@ function LeadershipSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-            className="group relative overflow-hidden rounded-[28px] border border-slate-200/60 bg-gradient-to-br from-white via-slate-50/30 to-white shadow-[0_8px_40px_rgba(15,23,42,0.08)] transition-all duration-500 hover:shadow-[0_16px_60px_rgba(15,23,42,0.12)] hover:-translate-y-1"
+            className="group relative overflow-hidden rounded-[28px] card-premium-dark border border-violet-500/20 shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-500 hover:shadow-[0_16px_60px_rgba(109,40,217,0.28)] hover:-translate-y-1"
           >
             <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-violet-500/5" />
@@ -229,34 +229,34 @@ function LeadershipSection() {
                   className="space-y-4"
                 >
                   {/* PERSONAL GREETING */}
-                  <p className="text-lg font-bold text-slate-900 lg:text-xl">
+                  <p className="text-lg font-bold text-white lg:text-xl">
                     Hello, I'm Daniel Reeves
                   </p>
 
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     I've spent over a decade watching businesses fail not because their ideas weren't good enough, but because they lacked the operational backbone to scale. That's what drives me every single day at iFranchise.
                   </p>
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     Scaling isn't just about opening more locations. It's about building systems so strong that your brand can thrive in 100 cities without losing its soul. It's about creating frameworks that turn chaos into clarity, and ambition into achievement.
                   </p>
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     We don't just advise — we roll up our sleeves and build alongside you. From market validation to operational excellence, we're in the trenches with every partner, ensuring no detail is overlooked and no opportunity is wasted.
                   </p>
-                  <p className="text-[14px] leading-[1.65] text-slate-700 lg:text-[15px] lg:leading-[1.7]">
+                  <p className="text-[14px] leading-[1.65] text-white/90 lg:text-[15px] lg:leading-[1.7]">
                     Your growth is our obsession. Let's turn your brand into an unstoppable force.
                   </p>
                   
                   {/* PREMIUM QUOTE CARD */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="relative overflow-hidden rounded-xl border border-indigo-200/60 bg-gradient-to-br from-indigo-50/50 via-blue-50/30 to-violet-50/50 p-4 shadow-lg backdrop-blur-sm mt-4"
+                    className="relative overflow-hidden rounded-xl border border-violet-400/35 bg-violet-500/10 p-4 shadow-lg backdrop-blur-sm mt-4"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-violet-500/5" />
                     <div className="relative">
                       <svg className="mb-2 h-4 w-4 text-indigo-400" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                       </svg>
-                      <p className="text-[14px] font-semibold italic leading-[1.65] text-slate-800 lg:text-[15px] lg:leading-[1.7]">
+                      <p className="text-[14px] font-semibold italic leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
                         Excellence isn't an accident. It's a system. And we're here to build that system with you.
                       </p>
                     </div>
@@ -269,18 +269,18 @@ function LeadershipSection() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-between border-t border-slate-200 pt-4 mt-4"
+                  className="flex items-center justify-between border-t border-violet-500/25 pt-4 mt-4"
                 >
                   <div className="flex items-center gap-3">
                     {/* iFranchise logo box */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 shadow-inner overflow-hidden">
                       <img src={BrandLogo} alt="iFranchise" className="h-9 w-9 object-contain" />
                     </div>
                     <div>
-                      <p className="text-2xl text-slate-900 lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+                      <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
                         Daniel Reeves
                       </p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
                         Co-Founder
                       </p>
                     </div>
@@ -289,7 +289,7 @@ function LeadershipSection() {
                   <div className="flex items-center gap-3">
                     <a
                       href="#"
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-blue-700 hover:scale-110"
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white transition-all duration-300 hover:bg-violet-500 hover:scale-110"
                       aria-label="LinkedIn Profile"
                     >
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -299,7 +299,7 @@ function LeadershipSection() {
                     
                     <button
                       onClick={() => setCofounderModalOpen(true)}
-                      className="group flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-900 shadow-sm transition-all duration-300 hover:border-indigo-400 hover:bg-indigo-50 hover:shadow-md cursor-pointer"
+                      className="group flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:border-indigo-300 hover:bg-indigo-500/20 hover:shadow-md cursor-pointer"
                     >
                       Explore His Journey
                       <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -315,7 +315,7 @@ function LeadershipSection() {
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[320px] lg:h-full lg:max-h-[480px]">
                   <div className="absolute -inset-4 bg-gradient-to-br from-indigo-300/30 via-blue-200/20 to-violet-300/30 blur-3xl opacity-60" />
                   
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200">
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <img
                       src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80"
                       alt="Daniel Reeves"
@@ -329,8 +329,8 @@ function LeadershipSection() {
               </div>
             </div>
 
-            <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none">
-              <div className="absolute inset-0 rounded-[28px] border border-indigo-200/50" />
+              <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none">
+              <div className="absolute inset-0 rounded-[28px] border border-violet-400/30" />
             </div>
           </motion.div>
         </div>
@@ -349,7 +349,7 @@ function LeadershipSection() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#fff', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
+            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
           >
@@ -369,27 +369,27 @@ function LeadershipSection() {
             
             <div style={{ padding: 24, flex: 1, overflowY: 'auto', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
               <div className="space-y-6">
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   I started iFranchise with a simple belief: every entrepreneur deserves a fair shot at building something extraordinary. Too many brilliant business ideas die not from lack of potential, but from lack of the right guidance, capital, and strategic support.
                 </p>
 
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   Over the past 15+ years, I've had the privilege of transforming franchise ecosystems across India and Southeast Asia. My journey began when I witnessed firsthand how fragmented and opaque the franchise industry was — brilliant brands struggling to find the right investors, and passionate entrepreneurs unable to access verified opportunities.
                 </p>
 
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   That's when I decided to build something different. Not just another listing platform, but a comprehensive intelligence system that brings transparency, data-driven insights, and strategic support to every stakeholder in the franchise ecosystem.
                 </p>
 
-                <div className="bg-violet-50 border-l-4 border-violet-500 p-4 rounded">
-                  <p className="text-base italic text-slate-800">
+                <div className="bg-violet-500/15 border-l-4 border-violet-400 p-4 rounded">
+                  <p className="text-base italic text-white">
                     "We're not building a marketplace. We're building the operating system for India's next generation of business empires."
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Career Highlights</h4>
-                  <ul className="space-y-2 text-sm text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Career Highlights</h4>
+                  <ul className="space-y-2 text-sm text-white/90">
                     <li>• Scaled 350+ brands across India and Southeast Asia</li>
                     <li>• Facilitated ₹500Cr+ in franchise capital deployment</li>
                     <li>• Expanded operations to 100+ cities in 8 countries</li>
@@ -400,14 +400,14 @@ function LeadershipSection() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Education & Certifications</h4>
-                  <p className="text-sm text-slate-700">MBA - IIM Ahmedabad | B.Tech - IIT Delhi</p>
-                  <p className="text-sm text-slate-700 mt-2">Certified Franchise Executive (CFE) | Harvard Business School - Strategic Leadership Program</p>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Education & Certifications</h4>
+                  <p className="text-sm text-white/90">MBA - IIM Ahmedabad | B.Tech - IIT Delhi</p>
+                  <p className="text-sm text-white/90 mt-2">Certified Franchise Executive (CFE) | Harvard Business School - Strategic Leadership Program</p>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Awards & Recognition</h4>
-                  <ul className="space-y-2 text-sm text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Awards & Recognition</h4>
+                  <ul className="space-y-2 text-sm text-white/90">
                     <li>• Entrepreneur of the Year 2023 - Economic Times</li>
                     <li>• Top 40 Under 40 Business Leaders - Fortune India</li>
                     <li>• Excellence in Franchise Innovation Award</li>
@@ -416,8 +416,8 @@ function LeadershipSection() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Philosophy</h4>
-                  <p className="text-base leading-relaxed text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Philosophy</h4>
+                  <p className="text-base leading-relaxed text-white/95">
                     Success in franchising isn't about luck — it's about systems, data, and unwavering commitment to excellence. Every decision we make at iFranchise is guided by one principle: creating lasting value for our partners. Your success is our legacy.
                   </p>
                 </div>
@@ -425,7 +425,7 @@ function LeadershipSection() {
               
               <button
                 onClick={() => setFounderModalOpen(false)}
-                className="w-full mt-6 px-6 py-3 rounded-xl bg-slate-900 text-white text-sm font-bold transition-all duration-300 hover:bg-slate-800"
+                className="w-full mt-6 px-6 py-3 rounded-xl bg-violet-600 text-white text-sm font-bold transition-all duration-300 hover:bg-violet-500"
               >
                 Close
               </button>
@@ -448,7 +448,7 @@ function LeadershipSection() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#fff', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
+            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
           >
@@ -468,27 +468,27 @@ function LeadershipSection() {
             
             <div style={{ padding: 24, flex: 1, overflowY: 'auto', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
               <div className="space-y-6">
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   I've spent over a decade watching businesses fail not because their ideas weren't good enough, but because they lacked the operational backbone to scale. That's what drives me every single day at iFranchise.
                 </p>
 
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   My journey in franchise operations began in Singapore, where I helped build multi-country expansion frameworks for some of Asia's fastest-growing brands. I learned that scaling isn't just about replication — it's about creating systems so robust that your brand can thrive in 100 cities without losing its soul.
                 </p>
 
-                <p className="text-base leading-relaxed text-slate-700">
+                <p className="text-base leading-relaxed text-white/95">
                   When Arjun and I founded iFranchise, we shared a vision: to build the infrastructure that turns franchise opportunities into category-defining businesses. My role is to ensure that every operational detail, every process, and every system we create is designed for sustainable, profitable growth.
                 </p>
 
-                <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded">
-                  <p className="text-base italic text-slate-800">
+                <div className="bg-violet-500/15 border-l-4 border-violet-400 p-4 rounded">
+                  <p className="text-base italic text-white">
                     "Excellence isn't an accident. It's a system. And we're here to build that system with you."
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Career Highlights</h4>
-                  <ul className="space-y-2 text-sm text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Career Highlights</h4>
+                  <ul className="space-y-2 text-sm text-white/90">
                     <li>• Engineered operational blueprints for 200+ franchise brands</li>
                     <li>• Expanded franchise networks across 25+ countries</li>
                     <li>• Reduced operational costs by 40% through process optimization</li>
@@ -499,14 +499,14 @@ function LeadershipSection() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Education & Certifications</h4>
-                  <p className="text-sm text-slate-700">MBA - INSEAD, France | B.Eng - NUS Singapore</p>
-                  <p className="text-sm text-slate-700 mt-2">Certified Franchise Operations Executive | MIT Sloan - Operations Management Program</p>
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Education & Certifications</h4>
+                  <p className="text-sm text-white/90">MBA - INSEAD, France | B.Eng - NUS Singapore</p>
+                  <p className="text-sm text-white/90 mt-2">Certified Franchise Operations Executive | MIT Sloan - Operations Management Program</p>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Awards & Recognition</h4>
-                  <ul className="space-y-2 text-sm text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Awards & Recognition</h4>
+                  <ul className="space-y-2 text-sm text-white/90">
                     <li>• Operations Excellence Award - Franchise Asia 2023</li>
                     <li>• Top 50 Franchise Professionals - Global Franchise Magazine</li>
                     <li>• Innovation in Process Management Award</li>
@@ -515,8 +515,8 @@ function LeadershipSection() {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Philosophy</h4>
-                  <p className="text-base leading-relaxed text-slate-700">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-violet-300 mb-3">Philosophy</h4>
+                  <p className="text-base leading-relaxed text-white/95">
                     Great franchises are built on great systems. My approach combines data-driven decision making with hands-on operational expertise. We don't just advise — we roll up our sleeves and build alongside you, ensuring every detail is optimized for success.
                   </p>
                 </div>
@@ -524,7 +524,7 @@ function LeadershipSection() {
               
               <button
                 onClick={() => setCofounderModalOpen(false)}
-                className="w-full mt-6 px-6 py-3 rounded-xl bg-slate-900 text-white text-sm font-bold transition-all duration-300 hover:bg-slate-800"
+                className="w-full mt-6 px-6 py-3 rounded-xl bg-violet-600 text-white text-sm font-bold transition-all duration-300 hover:bg-violet-500"
               >
                 Close
               </button>

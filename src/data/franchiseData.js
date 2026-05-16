@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// CENTRALIZED FRANCHISE OPPORTUNITIES DATABASE
+// CENTRALIZED FRANCHISE OPPORTUNITIES DATA
 // ═══════════════════════════════════════════════════════════════════════════════
 // This is the SINGLE SOURCE OF TRUTH for all franchise data across the platform.
 // Any changes here automatically update:
@@ -7,6 +7,13 @@
 // - Brand Owners Dashboard
 // - Investors Dashboard
 // - All statistics and metrics
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// Franchise Opportunities page adds derived filter keys per row via
+// enrichFranchiseRow (src/lib/franchiseOpportunityFilters.js): brand, location,
+// franchiseModel, investmentRangeLabel, investmentRangeBuckets — without changing
+// the raw objects below for other routes.
+//
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const franchiseOpportunities = [
@@ -119,7 +126,7 @@ export const franchiseOpportunities = [
     image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
     badge: 'GROWING',
     investment: '$60K-$150K',
-    model: 'FOCO',
+    model: 'COFO',
     locations: 'Urban & Suburban',
     cities: ['Delhi', 'Mumbai', 'Kolkata', 'Jaipur', 'Lucknow'],
     roi: '30%',
@@ -136,7 +143,7 @@ export const franchiseOpportunities = [
     image: 'https://images.unsplash.com/photo-1560066988-a4f3a1b1b4b8?auto=format&fit=crop&w=600&q=80',
     badge: 'POPULAR',
     investment: '$45K-$120K',
-    model: 'FOFO',
+    model: 'COCO',
     locations: 'Malls & Markets',
     cities: ['Mumbai', 'Delhi', 'Bengaluru', 'Pune', 'Hyderabad'],
     roi: '33%',
@@ -204,7 +211,7 @@ export const franchiseOpportunities = [
     image: 'https://images.unsplash.com/photo-1585859608211-45b8c5d3d4b6?auto=format&fit=crop&w=600&q=80',
     badge: 'NEW',
     investment: '$25K-$75K',
-    model: 'FICO',
+    model: 'FIFO',
     locations: 'Residential Zones',
     cities: ['Pune', 'Jaipur', 'Chandigarh', 'Indore'],
     roi: '40%',
@@ -289,7 +296,7 @@ export const franchiseOpportunities = [
     image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80',
     badge: 'POPULAR',
     investment: '$85K-$200K',
-    model: 'FICO',
+    model: 'COFO',
     locations: 'IT Cities',
     cities: ['Bengaluru', 'Hyderabad', 'Pune', 'Chennai'],
     roi: '34%',
@@ -340,7 +347,7 @@ export const franchiseOpportunities = [
     image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80',
     badge: 'NEW',
     investment: '$200K-$400K',
-    model: 'FOFO',
+    model: 'COCO',
     locations: 'Entertainment Zones',
     cities: ['Mumbai', 'Delhi', 'Bengaluru'],
     roi: '32%',

@@ -1,39 +1,17 @@
 /**
  * lib/index.js
  * ─────────────────────────────────────────────────────────────────────────────
- * Barrel export for the entire backend infrastructure layer.
+ * Barrel export for the backend infrastructure layer.
  * Import from here instead of individual files to keep imports clean.
  *
  * Usage:
- *   import { submitContactForm, validate, contactFormSchema } from '@/lib';
+ *   import { submitContactForm, submitFranchiseInquiry } from '@/lib';
+ *   import { FORM_TYPES, SHEET_TABS } from '@/lib/forms';
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-// Supabase client
-export { supabase, isSupabaseConfigured } from './supabase';
-
-// Validation schemas + utility
-export {
-  contactFormSchema,
-  franchiseInquirySchema,
-  brandApplicationSchema,
-  jobApplicationSchema,
-  newsletterSchema,
-  chatbotBrandSchema,
-  chatbotInvestorSchema,
-  validate,
-} from './validation';
-
-// Form submission helpers
-export {
-  submitContactForm,
-  submitFranchiseInquiry,
-  submitBrandApplication,
-  submitJobApplication,
-  submitNewsletterSignup,
-  submitChatbotBrandSession,
-  submitChatbotInvestorSession,
-} from './submissions';
+// Centralized form architecture
+export * from './forms';
 
 // Rate limiting
 export {
@@ -42,12 +20,6 @@ export {
   RATE_LIMIT_KEYS,
 } from './rateLimiter';
 
-// Realtime subscriptions (admin use only)
-export {
-  subscribeToNewLeads,
-  subscribeToFranchiseInquiries,
-  subscribeToBrandApplications,
-  subscribeToJobApplications,
-  subscribeToChatbotSessions,
-  subscribeToAllLeads,
-} from './realtime';
+// Utilities
+export { logger } from './logger';
+export { sanitizeText, sanitizeEmail, sanitizePhone, sanitizeObjectStrings } from './sanitize';
