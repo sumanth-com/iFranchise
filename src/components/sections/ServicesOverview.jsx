@@ -180,14 +180,14 @@ function ServiceCard({ svc, index }) {
             transition={{ duration: 0.25 }}
             className="shrink-0 mt-1"
           >
-            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/>
             </svg>
           </motion.div>
         </div>
 
         {/* short description */}
-        <p className="text-[0.8rem] text-slate-500 leading-relaxed mb-3">{svc.short}</p>
+        <p className="text-[0.8rem] text-white leading-relaxed mb-3">{svc.short}</p>
 
         {/* expandable detail */}
         <motion.div
@@ -197,7 +197,7 @@ function ServiceCard({ svc, index }) {
           className="overflow-hidden"
         >
           <div className={`pt-3 border-t ${c.border} mt-1`}>
-            <p className="text-[0.78rem] text-slate-600 leading-relaxed">{svc.detail}</p>
+            <p className="text-[0.78rem] text-white leading-relaxed">{svc.detail}</p>
           </div>
         </motion.div>
 
@@ -207,7 +207,7 @@ function ServiceCard({ svc, index }) {
             <span className="w-1 h-1 rounded-full bg-current" />
             iFranchise Service
           </span>
-          <span className="text-[0.65rem] text-slate-400">{expanded ? 'Click to collapse' : 'Click to expand'}</span>
+          <span className="text-[0.65rem] text-white">{expanded ? 'Click to collapse' : 'Click to expand'}</span>
         </div>
       </div>
     </motion.div>
@@ -255,7 +255,7 @@ export default function ServicesOverview() {
               Expansion Services
             </span>
           </h2>
-          <p className="text-slate-500 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-2xl mx-auto leading-relaxed">
             Every service is engineered to remove friction, attract the right investors, and build a franchise system that scales without breaking.
           </p>
         </motion.div>

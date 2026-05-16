@@ -37,7 +37,7 @@ export default function ListYourBrandFAQSection() {
           className="mb-10 text-center"
         >
           <h2 className="mb-3 text-3xl font-bold text-white lg:text-4xl">Frequently Asked Questions</h2>
-          <p className="mx-auto max-w-2xl text-lg text-white/80">
+          <p className="mx-auto max-w-2xl text-lg text-white">
             Quick answers for brand founders exploring franchise expansion.
           </p>
         </motion.div>
@@ -52,7 +52,7 @@ export default function ListYourBrandFAQSection() {
             <div className="card-premium-dark relative flex h-full flex-col justify-between rounded-2xl border border-violet-500/20 p-8 lg:p-9">
               <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent opacity-70" />
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-widest text-violet-300 mb-2">Get started</p>
+                <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white mb-2">Get started</p>
                 <h3 className="text-xl font-extrabold text-white mb-2">Ready to list your brand?</h3>
                 <p className="text-sm text-violet-100/80 leading-relaxed mb-6">
                   Submit the hero form or speak with our expansion team for a confidential franchise readiness review.
@@ -98,11 +98,11 @@ export default function ListYourBrandFAQSection() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <p className="pr-2 font-semibold text-white">{item.question}</p>
-                    <span className="shrink-0 text-lg font-semibold text-violet-300">{isOpen ? '−' : '+'}</span>
+                    <span className="shrink-0 text-lg font-semibold text-white">{isOpen ? '−' : '+'}</span>
                   </div>
                   <div className={`grid transition-all duration-300 ${isOpen ? 'mt-3 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                     <div className="overflow-hidden">
-                      <p className="text-sm leading-relaxed text-white/90">{item.answer}</p>
+                      <p className="text-sm leading-relaxed text-white">{item.answer}</p>
                     </div>
                   </div>
                 </motion.button>

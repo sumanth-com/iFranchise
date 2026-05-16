@@ -24,9 +24,9 @@ function OppCard({ opp, index }) {
   const roi = parseInt(opp.roi, 10);
   const roiColor = roi >= 40 ? 'text-emerald-400' : roi >= 30 ? 'text-amber-400' : 'text-blue-400';
   const badgeColor = opp.badge === 'HIGH ROI' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-    : opp.badge === 'TRENDING'  ? 'bg-violet-500/20 text-violet-300 border-violet-500/30'
+    : opp.badge === 'TRENDING'  ? 'bg-violet-500/20 text-white border-violet-500/30'
     : opp.badge === 'HOT MARKET'? 'bg-red-500/20 text-red-300 border-red-500/30'
-    : 'bg-slate-500/20 text-slate-300 border-slate-500/30';
+    : 'bg-slate-500/20 text-white border-slate-500/30';
 
   return (
     <motion.button
@@ -49,13 +49,13 @@ function OppCard({ opp, index }) {
           <p className="text-[0.78rem] font-bold text-white truncate">{opp.brandName}</p>
           <span className={`shrink-0 px-1.5 py-px rounded-full text-[0.55rem] font-bold border ${badgeColor}`}>{opp.badge}</span>
         </div>
-        <p className="text-[0.65rem] text-slate-500">{opp.category} · {opp.model}</p>
+        <p className="text-[0.65rem] text-white">{opp.category} · {opp.model}</p>
       </div>
       <div className="text-right shrink-0">
         <p className={`text-sm font-extrabold ${roiColor}`}>{opp.roi}</p>
-        <p className="text-[0.6rem] text-slate-500">ROI</p>
+        <p className="text-[0.6rem] text-white">ROI</p>
       </div>
-      <svg className="w-3.5 h-3.5 text-slate-600 group-hover:text-violet-400 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+      <svg className="w-3.5 h-3.5 text-white group-hover:text-violet-400 transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
       </svg>
     </motion.button>
@@ -112,7 +112,7 @@ export default function InvestorsSection() {
               <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-white/5">
                 <div>
                   <p className="text-[0.75rem] font-bold text-white">Investor Intelligence Hub</p>
-                  <p className="text-[0.62rem] text-slate-500">Live opportunity data · Auto-updated</p>
+                  <p className="text-[0.62rem] text-white">Live opportunity data · Auto-updated</p>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
@@ -134,7 +134,7 @@ export default function InvestorsSection() {
                   ].map((k, i) => (
                     <div key={i} className="flex flex-col items-center py-2.5 rounded-xl bg-white/5 border border-white/8">
                       <p className={`text-xl font-extrabold ${k.color}`}>{k.value}</p>
-                      <p className="text-[0.6rem] text-slate-500 mt-0.5">{k.label}</p>
+                      <p className="text-[0.6rem] text-white mt-0.5">{k.label}</p>
                     </div>
                   ))}
                 </div>
@@ -142,8 +142,8 @@ export default function InvestorsSection() {
                 {/* verified opportunity cards */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-slate-400">Top Verified Opportunities</p>
-                    <span className="text-[0.6rem] text-slate-500">by ROI</span>
+                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-white">Top Verified Opportunities</p>
+                    <span className="text-[0.6rem] text-white">by ROI</span>
                   </div>
                   <div className="space-y-1.5">
                     {topOpps.map((opp, i) => <OppCard key={opp.id} opp={opp} index={i} />)}
@@ -152,13 +152,13 @@ export default function InvestorsSection() {
 
                 {/* industry breakdown */}
                 <div className="rounded-xl bg-white/5 border border-white/8 p-3">
-                  <p className="text-[0.62rem] font-bold uppercase tracking-wider text-slate-400 mb-2.5">Industry Breakdown</p>
+                  <p className="text-[0.62rem] font-bold uppercase tracking-wider text-white mb-2.5">Industry Breakdown</p>
                   <div className="space-y-2">
                     {trends.slice(0, 4).map((t, i) => (
                       <div key={i} className="space-y-0.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-[0.65rem] text-white/70">{t.industry}</span>
-                          <span className="text-[0.6rem] text-slate-500">{t.avgROI}% avg ROI</span>
+                          <span className="text-[0.65rem] text-white">{t.industry}</span>
+                          <span className="text-[0.6rem] text-white">{t.avgROI}% avg ROI</span>
                         </div>
                         <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
                           <motion.div
@@ -183,7 +183,7 @@ export default function InvestorsSection() {
                   </div>
                   <div>
                     <p className="text-[0.72rem] font-bold text-emerald-300">{growth.recentCount} new opportunities added this quarter</p>
-                    <p className="text-[0.62rem] text-slate-500">Platform growing at {growth.growthRate}% — more choices every month</p>
+                    <p className="text-[0.62rem] text-white">Platform growing at {growth.growthRate}% — more choices every month</p>
                   </div>
                 </div>
 
@@ -210,7 +210,7 @@ export default function InvestorsSection() {
                   Build Lasting Wealth.
                 </span>
               </h2>
-              <p className="text-slate-400 text-base leading-relaxed max-w-lg">
+              <p className="text-white text-base leading-relaxed max-w-lg">
                 Access India's most curated franchise investment marketplace — every opportunity is verified, every ROI is real, every brand is expansion-ready.
               </p>
             </div>
@@ -237,7 +237,7 @@ export default function InvestorsSection() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white mb-0.5">{b.title}</p>
-                    <p className="text-[0.75rem] text-slate-400">{b.desc}</p>
+                    <p className="text-[0.75rem] text-white">{b.desc}</p>
                   </div>
                 </motion.div>
               ))}

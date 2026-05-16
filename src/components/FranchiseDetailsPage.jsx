@@ -2379,17 +2379,17 @@ function FranchiseDetailsPage() {
 
   const renderTabContent = () => {
     if (activeTab === 'Overview') {
-      return <p className="text-base leading-relaxed text-slate-600">{selectedFranchise.overview}</p>;
+      return <p className="text-base leading-relaxed text-white">{selectedFranchise.overview}</p>;
     }
     if (activeTab === 'Business Model') {
-      return <p className="text-base leading-relaxed text-slate-600">{selectedFranchise.businessModel}</p>;
+      return <p className="text-base leading-relaxed text-white">{selectedFranchise.businessModel}</p>;
     }
     if (activeTab === 'Investment Details') {
       return (
         <div className="grid gap-3 sm:grid-cols-2">
           {selectedFranchise.investmentDetails.map((item) => (
             <article key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm text-slate-500">{item.label}</p>
+              <p className="text-sm text-white">{item.label}</p>
               <p className="mt-1 text-lg font-semibold text-[#0b0f19]">{item.value}</p>
             </article>
           ))}
@@ -2413,7 +2413,7 @@ function FranchiseDetailsPage() {
           {selectedFranchise.faqs.map((item) => (
             <article key={item.q} className="rounded-xl border border-slate-200 bg-white p-4">
               <h4 className="text-base font-semibold text-[#0b0f19]">{item.q}</h4>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.a}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white">{item.a}</p>
             </article>
           ))}
         </div>
@@ -2427,7 +2427,7 @@ function FranchiseDetailsPage() {
               <p className="text-sm font-semibold text-[#0b0f19]">{review.name}</p>
               <p className="text-sm text-amber-500">{'★'.repeat(review.rating)}</p>
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{review.text}</p>
+            <p className="mt-2 text-sm leading-relaxed text-white">{review.text}</p>
           </article>
         ))}
       </div>
@@ -2471,15 +2471,15 @@ function FranchiseDetailsPage() {
               </a>
             </div>
 
-            <p className="mt-4 text-lg text-slate-600 lg:text-xl">{selectedFranchise.tagline}</p>
+            <p className="mt-4 text-lg text-white lg:text-xl">{selectedFranchise.tagline}</p>
           </div>
 
           <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:grid-cols-2 lg:grid-cols-5 lg:p-8">
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-slate-500">Investment</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.investment}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-slate-500">Space</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.space}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-slate-500">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.roi}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-slate-500">Payback</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.payback}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-slate-500">Outlets</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.outlets}</p></article>
+            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Investment</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.investment}</p></article>
+            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Space</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.space}</p></article>
+            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.roi}</p></article>
+            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Payback</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.payback}</p></article>
+            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Outlets</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.outlets}</p></article>
           </div>
 
           <ImageCarousel 
@@ -2510,19 +2510,19 @@ function FranchiseDetailsPage() {
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">About {selectedFranchise.name}</h3>
             <div className="mt-6 grid gap-4 lg:grid-cols-2">
-              <p className="text-base leading-relaxed text-slate-600">
+              <p className="text-base leading-relaxed text-white">
                 {selectedFranchise.name} is a <strong>premium franchise brand</strong> designed for investors who want
                 predictable demand and a differentiated market position.
               </p>
-              <p className="text-base leading-relaxed text-slate-600">
+              <p className="text-base leading-relaxed text-white">
                 The model combines <strong>strong unit economics</strong> with clear execution SOPs, helping partners
                 operate consistently across city tiers.
               </p>
-              <p className="text-base leading-relaxed text-slate-600">
+              <p className="text-base leading-relaxed text-white">
                 With centralized sourcing and launch playbooks, investors get <strong>decision clarity</strong> from
                 location finalization to opening day.
               </p>
-              <p className="text-base leading-relaxed text-slate-600">
+              <p className="text-base leading-relaxed text-white">
                 The brand focuses on loyalty and repeat behavior to create <strong>long-term growth support</strong>,
                 not just short-term spikes.
               </p>
@@ -2532,9 +2532,9 @@ function FranchiseDetailsPage() {
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Investment & Financials</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-slate-500">Investment Range</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-slate-500">Area Required</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-slate-500">Franchise Fee</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.franchiseFee}</p></article>
+              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Investment Range</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
+              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Area Required</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
+              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Franchise Fee</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.franchiseFee}</p></article>
             </div>
             <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
               <div className="grid grid-cols-1 gap-px bg-slate-200 md:grid-cols-4">
@@ -2544,7 +2544,7 @@ function FranchiseDetailsPage() {
               </div>
               <div className="divide-y divide-slate-200">
                 {selectedFranchise.financialTable.map((row) => (
-                  <div key={row.storeSize} className="grid grid-cols-1 gap-2 px-5 py-4 text-sm text-slate-600 md:grid-cols-4 md:gap-4">
+                  <div key={row.storeSize} className="grid grid-cols-1 gap-2 px-5 py-4 text-sm text-white md:grid-cols-4 md:gap-4">
                     <p className="font-medium">{row.storeSize}</p>
                     <p>{row.investmentCost}</p>
                     <p>{row.royaltyFees}</p>
@@ -2561,7 +2561,7 @@ function FranchiseDetailsPage() {
               {selectedFranchise.franchiseModels.map((model) => (
                 <article key={model.name} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
                   <p className="text-lg font-bold text-[#0b0f19]">{model.name}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{model.description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white">{model.description}</p>
                 </article>
               ))}
             </div>
@@ -2575,7 +2575,7 @@ function FranchiseDetailsPage() {
                   <span className="mt-0.5 inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-violet-100 text-lg text-violet-700">✓</span>
                   <div>
                     <p className="text-base font-semibold text-[#0b0f19]">{item.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-white">{item.description}</p>
                   </div>
                 </article>
               ))}
@@ -2597,16 +2597,16 @@ function FranchiseDetailsPage() {
             <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Operations & Returns</h3>
             <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
               <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-slate-500">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.roi}</p></article>
+                <article><p className="text-sm text-white">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.roi}</p></article>
               </div>
               <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-slate-500">Payback Period</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.payback}</p></article>
+                <article><p className="text-sm text-white">Payback Period</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.payback}</p></article>
               </div>
               <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-slate-500">Hours Required</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.hours}</p></article>
+                <article><p className="text-sm text-white">Hours Required</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.hours}</p></article>
               </div>
               <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-slate-500">Staff Requirement</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.staff}</p></article>
+                <article><p className="text-sm text-white">Staff Requirement</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.staff}</p></article>
               </div>
             </div>
           </section>
@@ -2628,7 +2628,7 @@ function FranchiseDetailsPage() {
               {selectedFranchise.requirements.map((item) => (
                 <article key={item.label} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
                   <p className="text-sm font-semibold text-slate-700">{item.label}</p>
-                  <p className="text-sm text-slate-600">{item.value}</p>
+                  <p className="text-sm text-white">{item.value}</p>
                 </article>
               ))}
             </div>
@@ -2651,12 +2651,12 @@ function FranchiseDetailsPage() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {selectedFranchise.agreementDetails.map((item) => (
                 <article key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm text-slate-500">{item.label}</p>
+                  <p className="text-sm text-white">{item.label}</p>
                   <p className="mt-2 text-sm font-medium text-slate-700">{item.value}</p>
                 </article>
               ))}
             </div>
-            <p className="mt-6 text-xs leading-relaxed text-slate-400">{selectedFranchise.disclaimer}</p>
+            <p className="mt-6 text-xs leading-relaxed text-white">{selectedFranchise.disclaimer}</p>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
@@ -2664,7 +2664,7 @@ function FranchiseDetailsPage() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {['Apply', 'Evaluation', 'Approval', 'Launch'].map((step, idx) => (
                 <article key={step} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">Step {idx + 1}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white">Step {idx + 1}</p>
                   <p className="mt-3 text-lg font-semibold text-[#0b0f19]">{step}</p>
                 </article>
               ))}
@@ -2674,7 +2674,7 @@ function FranchiseDetailsPage() {
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Explore Similar Opportunities</h3>
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Featured</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">Featured</span>
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {relatedFranchises.map((franchise) => (
@@ -2696,7 +2696,7 @@ function FranchiseDetailsPage() {
                   </div>
                   <div className="p-5">
                     <h4 className="text-xl font-bold tracking-tight text-[#0b0f19]">{franchise.name}</h4>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-600">{franchise.tagline}</p>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white">{franchise.tagline}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
                         {franchise.keyInfo.investment}
@@ -2707,11 +2707,11 @@ function FranchiseDetailsPage() {
                     </div>
                     <div className="mt-4 grid grid-cols-2 gap-3">
                       <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="text-xs font-medium text-slate-500">ROI</p>
+                        <p className="text-xs font-medium text-white">ROI</p>
                         <p className="text-lg font-bold text-[#0b0f19]">{franchise.keyInfo.roi}</p>
                       </div>
                       <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="text-xs font-medium text-slate-500">Payback</p>
+                        <p className="text-xs font-medium text-white">Payback</p>
                         <p className="text-lg font-bold text-[#0b0f19]">{franchise.keyInfo.payback}</p>
                       </div>
                     </div>

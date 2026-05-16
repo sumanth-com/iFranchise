@@ -11,15 +11,15 @@ const BUDGETS = ['Under Rs.25L', 'Rs.25L - Rs.50L', 'Rs.50L - Rs.1Cr', 'Rs.1Cr -
 const EXPANSION_GOALS = ['1-3 cities', '4-10 cities', '10-25 cities', '25+ cities'];
 
 const inputClass =
-  'w-full rounded-lg border border-slate-200/90 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20';
-const labelClass = 'mb-1 block text-[0.62rem] font-bold uppercase tracking-wider text-violet-200';
+  'w-full rounded-lg border border-slate-200/90 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-white shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20';
+const labelClass = 'mb-1 block text-[0.62rem] font-bold uppercase tracking-wider text-white';
 
 function Field({ label, required, children, className = '' }) {
   return (
     <div className={`flex flex-col ${className}`}>
       <label className={labelClass}>
         {label}
-        {required && <span className="ml-0.5 text-violet-300">*</span>}
+        {required && <span className="ml-0.5 text-white">*</span>}
       </label>
       {children}
     </div>
@@ -65,7 +65,7 @@ export default function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
 
         <div className="mb-4 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 pb-3">
           <div>
-            <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-violet-300">Brand inquiry</p>
+            <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white">Brand inquiry</p>
             <h2 className="text-lg font-extrabold text-white">Start Your Listing</h2>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/35 bg-emerald-500/15 px-2.5 py-1 text-[0.58rem] font-bold uppercase text-emerald-300">
@@ -83,7 +83,7 @@ export default function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                 </svg>
               </div>
               <p className="text-sm font-bold text-white">Application received</p>
-              <p className="mt-1 text-xs text-violet-200/70">We&apos;ll contact you within 24 hours.</p>
+              <p className="mt-1 text-xs text-white">We&apos;ll contact you within 24 hours.</p>
             </motion.div>
           ) : (
             <motion.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-2.5">

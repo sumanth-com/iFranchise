@@ -40,7 +40,7 @@ function PremiumTeamCard({ member }) {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0618] via-[#0a0618]/85 to-transparent" />
           <div className="absolute bottom-2 left-4">
             <h3 className="text-lg font-black text-white">{member.name}</h3>
-            <p className="mt-0.5 text-xs font-semibold text-violet-200">{member.role}</p>
+            <p className="mt-0.5 text-xs font-semibold text-white">{member.role}</p>
           </div>
         </div>
 
@@ -57,15 +57,15 @@ function PremiumTeamCard({ member }) {
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">About</h4>
-              <p className="mt-2 text-sm leading-relaxed text-white/90">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white">About</h4>
+              <p className="mt-2 text-sm leading-relaxed text-white">
                 {member.about}
               </p>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Expertise</h4>
-              <ul className="mt-2 space-y-1 text-sm text-white/90">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white">Expertise</h4>
+              <ul className="mt-2 space-y-1 text-sm text-white">
                 {member.expertise.map((item, idx) => (
                   <li key={idx}>• {item}</li>
                 ))}
@@ -73,13 +73,13 @@ function PremiumTeamCard({ member }) {
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Education</h4>
-              <p className="mt-2 text-sm text-white/90">{member.education}</p>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white">Education</h4>
+              <p className="mt-2 text-sm text-white">{member.education}</p>
             </div>
 
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-violet-300">Awards & Recognition</h4>
-              <ul className="mt-2 space-y-1 text-sm text-white/90">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white">Awards & Recognition</h4>
+              <ul className="mt-2 space-y-1 text-sm text-white">
                 {member.awards.map((award, idx) => (
                   <li key={idx}>• {award}</li>
                 ))}
@@ -119,7 +119,7 @@ function PremiumTeamCard({ member }) {
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
           <h3 className="text-2xl font-bold tracking-tight text-white">{member.name}</h3>
-          <p className="mt-1 text-sm font-medium text-violet-200">{member.role}</p>
+          <p className="mt-1 text-sm font-medium text-white">{member.role}</p>
         </div>
         
         <div className="mt-4 flex items-center justify-between gap-3">
@@ -393,7 +393,7 @@ function AboutPage() {
             >
               <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-                <span className="text-xs font-bold uppercase tracking-wider text-violet-200">Our Story</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-white">Our Story</span>
               </div>
 
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
@@ -419,7 +419,7 @@ function AboutPage() {
               { num: '01', title: 'Our Foundation', desc: 'Built on transparency, data intelligence, and strategic execution to transform franchise growth.', bgColor: 'bg-gradient-to-br from-violet-50 to-purple-50', textColor: 'text-violet-600' },
               { num: '02', title: 'Our Approach', desc: 'Data-driven matching, rigorous brand validation, and investor-first advisory for sustainable growth.', bgColor: 'bg-gradient-to-br from-indigo-50 to-blue-50', textColor: 'text-indigo-600' },
               { num: '03', title: 'Our Edge', desc: 'Proprietary intelligence systems, verified opportunities, and end-to-end franchise expansion support.', bgColor: 'bg-gradient-to-br from-purple-50 to-pink-50', textColor: 'text-purple-600' },
-              { num: '04', title: 'Vision & Mission', desc: "To become India's most trusted franchise intelligence platform, powering 10,000+ success stories.", bgColor: 'bg-gradient-to-br from-violet-500/20 to-indigo-500/10', textColor: 'text-violet-200' },
+              { num: '04', title: 'Vision & Mission', desc: "To become India's most trusted franchise intelligence platform, powering 10,000+ success stories.", bgColor: 'bg-gradient-to-br from-violet-500/20 to-indigo-500/10', textColor: 'text-white' },
             ].map((card, idx) => (
               <motion.div
                 key={card.num}
@@ -433,7 +433,7 @@ function AboutPage() {
                   {card.num}
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
-                <p className="text-sm leading-relaxed text-white/90">{card.desc}</p>
+                <p className="text-sm leading-relaxed text-white">{card.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -455,14 +455,14 @@ function AboutPage() {
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-violet-200">Our Team</span>
+              <span className="text-xs font-bold uppercase tracking-[0.15em] text-white">Our Team</span>
             </div>
 
             <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
               Meet Our Strategic Leadership Team
             </h2>
 
-            <p className="mt-6 mx-auto max-w-3xl text-lg leading-relaxed text-white/90">
+            <p className="mt-6 mx-auto max-w-3xl text-lg leading-relaxed text-white">
               With over a decade in business, we've empowered countless dreams and transformed them into tangible realities for hundreds of our clients. We're not just consultants — we're your partners in building something extraordinary. It's time for you to join the tribe of digitally empowered, strategically positioned, and unstoppable franchise businesses.
             </p>
           </motion.div>
@@ -495,7 +495,7 @@ function AboutPage() {
               className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm"
             >
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-violet-200">Our Advantages</span>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-white">Our Advantages</span>
             </motion.div>
 
             <motion.h2
@@ -515,7 +515,7 @@ function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className="mt-6 text-lg leading-relaxed text-white/90 sm:text-xl"
+              className="mt-6 text-lg leading-relaxed text-white sm:text-xl"
             >
               We don't just connect brands and investors — we deliver intelligence, systems, and strategic infrastructure that accelerate franchise expansion.
             </motion.p>
@@ -538,13 +538,13 @@ function AboutPage() {
                 className="group relative overflow-hidden rounded-3xl card-premium-dark border border-violet-500/20 p-8 shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_24px_60px_rgba(109,40,217,0.35)]"
               >
                 <div className="relative z-10">
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/20 text-violet-300 shadow-inner border border-violet-400/25">
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/20 text-white shadow-inner border border-violet-400/25">
                     <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
                   <h3 className="mt-6 text-xl font-bold tracking-tight text-white sm:text-2xl">{card.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-white/90">{card.desc}</p>
+                  <p className="mt-3 text-base leading-relaxed text-white">{card.desc}</p>
                 </div>
               </motion.article>
             ))}
@@ -557,7 +557,7 @@ function AboutPage() {
             transition={{ duration: 0.3, delay: 0.15 }}
             className="mt-16 text-center"
           >
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-300/90">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/90">
               Built for founders. Trusted by investors. Designed for scale.
             </p>
           </motion.div>
@@ -568,12 +568,12 @@ function AboutPage() {
       <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <section className="pb-12 lg:pb-16">
           <div className="mx-auto max-w-[760px] text-center">
-            <p className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-violet-200 shadow-lg">
+            <p className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               Customers
             </p>
             <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Our customers love us</h2>
-            <p className="mt-4 text-base leading-relaxed text-white/90">
+            <p className="mt-4 text-base leading-relaxed text-white">
               Real feedback from teams and individuals who rely on iFranchise to power growth with practical analytics.
             </p>
           </div>
@@ -589,19 +589,19 @@ function AboutPage() {
                     <img src={testimonial.avatar} alt={testimonial.name} className="h-14 w-14 rounded-xl object-cover" loading="lazy" />
                     <div className="flex-1">
                       <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
-                      <p className="text-sm text-violet-200">{testimonial.company}</p>
+                      <p className="text-sm text-white">{testimonial.company}</p>
                     </div>
-                    <span className="text-3xl text-violet-300">{testimonial.icon}</span>
+                    <span className="text-3xl text-white">{testimonial.icon}</span>
                   </div>
                   <div className="mt-4 border-t border-violet-500/25 pt-4">
-                    <p className="text-base leading-relaxed text-white/95">{testimonial.quote}</p>
+                    <p className="text-base leading-relaxed text-white">{testimonial.quote}</p>
                   </div>
                 </article>
               ))}
             </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white/90">
+          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white">
             <div className="flex -space-x-2">
               {['https://i.pravatar.cc/40?img=12', 'https://i.pravatar.cc/40?img=18', 'https://i.pravatar.cc/40?img=26', 'https://i.pravatar.cc/40?img=32'].map((avatar) => (
                 <img key={avatar} src={avatar} alt="Reviewer avatar" className="h-8 w-8 rounded-full border-2 border-violet-500/40 object-cover" loading="lazy" />

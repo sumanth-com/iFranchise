@@ -210,7 +210,7 @@ function TextInput({ placeholder, value, onChange, type = 'text' }) {
       placeholder={placeholder}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
-      className="mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] text-slate-900/90 outline-none transition-all duration-150 placeholder:text-slate-400/90"
+      className="mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] text-slate-900/90 outline-none transition-all duration-150 placeholder:text-white/90"
       style={{
         border: '1px solid rgba(0,0,0,0.1)',
         background: 'rgba(0,0,0,0.03)',

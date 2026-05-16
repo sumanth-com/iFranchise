@@ -82,7 +82,7 @@ export default function ServicesStyleIndustriesSection() {
       <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
           <span
-            className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300"
+            className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white"
             style={{
               background: 'rgba(139,92,246,0.15)',
               border: '1px solid rgba(139,92,246,0.3)',
@@ -156,7 +156,7 @@ export default function ServicesStyleIndustriesSection() {
         </div>
 
         <div className="mt-14 text-center">
-          <p className="mb-5 text-sm text-white/55">
+          <p className="mb-5 text-sm text-white">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
           <button

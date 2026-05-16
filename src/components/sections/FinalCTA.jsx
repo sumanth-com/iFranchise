@@ -90,7 +90,7 @@ export default function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, delay: 0.15 }}
-          className="text-slate-500 text-lg leading-relaxed max-w-2xl mx-auto mb-10"
+          className="text-white text-lg leading-relaxed max-w-2xl mx-auto mb-10"
         >
           200+ brands have already started their franchise journey with iFranchise. The infrastructure, the investors, and the systems are ready. The only thing missing is your brand.
         </motion.p>
@@ -151,7 +151,7 @@ export default function FinalCTA() {
               className="flex flex-col items-center"
             >
               <span className="text-2xl font-extrabold text-slate-900">{s.value}</span>
-              <span className="text-[0.68rem] text-slate-400 mt-0.5">{s.label}</span>
+              <span className="text-[0.68rem] text-white mt-0.5">{s.label}</span>
             </motion.div>
           ))}
         </motion.div>

@@ -107,7 +107,7 @@ function StatCard({ value, label }) {
       className="rounded-2xl border border-violet-500/25 card-premium-dark-inner p-6 text-center shadow-inner"
       style={{ transition: 'transform 0.18s ease', willChange: 'transform' }}>
       <p ref={numRef} className="text-3xl font-extrabold text-white">{value}</p>
-      <p className="mt-1 text-sm text-violet-200/90">{label}</p>
+      <p className="mt-1 text-sm text-white/90">{label}</p>
     </div>
   );
 }
@@ -141,7 +141,7 @@ function ArticleSection({ section, index }) {
         {section.points && (
           <ul className="mt-4 space-y-3">
             {section.points.map((pt) => (
-              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-white/90">
+              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-white">
                 <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-violet-400" />
                 {pt}
               </li>
@@ -154,7 +154,7 @@ function ArticleSection({ section, index }) {
           </div>
         )}
         {section.quote && (
-          <blockquote className="my-6 rounded-2xl border border-violet-400/35 bg-violet-500/10 px-6 py-5 text-[18px] italic leading-relaxed text-white/95">
+          <blockquote className="my-6 rounded-2xl border border-violet-400/35 bg-violet-500/10 px-6 py-5 text-[18px] italic leading-relaxed text-white">
             &ldquo;{section.quote}&rdquo;
           </blockquote>
         )}
@@ -203,9 +203,9 @@ function OverviewDropdown({ headings, onHeadingClick }) {
             <span className="relative inline-flex h-3 w-3 rounded-full bg-violet-500" />
           </span>
           <span className="text-base font-bold text-white">Overview</span>
-          <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-200">{headings.length} sections</span>
+          <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-semibold text-white">{headings.length} sections</span>
         </div>
-        <svg className={`h-5 w-5 text-violet-300 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+        <svg className={`h-5 w-5 text-white transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
@@ -218,7 +218,7 @@ function OverviewDropdown({ headings, onHeadingClick }) {
               <button key={h.id} type="button"
                 onClick={() => { onHeadingClick(h.id); setOpen(false); }}
                 className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all duration-200 ${
-                  highlighted === h.id ? 'bg-violet-600 text-white scale-[1.02]' : 'text-white/95 hover:bg-violet-500/15 hover:text-white'
+                  highlighted === h.id ? 'bg-violet-600 text-white scale-[1.02]' : 'text-white hover:bg-violet-500/15 hover:text-white'
                 }`}>
                 <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/25 text-[10px] font-bold text-violet-100">
                   {i + 1}
@@ -358,29 +358,29 @@ function BlogDetailPage() {
 
       <div className="mx-auto max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
         <div data-reveal className="mb-8 border-b border-violet-500/25 pb-8">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-violet-200/95">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-white">
             <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900">{article.category}</span>
-            <span className="text-white/50">&#183;</span><span>{article.readTime}</span>
-            <span className="text-white/50">&#183;</span><span>{formatDisplayDate(article.date)}</span>
+            <span className="text-white">&#183;</span><span>{article.readTime}</span>
+            <span className="text-white">&#183;</span><span>{formatDisplayDate(article.date)}</span>
           </div>
           <h1 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">{article.title}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/90">{article.excerpt}</p>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white">{article.excerpt}</p>
 
           {/* Author / Read time / Date — 3 columns like reference */}
           <div className="mt-8 grid grid-cols-3 gap-4 border-t border-violet-500/20 pt-6">
             <div className="flex items-center gap-3">
               <img src={author?.avatar} alt={author?.name} className="h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2 ring-violet-400/40" />
               <div>
-                <p className="text-[11px] text-violet-300/90">Written by</p>
+                <p className="text-[11px] text-white/90">Written by</p>
                 <p className="text-sm font-semibold text-white">{author?.name}</p>
               </div>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-[11px] text-violet-300/90">Read Time</p>
+              <p className="text-[11px] text-white/90">Read Time</p>
               <p className="text-sm font-semibold text-white">{article.readTime}</p>
             </div>
             <div className="flex flex-col justify-center">
-              <p className="text-[11px] text-violet-300/90">Posted on</p>
+              <p className="text-[11px] text-white/90">Posted on</p>
               <p className="text-sm font-semibold text-white">{formatDisplayDate(article.date)}</p>
             </div>
           </div>
@@ -402,7 +402,7 @@ function BlogDetailPage() {
           {sections.map((section, i) => (
             <ArticleSection key={section.id} section={section} index={i} />
           ))}
-          <blockquote data-reveal className="rounded-2xl border border-violet-400/35 bg-violet-500/10 px-8 py-7 text-[19px] italic leading-relaxed text-white/95 shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+          <blockquote data-reveal className="rounded-2xl border border-violet-400/35 bg-violet-500/10 px-8 py-7 text-[19px] italic leading-relaxed text-white shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
             &ldquo;{article.quote}&rdquo;
           </blockquote>
         </div>
@@ -415,10 +415,10 @@ function BlogDetailPage() {
               <img src={author.avatar} alt={author.name}
                 className="h-20 w-20 flex-shrink-0 rounded-2xl object-cover shadow-lg ring-4 ring-violet-500/25" />
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-violet-300/90">About The Author</p>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-white/90">About The Author</p>
                 <h3 className="mt-1 text-2xl font-extrabold text-white">{author.name}</h3>
-                <p className="text-sm font-medium text-violet-300">{author.role}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-white/90">{author.bio}</p>
+                <p className="text-sm font-medium text-white">{author.role}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-white">{author.bio}</p>
               </div>
               <button type="button" onClick={() => setShowAuthorModal(true)}
                 className="flex-shrink-0 self-start rounded-xl border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-500/25 sm:self-center">
@@ -448,7 +448,7 @@ function BlogDetailPage() {
                     <div className="absolute inset-0 rounded-xl ring-2 ring-indigo-400 ring-offset-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
                   <div className="min-w-0">
-                    <p className="flex items-center gap-1 text-xs font-semibold text-violet-300 transition-colors group-hover:text-violet-200">
+                    <p className="flex items-center gap-1 text-xs font-semibold text-white transition-colors group-hover:text-white">
                       <span className="transition-transform duration-200 group-hover:-translate-x-1">&#8592;</span> Previous Post
                     </p>
                     <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{prevPost.title}</p>
@@ -464,7 +464,7 @@ function BlogDetailPage() {
                 <div className="absolute inset-x-0 top-0 h-0.5 origin-right scale-x-0 bg-gradient-to-l from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />
                 <div className="flex items-center justify-end gap-4">
                   <div className="min-w-0">
-                    <p className="flex items-center justify-end gap-1 text-xs font-semibold text-violet-300 transition-colors group-hover:text-violet-200">
+                    <p className="flex items-center justify-end gap-1 text-xs font-semibold text-white transition-colors group-hover:text-white">
                       Next Post <span className="transition-transform duration-200 group-hover:translate-x-1">&#8594;</span>
                     </p>
                     <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{nextPost.title}</p>
@@ -495,7 +495,7 @@ function BlogDetailPage() {
         <div className="bg-transparent border-t border-violet-500/20">
           <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8">
             <div data-reveal>
-              <p className="text-sm font-medium text-violet-300/90">You may also like these</p>
+              <p className="text-sm font-medium text-white/90">You may also like these</p>
               <h2 className="mt-1 text-4xl font-extrabold tracking-tight text-white">Related Post</h2>
             </div>
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -514,7 +514,7 @@ function BlogDetailPage() {
           <div data-reveal className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
             <div className="flex-1">
               <h3 className="text-2xl font-extrabold text-white md:text-3xl">Never miss an insight</h3>
-              <p className="mt-2 text-slate-300">Join 1,000,000+ subscribers getting expert tips every week.</p>
+              <p className="mt-2 text-white">Join 1,000,000+ subscribers getting expert tips every week.</p>
             </div>
             <form className="flex w-full max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
               <input type="email" required placeholder="name@email.com"

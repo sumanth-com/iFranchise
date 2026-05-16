@@ -48,7 +48,7 @@ const ONBOARDING = [
 ];
 
 const STATUS_COLOR = { live: 'bg-emerald-500', progress: 'bg-amber-400', pending: 'bg-slate-500' };
-const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-violet-200/65' };
+const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-white' };
 const STATUS_LABEL = { live: 'Live', progress: 'In Progress', pending: 'Pending' };
 
 export default function BrandsSection() {
@@ -75,7 +75,7 @@ export default function BrandsSection() {
               className="flex flex-col gap-5"
             >
               <div>
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.65rem] font-bold uppercase tracking-widest text-violet-300 mb-4 block w-fit">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.65rem] font-bold uppercase tracking-widest text-white mb-4 block w-fit">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
                   For Brand Owners
                 </span>
@@ -108,7 +108,7 @@ export default function BrandsSection() {
                     </div>
                     <div>
                       <p className="text-[0.75rem] font-bold text-white leading-snug">{b.title}</p>
-                      <p className="text-[0.65rem] text-violet-200/70 mt-0.5">{b.desc}</p>
+                      <p className="text-[0.65rem] text-white mt-0.5">{b.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -138,7 +138,7 @@ export default function BrandsSection() {
                 <div className="flex items-center justify-between px-4 py-2.5 border-b border-violet-500/25 bg-violet-950/40">
                   <div>
                     <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
-                    <p className="text-[0.6rem] text-violet-200/70">Operational intelligence · Live data</p>
+                    <p className="text-[0.6rem] text-white">Operational intelligence · Live data</p>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="relative flex h-1.5 w-1.5">
@@ -160,7 +160,7 @@ export default function BrandsSection() {
                     ].map((k, i) => (
                       <div key={i} className="flex flex-col items-center py-2 rounded-xl bg-violet-950/50 border border-violet-500/25">
                         <p className={`text-lg font-extrabold ${k.color} tabular-nums`}>{k.value}</p>
-                        <p className="text-[0.58rem] text-violet-200/65 mt-0.5">{k.label}</p>
+                        <p className="text-[0.58rem] text-white mt-0.5">{k.label}</p>
                       </div>
                     ))}
                   </div>
@@ -170,13 +170,13 @@ export default function BrandsSection() {
 
                     {/* market tracker */}
                     <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Market Tracker</p>
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Market Tracker</p>
                       <div className="space-y-1.5">
                         {markets.slice(0, 4).map((m, i) => (
                           <div key={i} className="space-y-0.5">
                             <div className="flex items-center justify-between">
-                              <span className="text-[0.62rem] text-white/90 truncate max-w-[80px]">{m.industry}</span>
-                              <span className="text-[0.58rem] text-violet-200/65">{m.count}</span>
+                              <span className="text-[0.62rem] text-white truncate max-w-[80px]">{m.industry}</span>
+                              <span className="text-[0.58rem] text-white">{m.count}</span>
                             </div>
                             <MiniBar value={m.count} max={maxCount} color={i % 2 === 0 ? 'violet' : 'emerald'} delay={i * 0.08} />
                           </div>
@@ -186,7 +186,7 @@ export default function BrandsSection() {
 
                     {/* onboarding pipeline */}
                     <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Onboarding Pipeline</p>
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Onboarding Pipeline</p>
                       <div className="space-y-1.5">
                         {ONBOARDING.map((o, i) => (
                           <motion.div
@@ -213,11 +213,11 @@ export default function BrandsSection() {
 
                     {/* top cities */}
                     <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-300/80 mb-2">Top Cities</p>
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Top Cities</p>
                       <div className="space-y-1">
                         {topCities.map((c, i) => (
                           <div key={i} className="flex items-center justify-between">
-                            <span className="text-[0.65rem] text-white/90 truncate">{c.city}</span>
+                            <span className="text-[0.65rem] text-white truncate">{c.city}</span>
                             <span className="text-[0.6rem] font-bold text-violet-400">{c.count}</span>
                           </div>
                         ))}
@@ -226,15 +226,15 @@ export default function BrandsSection() {
 
                     {/* growth analytics */}
                     <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5 flex flex-col gap-2">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-slate-400">Growth Analytics</p>
+                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white">Growth Analytics</p>
                       <div className="flex flex-col gap-2 flex-1 justify-center">
                         <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
                           <span className="text-base font-extrabold text-emerald-400 tabular-nums">{growth.growthRate}%</span>
-                          <span className="text-[0.58rem] text-violet-200/65">Growth Rate</span>
+                          <span className="text-[0.58rem] text-white">Growth Rate</span>
                         </div>
                         <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
                           <span className="text-base font-extrabold text-violet-400 tabular-nums">{growth.recentCount}</span>
-                          <span className="text-[0.58rem] text-violet-200/65">New This Quarter</span>
+                          <span className="text-[0.58rem] text-white">New This Quarter</span>
                         </div>
                       </div>
                     </div>

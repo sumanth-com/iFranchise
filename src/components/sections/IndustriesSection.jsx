@@ -183,22 +183,22 @@ function IndustryCard({ ind, index }) {
           {/* live brand count badge */}
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 border border-slate-200`}>
             <span className={`text-[0.6rem] font-bold ${COLOR_TEXT[ind.color]}`}>{ind.stats.brands}</span>
-            <span className="text-[0.58rem] text-slate-500">brands</span>
+            <span className="text-[0.58rem] text-white">brands</span>
           </div>
         </div>
 
         <h3 className="text-base font-extrabold text-slate-900 mb-1">{ind.name}</h3>
-        <p className="text-[0.75rem] text-slate-500 mb-4 leading-snug">{ind.tagline}</p>
+        <p className="text-[0.75rem] text-white mb-4 leading-snug">{ind.tagline}</p>
 
         {/* stats row */}
         <div className="grid grid-cols-2 gap-2 mb-4">
           <div className="flex flex-col p-2 rounded-lg bg-slate-50 border border-slate-200">
             <span className={`text-sm font-extrabold ${COLOR_TEXT[ind.color]}`}>{ind.stats.avgROI}</span>
-            <span className="text-[0.6rem] text-slate-400">Avg ROI</span>
+            <span className="text-[0.6rem] text-white">Avg ROI</span>
           </div>
           <div className="flex flex-col p-2 rounded-lg bg-slate-50 border border-slate-200">
             <span className="text-sm font-extrabold text-emerald-600">{ind.stats.growth}</span>
-            <span className="text-[0.6rem] text-slate-400">YoY Growth</span>
+            <span className="text-[0.6rem] text-white">YoY Growth</span>
           </div>
         </div>
 
@@ -212,7 +212,7 @@ function IndustryCard({ ind, index }) {
               transition={{ duration: 0.25 }}
               className="overflow-hidden"
             >
-              <p className="text-[0.72rem] text-slate-600 leading-relaxed border-t border-slate-200 pt-3 mb-3">
+              <p className="text-[0.72rem] text-white leading-relaxed border-t border-slate-200 pt-3 mb-3">
                 {ind.insight}
               </p>
             </motion.div>
@@ -252,7 +252,7 @@ export default function IndustriesSection() {
           transition={{ duration: 0.55 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Industries We Support
           </span>
@@ -262,7 +262,7 @@ export default function IndustriesSection() {
               Every High-Growth Sector
             </span>
           </h2>
-          <p className="text-slate-300 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-2xl mx-auto leading-relaxed">
             We operate across India's most dynamic industries — each with proven franchise models, qualified investors, and structured expansion systems.
           </p>
         </motion.div>
@@ -282,7 +282,7 @@ export default function IndustriesSection() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="text-center mt-14"
         >
-          <p className="text-slate-400 text-sm mb-5">Don't see your industry? We work across all sectors.</p>
+          <p className="text-white text-sm mb-5">Don't see your industry? We work across all sectors.</p>
           <button
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-violet-700 transition-colors duration-200 shadow-lg"

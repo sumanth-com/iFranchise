@@ -44,7 +44,7 @@ export default function ForBrandOwnersPage() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col gap-4"
               >
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-300">
+                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-white">
                   <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
                   For brand founders
                 </span>
@@ -161,7 +161,7 @@ function TrustStrip() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.7rem] font-bold uppercase tracking-widest text-violet-300">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.7rem] font-bold uppercase tracking-widest text-white">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
             Trusted by India&apos;s Fastest-Growing Brands
           </span>
@@ -181,7 +181,7 @@ function TrustStrip() {
               <p className="text-3xl font-extrabold text-white mb-1">
                 <TrustCounter target={s.value} suffix={s.suffix} />
               </p>
-              <p className="text-[0.7rem] font-medium text-slate-300 text-center">{s.label}</p>
+              <p className="text-[0.7rem] font-medium text-white text-center">{s.label}</p>
             </motion.div>
           ))}
         </div>
@@ -202,7 +202,7 @@ function TrustStrip() {
           ].map((t, i) => (
             <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/25 bg-white/5">
               <span className="text-emerald-600 text-xs font-bold">{t.icon}</span>
-              <span className="text-[0.75rem] font-semibold text-slate-200">{t.text}</span>
+              <span className="text-[0.75rem] font-semibold text-white">{t.text}</span>
             </div>
           ))}
         </motion.div>
@@ -349,7 +349,7 @@ function ProblemsSection() {
               Why Most Brands Fail to Scale — and How iFranchise Fixes It
             </span>
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-400 leading-relaxed line-clamp-2 max-w-2xl mx-auto">
+          <p className="mt-3 text-sm sm:text-base text-white leading-relaxed line-clamp-2 max-w-2xl mx-auto">
             Select any failure point to see our franchise operating system — investor match, model design, and rollout intelligence.
           </p>
         </motion.div>
@@ -365,7 +365,7 @@ function ProblemsSection() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex min-h-[520px] flex-col"
           >
-            <p className="mb-4 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest text-violet-300/80">7 Common Failure Points</p>
+            <p className="mb-4 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest text-white/80">7 Common Failure Points</p>
             <div className="flex flex-1 flex-col justify-between gap-2">
             {ITEMS.map((it, i) => (
               <motion.button
@@ -380,13 +380,13 @@ function ProblemsSection() {
                 }`}
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
-                  active === i ? 'bg-red-500 text-white' : 'bg-white/10 text-slate-400'
+                  active === i ? 'bg-red-500 text-white' : 'bg-white/10 text-white'
                 }`}>
                   {it.icon}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className={`text-sm font-semibold leading-snug transition-colors duration-200 ${
-                    active === i ? 'text-red-200' : 'text-slate-200'
+                    active === i ? 'text-red-200' : 'text-white'
                   }`}>{it.problem}</p>
                   {active === i && (
                     <motion.p
@@ -404,7 +404,7 @@ function ProblemsSection() {
                   transition={{ duration: 0.2 }}
                   className="shrink-0"
                 >
-                  <svg className={`w-4 h-4 transition-colors duration-200 ${active === i ? 'text-red-400' : 'text-slate-300'}`}
+                  <svg className={`w-4 h-4 transition-colors duration-200 ${active === i ? 'text-red-400' : 'text-white'}`}
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
                   </svg>
@@ -449,7 +449,7 @@ function ProblemsSection() {
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-[0.6rem] font-bold uppercase tracking-wider text-violet-200">iFranchise Solution</p>
+                    <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white">iFranchise Solution</p>
                     <p className="text-base font-extrabold text-white leading-tight">{item.solution}</p>
                   </div>
                   <div className="ml-auto w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
@@ -465,11 +465,11 @@ function ProblemsSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                     <span className="text-[0.72rem] font-semibold text-red-200">{item.problem}</span>
-                    <span className="text-slate-500">→</span>
-                    <span className="text-[0.72rem] font-semibold text-violet-300">Fixed</span>
+                    <span className="text-white">→</span>
+                    <span className="text-[0.72rem] font-semibold text-white">Fixed</span>
                   </div>
 
-                  <p className="text-[0.9rem] font-medium leading-relaxed text-white/95">{item.solutionDesc}</p>
+                  <p className="text-[0.9rem] font-medium leading-relaxed text-white">{item.solutionDesc}</p>
                   <p className="text-[0.8rem] leading-relaxed text-violet-100/75">{item.solutionDetail}</p>
 
                   <ul className="space-y-2 rounded-xl border border-violet-500/20 bg-violet-500/5 p-3.5">
@@ -492,7 +492,7 @@ function ProblemsSection() {
                     ))}
                   </div>
 
-                  <p className="text-[0.7rem] font-bold uppercase tracking-wider text-violet-300/90">{item.metric}</p>
+                  <p className="text-[0.7rem] font-bold uppercase tracking-wider text-white/90">{item.metric}</p>
 
                   <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-4">
                     <div className="flex items-center gap-1.5">

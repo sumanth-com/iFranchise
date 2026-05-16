@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import brandLogo from '../assets/BrandNav.png';
+import FooterJumpLink from './footer/FooterJumpLink';
+import FooterSocialButtons from './footer/FooterSocialButtons';
 
 // ── Navigation helper ─────────────────────────────────────────────────────────
 function navigateTo(path) {
@@ -93,26 +96,7 @@ function LinkDot({ type, color }) {
 
 // ── Hiring badge ──────────────────────────────────────────────────────────────
 function HiringBadge() {
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        padding: '2px 7px',
-        borderRadius: '999px',
-        backgroundColor: 'rgba(239,68,68,0.1)',
-        border: '1px solid rgba(239,68,68,0.2)',
-        fontSize: '10px',
-        fontWeight: 700,
-        color: '#ef4444',
-        letterSpacing: '0.04em',
-        animation: 'footerHiringBreath 2s ease-in-out infinite',
-        flexShrink: 0,
-      }}
-    >
-      Hiring
-    </span>
-  );
+  return <span className="footer-hiring-badge">Hiring</span>;
 }
 
 // ── Footer link columns ───────────────────────────────────────────────────────
@@ -149,46 +133,6 @@ const FOOTER_COLS = [
       { label: 'Franchise Guides', path: '/blog',                dot: 'none' },
       { label: 'Industry Reports', path: '/blog',                dot: 'none' },
     ],
-  },
-];
-
-// ── Social icons ──────────────────────────────────────────────────────────────
-const SOCIALS = [
-  {
-    label: 'LinkedIn',
-    href: '#',
-    svg: (
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Instagram',
-    href: '#',
-    svg: (
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Twitter / X',
-    href: '#',
-    svg: (
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'YouTube',
-    href: '#',
-    svg: (
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-      </svg>
-    ),
   },
 ];
 
@@ -281,51 +225,26 @@ export default function PreFooterCTA() {
           </div>
 
           {/* Description */}
-          <p style={{ maxWidth: '620px', margin: '0 auto 28px', fontSize: '16px', lineHeight: 1.65, color: 'rgba(255,255,255,0.8)', ...reveal(0.28) }}>
+          <p style={{ maxWidth: '620px', margin: '0 auto 28px', fontSize: '16px', lineHeight: 1.65, color: '#ffffff', ...reveal(0.28) }}>
             Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.
           </p>
 
           {/* Status */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.8)', marginBottom: '28px', ...reveal(0.36) }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, color: '#ffffff', marginBottom: '28px', ...reveal(0.36) }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 0 3px rgba(34,197,94,0.2)', display: 'inline-block', flexShrink: 0 }} />
             Trusted by 1,200+ founders.
           </div>
 
-          {/* Buttons - Both Black with Premium Animations */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '44px', ...reveal(0.44) }}>
+          {/* Pre-footer CTAs — white buttons, purple text */}
+          <div className="prefooter-cta-row" style={reveal(0.44)}>
             {/* Primary — Explore Opportunities */}
             <button
               onClick={() => navigateTo('/franchise-opportunities')}
-              className="cta-button-primary"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                padding: '14px 28px', borderRadius: '16px',
-                backgroundColor: '#0B1220', color: '#fff',
-                fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-                boxShadow: '0 4px 20px rgba(11,15,25,0.25)',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.backgroundColor = '#1a2332';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(11,15,25,0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.backgroundColor = '#0B1220';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(11,15,25,0.25)';
-              }}
+              className="prefooter-cta-btn"
             >
-              <span style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span className="prefooter-cta-btn__inner">
                 Explore Opportunities
-                <span style={{ 
-                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
-                  width: '20px', height: '20px', borderRadius: '50%', 
-                  backgroundColor: 'rgba(255,255,255,0.2)',
-                  transition: 'all 0.3s ease'
-                }} className="arrow-circle">
+                <span className="prefooter-cta-btn__arrow" aria-hidden>
                   <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
                   </svg>
@@ -336,36 +255,11 @@ export default function PreFooterCTA() {
             {/* Secondary — Book Strategic Call (Changed from List Your Brand) */}
             <button
               onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
-              className="cta-button-secondary"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                padding: '14px 28px', borderRadius: '16px',
-                backgroundColor: '#0B1220', color: '#fff',
-                fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-                boxShadow: '0 4px 20px rgba(11,15,25,0.25)',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.backgroundColor = '#1a2332';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(11,15,25,0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.backgroundColor = '#0B1220';
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(11,15,25,0.25)';
-              }}
+              className="prefooter-cta-btn"
             >
-              <span style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span className="prefooter-cta-btn__inner">
                 Book Strategic Call
-                <span style={{ 
-                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
-                  width: '20px', height: '20px', borderRadius: '50%', 
-                  backgroundColor: 'rgba(255,255,255,0.2)',
-                  transition: 'all 0.3s ease'
-                }} className="arrow-circle">
+                <span className="prefooter-cta-btn__arrow" aria-hidden>
                   <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
                   </svg>
@@ -402,22 +296,20 @@ export default function PreFooterCTA() {
             zIndex: 1,
           }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '40px 32px', marginBottom: '48px', position: 'relative', zIndex: 1 }}>
+          <div className="footer-main-grid">
 
             {/* ── Col 1: Brand + Address ── */}
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                <div style={{ width: '34px', height: '34px', borderRadius: '9px', backgroundColor: '#0b0f19', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ color: '#fff', fontWeight: 800, fontSize: '14px' }}>iF</span>
-                </div>
-                <span style={{ fontWeight: 800, fontSize: '17px', color: '#ffffff', letterSpacing: '-0.02em' }}>iFranchise</span>
+              <div className="footer-brand-lockup">
+                <img src={brandLogo} alt="iFranchise" className="footer-brand-logo" width={34} height={34} />
+                <span className="footer-brand-name">iFranchise</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {QUICK_CONNECT.map((item) => (
                   <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px' }}>
-                    <span style={{ color: 'rgba(255,255,255,0.8)', flexShrink: 0, marginTop: '1px' }}>{item.icon}</span>
+                    <span style={{ color: '#ffffff', flexShrink: 0, marginTop: '1px' }}>{item.icon}</span>
                     <div>
-                      <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5 }}>{item.value}</p>
+                      <p style={{ fontSize: '13px', color: '#ffffff', margin: 0, lineHeight: 1.5 }}>{item.value}</p>
                     </div>
                   </div>
                 ))}
@@ -427,93 +319,50 @@ export default function PreFooterCTA() {
             {/* ── Cols 2 & 3: Link columns ── */}
             {FOOTER_COLS.map((col) => (
               <div key={col.heading}>
-                <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.55)', marginBottom: '16px' }}>{col.heading}</p>
+                <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#ffffff', marginBottom: '16px' }}>{col.heading}</p>
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '11px' }}>
                   {col.links.map((link) => (
-                    <li key={link.label} style={{ display: 'inline-flex' }}>
-                      <a
+                    <li key={link.label} style={{ display: 'inline-flex', alignItems: 'center', gap: '7px' }}>
+                      <FooterJumpLink
                         href={link.path}
                         onClick={(e) => { e.preventDefault(); navigateTo(link.path); }}
-                        style={{ fontSize: '14px', color: '#ffffff', textDecoration: 'none', transition: 'color 0.3s ease', display: 'inline-flex', alignItems: 'center', gap: '7px' }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.color = '#8b5cf6';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.color = '#475569';
-                        }}
                       >
                         {link.label}
-                        {link.dot !== 'none' && <LinkDot type={link.dot} color={link.dotColor} />}
-                        {link.badge && <span style={{ marginLeft: '4px' }}><HiringBadge /></span>}
-                      </a>
+                      </FooterJumpLink>
+                      {link.dot !== 'none' && <LinkDot type={link.dot} color={link.dotColor} />}
+                      {link.badge && <HiringBadge />}
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
 
-            {/* ── Col 4: Socials ── */}
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.55)', marginBottom: '16px', textAlign: 'center' }}>Follow Us</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
-                {SOCIALS.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
-                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '10px', backgroundColor: 'rgba(255,255,255,0.1)', color: '#ffffff', textDecoration: 'none', transition: 'all 0.3s cubic-bezier(0.22,1,0.36,1)', flexShrink: 0 }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.1)';
-                      e.currentTarget.style.backgroundColor = 'rgba(139,92,246,0.8)';
-                      e.currentTarget.style.color = '#fff';
-                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(11,15,25,0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
-                      e.currentTarget.style.color = '#ffffff';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    {s.svg}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
 
 
           {/* ── Bottom bar ── */}
-          <div style={{ 
-            borderTop: '1px solid rgba(139,92,246,0.2)', 
-            padding: '18px 0 24px', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'space-between', 
-            flexWrap: 'wrap', 
-            gap: '12px',
-            position: 'relative',
-            zIndex: 1,
-          }}
-          className="footer-bottom-bar"
-          >
-            <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: 0 }} className="footer-copyright">@ 2026 iFranchise. All rights reserved.</p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }} className="footer-links">
-              {[
-                { label: 'Privacy Policy',   path: '/privacy-policy' },
-                { label: 'Terms of Service', path: '/terms-and-conditions' },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.path}
-                  onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                  style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.3s ease' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#8b5cf6'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; }}
-                >
-                  {item.label}
-                </a>
-              ))}
+          <div className="footer-bottom-bar">
+            <p className="footer-copyright">@ 2026 iFranchise. All rights reserved.</p>
+            <div className="footer-bottom-right">
+              <div className="footer-follow-block">
+                <p className="footer-follow-heading">Follow Us</p>
+                <FooterSocialButtons />
+              </div>
+              <div className="footer-legal-links">
+                {[
+                  { label: 'Privacy Policy', path: '/privacy-policy' },
+                  { label: 'Terms of Service', path: '/terms-and-conditions' },
+                ].map((item) => (
+                  <FooterJumpLink
+                    key={item.label}
+                    href={item.path}
+                    className="footer-jump-link--legal"
+                    onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
+                  >
+                    {item.label}
+                  </FooterJumpLink>
+                ))}
+              </div>
             </div>
           </div>
         </div>

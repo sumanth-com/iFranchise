@@ -111,7 +111,7 @@ function WhyCard({ block, index }) {
           </motion.div>
           <div className="text-right">
             <p className={`text-xl font-extrabold ${c.stat}`}>{block.stat.value}<span className="text-sm">{block.stat.unit}</span></p>
-            <p className="text-[0.6rem] text-slate-400">{block.stat.label}</p>
+            <p className="text-[0.6rem] text-white">{block.stat.label}</p>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ function WhyCard({ block, index }) {
         <p className={`text-[0.7rem] font-semibold uppercase tracking-wider mb-3 ${c.stat}`}>{block.tagline}</p>
 
         {/* description */}
-        <p className="text-[0.8rem] text-slate-400 leading-relaxed mb-5 flex-1">{block.desc}</p>
+        <p className="text-[0.8rem] text-white leading-relaxed mb-5 flex-1">{block.desc}</p>
 
         {/* bullet points */}
         <div className="space-y-1.5 pt-4 border-t border-slate-100">
@@ -134,7 +134,7 @@ function WhyCard({ block, index }) {
               className="flex items-center gap-2"
             >
               <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />
-              <span className="text-[0.75rem] text-slate-300 font-medium">{pt}</span>
+              <span className="text-[0.75rem] text-white font-medium">{pt}</span>
             </motion.div>
           ))}
         </div>
@@ -157,7 +157,7 @@ export default function WhyChooseSection() {
           transition={{ duration: 0.55 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Why iFranchise
           </span>
@@ -167,7 +167,7 @@ export default function WhyChooseSection() {
               Sets Us Apart
             </span>
           </h2>
-          <p className="text-slate-300 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-xl mx-auto leading-relaxed">
             We're not a listing platform. We're the operating system behind India's fastest-growing franchise brands.
           </p>
         </motion.div>
@@ -195,7 +195,7 @@ export default function WhyChooseSection() {
           ].map((s, i) => (
             <div key={i} className="card-premium-dark-inner flex flex-col items-center py-6 transition-colors duration-200 hover:border-violet-400/35">
               <p className="text-2xl font-extrabold text-white mb-1">{s.value}</p>
-              <p className="text-[0.7rem] text-slate-300">{s.label}</p>
+              <p className="text-[0.7rem] text-white">{s.label}</p>
             </div>
           ))}
         </motion.div>

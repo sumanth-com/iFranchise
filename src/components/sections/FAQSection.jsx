@@ -61,7 +61,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
         className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
       >
         <span className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-          isOpen ? 'text-white' : 'text-slate-200'
+          isOpen ? 'text-white' : 'text-white'
         }`}>
           {question}
         </span>
@@ -72,7 +72,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
           className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${
             isOpen
               ? 'bg-slate-900 text-white'
-              : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+              : 'bg-slate-100 text-white group-hover:bg-slate-200'
           }`}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -105,7 +105,7 @@ function FAQItem({ question, answer, index, isOpen, onToggle }) {
           >
             <div className="relative px-6 pb-6 sm:px-8 sm:pb-7">
               <div className="h-px bg-gradient-to-r from-slate-200 via-slate-300/50 to-transparent mb-4" />
-              <p className="text-[0.88rem] text-slate-300 leading-relaxed">{answer}</p>
+              <p className="text-[0.88rem] text-white leading-relaxed">{answer}</p>
             </div>
           </motion.div>
         )}
@@ -130,7 +130,7 @@ export default function FAQSection() {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center justify-center mb-5">
-            <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
+            <span className="inline-block rounded-full border border-violet-500/30 bg-violet-500/10 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-slate-700 mr-2 align-middle" />
               FAQ
             </span>
@@ -141,7 +141,7 @@ export default function FAQSection() {
               Listing Your Brand
             </span>
           </h2>
-          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-xl mx-auto leading-relaxed">
             Answers to the most common questions from brand owners exploring franchise expansion.
           </p>
         </motion.div>
@@ -168,7 +168,7 @@ export default function FAQSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mt-10"
         >
-          <p className="text-slate-300 text-sm mb-4">Still have questions? Our expansion team is ready to help.</p>
+          <p className="text-white text-sm mb-4">Still have questions? Our expansion team is ready to help.</p>
           <button
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-violet-700 transition-colors duration-200 shadow-md"

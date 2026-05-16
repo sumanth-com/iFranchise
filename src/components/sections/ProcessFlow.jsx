@@ -134,7 +134,7 @@ function StepNode({ step, index, total }) {
         className="text-center px-2"
       >
         <p className="text-[0.82rem] font-bold text-slate-900 mb-1.5 leading-snug">{step.title}</p>
-        <p className="text-[0.72rem] text-slate-500 leading-relaxed">{step.desc}</p>
+        <p className="text-[0.72rem] text-white leading-relaxed">{step.desc}</p>
       </motion.div>
 
     </div>
@@ -171,7 +171,7 @@ export default function ProcessFlow() {
               Expansion Process
             </span>
           </h2>
-          <p className="text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-xl mx-auto leading-relaxed">
             A structured, repeatable system engineered to take your brand from concept to scaled franchise network.
           </p>
         </motion.div>
@@ -199,7 +199,7 @@ export default function ProcessFlow() {
           ].map((m, i) => (
             <div key={i} className="flex flex-col items-center py-4 px-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
               <p className="text-lg font-extrabold text-slate-900 mb-0.5">{m.value}</p>
-              <p className="text-[0.68rem] text-slate-500 font-medium">{m.label}</p>
+              <p className="text-[0.68rem] text-white font-medium">{m.label}</p>
             </div>
           ))}
         </motion.div>

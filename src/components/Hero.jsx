@@ -501,7 +501,7 @@ function GrowthCard({ card }) {
         {/* Error fallback */}
         {imgError && (
           <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-            <span className="text-5xl font-black text-slate-300">{card.eyebrow[0]}</span>
+            <span className="text-5xl font-black text-white">{card.eyebrow[0]}</span>
           </div>
         )}
         {/* Image — contain so nothing is cut */}
@@ -558,7 +558,7 @@ function GrowthCard({ card }) {
       <div className="flex flex-col flex-1 p-5">
 
         {/* Eyebrow label */}
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-2">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white mb-2">
           {card.eyebrow}
         </p>
 
@@ -568,7 +568,7 @@ function GrowthCard({ card }) {
         </h3>
 
         {/* Description */}
-        <p className="text-sm leading-relaxed text-slate-500 flex-1 mb-3">
+        <p className="text-sm leading-relaxed text-white flex-1 mb-3">
           {card.description}
         </p>
 
@@ -577,7 +577,7 @@ function GrowthCard({ card }) {
           {card.tags.map((t) => (
             <span
               key={t}
-              className="text-[11px] font-medium text-slate-500 px-2.5 py-0.5 rounded-full border border-slate-200"
+              className="text-[11px] font-medium text-white px-2.5 py-0.5 rounded-full border border-slate-200"
               style={{ backgroundColor: '#f8f9fa' }}
             >
               {t}
@@ -829,11 +829,11 @@ function FranchiseModelModal({ model, onClose }) {
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#0b0f19] leading-tight mb-1">
               {model.title}
             </h2>
-            <p className="text-sm text-slate-500 leading-relaxed">{details.tagline}</p>
+            <p className="text-sm text-white leading-relaxed">{details.tagline}</p>
           </div>
           <button
             onClick={onClose}
-            className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition-colors duration-150 mt-0.5"
+            className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 text-white hover:bg-slate-200 hover:text-slate-700 transition-colors duration-150 mt-0.5"
             aria-label="Close modal"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -855,7 +855,7 @@ function FranchiseModelModal({ model, onClose }) {
               </div>
               <h3 className="text-sm font-bold text-[#0b0f19] uppercase tracking-wider">Overview</h3>
             </div>
-            <p className="text-sm text-slate-600 leading-relaxed pl-[2.375rem]">{details.overview}</p>
+            <p className="text-sm text-white leading-relaxed pl-[2.375rem]">{details.overview}</p>
           </div>
 
           {/* How it Works */}
@@ -870,7 +870,7 @@ function FranchiseModelModal({ model, onClose }) {
             </div>
             <ul className="pl-[2.375rem] space-y-2">
               {details.howItWorks.map((step, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600">
+                <li key={i} className="flex items-start gap-2.5 text-sm text-white">
                   <span className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white mt-0.5" style={{ backgroundColor: details.accentColor }}>
                     {i + 1}
                   </span>
@@ -887,7 +887,7 @@ function FranchiseModelModal({ model, onClose }) {
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke={details.accentColor} viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Investment Range</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Investment Range</span>
               </div>
               <p className="text-2xl font-extrabold text-[#0b0f19]">{details.investment}</p>
             </div>
@@ -896,9 +896,9 @@ function FranchiseModelModal({ model, onClose }) {
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke={details.accentColor} viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Who Should Choose</span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider">Who Should Choose</span>
               </div>
-              <p className="text-sm text-slate-600 leading-relaxed">{details.whoShouldChoose}</p>
+              <p className="text-sm text-white leading-relaxed">{details.whoShouldChoose}</p>
             </div>
           </div>
 
@@ -915,7 +915,7 @@ function FranchiseModelModal({ model, onClose }) {
               </div>
               <ul className="space-y-2">
                 {details.pros.map((p, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                  <li key={i} className="flex items-start gap-2 text-sm text-white">
                     <svg className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
@@ -935,7 +935,7 @@ function FranchiseModelModal({ model, onClose }) {
               </div>
               <ul className="space-y-2">
                 {details.considerations.map((c, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                  <li key={i} className="flex items-start gap-2 text-sm text-white">
                     <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01" />
                     </svg>
@@ -951,7 +951,7 @@ function FranchiseModelModal({ model, onClose }) {
         <div className="flex items-center justify-between gap-3 px-8 py-5 border-t border-slate-100 bg-slate-50/60 rounded-b-[20px] shrink-0">
           <button
             onClick={() => navigateTo('/franchise-opportunities')}
-            className="text-sm font-semibold text-slate-600 hover:text-[#0b0f19] transition-colors duration-150 underline underline-offset-2"
+            className="text-sm font-semibold text-white hover:text-[#0b0f19] transition-colors duration-150 underline underline-offset-2"
           >
             Compare Models
           </button>
@@ -1026,7 +1026,7 @@ function FranchiseModelCard({ model, visible, delayMs }) {
             </h3>
           </div>
           <div className="flex-1">
-            <p className="text-sm leading-relaxed text-slate-500 line-clamp-3">
+            <p className="text-sm leading-relaxed text-white line-clamp-3">
               {model.description}
             </p>
           </div>
@@ -1068,7 +1068,7 @@ function TestimonialStatCard({ item }) {
         <img src={item.avatar} alt={item.name} className="h-10 w-10 rounded-full object-cover" loading="lazy" />
         <div className="flex-1">
           <p className="text-sm font-semibold text-slate-800">{item.name}</p>
-          <p className="text-xs text-slate-500">{item.role}</p>
+          <p className="text-xs text-white">{item.role}</p>
         </div>
       </div>
       {item.rating && (
@@ -1078,7 +1078,7 @@ function TestimonialStatCard({ item }) {
           ))}
         </div>
       )}
-      <p className="mt-4 text-sm leading-relaxed text-slate-600">{item.quote}</p>
+      <p className="mt-4 text-sm leading-relaxed text-white">{item.quote}</p>
     </article>
   );
 }
@@ -1163,7 +1163,7 @@ function FranchiseCard({ franchise }) {
 
         {/* Tags Row */}
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-violet-300" style={{ background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.3)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.3)' }}>
             {franchise.tags.investment}
           </span>
           <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -1233,7 +1233,7 @@ function FranchiseCard({ franchise }) {
 function ContactIcon({ type }) {
   if (type === 'phone') {
     return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-200">
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-white">
         <path
           d="M4.5 4.5h4l1.8 4.2-2.1 2.1a15.4 15.4 0 0 0 5 5l2.1-2.1 4.2 1.8v4A1.6 1.6 0 0 1 18 21C10.3 21 3 13.7 3 6A1.6 1.6 0 0 1 4.5 4.5z"
           fill="none"
@@ -1247,7 +1247,7 @@ function ContactIcon({ type }) {
   }
   if (type === 'location') {
     return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-200">
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-white">
         <path
           d="M12 21s6-5.6 6-11a6 6 0 1 0-12 0c0 5.4 6 11 6 11z"
           fill="none"
@@ -1261,7 +1261,7 @@ function ContactIcon({ type }) {
     );
   }
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-slate-200">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 text-white">
       <path
         d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9z"
         fill="none"
@@ -1330,27 +1330,27 @@ function ContactSection() {
               <input
                 type="text"
                 placeholder="Full Name"
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-slate-300/70 outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="email"
                 placeholder="Email Address"
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-slate-300/70 outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="url"
                 placeholder="Website"
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-slate-300/70 outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="tel"
                 placeholder="Contact Number"
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-slate-300/70 outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <textarea
                 placeholder="Message"
                 rows={5}
-                className="w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-slate-300/70 outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <button
                 type="submit"
@@ -1405,7 +1405,7 @@ function FranchiseEduCard({ card, index }) {
         {/* Fallback gradient on total failure */}
         {imgError && (
           <div className={`absolute inset-0 bg-gradient-to-br ${card.fallback} flex items-center justify-center`}>
-            <svg className="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2}>
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
@@ -1437,14 +1437,14 @@ function FranchiseEduCard({ card, index }) {
         <h3 className="text-base sm:text-[17px] font-extrabold text-[#0b0f19] mb-3 leading-snug">
           {card.title}
         </h3>
-        <p className="text-sm text-slate-500 leading-relaxed flex-1">
+        <p className="text-sm text-white leading-relaxed flex-1">
           {card.body}
         </p>
         <div className="mt-4 pt-4 border-t border-slate-100 flex items-start gap-2">
-          <svg className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+          <svg className="w-3.5 h-3.5 text-white shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-xs text-slate-400 leading-relaxed italic">{card.why}</p>
+          <p className="text-xs text-white leading-relaxed italic">{card.why}</p>
         </div>
       </div>
     </Reveal>
@@ -1563,7 +1563,7 @@ function BarLineChart({ dataset, active }) {
       {/* Y-axis */}
       <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between pr-1.5">
         {yTicks.map((v) => (
-          <span key={v} className="text-[9px] text-slate-300 font-medium w-5 text-right leading-none">{v}</span>
+          <span key={v} className="text-[9px] text-white font-medium w-5 text-right leading-none">{v}</span>
         ))}
       </div>
 
@@ -1631,7 +1631,7 @@ function BarLineChart({ dataset, active }) {
       {/* X-axis labels */}
       <div className="absolute left-7 right-0 bottom-0 flex justify-between">
         {labels.map((l) => (
-          <span key={l} className="text-[8px] sm:text-[9px] text-slate-300 font-medium flex-1 text-center leading-none">{l}</span>
+          <span key={l} className="text-[8px] sm:text-[9px] text-white font-medium flex-1 text-center leading-none">{l}</span>
         ))}
       </div>
     </div>
@@ -1765,7 +1765,7 @@ function OpportunityGauge({ active }) {
         {zones.map((z) => (
           <div key={z.label} className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: z.color }} />
-            <span className="text-[9px] font-semibold text-slate-500">{z.label}</span>
+            <span className="text-[9px] font-semibold text-white">{z.label}</span>
           </div>
         ))}
       </div>
@@ -1786,7 +1786,7 @@ function BenchmarkBars({ active }) {
       {segments.map((s, i) => (
         <div key={s.label}>
           <div className="flex justify-between mb-1">
-            <span className="text-[11px] font-semibold text-slate-600">{s.label}</span>
+            <span className="text-[11px] font-semibold text-white">{s.label}</span>
             <span className="text-[11px] font-bold text-slate-800">{s.score}</span>
           </div>
           <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -1802,7 +1802,7 @@ function BenchmarkBars({ active }) {
       ))}
       {/* Dial indicator */}
       <div className="flex items-center justify-between pt-1">
-        <span className="text-[10px] text-slate-400 font-medium">Scalability Index</span>
+        <span className="text-[10px] text-white font-medium">Scalability Index</span>
         <span className="text-[11px] font-bold text-violet-600">
           {active ? '✓ Optimised' : '—'}
         </span>
@@ -1876,7 +1876,7 @@ function InvestorSignals({ active }) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[11px] font-semibold text-slate-700 leading-snug truncate">{s.text}</p>
-            <p className="text-[10px] text-slate-400">{s.time}</p>
+            <p className="text-[10px] text-white">{s.time}</p>
           </div>
           <span className="relative shrink-0 flex h-2 w-2">
             {active && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />}
@@ -1961,7 +1961,7 @@ function MarketIntelligenceSection() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">India Franchise Market Intelligence</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">India Franchise Market Intelligence</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight mb-2">
             Inside India&apos;s Franchise Growth Engine
@@ -2020,7 +2020,7 @@ function MarketIntelligenceSection() {
                 <span className="w-2 h-2 rounded-full shrink-0" style={{ background: k.dotColor }} />
                 <p className="text-xl font-extrabold text-white tabular-nums leading-none">{k.value}</p>
               </div>
-              <p className="text-[10px] text-slate-400">{k.sub}</p>
+              <p className="text-[10px] text-white">{k.sub}</p>
             </div>
           ))}
         </div>
@@ -2061,7 +2061,7 @@ function MarketIntelligenceSection() {
                 {/* Y-axis with percentage labels */}
                 <div className="absolute left-0 top-0 bottom-8 flex flex-col justify-between pr-2 pointer-events-none">
                   {[100, 75, 50, 25, 0].map((v) => (
-                    <span key={v} className="text-[10px] text-slate-400 font-medium w-7 text-right leading-none">{v}%</span>
+                    <span key={v} className="text-[10px] text-white font-medium w-7 text-right leading-none">{v}%</span>
                   ))}
                 </div>
 
@@ -2312,7 +2312,7 @@ function MarketIntelligenceSection() {
                         <span className="w-2 h-2 rounded-full shrink-0" style={{ background: s.color }} />
                         <div>
                           <p className="text-[10px] font-semibold text-white leading-tight">{s.label}</p>
-                          <p className="text-[9px] text-slate-400">{s.pct}</p>
+                          <p className="text-[9px] text-white">{s.pct}</p>
                         </div>
                       </div>
                     ))}
@@ -2329,7 +2329,7 @@ function MarketIntelligenceSection() {
                   {CATEGORIES.map((cat, i) => (
                     <div key={cat.name}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-semibold text-slate-600">{cat.name}</span>
+                        <span className="text-[10px] font-semibold text-white">{cat.name}</span>
                         <span className="text-[10px] font-bold text-slate-700">{cat.pct}%</span>
                       </div>
                       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
@@ -2354,16 +2354,16 @@ function MarketIntelligenceSection() {
         {/* Compact Source strip */}
         <div className="mt-3 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Verified Sources:</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white">Verified Sources:</span>
             {SOURCES.map((s) => (
               <span key={s} className="text-[11px] font-semibold text-white px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>{s}</span>
             ))}
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
-            <svg className="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
-            <p className="text-[11px] text-slate-400 font-medium">AI + Market Intelligence Powered</p>
+            <p className="text-[11px] text-white font-medium">AI + Market Intelligence Powered</p>
           </div>
         </div>
 
@@ -2501,7 +2501,7 @@ function ProcessCinematicVisual({ mode, visible }) {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
         </span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-violet-200">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-white">
           Live growth engine
         </span>
       </div>
@@ -2560,13 +2560,13 @@ function ProcessCinematicVisual({ mode, visible }) {
           ))}
 
           <div
-            className="process-float-badge absolute left-[8%] top-[42%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-violet-200/90"
+            className="process-float-badge absolute left-[8%] top-[42%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-white/90"
             style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(167,139,250,0.25)' }}
           >
             {mode === 'Investors' ? 'Match' : 'List'}
           </div>
           <div
-            className="process-float-badge absolute right-[6%] top-[48%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-violet-200/90"
+            className="process-float-badge absolute right-[6%] top-[48%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-white/90"
             style={{
               background: 'rgba(255,255,255,0.08)',
               border: '1px solid rgba(167,139,250,0.25)',
@@ -2585,7 +2585,7 @@ function ProcessCinematicVisual({ mode, visible }) {
         {stats.map((stat) => (
           <div key={stat.label} className="text-center">
             <p className="text-sm font-extrabold text-white">{stat.value}</p>
-            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-violet-300/80">
+            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-white/80">
               {stat.label}
             </p>
           </div>
@@ -2645,7 +2645,7 @@ function ProcessStepCard({ step, index, visible }) {
           </div>
           <div className="min-w-0 flex-1">
             <h3 className="mb-1.5 text-[0.95rem] font-bold leading-snug text-white">{step.title}</h3>
-            <p className="text-[0.78rem] leading-relaxed text-white/65">{step.desc}</p>
+            <p className="text-[0.78rem] leading-relaxed text-white">{step.desc}</p>
           </div>
         </div>
       </div>
@@ -2783,7 +2783,7 @@ function FAQAccordionItem({ faq, index }) {
         {/* Plus/Minus Icon */}
         <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
           <svg 
-            className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}
+            className={`w-5 h-5 text-white transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24" 
@@ -2802,7 +2802,7 @@ function FAQAccordionItem({ faq, index }) {
       >
         <div className="px-6 pb-6 pt-0">
           <div className="pl-12">
-            <p className="text-slate-600 leading-relaxed text-base">
+            <p className="text-white leading-relaxed text-base">
               {faq.answer}
             </p>
           </div>
@@ -2836,7 +2836,7 @@ function PremiumFAQItem({ faq, index }) {
         {/* Plus/Minus Icon */}
         <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
           <svg 
-            className={`w-4 h-4 text-slate-400 transition-all duration-300 ${isOpen ? 'rotate-45 text-[#0b0f19]' : 'group-hover:text-slate-600'}`} 
+            className={`w-4 h-4 text-white transition-all duration-300 ${isOpen ? 'rotate-45 text-[#0b0f19]' : 'group-hover:text-white'}`} 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24" 
@@ -2851,7 +2851,7 @@ function PremiumFAQItem({ faq, index }) {
       <div className={`overflow-hidden transition-all duration-200 ease-out ${isOpen ? 'max-h-32 pb-4' : 'max-h-0'}`}>
         <div className="px-4">
           <div className="pl-11 pr-2">
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-white leading-relaxed">
               {faq.answer}
             </p>
           </div>
@@ -3201,7 +3201,7 @@ function Hero() {
       <div className="relative w-full overflow-hidden bg-transparent">
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4"
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
               style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
               Opportunities
@@ -3249,7 +3249,7 @@ function Hero() {
         {/* ── WHO WE SERVE ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               Who We Serve
             </span>
@@ -3348,7 +3348,7 @@ function Hero() {
         {/* ── SERVICES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12">
           <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               Our Services
             </span>
@@ -3497,7 +3497,7 @@ function Hero() {
         {/* ── PROCESS ── */}
         <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-violet-400" /></span>
               iFranchise Process
             </span>
@@ -3548,7 +3548,7 @@ function Hero() {
         {/* ── INDUSTRIES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
           <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4"
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
               style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               Industries
@@ -3644,7 +3644,7 @@ function Hero() {
         <div className="section-container relative z-10">
           {/* Section Header */}
           <div className="text-center mb-8 sm:mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-4"
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
               style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
               Why iFranchise
@@ -3746,7 +3746,7 @@ function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-violet-300">
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
                 Testimonials
               </span>
             </div>
@@ -3901,7 +3901,7 @@ function Hero() {
           >
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-white to-slate-50 border border-slate-200/60 shadow-sm rounded-full px-3 py-1">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
                 FAQs
               </span>
             </div>
@@ -3958,12 +3958,12 @@ function Hero() {
                 <div className="hidden w-[75vw] max-w-[380px] sm:w-full lg:max-w-[460px] xl:max-w-[500px] h-80 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl items-center justify-center drop-shadow-[0_24px_48px_rgba(15,23,42,0.14)]">
                   <div className="text-center">
                     <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-200 to-slate-100 flex items-center justify-center">
-                      <svg className="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                      <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                       </svg>
                     </div>
-                    <p className="text-xl font-semibold text-slate-600">Strategic Franchise Advisory</p>
-                    <p className="text-sm text-slate-400 mt-2">Professional consultation</p>
+                    <p className="text-xl font-semibold text-white">Strategic Franchise Advisory</p>
+                    <p className="text-sm text-white mt-2">Professional consultation</p>
                   </div>
                 </div>
 

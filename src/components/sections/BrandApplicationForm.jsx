@@ -60,7 +60,7 @@ const CITY_GOALS = ["1-3 cities","4-10 cities","10-25 cities","25+ cities (Natio
 function InputField({ label, type = "text", placeholder, value, onChange, required }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-slate-500">
+      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-white">
         {label}{required && <span className="text-violet-500 ml-0.5">*</span>}
       </label>
       <input
@@ -77,7 +77,7 @@ function InputField({ label, type = "text", placeholder, value, onChange, requir
 function SelectField({ label, options, value, onChange, required }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-slate-500">
+      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-white">
         {label}{required && <span className="text-violet-500 ml-0.5">*</span>}
       </label>
       <select
@@ -96,7 +96,7 @@ function SelectField({ label, options, value, onChange, required }) {
 function ChipSelect({ label, options, value, onChange, required }) {
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-slate-500">
+      <label className="text-[0.7rem] font-bold uppercase tracking-wider text-white">
         {label}{required && <span className="text-violet-500 ml-0.5">*</span>}
       </label>
       <div className="flex flex-wrap gap-2">
@@ -108,7 +108,7 @@ function ChipSelect({ label, options, value, onChange, required }) {
             className={`px-3 py-1.5 rounded-lg text-[0.75rem] font-semibold border transition-all duration-150 ${
               value === o
                 ? "bg-violet-600 border-violet-600 text-white shadow-sm"
-                : "bg-white border-slate-200 text-slate-600 hover:border-violet-300 hover:text-violet-700"
+                : "bg-white border-slate-200 text-white hover:border-violet-300 hover:text-violet-700"
             }`}
           >
             {o}
@@ -167,7 +167,7 @@ export default function BrandApplicationForm() {
           <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="text-3xl font-extrabold text-white mb-3">Application Received</motion.h2>
           <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="text-slate-300 text-base mb-10 leading-relaxed">
+            className="text-white text-base mb-10 leading-relaxed">
             Thank you, <span className="text-slate-900 font-semibold">{form.name}</span>. Our expansion team will review{" "}
             <span className="text-violet-600 font-semibold">{form.brandName}</span> and reach out within 24 hours.
           </motion.p>
@@ -177,7 +177,7 @@ export default function BrandApplicationForm() {
                 className="flex flex-col p-4 rounded-xl bg-white border border-slate-200 shadow-sm text-center">
                 <span className="text-[0.6rem] font-bold text-violet-500 uppercase tracking-wider mb-1">{w.time}</span>
                 <span className="text-[0.78rem] font-bold text-slate-900 mb-0.5">{w.title}</span>
-                <span className="text-[0.68rem] text-slate-500 leading-snug">{w.desc}</span>
+                <span className="text-[0.68rem] text-white leading-snug">{w.desc}</span>
               </motion.div>
             ))}
           </div>
@@ -192,7 +192,7 @@ export default function BrandApplicationForm() {
 
         <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }}
           className="text-center mb-10">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Brand Application
           </span>
@@ -200,7 +200,7 @@ export default function BrandApplicationForm() {
             List Your Brand on{" "}
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">iFranchise</span>
           </h2>
-          <p className="text-slate-300 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-white text-base max-w-xl mx-auto leading-relaxed">
             Complete this 4-step application. Our expansion team reviews every submission personally.
           </p>
         </motion.div>
@@ -243,14 +243,14 @@ export default function BrandApplicationForm() {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                             </svg>
                           ) : (
-                            <span className={active ? "text-white" : "text-slate-400"}>{s.icon}</span>
+                            <span className={active ? "text-white" : "text-white"}>{s.icon}</span>
                           )}
                         </motion.div>
                         <div className="text-center hidden sm:block">
-                          <p className={`text-[0.65rem] font-bold transition-colors duration-200 ${active ? "text-violet-700" : done ? "text-emerald-600" : "text-slate-400"}`}>
+                          <p className={`text-[0.65rem] font-bold transition-colors duration-200 ${active ? "text-violet-700" : done ? "text-emerald-600" : "text-white"}`}>
                             {s.title}
                           </p>
-                          <p className="text-[0.58rem] text-slate-400">{s.subtitle}</p>
+                          <p className="text-[0.58rem] text-white">{s.subtitle}</p>
                         </div>
                       </button>
                     );
@@ -269,7 +269,7 @@ export default function BrandApplicationForm() {
                     {step === 1 && <>
                       <div>
                         <p className="text-lg font-extrabold text-slate-900 mb-0.5">Tell us about your brand</p>
-                        <p className="text-[0.78rem] text-slate-500">Basic information to understand your business.</p>
+                        <p className="text-[0.78rem] text-white">Basic information to understand your business.</p>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <InputField label="Brand Name" placeholder="e.g. BurgerBlast" value={form.brandName} onChange={v => set("brandName", v)} required />
@@ -282,7 +282,7 @@ export default function BrandApplicationForm() {
                     {step === 2 && <>
                       <div>
                         <p className="text-lg font-extrabold text-slate-900 mb-0.5">Expansion readiness</p>
-                        <p className="text-[0.78rem] text-slate-500">Help us understand your current franchise infrastructure.</p>
+                        <p className="text-[0.78rem] text-white">Help us understand your current franchise infrastructure.</p>
                       </div>
                       <ChipSelect label="Preferred Franchise Model" options={MODELS} value={form.model} onChange={v => set("model", v)} required />
                       <ChipSelect label="Do you have documented SOPs?" options={["Yes, fully documented","Partially documented","Not yet"]} value={form.hasSOPs} onChange={v => set("hasSOPs", v)} />
@@ -292,13 +292,13 @@ export default function BrandApplicationForm() {
                     {step === 3 && <>
                       <div>
                         <p className="text-lg font-extrabold text-slate-900 mb-0.5">Your growth goals</p>
-                        <p className="text-[0.78rem] text-slate-500">Define your expansion ambitions so we can build the right strategy.</p>
+                        <p className="text-[0.78rem] text-white">Define your expansion ambitions so we can build the right strategy.</p>
                       </div>
                       <ChipSelect label="Target city expansion" options={CITY_GOALS} value={form.cityGoal} onChange={v => set("cityGoal", v)} required />
                       <ChipSelect label="Expansion timeline" options={TIMELINES} value={form.timeline} onChange={v => set("timeline", v)} required />
                       <ChipSelect label="Franchise investment range" options={BUDGETS} value={form.budget} onChange={v => set("budget", v)} />
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[0.7rem] font-bold uppercase tracking-wider text-slate-500">Brand Vision <span className="text-slate-400 normal-case tracking-normal font-normal">(optional)</span></label>
+                        <label className="text-[0.7rem] font-bold uppercase tracking-wider text-white">Brand Vision <span className="text-white normal-case tracking-normal font-normal">(optional)</span></label>
                         <textarea rows={3} placeholder="Describe your long-term franchise vision..."
                           value={form.vision} onChange={e => set("vision", e.target.value)}
                           className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all duration-200 resize-none" />
@@ -308,7 +308,7 @@ export default function BrandApplicationForm() {
                     {step === 4 && <>
                       <div>
                         <p className="text-lg font-extrabold text-slate-900 mb-0.5">Contact & consultation</p>
-                        <p className="text-[0.78rem] text-slate-500">Your dedicated expansion manager will reach out within 24 hours.</p>
+                        <p className="text-[0.78rem] text-white">Your dedicated expansion manager will reach out within 24 hours.</p>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <InputField label="Full Name" placeholder="Your name" value={form.name} onChange={v => set("name", v)} required />
@@ -330,7 +330,7 @@ export default function BrandApplicationForm() {
                 {/* navigation */}
                 <div className="flex items-center justify-between mt-8 pt-5 border-t border-slate-100">
                   <button onClick={() => setStep(s => Math.max(1, s - 1))} disabled={step === 1}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed">
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 text-white text-sm font-semibold hover:bg-slate-200 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
                     Back
                   </button>
@@ -372,7 +372,7 @@ export default function BrandApplicationForm() {
           {/* WHAT HAPPENS NEXT */}
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }} className="space-y-3 lg:sticky lg:top-28">
-            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-slate-400 mb-4">What Happens Next</p>
+            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white mb-4">What Happens Next</p>
             {WHAT_NEXT.map((w, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
@@ -388,7 +388,7 @@ export default function BrandApplicationForm() {
                     <p className="text-[0.78rem] font-bold text-slate-900">{w.title}</p>
                     <span className="text-[0.6rem] font-semibold text-violet-500 shrink-0">{w.time}</span>
                   </div>
-                  <p className="text-[0.7rem] text-slate-500 leading-relaxed">{w.desc}</p>
+                  <p className="text-[0.7rem] text-white leading-relaxed">{w.desc}</p>
                 </div>
               </motion.div>
             ))}

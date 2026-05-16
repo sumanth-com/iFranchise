@@ -14,7 +14,7 @@ function SectionHeader({ badge, title, subtitle, center = true }) {
       className={`mb-6 lg:mb-8 ${center ? 'text-center mx-auto max-w-3xl' : ''}`}
     >
       {badge && (
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-3">
+        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
           {badge}
         </span>
@@ -108,7 +108,7 @@ export function GrowthInvestorSection() {
             viewport={{ once: true }}
             className="card-premium-dark rounded-2xl p-5 flex flex-col justify-center"
           >
-            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-violet-300 mb-3">Investor match</p>
+            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white mb-3">Investor match</p>
             <div className="grid grid-cols-2 gap-3">
               {MATCH_FEATURES.map((f, i) => (
                 <motion.div
@@ -120,7 +120,7 @@ export function GrowthInvestorSection() {
                   className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-3.5 text-center"
                 >
                   <p className="text-xl font-extrabold text-white">{f.value}</p>
-                  <p className="mt-0.5 text-[0.65rem] font-medium text-violet-200/85">{f.label}</p>
+                  <p className="mt-0.5 text-[0.65rem] font-medium text-white">{f.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -157,7 +157,7 @@ function ColumnShell({ label, children, delay = 0 }) {
       className="flex h-full min-h-[380px] flex-col rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-950/40 via-[#0e0620]/80 to-[#0a0618]/90 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-5"
     >
       <motion.div className="mb-4 flex shrink-0 items-center justify-between border-b border-violet-500/20 pb-3">
-        <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-violet-300">{label}</p>
+        <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white">{label}</p>
         <motion.span
           className="h-1.5 w-1.5 rounded-full bg-violet-400"
           animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.2, 1] }}
@@ -230,7 +230,7 @@ export function RoadmapTimelineSection() {
                   />
                 </motion.span>
                 <motion.div className="min-w-0 flex-1">
-                  <p className="text-[0.58rem] font-bold uppercase tracking-wider text-violet-300">{t.week}</p>
+                  <p className="text-[0.58rem] font-bold uppercase tracking-wider text-white">{t.week}</p>
                   <h3 className="text-sm font-extrabold text-white">{t.title}</h3>
                   <p className="text-[0.7rem] text-violet-100/75">{t.desc}</p>
                 </motion.div>

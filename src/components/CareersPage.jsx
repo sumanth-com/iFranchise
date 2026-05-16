@@ -115,7 +115,7 @@ function RevealSection({ children, className = '', delay = 0 }) {
 
 function SectionLabel({ text }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-300 mb-4">
+    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-white mb-4">
       <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
       {text}
     </span>
@@ -135,12 +135,12 @@ function BenefitCard({ icon, title, desc, delay }) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
       className="group card-premium-dark border border-violet-500/20 rounded-2xl p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_48px_rgba(109,40,217,0.28)] hover:-translate-y-1 hover:border-violet-400/35 transition-all duration-300"
     >
-      <div className="w-12 h-12 rounded-xl bg-violet-500/15 border border-violet-400/25 flex items-center justify-center text-violet-300 group-hover:text-white group-hover:bg-violet-500/25 transition-colors duration-300">
+      <div className="w-12 h-12 rounded-xl bg-violet-500/15 border border-violet-400/25 flex items-center justify-center text-white group-hover:text-white group-hover:bg-violet-500/25 transition-colors duration-300">
         {icon}
       </div>
       <div>
         <h3 className="text-sm font-bold text-white mb-1">{title}</h3>
-        <p className="text-xs text-violet-200/90 leading-relaxed">{desc}</p>
+        <p className="text-xs text-white/90 leading-relaxed">{desc}</p>
       </div>
     </motion.div>
   );
@@ -163,7 +163,7 @@ function RoleCard({ role, index, onApply }) {
     >
       {/* Top row: icon + dept badge */}
       <div className="flex items-start justify-between">
-        <div className="w-14 h-14 rounded-2xl bg-violet-500/15 flex items-center justify-center text-violet-300 group-hover:text-white transition-colors duration-300 shadow-inner border border-violet-400/25">
+        <div className="w-14 h-14 rounded-2xl bg-violet-500/15 flex items-center justify-center text-white group-hover:text-white transition-colors duration-300 shadow-inner border border-violet-400/25">
           {role.icon}
         </div>
         <span className={`text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full ${DEPT_COLORS[role.dept] || 'bg-violet-500/15 text-white border border-violet-400/35'}`}>
@@ -176,7 +176,7 @@ function RoleCard({ role, index, onApply }) {
         <h3 className="text-xl font-extrabold text-white mb-2 group-hover:text-violet-100 transition-colors duration-200 leading-tight">
           {role.title}
         </h3>
-        <p className="text-sm text-violet-200/90 leading-relaxed">{role.tagline}</p>
+        <p className="text-sm text-white/90 leading-relaxed">{role.tagline}</p>
       </div>
 
       {/* Meta chips */}
@@ -187,7 +187,7 @@ function RoleCard({ role, index, onApply }) {
         <span className={`text-xs font-semibold px-3 py-1.5 rounded-full ${MODE_COLORS[role.mode]}`}>
           {role.mode}
         </span>
-        <span className="text-xs font-medium text-violet-200 bg-violet-500/10 border border-violet-400/25 px-3 py-1.5 rounded-full flex items-center gap-1">
+        <span className="text-xs font-medium text-white bg-violet-500/10 border border-violet-400/25 px-3 py-1.5 rounded-full flex items-center gap-1">
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -202,7 +202,7 @@ function RoleCard({ role, index, onApply }) {
       {/* Salary + CTA */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-violet-300/70 mb-0.5">Salary</p>
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-white mb-0.5">Salary</p>
           <p className="text-base font-bold text-white">{role.salary}</p>
         </div>
         <button
@@ -229,10 +229,10 @@ function FaqItem({ q, a }) {
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left group"
       >
-        <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${open ? 'text-white' : 'text-white/95 group-hover:text-white'}`}>
+        <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${open ? 'text-white' : 'text-white group-hover:text-white'}`}>
           {q}
         </span>
-        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'bg-violet-600 text-white rotate-45' : 'bg-violet-500/20 text-violet-200 group-hover:bg-violet-500/30'}`}>
+        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'bg-violet-600 text-white rotate-45' : 'bg-violet-500/20 text-white group-hover:bg-violet-500/30'}`}>
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
@@ -248,7 +248,7 @@ function FaqItem({ q, a }) {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-white/90 leading-relaxed px-6 pb-5">{a}</p>
+            <p className="text-sm text-white leading-relaxed px-6 pb-5">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -294,7 +294,7 @@ function CareersPage() {
             animate={curtainDone ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           >
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-violet-300 mb-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-white mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400 inline-block" />
               We're Hiring
             </span>
@@ -306,7 +306,7 @@ function CareersPage() {
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto leading-relaxed mb-8">
+            <p className="text-base sm:text-lg text-white max-w-xl mx-auto leading-relaxed mb-8">
               At iFranchise, we build category-defining growth systems, creative ecosystems, and careers that matter.
             </p>
           </motion.div>
@@ -340,7 +340,7 @@ function CareersPage() {
           <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
             This is the vibe that drives us.
           </h2>
-          <p className="text-sm sm:text-base text-violet-200/90 max-w-lg mx-auto">
+          <p className="text-sm sm:text-base text-white/90 max-w-lg mx-auto">
             Performance, ownership, growth, creativity, and balance — not just words on a wall.
           </p>
         </RevealSection>
@@ -362,7 +362,7 @@ function CareersPage() {
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
               Join the Creative Force.
             </h2>
-            <p className="text-sm sm:text-base text-violet-200/90 max-w-lg mx-auto">
+            <p className="text-sm sm:text-base text-white/90 max-w-lg mx-auto">
               {ROLES.length} open positions across design, growth, and strategy.
             </p>
           </RevealSection>
@@ -384,11 +384,11 @@ function CareersPage() {
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-3">
               Got a question?{' '}
-              <span className="text-violet-300/80 font-semibold">We've got answers.</span>
+              <span className="text-white/80 font-semibold">We've got answers.</span>
             </h2>
-            <p className="text-sm text-violet-200/90">
+            <p className="text-sm text-white/90">
               Still unsure? Email{' '}
-              <a href="mailto:careers@ifranchise.in" className="text-violet-300 hover:text-white hover:underline font-medium">
+              <a href="mailto:careers@ifranchise.in" className="text-white hover:text-white hover:underline font-medium">
                 careers@ifranchise.in
               </a>
             </p>

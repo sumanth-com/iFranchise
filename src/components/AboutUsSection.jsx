@@ -3,15 +3,15 @@ const leftFlowIcons = [
   { id: 'l2', label: '↗', style: 'h-11 w-11 bg-[#EAFB63] text-slate-900' },
   { id: 'l3', label: '◼', style: 'h-12 w-12 bg-[#111827] text-white' },
   { id: 'l4', label: '◎', style: 'h-10 w-10 bg-white text-slate-700' },
-  { id: 'l5', label: 'C', style: 'h-11 w-11 bg-white text-slate-600' },
+  { id: 'l5', label: 'C', style: 'h-11 w-11 bg-white text-white' },
 ];
 
 const rightFlowIcons = [
   { id: 'r1', label: 'P', style: 'h-11 w-11 bg-[#1F7A4E] text-white' },
   { id: 'r2', label: '〰', style: 'h-11 w-11 bg-[#D6A74B] text-slate-900' },
   { id: 'r3', label: '9', style: 'h-11 w-11 bg-[#EF5B4A] text-white' },
-  { id: 'r4', label: 'Carta', style: 'h-10 w-10 bg-white px-1 text-[9px] text-slate-600' },
-  { id: 'r5', label: '•', style: 'h-8 w-8 bg-[#E2E8F0] text-slate-500' },
+  { id: 'r4', label: 'Carta', style: 'h-10 w-10 bg-white px-1 text-[9px] text-white' },
+  { id: 'r5', label: '•', style: 'h-8 w-8 bg-[#E2E8F0] text-white' },
 ];
 
 function AboutUsSection() {
@@ -21,7 +21,7 @@ function AboutUsSection() {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/70 to-transparent opacity-80" aria-hidden />
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white">About Us</p>
         <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-          Connect everything <span className="text-violet-300">in one place</span>
+          Connect everything <span className="text-white">in one place</span>
         </h1>
         <p className="mx-auto mt-4 max-w-[640px] text-sm leading-relaxed text-white sm:text-base">
           Seamlessly unify all of your franchise and investment data in one place to create a single source of truth.

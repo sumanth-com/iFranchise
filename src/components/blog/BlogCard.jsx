@@ -32,7 +32,7 @@ function BlogCard({ post, priority = false }) {
           />
         </div>
         <div className="space-y-3 px-5 pb-6 pt-4">
-          <div className="flex items-center gap-3 text-xs text-violet-200/95">
+          <div className="flex items-center gap-3 text-xs text-white">
             <span className="rounded-full border border-violet-400/35 bg-violet-500/15 px-2.5 py-1 font-medium text-white">
               {post.category}
             </span>

@@ -131,7 +131,7 @@ function OpportunityCard({ opportunity }) {
       {/* Content */}
       <div className="p-5">
         {/* Category */}
-        <div className="text-xs text-violet-200/90 font-medium mb-1">{opportunity.category}</div>
+        <div className="text-xs text-white/90 font-medium mb-1">{opportunity.category}</div>
         
         {/* Brand Name */}
         <h3 className="text-lg font-bold text-white mb-3">{opportunity.brandName}</h3>
@@ -140,7 +140,7 @@ function OpportunityCard({ opportunity }) {
         <div className="space-y-3 mb-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center text-sm">
-              <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span className="text-white">Investment:</span>
@@ -149,7 +149,7 @@ function OpportunityCard({ opportunity }) {
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center text-sm">
-              <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
               </svg>
               <span className="text-white">Model:</span>
@@ -165,7 +165,7 @@ function OpportunityCard({ opportunity }) {
             </span>
           </div>
           <div className="flex items-center text-sm">
-            <svg className="w-4 h-4 text-violet-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -218,7 +218,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-sm text-white/80 hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
+        className="px-3 py-2 text-sm text-white hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
       >
         Previous
       </button>
@@ -228,11 +228,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         <>
           <button
             onClick={() => onPageChange(1)}
-            className="px-3 py-2 text-sm text-white/80 hover:text-white"
+            className="px-3 py-2 text-sm text-white hover:text-white"
           >
             1
           </button>
-          {startPage > 2 && <span className="px-2 text-violet-300/70">...</span>}
+          {startPage > 2 && <span className="px-2 text-white">...</span>}
         </>
       )}
 
@@ -243,7 +243,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
           className={`px-3 py-2 text-sm rounded-md transition-colors ${
             page === currentPage
               ? 'bg-violet-600 text-white'
-              : 'text-white/80 hover:text-white'
+              : 'text-white hover:text-white'
           }`}
         >
           {page}
@@ -252,10 +252,10 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
       {endPage < totalPages && (
         <>
-          {endPage < totalPages - 1 && <span className="px-2 text-violet-300/70">...</span>}
+          {endPage < totalPages - 1 && <span className="px-2 text-white">...</span>}
           <button
             onClick={() => onPageChange(totalPages)}
-            className="px-3 py-2 text-sm text-white/80 hover:text-white"
+            className="px-3 py-2 text-sm text-white hover:text-white"
           >
             {totalPages}
           </button>
@@ -266,7 +266,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-sm text-white/80 hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
+        className="px-3 py-2 text-sm text-white hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
       >
         Next
       </button>
@@ -432,14 +432,14 @@ function FranchiseOpportunitiesPage() {
               <div className="border-b border-violet-500/25 p-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                     </svg>
                     <h2 className="text-lg font-bold text-white">Filters</h2>
                   </div>
                   <button
                     onClick={clearAllFilters}
-                    className="text-xs uppercase tracking-wide text-violet-300 hover:text-white font-semibold transition-colors"
+                    className="text-xs uppercase tracking-wide text-white hover:text-white font-semibold transition-colors"
                   >
                     Clear All
                   </button>
@@ -451,7 +451,7 @@ function FranchiseOpportunitiesPage() {
                 {/* Industry Filters */}
                 <div className="card-premium-dark-inner rounded-xl p-4">
                   <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                     Industry
@@ -479,7 +479,7 @@ function FranchiseOpportunitiesPage() {
                 {/* Investment Filters */}
                 <div className="card-premium-dark-inner rounded-xl p-4">
                   <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Min Investment
@@ -503,7 +503,7 @@ function FranchiseOpportunitiesPage() {
                 {/* Operating Model Filters */}
                 <div className="card-premium-dark-inner rounded-xl p-4">
                   <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                     </svg>
                     Operating Model
@@ -531,7 +531,7 @@ function FranchiseOpportunitiesPage() {
                 {/* Location Filter */}
                 <div className="card-premium-dark-inner rounded-xl p-4">
                   <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -543,7 +543,7 @@ function FranchiseOpportunitiesPage() {
                       placeholder="e.g. Texas, New York, California"
                       value={filters.location}
                       onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                      className="w-full px-4 py-3 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                      className="w-full px-4 py-3 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
                     <div className="flex flex-wrap gap-1.5">
                       {LOCATION_OPTIONS.map(location => (
@@ -581,7 +581,7 @@ function FranchiseOpportunitiesPage() {
                       placeholder="Search brands, industries..."
                       value={searchTerm}
                       onChange={handleSearch}
-                      className="w-full pl-9 pr-4 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                      className="w-full pl-9 pr-4 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
                   </div>
                   {/* Sort Dropdown */}
@@ -611,7 +611,7 @@ function FranchiseOpportunitiesPage() {
                         const newIndustries = filters.industries.filter(i => i !== industry);
                         setFilters({ ...filters, industries: newIndustries });
                       }}
-                      className="ml-1 text-violet-300 hover:text-white"
+                      className="ml-1 text-white hover:text-white"
                     >
                       ×
                     </button>
@@ -622,7 +622,7 @@ function FranchiseOpportunitiesPage() {
                     {filters.investment}
                     <button
                       onClick={() => setFilters({ ...filters, investment: '' })}
-                      className="ml-1 text-violet-300 hover:text-white"
+                      className="ml-1 text-white hover:text-white"
                     >
                       ×
                     </button>
@@ -636,7 +636,7 @@ function FranchiseOpportunitiesPage() {
                         const newModels = filters.models.filter(m => m !== model);
                         setFilters({ ...filters, models: newModels });
                       }}
-                      className="ml-1 text-violet-300 hover:text-white"
+                      className="ml-1 text-white hover:text-white"
                     >
                       ×
                     </button>
@@ -647,7 +647,7 @@ function FranchiseOpportunitiesPage() {
                     {filters.location}
                     <button
                       onClick={() => setFilters({ ...filters, location: '' })}
-                      className="ml-1 text-violet-300 hover:text-white"
+                      className="ml-1 text-white hover:text-white"
                     >
                       ×
                     </button>
@@ -674,7 +674,7 @@ function FranchiseOpportunitiesPage() {
               ) : paginatedOpportunities.length === 0 ? (
                 <div className="col-span-full flex flex-col items-center justify-center rounded-xl border border-violet-500/25 bg-violet-950/20 py-16 px-6 text-center">
                   <p className="text-base font-semibold text-white">No franchise opportunities found</p>
-                  <p className="mt-2 max-w-md text-sm text-white/70">
+                  <p className="mt-2 max-w-md text-sm text-white">
                     Adjust filters from the Franchise Opportunities menu in the navbar, or choose Clear All in the filters panel here.
                   </p>
                 </div>
@@ -732,7 +732,7 @@ function FranchiseOpportunitiesPage() {
                   placeholder="Search brands..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="w-full pl-9 pr-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
+                  className="w-full pl-9 pr-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
                 />
               </div>
 
@@ -762,7 +762,7 @@ function FranchiseOpportunitiesPage() {
                       const newIndustries = filters.industries.filter(i => i !== industry);
                       setFilters({ ...filters, industries: newIndustries });
                     }}
-                    className="ml-1 text-violet-300 hover:text-white"
+                    className="ml-1 text-white hover:text-white"
                   >
                     ×
                   </button>
@@ -773,7 +773,7 @@ function FranchiseOpportunitiesPage() {
                   {filters.investment}
                   <button
                     onClick={() => setFilters({ ...filters, investment: '' })}
-                    className="ml-1 text-violet-300 hover:text-white"
+                    className="ml-1 text-white hover:text-white"
                   >
                     ×
                   </button>
@@ -787,7 +787,7 @@ function FranchiseOpportunitiesPage() {
                       const newModels = filters.models.filter(m => m !== model);
                       setFilters({ ...filters, models: newModels });
                     }}
-                    className="ml-1 text-violet-300 hover:text-white"
+                    className="ml-1 text-white hover:text-white"
                   >
                     ×
                   </button>
@@ -798,7 +798,7 @@ function FranchiseOpportunitiesPage() {
                   {filters.location}
                   <button
                     onClick={() => setFilters({ ...filters, location: '' })}
-                    className="ml-1 text-violet-300 hover:text-white"
+                    className="ml-1 text-white hover:text-white"
                   >
                     ×
                   </button>
@@ -825,7 +825,7 @@ function FranchiseOpportunitiesPage() {
             ) : paginatedOpportunities.length === 0 ? (
               <div className="col-span-full flex flex-col items-center justify-center rounded-xl border border-violet-500/25 bg-violet-950/20 py-16 px-6 text-center">
                 <p className="text-base font-semibold text-white">No franchise opportunities found</p>
-                <p className="mt-2 max-w-md text-sm text-white/70">
+                <p className="mt-2 max-w-md text-sm text-white">
                   Adjust filters from the Franchise Opportunities menu in the navbar, or choose Clear All in the filters panel here.
                 </p>
               </div>
@@ -860,7 +860,7 @@ function FranchiseOpportunitiesPage() {
             {/* Drawer Header */}
             <div className="flex items-center justify-between p-5 border-b border-violet-500/25">
               <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
                 <h2 className="text-lg font-bold text-white">Filters</h2>
@@ -868,7 +868,7 @@ function FranchiseOpportunitiesPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => clearAllFilters()}
-                  className="text-sm text-violet-300 hover:text-white font-medium transition-colors"
+                  className="text-sm text-white hover:text-white font-medium transition-colors"
                 >
                   Clear All
                 </button>
@@ -888,7 +888,7 @@ function FranchiseOpportunitiesPage() {
               {/* Industry Filters */}
               <div className="card-premium-dark-inner rounded-xl p-4">
                 <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                   Industry
@@ -916,7 +916,7 @@ function FranchiseOpportunitiesPage() {
               {/* Investment Filters */}
               <div className="card-premium-dark-inner rounded-xl p-4">
                 <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Min Investment
@@ -940,7 +940,7 @@ function FranchiseOpportunitiesPage() {
               {/* Operating Model Filters */}
               <div className="card-premium-dark-inner rounded-xl p-4">
                 <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                   </svg>
                   Operating Model
@@ -968,7 +968,7 @@ function FranchiseOpportunitiesPage() {
               {/* Location Filter */}
               <div className="card-premium-dark-inner rounded-xl p-4">
                 <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
@@ -980,7 +980,7 @@ function FranchiseOpportunitiesPage() {
                     placeholder="e.g. Texas, New York, California"
                     value={filters.location}
                     onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                    className="w-full px-4 py-2 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                    className="w-full px-4 py-2 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                   />
                   <div className="flex flex-wrap gap-2 mt-3">
                     {LOCATION_OPTIONS.map(location => (

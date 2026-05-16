@@ -285,7 +285,7 @@ function FAQItem({ question, answer, index }) {
           className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
         >
           <span className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-            isOpen ? 'text-white' : 'text-white/90'
+            isOpen ? 'text-white' : 'text-white'
           }`}>
             {question}
           </span>
@@ -297,7 +297,7 @@ function FAQItem({ question, answer, index }) {
             className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${
               isOpen 
                 ? 'bg-slate-900 text-white' 
-                : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200'
+                : 'bg-slate-100 text-white group-hover:bg-slate-200'
             }`}
           >
             <FiChevronDown className="w-4 h-4" />
@@ -329,7 +329,7 @@ function FAQItem({ question, answer, index }) {
             >
               <div className="px-6 pb-6 sm:px-8 sm:pb-8">
                 <div className="pt-2 border-t border-violet-500/20">
-                  <p className="text-sm sm:text-base text-white/70 leading-relaxed mt-4">
+                  <p className="text-sm sm:text-base text-white leading-relaxed mt-4">
                     {answer}
                   </p>
                 </div>
@@ -412,7 +412,7 @@ function InvestorDashboardContent({ navigateTo }) {
             className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer hover:scale-105 ${
               selectedFilter === tag.value
                 ? 'bg-violet-600 text-white shadow-md' 
-                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-slate-600 hover:border-violet-300 hover:text-violet-400'
+                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-white hover:border-violet-300 hover:text-violet-400'
             }`}
           >
             {tag.label}
@@ -440,12 +440,12 @@ function InvestorDashboardContent({ navigateTo }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-[9px] text-slate-500">{opp.industry}</span>
-                  <span className="text-[9px] text-slate-300">Â·</span>
+                  <span className="text-[9px] text-white">{opp.industry}</span>
+                  <span className="text-[9px] text-white">Â·</span>
                   <span className="text-[9px] font-semibold text-emerald-400">{opp.roi}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] text-slate-600">{opp.investment}</span>
+                  <span className="text-[9px] text-white">{opp.investment}</span>
                   <FiArrowRight className="h-3 w-3 text-indigo-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -466,9 +466,9 @@ function InvestorDashboardContent({ navigateTo }) {
             className={`rounded-lg bg-gradient-to-br ${metric.color} p-2 shadow-lg relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-            <metric.icon className="h-3 w-3 text-white/80 mb-0.5" />
+            <metric.icon className="h-3 w-3 text-white mb-0.5" />
             <div className="text-sm font-bold text-white">{metric.value}</div>
-            <div className="text-[8px] text-white/70">{metric.label}</div>
+            <div className="text-[8px] text-white">{metric.label}</div>
           </div>
         ))}
       </div>
@@ -495,7 +495,7 @@ function InvestorDashboardContent({ navigateTo }) {
           <div className="absolute left-7 right-0 top-0 bottom-6 flex flex-col justify-between">
             {[100, 75, 50, 25, 0].map((val, i) => (
               <div key={i} className="relative h-px bg-slate-200">
-                <span className="absolute -left-7 -top-2 text-[8px] text-slate-400 font-medium w-6 text-right">{val}%</span>
+                <span className="absolute -left-7 -top-2 text-[8px] text-white font-medium w-6 text-right">{val}%</span>
               </div>
             ))}
           </div>
@@ -532,7 +532,7 @@ function InvestorDashboardContent({ navigateTo }) {
                 </div>
                 
                 {/* Month label below */}
-                <span className="text-[7px] text-slate-500 font-medium mt-1 absolute" style={{ bottom: 0 }}>{item.label}</span>
+                <span className="text-[7px] text-white font-medium mt-1 absolute" style={{ bottom: 0 }}>{item.label}</span>
               </div>
             ))}
           </div>
@@ -641,7 +641,7 @@ function ProcessStepNode({ step, index, total }) {
         style={{ transitionDelay: `${index * 80 + 100}ms` }}
       >
         <p className="text-[0.82rem] font-bold text-white mb-1.5 leading-snug">{step.title}</p>
-        <p className="text-[0.72rem] text-white/85 leading-relaxed">{step.desc}</p>
+        <p className="text-[0.72rem] text-white leading-relaxed">{step.desc}</p>
       </div>
     </div>
   );
@@ -700,7 +700,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, delay: 0.05, ease: [0.22,1,0.36,1] }}
-            className="mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed text-white/70 mb-8"
+            className="mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed text-white mb-8"
           >
             End-to-end franchise expansion services for growing brands. From onboarding and documentation to investor acquisition and strategic scaling.
           </motion.p>
@@ -768,12 +768,12 @@ export default function ServicesPage() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-white/50">From 150+ reviews</p>
+                <p className="text-sm font-medium text-white">From 150+ reviews</p>
               </div>
             </div>
 
             {/* Trust Text */}
-            <p className="text-sm font-medium text-white/50">
+            <p className="text-sm font-medium text-white">
               Helping brands expand and investors connect through a smarter franchise ecosystem
             </p>
           </motion.div>
@@ -788,7 +788,7 @@ export default function ServicesPage() {
         {/* Section Header */}
         <div className="relative z-10 text-center mb-16">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
               Our Services
             </span>
@@ -797,7 +797,7 @@ export default function ServicesPage() {
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mx-auto max-w-3xl text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="mx-auto max-w-3xl text-base leading-relaxed text-white sm:text-lg">
               We provide end-to-end franchise services designed to help businesses scale efficiently and connect with the right investors. Our process covers every stage of franchise growth â€” from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </Reveal>
@@ -849,11 +849,11 @@ export default function ServicesPage() {
                   {/* Service Points - flex-1 to push content to fill space */}
                   <ul className="space-y-3 flex-1">
                     {service.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm text-white/65 leading-relaxed">
+                      <li key={idx} className="flex items-start gap-3 text-sm text-white leading-relaxed">
                         <span className="flex-shrink-0 mt-0.5">
                           <FiCheck className="h-4 w-4 text-emerald-400" />
                         </span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {point}
                         </span>
                       </li>
@@ -893,7 +893,7 @@ export default function ServicesPage() {
           {/* header */}
           <div className="text-center mb-14">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                 How It Works
               </span>
@@ -902,7 +902,7 @@ export default function ServicesPage() {
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+              <p className="mx-auto max-w-2xl text-base leading-relaxed text-white sm:text-lg">
                 A structured, repeatable system engineered to take your brand from concept to scaled franchise network.
               </p>
             </Reveal>
@@ -922,7 +922,7 @@ export default function ServicesPage() {
               ].map((m, i) => (
                 <motion.div key={i} className="group flex flex-col items-center py-4 px-3 rounded-xl border border-white/20 bg-white/10 text-center backdrop-blur-sm transition-colors duration-200 hover:bg-white/15 hover:border-white/30">
                   <p className="text-lg font-extrabold text-white mb-0.5 group-hover:text-white">{m.value}</p>
-                  <p className="text-[0.68rem] text-white/90 font-medium group-hover:text-white">{m.label}</p>
+                  <p className="text-[0.68rem] text-white font-medium group-hover:text-white">{m.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -956,7 +956,7 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div>
               <Reveal>
-                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-6">
+                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-6">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   For Brands
                 </span>
@@ -966,7 +966,7 @@ export default function ServicesPage() {
               </Reveal>
               
               <Reveal delay={0.1}>
-                <p className="text-lg text-white/90 leading-relaxed mb-8">
+                <p className="text-lg text-white leading-relaxed mb-8">
                   We help businesses transform into scalable franchise models with the right structure, strategy, and investor network.
                 </p>
               </Reveal>
@@ -1030,7 +1030,7 @@ export default function ServicesPage() {
                         </div>
                         <div>
                           <div className="text-xs font-bold text-white">Brand Expansion Hub</div>
-                          <div className="text-[10px] text-slate-400">Real-time Analytics</div>
+                          <div className="text-[10px] text-white">Real-time Analytics</div>
                         </div>
                       </div>
                       
@@ -1048,23 +1048,23 @@ export default function ServicesPage() {
                     <div className="grid grid-cols-3 gap-2">
                       <div className="rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiUsers className="h-3.5 w-3.5 text-white/80 mb-1" />
+                        <FiUsers className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">24</div>
-                        <div className="text-[9px] text-white/70">Locations</div>
+                        <div className="text-[9px] text-white">Locations</div>
                       </div>
 
                       <div className="rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiTarget className="h-3.5 w-3.5 text-white/80 mb-1" />
+                        <FiTarget className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">8</div>
-                        <div className="text-[9px] text-white/70">Markets</div>
+                        <div className="text-[9px] text-white">Markets</div>
                       </div>
 
                       <div className="rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiDollarSign className="h-3.5 w-3.5 text-white/80 mb-1" />
+                        <FiDollarSign className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">â‚¹6.8M</div>
-                        <div className="text-[9px] text-white/70">Revenue</div>
+                        <div className="text-[9px] text-white">Revenue</div>
                       </div>
                     </div>
 
@@ -1075,12 +1075,12 @@ export default function ServicesPage() {
                           <FiMap className="h-3 w-3 text-indigo-400" />
                           <div>
                             <span className="text-xs font-bold text-slate-800 block">Franchise Locations</span>
-                            <span className="text-[8px] text-slate-500">Active expansion cities</span>
+                            <span className="text-[8px] text-white">Active expansion cities</span>
                           </div>
                         </div>
                         
                         {/* City Dropdown */}
-                        <select className="text-[10px] font-medium text-slate-600 bg-white/70 backdrop-blur-sm border border-slate-200/50 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
+                        <select className="text-[10px] font-medium text-white bg-white/70 backdrop-blur-sm border border-slate-200/50 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
                           <option value="">View All (8)</option>
                           <option value="mumbai">Mumbai - 12 locations</option>
                           <option value="delhi">Delhi - 10 locations</option>
@@ -1210,7 +1210,7 @@ export default function ServicesPage() {
                         <div className="absolute left-8 right-0 top-0 bottom-0 flex flex-col justify-between">
                           {[100, 75, 50, 25, 0].map((val, i) => (
                             <div key={i} className="relative h-px bg-slate-200">
-                              <span className="absolute -left-8 -top-2 text-[7px] text-slate-400 font-medium w-6 text-right">{val}%</span>
+                              <span className="absolute -left-8 -top-2 text-[7px] text-white font-medium w-6 text-right">{val}%</span>
                             </div>
                           ))}
                         </div>
@@ -1253,7 +1253,7 @@ export default function ServicesPage() {
                               </motion.div>
                               
                               {/* Month label below */}
-                              <span className="text-[8px] text-slate-500 font-medium mt-1.5">{item.label}</span>
+                              <span className="text-[8px] text-white font-medium mt-1.5">{item.label}</span>
                             </div>
                           ))}
                         </div>
@@ -1272,7 +1272,7 @@ export default function ServicesPage() {
                         >
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-1.5">
-                              <FiMap className="h-2.5 w-2.5 text-slate-600" />
+                              <FiMap className="h-2.5 w-2.5 text-white" />
                               <span className="text-[10px] font-bold text-slate-800">{location.city}</span>
                             </div>
                             <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-${location.color}-50 border border-${location.color}-200`}>
@@ -1280,7 +1280,7 @@ export default function ServicesPage() {
                               <span className={`text-[7px] font-semibold text-${location.color}-700`}>{location.label}</span>
                             </div>
                           </div>
-                          <div className="text-[9px] text-slate-600 font-medium mb-1.5">{location.status}</div>
+                          <div className="text-[9px] text-white font-medium mb-1.5">{location.status}</div>
                           <div className="h-1 rounded-full bg-slate-200 overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
@@ -1289,7 +1289,7 @@ export default function ServicesPage() {
                               className={`h-full bg-${location.color}-500`}
                             />
                           </div>
-                          <div className="text-[7px] text-slate-400 mt-0.5">{location.progress}% market coverage</div>
+                          <div className="text-[7px] text-white mt-0.5">{location.progress}% market coverage</div>
                         </div>
                       ))}
                     </div>
@@ -1330,7 +1330,7 @@ export default function ServicesPage() {
                         </div>
                         <div>
                           <div className="text-[11px] font-bold text-white">Opportunity Discovery</div>
-                          <div className="text-[9px] text-violet-300">24 Verified Franchises</div>
+                          <div className="text-[9px] text-white">24 Verified Franchises</div>
                         </div>
                       </div>
                       
@@ -1360,7 +1360,7 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div className="order-1 lg:order-2">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-6">
+                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-6">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   For Investors
                 </span>
@@ -1372,7 +1372,7 @@ export default function ServicesPage() {
               </div>
               
               <div>
-                <p className="text-base text-white/70 leading-relaxed mb-8">
+                <p className="text-base text-white leading-relaxed mb-8">
                   We help investors explore verified franchise opportunities across industries with transparent business information and structured support.
                 </p>
               </div>
@@ -1427,7 +1427,7 @@ export default function ServicesPage() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300 mb-5">
+              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                 Industries
               </span>
@@ -1436,7 +1436,7 @@ export default function ServicesPage() {
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base text-white/70 leading-relaxed">
+              <p className="mx-auto max-w-2xl text-base text-white leading-relaxed">
                 Our franchise services are designed to support businesses across industries looking to expand through scalable franchise models.
               </p>
             </Reveal>
@@ -1496,7 +1496,7 @@ export default function ServicesPage() {
 
           {/* Bottom CTA */}
           <Reveal delay={0.6} className="text-center mt-16">
-            <p className="text-sm text-white/50 mb-4">
+            <p className="text-sm text-white mb-4">
               Don't see your industry? We work with businesses across all sectors.
             </p>
             <button
@@ -1519,7 +1519,7 @@ export default function ServicesPage() {
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3 }}
-              className="text-xs font-bold uppercase tracking-[0.18em] text-violet-300 mb-5"
+              className="text-xs font-bold uppercase tracking-[0.18em] text-white mb-5"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
               Benefits
@@ -1534,7 +1534,7 @@ export default function ServicesPage() {
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.1 }}
-              className="text-base leading-relaxed text-white/65 sm:text-lg"
+              className="text-base leading-relaxed text-white sm:text-lg"
             >
               iFranchise helps you discover verified opportunities, make confident investment decisions, and scale smarter with real data and insights.
             </motion.p>
@@ -1548,7 +1548,7 @@ export default function ServicesPage() {
                 Book a Call
               </button>
               <button type="button" onClick={() => navigateTo('/franchise-opportunities')}
-                className="rounded-full border border-violet-500/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white/90 transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
+                className="rounded-full border border-violet-500/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
                 View More
               </button>
             </motion.div>
@@ -1679,7 +1679,7 @@ export default function ServicesPage() {
                 className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full">
-                    <FiFileText className="h-3.5 w-3.5 text-slate-300" />
+                    <FiFileText className="h-3.5 w-3.5 text-white" />
                   </span>
                   <p className="text-sm font-medium text-white">Transparent Deal Information</p>
                 </div>
@@ -1756,7 +1756,7 @@ export default function ServicesPage() {
           <div className="text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
+                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   Why iFranchise
                 </span>
@@ -1792,7 +1792,7 @@ export default function ServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-white/85 leading-relaxed">
+                  <p className="text-sm text-white leading-relaxed">
                     From onboarding to investor acquisition, we manage every stage of franchise growth.
                   </p>
                 </div>
@@ -1824,7 +1824,7 @@ export default function ServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-white/85 leading-relaxed">
+                  <p className="text-sm text-white leading-relaxed">
                     Our approach is built around scalable business expansion and market reach.
                   </p>
                 </div>
@@ -1856,7 +1856,7 @@ export default function ServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-white/85 leading-relaxed">
+                  <p className="text-sm text-white leading-relaxed">
                     Access investors actively searching for franchise business opportunities.
                   </p>
                 </div>
@@ -1888,7 +1888,7 @@ export default function ServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-white/85 leading-relaxed">
+                  <p className="text-sm text-white leading-relaxed">
                     Clear processes, transparent communication, and growth-focused execution.
                   </p>
                 </div>
@@ -1911,7 +1911,7 @@ export default function ServicesPage() {
           <div className="text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-violet-300">
+                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   FAQ
                 </span>

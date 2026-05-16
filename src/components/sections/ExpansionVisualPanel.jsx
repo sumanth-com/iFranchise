@@ -14,7 +14,7 @@ const STEPS = ['Audit', 'Model', 'Match', 'Scale'];
 
 function CursorIcon() {
   return (
-    <svg className="h-6 w-6 text-slate-600" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M5 3l14 8.5L12 12l-1.5 7L5 3z"
         fill="currentColor"
@@ -146,7 +146,7 @@ export default function ExpansionVisualPanel() {
           Select a problem on the left
         </h3>
 
-        <p className="mt-2 text-sm leading-relaxed text-slate-500">
+        <p className="mt-2 text-sm leading-relaxed text-white">
           See how iFranchise solves each failure point with structured expansion support.
         </p>
 
@@ -223,7 +223,7 @@ export default function ExpansionVisualPanel() {
                 >
                   {i + 1}
                 </motion.div>
-                <span className="text-[0.58rem] font-medium text-slate-500">{step}</span>
+                <span className="text-[0.58rem] font-medium text-white">{step}</span>
               </motion.div>
             ))}
           </div>
@@ -247,7 +247,7 @@ export default function ExpansionVisualPanel() {
             </span>
           ))}
         </motion.span>
-        <span className="text-xs font-medium text-slate-500">Pick a failure point to explore</span>
+        <span className="text-xs font-medium text-white">Pick a failure point to explore</span>
       </motion.div>
     </motion.div>
   );

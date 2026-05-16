@@ -23,7 +23,7 @@ function BlogSidebar({ headings, activeHeadingId, onHeadingClick, shareUrl, shar
                   className={`block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors duration-150 ${
                     activeHeadingId === heading.id
                       ? 'bg-slate-900 font-medium text-white'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                      : 'text-white hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
                   {heading.label}
@@ -41,7 +41,7 @@ function BlogSidebar({ headings, activeHeadingId, onHeadingClick, shareUrl, shar
 
         {/* Subscribe */}
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm leading-relaxed text-slate-600">
+          <p className="text-sm leading-relaxed text-white">
             Join 1,000,000+ subscribers receiving expert tips on earning more, investing smarter and living better, all in our free newsletter.
           </p>
           <form className="mt-4 flex gap-2" onSubmit={(e) => e.preventDefault()}>
@@ -82,10 +82,10 @@ function BlogSidebar({ headings, activeHeadingId, onHeadingClick, shareUrl, shar
                       className="h-14 w-14 flex-shrink-0 rounded-lg object-cover transition duration-300 group-hover:opacity-80"
                     />
                     <div className="min-w-0">
-                      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-800 transition group-hover:text-slate-600">
+                      <p className="line-clamp-2 text-[13px] font-medium leading-snug text-slate-800 transition group-hover:text-white">
                         {post.title}
                       </p>
-                      <p className="mt-1 text-[11px] text-slate-400">
+                      <p className="mt-1 text-[11px] text-white">
                         {post.category} · {formatDisplayDate(post.date)}
                       </p>
                     </div>

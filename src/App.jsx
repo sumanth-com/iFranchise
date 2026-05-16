@@ -46,7 +46,7 @@ class PageErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="relative z-10 flex min-h-[50vh] flex-col items-center justify-center gap-4 px-6 text-center">
-          <p className="text-sm font-medium text-violet-200/80">Something went wrong loading this page.</p>
+          <p className="text-sm font-medium text-white">Something went wrong loading this page.</p>
           <button
             type="button"
             onClick={() => window.location.reload()}
@@ -73,7 +73,7 @@ function PageSkeleton() {
     >
       <div className="flex flex-col items-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-violet-500/30 border-t-violet-400" />
-        <p className="text-xs font-medium uppercase tracking-widest text-violet-200/70">Loading</p>
+        <p className="text-xs font-medium uppercase tracking-widest text-white">Loading</p>
       </div>
     </div>
   );
@@ -239,7 +239,7 @@ function App() {
 
   return (
     <FranchiseOpportunityNavbarFiltersProvider>
-      <div className="relative min-h-screen scroll-smooth bg-transparent text-slate-100">
+      <div className="relative min-h-screen scroll-smooth bg-transparent text-white">
         <AnimatedSiteBackdrop />
         <Navbar />
 

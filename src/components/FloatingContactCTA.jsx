@@ -242,7 +242,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                         <h3 className="text-2xl font-bold tracking-tight text-slate-900">
                           Talk to a Franchise Strategist
                         </h3>
-                        <p className="mt-2 text-sm text-slate-500">
+                        <p className="mt-2 text-sm text-white">
                           Get personalised guidance about {franchiseName}
                         </p>
                       </div>
@@ -252,7 +252,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                         {/* Name row */}
                         <div className="grid gap-4 sm:grid-cols-2">
                           <div>
-                            <label htmlFor="firstName" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="firstName" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               First Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -267,7 +267,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                             />
                           </div>
                           <div>
-                            <label htmlFor="lastName" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="lastName" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               Last Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -286,7 +286,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                         {/* Phone + Email row */}
                         <div className="grid gap-4 sm:grid-cols-2">
                           <div>
-                            <label htmlFor="phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               Phone Number <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -301,7 +301,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                             />
                           </div>
                           <div>
-                            <label htmlFor="email" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="email" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               Email Address <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -319,7 +319,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
 
                         {/* Investment Range */}
                         <div>
-                          <label htmlFor="investmentRange" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          <label htmlFor="investmentRange" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                             Investment Range <span className="text-red-500">*</span>
                           </label>
                           <select
@@ -342,7 +342,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                         {/* State + City row */}
                         <div className="grid gap-4 sm:grid-cols-2">
                           <div>
-                            <label htmlFor="state" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="state" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               State <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -357,7 +357,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                             />
                           </div>
                           <div>
-                            <label htmlFor="city" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            <label htmlFor="city" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
                               City <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -375,8 +375,8 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
 
                         {/* Website (optional) */}
                         <div>
-                          <label htmlFor="website" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                            Website <span className="text-slate-400 normal-case tracking-normal font-normal">(Optional)</span>
+                          <label htmlFor="website" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
+                            Website <span className="text-white normal-case tracking-normal font-normal">(Optional)</span>
                           </label>
                           <input
                             id="website"
@@ -391,8 +391,8 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
 
                         {/* Message */}
                         <div>
-                          <label htmlFor="message" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-                            Message <span className="text-slate-400 normal-case tracking-normal font-normal">(Optional)</span>
+                          <label htmlFor="message" className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-white">
+                            Message <span className="text-white normal-case tracking-normal font-normal">(Optional)</span>
                           </label>
                           <textarea
                             id="message"
@@ -412,7 +412,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                           Submit Request
                         </button>
 
-                        <p className="text-center text-xs text-slate-400">
+                        <p className="text-center text-xs text-white">
                           Our franchise strategist will reach out within 24 hours.
                         </p>
                       </form>
@@ -431,7 +431,7 @@ export default function FloatingContactCTA({ franchiseName = 'this opportunity' 
                         </svg>
                       </motion.div>
                       <h3 className="text-3xl font-bold text-slate-900">Request Submitted!</h3>
-                      <p className="mt-4 text-base text-slate-600">
+                      <p className="mt-4 text-base text-white">
                         Thank you for your interest. Our franchise strategist will contact you shortly.
                       </p>
                     </div>

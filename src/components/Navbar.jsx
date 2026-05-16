@@ -6,6 +6,58 @@ import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters
 
 const FRANCHISE_NAVBAR_OPTIONS = buildNavbarFranchiseFilterOptions();
 
+function NavbarFilterCheckIcon() {
+  return (
+    <svg className="navbar-filter-check-icon h-3 w-3 shrink-0" viewBox="0 0 12 12" fill="none" aria-hidden>
+      <path
+        d="M2.5 6.2L5 8.7L9.5 3.8"
+        stroke="#ffffff"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function NavbarFilterChevron({ isOpen = false }) {
+  return (
+    <svg
+      className={`navbar-filter-chevron h-4 w-4 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+    >
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="#6d28d9"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CompanyNavRowArrow() {
+  return (
+    <span
+      className="company-nav-row-arrow inline-flex shrink-0 translate-x-0 text-violet-600 transition-transform duration-300 ease-out group-hover:translate-x-2"
+      aria-hidden
+    >
+      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M5 12h13M14 7l5 5-5 5"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
+
 function NavbarFranchiseFilterCheckbox({ checked, label, onChange }) {
   return (
     <label className="group flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-all duration-200 hover:border-violet-100/90 hover:bg-violet-50/70">
@@ -17,21 +69,11 @@ function NavbarFranchiseFilterCheckbox({ checked, label, onChange }) {
         }`}
         aria-hidden
       >
-        {checked && (
-          <svg className="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none">
-            <path
-              d="M2.5 6.2L5 8.7L9.5 3.8"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
+        {checked && <NavbarFilterCheckIcon />}
       </span>
       <span
         className={`text-[13px] leading-snug transition-colors duration-200 ${
-          checked ? 'font-semibold text-slate-900' : 'font-medium text-slate-600 group-hover:text-slate-800'
+          checked ? 'font-semibold text-slate-900' : 'font-medium text-slate-700 group-hover:text-slate-900'
         }`}
       >
         {label}
@@ -44,7 +86,7 @@ function NavbarFranchiseFilterCheckbox({ checked, label, onChange }) {
 function FranchiseFilterSection({ title, children }) {
   return (
     <div className="min-h-0">
-      <h4 className="mb-2.5 px-1 text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">
+      <h4 className="mb-2.5 px-1 text-[11px] font-bold uppercase tracking-[0.1em] text-violet-800">
         {title}
       </h4>
       <div className="space-y-0.5">{children}</div>
@@ -115,12 +157,12 @@ function FranchiseFilterPanelBody({ navFranchiseFilters, embedded = false, compa
 const NAV_COMPANY_PANEL_CLASS = 'w-[min(400px,calc(100vw-32px))]';
 const NAV_FRANCHISE_PANEL_CLASS = 'w-[min(440px,calc(100vw-32px))]';
 const NAV_DROPDOWN_PANEL_CLASS =
-  'rounded-2xl border border-slate-200/60 bg-white shadow-2xl';
+  'navbar-dropdown-panel rounded-2xl border border-slate-200/60 bg-white shadow-2xl';
 const NAV_SUBMENU_CLASS =
-  'min-w-[15.5rem] w-max max-w-[min(18rem,calc(100vw-40px))] max-h-52 overflow-y-auto overflow-x-hidden overscroll-contain rounded-2xl border border-slate-200/60 bg-white p-2.5 shadow-2xl';
+  'navbar-dropdown-panel min-w-[15.5rem] w-max max-w-[min(18rem,calc(100vw-40px))] max-h-52 overflow-y-auto overflow-x-hidden overscroll-contain rounded-2xl border border-slate-200/60 bg-white p-2.5 shadow-2xl';
 
 const NAV_LINK_BASE =
-  'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200';
+  'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200';
 const NAV_LINK_IDLE = 'text-violet-800 hover:bg-violet-50 hover:text-violet-950';
 const NAV_LINK_ACTIVE = 'bg-violet-100 text-violet-950';
 
@@ -128,27 +170,17 @@ function NavbarFranchiseFilterMenuCheckbox({ checked, label, onChange }) {
   return (
     <label className="group flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-violet-50/90">
       <span
-        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-all ${
+        className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border-2 transition-all ${
           checked
-            ? 'border-violet-600 bg-violet-600'
+            ? 'border-violet-600 bg-violet-600 shadow-[0_2px_8px_rgba(124,58,237,0.35)]'
             : 'border-slate-300 bg-white group-hover:border-violet-400'
         }`}
       >
-        {checked && (
-          <svg className="h-2.5 w-2.5 text-white" viewBox="0 0 12 12" fill="none">
-            <path
-              d="M2.5 6.2L5 8.7L9.5 3.8"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
+        {checked && <NavbarFilterCheckIcon />}
       </span>
       <span
         className={`whitespace-nowrap text-xs leading-snug ${
-          checked ? 'font-semibold text-slate-900' : 'text-slate-600'
+          checked ? 'font-semibold text-slate-900' : 'text-slate-700'
         }`}
       >
         {label}
@@ -181,9 +213,9 @@ function NavbarFranchiseFilterColumn({
             : 'border-slate-200 bg-white hover:border-violet-200 hover:bg-violet-50/60'
         }`}
       >
-        <span className="flex w-full items-center justify-center gap-0.5 px-0.5">
+        <span className="flex w-full items-center justify-center gap-1 px-0.5">
           <span className="text-center text-xs font-semibold leading-tight text-slate-800">{label}</span>
-          <ChevronIcon className={`h-3 w-3 shrink-0 text-slate-400 ${isOpen ? 'rotate-180' : ''}`} />
+          <NavbarFilterChevron isOpen={isOpen} />
         </span>
         {count > 0 && (
           <span className="rounded-full bg-violet-600 px-1.5 py-0.5 text-[9px] font-bold leading-none text-white">
@@ -222,7 +254,7 @@ function NavbarFranchisePremiumPanel({ navFranchiseFilters, onOpenListings, onCl
     <motion.div className={`overflow-visible ${NAV_DROPDOWN_PANEL_CLASS}`}>
       <div className="border-b border-slate-100 px-4 py-3">
         <h3 className="text-sm font-semibold text-slate-900">Browse franchises</h3>
-        <p className="mt-0.5 text-xs text-slate-500">Select filters, then view matching opportunities</p>
+        <p className="mt-0.5 text-xs font-medium text-slate-600">Select filters, then view matching opportunities</p>
       </div>
 
       <div className="relative px-3 pb-4 pt-3">
@@ -307,7 +339,7 @@ function FranchiseFilterPanelFooter({ onClear, onOpenListings, compact = false }
         <button
           type="button"
           onClick={onClear}
-          className="flex flex-1 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-600 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800"
+          className="flex flex-1 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800"
         >
           Reset
         </button>
@@ -327,7 +359,7 @@ function FranchiseFilterPanelFooter({ onClear, onOpenListings, compact = false }
 
   return (
     <div className="flex flex-col gap-2.5 border-t border-slate-100 bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-xs leading-relaxed text-slate-500">
+      <p className="text-xs leading-relaxed text-slate-600">
         Combinations narrow results together.
       </p>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
@@ -464,10 +496,10 @@ function ReportIcon() {
 
 function TeamIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <rect x="2" y="7" width="20" height="14" rx="2" />
       <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
-      <path d="M12 12v2M8 12h8" />
+      <path d="M12 11v3M8 11h8" />
     </svg>
   );
 }
@@ -482,7 +514,7 @@ function ProcessIcon() {
 
 function ContactIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
     </svg>
@@ -491,17 +523,17 @@ function ContactIcon() {
 
 function AboutIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <circle cx="12" cy="12" r="9" />
-      <path d="M12 11v5" />
-      <path d="M12 8h.01" />
+      <path d="M12 10v6" />
+      <path d="M12 7h.01" />
     </svg>
   );
 }
 
 function CompanyNavIconWrap({ children }) {
   return (
-    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#0b1220] shadow-sm transition-all duration-200 group-hover:bg-violet-600 group-hover:shadow-md">
+    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 text-white shadow-[0_4px_14px_rgba(124,58,237,0.35)] transition-all duration-200 group-hover:from-violet-700 group-hover:to-violet-900 group-hover:shadow-[0_6px_18px_rgba(124,58,237,0.45)] [&_svg]:text-white [&_svg]:stroke-white">
       {children}
     </span>
   );
@@ -659,7 +691,7 @@ function Navbar() {
               <span className="text-lg sm:text-2xl font-extrabold tracking-tight leading-tight text-violet-900">
                 iFranchise
               </span>
-              <p className="text-[10px] sm:text-xs leading-tight text-violet-600/80 hidden xs:block">
+              <p className="text-[10px] sm:text-xs font-semibold leading-tight text-violet-800 hidden xs:block">
                 India's Trusted Franchise Growth Platform
               </p>
             </div>
@@ -712,7 +744,7 @@ function Navbar() {
                             <item.Icon />
                           </CompanyNavIconWrap>
                           <div className="flex-1">
-                            <span className="flex items-center gap-2 text-sm font-medium text-slate-800 group-hover:text-violet-700">
+                            <span className="flex items-center gap-2 text-sm font-bold text-slate-800 group-hover:text-violet-700">
                               {item.title}
                               {item.badge && (
                                 <span className="relative inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm">
@@ -721,9 +753,9 @@ function Navbar() {
                                 </span>
                               )}
                             </span>
-                            <span className="mt-0.5 block text-xs text-slate-500">{item.description}</span>
+                            <span className="mt-0.5 block text-xs font-medium leading-snug text-slate-600">{item.description}</span>
                           </div>
-                          <span className="text-base leading-none text-slate-400 opacity-0 group-hover:text-violet-600 group-hover:opacity-100 transition-all duration-200">→</span>
+                          <CompanyNavRowArrow />
                         </a>
                       ))}
                     </div>
@@ -818,19 +850,19 @@ function Navbar() {
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="inline-flex min-h-[48px] min-w-[100px] items-center justify-center gap-2.5 rounded-full border border-violet-200 px-4 py-2.5 text-sm font-semibold text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 lg:hidden"
+          className="inline-flex min-h-[48px] min-w-[100px] items-center justify-center gap-2.5 rounded-full border border-violet-200 px-4 py-2.5 text-sm font-bold text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 lg:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
           <MenuIcon isOpen={isMobileMenuOpen} />
-          <span className="font-medium">Menu</span>
+          <span className="font-bold">Menu</span>
         </button>
 
         {/* Desktop CTA Button */}
         <button
           type="button"
           onClick={() => navigateTo('/list-your-brand')}
-          className="group ml-auto hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] lg:inline-flex"
+          className="group ml-auto hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] lg:inline-flex"
         >
           List Your Brand
           <motion.div
@@ -877,7 +909,7 @@ function Navbar() {
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 transition-all hover:bg-slate-200"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition-all hover:bg-slate-200"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -895,7 +927,7 @@ function Navbar() {
                       onClick={() => setMobileAccordion(mobileAccordion === 'company' ? null : 'company')}
                       className="flex w-full items-center justify-between px-4 py-3 text-left"
                     >
-                      <span className="text-base font-semibold text-slate-900">Company</span>
+                      <span className="text-base font-bold text-slate-900">Company</span>
                       <ChevronIcon className={mobileAccordion === 'company' ? 'rotate-180' : ''} />
                     </button>
                     <AnimatePresence>
@@ -913,12 +945,12 @@ function Navbar() {
                                 key={item.title}
                                 href={item.path}
                                 onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                                className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-violet-50/80"
+                                className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 hover:bg-violet-50/80"
                               >
                                 <CompanyNavIconWrap>
                                   <item.Icon />
                                 </CompanyNavIconWrap>
-                                <span className="flex items-center gap-2">
+                                <span className="flex flex-1 items-center gap-2 font-bold">
                                   {item.title}
                                   {item.badge && (
                                     <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-[9px] font-bold text-white">
@@ -926,6 +958,7 @@ function Navbar() {
                                     </span>
                                   )}
                                 </span>
+                                <CompanyNavRowArrow />
                               </a>
                             ))}
                           </div>
@@ -938,7 +971,7 @@ function Navbar() {
                   <a
                     href="/services"
                     onClick={(e) => { e.preventDefault(); navigateTo('/services'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-semibold text-slate-900 hover:bg-slate-50"
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Services
                   </a>
@@ -947,7 +980,7 @@ function Navbar() {
                   <a
                     href="/franchise-opportunities"
                     onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-semibold text-slate-900 hover:bg-slate-50"
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Franchise Opportunities
                   </a>
@@ -956,7 +989,7 @@ function Navbar() {
                   <a
                     href="/blog"
                     onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-semibold text-slate-900 hover:bg-slate-50"
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Blogs
                   </a>
@@ -965,7 +998,7 @@ function Navbar() {
                   <a
                     href="/contact"
                     onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-semibold text-slate-900 hover:bg-slate-50"
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Contact Us
                   </a>

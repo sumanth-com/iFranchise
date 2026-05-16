@@ -71,6 +71,7 @@ export default {
           borderStyle: 'solid',
           borderColor: 'rgba(139,92,246,0.18)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          color: '#ffffff',
         },
         '.card-premium-dark-inner': {
           backgroundColor: 'rgba(255,255,255,0.06)',
@@ -79,6 +80,7 @@ export default {
           borderColor: 'rgba(139,92,246,0.22)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
+          color: '#ffffff',
         },
       });
     },

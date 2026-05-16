@@ -65,7 +65,7 @@ const CASES = [
 ];
 
 const COLOR = {
-  violet: { accent: 'text-violet-300', bg: 'bg-violet-500/15', border: 'border-violet-500/35', dot: 'bg-violet-500', tab: 'bg-violet-500' },
+  violet: { accent: 'text-white', bg: 'bg-violet-500/15', border: 'border-violet-500/35', dot: 'bg-violet-500', tab: 'bg-violet-500' },
 };
 const CHART_GREEN = '#22c55e';
 
@@ -133,7 +133,7 @@ function CityDots({ cities, color }) {
             transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
             className={`w-1.5 h-1.5 rounded-full ${COLOR[color].dot} shrink-0`}
           />
-          <span className="text-[0.62rem] font-medium text-white/70">{city}</span>
+          <span className="text-[0.62rem] font-medium text-white">{city}</span>
         </motion.div>
       ))}
     </div>
@@ -160,11 +160,11 @@ function CaseCard({ cs, isActive, onClick }) {
         />
         <div className="flex-1 min-w-0">
           <p className="text-sm font-bold text-white truncate">{cs.brand}</p>
-          <p className="text-[0.65rem] text-violet-200/70">{cs.category}</p>
+          <p className="text-[0.65rem] text-white">{cs.category}</p>
         </div>
         <div className="text-right shrink-0">
           <p className={`text-sm font-extrabold ${c.accent}`}>{cs.roiGrowth}</p>
-          <p className="text-[0.6rem] text-violet-200/70">{cs.timeline}</p>
+          <p className="text-[0.6rem] text-white">{cs.timeline}</p>
         </div>
       </div>
     </button>
@@ -190,7 +190,7 @@ export default function CaseStudiesSection() {
           transition={{ duration: 0.55 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-violet-300 mb-4">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Proven Results
           </span>
@@ -216,13 +216,13 @@ export default function CaseStudiesSection() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-3"
           >
-            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-violet-200/75 mb-4">Select a Case Study</p>
+            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white/75 mb-4">Select a Case Study</p>
             {CASES.map((c, i) => (
               <CaseCard key={c.id} cs={c} isActive={active === i} onClick={() => setActive(i)} />
             ))}
 
             {/* disclaimer */}
-            <p className="text-[0.62rem] text-violet-200/75 leading-relaxed pt-2">
+            <p className="text-[0.62rem] text-white/75 leading-relaxed pt-2">
               * Results are representative of brands that completed the full iFranchise expansion program.
             </p>
           </motion.div>
@@ -248,12 +248,12 @@ export default function CaseStudiesSection() {
                 <div className="flex-1">
                   <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${c.accent} mb-0.5`}>{cs.category}</p>
                   <h3 className="text-xl font-extrabold text-white">{cs.brand}</h3>
-                  <p className="text-[0.78rem] text-violet-200/75">{cs.tagline}</p>
+                  <p className="text-[0.78rem] text-white/75">{cs.tagline}</p>
                 </div>
                 <div className="text-right shrink-0">
                   <p className={`text-2xl font-extrabold ${c.accent}`}>{cs.roiGrowth}</p>
-                  <p className="text-[0.65rem] text-violet-200/70">Revenue Growth</p>
-                  <p className="text-[0.65rem] text-violet-200/70">in {cs.timeline}</p>
+                  <p className="text-[0.65rem] text-white">Revenue Growth</p>
+                  <p className="text-[0.65rem] text-white">in {cs.timeline}</p>
                 </div>
               </div>
 
@@ -267,7 +267,7 @@ export default function CaseStudiesSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                       </svg>
                     </div>
-                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-violet-300">Before iFranchise</p>
+                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-white">Before iFranchise</p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mb-3">
                     {[
@@ -278,7 +278,7 @@ export default function CaseStudiesSection() {
                     ].map((m, i) => (
                       <div key={i} className="flex flex-col p-2 rounded-lg bg-white/5 border border-violet-500/25">
                         <span className="text-sm font-extrabold text-white">{m.value}</span>
-                        <span className="text-[0.6rem] text-violet-200/75">{m.label}</span>
+                        <span className="text-[0.6rem] text-white/75">{m.label}</span>
                       </div>
                     ))}
                   </div>
@@ -286,7 +286,7 @@ export default function CaseStudiesSection() {
                     {cs.before.problems.map((p, i) => (
                       <div key={i} className="flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-violet-400 shrink-0" />
-                        <span className="text-[0.68rem] text-violet-300">{p}</span>
+                        <span className="text-[0.68rem] text-white">{p}</span>
                       </div>
                     ))}
                   </div>
@@ -317,7 +317,7 @@ export default function CaseStudiesSection() {
                         className="flex flex-col p-2 rounded-lg bg-white/10 border border-violet-400/35"
                       >
                         <span className={`text-sm font-extrabold ${c.accent}`}>{m.value}</span>
-                        <span className="text-[0.6rem] text-violet-200/70">{m.label}</span>
+                        <span className="text-[0.6rem] text-white">{m.label}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -338,28 +338,28 @@ export default function CaseStudiesSection() {
                 {/* revenue growth chart */}
                 <div className="p-4 rounded-2xl card-premium-dark border border-violet-500/25">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-violet-200/75">Revenue Growth</p>
+                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-white/75">Revenue Growth</p>
                     <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.revenue} → {cs.after.revenue}</span>
                   </div>
                   <Sparkline points={cs.revenuePoints} />
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-[0.6rem] text-violet-200/70">Month 1</span>
-                    <span className="text-[0.6rem] text-violet-200/70">Month {cs.revenuePoints.length}</span>
+                    <span className="text-[0.6rem] text-white">Month 1</span>
+                    <span className="text-[0.6rem] text-white">Month {cs.revenuePoints.length}</span>
                   </div>
                 </div>
 
                 {/* city expansion */}
                 <div className="p-4 rounded-2xl card-premium-dark border border-violet-500/25">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-violet-200/75">City Expansion</p>
+                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-white/75">City Expansion</p>
                     <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.cities} → {cs.after.cities} cities</span>
                   </div>
                   <CityDots cities={cs.cityData} color={cs.color} />
                   <div className="flex items-center gap-2 mt-3 pt-2 border-t border-white/8">
-                    <svg className="w-3 h-3 text-violet-200/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     </svg>
-                    <span className="text-[0.62rem] text-violet-200/70">{cs.after.investors} investors across {cs.after.cities} cities</span>
+                    <span className="text-[0.62rem] text-white">{cs.after.investors} investors across {cs.after.cities} cities</span>
                   </div>
                 </div>
               </div>
@@ -376,7 +376,7 @@ export default function CaseStudiesSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mt-14"
         >
-          <p className="text-violet-200/70 text-sm mb-5">Ready to write your own success story?</p>
+          <p className="text-white text-sm mb-5">Ready to write your own success story?</p>
           <button
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-violet-700 transition-colors duration-200 shadow-lg"
