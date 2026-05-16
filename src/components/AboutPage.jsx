@@ -136,7 +136,7 @@ function PremiumTeamCard({ member }) {
           
           <button 
             onClick={() => setShowDetails(true)}
-            className="flex-1 rounded-full border border-violet-400/45 bg-violet-500/15 px-4 py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-violet-500/25 hover:border-violet-300"
+            className="btn-purple-solid flex-1 rounded-full px-4 py-2 text-sm font-bold transition-all duration-300 hover:-translate-y-0.5"
           >
             Know More
           </button>
@@ -270,7 +270,7 @@ function AboutPage() {
   };
 
   return (
-    <main className="relative z-10 w-full bg-transparent text-white">
+    <main className="relative z-10 w-full bg-transparent text-theme-primary">
       {/* HERO SECTION */}
       <section className="relative w-full py-20 sm:py-28 lg:py-32 overflow-hidden min-h-[85vh] flex items-center">
         <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 lg:px-8">
@@ -279,7 +279,7 @@ function AboutPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="flex flex-col gap-8 text-center lg:text-left"
+              className="theme-section-on-light flex flex-col gap-8 text-center lg:text-left"
             >
               <h1 className="text-[clamp(36px,7vw,64px)] font-black leading-[1.08] tracking-tight text-white">
                 Building Franchise
@@ -366,7 +366,7 @@ function AboutPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
-              className="space-y-6"
+              className="theme-section-on-light space-y-6"
             >
               <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/10 px-4 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />

@@ -131,7 +131,7 @@ export default function BrandsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.div className="card-premium-dark rounded-2xl overflow-hidden shadow-xl">
+              <motion.div className="theme-dark-surface card-premium-dark rounded-2xl overflow-hidden shadow-xl">
 
                 {/* header */}
                 <div className="flex items-center justify-between px-4 py-2.5 border-b border-violet-500/25 bg-violet-950/40">

@@ -9,7 +9,10 @@ const opportunities = franchiseOpportunities;
 const INDUSTRY_OPTIONS = ['Food & Beverage', 'Retail', 'Health & Wellness', 'Home Services', 'Technology', 'Education', 'Entertainment'];
 const INVESTMENT_OPTIONS = ['Under $50,000', '$50,000 - $100,000', '$100,000 - $250,000', '$250,000 - $500,000', 'Over $500,000'];
 const MODEL_OPTIONS = ['FOCO', 'FOFO', 'FICO'];
-const LOCATION_OPTIONS = ['Texas', 'California', 'New York', 'Florida', 'Illinois'];
+const INDIAN_CITIES = [
+  'Mumbai', 'Delhi NCR', 'Bengaluru', 'Hyderabad', 'Chennai',
+  'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Chandigarh',
+];
 
 const parseInvestmentValue = (investmentLabel) => {
   const cleaned = investmentLabel.replace(/[$,]/g, '');
@@ -540,22 +543,18 @@ function FranchiseOpportunitiesPage() {
                   <div className="space-y-4">
                     <input
                       type="text"
-                      placeholder="e.g. Texas, New York, California"
+                      list="franchise-location-cities"
+                      placeholder="e.g. Mumbai, Bengaluru, Delhi NCR"
                       value={filters.location}
                       onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                      className="w-full px-4 py-3 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                      className="w-full px-4 py-3 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
-                    <div className="flex flex-wrap gap-1.5">
-                      {LOCATION_OPTIONS.map(location => (
-                        <button
-                          key={location}
-                          onClick={() => setFilters({ ...filters, location: location })}
-                          className="px-2.5 py-1.5 text-xs bg-violet-500/15 border border-violet-400/35 text-white rounded-full hover:bg-violet-500/25 hover:border-violet-300 transition-all"
-                        >
-                          {location}
-                        </button>
+                    <datalist id="franchise-location-cities">
+                      {INDIAN_CITIES.map((city) => (
+                        <option key={city} value={city} />
                       ))}
-                    </div>
+                    </datalist>
+                    <p className="text-xs font-medium text-slate-900">Indian cities — type or pick from suggestions</p>
                   </div>
                 </div>
               </div>
@@ -977,22 +976,18 @@ function FranchiseOpportunitiesPage() {
                 <div className="space-y-3">
                   <input
                     type="text"
-                    placeholder="e.g. Texas, New York, California"
+                    list="franchise-location-cities-mobile"
+                    placeholder="e.g. Mumbai, Bengaluru, Delhi NCR"
                     value={filters.location}
                     onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-                    className="w-full px-4 py-2 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                    className="w-full px-4 py-2 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                   />
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {LOCATION_OPTIONS.map(location => (
-                      <button
-                        key={location}
-                        onClick={() => setFilters({ ...filters, location: location })}
-                        className="px-3 py-1 text-xs bg-violet-500/15 border border-violet-400/35 text-white rounded-full hover:bg-violet-500/25 hover:border-violet-300 transition-all"
-                      >
-                        {location}
-                      </button>
+                  <datalist id="franchise-location-cities-mobile">
+                    {INDIAN_CITIES.map((city) => (
+                      <option key={city} value={city} />
                     ))}
-                  </div>
+                  </datalist>
+                  <p className="text-xs font-medium text-slate-900">Indian cities — type or pick from suggestions</p>
                 </div>
               </div>
             </div>

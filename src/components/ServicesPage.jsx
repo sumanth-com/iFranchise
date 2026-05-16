@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiTrendingUp, FiTarget, FiUsers, FiMessageSquare,
@@ -9,6 +9,8 @@ import {
   FiChevronDown, FiPlus, FiMinus, FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
 import CtaButton from './ui/CtaButton';
+import SectionPill from './ui/SectionPill';
+import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../assets/IndImgs/Food & Beverage.png';
@@ -32,7 +34,7 @@ function ServicesIndustryCardImg({ src, alt }) {
         loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}
-        className={`h-full w-full object-contain object-center transition-opacity duration-300 ${
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -265,7 +267,7 @@ function FAQItem({ question, answer, index }) {
   return (
     <Reveal delay={index * 0.08}>
       <motion.div
-        className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300"
+        className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300"
         animate={{
           borderColor: isOpen ? 'rgba(15, 23, 42, 0.2)' : 'rgba(148, 163, 184, 0.6)',
         }}
@@ -413,7 +415,7 @@ function InvestorDashboardContent({ navigateTo }) {
             className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer hover:scale-105 ${
               selectedFilter === tag.value
                 ? 'bg-violet-600 text-white shadow-md' 
-                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-white hover:border-violet-300 hover:text-violet-400'
+                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-slate-600 hover:border-violet-300 hover:text-violet-600'
             }`}
           >
             {tag.label}
@@ -427,7 +429,7 @@ function InvestorDashboardContent({ navigateTo }) {
           <button
             key={i}
             onClick={() => navigateTo(opp.link)}
-            className="w-full rounded-lg bg-white/90 backdrop-blur-sm p-2 shadow-md border border-slate-200/60 hover:shadow-lg hover:border-violet-300 transition-all duration-300 cursor-pointer group"
+            className="dashboard-surface-light w-full rounded-lg bg-white/90 backdrop-blur-sm p-2 shadow-md border border-slate-200/60 hover:shadow-lg hover:border-violet-300 transition-all duration-300 cursor-pointer group"
           >
             <div className="flex items-start gap-2">
               <div className={`h-9 w-9 flex-shrink-0 rounded-lg bg-gradient-to-br ${opp.color} shadow-lg flex items-center justify-center`}>
@@ -441,12 +443,12 @@ function InvestorDashboardContent({ navigateTo }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-[9px] text-white">{opp.industry}</span>
-                  <span className="text-[9px] text-white">Â·</span>
-                  <span className="text-[9px] font-semibold text-emerald-400">{opp.roi}</span>
+                  <span className="text-[9px] text-slate-500">{opp.industry}</span>
+                  <span className="text-[9px] text-slate-400">·</span>
+                  <span className="text-[9px] font-semibold text-emerald-600">{opp.roi}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] text-white">{opp.investment}</span>
+                  <span className="text-[9px] text-slate-600">{opp.investment}</span>
                   <FiArrowRight className="h-3 w-3 text-indigo-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -464,7 +466,7 @@ function InvestorDashboardContent({ navigateTo }) {
         ].map((metric, i) => (
           <div
             key={i}
-            className={`rounded-lg bg-gradient-to-br ${metric.color} p-2 shadow-lg relative overflow-hidden`}
+            className={`dashboard-metric-card rounded-lg bg-gradient-to-br ${metric.color} p-2 shadow-lg relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
             <metric.icon className="h-3 w-3 text-white mb-0.5" />
@@ -475,7 +477,7 @@ function InvestorDashboardContent({ navigateTo }) {
       </div>
 
       {/* Market Trends Chart - Larger & Better Visible */}
-      <div className="rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
+      <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
         <div className="flex items-center justify-between mb-2.5">
           <div className="flex items-center gap-1.5">
             <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
@@ -486,7 +488,7 @@ function InvestorDashboardContent({ navigateTo }) {
           <div className="relative flex items-center gap-1">
             <div className="absolute h-1 w-1 rounded-full bg-emerald-500/200 animate-ping" />
             <div className="h-1 w-1 rounded-full bg-emerald-500/200" />
-            <span className="text-[8px] font-semibold text-emerald-400">Live</span>
+            <span className="text-[8px] font-semibold text-emerald-600">Live</span>
           </div>
         </div>
         
@@ -496,7 +498,7 @@ function InvestorDashboardContent({ navigateTo }) {
           <div className="absolute left-7 right-0 top-0 bottom-6 flex flex-col justify-between">
             {[100, 75, 50, 25, 0].map((val, i) => (
               <div key={i} className="relative h-px bg-slate-200">
-                <span className="absolute -left-7 -top-2 text-[8px] text-white font-medium w-6 text-right">{val}%</span>
+                <span className="absolute -left-7 -top-2 text-[8px] text-slate-500 font-medium w-6 text-right">{val}%</span>
               </div>
             ))}
           </div>
@@ -533,7 +535,7 @@ function InvestorDashboardContent({ navigateTo }) {
                 </div>
                 
                 {/* Month label below */}
-                <span className="text-[7px] text-white font-medium mt-1 absolute" style={{ bottom: 0 }}>{item.label}</span>
+                <span className="text-[7px] text-slate-500 font-medium mt-1 absolute" style={{ bottom: 0 }}>{item.label}</span>
               </div>
             ))}
           </div>
@@ -659,6 +661,7 @@ function ProcessSteps() {
 }
 
 export default function ServicesPage() {
+  const { isLight } = useTheme();
   const pageRef = useRef(null);
 
   const navigateTo = (path) => {
@@ -667,12 +670,12 @@ export default function ServicesPage() {
   };
 
   return (
-    <main ref={pageRef} className="relative z-10 w-full bg-transparent text-white">
+    <main ref={pageRef} className="relative z-10 w-full bg-transparent text-theme-primary">
 
       {/* HERO */}
-      <section className="relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-8 pt-8 sm:px-6 lg:px-8">
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
+      <section className="page-hero-light relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+        <div className="page-hero-light__bg pointer-events-none absolute inset-0" aria-hidden>
+          <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
           <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="services-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -695,7 +698,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, ease: [0.22,1,0.36,1] }}
-            className="text-[clamp(2.75rem,8vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-white mb-6"
+            className={`text-[clamp(2.75rem,8vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] mb-6 ${isLight ? 'text-slate-900' : 'text-white'}`}
           >
             Franchise Growth Services
           </motion.h1>
@@ -705,7 +708,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, delay: 0.05, ease: [0.22,1,0.36,1] }}
-            className="mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed text-white mb-8"
+            className={`mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed mb-8 ${isLight ? 'text-slate-600' : 'text-white'}`}
           >
             End-to-end franchise expansion services for growing brands. From onboarding and documentation to investor acquisition and strategic scaling.
           </motion.p>
@@ -763,12 +766,12 @@ export default function ServicesPage() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-white">From 150+ reviews</p>
+                <p className={`text-sm font-medium ${isLight ? 'text-slate-700' : 'text-white'}`}>From 150+ reviews</p>
               </div>
             </div>
 
             {/* Trust Text */}
-            <p className="text-sm font-medium text-white">
+            <p className={`text-sm font-medium ${isLight ? 'text-slate-600' : 'text-white'}`}>
               Helping brands expand and investors connect through a smarter franchise ecosystem
             </p>
           </motion.div>
@@ -781,12 +784,9 @@ export default function ServicesPage() {
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
-        <div className="relative z-10 text-center mb-16">
+        <div className="theme-section-on-light relative z-10 text-center mb-16">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-              Our Services
-            </span>
+            <SectionPill className="mb-5">Our Services</SectionPill>
             <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
               Complete Franchise Growth & Expansion Services
             </h2>
@@ -802,7 +802,7 @@ export default function ServicesPage() {
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICE_CARDS.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.08}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15)] hover:border-violet-200/70 h-full flex flex-col" style={{ boxShadow: '0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04)' }}>
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15)] hover:border-violet-200/70 h-full flex flex-col" style={{ boxShadow: '0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04)' }}>
                 
                 {/* Animated line background - flows on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -987,7 +987,7 @@ export default function ServicesPage() {
               <div className="relative max-w-md mx-auto lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-5 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="services-dashboard-panel theme-dark-surface relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-5 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
                   
                   {/* Animated glow effects */}
                   <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl animate-pulse-slow" />
@@ -997,7 +997,7 @@ export default function ServicesPage() {
                   <div className="relative space-y-3">
                     
                     {/* Header - Brand Expansion Control Center */}
-                    <div className="flex items-center justify-between rounded-xl bg-gradient-to-r from-slate-800 to-slate-900 p-3 shadow-lg">
+                    <div className="dashboard-header-bar flex items-center justify-between rounded-xl bg-gradient-to-r from-slate-800 to-slate-900 p-3 shadow-lg">
                       <div className="flex items-center gap-2.5">
                         <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
                           <FiTrendingUp className="h-4 w-4 text-white" />
@@ -1020,21 +1020,21 @@ export default function ServicesPage() {
 
                     {/* Growth Metrics Cards - Real Data (No Floating) */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg relative overflow-hidden">
+                      <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                         <FiUsers className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">24</div>
                         <div className="text-[9px] text-white">Locations</div>
                       </div>
 
-                      <div className="rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 p-2.5 shadow-lg relative overflow-hidden">
+                      <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                         <FiTarget className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">8</div>
                         <div className="text-[9px] text-white">Markets</div>
                       </div>
 
-                      <div className="rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 shadow-lg relative overflow-hidden">
+                      <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                         <FiDollarSign className="h-3.5 w-3.5 text-white mb-1" />
                         <div className="text-lg font-bold text-white">â‚¹6.8M</div>
@@ -1043,18 +1043,18 @@ export default function ServicesPage() {
                     </div>
 
                     {/* Interactive City Expansion Map with Real Embedded Map */}
-                    <div className="rounded-lg bg-white/70 backdrop-blur-sm p-3 shadow-lg border border-slate-200/60">
+                    <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm p-3 shadow-lg border border-slate-200/60">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-1.5">
-                          <FiMap className="h-3 w-3 text-indigo-400" />
+                          <FiMap className="h-3 w-3 text-indigo-500" />
                           <div>
                             <span className="text-xs font-bold text-slate-800 block">Franchise Locations</span>
-                            <span className="text-[8px] text-white">Active expansion cities</span>
+                            <span className="text-[8px] text-slate-500">Active expansion cities</span>
                           </div>
                         </div>
                         
                         {/* City Dropdown */}
-                        <select className="text-[10px] font-medium text-white bg-white/70 backdrop-blur-sm border border-slate-200/50 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
+                        <select className="text-[10px] font-medium text-slate-800 bg-white border border-slate-200 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
                           <option value="">View All (8)</option>
                           <option value="mumbai">Mumbai - 12 locations</option>
                           <option value="delhi">Delhi - 10 locations</option>
@@ -1163,7 +1163,7 @@ export default function ServicesPage() {
                     </div>
 
                     {/* Live Growth Chart - Properly Aligned Bars */}
-                    <div className="rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
+                    <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-1.5">
                           <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
@@ -1184,7 +1184,7 @@ export default function ServicesPage() {
                         <div className="absolute left-8 right-0 top-0 bottom-0 flex flex-col justify-between">
                           {[100, 75, 50, 25, 0].map((val, i) => (
                             <div key={i} className="relative h-px bg-slate-200">
-                              <span className="absolute -left-8 -top-2 text-[7px] text-white font-medium w-6 text-right">{val}%</span>
+                              <span className="absolute -left-8 -top-2 text-[7px] text-slate-500 font-medium w-6 text-right">{val}%</span>
                             </div>
                           ))}
                         </div>
@@ -1227,7 +1227,7 @@ export default function ServicesPage() {
                               </motion.div>
                               
                               {/* Month label below */}
-                              <span className="text-[8px] text-white font-medium mt-1.5">{item.label}</span>
+                              <span className="text-[8px] text-slate-500 font-medium mt-1.5">{item.label}</span>
                             </div>
                           ))}
                         </div>
@@ -1242,11 +1242,11 @@ export default function ServicesPage() {
                       ].map((location, i) => (
                         <div
                           key={location.city}
-                          className="rounded-lg bg-white/80 backdrop-blur-sm p-2 shadow-md border border-slate-200/60"
+                          className="dashboard-surface-light rounded-lg bg-white/80 backdrop-blur-sm p-2 shadow-md border border-slate-200/60"
                         >
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-1.5">
-                              <FiMap className="h-2.5 w-2.5 text-white" />
+                              <FiMap className="h-2.5 w-2.5 text-indigo-500" />
                               <span className="text-[10px] font-bold text-slate-800">{location.city}</span>
                             </div>
                             <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-${location.color}-50 border border-${location.color}-200`}>
@@ -1254,7 +1254,7 @@ export default function ServicesPage() {
                               <span className={`text-[7px] font-semibold text-${location.color}-700`}>{location.label}</span>
                             </div>
                           </div>
-                          <div className="text-[9px] text-white font-medium mb-1.5">{location.status}</div>
+                          <div className="text-[9px] text-slate-600 font-medium mb-1.5">{location.status}</div>
                           <div className="h-1 rounded-full bg-slate-200 overflow-hidden">
                             <motion.div
                               initial={{ width: 0 }}
@@ -1263,7 +1263,7 @@ export default function ServicesPage() {
                               className={`h-full bg-${location.color}-500`}
                             />
                           </div>
-                          <div className="text-[7px] text-white mt-0.5">{location.progress}% market coverage</div>
+                          <div className="text-[7px] text-slate-500 mt-0.5">{location.progress}% market coverage</div>
                         </div>
                       ))}
                     </div>
@@ -1291,13 +1291,13 @@ export default function ServicesPage() {
               <div className="relative max-w-md mx-auto lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="services-dashboard-panel theme-dark-surface relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
 
                   {/* Dashboard Content */}
                   <div className="relative space-y-2.5">
                     
                     {/* Header - Opportunity Discovery with Live Pill */}
-                    <div className="flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-800 to-purple-900 p-2.5 shadow-lg">
+                    <div className="dashboard-header-bar flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-800 to-purple-900 p-2.5 shadow-lg">
                       <div className="flex items-center gap-2">
                         <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
                           <FiTarget className="h-3.5 w-3.5 text-white" />
@@ -1392,12 +1392,9 @@ export default function ServicesPage() {
           
 
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className="theme-section-on-light text-center mb-16">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-                Industries
-              </span>
+              <SectionPill className="mb-5">Industries</SectionPill>
               <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
                 Industries We Help Scale Through Franchising
               </h2>
@@ -1412,31 +1409,23 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES_INDUSTRIES.map((ind, i) => (
               <Reveal key={ind.label} delay={i * 0.05}>
-                <div
-                  className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl"
+                <motion.div
+                  className="theme-light-card group relative flex flex-col overflow-hidden rounded-2xl"
                   style={{
-                    background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
-                    border: '1px solid rgba(139,92,246,0.18)',
-                    boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
                     transition:
                       'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-6px)';
-                    e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
-                    e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-                    e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
                   }}
-                  onClick={() => navigateTo('/franchise-opportunities')}
                 >
-                  <div className="relative h-52 overflow-hidden bg-[#0a0618]">
+                  <div className="industry-card-media relative h-56 overflow-hidden bg-[#0a0618]">
                     <ServicesIndustryCardImg src={ind.img} alt={ind.label} />
                     <div
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
+                      className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
                       aria-hidden
                     />
                     <div
@@ -1449,14 +1438,15 @@ export default function ServicesPage() {
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="mb-1.5 text-base font-bold leading-snug text-white">{ind.label}</h3>
                     <p className="flex-1 text-[0.78rem] leading-relaxed text-white">{ind.desc}</p>
-                    <div
-                      className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                      style={{ color: '#c4b5fd' }}
+                    <button
+                      type="button"
+                      className="industry-card-explore"
+                      onClick={() => navigateTo('/franchise-opportunities')}
                     >
                       Explore opportunities <FiArrowRight className="h-3 w-3" />
-                    </div>
+                    </button>
                   </div>
-                </div>
+                </motion.div>
               </Reveal>
             ))}
           </div>
@@ -1477,7 +1467,7 @@ export default function ServicesPage() {
       {/* BENEFITS â€“ More than just a franchise platform */}
       <section className="relative z-10 w-full py-12 overflow-hidden">
         <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-[680px] text-center mb-14">
+          <div className="theme-section-on-light mx-auto max-w-[680px] text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3 }}
@@ -1567,7 +1557,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[6%] left-[40%]"
               initial={{ opacity: 0, y: -12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.2 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
                     <FiCheckCircle className="h-3.5 w-3.5 text-emerald-400" />
@@ -1581,7 +1571,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.25 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
                     <FiBarChart2 className="h-3.5 w-3.5 text-indigo-400" />
@@ -1595,7 +1585,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 right-[6%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.3 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/20">
                     <FiTarget className="h-3.5 w-3.5 text-violet-400" />
@@ -1609,7 +1599,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.35 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20">
                     <FiAward className="h-3.5 w-3.5 text-amber-400" />
@@ -1623,7 +1613,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[6%] left-[37%]"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.4 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500/20">
                     <FiRefreshCw className="h-3.5 w-3.5 text-blue-400" />
@@ -1637,7 +1627,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.45 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full">
                     <FiFileText className="h-3.5 w-3.5 text-white" />
@@ -1651,7 +1641,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 left-[6%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.5 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-rose-500/20">
                     <FiUsers className="h-3.5 w-3.5 text-rose-400" />
@@ -1665,7 +1655,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.55 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
-                className="whitespace-nowrap rounded-full border border-slate-800/90 bg-slate-900 px-5 py-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-purple-500/20">
                     <FiTarget className="h-3.5 w-3.5 text-purple-400" />
@@ -1694,7 +1684,7 @@ export default function ServicesPage() {
               <motion.div key={item.title}
                 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.25, delay: i * 0.02 }}
-                className="rounded-2xl border border-slate-800/90 bg-slate-900 px-5 py-4 shadow-[0_4px_16px_rgba(0,0,0,0.28)] transition-all duration-200 hover:bg-slate-800 hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+                className="theme-light-pill rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]"
               >
                 <div className="flex items-center gap-3">
                   <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-${item.color}-50`}>
@@ -1714,13 +1704,10 @@ export default function ServicesPage() {
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
-          <div className="text-center mb-12">
+          <div className="theme-section-on-light text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-                  Why iFranchise
-                </span>
+                <SectionPill>Why iFranchise</SectionPill>
               </div>
               <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
                 Why Businesses Choose iFranchise
@@ -1733,7 +1720,7 @@ export default function ServicesPage() {
             
             {/* Card 1: End-to-End Support */}
             <Reveal delay={0}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(99,102,241,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(99,102,241,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(99,102,241,0.3), inset 0 0 20px rgba(99,102,241,0.08)' }} />
@@ -1765,7 +1752,7 @@ export default function ServicesPage() {
 
             {/* Card 2: Expansion-Focused Strategy */}
             <Reveal delay={0.1}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(16,185,129,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(16,185,129,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(16,185,129,0.3), inset 0 0 20px rgba(16,185,129,0.08)' }} />
@@ -1797,7 +1784,7 @@ export default function ServicesPage() {
 
             {/* Card 3: Investor Network */}
             <Reveal delay={0.2}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(139,92,246,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(139,92,246,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(139,92,246,0.3), inset 0 0 20px rgba(139,92,246,0.08)' }} />
@@ -1829,7 +1816,7 @@ export default function ServicesPage() {
 
             {/* Card 4: Structured Franchise Ecosystem */}
             <Reveal delay={0.3}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(249,115,22,0.15)] h-full flex flex-col">
+              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(249,115,22,0.15)] h-full flex flex-col">
                 
                 {/* Soft glow border on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(249,115,22,0.3), inset 0 0 20px rgba(249,115,22,0.08)' }} />

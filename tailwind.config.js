@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       screens: {
@@ -66,21 +67,21 @@ export default {
       addComponents({
         /* Homepage dark grid cards — reuse site-wide */
         '.card-premium-dark': {
-          background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
+          background: 'var(--theme-card-gradient)',
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: 'rgba(139,92,246,0.18)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          color: '#ffffff',
+          borderColor: 'var(--theme-border)',
+          boxShadow: 'var(--theme-shadow-md)',
+          color: 'var(--theme-text-primary)',
         },
         '.card-premium-dark-inner': {
-          backgroundColor: 'rgba(255,255,255,0.06)',
+          background: 'var(--theme-bg-surface)',
           borderWidth: '1px',
           borderStyle: 'solid',
-          borderColor: 'rgba(139,92,246,0.22)',
+          borderColor: 'var(--theme-border-strong)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
-          color: '#ffffff',
+          color: 'var(--theme-text-primary)',
         },
       });
     },

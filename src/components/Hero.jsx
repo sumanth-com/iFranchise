@@ -2,7 +2,7 @@
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import CtaButton from './ui/CtaButton';
-import { useHeroParallax } from '../hooks/useHeroParallax';
+import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
@@ -29,6 +29,21 @@ import {
   getIndustryCount,
   calculateGrowthMetrics
 } from '../data/franchiseData';
+import { useTheme } from '../context/ThemeContext';
+import {
+  getCardBaseStyle,
+  cardHoverHandlers,
+  metricBoxStyle,
+  tagVioletStyle,
+  tagNeutralStyle,
+  serviceIconStyle,
+  imageCornerTagStyle,
+  sectionHeadingClass,
+  sectionBodyClass,
+  cardTitleClass,
+  cardBodyClass,
+  cardListClass,
+} from '../lib/cardThemeStyles';
 
 // ── Lightweight scroll-triggered visibility hook ──────────────────────────────
 // Returns [ref, isVisible] — isVisible toggles true/false on every enter/leave
@@ -47,7 +62,7 @@ function HeroIndustryCardImg({ src, alt }) {
         loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}
-        className={`h-full w-full object-contain object-center transition-opacity duration-300 ${
+        className={`h-auto max-h-full w-full object-contain object-center transition-opacity duration-300 ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -1058,13 +1073,14 @@ function FranchiseModelCard({ model, visible, delayMs }) {
 }
 
 function TestimonialStatCard({ item }) {
+  const { isLight } = useTheme();
   return (
-    <article className="rounded-[18px] border border-[rgba(0,0,0,0.06)] bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+    <article className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
       <div className="flex items-center gap-3">
         <img src={item.avatar} alt={item.name} className="h-10 w-10 rounded-full object-cover" loading="lazy" />
         <div className="flex-1">
-          <p className="text-sm font-semibold text-slate-800">{item.name}</p>
-          <p className="text-xs text-white">{item.role}</p>
+          <p className="text-sm font-semibold text-slate-900">{item.name}</p>
+          <p className={`text-xs ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>{item.role}</p>
         </div>
       </div>
       {item.rating && (
@@ -1074,12 +1090,13 @@ function TestimonialStatCard({ item }) {
           ))}
         </div>
       )}
-      <p className="mt-4 text-sm leading-relaxed text-white">{item.quote}</p>
+      <p className={`mt-4 text-sm leading-relaxed ${isLight ? 'text-slate-700' : 'text-slate-200'}`}>{item.quote}</p>
     </article>
   );
 }
 
 function FranchiseCard({ franchise }) {
+  const { isLight } = useTheme();
   const badgeColors = {
     green: 'bg-emerald-500 text-white',
     orange: 'bg-amber-500 text-white',
@@ -1096,9 +1113,8 @@ function FranchiseCard({ franchise }) {
     <article 
       onClick={handleCardClick}
       className="group flex h-full flex-col overflow-hidden rounded-2xl cursor-pointer"
-      style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease' }}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
+      style={getCardBaseStyle(isLight)}
+      {...cardHoverHandlers(isLight, -6)}
     >
       {/* Top glow line on hover */}
       <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -1154,51 +1170,51 @@ function FranchiseCard({ franchise }) {
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
         {/* Title and Description */}
-        <h3 className="text-xl font-bold tracking-tight text-white">{franchise.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-white">{franchise.description}</p>
+        <h3 className={`text-xl font-bold tracking-tight ${cardTitleClass(isLight)}`}>{franchise.title}</h3>
+        <p className={`mt-2 text-sm leading-relaxed ${cardBodyClass(isLight)}`}>{franchise.description}</p>
 
         {/* Tags Row */}
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.3)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagVioletStyle(isLight)}>
             {franchise.tags.investment}
           </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagNeutralStyle(isLight)}>
             {franchise.tags.model}
           </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagNeutralStyle(isLight)}>
             {franchise.tags.expansion}
           </span>
         </div>
 
         {/* Metrics Row */}
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <p className="text-xs font-medium text-white">ROI</p>
-            <p className="text-lg font-bold text-white">{franchise.metrics.roi}</p>
+          <div className="rounded-lg p-3" style={metricBoxStyle(isLight)}>
+            <p className={`text-xs font-medium ${cardBodyClass(isLight)}`}>ROI</p>
+            <p className={`text-lg font-bold ${cardTitleClass(isLight)}`}>{franchise.metrics.roi}</p>
           </div>
-          <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
-            <p className="text-xs font-medium text-white">Payback</p>
-            <p className="text-lg font-bold text-white">{franchise.metrics.payback}</p>
+          <div className="rounded-lg p-3" style={metricBoxStyle(isLight)}>
+            <p className={`text-xs font-medium ${cardBodyClass(isLight)}`}>Payback</p>
+            <p className={`text-lg font-bold ${cardTitleClass(isLight)}`}>{franchise.metrics.payback}</p>
           </div>
         </div>
 
         {/* Details Grid */}
         <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
           <div>
-            <p className="font-medium text-white">Industry</p>
-            <p className="text-white">{franchise.details.industry}</p>
+            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Industry</p>
+            <p className={cardBodyClass(isLight)}>{franchise.details.industry}</p>
           </div>
           <div>
-            <p className="font-medium text-white">Segment</p>
-            <p className="text-white">{franchise.details.segment}</p>
+            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Segment</p>
+            <p className={cardBodyClass(isLight)}>{franchise.details.segment}</p>
           </div>
           <div>
-            <p className="font-medium text-white">Investment</p>
-            <p className="text-white">{franchise.details.investment}</p>
+            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Investment</p>
+            <p className={cardBodyClass(isLight)}>{franchise.details.investment}</p>
           </div>
           <div>
-            <p className="font-medium text-white">Space</p>
-            <p className="text-white">{franchise.details.space}</p>
+            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Space</p>
+            <p className={cardBodyClass(isLight)}>{franchise.details.space}</p>
           </div>
         </div>
 
@@ -1555,7 +1571,7 @@ function BarLineChart({ dataset, active }) {
   const yTicks = [100, 75, 50, 25, 0];
 
   return (
-    <div className="relative h-52 sm:h-56 select-none">
+    <div id="market-intelligence-chart" className="relative h-52 sm:h-56 select-none">
       {/* Y-axis */}
       <div className="absolute left-0 top-0 bottom-6 flex flex-col justify-between pr-1.5">
         {yTicks.map((v) => (
@@ -1606,8 +1622,8 @@ function BarLineChart({ dataset, active }) {
         preserveAspectRatio="none" viewBox="0 0 100 100">
         <defs>
           <linearGradient id="lg2" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#f59e0b" />
-            <stop offset="100%" stopColor="#ef4444" />
+            <stop offset="0%" stopColor="#7c3aed" />
+            <stop offset="100%" stopColor="#a78bfa" />
           </linearGradient>
         </defs>
         <polyline
@@ -1619,7 +1635,7 @@ function BarLineChart({ dataset, active }) {
         />
         {line.map((v, i) => (
           <circle key={i} cx={(i / (line.length - 1)) * 100} cy={100 - v} r="1.4"
-            fill="#f59e0b" opacity={active ? 1 : 0}
+            fill="#8b5cf6" opacity={active ? 1 : 0}
             style={{ transition: `opacity 0.25s ease ${0.25 + i * 0.08}s` }} />
         ))}
       </svg>
@@ -1951,13 +1967,13 @@ function MarketIntelligenceSection() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
         {/* Compact Header */}
-        <div className="text-center mb-6">
+        <div className="theme-section-on-light text-center mb-6">
           <div className="inline-flex items-center gap-2 bg-white border border-slate-200 shadow-sm rounded-full px-4 py-1.5 mb-4">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">India Franchise Market Intelligence</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.12em] text-violet-700">India Franchise Market Intelligence</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight mb-2">
             Inside India&apos;s Franchise Growth Engine
@@ -2022,7 +2038,7 @@ function MarketIntelligenceSection() {
         </div>
 
         {/* Premium Main dashboard card */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="theme-dark-surface rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_280px]">
 
             {/* LEFT – Premium Chart panel */}
@@ -2035,15 +2051,16 @@ function MarketIntelligenceSection() {
                   <p className="text-sm font-extrabold text-white">India Franchise Market Expansion</p>
                 </div>
                 {/* More prominent tab buttons */}
-                <div className="flex items-center gap-1 rounded-xl p-1 shrink-0" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
+                <div className="market-intel-tabs flex items-center gap-1 rounded-xl p-1 shrink-0" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
                   {['Monthly', 'Quarterly', 'Yearly'].map((t) => (
                     <button
                       key={t}
+                      type="button"
                       onClick={() => setTab(t)}
-                      className={`text-xs font-bold px-4 py-2 rounded-lg transition-all duration-200 ${
+                      className={`market-intel-tab-btn text-xs font-bold px-4 py-2 rounded-lg transition-all duration-200 ${
                         tab === t
-                          ? 'bg-gradient-to-br from-violet-600 to-violet-700 text-white shadow-md'
-                          : 'text-white hover:text-white hover:bg-white/10'
+                          ? 'is-active bg-gradient-to-br from-violet-600 to-violet-700 text-white shadow-md'
+                          : 'text-white/90 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {t}
@@ -2485,14 +2502,7 @@ function ProcessCinematicVisual({ mode, visible }) {
         aria-hidden
       />
 
-      <div
-        className="absolute top-5 left-5 z-10 inline-flex items-center gap-2 rounded-full px-3 py-1.5"
-        style={{
-          background: 'rgba(109,40,217,0.35)',
-          border: '1px solid rgba(167,139,250,0.45)',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
+      <div className="process-live-badge absolute top-5 left-5 z-10 inline-flex items-center gap-2 rounded-full px-3 py-1.5">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -2591,7 +2601,18 @@ function ProcessCinematicVisual({ mode, visible }) {
   );
 }
 
-function ProcessStepCard({ step, index, visible }) {
+function ProcessStepCard({ step, index, visible, isLight }) {
+  const cardSurface = isLight
+    ? { background: '#ffffff', border: '1px solid #e2e8f0', boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)' }
+    : { background: 'rgba(109,40,217,0.22)', border: '1px solid rgba(167,139,250,0.42)', boxShadow: '0 8px 32px rgba(109,40,217,0.28)', backdropFilter: 'blur(12px)' };
+  const numStyle = isLight
+    ? { background: '#ffffff', border: '2px solid #e2e8f0', boxShadow: '0 2px 8px rgba(15, 23, 42, 0.08)', color: '#0b0f19' }
+    : {
+        background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+        border: '2px solid rgba(167,139,250,0.55)',
+        boxShadow: '0 0 0 4px rgba(139,92,246,0.2), 0 4px 16px rgba(109,40,217,0.4)',
+        color: '#ffffff',
+      };
   return (
     <div
       className="relative flex-1"
@@ -2603,45 +2624,30 @@ function ProcessStepCard({ step, index, visible }) {
     >
       <div
         className="group relative flex h-full min-h-[118px] overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
-        style={{
-          background: 'rgba(109,40,217,0.22)',
-          border: '1px solid rgba(167,139,250,0.42)',
-          boxShadow: '0 8px 32px rgba(109,40,217,0.28)',
-          backdropFilter: 'blur(12px)',
-        }}
+        style={cardSurface}
       >
-        <div
-          className="pointer-events-none absolute inset-0 rounded-2xl"
-          style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.18) 0%, transparent 60%)' }}
-        />
-        <div
-          className="pointer-events-none absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(167,139,250,0.85), transparent)' }}
-        />
+        {!isLight && (
+          <>
+            <div
+              className="pointer-events-none absolute inset-0 rounded-2xl"
+              style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.18) 0%, transparent 60%)' }}
+            />
+            <div
+              className="pointer-events-none absolute top-0 left-0 right-0 h-px"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(167,139,250,0.85), transparent)' }}
+            />
+          </>
+        )}
         <div className="relative z-10 flex w-full items-start gap-4">
           <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-            style={{
-              background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
-              border: '2px solid rgba(167,139,250,0.55)',
-              boxShadow: '0 0 0 4px rgba(139,92,246,0.2), 0 4px 16px rgba(109,40,217,0.4)',
-            }}
+            className="process-step-num flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+            style={numStyle}
           >
-            <span className="text-xs font-extrabold text-white">{step.num}</span>
-          </div>
-          <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-            style={{
-              background: 'rgba(139,92,246,0.32)',
-              border: '1px solid rgba(167,139,250,0.45)',
-              color: '#c4b5fd',
-            }}
-          >
-            {step.icon}
+            <span className="text-xs font-extrabold">{step.num}</span>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="mb-1.5 text-[0.95rem] font-bold leading-snug text-white">{step.title}</h3>
-            <p className="text-[0.78rem] leading-relaxed text-white">{step.desc}</p>
+            <h3 className={`mb-1.5 text-[0.95rem] font-bold leading-snug ${isLight ? 'text-slate-900' : 'text-white'}`}>{step.title}</h3>
+            <p className={`text-[0.78rem] leading-relaxed ${isLight ? 'text-slate-600' : 'text-white'}`}>{step.desc}</p>
           </div>
         </div>
       </div>
@@ -2649,7 +2655,7 @@ function ProcessStepCard({ step, index, visible }) {
   );
 }
 
-function ProcessTimeline() {
+function ProcessTimeline({ isLight }) {
   const [mode, setMode] = useState('Investors');
   const [visible, setVisible] = useState(false);
   const ref = useRef(null);
@@ -2722,28 +2728,41 @@ function ProcessTimeline() {
         <ProcessCinematicVisual mode={mode} visible={visible} />
         <div className="flex min-h-[420px] flex-col gap-5">
           <div
-            className="inline-flex w-fit items-center gap-1 rounded-2xl p-1"
-            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+            className={`process-mode-toggle inline-flex w-fit items-center gap-1 rounded-2xl p-1 ${isLight ? 'bg-slate-100 border border-slate-200' : ''}`}
+            style={isLight ? undefined : { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
           >
-            {['Investors', 'Brands'].map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                className="relative rounded-xl px-6 py-2.5 text-sm font-bold transition-all duration-300"
-                style={{
-                  background: mode === m ? 'linear-gradient(135deg, #6d28d9, #4f46e5)' : 'transparent',
-                  color: mode === m ? '#ffffff' : 'rgba(255,255,255,0.45)',
-                  boxShadow: mode === m ? '0 4px 16px rgba(109,40,217,0.4)' : 'none',
-                }}
-              >
-                For {m}
-              </button>
-            ))}
+            {['Investors', 'Brands'].map((m) => {
+              const active = mode === m;
+              return (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  className={`relative rounded-xl px-5 sm:px-6 py-2.5 text-sm font-bold transition-all duration-300 ${
+                    isLight
+                      ? active
+                        ? 'bg-gradient-to-br from-violet-600 to-violet-700 text-white shadow-[0_4px_16px_rgba(109,40,217,0.35)]'
+                        : 'bg-transparent text-slate-600 hover:text-slate-900'
+                      : ''
+                  }`}
+                  style={
+                    isLight
+                      ? undefined
+                      : {
+                          background: active ? 'linear-gradient(135deg, #6d28d9, #4f46e5)' : 'transparent',
+                          color: active ? '#ffffff' : 'rgba(255,255,255,0.45)',
+                          boxShadow: active ? '0 4px 16px rgba(109,40,217,0.4)' : 'none',
+                        }
+                  }
+                >
+                  For {m}
+                </button>
+              );
+            })}
           </div>
           <div className="flex flex-1 flex-col justify-between gap-4">
             {steps.map((step, i) => (
-              <ProcessStepCard key={`${mode}-${step.num}`} step={step} index={i} visible={visible} />
+              <ProcessStepCard key={`${mode}-${step.num}`} step={step} index={i} visible={visible} isLight={isLight} />
             ))}
           </div>
         </div>
@@ -2779,7 +2798,7 @@ function FAQAccordionItem({ faq, index }) {
         {/* Plus/Minus Icon */}
         <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
           <svg 
-            className={`w-5 h-5 text-white transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}
+            className={`w-5 h-5 text-slate-600 transition-transform duration-300 ${isOpen ? 'rotate-45' : 'rotate-0'}`}
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24" 
@@ -2798,7 +2817,7 @@ function FAQAccordionItem({ faq, index }) {
       >
         <div className="px-6 pb-6 pt-0">
           <div className="pl-12">
-            <p className="text-white leading-relaxed text-base">
+            <p className="text-slate-600 leading-relaxed text-base">
               {faq.answer}
             </p>
           </div>
@@ -2880,7 +2899,7 @@ function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
 }
 
 function Hero() {
-  const heroParallaxRef = useHeroParallax(true, 10);
+  const { isLight } = useTheme();
   const leftLoopItems = [...testimonials.left, ...testimonials.left];
   const rightLoopItems = [...testimonials.right, ...testimonials.right];
     const growthRef = useRef(null);
@@ -3085,19 +3104,17 @@ function Hero() {
   return (
     <main className="relative isolate overflow-x-hidden bg-transparent">
       {/* -- HERO SECTION — cinematic entry -- */}
-      <section className="cinematic-hero relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-[#0a0618]">
-        <div ref={heroParallaxRef} className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
-          <div className="hero-cinematic-float-layer absolute inset-0">
-            <img
-              src={homeHeroBg}
-              alt=""
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-              className="hero-cinematic-media pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-              aria-hidden
-            />
-          </div>
+      <section className="cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden bg-[#0a0618]">
+        <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
+          <img
+            src={homeHeroBg}
+            alt=""
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+              className="hero-cinematic-media pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%]"
+            aria-hidden
+          />
         </div>
         <div className="hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48" aria-hidden />
         <div
@@ -3105,11 +3122,11 @@ function Hero() {
           aria-hidden
         />
 
-        <div className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-5 pt-2 sm:items-center sm:justify-center sm:px-8 sm:pb-[8%] sm:pt-0">
-          <div className="mx-auto flex min-h-0 w-full max-w-[900px] flex-1 flex-col items-center text-center sm:flex-none sm:justify-center">
-            <div className="flex flex-1 flex-col items-center justify-center pt-[4vh] pb-2 sm:flex-none sm:justify-center sm:pt-0 sm:pb-0">
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center px-4 pb-14 pt-16 sm:px-8 sm:pb-20">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center text-center">
+            <div className="flex w-full flex-col items-center justify-center">
             <div
-              className="cinematic-enter-pill cinematic-delay-0 mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
+              className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
               style={{
                 background: 'rgba(88,28,135,0.55)',
                 border: '1px solid rgba(192,132,252,0.5)',
@@ -3124,26 +3141,26 @@ function Hero() {
                   boxShadow: '0 0 8px rgba(192,132,252,0.85)',
                 }}
               />
-              <span style={{ color: '#f3e8ff', fontSize: '11px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              <span className="hero-cinematic-pill-text" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
                 Built for Ambitious Growth
               </span>
             </div>
 
             <h1
-              className="cinematic-blur-reveal cinematic-delay-1 mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
+              className="mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
               style={{
                 letterSpacing: '-0.01em',
                 textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
               }}
             >
-              Where <span style={{ color: '#c084fc' }}>Brands</span> Expand
+              Where <span className="hero-cinematic-accent">Brands</span> Expand
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
-              and <span style={{ color: '#c084fc' }}>Investors</span> Discover What&apos;s Next
+              and <span className="hero-cinematic-accent">Investors</span> Discover What&apos;s Next
             </h1>
 
             <p
-              className="cinematic-fade-up cinematic-delay-2 max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
+              className="max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
               style={{
                 color: 'rgba(255,255,255,0.92)',
                 textShadow: '0 1px 8px rgba(0,0,0,0.65)',
@@ -3151,8 +3168,8 @@ function Hero() {
             >
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
-            </div>
-            <div className="cinematic-fade-up cinematic-delay-3 mt-auto flex w-full max-w-md shrink-0 flex-col gap-3 pt-3 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
+
+            <div className="hero-cta-row mt-6 flex w-full flex-col items-center gap-4 sm:mt-7 sm:flex-row sm:justify-center sm:gap-6 md:gap-8">
               <HeroCtaButton
                 label="Explore Opportunities"
                 path="/franchise-opportunities"
@@ -3166,6 +3183,7 @@ function Hero() {
                 animDelay="300ms"
               />
             </div>
+            </div>
           </div>
         </div>
 
@@ -3175,24 +3193,21 @@ function Hero() {
       <div className="section-reveal relative w-full overflow-hidden bg-transparent">
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="reveal-child text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
-              style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-              Opportunities
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Featured Franchises</h2>
-            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+            <SectionPill className="mb-4">Opportunities</SectionPill>
+            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Featured Franchises</h2>
+            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
               Curated, high-performing brands ready for expansion and investment.
             </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {featuredFranchises.slice(0, 3).map((franchise, i) => (
-              <div key={franchise.id} className="group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease', animation: `cardReveal 0.4s ease ${i*0.08+0.1}s both` }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}>
-                <FranchiseCard franchise={franchise} darkMode />
+              <div
+                key={franchise.id}
+                className="flex flex-col"
+                style={{ animation: `cardReveal 0.4s ease ${i * 0.08 + 0.1}s both` }}
+              >
+                <FranchiseCard franchise={franchise} />
               </div>
             ))}
           </div>
@@ -3220,12 +3235,9 @@ function Hero() {
         {/* ── WHO WE SERVE ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              Who We Serve
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Built for Investors and Growing Brands</h2>
-            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+            <SectionPill className="mb-4">Who We Serve</SectionPill>
+            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Built for Investors and Growing Brands</h2>
+            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
               Whether investing in franchise businesses or expanding your brand — iFranchise provides the infrastructure for long-term growth.
             </p>
           </div>
@@ -3252,9 +3264,8 @@ function Hero() {
               },
             ].map((card, ci) => (
               <div key={card.tag} className="group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease', animation: `fadeUp 0.4s ease ${card.delay} both` }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 24px 60px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
+                style={getCardBaseStyle(isLight, { animation: `fadeUp 0.4s ease ${card.delay} both` })}
+                {...cardHoverHandlers(isLight, -6)}
               >
                 {/* Hover top glow line */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -3270,18 +3281,21 @@ function Hero() {
                     decoding="async"
                   />
                   {/* Tag badge */}
-                  <span className="absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white"
-                    style={{ background: 'rgba(109,40,217,0.75)', backdropFilter: 'blur(10px)', border: '1px solid rgba(167,139,250,0.3)' }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-300" />{card.tag}
+                  <span
+                    className={`who-serve-image-tag absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider ${isLight ? 'text-violet-700' : 'text-white'}`}
+                    style={imageCornerTagStyle(isLight)}
+                  >
+                    <span className={`w-1.5 h-1.5 shrink-0 rounded-full ${isLight ? 'bg-violet-600' : 'bg-violet-300'}`} />
+                    {card.tag}
                   </span>
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 flex flex-col p-6">
-                  <h3 className="text-[1.05rem] font-extrabold text-white mb-4 leading-snug">{card.heading}</h3>
+                  <h3 className={`text-[1.05rem] font-extrabold mb-4 leading-snug ${cardTitleClass(isLight)}`}>{card.heading}</h3>
                   <ul className="space-y-2.5 mb-6 flex-1">
                     {card.points.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-[0.8rem] text-white leading-snug">
+                      <li key={i} className={`flex items-start gap-2.5 text-[0.8rem] leading-snug ${cardListClass(isLight)}`}>
                         <svg className="w-3.5 h-3.5 text-violet-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                         {item}
                       </li>
@@ -3319,14 +3333,11 @@ function Hero() {
         {/* ── SERVICES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12">
           <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              Our Services
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl mb-4">
+            <SectionPill className="mb-5">Our Services</SectionPill>
+            <h2 className={`text-3xl font-extrabold sm:text-4xl lg:text-5xl mb-4 ${sectionHeadingClass(isLight)}`}>
               Complete Franchise Growth &amp; Expansion Services
             </h2>
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white sm:text-base">
+            <p className={`mx-auto max-w-2xl text-sm leading-relaxed sm:text-base ${sectionBodyClass(isLight)}`}>
               End-to-end franchise services — from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </div>
@@ -3371,26 +3382,13 @@ function Hero() {
               },
             ].map((s, i) => (
               <div key={s.title} className="group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{
-                  background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
-                  border: '1px solid rgba(139,92,246,0.18)',
-                  boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-                  transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',
+                style={getCardBaseStyle(isLight, {
                   opacity: 0,
                   transform: 'translateY(24px)',
                   animation: `cardReveal 0.45s cubic-bezier(0.22,1,0.36,1) ${i * 0.07 + 0.1}s forwards`,
                   minHeight: '260px',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
-                  e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
-                  e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-                  e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
-                }}
+                })}
+                {...cardHoverHandlers(isLight, -6)}
               >
                                 {/* Top glow line on hover */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -3404,32 +3402,32 @@ function Hero() {
                   {/* Icon — top left, animated */}
                   <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl"
                     style={{
-                      background: 'rgba(139,92,246,0.15)',
-                      border: '1px solid rgba(139,92,246,0.3)',
-                      color: '#c4b5fd',
+                      ...serviceIconStyle(isLight),
                       transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.3s ease, box-shadow 0.3s ease',
                       animation: `iconPulse 3s ease-in-out infinite ${i * 0.4}s`,
                     }}
                     ref={el => {
                       if (!el) return;
                       const c = el.closest('.group');
-                      c.addEventListener('mouseenter', () => { el.style.transform = 'scale(1.15) rotate(6deg)'; el.style.background = 'rgba(139,92,246,0.35)'; el.style.boxShadow = '0 0 20px rgba(139,92,246,0.4)'; });
-                      c.addEventListener('mouseleave', () => { el.style.transform = 'scale(1) rotate(0deg)'; el.style.background = 'rgba(139,92,246,0.15)'; el.style.boxShadow = 'none'; });
+                      const base = serviceIconStyle(isLight);
+                      const hoverBg = isLight ? 'rgba(124,58,237,0.18)' : 'rgba(139,92,246,0.35)';
+                      c.addEventListener('mouseenter', () => { el.style.transform = 'scale(1.15) rotate(6deg)'; el.style.background = hoverBg; el.style.boxShadow = '0 0 20px rgba(139,92,246,0.4)'; });
+                      c.addEventListener('mouseleave', () => { el.style.transform = 'scale(1) rotate(0deg)'; el.style.background = base.background; el.style.boxShadow = 'none'; });
                     }}
                   >
                     {s.icon}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-[1rem] font-bold text-white mb-2 leading-snug tracking-[-0.01em]">{s.title}</h3>
+                  <h3 className={`text-[1rem] font-bold mb-2 leading-snug tracking-[-0.01em] ${cardTitleClass(isLight)}`}>{s.title}</h3>
 
                   {/* Description */}
-                  <p className="text-[0.78rem] text-white leading-relaxed mb-5">{s.desc}</p>
+                  <p className={`text-[0.78rem] leading-relaxed mb-5 ${cardBodyClass(isLight)}`}>{s.desc}</p>
 
                   {/* Points */}
                   <ul className="space-y-2 flex-1 mt-auto">
                     {s.points.map((p, j) => (
-                      <li key={j} className="flex items-center gap-2.5 text-[0.76rem] text-white font-medium leading-snug">
+                      <li key={j} className={`flex items-center gap-2.5 text-[0.76rem] font-medium leading-snug ${cardListClass(isLight)}`}>
                         <span className="flex-shrink-0 w-1 h-1 rounded-full bg-violet-400/60" />{p}
                       </li>
                     ))}
@@ -3468,18 +3466,15 @@ function Hero() {
         {/* ── PROCESS ── */}
         <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-violet-400" /></span>
-              iFranchise Process
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">Two Strategic Paths. One Growth Engine.</h2>
-            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+            <SectionPill className="mb-4">iFranchise Process</SectionPill>
+            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Two Strategic Paths. One Growth Engine.</h2>
+            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
               Whether scaling a franchise brand or investing in the right opportunity — iFranchise simplifies every critical step.
             </p>
           </div>
 
           {/* Full ProcessTimeline — free scroll, no viewport constraint */}
-          <ProcessTimeline />
+          <ProcessTimeline isLight={isLight} />
 
           {/* Outcome metrics */}
           <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -3489,9 +3484,9 @@ function Hero() {
               { value: '6 Months', label: 'First Unit Live' },
               { value: '12 Months', label: 'Multi-City Expansion' },
             ].map((m, i) => (
-              <div key={i} className="flex flex-col items-center py-5 px-4 rounded-2xl text-center" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(139,92,246,0.2)', backdropFilter: 'blur(8px)' }}>
-                <p className="text-xl font-extrabold text-white mb-1">{m.value}</p>
-                <p className="text-[0.7rem] text-white font-medium">{m.label}</p>
+              <div key={i} className="flex flex-col items-center py-5 px-4 rounded-2xl text-center" style={metricBoxStyle(isLight)}>
+                <p className={`text-xl font-extrabold mb-1 ${cardTitleClass(isLight)}`}>{m.value}</p>
+                <p className={`text-[0.7rem] font-medium ${cardBodyClass(isLight)}`}>{m.label}</p>
               </div>
             ))}
           </div>
@@ -3513,16 +3508,12 @@ function Hero() {
 
         {/* ── INDUSTRIES ── */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
-              style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              Industries
-            </span>
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl mb-3">
+          <div className="theme-section-on-light text-center mb-10">
+            <SectionPill className="mb-4">Industries</SectionPill>
+            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>
               Opportunities Across High-Growth Industries
             </h2>
-            <p className="mx-auto max-w-xl text-sm text-white sm:text-base leading-relaxed">
+            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
               Franchise opportunities across India's most dynamic sectors — each with proven models and qualified investors.
             </p>
           </div>
@@ -3560,23 +3551,26 @@ function Hero() {
                 img: beautyImg,
               },
             ].map((ind, i) => (
-              <div key={ind.label} className="group relative overflow-hidden rounded-2xl cursor-pointer flex flex-col"
-                style={{ animation: `cardReveal 0.4s ease ${i*0.07+0.1}s both`, transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease', background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = `0 20px 50px rgba(109,40,217,0.3)`; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
-                onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+              <div key={ind.label} className="theme-light-card group relative overflow-hidden rounded-2xl flex flex-col"
+                style={{ animation: `cardReveal 0.4s ease ${i*0.07+0.1}s both`, transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                <div className="relative h-52 overflow-hidden bg-[#0a0618]">
+                <div className="industry-card-media relative h-52 overflow-hidden bg-[#0a0618]">
                   <HeroIndustryCardImg src={ind.img} alt={ind.label} />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent" aria-hidden />
+                  <div className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent" aria-hidden />
                   <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)` }} />
                 </div>
                 <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-base font-bold text-white mb-1.5 leading-snug">{ind.label}</h3>
-                  <p className="text-[0.78rem] text-white leading-relaxed flex-1">{ind.desc}</p>
-                  <div className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: '#c4b5fd' }}>
+                  <h3 className={`text-base font-bold mb-1.5 leading-snug ${cardTitleClass(isLight)}`}>{ind.label}</h3>
+                  <p className={`text-[0.78rem] leading-relaxed flex-1 ${cardBodyClass(isLight)}`}>{ind.desc}</p>
+                  <button
+                    type="button"
+                    className="industry-card-explore"
+                    onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                  >
                     Explore opportunities <FiArrowRight className="h-3 w-3" />
-                  </div>
+                  </button>
                 </div>
               </div>
             ))}
@@ -3606,12 +3600,8 @@ function Hero() {
       <section className="relative w-full py-12 sm:py-16 lg:py-20 overflow-hidden">
         <div className="section-container relative z-10">
           {/* Section Header */}
-          <div className="text-center mb-8 sm:mb-10">
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
-              style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              Why iFranchise
-            </span>
+          <div className="theme-section-on-light text-center mb-8 sm:mb-10">
+            <SectionPill className="mb-4">Why iFranchise</SectionPill>
             <h2 className="text-[clamp(1.5rem,4.5vw,2.25rem)] font-extrabold tracking-tight text-white leading-[1.15] mb-3 px-4 max-w-3xl mx-auto">
               Why Investors and Brands Choose iFranchise
             </h2>
@@ -3649,8 +3639,8 @@ function Hero() {
               },
             ].map((card, i) => (
               <Reveal key={card.title} delay={card.delay} className="h-full">
-                <div className="group relative h-full flex flex-col overflow-hidden rounded-2xl"
-                  style={{ background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)', border: '1px solid rgba(139,92,246,0.18)', boxShadow: '0 4px 24px rgba(0,0,0,0.4)', transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease' }}
+                <div className="theme-light-card group relative h-full flex flex-col overflow-hidden rounded-2xl"
+                  style={{ transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease' }}
                   onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)'; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)'; e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)'; }}
                 >
@@ -3665,9 +3655,11 @@ function Hero() {
                   <div className="relative flex items-center justify-center h-44 overflow-hidden">
                     <div className="absolute inset-0 pointer-events-none"
                       style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(139,92,246,0.18) 0%, transparent 70%)' }} />
-                    <div className="relative z-10 flex items-center justify-center w-20 h-20 rounded-2xl transition-all duration-300 group-hover:scale-110"
-                      style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', boxShadow: '0 0 0 0 rgba(139,92,246,0.4)', animation: `iconPulse 3s ease-in-out infinite ${i * 0.5}s` }}
-                      ref={el => { if (!el) return; const c = el.closest('.group'); c.addEventListener('mouseenter', () => { el.style.background = 'rgba(139,92,246,0.3)'; el.style.boxShadow = '0 0 24px rgba(139,92,246,0.5)'; }); c.addEventListener('mouseleave', () => { el.style.background = 'rgba(139,92,246,0.15)'; el.style.boxShadow = 'none'; }); }}
+                    <div className="why-feature-icon relative z-10 flex items-center justify-center w-20 h-20 rounded-2xl transition-all duration-300 group-hover:scale-110 [&_svg]:text-current"
+                      style={isLight
+                        ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff', boxShadow: '0 8px 24px rgba(109,40,217,0.25)', animation: `iconPulse 3s ease-in-out infinite ${i * 0.5}s` }
+                        : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', boxShadow: '0 0 0 0 rgba(139,92,246,0.4)', animation: `iconPulse 3s ease-in-out infinite ${i * 0.5}s` }}
+                      ref={el => { if (!el) return; const c = el.closest('.group'); const base = isLight ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff' } : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd' }; c.addEventListener('mouseenter', () => { el.style.background = isLight ? 'linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%)' : 'rgba(139,92,246,0.3)'; el.style.boxShadow = '0 0 24px rgba(109,40,217,0.45)'; }); c.addEventListener('mouseleave', () => { el.style.background = base.background; el.style.border = base.border; el.style.color = base.color; el.style.boxShadow = isLight ? '0 8px 24px rgba(109,40,217,0.25)' : 'none'; }); }}
                     >
                       {card.icon}
                     </div>
@@ -3685,12 +3677,14 @@ function Hero() {
 
           {/* Bottom CTA */}
           <div className="mt-10 sm:mt-12 text-center">
-            <button type="button"
+            <button
+              type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.22)', backdropFilter: 'blur(8px)' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.18)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>
+              className="why-section-cta group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+              style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)' }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(109,40,217,0.45)'; }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(109,40,217,0.35)'; }}
+            >
               Explore Franchise Opportunities
               <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" /></svg>
             </button>
@@ -3704,15 +3698,7 @@ function Hero() {
           
           {/* Section Header */}
           <div className="section-header">
-            <div className="section-pill" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
-                Testimonials
-              </span>
-            </div>
+            <SectionPill className="mb-5">Testimonials</SectionPill>
             <h2 className="section-title" style={{ color: '#ffffff' }}>
               Trusted by brands. Backed by outcomes.
             </h2>
@@ -3862,12 +3848,7 @@ function Hero() {
               animationDelay: '0.2s'
             }}
           >
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-white to-slate-50 border border-slate-200/60 shadow-sm rounded-full px-3 py-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">
-                FAQs
-              </span>
-            </div>
+            <SectionPill>FAQs</SectionPill>
           </div>
 
           {/* SECTION HEADER - CENTERED */}
@@ -3879,10 +3860,10 @@ function Hero() {
               animationDelay: '0.1s'
             }}
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight mb-4">
               Helpful Franchise Questions & Answers
             </h2>
-            <p className="text-base text-white leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
               Everything founders, investors, and franchise buyers need to know before making expansion decisions.
             </p>
           </div>

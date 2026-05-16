@@ -26,7 +26,7 @@ export default function ForBrandOwnersPage() {
   };
 
   return (
-    <main className="relative z-10 overflow-x-hidden bg-transparent text-white">
+    <main className="list-your-brand-page relative z-10 overflow-x-hidden bg-transparent text-white">
       <section
         className={`${LYB_SECTION} w-full flex flex-col justify-center py-6 lg:py-8 overflow-hidden`}
         style={{ minHeight: 'calc(100vh - 80px)', maxHeight: 'calc(100vh - 80px)' }}
@@ -44,20 +44,17 @@ export default function ForBrandOwnersPage() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col gap-4"
               >
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-white">
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-800">
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-600 animate-pulse" />
                   For brand founders
                 </span>
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-extrabold leading-[1.1] tracking-tight text-white max-w-lg">
-                  List your brand.{' '}
-                  <span className="bg-gradient-to-r from-violet-300 to-indigo-300 bg-clip-text text-transparent">
-                    Scale with capital.
-                  </span>
+                <h1 className="lyb-section-heading text-3xl sm:text-4xl lg:text-[2.5rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 max-w-lg">
+                  List your brand. Scale with capital.
                 </h1>
-                <p className="text-sm text-violet-100/85 leading-relaxed max-w-md">
+                <p className="text-sm text-slate-700 leading-relaxed max-w-md">
                   Investor-ready franchise listing — model design, verified capital, and multi-city rollout.
                 </p>
-                <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem] text-violet-100/90">
+                <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem] text-slate-700">
                   <li className="flex items-center gap-1.5"><IcoUsers /><span>1,800+ investors</span></li>
                   <li className="flex items-center gap-1.5"><IcoShield /><span>SEBI-aligned</span></li>
                   <li className="flex items-center gap-1.5"><IcoTrend /><span>30-day readiness</span></li>
@@ -65,7 +62,7 @@ export default function ForBrandOwnersPage() {
                 <button
                   type="button"
                   onClick={scrollToInquiry}
-                  className="group inline-flex w-fit items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-900 shadow-lg transition hover:bg-violet-50"
+                  className="btn-purple-solid group inline-flex w-fit items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-lg transition hover:-translate-y-0.5"
                 >
                   Start Franchise Listing
                   <IcoArrow />
@@ -441,7 +438,7 @@ function ProblemsSection() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.98 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="card-premium-dark flex h-full flex-1 flex-col overflow-hidden rounded-2xl shadow-xl"
+                className="theme-dark-surface card-premium-dark flex h-full flex-1 flex-col overflow-hidden rounded-2xl shadow-xl"
               >
                 {/* card header */}
                 <div className="flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-violet-600 to-indigo-600">

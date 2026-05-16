@@ -189,7 +189,7 @@ function LeadershipSection() {
                     
                     <button
                       onClick={() => setFounderModalOpen(true)}
-                      className="group flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:border-violet-300 hover:bg-violet-500/25 hover:shadow-md cursor-pointer"
+                      className="btn-purple-solid group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer"
                     >
                       Explore His Journey
                       <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
@@ -299,7 +299,7 @@ function LeadershipSection() {
                     
                     <button
                       onClick={() => setCofounderModalOpen(true)}
-                      className="group flex items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-300 hover:border-indigo-300 hover:bg-indigo-500/20 hover:shadow-md cursor-pointer"
+                      className="btn-purple-solid group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer"
                     >
                       Explore His Journey
                       <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>

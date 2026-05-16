@@ -8,8 +8,7 @@ function showsAssistantImmediately(pathname) {
 
 function getMobileScrollThreshold(pathname) {
   if (pathname === '/') {
-    const heroHeight = window.innerHeight - 80;
-    return Math.max(heroHeight * 0.72, 280);
+    return Math.max(window.innerHeight * 0.92, 320);
   }
   return 100;
 }

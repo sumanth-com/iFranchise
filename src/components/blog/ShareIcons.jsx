@@ -31,7 +31,7 @@ function ShareIcons({ url, title, variant = 'light', className = '' }) {
 
   const baseBtn = isDark
     ? 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-violet-400/40 bg-white/10 text-white transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-violet-300 hover:bg-white/20'
-    : 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-white transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-slate-300';
+    : 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition duration-200 hover:-translate-y-0.5 hover:scale-105 hover:border-slate-300 hover:bg-slate-50';
 
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>

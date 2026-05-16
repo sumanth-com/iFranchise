@@ -188,7 +188,7 @@ export function RoadmapTimelineSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 + i * 0.08, duration: 0.45 }}
                 whileHover={{ x: 4 }}
-                className="relative flex flex-1 flex-col justify-center overflow-hidden rounded-xl border border-violet-500/20 bg-white/[0.04] px-4 py-3.5 transition-colors hover:border-violet-400/35"
+                className="lyb-scale-card relative flex flex-1 flex-col justify-center overflow-hidden rounded-xl border border-violet-500/20 bg-white px-4 py-3.5 transition-colors hover:border-violet-300"
               >
                 <motion.div
                   className="absolute left-0 top-0 bottom-0 w-0.5 origin-top bg-gradient-to-b from-violet-400 to-indigo-500"
@@ -198,8 +198,8 @@ export function RoadmapTimelineSection() {
                   transition={{ delay: 0.15 + i * 0.1, duration: 0.5 }}
                 />
                 <p className="text-[0.58rem] font-bold uppercase tracking-wider text-violet-400">{r.phase}</p>
-                <h3 className="mt-0.5 text-sm font-extrabold text-white">{r.title}</h3>
-                <p className="mt-1 text-[0.72rem] leading-snug text-violet-100/75">{r.items.join(' · ')}</p>
+                <h3 className="mt-0.5 text-sm font-extrabold text-slate-900">{r.title}</h3>
+                <p className="mt-1 text-[0.72rem] leading-snug text-slate-600">{r.items.join(' · ')}</p>
               </motion.div>
             ))}
           </ColumnShell>
@@ -213,7 +213,7 @@ export function RoadmapTimelineSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 + i * 0.07, duration: 0.45 }}
                 whileHover={{ x: -4 }}
-                className="relative flex flex-1 items-center gap-3 overflow-hidden rounded-xl border border-violet-500/20 bg-white/[0.04] px-3 py-3 transition-colors hover:border-violet-400/35"
+                className="lyb-scale-card relative flex flex-1 items-center gap-3 overflow-hidden rounded-xl border border-violet-500/20 bg-white px-3 py-3 transition-colors hover:border-violet-300"
               >
                 <motion.span
                   className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[0.65rem] font-bold text-white shadow-[0_0_16px_rgba(139,92,246,0.45)]"
@@ -230,9 +230,9 @@ export function RoadmapTimelineSection() {
                   />
                 </motion.span>
                 <motion.div className="min-w-0 flex-1">
-                  <p className="text-[0.58rem] font-bold uppercase tracking-wider text-white">{t.week}</p>
-                  <h3 className="text-sm font-extrabold text-white">{t.title}</h3>
-                  <p className="text-[0.7rem] text-violet-100/75">{t.desc}</p>
+                  <p className="text-[0.58rem] font-bold uppercase tracking-wider text-slate-600">{t.week}</p>
+                  <h3 className="text-sm font-extrabold text-slate-900">{t.title}</h3>
+                  <p className="text-[0.7rem] text-slate-600">{t.desc}</p>
                 </motion.div>
               </motion.div>
             ))}

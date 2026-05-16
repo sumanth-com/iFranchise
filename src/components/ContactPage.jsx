@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import contactImage2 from '../assets/contact2.png';
 import { submitContactForm } from '@/lib/forms';
+import { useTheme } from '../context/ThemeContext';
 import FooterSocialButtons from './footer/FooterSocialButtons';
+import SectionPill from './ui/SectionPill';
 
 function ContactPage() {
+  const { isLight } = useTheme();
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
@@ -80,15 +83,15 @@ function ContactPage() {
   ];
 
   return (
-    <main className="relative z-10 bg-transparent text-white">
+    <main className="relative z-10 bg-transparent text-theme-primary">
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1 — HERO (CENTERED, CLEAN)
           ═══════════════════════════════════════════════════════════ */}
-      <section className="relative w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center overflow-hidden bg-transparent" id="hero-section">
+      <section className="page-hero-light relative w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center overflow-hidden bg-transparent" id="hero-section">
 
         {/* ── Background layer ── */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
+        <div className="page-hero-light__bg pointer-events-none absolute inset-0">
+          <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
           <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -112,10 +115,10 @@ function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mb-7 inline-flex items-center gap-2 rounded-full border border-violet-500/35 bg-violet-500/15 px-4 py-1.5 backdrop-blur-sm"
+            className={`mb-7 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-sm ${isLight ? 'border-violet-200 bg-violet-50' : 'border-violet-500/35 bg-violet-500/15'}`}
           >
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white">
+            <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${isLight ? 'text-slate-900' : 'text-white'}`}>
               India's Trusted Franchise Growth Platform
             </span>
           </motion.div>
@@ -125,11 +128,11 @@ function ContactPage() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl xl:text-6xl mb-4"
+            className={`text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl xl:text-6xl mb-4 ${isLight ? 'text-slate-900' : 'text-white'}`}
           >
             Build Smarter.{' '}
             <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className={isLight ? 'text-violet-700' : 'bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent'}>
                 Scale Faster.
               </span>
               <motion.span
@@ -140,7 +143,7 @@ function ContactPage() {
               />
             </span>
             <br />
-            <span className="text-white">Win with Precision.</span>
+            <span className={isLight ? 'text-slate-900' : 'text-white'}>Win with Precision.</span>
           </motion.h1>
 
           {/* Sub-headline */}
@@ -148,7 +151,7 @@ function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.3, ease: 'easeOut' }}
-            className="text-base sm:text-lg text-white max-w-xl leading-relaxed mb-8"
+            className={`text-base sm:text-lg max-w-xl leading-relaxed mb-8 ${isLight ? 'text-slate-600' : 'text-white'}`}
           >
             Strategic franchise intelligence for founders who think in systems, move with conviction, and build for legacy.
           </motion.p>
@@ -214,8 +217,8 @@ function ContactPage() {
                 transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
                 className="flex flex-col items-center"
               >
-                <span className="text-xl font-extrabold text-white">{stat.value}</span>
-                <span className="text-xs text-white font-medium mt-0.5">{stat.label}</span>
+                <span className={`text-xl font-extrabold ${isLight ? 'text-slate-900' : 'text-white'}`}>{stat.value}</span>
+                <span className={`text-xs font-medium mt-0.5 ${isLight ? 'text-slate-600' : 'text-white'}`}>{stat.label}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -422,10 +425,7 @@ function ContactPage() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-8"
           >
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4 border border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.15)] backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-              OUR LOCATION
-            </div>
+            <SectionPill className="mb-4">Our Location</SectionPill>
             
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
               Built in Bangalore. Scaling Across India.

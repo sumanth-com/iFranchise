@@ -131,12 +131,12 @@ function DoubleSectionImage({ src1, src2, alt }) {
 function ArticleSection({ section, index }) {
   return (
     <div data-reveal style={{ '--reveal-delay': `${index * 50}ms` }}>
-      <h2 id={section.id} className="scroll-mt-28 text-2xl font-bold leading-tight text-white md:text-3xl">
+      <h2 id={section.id} className="scroll-mt-28 text-2xl font-bold leading-tight text-slate-900 md:text-3xl">
         {section.heading}
       </h2>
       <div className="mt-5 space-y-5">
         {section.body.map((p, pi) => (
-          <p key={pi} className="text-[16.5px] leading-[1.9] text-white/92">{p}</p>
+          <p key={pi} className="text-[16.5px] leading-[1.9] text-slate-800">{p}</p>
         ))}
         {section.points && (
           <ul className="mt-4 space-y-3">
@@ -149,8 +149,8 @@ function ArticleSection({ section, index }) {
           </ul>
         )}
         {section.insight && (
-          <div className="my-6 rounded-xl border-l-4 border-violet-400 bg-violet-500/15 p-5">
-            <p className="text-[15.5px] font-medium leading-relaxed text-white">{section.insight}</p>
+          <div className="blog-insight-box my-6 rounded-xl border-l-4 border-violet-400 bg-violet-50 p-5">
+            <p className="text-[15.5px] font-medium leading-relaxed text-violet-900">{section.insight}</p>
           </div>
         )}
         {section.quote && (
@@ -354,7 +354,7 @@ function BlogDetailPage() {
   const heroImages = article.heroImages || [article.image];
 
   return (
-    <main className="relative z-10 w-full text-white pb-24">
+    <main className="blog-detail-page relative z-10 w-full bg-white pb-24 text-slate-900">
 
       <div className="mx-auto max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
         <div data-reveal className="mb-8 border-b border-violet-500/25 pb-8">
@@ -388,7 +388,7 @@ function BlogDetailPage() {
           {/* Share this post — centered on its own line */}
           <div className="mt-6 flex items-center justify-center gap-4 border-t border-violet-500/20 pt-6">
             <span className="text-sm font-semibold text-white">Share this post</span>
-            <ShareIcons url={articleUrl} title={article.title} variant="dark" />
+            <ShareIcons url={articleUrl} title={article.title} variant="light" />
           </div>
         </div>
         <div data-reveal><HeroCarousel images={heroImages} /></div>
@@ -421,7 +421,7 @@ function BlogDetailPage() {
                 <p className="mt-2 text-[15px] leading-relaxed text-white">{author.bio}</p>
               </div>
               <button type="button" onClick={() => setShowAuthorModal(true)}
-                className="flex-shrink-0 self-start rounded-xl border border-violet-400/40 bg-violet-500/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-500/25 sm:self-center">
+                className="btn-purple-solid flex-shrink-0 self-start rounded-xl px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 sm:self-center">
                 More about {author.name.split(' ')[0]}
               </button>
             </div>
@@ -508,24 +508,6 @@ function BlogDetailPage() {
           </div>
         </div>
       )}
-
-      <div className="bg-[#0b1f3b]">
-        <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8">
-          <div data-reveal className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
-            <div className="flex-1">
-              <h3 className="text-2xl font-extrabold text-white md:text-3xl">Never miss an insight</h3>
-              <p className="mt-2 text-white">Join 1,000,000+ subscribers getting expert tips every week.</p>
-            </div>
-            <form className="flex w-full max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" required placeholder="name@email.com"
-                className="h-12 min-w-0 flex-1 rounded-xl border border-slate-600 bg-slate-800 px-4 text-sm text-white placeholder-slate-400 outline-none transition focus:border-indigo-400" />
-              <button type="submit" className="h-12 flex-shrink-0 rounded-xl bg-indigo-500 px-6 text-sm font-bold text-white transition hover:bg-indigo-400">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
 
       {showAuthorModal && author && (
         <AuthorModal author={author} onClose={() => setShowAuthorModal(false)} />

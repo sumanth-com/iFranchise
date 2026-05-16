@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import brandLogo from '../assets/BrandNav.png';
+import ThemeToggle from './ThemeToggle';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
 
@@ -163,8 +164,8 @@ const NAV_SUBMENU_CLASS =
 
 const NAV_LINK_BASE =
   'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200';
-const NAV_LINK_IDLE = 'text-violet-800 hover:bg-violet-50 hover:text-violet-950';
-const NAV_LINK_ACTIVE = 'bg-violet-100 text-violet-950';
+const NAV_LINK_IDLE = 'site-navbar-link text-violet-800 hover:bg-violet-50 hover:text-violet-950';
+const NAV_LINK_ACTIVE = 'site-navbar-link site-navbar-link--active bg-violet-100 text-violet-950';
 
 function NavbarFranchiseFilterMenuCheckbox({ checked, label, onChange }) {
   return (
@@ -671,13 +672,11 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed left-0 top-0 z-[9999] w-full bg-white transition-all duration-300 ${
-        isScrolled
-          ? 'h-16 border-b border-violet-100 shadow-[0_4px_24px_rgba(124,58,237,0.08)]'
-          : 'h-20 border-b border-violet-100/90'
+      className={`site-navbar fixed left-0 top-0 z-[9999] h-16 w-full ${
+        isScrolled ? 'site-navbar--scrolled' : ''
       }`}
     >
-      <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between h-full px-2 sm:px-4 lg:px-6">
+      <nav className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-2 sm:px-4 lg:px-6">
         
         {/* Logo */}
         <div className="flex flex-col mr-auto">
@@ -688,11 +687,15 @@ function Navbar() {
               className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl"
             />
             <div className="flex flex-col">
-              <span className="text-lg sm:text-2xl font-extrabold tracking-tight leading-tight text-violet-900">
+              <span className="site-navbar-logo-title text-lg sm:text-2xl font-extrabold tracking-tight leading-tight text-violet-900">
                 iFranchise
               </span>
-              <p className="text-[10px] sm:text-xs font-semibold leading-tight text-violet-800 hidden xs:block">
-                India's Trusted Franchise Growth Platform
+              <p
+                className={`site-navbar-logo-tagline hidden text-[10px] font-semibold leading-tight text-violet-800 transition-[opacity,max-height] duration-300 sm:block sm:text-xs ${
+                  isScrolled ? 'max-h-0 opacity-0' : 'max-h-6 opacity-100'
+                }`}
+              >
+                India&apos;s Trusted Franchise Growth Platform
               </p>
             </div>
           </a>
@@ -847,11 +850,15 @@ function Navbar() {
           </li>
         </ul>
 
+        <div className="site-navbar-actions ml-auto flex h-10 shrink-0 items-center gap-2 sm:gap-3">
+          <ThemeToggle compact className="lg:hidden" />
+          <ThemeToggle className="hidden lg:inline-flex" />
+
         {/* Mobile Menu Button */}
         <button
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="inline-flex min-h-[48px] min-w-[100px] items-center justify-center gap-2.5 rounded-full border border-violet-200 px-4 py-2.5 text-sm font-bold text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 lg:hidden"
+          className="site-navbar-menu-btn inline-flex min-h-[48px] min-w-[100px] items-center justify-center gap-2.5 rounded-full border border-violet-200 px-4 py-2.5 text-sm font-bold text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 lg:hidden"
           aria-expanded={isMobileMenuOpen}
           aria-label="Toggle navigation menu"
         >
@@ -863,7 +870,7 @@ function Navbar() {
         <button
           type="button"
           onClick={() => navigateTo('/list-your-brand')}
-          className="group ml-auto hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] lg:inline-flex"
+          className="site-navbar-cta group hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] lg:inline-flex"
         >
           List Your Brand
           <motion.div
@@ -874,6 +881,7 @@ function Navbar() {
             <ArrowRightIcon />
           </motion.div>
         </button>
+        </div>
       </nav>
 
       {/* Mobile Navigation Drawer */}
@@ -907,15 +915,18 @@ function Navbar() {
                   />
                   <span className="text-lg font-bold text-[#0b0f19]">iFranchise</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition-all hover:bg-slate-200"
-                >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-2">
+                  <ThemeToggle compact />
+                  <button
+                    type="button"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition-all hover:bg-slate-200"
+                  >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               {/* Mobile Menu Items */}

@@ -4,16 +4,16 @@
 import React from 'react';
 
 export const DEPT_COLORS = {
-  Design: 'bg-violet-500/20 text-white border border-violet-400/40',
-  Growth: 'bg-emerald-500/20 text-white border border-emerald-400/35',
-  Marketing: 'bg-sky-500/20 text-white border border-sky-400/35',
-  Sales: 'bg-orange-500/20 text-white border border-orange-400/35',
+  Design: 'bg-violet-100 text-violet-800 border border-violet-200',
+  Growth: 'bg-emerald-100 text-emerald-800 border border-emerald-200',
+  Marketing: 'bg-sky-100 text-sky-800 border border-sky-200',
+  Sales: 'bg-orange-100 text-orange-800 border border-orange-200',
 };
 
 export const MODE_COLORS = {
-  Remote: 'bg-emerald-500/15 text-emerald-100 border border-emerald-400/35',
-  Hybrid: 'bg-sky-500/15 text-sky-100 border border-sky-400/35',
-  Onsite: 'bg-orange-500/15 text-orange-100 border border-orange-400/35',
+  Remote: 'bg-emerald-50 text-emerald-800 border border-emerald-200',
+  Hybrid: 'bg-sky-50 text-sky-800 border border-sky-200',
+  Onsite: 'bg-amber-50 text-amber-800 border border-amber-200',
 };
 
 export const ROLE_TOOLS = {

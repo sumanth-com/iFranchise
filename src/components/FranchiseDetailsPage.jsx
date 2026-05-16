@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ImageCarousel from './ImageCarousel';
 
 const franchiseDetailsData = {
@@ -2471,23 +2471,34 @@ function FranchiseDetailsPage() {
               </a>
             </div>
 
-            <p className="mt-4 text-lg text-white lg:text-xl">{selectedFranchise.tagline}</p>
+            <p className="mt-4 text-lg text-slate-600 lg:text-xl">{selectedFranchise.tagline}</p>
           </div>
 
-          <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:grid-cols-2 lg:grid-cols-5 lg:p-8">
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Investment</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.investment}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Space</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.space}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.roi}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Payback</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.payback}</p></article>
-            <article className="rounded-xl bg-slate-50 p-4"><p className="text-sm text-white">Outlets</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.keyInfo.outlets}</p></article>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:items-stretch">
+            <div className="min-h-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
+              <ImageCarousel
+                images={galleryImages}
+                alt={selectedFranchise.name}
+                category="food"
+                showThumbnails={false}
+                heightClassName="h-[min(52vh,480px)] sm:h-[min(48vh,440px)]"
+              />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
+              {[
+                { label: 'Investment', value: selectedFranchise.keyInfo.investment },
+                { label: 'Space', value: selectedFranchise.keyInfo.space },
+                { label: 'ROI', value: selectedFranchise.keyInfo.roi },
+                { label: 'Payback', value: selectedFranchise.keyInfo.payback },
+                { label: 'Outlets', value: selectedFranchise.keyInfo.outlets },
+              ].map((item) => (
+                <article key={item.label} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                  <p className="text-sm font-medium text-slate-600">{item.label}</p>
+                  <p className="mt-1 text-lg font-semibold text-[#0b0f19]">{item.value}</p>
+                </article>
+              ))}
+            </div>
           </div>
-
-          <ImageCarousel 
-            images={galleryImages} 
-            alt={selectedFranchise.name}
-            category="food"
-            showThumbnails={false}
-          />
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex flex-wrap gap-2">

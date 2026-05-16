@@ -189,13 +189,13 @@ export default function PreFooterCTA() {
       {/* ── Unified card ── */}
       <div
         ref={ref}
+        className="prefooter-unified-card"
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
           padding: '0 16px',
           borderRadius: '28px',
-          background: 'rgba(255,255,255,0.05)',
-          border: '1px solid rgba(139,92,246,0.2)',
+          border: '1px solid',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           overflow: 'hidden',
@@ -204,7 +204,11 @@ export default function PreFooterCTA() {
         }}
       >
         {/* Inner gradient shimmer */}
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 50%, rgba(99,102,241,0.06) 100%)', pointerEvents: 'none', zIndex: 0 }} />
+        <div
+          aria-hidden="true"
+          className="prefooter-unified-card__shimmer"
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}
+        />
 
         {/* ══════════════════════════════════════════
             TOP — CTA
@@ -230,12 +234,12 @@ export default function PreFooterCTA() {
           </p>
 
           {/* Status */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, color: '#ffffff', marginBottom: '28px', ...reveal(0.36) }}>
+          <div className="prefooter-trust-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, marginBottom: '28px', ...reveal(0.36) }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 0 3px rgba(34,197,94,0.2)', display: 'inline-block', flexShrink: 0 }} />
             Trusted by 1,200+ founders.
           </div>
 
-          {/* Pre-footer CTAs — white buttons, purple text */}
+          {/* Pre-footer CTAs — black buttons, white text */}
           <div className="prefooter-cta-row" style={reveal(0.44)}>
             {/* Primary — Explore Opportunities */}
             <button

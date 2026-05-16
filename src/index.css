@@ -27,13 +27,14 @@
   }
 
   body {
-    @apply m-0 text-white antialiased;
+    @apply m-0 antialiased;
     font-family: 'Inter', system-ui, sans-serif;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #0a0618;
+    color: var(--theme-text-primary);
+    background: var(--theme-bg-base);
     /* Prevent layout shift from scrollbar */
     scrollbar-gutter: stable;
     /* NOTE: overflow-x:hidden removed — it breaks position:sticky on child elements */
@@ -44,7 +45,7 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle at 1px 1px, rgba(167,139,250,0.06) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, var(--theme-grain) 1px, transparent 0);
     background-size: 32px 32px;
     pointer-events: none;
     z-index: -1;
@@ -57,7 +58,7 @@
 
   *:focus { outline: none; }
   *:focus-visible {
-    outline: 2px solid #3b82f6;
+    outline: 2px solid var(--theme-focus, #8b5cf6);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -212,9 +213,22 @@ img.loaded {
     @apply text-center mb-10 sm:mb-14;
   }
 
-  .section-pill {
-    @apply inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-slate-200/60
-           shadow-sm rounded-full px-4 py-2 mb-5;
+  .section-pill,
+  .site-section-pill {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em];
+  }
+
+  .site-section-pill__dot {
+    @apply relative h-2 w-2 shrink-0 rounded-full bg-emerald-500;
+  }
+
+  .site-section-pill__dot::before {
+    content: '';
+    @apply absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75;
+  }
+
+  .site-section-pill__text {
+    @apply leading-none;
   }
 
   .section-title {
@@ -1076,7 +1090,7 @@ img.loaded {
   display: inline-flex;
   align-items: center;
   padding: 14px 28px;
-  border-radius: 16px;
+  border-radius: 9999px;
   background-color: #ffffff;
   color: #6d28d9;
   font-size: 14px;
@@ -1433,8 +1447,7 @@ header a.btn-wave,
 footer button.btn-wave,
 footer a.btn-wave,
 .cinematic-hero button.btn-wave,
-.cinematic-hero a.btn-wave,
-.prefooter-cta-btn {
+.cinematic-hero a.btn-wave {
   border-radius: revert !important;
   background-color: revert !important;
   background-image: revert !important;
@@ -2292,18 +2305,13 @@ img[loading="lazy"]:not([src=""]) {
 /* ─── Cinematic homepage hero ───────────────────────────────────────────────── */
 .cinematic-hero {
   contain: layout style;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 100dvh;
 }
 
 .hero-cinematic-media-wrap {
-  --hero-px: 0px;
-  --hero-py: 0px;
-  transform: translate3d(var(--hero-px), var(--hero-py), 0);
-  will-change: transform;
-}
-
-.hero-cinematic-float-layer {
-  animation: heroFloat 14s ease-in-out infinite;
-  will-change: transform;
+  transform: none;
 }
 
 .hero-cinematic-media {
@@ -2311,7 +2319,20 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 .hero-cinematic-media-shadow {
-  background: radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0, 0, 0, 0.45), transparent 70%);
+  background:
+    radial-gradient(ellipse 55% 35% at 50% 55%, transparent 35%, rgba(0, 0, 0, 0.12) 100%),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0, 0, 0, 0.28), transparent 72%);
+}
+
+/* Hero copy — sit slightly above vertical center */
+.hero-cinematic-content {
+  transform: translateY(clamp(-2.5rem, -6vh, -4.5rem));
+}
+
+/* Hero CTAs — directly under subtitle */
+.hero-cta-row {
+  width: 100%;
+  max-width: 36rem;
 }
 
 /* Hero primary CTAs — white pill, purple text */
@@ -2417,10 +2438,18 @@ img[loading="lazy"]:not([src=""]) {
   filter: blur(0);
 }
 
-@media (max-width: 768px) {
-  .hero-cinematic-float-layer {
-    animation: none;
-  }
+.cinematic-hero .cinematic-blur-reveal,
+.cinematic-hero .cinematic-fade-up,
+.cinematic-hero .cinematic-enter-pill,
+.cinematic-hero .hero-cta {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.cinematic-hero .hero-cta:hover {
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2770,49 +2799,6 @@ img[loading="lazy"]:not([src=""]) {
   transition-duration: var(--motion-micro);
 }
 
-/* ─── Pure white copy on dark UI (no dim grey subtext) ─────────────────────── */
-#main-content,
-.card-premium-dark,
-.card-premium-dark-inner {
-  color: #ffffff;
-}
-
-#main-content :is(
-  [class*='text-slate-100'],
-  [class*='text-slate-200'],
-  [class*='text-slate-300'],
-  [class*='text-slate-400'],
-  [class*='text-slate-500'],
-  [class*='text-slate-600'],
-  [class*='text-violet-200'],
-  [class*='text-violet-300'],
-  [class*='text-white/']
-),
-.card-premium-dark :is(
-  [class*='text-slate-100'],
-  [class*='text-slate-200'],
-  [class*='text-slate-300'],
-  [class*='text-slate-400'],
-  [class*='text-slate-500'],
-  [class*='text-slate-600'],
-  [class*='text-violet-200'],
-  [class*='text-violet-300'],
-  [class*='text-white/']
-),
-.card-premium-dark-inner :is(
-  [class*='text-slate-100'],
-  [class*='text-slate-200'],
-  [class*='text-slate-300'],
-  [class*='text-slate-400'],
-  [class*='text-slate-500'],
-  [class*='text-slate-600'],
-  [class*='text-violet-200'],
-  [class*='text-violet-300'],
-  [class*='text-white/']
-) {
-  color: #ffffff !important;
-}
-
 /* Keep readable contrast on explicit light panels (override sitewide white text) */
 .bg-white,
 .bg-slate-50,
@@ -2826,9 +2812,18 @@ img[loading="lazy"]:not([src=""]) {
   color: #475569;
 }
 
-.bg-white .text-white:not(.btn-wave):not([class*='bg-']):not(button *):not(.navbar-filter-check-icon),
-.bg-slate-50 .text-white:not([class*='bg-']):not(.navbar-filter-check-icon) {
+.bg-white .text-white:not(.btn-wave):not(.site-cta):not([class*='bg-']):not(button):not(button *):not(a[class*='bg-violet']):not(.navbar-filter-check-icon),
+.bg-slate-50 .text-white:not([class*='bg-']):not(button):not(button *):not(.navbar-filter-check-icon) {
   color: #475569 !important;
+}
+
+.bg-white button.text-white,
+.bg-white button.text-white *,
+.bg-white .site-cta,
+.bg-white .site-cta *,
+.bg-slate-50 button.text-white,
+.bg-slate-50 button.text-white * {
+  color: #ffffff !important;
 }
 
 /* Violet checkboxes inside white navbar panels — keep tick marks white */
@@ -2877,4 +2872,123 @@ img[loading="lazy"]:not([src=""]) {
   color: #7c3aed !important;
   stroke: #7c3aed !important;
   opacity: 1 !important;
+}
+
+/* ═══ Light mode: pure white pages + black body copy ═══════════════════════════ */
+html[data-theme='light'],
+html[data-theme='light'] body {
+  background-color: #ffffff;
+}
+
+html[data-theme='light'] .site-backdrop__gradient {
+  background: #ffffff !important;
+}
+
+/* Default: white utility text → dark on light pages (not CTA buttons/links) */
+html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white,
+html[data-theme='light'] #main-content .text-white:not(button):not(a) {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content [class*='text-white/9'],
+html[data-theme='light'] #main-content [class*='text-white/8'] {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] #main-content .theme-section-on-light .text-white,
+html[data-theme='light'] #main-content .theme-section-on-light h1,
+html[data-theme='light'] #main-content .theme-section-on-light h2,
+html[data-theme='light'] #main-content .theme-section-on-light h3,
+html[data-theme='light'] #main-content .theme-section-on-light p,
+html[data-theme='light'] #main-content .theme-section-on-light li,
+html[data-theme='light'] #main-content .theme-section-on-light span {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .theme-section-on-light p.text-white,
+html[data-theme='light'] #main-content .theme-section-on-light .text-white\/90 {
+  color: #475569 !important;
+}
+
+/* White premium cards (not dark dashboards) */
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white,
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li) {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .card-premium-dark-inner:not(.theme-dark-surface *) .text-white {
+  color: #0b0f19 !important;
+}
+
+/* Premium white cards — black text (wins over default .text-white rule) */
+html[data-theme='light'] #main-content .theme-light-card,
+html[data-theme='light'] #main-content .theme-light-card .text-white,
+html[data-theme='light'] #main-content .theme-light-card :is(h1, h2, h3, h4, h5, h6, p, span, li),
+html[data-theme='light'] #main-content .theme-light-pill,
+html[data-theme='light'] #main-content .theme-light-pill .text-white,
+html[data-theme='light'] #main-content .theme-light-pill p {
+  color: #0b0f19 !important;
+}
+
+/* Dashboard panels only — keep white text */
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill),
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) .text-white,
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, div) {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .theme-dark-surface[class*='from-[#12082a'] .text-white,
+html[data-theme='light'] #main-content .theme-dark-surface[class*='from-[#12082a'] :is(p, h1, h2, h3, h4, span, li),
+html[data-theme='light'] #main-content .theme-dark-surface[class*='bg-[#12082a'] .text-white,
+html[data-theme='light'] #main-content .theme-dark-surface[class*='bg-[#12082a'] :is(p, span, div),
+html[data-theme='light'] #main-content .theme-dark-surface[style*='linear-gradient(145deg, #12082a'] .text-white,
+html[data-theme='light'] #main-content .theme-dark-surface[class*='bg-slate-900'] .text-white,
+html[data-theme='light'] #main-content section.theme-dark-surface[class*='bg-slate-900'] .text-white,
+html[data-theme='light'] #main-content [class*='bg-violet-950'] .text-white,
+html[data-theme='light'] #main-content [class*='bg-violet-950'] :is(p, span),
+html[data-theme='light'] #main-content [class*='from-slate-800'][class*='to-slate-900'] .text-white,
+html[data-theme='light'] #main-content #market-intelligence-chart .text-white {
+  color: #ffffff !important;
+}
+
+/* CTAs on colored buttons — always white label text */
+html[data-theme='light'] #main-content .site-cta,
+html[data-theme='light'] #main-content .site-cta *,
+html[data-theme='light'] #main-content .btn-wave,
+html[data-theme='light'] #main-content .btn-wave *,
+html[data-theme='light'] #main-content button.text-white,
+html[data-theme='light'] #main-content button.text-white *,
+html[data-theme='light'] #main-content a.text-white[class*='bg-violet'],
+html[data-theme='light'] #main-content a.text-white[class*='bg-violet'] *,
+html[data-theme='light'] #main-content [class*='bg-violet-6'].text-white,
+html[data-theme='light'] #main-content [class*='bg-violet-7'].text-white,
+html[data-theme='light'] #main-content button[style*='#6d28d9'],
+html[data-theme='light'] #main-content button[style*='#6d28d9'] *,
+html[data-theme='light'] #main-content button[style*='#4f46e5'],
+html[data-theme='light'] #main-content button[style*='#4f46e5'] *,
+html[data-theme='light'] #main-content .theme-light-card button.text-white,
+html[data-theme='light'] #main-content .theme-light-card button.text-white *,
+html[data-theme='light'] #main-content .theme-light-card .site-cta,
+html[data-theme='light'] #main-content .theme-light-card .site-cta *,
+html[data-theme='light'] #main-content [class*='bg-[#0B1220]'],
+html[data-theme='light'] #main-content [class*='bg-[#0B1220]'] * {
+  color: #ffffff !important;
+}
+
+/* Home hero — keep dark-mode look in light theme (wins over #main-content .text-white) */
+html[data-theme='light'] #main-content .cinematic-hero,
+html[data-theme='light'] #main-content .cinematic-hero h1,
+html[data-theme='light'] #main-content .cinematic-hero h2,
+html[data-theme='light'] #main-content .cinematic-hero p,
+html[data-theme='light'] #main-content .cinematic-hero .text-white,
+html[data-theme='light'] #main-content .cinematic-hero .hero-cinematic-pill-text {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero .hero-cinematic-accent {
+  color: #c084fc !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero p {
+  color: rgba(255, 255, 255, 0.92) !important;
 }

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FiArrowRight } from 'react-icons/fi';
 import CtaButton from '../ui/CtaButton';
+import SectionPill from '../ui/SectionPill';
 import retailImg from '../../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../../assets/IndImgs/Food & Beverage.png';
 import healthcareImg from '../../assets/IndImgs/Healthcare & Wellness.png';
@@ -14,42 +16,12 @@ const navigateTo = (path) => {
 };
 
 const INDUSTRIES = [
-  {
-    label: 'Retail & Jewelry',
-    accent: '#f59e0b',
-    desc: 'Scale your retail brand with proven franchise models',
-    img: retailImg,
-  },
-  {
-    label: 'Food & Beverage',
-    accent: '#f97316',
-    desc: 'Expand your F&B concept across multiple locations',
-    img: foodImg,
-  },
-  {
-    label: 'Healthcare & Wellness',
-    accent: '#10b981',
-    desc: 'Grow your wellness business with franchise support',
-    img: healthcareImg,
-  },
-  {
-    label: 'Education & Training',
-    accent: '#3b82f6',
-    desc: 'Build an education empire through franchising',
-    img: educationImg,
-  },
-  {
-    label: 'Beauty & Lifestyle',
-    accent: '#ec4899',
-    desc: 'Transform beauty concepts into franchise networks',
-    img: beautyImg,
-  },
-  {
-    label: 'Logistics & Infrastructure',
-    accent: '#94a3b8',
-    desc: 'Scale logistics operations with franchise models',
-    img: logisticsImg,
-  },
+  { label: 'Retail & Jewelry', accent: '#f59e0b', desc: 'Scale your retail brand with proven franchise models', img: retailImg },
+  { label: 'Food & Beverage', accent: '#f97316', desc: 'Expand your F&B concept across multiple locations', img: foodImg },
+  { label: 'Healthcare & Wellness', accent: '#10b981', desc: 'Grow your wellness business with franchise support', img: healthcareImg },
+  { label: 'Education & Training', accent: '#3b82f6', desc: 'Build an education empire through franchising', img: educationImg },
+  { label: 'Beauty & Lifestyle', accent: '#ec4899', desc: 'Transform beauty concepts into franchise networks', img: beautyImg },
+  { label: 'Logistics & Infrastructure', accent: '#94a3b8', desc: 'Scale logistics operations with franchise models', img: logisticsImg },
 ];
 
 function IndustryCardImg({ src, alt }) {
@@ -58,8 +30,8 @@ function IndustryCardImg({ src, alt }) {
   return (
     <>
       {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0618]" aria-hidden>
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500/25 border-t-violet-400" />
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-100" aria-hidden>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-200 border-t-violet-600" />
         </div>
       )}
       <img
@@ -68,7 +40,7 @@ function IndustryCardImg({ src, alt }) {
         loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}
-        className={`h-full w-full object-contain object-center transition-opacity duration-300 ${
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -78,29 +50,19 @@ function IndustryCardImg({ src, alt }) {
 
 export default function ServicesStyleIndustriesSection() {
   return (
-    <section className="relative z-10 overflow-hidden py-10 lg:py-14">
-      <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <span
-            className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white"
-            style={{
-              background: 'rgba(139,92,246,0.15)',
-              border: '1px solid rgba(139,92,246,0.3)',
-              backdropFilter: 'blur(8px)',
-            }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-            Industries
-          </span>
-          <h2 className="mb-3 text-3xl font-extrabold text-white sm:text-4xl">
+    <section className="lyb-industries-section relative z-10 overflow-hidden py-10 lg:py-14">
+      <motion.div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <motion.div className="theme-section-on-light mb-10 text-center">
+          <SectionPill className="mb-4">Industries</SectionPill>
+          <h2 className="lyb-section-heading mb-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
             Industries We Help Scale Through Franchising
           </h2>
-          <p className="mx-auto max-w-xl text-sm leading-relaxed text-white sm:text-base">
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
             Franchise services built for brands across sectors ready to expand through scalable models.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {INDUSTRIES.map((ind, i) => (
             <motion.div
               key={ind.label}
@@ -108,62 +70,45 @@ export default function ServicesStyleIndustriesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl"
-              style={{
-                background: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
-                border: '1px solid rgba(139,92,246,0.18)',
-                boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-                transition:
-                  'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-6px)';
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
-                e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-                e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
-              }}
-              onClick={() => navigateTo('/franchise-opportunities')}
+              className="theme-light-card group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-200 hover:shadow-[0_20px_40px_rgba(109,40,217,0.14)]"
             >
-              <div className="relative h-52 overflow-hidden bg-[#0a0618]">
+              <motion.div className="industry-card-media relative h-56 overflow-hidden bg-slate-100">
                 <IndustryCardImg src={ind.img} alt={ind.label} />
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
+                <motion.div
+                  className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/95 to-transparent"
                   aria-hidden
                 />
-                <div
+                <motion.div
                   className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)`,
-                  }}
+                  style={{ background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)` }}
                 />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="mb-1.5 text-base font-bold leading-snug text-white">{ind.label}</h3>
-                <p className="flex-1 text-[0.78rem] leading-relaxed text-white">{ind.desc}</p>
-                <div
-                  className="mt-3 flex items-center gap-1.5 text-[0.72rem] font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                  style={{ color: '#c4b5fd' }}
+              </motion.div>
+              <motion.div className="flex flex-1 flex-col p-5">
+                <h3 className="mb-1.5 text-base font-bold leading-snug text-slate-900 transition-colors group-hover:text-violet-700">
+                  {ind.label}
+                </h3>
+                <p className="flex-1 text-[0.78rem] leading-relaxed text-slate-600">{ind.desc}</p>
+                <button
+                  type="button"
+                  className="industry-card-explore"
+                  onClick={() => navigateTo('/franchise-opportunities')}
                 >
                   Explore opportunities <FiArrowRight className="h-3 w-3" />
-                </div>
-              </div>
+                </button>
+              </motion.div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-14 text-center">
-          <p className="mb-5 text-sm text-white">
+        <motion.div className="mt-14 text-center">
+          <p className="mb-5 text-sm text-slate-600">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
           <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
             Discuss Your Industry
           </CtaButton>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

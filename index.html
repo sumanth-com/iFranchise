@@ -9,7 +9,10 @@
       content="iFranchise — India's trusted franchise growth platform. Discover verified franchise opportunities, compare investments, and scale your brand nationwide."
     />
     <meta name="theme-color" content="#0a0618" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      (function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();
+    </script>
     <title>iFranchise — India's Trusted Franchise Growth Platform</title>
 
     <!-- Preconnect to font origins for zero-latency font load -->

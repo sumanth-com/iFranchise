@@ -118,7 +118,7 @@ function BlogPage() {
               type="button"
               onClick={onLoadMore}
               disabled={isLoadingMore}
-              className="group inline-flex min-w-[180px] items-center justify-center gap-3 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(15,23,42,0.24)] disabled:cursor-not-allowed disabled:opacity-80"
+              className="btn-purple-solid group inline-flex min-w-[180px] items-center justify-center gap-3 rounded-full px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-white transition duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-80"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-400/45 bg-white/15 text-lg text-white transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                 →

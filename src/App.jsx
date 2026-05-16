@@ -72,7 +72,7 @@ function PageSkeleton() {
     >
       <div className="flex flex-col items-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-2 border-violet-500/30 border-t-violet-400" />
-        <p className="text-xs font-medium uppercase tracking-widest text-white">Loading</p>
+        <p className="text-xs font-medium uppercase tracking-widest text-theme-primary">Loading</p>
       </div>
     </div>
   );
@@ -234,17 +234,18 @@ function App() {
   const isBlogPage                = pathname === '/blog';
   const isBlogDetailPage          = pathname === '/blog-detail';
   const isListYourBrandPage       = pathname === '/list-your-brand';
+  const isHomePage                = pathname === '/';
 
   return (
     <FranchiseOpportunityNavbarFiltersProvider>
-      <div className="relative min-h-screen scroll-smooth bg-transparent text-white">
+      <div className="relative min-h-screen scroll-smooth bg-transparent text-theme-primary">
         <AnimatedSiteBackdrop />
         <Navbar />
 
       {/* Page transition wrapper */}
       <main
         id="main-content"
-        className={`relative z-10 ${isCareerDetailPage ? '' : 'pt-20'}`}
+        className={`relative z-10 ${isCareerDetailPage || isHomePage ? '' : 'pt-16'}`}
         style={{
           opacity: pagePhase === 'idle' ? 1 : 0,
           transition: pagePhase === 'idle'
