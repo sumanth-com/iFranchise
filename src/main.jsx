@@ -1,8 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import { preloadHomeHero } from './lib/preloadHomeHero.js'
 import App from './App.jsx'
 import Lenis from '@studio-freight/lenis'
+
+const path = window.location.pathname
+if (path === '/' || path === '') {
+  preloadHomeHero()
+}
 
 function initLenis() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches

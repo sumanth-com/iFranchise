@@ -943,53 +943,14 @@ function Navbar() {
                     Services
                   </a>
 
-                  {/* Franchise Opportunities filters (mobile) */}
-                  <div className="rounded-xl border border-slate-200">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setMobileAccordion(
-                          mobileAccordion === 'franchiseFilters' ? null : 'franchiseFilters'
-                        )
-                      }
-                      className="flex w-full items-center justify-between px-4 py-3 text-left"
-                    >
-                      <span className="text-base font-semibold text-slate-900">
-                        Franchise Opportunities
-                      </span>
-                      <ChevronIcon className={mobileAccordion === 'franchiseFilters' ? 'rotate-180' : ''} />
-                    </button>
-                    <AnimatePresence>
-                      {mobileAccordion === 'franchiseFilters' && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden border-t border-slate-100"
-                        >
-                          <div
-                            data-lenis-prevent
-                            className="franchise-filter-scroll max-h-[50vh] overflow-y-auto overscroll-contain px-3 py-3 touch-pan-y"
-                            onWheel={(e) => e.stopPropagation()}
-                            onTouchMove={(e) => e.stopPropagation()}
-                          >
-                            <FranchiseFilterPanelBody
-                              navFranchiseFilters={navFranchiseFilters}
-                              embedded
-                            />
-                          </div>
-                          <FranchiseFilterPanelFooter
-                            onClear={() => navFranchiseFilters.clearNavbarFilters()}
-                            onOpenListings={() => {
-                              navigateTo('/franchise-opportunities');
-                              setIsMobileMenuOpen(false);
-                            }}
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                  {/* Franchise Opportunities — direct link (mobile) */}
+                  <a
+                    href="/franchise-opportunities"
+                    onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
+                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-semibold text-slate-900 hover:bg-slate-50"
+                  >
+                    Franchise Opportunities
+                  </a>
 
                   {/* Blogs — direct link */}
                   <a

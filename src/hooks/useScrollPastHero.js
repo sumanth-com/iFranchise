@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-function getScrollThreshold(pathname) {
+const MOBILE_MAX_WIDTH = 767;
+
+function getMobileScrollThreshold(pathname) {
   if (pathname === '/') {
     const heroHeight = window.innerHeight - 80;
     return Math.max(heroHeight * 0.72, 280);
@@ -8,30 +10,48 @@ function getScrollThreshold(pathname) {
   return 100;
 }
 
+function isMobileViewport() {
+  return window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches;
+}
+
 /**
- * Show floating UI only after the user scrolls past the hero (homepage) or slightly on other pages.
+ * Desktop: show assistant immediately (including over home hero).
+ * Mobile: show only after scrolling past the hero on homepage (or slightly on other pages).
  */
 export function useScrollPastHero(pathname, enabled = true) {
-  const [pastHero, setPastHero] = useState(false);
+  const [showAssistant, setShowAssistant] = useState(() => {
+    if (!enabled) return false;
+    if (typeof window === 'undefined') return false;
+    return !isMobileViewport();
+  });
 
   useEffect(() => {
     if (!enabled) {
-      setPastHero(false);
+      setShowAssistant(false);
       return undefined;
     }
 
+    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
+
     const update = () => {
-      setPastHero(window.scrollY >= getScrollThreshold(pathname));
+      if (!mq.matches) {
+        setShowAssistant(true);
+        return;
+      }
+      setShowAssistant(window.scrollY >= getMobileScrollThreshold(pathname));
     };
 
     update();
+    mq.addEventListener('change', update);
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
+
     return () => {
+      mq.removeEventListener('change', update);
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
     };
   }, [pathname, enabled]);
 
-  return pastHero;
+  return showAssistant;
 }

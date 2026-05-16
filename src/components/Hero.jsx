@@ -3,9 +3,7 @@ import { createPortal } from 'react-dom';
 import Button from './Button';
 import TestimonialCard from './TestimonialCard';
 import contactImg from '../assets/contact.png';
-import homeHeroBg from '../assets/HomeHero.png';
-import homeBg from '../assets/HomeBG.png';
-import industriesBg from '../assets/Industries.png';
+import { homeHeroBg } from '../lib/preloadHomeHero.js';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../assets/IndImgs/Food & Beverage.png';
 import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
@@ -15,8 +13,6 @@ import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
 import forInvestorsImg from '../assets/ForInvestors.png';
 import forBrandsImg from '../assets/ForBrands.png';
 import brandLogo from '../assets/BrandLogo.png';
-import home2Bg from '../assets/Home2.png';
-import home3Bg from '../assets/Home3.png';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
   FiCheck, FiArrowRight,
@@ -3111,26 +3107,27 @@ function Hero() {
   return (
     <main className="relative isolate overflow-x-hidden bg-transparent">
       {/* -- HERO SECTION -- */}
-      <section
-        className="relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden"
-        style={{
-          backgroundImage: `url(${homeHeroBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
+      <section className="relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-[#0a0618]">
+        <img
+          src={homeHeroBg}
+          alt=""
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-t from-[#0a0618]/90 via-[#0a0618]/40 to-transparent sm:hidden"
           aria-hidden
         />
 
-        <div className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-5 pt-6 sm:items-center sm:justify-center sm:px-8 sm:pb-[8%] sm:pt-0">
+        <div className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-5 pt-2 sm:items-center sm:justify-center sm:px-8 sm:pb-[8%] sm:pt-0">
           <div className="mx-auto flex min-h-0 w-full max-w-[900px] flex-1 flex-col items-center text-center sm:flex-none sm:justify-center">
-
+            <div className="flex flex-1 flex-col items-center justify-center pt-[4vh] pb-2 sm:flex-none sm:justify-center sm:pt-0 sm:pb-0">
             {/* Animated pill badge */}
             <div
-              className="mb-5 inline-flex items-center gap-2.5 rounded-full px-5 py-2"
+              className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
               style={{
                 background: 'rgba(88,28,135,0.6)',
                 border: '1px solid rgba(192,132,252,0.65)',
@@ -3174,7 +3171,8 @@ function Hero() {
             >
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
-            <div className="mt-auto flex w-full max-w-md flex-col gap-3 pt-5 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
+            </div>
+            <div className="mt-auto flex w-full max-w-md shrink-0 flex-col gap-3 pt-3 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
               {[
                 { label: 'Explore Opportunities', path: '/franchise-opportunities' },
                 { label: 'List Your Brand', path: '/list-your-brand' },
@@ -3890,11 +3888,6 @@ function Hero() {
       <section className="relative w-full py-12 sm:py-16 lg:py-20 section-reveal">
         <div className="section-container">
           {/* Subtle background pattern */}
-          <div className="absolute inset-0 opacity-[0.015]" style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(139,92,246,0.3) 1px, transparent 0)',
-            backgroundSize: '48px 48px'
-          }} />
-          
           <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-12 flex flex-col justify-center">
           
           {/* TOP CENTER PILL */}

@@ -185,10 +185,7 @@ function CareerDetailPage({ roleId }) {
       </div>
 
       {/* Hero header */}
-      <div
-        className="relative border-b border-violet-500/20"
-        style={{ backgroundImage: 'radial-gradient(circle, rgba(167,139,250,0.2) 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-      >
+      <div className="relative border-b border-violet-500/20 bg-transparent">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0618]/40 to-[#0a0618] pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-10 sm:py-14">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}>

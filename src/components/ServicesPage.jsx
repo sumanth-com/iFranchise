@@ -9,7 +9,6 @@ import {
   FiChevronDown, FiPlus, FiMinus, FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
 import BrandLogo from '../assets/BrandLogo.png';
-import serviceHero from '../assets/serviceHero.png';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../assets/IndImgs/Food & Beverage.png';
 import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
@@ -679,10 +678,10 @@ export default function ServicesPage() {
 
       {/* HERO */}
       <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-8 pt-24 sm:px-6 lg:px-8">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-          <img src={serviceHero} alt="" className="h-full w-full object-cover opacity-20" />
-          <motion.div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,6,24,0.88) 0%, rgba(10,6,24,0.72) 45%, rgba(10,6,24,0.92) 100%)' }} />
-        </div>
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0a0618] via-[#0f0a1e] to-[#0a0618]"
+          aria-hidden
+        />
 
         <div className="relative z-10 mx-auto max-w-[900px] text-center">
 

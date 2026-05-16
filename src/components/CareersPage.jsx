@@ -287,24 +287,7 @@ function CareersPage() {
       <PageCurtain onDone={() => setCurtainDone(true)} />
 
       {/* ── HERO ── */}
-      <section
-        ref={heroRef}
-        className="relative overflow-hidden bg-transparent"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 20% 50%, rgba(139,92,246,0.12) 0%, transparent 60%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.1) 0%, transparent 55%)',
-        }}
-      >
-        {/* Subtle dot grid */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.4]"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle, rgba(167,139,250,0.35) 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-          }}
-        />
-
+      <section ref={heroRef} className="relative overflow-hidden bg-transparent">
         <div className="relative max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 pt-12 pb-0 sm:pt-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
