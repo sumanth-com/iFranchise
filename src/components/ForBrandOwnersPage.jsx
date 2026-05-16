@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HeroBrandInquiryForm from './sections/HeroBrandInquiryForm';
 import ExpansionVisualPanel from './sections/ExpansionVisualPanel';
@@ -34,7 +34,7 @@ export default function ForBrandOwnersPage() {
         <motion.div className="relative z-10 flex h-full min-h-0 items-center">
           <motion.div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10">
             <motion.div
-              className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-12"
+              className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(400px,480px)] xl:gap-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
@@ -42,19 +42,19 @@ export default function ForBrandOwnersPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="flex flex-col gap-4"
+                className="lyb-hero-copy flex flex-col gap-4"
               >
-                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-800">
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-600 animate-pulse" />
+                <span className="lyb-hero-badge inline-flex w-fit items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-100">
+                  <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
                   For brand founders
                 </span>
-                <h1 className="lyb-section-heading text-3xl sm:text-4xl lg:text-[2.5rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 max-w-lg">
+                <h1 className="lyb-hero-title text-3xl sm:text-4xl lg:text-[2.5rem] font-extrabold leading-[1.1] tracking-tight max-w-lg">
                   List your brand. Scale with capital.
                 </h1>
-                <p className="text-sm text-slate-700 leading-relaxed max-w-md">
+                <p className="lyb-hero-subtext text-sm leading-relaxed max-w-md">
                   Investor-ready franchise listing — model design, verified capital, and multi-city rollout.
                 </p>
-                <ul className="flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem] text-slate-700">
+                <ul className="lyb-hero-subtext flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem]">
                   <li className="flex items-center gap-1.5"><IcoUsers /><span>1,800+ investors</span></li>
                   <li className="flex items-center gap-1.5"><IcoShield /><span>SEBI-aligned</span></li>
                   <li className="flex items-center gap-1.5"><IcoTrend /><span>30-day readiness</span></li>
@@ -341,12 +341,12 @@ function ProblemsSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
             The Hard Truth
           </span>
-          <h2 className="text-xl sm:text-2xl lg:text-[2.1rem] font-extrabold tracking-tight leading-[1.15]">
-            <span className="bg-gradient-to-r from-white via-violet-100 to-indigo-200 bg-clip-text text-transparent">
+          <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-xl sm:text-2xl lg:text-[2.1rem] font-extrabold tracking-tight leading-[1.15]">
+            <span className="lyb-problems-heading bg-gradient-to-r from-white via-violet-100 to-indigo-200 bg-clip-text text-transparent">
               Why Most Brands Fail to Scale — and How iFranchise Fixes It
             </span>
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-white leading-relaxed line-clamp-2 max-w-2xl mx-auto">
+          <p className="lyb-page-subtext mt-3 text-sm sm:text-base leading-relaxed line-clamp-2 max-w-2xl mx-auto">
             Select any failure point to see our franchise operating system — investor match, model design, and rollout intelligence.
           </p>
         </motion.div>

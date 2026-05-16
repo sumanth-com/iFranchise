@@ -36,8 +36,8 @@ export default function ListYourBrandFAQSection() {
           viewport={{ once: true }}
           className="mb-10 text-center"
         >
-          <h2 className="mb-3 text-3xl font-bold text-white lg:text-4xl">Frequently Asked Questions</h2>
-          <p className="mx-auto max-w-2xl text-lg text-white">
+          <h2 className="lyb-page-h2 lyb-section-heading-on-dark mb-3 text-3xl font-bold lg:text-4xl">Frequently Asked Questions</h2>
+          <p className="lyb-page-subtext lyb-section-subtext mx-auto max-w-2xl text-lg">
             Quick answers for brand founders exploring franchise expansion.
           </p>
         </motion.div>
@@ -62,7 +62,7 @@ export default function ListYourBrandFAQSection() {
                 <button
                   type="button"
                   onClick={() => document.getElementById('hero-brand-inquiry')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-                  className="w-full rounded-xl bg-white py-3 text-sm font-bold text-slate-900 shadow-lg transition hover:bg-violet-50"
+                  className="lyb-faq-cta-primary w-full rounded-xl py-3 text-sm font-bold shadow-lg transition hover:bg-violet-700"
                 >
                   Start Brand Inquiry
                 </button>

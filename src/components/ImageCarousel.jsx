@@ -31,7 +31,9 @@ export default function ImageCarousel({
   alt, 
   category = 'default',
   heightClassName = 'h-[450px] sm:h-[550px] md:h-[650px] lg:h-[750px]',
-  showThumbnails = false 
+  showThumbnails = false,
+  fillParent = false,
+  className = '',
 }) {
   const safeImages = useMemo(() => {
     const list = (images || []).filter(Boolean);
@@ -76,10 +78,10 @@ export default function ImageCarousel({
   };
 
   return (
-    <div className="space-y-4">
+    <div className={fillParent ? `flex h-full min-h-0 flex-col ${className}` : `space-y-4 ${className}`}>
       <div 
         ref={containerRef}
-        className={`group relative w-full overflow-hidden rounded-2xl lg:rounded-3xl ${heightClassName}`}
+        className={`group relative w-full overflow-hidden ${fillParent ? 'min-h-0 flex-1 rounded-none' : 'rounded-2xl lg:rounded-3xl'} ${heightClassName}`}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}

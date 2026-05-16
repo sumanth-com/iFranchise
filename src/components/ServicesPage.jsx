@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+﻿import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiTrendingUp, FiTarget, FiUsers, FiMessageSquare,
@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fi';
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
+import WhyIFranchiseSection from './sections/WhyIFranchiseSection';
 import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
@@ -1699,157 +1700,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* WHY CHOOSE iFRANCHISE */}
-      <div className="relative z-10 w-full pt-8 pb-12 overflow-hidden">
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Header */}
-          <div className="theme-section-on-light text-center mb-12">
-            <Reveal>
-              <div className="inline-flex items-center justify-center mb-6">
-                <SectionPill>Why iFranchise</SectionPill>
-              </div>
-              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
-                Why Businesses Choose iFranchise
-              </h2>
-            </Reveal>
-          </div>
-
-          {/* 4-Column Premium Enterprise Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-            
-            {/* Card 1: End-to-End Support */}
-            <Reveal delay={0}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(99,102,241,0.15)] h-full flex flex-col">
-                
-                {/* Soft glow border on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(99,102,241,0.3), inset 0 0 20px rgba(99,102,241,0.08)' }} />
-
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Animated Icon */}
-                  <div className="mb-6">
-                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg transition-all duration-200 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_12px_30px_rgba(99,102,241,0.3)]">
-                      <FiLayers className="h-7 w-7 text-white transition-transform duration-200 group-hover:scale-110" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-indigo-700">
-                    End-to-End Support
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-white leading-relaxed">
-                    From onboarding to investor acquisition, we manage every stage of franchise growth.
-                  </p>
-                </div>
-
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-              </div>
-            </Reveal>
-
-            {/* Card 2: Expansion-Focused Strategy */}
-            <Reveal delay={0.1}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(16,185,129,0.15)] h-full flex flex-col">
-                
-                {/* Soft glow border on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(16,185,129,0.3), inset 0 0 20px rgba(16,185,129,0.08)' }} />
-
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Animated Icon */}
-                  <div className="mb-6">
-                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg transition-all duration-200 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_12px_30px_rgba(16,185,129,0.3)]">
-                      <FiTrendingUp className="h-7 w-7 text-white transition-transform duration-200 group-hover:scale-110" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-emerald-700">
-                    Expansion-Focused Strategy
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-white leading-relaxed">
-                    Our approach is built around scalable business expansion and market reach.
-                  </p>
-                </div>
-
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-              </div>
-            </Reveal>
-
-            {/* Card 3: Investor Network */}
-            <Reveal delay={0.2}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(139,92,246,0.15)] h-full flex flex-col">
-                
-                {/* Soft glow border on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(139,92,246,0.3), inset 0 0 20px rgba(139,92,246,0.08)' }} />
-
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Animated Icon */}
-                  <div className="mb-6">
-                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg transition-all duration-200 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_12px_30px_rgba(139,92,246,0.3)]">
-                      <FiUsers className="h-7 w-7 text-white transition-transform duration-200 group-hover:scale-110" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-violet-700">
-                    Investor Network
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-white leading-relaxed">
-                    Access investors actively searching for franchise business opportunities.
-                  </p>
-                </div>
-
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-              </div>
-            </Reveal>
-
-            {/* Card 4: Structured Franchise Ecosystem */}
-            <Reveal delay={0.3}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(249,115,22,0.15)] h-full flex flex-col">
-                
-                {/* Soft glow border on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" style={{ boxShadow: '0 0 0 1px rgba(249,115,22,0.3), inset 0 0 20px rgba(249,115,22,0.08)' }} />
-
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Animated Icon */}
-                  <div className="mb-6">
-                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg transition-all duration-200 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-[0_12px_30px_rgba(249,115,22,0.3)]">
-                      <FiShield className="h-7 w-7 text-white transition-transform duration-200 group-hover:scale-110" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-4 transition-colors duration-300 group-hover:text-orange-700">
-                    Structured Franchise Ecosystem
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-white leading-relaxed">
-                    Clear processes, transparent communication, and growth-focused execution.
-                  </p>
-                </div>
-
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-              </div>
-            </Reveal>
-
-          </div>
-
-        </div>
-      </div>
+      {/* WHY iFRANCHISE — matches home page */}
+      <WhyIFranchiseSection className="relative z-10" />
 
       {/* FAQ SECTION */}
       <div className="relative z-10 w-full py-12 overflow-hidden">

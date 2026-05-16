@@ -11,16 +11,16 @@ function SectionHeader({ badge, title, subtitle, center = true }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className={`mb-6 lg:mb-8 ${center ? 'text-center mx-auto max-w-3xl' : ''}`}
+      className={`lyb-dark-heading mb-6 lg:mb-8 ${center ? 'text-center mx-auto max-w-3xl' : ''}`}
     >
       {badge && (
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-3">
+        <span className="lyb-section-badge inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
           {badge}
         </span>
       )}
-      <h2 className="text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold tracking-tight text-white leading-[1.12]">{title}</h2>
-      {subtitle && <p className="mt-2 text-violet-100/80 text-sm sm:text-base leading-relaxed">{subtitle}</p>}
+      <h2 className="lyb-section-heading-on-dark text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold tracking-tight text-white leading-[1.12]">{title}</h2>
+      {subtitle && <p className="lyb-section-subtext mt-2 text-sm sm:text-base leading-relaxed text-violet-100/80">{subtitle}</p>}
     </motion.div>
   );
 }
@@ -78,7 +78,7 @@ const MATCH_FEATURES = [
 
 export function GrowthInvestorSection() {
   return (
-    <section className={VIEWPORT_SECTION}>
+    <section className={`lyb-why-section ${VIEWPORT_SECTION}`}>
       <motion.div className={`${LYB_CONTAINER} w-full`}>
         <SectionHeader
           badge="Why iFranchise"
@@ -94,11 +94,11 @@ export function GrowthInvestorSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="card-premium-dark-inner rounded-xl p-4"
+                className="lyb-feature-card card-premium-dark-inner rounded-xl border border-violet-500/20 p-4"
               >
-                <span className="text-[0.6rem] font-bold text-violet-400">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="mt-1 text-sm font-extrabold text-white leading-snug">{b.title}</h3>
-                <p className="mt-1 text-[0.72rem] text-violet-100/75 leading-snug">{b.desc}</p>
+                <span className="lyb-feature-card-index text-[0.6rem] font-bold text-violet-400">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="lyb-feature-card-title mt-1 text-sm font-extrabold leading-snug text-white">{b.title}</h3>
+                <p className="lyb-feature-card-body mt-1 text-[0.72rem] leading-snug text-violet-100/75">{b.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -106,9 +106,9 @@ export function GrowthInvestorSection() {
             initial={{ opacity: 0, x: 12 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="card-premium-dark rounded-2xl p-5 flex flex-col justify-center"
+            className="lyb-investor-panel card-premium-dark rounded-2xl border border-violet-500/25 p-5 flex flex-col justify-center"
           >
-            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white mb-3">Investor match</p>
+            <p className="lyb-investor-panel-title text-[0.65rem] font-bold uppercase tracking-widest text-white mb-3">Investor match</p>
             <div className="grid grid-cols-2 gap-3">
               {MATCH_FEATURES.map((f, i) => (
                 <motion.div
@@ -117,14 +117,14 @@ export function GrowthInvestorSection() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.08 + i * 0.05 }}
-                  className="rounded-xl border border-violet-500/30 bg-violet-500/10 p-3.5 text-center"
+                  className="lyb-investor-stat rounded-xl border border-violet-500/30 bg-violet-500/10 p-3.5 text-center"
                 >
-                  <p className="text-xl font-extrabold text-white">{f.value}</p>
-                  <p className="mt-0.5 text-[0.65rem] font-medium text-white">{f.label}</p>
+                  <p className="lyb-investor-stat-value text-xl font-extrabold text-white">{f.value}</p>
+                  <p className="lyb-investor-stat-label mt-0.5 text-[0.65rem] font-medium text-white">{f.label}</p>
                 </motion.div>
               ))}
             </div>
-            <p className="mt-3 text-xs text-violet-100/70">
+            <p className="lyb-investor-panel-note mt-3 text-xs text-violet-100/70">
               Filtered by sector, ticket size, geography, and operating appetite.
             </p>
           </motion.div>
@@ -154,10 +154,10 @@ function ColumnShell({ label, children, delay = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="flex h-full min-h-[380px] flex-col rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-950/40 via-[#0e0620]/80 to-[#0a0618]/90 p-4 shadow-[0_16px_48px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:p-5"
+      className="lyb-scale-column flex h-full min-h-[380px] flex-col rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_24px_rgba(15,23,42,0.08)] sm:p-5"
     >
-      <motion.div className="mb-4 flex shrink-0 items-center justify-between border-b border-violet-500/20 pb-3">
-        <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white">{label}</p>
+      <motion.div className="mb-4 flex shrink-0 items-center justify-between border-b border-slate-200 pb-3">
+        <p className="lyb-scale-column-label text-[0.65rem] font-bold uppercase tracking-[0.2em] text-slate-600">{label}</p>
         <motion.span
           className="h-1.5 w-1.5 rounded-full bg-violet-400"
           animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.2, 1] }}
@@ -171,7 +171,7 @@ function ColumnShell({ label, children, delay = 0 }) {
 
 export function RoadmapTimelineSection() {
   return (
-    <section className={VIEWPORT_SECTION}>
+    <section className={`lyb-scale-section ${VIEWPORT_SECTION}`}>
       <motion.div className={`${LYB_CONTAINER} w-full`}>
         <SectionHeader
           badge="Your path to scale"
@@ -187,8 +187,7 @@ export function RoadmapTimelineSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 + i * 0.08, duration: 0.45 }}
-                whileHover={{ x: 4 }}
-                className="lyb-scale-card relative flex flex-1 flex-col justify-center overflow-hidden rounded-xl border border-violet-500/20 bg-white px-4 py-3.5 transition-colors hover:border-violet-300"
+                className="lyb-scale-card relative flex flex-1 flex-col justify-center overflow-hidden rounded-xl border border-slate-200 bg-white px-4 py-3.5"
               >
                 <motion.div
                   className="absolute left-0 top-0 bottom-0 w-0.5 origin-top bg-gradient-to-b from-violet-400 to-indigo-500"
@@ -198,8 +197,8 @@ export function RoadmapTimelineSection() {
                   transition={{ delay: 0.15 + i * 0.1, duration: 0.5 }}
                 />
                 <p className="text-[0.58rem] font-bold uppercase tracking-wider text-violet-400">{r.phase}</p>
-                <h3 className="mt-0.5 text-sm font-extrabold text-slate-900">{r.title}</h3>
-                <p className="mt-1 text-[0.72rem] leading-snug text-slate-600">{r.items.join(' · ')}</p>
+                <h3 className="lyb-scale-card-title mt-0.5 text-sm font-extrabold text-slate-900">{r.title}</h3>
+                <p className="lyb-scale-card-body mt-1 text-[0.72rem] leading-snug text-slate-600">{r.items.join(' · ')}</p>
               </motion.div>
             ))}
           </ColumnShell>
@@ -212,8 +211,7 @@ export function RoadmapTimelineSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 + i * 0.07, duration: 0.45 }}
-                whileHover={{ x: -4 }}
-                className="lyb-scale-card relative flex flex-1 items-center gap-3 overflow-hidden rounded-xl border border-violet-500/20 bg-white px-3 py-3 transition-colors hover:border-violet-300"
+                className="lyb-scale-card relative flex flex-1 items-center gap-3 overflow-hidden rounded-xl border border-slate-200 bg-white px-3 py-3"
               >
                 <motion.span
                   className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[0.65rem] font-bold text-white shadow-[0_0_16px_rgba(139,92,246,0.45)]"
@@ -230,9 +228,9 @@ export function RoadmapTimelineSection() {
                   />
                 </motion.span>
                 <motion.div className="min-w-0 flex-1">
-                  <p className="text-[0.58rem] font-bold uppercase tracking-wider text-slate-600">{t.week}</p>
-                  <h3 className="text-sm font-extrabold text-slate-900">{t.title}</h3>
-                  <p className="text-[0.7rem] text-slate-600">{t.desc}</p>
+                  <p className="lyb-scale-card-body text-[0.58rem] font-bold uppercase tracking-wider text-slate-600">{t.week}</p>
+                  <h3 className="lyb-scale-card-title text-sm font-extrabold text-slate-900">{t.title}</h3>
+                  <p className="lyb-scale-card-body text-[0.7rem] text-slate-600">{t.desc}</p>
                 </motion.div>
               </motion.div>
             ))}

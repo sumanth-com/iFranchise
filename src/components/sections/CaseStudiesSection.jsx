@@ -66,7 +66,7 @@ const CASES = [
 ];
 
 const COLOR = {
-  violet: { accent: 'text-white', bg: 'bg-violet-500/15', border: 'border-violet-500/35', dot: 'bg-violet-500', tab: 'bg-violet-500' },
+  violet: { accent: 'text-violet-700', bg: 'bg-violet-100', border: 'border-violet-300', dot: 'bg-violet-500', tab: 'bg-violet-500' },
 };
 const CHART_GREEN = '#22c55e';
 
@@ -127,14 +127,14 @@ function CityDots({ cities, color }) {
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.3, delay: i * 0.08 }}
-          className={`flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/5 border border-white/10`}
+          className="lyb-proven-city-pill flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5"
         >
           <motion.span
             animate={{ scale: [1, 1.6, 1], opacity: [0.8, 0.2, 0.8] }}
             transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-            className={`w-1.5 h-1.5 rounded-full ${COLOR[color].dot} shrink-0`}
+            className={`h-1.5 w-1.5 shrink-0 rounded-full ${COLOR[color].dot}`}
           />
-          <span className="text-[0.62rem] font-medium text-white">{city}</span>
+          <span className="text-[0.62rem] font-medium text-slate-800">{city}</span>
         </motion.div>
       ))}
     </div>
@@ -146,10 +146,10 @@ function CaseCard({ cs, isActive, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
+      className={`lyb-proven-card w-full text-left p-4 rounded-xl border transition-all duration-200 ${
         isActive
           ? `${c.border} ${c.bg}`
-          : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/8'
+          : 'border-slate-200 bg-white hover:border-violet-200'
       }`}
     >
       <div className="flex items-center gap-3">
@@ -160,12 +160,12 @@ function CaseCard({ cs, isActive, onClick }) {
           onError={e => { e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=80&q=80'; }}
         />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-bold text-white truncate">{cs.brand}</p>
-          <p className="text-[0.65rem] text-white">{cs.category}</p>
+          <p className="lyb-proven-card-title text-sm font-bold truncate">{cs.brand}</p>
+          <p className="lyb-proven-card-meta text-[0.65rem]">{cs.category}</p>
         </div>
         <div className="text-right shrink-0">
-          <p className={`text-sm font-extrabold ${c.accent}`}>{cs.roiGrowth}</p>
-          <p className="text-[0.6rem] text-white">{cs.timeline}</p>
+          <p className={`lyb-proven-card-stat text-sm font-extrabold ${isActive ? 'text-violet-700' : 'text-violet-600'}`}>{cs.roiGrowth}</p>
+          <p className="lyb-proven-card-meta text-[0.6rem]">{cs.timeline}</p>
         </div>
       </div>
     </button>
@@ -178,7 +178,7 @@ export default function CaseStudiesSection() {
   const c = COLOR[cs.color];
 
   return (
-    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
+    <section className="lyb-proven-section relative overflow-hidden bg-transparent py-10 lg:py-14">
 
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10">
@@ -191,17 +191,17 @@ export default function CaseStudiesSection() {
           transition={{ duration: 0.55 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-white mb-4">
+          <span className="lyb-section-badge inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Proven Results
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-white leading-[1.1] mb-4">
+          <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight leading-[1.1] mb-4">
             Franchise Transformations That{' '}
-            <span className="bg-gradient-to-r from-violet-300 to-indigo-300 bg-clip-text text-transparent">
+            <span className="lyb-gradient-heading bg-gradient-to-r from-violet-300 to-indigo-300 bg-clip-text text-transparent">
               Speak for Themselves
             </span>
           </h2>
-          <p className="text-violet-100/85 text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="lyb-section-subtext text-base max-w-2xl mx-auto leading-relaxed">
             Real brands. Real numbers. Real expansion — powered by iFranchise systems.
           </p>
         </motion.div>
@@ -217,13 +217,13 @@ export default function CaseStudiesSection() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-3"
           >
-            <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white/75 mb-4">Select a Case Study</p>
+            <p className="lyb-proven-sidebar-label mb-4 text-[0.65rem] font-bold uppercase tracking-widest">Select a Case Study</p>
             {CASES.map((c, i) => (
               <CaseCard key={c.id} cs={c} isActive={active === i} onClick={() => setActive(i)} />
             ))}
 
             {/* disclaimer */}
-            <p className="text-[0.62rem] text-white/75 leading-relaxed pt-2">
+            <p className="lyb-proven-sidebar-note pt-2 text-[0.62rem] leading-relaxed">
               * Results are representative of brands that completed the full iFranchise expansion program.
             </p>
           </motion.div>
@@ -239,7 +239,7 @@ export default function CaseStudiesSection() {
               className="space-y-4"
             >
               {/* case header */}
-              <div className="flex items-center gap-4 p-5 rounded-2xl card-premium-dark border border-violet-500/25">
+              <div className="lyb-proven-detail flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <img
                   src={cs.image}
                   alt={cs.brand}
@@ -248,27 +248,27 @@ export default function CaseStudiesSection() {
                 />
                 <div className="flex-1">
                   <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${c.accent} mb-0.5`}>{cs.category}</p>
-                  <h3 className="text-xl font-extrabold text-white">{cs.brand}</h3>
-                  <p className="text-[0.78rem] text-white/75">{cs.tagline}</p>
+                  <h3 className="lyb-proven-detail-title text-xl font-extrabold">{cs.brand}</h3>
+                  <p className="lyb-proven-detail-body text-[0.78rem]">{cs.tagline}</p>
                 </div>
                 <div className="text-right shrink-0">
                   <p className={`text-2xl font-extrabold ${c.accent}`}>{cs.roiGrowth}</p>
-                  <p className="text-[0.65rem] text-white">Revenue Growth</p>
-                  <p className="text-[0.65rem] text-white">in {cs.timeline}</p>
+                  <p className="lyb-proven-detail-body text-[0.65rem]">Revenue Growth</p>
+                  <p className="lyb-proven-detail-body text-[0.65rem]">in {cs.timeline}</p>
                 </div>
               </div>
 
               {/* before vs after */}
               <div className="grid grid-cols-2 gap-3">
                 {/* before */}
-                <div className="p-4 rounded-2xl bg-violet-950/50 border border-violet-500/30">
+                <div className="lyb-proven-before-panel rounded-2xl border border-violet-200 bg-violet-50 p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-5 h-5 rounded-full bg-violet-600/60 flex items-center justify-center">
                       <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                       </svg>
                     </div>
-                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-white">Before iFranchise</p>
+                    <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider">Before iFranchise</p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mb-3">
                     {[
@@ -277,9 +277,9 @@ export default function CaseStudiesSection() {
                       { label: 'Revenue',   value: cs.before.revenue   },
                       { label: 'Units',     value: cs.before.units     },
                     ].map((m, i) => (
-                      <div key={i} className="flex flex-col p-2 rounded-lg bg-white/5 border border-violet-500/25">
-                        <span className="text-sm font-extrabold text-white">{m.value}</span>
-                        <span className="text-[0.6rem] text-white/75">{m.label}</span>
+                      <div key={i} className="lyb-proven-metric-tile flex flex-col rounded-lg border border-slate-200 bg-white p-2">
+                        <span className="lyb-proven-metric-value text-sm font-extrabold">{m.value}</span>
+                        <span className="lyb-proven-metric-label text-[0.6rem]">{m.label}</span>
                       </div>
                     ))}
                   </div>
@@ -287,21 +287,21 @@ export default function CaseStudiesSection() {
                     {cs.before.problems.map((p, i) => (
                       <div key={i} className="flex items-center gap-1.5">
                         <span className="w-1 h-1 rounded-full bg-violet-400 shrink-0" />
-                        <span className="text-[0.68rem] text-white">{p}</span>
+                        <span className="lyb-proven-list-item text-[0.68rem]">{p}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* after */}
-                <div className={`p-4 rounded-2xl ${c.bg} border ${c.border}`}>
+                <div className={`lyb-proven-after-panel rounded-2xl border p-4 ${c.border} ${c.bg}`}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className={`w-5 h-5 rounded-full ${c.dot} flex items-center justify-center`}>
                       <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                       </svg>
                     </div>
-                    <p className={`text-[0.68rem] font-bold uppercase tracking-wider ${c.accent}`}>After iFranchise</p>
+                    <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider text-violet-700">After iFranchise</p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 mb-3">
                     {[
@@ -315,10 +315,10 @@ export default function CaseStudiesSection() {
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.3, delay: i * 0.07 }}
-                        className="flex flex-col p-2 rounded-lg bg-white/10 border border-violet-400/35"
+                        className="lyb-proven-metric-tile flex flex-col rounded-lg border border-violet-200 bg-white p-2"
                       >
-                        <span className={`text-sm font-extrabold ${c.accent}`}>{m.value}</span>
-                        <span className="text-[0.6rem] text-white">{m.label}</span>
+                        <span className="lyb-proven-metric-value text-sm font-extrabold text-violet-800">{m.value}</span>
+                        <span className="lyb-proven-metric-label text-[0.6rem]">{m.label}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -326,7 +326,7 @@ export default function CaseStudiesSection() {
                     {cs.after.wins.map((w, i) => (
                       <div key={i} className="flex items-center gap-1.5">
                         <span className={`w-1 h-1 rounded-full ${c.dot} shrink-0`} />
-                        <span className="text-[0.68rem] text-violet-100/85">{w}</span>
+                        <span className="lyb-proven-list-item text-[0.68rem]">{w}</span>
                       </div>
                     ))}
                   </div>
@@ -337,30 +337,30 @@ export default function CaseStudiesSection() {
               <div className="grid grid-cols-2 gap-3">
 
                 {/* revenue growth chart */}
-                <div className="p-4 rounded-2xl card-premium-dark border border-violet-500/25">
+                <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-white/75">Revenue Growth</p>
+                    <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">Revenue Growth</p>
                     <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.revenue} → {cs.after.revenue}</span>
                   </div>
                   <Sparkline points={cs.revenuePoints} />
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-[0.6rem] text-white">Month 1</span>
-                    <span className="text-[0.6rem] text-white">Month {cs.revenuePoints.length}</span>
+                    <span className="lyb-proven-chart-meta text-[0.6rem]">Month 1</span>
+                    <span className="lyb-proven-chart-meta text-[0.6rem]">Month {cs.revenuePoints.length}</span>
                   </div>
                 </div>
 
                 {/* city expansion */}
-                <div className="p-4 rounded-2xl card-premium-dark border border-violet-500/25">
+                <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-wider text-white/75">City Expansion</p>
+                    <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">City Expansion</p>
                     <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.cities} → {cs.after.cities} cities</span>
                   </div>
                   <CityDots cities={cs.cityData} color={cs.color} />
-                  <div className="flex items-center gap-2 mt-3 pt-2 border-t border-white/8">
-                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <div className="lyb-proven-chart-footer mt-3 flex items-center gap-2 border-t border-slate-200 pt-2">
+                    <svg className="h-3 w-3 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     </svg>
-                    <span className="text-[0.62rem] text-white">{cs.after.investors} investors across {cs.after.cities} cities</span>
+                    <span className="lyb-proven-chart-meta text-[0.62rem]">{cs.after.investors} investors across {cs.after.cities} cities</span>
                   </div>
                 </div>
               </div>
@@ -377,7 +377,7 @@ export default function CaseStudiesSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mt-14"
         >
-          <p className="text-white text-sm mb-5">Ready to write your own success story?</p>
+          <p className="lyb-proven-footer-cta mb-5 text-sm">Ready to write your own success story?</p>
           <CtaButton
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
           >

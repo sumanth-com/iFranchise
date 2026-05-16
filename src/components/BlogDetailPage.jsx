@@ -141,7 +141,7 @@ function ArticleSection({ section, index }) {
         {section.points && (
           <ul className="mt-4 space-y-3">
             {section.points.map((pt) => (
-              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-white">
+              <li key={pt} className="flex items-start gap-3 text-[16px] leading-relaxed text-slate-800">
                 <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-violet-400" />
                 {pt}
               </li>
@@ -176,54 +176,50 @@ function ArticleSection({ section, index }) {
 }
 
 function OverviewDropdown({ headings, onHeadingClick }) {
-  const [open, setOpen] = useState(false);
-  const [highlighted, setHighlighted] = useState(null);
-
-  useEffect(() => {
-    if (!headings.length) return;
-    let i = 0;
-    const id = setInterval(() => {
-      setHighlighted(headings[i]?.id ?? null);
-      i++;
-      if (i >= headings.length) { clearInterval(id); setTimeout(() => setHighlighted(null), 400); }
-    }, 120);
-    return () => clearInterval(id);
-  }, [headings]);
+  const [open, setOpen] = useState(true);
+  const rows = Math.ceil(headings.length / 3);
+  const panelHeight = rows * 56 + 40;
 
   return (
-    <div className="mb-10 w-full">
+    <div className="blog-overview mb-10 w-full">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="group flex w-full items-center justify-between rounded-2xl border border-violet-500/25 card-premium-dark px-6 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition hover:border-violet-400/40"
+        className="blog-overview-trigger group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm transition hover:border-violet-200 hover:shadow-md"
+        aria-expanded={open}
       >
         <div className="flex items-center gap-3">
           <span className="relative flex h-3 w-3">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-400 opacity-60" />
             <span className="relative inline-flex h-3 w-3 rounded-full bg-violet-500" />
           </span>
-          <span className="text-base font-bold text-white">Overview</span>
-          <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-semibold text-white">{headings.length} sections</span>
+          <span className="blog-overview-title text-base font-bold text-slate-900">Overview</span>
+          <span className="blog-overview-badge rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-semibold text-violet-700">{headings.length} sections</span>
         </div>
-        <svg className={`h-5 w-5 text-white transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+        <svg className={`blog-overview-chevron h-5 w-5 text-slate-700 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
           fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: open ? `${headings.length * 52 + 24}px` : '0px', opacity: open ? 1 : 0 }}>
-        <div className="mt-2 rounded-2xl border border-violet-500/25 card-premium-dark px-4 py-3 shadow-inner">
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="blog-overview-panel-wrap overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: open ? `${panelHeight}px` : '0px', opacity: open ? 1 : 0 }}
+      >
+        <div className="blog-overview-panel mt-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {headings.map((h, i) => (
-              <button key={h.id} type="button"
-                onClick={() => { onHeadingClick(h.id); setOpen(false); }}
-                className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all duration-200 ${
-                  highlighted === h.id ? 'bg-violet-600 text-white scale-[1.02]' : 'text-white hover:bg-violet-500/15 hover:text-white'
-                }`}>
-                <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/25 text-[10px] font-bold text-violet-100">
+              <button
+                key={h.id}
+                type="button"
+                onClick={() => {
+                  onHeadingClick(h.id);
+                  setOpen(false);
+                }}
+                className="blog-overview-item flex items-center gap-2.5 rounded-xl bg-violet-50 px-3 py-2.5 text-left text-sm font-medium text-slate-900 transition hover:bg-violet-100"
+              >
+                <span className="blog-overview-num flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">
                   {i + 1}
                 </span>
-                {h.label}
+                <span className="blog-overview-label leading-snug">{h.label}</span>
               </button>
             ))}
           </div>
@@ -328,6 +324,11 @@ function BlogDetailPage() {
     return () => clearTimeout(timer);
   }, [article?.slug]);
 
+  const overviewItems = useMemo(() => {
+    if (headings.length > 0) return headings;
+    return sections.map((s) => ({ id: s.id, label: s.heading }));
+  }, [headings, sections]);
+
   const relatedPosts = useMemo(
     () => blogPosts.filter((p) => p?.slug && p.slug !== article?.slug).slice(0, 3),
     [article?.slug]
@@ -396,8 +397,8 @@ function BlogDetailPage() {
 
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
         <div className="mt-12 space-y-14">
-          {headings.length > 0 && (
-            <OverviewDropdown headings={headings} onHeadingClick={handleHeadingClick} />
+          {overviewItems.length > 0 && (
+            <OverviewDropdown headings={overviewItems} onHeadingClick={handleHeadingClick} />
           )}
           {sections.map((section, i) => (
             <ArticleSection key={section.id} section={section} index={i} />
@@ -481,12 +482,13 @@ function BlogDetailPage() {
         </div>
       </div>
 
-      <div className="relative h-[280px] w-full overflow-hidden md:h-[400px]">
+      <div className="blog-insights-banner relative h-[280px] w-full overflow-hidden md:h-[400px]">
         <img src={article.subImage || article.image} alt="" loading="lazy" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/65" />
+        <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/60">Keep Reading</p>
-            <p className="mt-3 text-3xl font-extrabold text-white md:text-5xl">Explore More Insights</p>
+            <p className="blog-insights-eyebrow text-xs font-bold uppercase tracking-[0.3em] text-violet-200">Keep Reading</p>
+            <p className="blog-insights-title mt-3 text-3xl font-extrabold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] md:text-5xl">Explore More Insights</p>
           </div>
         </div>
       </div>

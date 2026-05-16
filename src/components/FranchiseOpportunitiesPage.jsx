@@ -190,7 +190,7 @@ function OpportunityCard({ opportunity }) {
             e.stopPropagation();
             handleViewDetails();
           }}
-          className="w-full bg-[#0B1220] text-white py-2 px-4 rounded-lg text-sm font-semibold transition-colors duration-200 hover:bg-[#1a2332] border border-white/10"
+          className="btn-purple-solid w-full rounded-lg border-none py-2 px-4 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5"
         >
           View Details
         </button>

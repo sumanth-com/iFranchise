@@ -80,13 +80,13 @@ export default function BrandsSection() {
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
                   For Brand Owners
                 </span>
-                <h2 className="text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.3rem] font-extrabold text-white leading-[1.1] tracking-tight mb-3">
+                <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.3rem] font-extrabold leading-[1.1] tracking-tight mb-3">
                   Everything Your Brand Needs to{' '}
                   <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
                     Franchise at Scale
                   </span>
                 </h2>
-                <p className="text-violet-100/85 text-[0.88rem] leading-relaxed max-w-md">
+                <p className="lyb-section-subtext text-[0.88rem] leading-relaxed max-w-md">
                   From franchise model design to investor acquisition — we handle the full expansion infrastructure so you focus on building your brand.
                 </p>
               </div>

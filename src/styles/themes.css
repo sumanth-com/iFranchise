@@ -887,7 +887,9 @@ html[data-theme='light'] #main-content [class*='text-red-'] { color: #dc2626 !im
 html[data-theme='light'] #main-content [class*='text-blue-'] { color: #2563eb !important; }
 
 /* White text stays white ONLY on colored buttons / badges / gradients */
-html[data-theme='light'] #main-content [class*='bg-violet-5'] .text-white,
+/* Note: do NOT use [class*='bg-violet-5'] — it wrongly matches bg-violet-50 (light panels) */
+html[data-theme='light'] #main-content [class*='bg-violet-500'] .text-white,
+html[data-theme='light'] #main-content [class*='bg-violet-600'] .text-white,
 html[data-theme='light'] #main-content [class*='bg-violet-6'] .text-white,
 html[data-theme='light'] #main-content [class*='bg-violet-7'] .text-white,
 html[data-theme='light'] #main-content [class*='bg-violet-8'] .text-white,
@@ -1501,6 +1503,38 @@ html[data-theme='light'] .blog-detail-page .blog-insight-box p {
   color: #4c1d95 !important;
 }
 
+/* Blog detail — overview accordion (readable on light background) */
+.blog-detail-page .blog-overview-title,
+.blog-detail-page .blog-overview-label,
+.blog-detail-page .blog-overview-chevron {
+  color: #0b0f19 !important;
+}
+
+.blog-detail-page .blog-overview-badge {
+  background: #ede9fe !important;
+  color: #6d28d9 !important;
+}
+
+.blog-detail-page .blog-overview-item {
+  background: #f5f3ff !important;
+  color: #0b0f19 !important;
+}
+
+.blog-detail-page .blog-overview-item:hover {
+  background: #ede9fe !important;
+}
+
+.blog-detail-page .blog-overview-num {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-trigger,
+html[data-theme='light'] .blog-detail-page .blog-overview-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
 /* Careers — white page */
 html[data-theme='light'] .careers-page {
   background: #ffffff !important;
@@ -1541,61 +1575,431 @@ html[data-theme='light'] .career-detail-page .text-white {
   color: #0b0f19 !important;
 }
 
-/* List your brand — light content */
+/* ═══ List your brand page ═══ */
+html[data-theme='dark'] .list-your-brand-page {
+  color: #f8fafc;
+}
+
 html[data-theme='light'] .list-your-brand-page {
-  background: #ffffff !important;
+  color: #0b0f19;
+}
+
+html[data-theme='light'] .list-your-brand-page,
+html[data-theme='dark'] .list-your-brand-page {
+  background: transparent !important;
+}
+
+/* ── Light mode: hero & section headings — black ── */
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-title,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-title,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-section-heading-on-dark,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-page-h2,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-dark-heading h2,
+html[data-theme='light'] .list-your-brand-page .lyb-section-heading-on-dark,
+html[data-theme='light'] .list-your-brand-page .lyb-page-h2 {
+  color: #0b0f19 !important;
+  -webkit-text-fill-color: #0b0f19 !important;
+  background: none !important;
+  background-image: none !important;
+}
+
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-subtext,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-copy p,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-copy li,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-section-subtext,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-dark-heading > p,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-page-subtext,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-subtext,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-copy p,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-copy li,
+html[data-theme='light'] .list-your-brand-page .lyb-section-subtext,
+html[data-theme='light'] .list-your-brand-page .lyb-dark-heading > p {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-hero-badge {
+  color: #5b21b6 !important;
+  border-color: #c4b5fd !important;
+  background: #f5f3ff !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-problems-heading {
+  background: none !important;
+  -webkit-text-fill-color: #0b0f19 !important;
   color: #0b0f19 !important;
 }
 
-html[data-theme='light'] .list-your-brand-page h1,
-html[data-theme='light'] .list-your-brand-page h2,
-html[data-theme='light'] .list-your-brand-page h3,
-html[data-theme='light'] .list-your-brand-page p,
-html[data-theme='light'] .list-your-brand-page li,
-html[data-theme='light'] .list-your-brand-page .lyb-section-heading {
-  color: #0b0f19 !important;
+/* ── Dark mode: hero & section headings — white ── */
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-title,
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-title,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-section-heading-on-dark,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-page-h2,
+html[data-theme='dark'] .list-your-brand-page .lyb-section-heading-on-dark {
+  color: #ffffff !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-scale-card {
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-subtext,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-copy p,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-copy li,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-section-subtext,
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-copy p,
+html[data-theme='dark'] .list-your-brand-page .lyb-section-subtext {
+  color: rgba(237, 233, 254, 0.92) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-dark-heading > p {
+  color: rgba(221, 214, 254, 0.85) !important;
+}
+
+/* ── Scale + industry cards — black text (both themes) ── */
+.list-your-brand-page .lyb-scale-card {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06) !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-scale-card h3,
-html[data-theme='light'] .list-your-brand-page .lyb-scale-card p {
-  color: #0b0f19 !important;
+.list-your-brand-page .lyb-scale-card-title,
+.list-your-brand-page .lyb-scale-card h3,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card-title,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-title,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card h3,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card h3 {
+  color: #000000 !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .theme-light-card,
-html[data-theme='light'] .list-your-brand-page .lyb-white-card {
+.list-your-brand-page .lyb-scale-card-body,
+.list-your-brand-page .lyb-scale-card p,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card-body,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-body,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card p,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card p {
+  color: #334155 !important;
+}
+
+.list-your-brand-page .lyb-industry-card {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  color: #0b0f19 !important;
+  transform: none !important;
 }
 
-/* List your brand — industry cards match services page */
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .theme-light-card {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
+.list-your-brand-page .lyb-industry-card:hover {
+  transform: none !important;
+  border-color: #e2e8f0 !important;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .theme-light-card h3 {
+.list-your-brand-page .lyb-industry-card h3,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card h3,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card h3 {
+  color: #000000 !important;
+}
+
+.list-your-brand-page .lyb-industry-card p,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card p,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card p {
+  color: #334155 !important;
+}
+
+.list-your-brand-page .lyb-industry-card .industry-card-explore {
+  color: #7c3aed !important;
+}
+
+.list-your-brand-page .lyb-industry-card .industry-card-explore:hover {
+  color: #6d28d9 !important;
+  gap: 0.375rem !important;
+  transform: none !important;
+}
+
+/* ── Hero inquiry form — typed text pure black ── */
+.list-your-brand-page .lyb-hero-form input,
+.list-your-brand-page .lyb-hero-form select,
+.list-your-brand-page .lyb-hero-form textarea,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-form input,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-form input,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-form select,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-form select,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-hero-form textarea,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-form textarea {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  caret-color: #000000 !important;
+}
+
+.list-your-brand-page .lyb-hero-form input::placeholder,
+.list-your-brand-page .lyb-hero-form textarea::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+}
+
+.list-your-brand-page .lyb-hero-form input:-webkit-autofill,
+.list-your-brand-page .lyb-hero-form select:-webkit-autofill,
+.list-your-brand-page .lyb-hero-form textarea:-webkit-autofill {
+  -webkit-text-fill-color: #000000 !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+.list-your-brand-page .lyb-hero-form select option {
+  color: #000000 !important;
+  background: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-form label,
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-form .lyb-form-eyebrow,
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-form .lyb-form-title {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form .lyb-form-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12) !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form label,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form .lyb-form-eyebrow,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form .lyb-form-title {
   color: #0f172a !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .theme-light-card p {
+/* Submit — purple + white (both themes; required in dark) */
+.list-your-brand-page .lyb-hero-form-submit,
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-form-submit,
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form-submit {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.list-your-brand-page .lyb-hero-form-submit:hover:not(:disabled),
+html[data-theme='dark'] .list-your-brand-page .lyb-hero-form-submit:hover:not(:disabled),
+html[data-theme='light'] .list-your-brand-page .lyb-hero-form-submit:hover:not(:disabled) {
+  background: #6d28d9 !important;
+  color: #ffffff !important;
+}
+
+/* ── Section badges (Why iFranchise, Proven Results, etc.) ── */
+html[data-theme='light'] .list-your-brand-page .lyb-section-badge {
+  color: #5b21b6 !important;
+  border-color: #c4b5fd !important;
+  background: #f5f3ff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-section-badge {
+  color: #ffffff !important;
+}
+
+/* ── Why iFranchise — readable cards in light mode ── */
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-feature-card,
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-feature-card-index {
+  color: #7c3aed !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-feature-card-title,
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-panel-title {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-feature-card-body,
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-panel-note {
   color: #475569 !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .lyb-section-heading,
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .theme-section-on-light p {
-  color: #0f172a !important;
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-stat {
+  background: #f5f3ff !important;
+  border-color: #ddd6fe !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-industries-section .theme-section-on-light > p {
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-stat-value,
+html[data-theme='light'] .list-your-brand-page .lyb-why-section .lyb-investor-stat-label {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-why-section .lyb-feature-card-title,
+html[data-theme='dark'] .list-your-brand-page .lyb-why-section .lyb-investor-panel-title,
+html[data-theme='dark'] .list-your-brand-page .lyb-why-section .lyb-investor-stat-value,
+html[data-theme='dark'] .list-your-brand-page .lyb-why-section .lyb-investor-stat-label {
+  color: #ffffff !important;
+}
+
+/* ── Your path to scale — white column shells (both themes) ── */
+.list-your-brand-page .lyb-scale-column {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.list-your-brand-page .lyb-scale-column-label {
   color: #475569 !important;
+}
+
+/* ── Proven Results — black readable text in light mode ── */
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-gradient-heading {
+  background: linear-gradient(90deg, #6d28d9, #4f46e5) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-sidebar-label,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-sidebar-note,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-footer-cta {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-card-title {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-card-meta {
+  color: #64748b !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail-title,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-label {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail-body,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-meta {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-accent,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail .text-white {
+  color: #7c3aed !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-before-panel {
+  background: #f5f3ff !important;
+  border-color: #ddd6fe !important;
+}
+
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-panel-label,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-panel-label,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-metric-value,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-metric-value,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-list-item,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-list-item {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-metric-label,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-metric-label {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-metric-tile {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-proven-card-stat {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-after-panel {
+  background: #faf5ff !important;
+  border-color: #ddd6fe !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-after-panel .text-white,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-after-panel [class*='text-white'] {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-after-panel [class*='text-violet-100'] {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-after-panel .bg-white\/10 {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-city-pill,
+html[data-theme='light'] .list-your-brand-page .lyb-proven-section .lyb-proven-city-pill span {
+  color: #0b0f19 !important;
+  background: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-before-panel {
+  background: rgba(46, 16, 101, 0.55) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-panel-label,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-metric-value,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-metric-label,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-before-panel .lyb-proven-list-item,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-panel-label,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-metric-value,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-metric-label,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-after-panel .lyb-proven-list-item {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-metric-tile {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-proven-card-stat {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail-title,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-label,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-sidebar-label {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail-body,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-meta,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-sidebar-note,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-footer-cta {
+  color: rgba(237, 233, 254, 0.85) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-panel {
+  background: linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%) !important;
+  border-color: rgba(139, 92, 246, 0.25) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-accent,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-detail .text-white {
+  color: #c4b5fd !important;
+}
+
+/* ── FAQ primary CTA — purple + white (both themes) ── */
+.list-your-brand-page .lyb-faq-cta-primary,
+html[data-theme='light'] .list-your-brand-page .lyb-faq-cta-primary,
+html[data-theme='dark'] .list-your-brand-page .lyb-faq-cta-primary {
+  background: #7c3aed !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.list-your-brand-page .lyb-faq-cta-primary:hover,
+html[data-theme='light'] .list-your-brand-page .lyb-faq-cta-primary:hover,
+html[data-theme='dark'] .list-your-brand-page .lyb-faq-cta-primary:hover {
+  background: #6d28d9 !important;
+  color: #ffffff !important;
 }
 
 /* Services — dashboard: readable text on light sub-panels, white on dark metrics */
@@ -1623,4 +2027,312 @@ html[data-theme='light'] .services-dashboard-panel .dashboard-header-bar .text-w
 
 html[data-theme='light'] .services-dashboard-panel .dashboard-header-bar .text-emerald-300 {
   color: #6ee7b7 !important;
+}
+
+/* ═══ Franchise details — full-width gallery + about layout ═══ */
+.fd-gallery-full {
+  width: 100%;
+}
+
+.fd-gallery-full .fd-gallery-shell > div {
+  height: 100%;
+  min-height: 0;
+}
+
+.franchise-details-page .fd-about-section :is(p, h3, strong) {
+  color: #000000 !important;
+}
+
+.franchise-details-page .fd-about-heading,
+.franchise-details-page .fd-section-heading {
+  text-align: center !important;
+  width: 100%;
+}
+
+.franchise-details-page .fd-about-stats {
+  align-self: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (min-width: 1024px) {
+  .franchise-details-page .fd-about-stats {
+    justify-self: end;
+    max-width: 100%;
+  }
+}
+
+.franchise-details-page .fd-about-stats .fd-stat-card,
+.franchise-details-page .fd-about-stats .fd-about-stat-card {
+  background: #ffffff !important;
+  text-align: center !important;
+}
+
+.franchise-details-page .fd-about-stats .fd-about-stat-card p {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center !important;
+}
+
+.franchise-details-page .fd-about-stats .fd-about-stat-card p:first-child {
+  letter-spacing: 0.08em;
+}
+
+.franchise-details-page .fd-about-stats .fd-about-stat-card p:last-child {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-stats .fd-stat-card p,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-stats .fd-about-stat-card p {
+  color: #000000 !important;
+  text-align: center !important;
+}
+
+.fd-stat-card {
+  background: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .fd-stat-card p:first-child,
+html[data-theme='light'] .fd-stat-card p:first-child {
+  color: #64748b !important;
+}
+
+html[data-theme='light'] #main-content .fd-stat-card p:last-child,
+html[data-theme='light'] .fd-stat-card p:last-child {
+  color: #0b0f19 !important;
+}
+
+/* ═══ Franchise details — readable text in dark & light mode ═══ */
+.franchise-details-page :is(.bg-white, .fd-stat-card) {
+  background-color: #ffffff !important;
+}
+
+.franchise-details-page .bg-slate-50 {
+  background-color: #f8fafc !important;
+}
+
+.franchise-details-page .bg-slate-100 {
+  background-color: #f1f5f9 !important;
+}
+
+/* Headings on white panels */
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) [class*='0b0f19'],
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) h1,
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) h3,
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) h4,
+html[data-theme='light'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) [class*='0b0f19'] {
+  color: #0b0f19 !important;
+}
+
+/* Body copy wrongly set to text-white on light panels (exclude purple CTAs) */
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50, .fd-stat-card) .text-white:not(.btn-purple-solid):not(.fd-tab-btn--active),
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) .divide-y .text-white:not(.btn-purple-solid),
+html[data-theme='light'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50, .fd-stat-card) .text-white:not(.btn-purple-solid):not(.fd-tab-btn--active) {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) .text-slate-600,
+html[data-theme='dark'] #main-content .franchise-details-page :is(.bg-white, .bg-slate-50) .text-slate-700,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-stat-card .text-slate-500 {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-stat-card [class*='0b0f19'] {
+  color: #0b0f19 !important;
+}
+
+/* Financial table rows */
+html[data-theme='dark'] #main-content .franchise-details-page .divide-y > div {
+  background: #ffffff !important;
+  color: #334155 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .divide-y > div p {
+  color: #334155 !important;
+}
+
+/* Purple CTAs — white text (both themes) */
+.franchise-details-page .btn-purple-solid,
+.franchise-details-page .btn-purple-solid span,
+.franchise-details-page .btn-purple-solid svg,
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid,
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid *,
+html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid,
+html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid * {
+  color: #ffffff !important;
+}
+
+.franchise-details-page .btn-purple-solid {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+}
+
+.franchise-details-page .btn-purple-solid:hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+}
+
+/* Status badges on hero */
+html[data-theme='dark'] #main-content .franchise-details-page .bg-emerald-100 {
+  color: #047857 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .bg-violet-100 {
+  color: #6d28d9 !important;
+}
+
+/* Tab filters — inactive: dark text on white; active: purple + white */
+.franchise-details-page .fd-tab-btn--inactive {
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+}
+
+.franchise-details-page .fd-tab-btn--inactive:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-btn--inactive,
+html[data-theme='light'] #main-content .franchise-details-page .fd-tab-btn--inactive {
+  color: #334155 !important;
+  background: #ffffff !important;
+}
+
+.franchise-details-page .fd-tab-btn--active,
+.franchise-details-page .fd-tab-btn--active.btn-purple-solid {
+  color: #ffffff !important;
+  border: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-btn--active,
+html[data-theme='light'] #main-content .franchise-details-page .fd-tab-btn--active,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-btn--active *,
+html[data-theme='light'] #main-content .franchise-details-page .fd-tab-btn--active * {
+  color: #ffffff !important;
+}
+
+.franchise-details-page .fd-tab-body,
+.franchise-details-page .fd-tab-content .fd-tab-body,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-body,
+html[data-theme='light'] #main-content .franchise-details-page .fd-tab-body {
+  color: #334155 !important;
+}
+
+.franchise-details-page .fd-tab-content .text-slate-700 {
+  color: #334155 !important;
+}
+
+/* Similar opportunities — metric labels */
+html[data-theme='dark'] #main-content .franchise-details-page .bg-white .text-xs.font-medium.text-white {
+  color: #64748b !important;
+}
+
+/* Franchise details — dual-column section pairs */
+.franchise-details-page .fd-dual-sections {
+  width: 100%;
+  max-width: 100%;
+}
+
+.franchise-details-page .fd-dual-row {
+  align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+  .franchise-details-page .fd-dual-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.franchise-details-page .fd-dual-panel {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 28px rgba(15, 23, 42, 0.06) !important;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.franchise-details-page .fd-dual-panel:hover {
+  border-color: rgba(203, 213, 225, 0.95) !important;
+  box-shadow:
+    0 2px 4px rgba(15, 23, 42, 0.05),
+    0 12px 32px rgba(15, 23, 42, 0.08) !important;
+}
+
+.franchise-details-page .fd-dual-panel-title {
+  color: #0b0f19 !important;
+}
+
+.franchise-details-page .fd-mini-card {
+  background: rgba(248, 250, 252, 0.9) !important;
+  border-color: #e2e8f0 !important;
+}
+
+.franchise-details-page .fd-dual-sections :is(p, h3, span):not([class*='violet']):not([class*='emerald']) {
+  color: #000000 !important;
+}
+
+.franchise-details-page .fd-dual-sections .text-black {
+  color: #000000 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-dual-panel {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-dual-panel-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-dual-panel [class*='0b0f19'] {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-mini-card {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-dual-sections :is(p, h3):not([class*='violet']):not([class*='emerald']),
+html[data-theme='light'] #main-content .franchise-details-page .fd-dual-sections :is(p, h3):not([class*='violet']):not([class*='emerald']) {
+  color: #000000 !important;
+}
+
+/* Franchise details — How to Get Started */
+.franchise-details-page .fd-get-started :is(h3, h4, p):not([class*='violet']):not([class*='indigo']):not([class*='emerald']):not([class*='amber']) {
+  color: #000000 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-get-started .fd-gs-card,
+html[data-theme='light'] #main-content .franchise-details-page .fd-get-started .fd-gs-card {
+  background: #ffffff !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .franchise-details-page .fd-get-started .fd-gs-badge .animate-ping {
+    animation: none !important;
+  }
+}
+
+/* Blog — Explore More Insights banner */
+.blog-insights-banner .blog-insights-eyebrow {
+  color: #e9d5ff !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.blog-insights-banner .blog-insights-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75), 0 4px 32px rgba(0, 0, 0, 0.45);
+}
+
+/* Shared Why iFranchise (home + services) */
+html[data-theme='light'] #main-content .why-ifranchise-section .why-card-title,
+html[data-theme='light'] #main-content .why-ifranchise-section .why-card-desc {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .why-ifranchise-section .why-section-heading {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .why-ifranchise-section .why-section-subtitle {
+  color: #334155 !important;
 }

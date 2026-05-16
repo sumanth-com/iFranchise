@@ -1,5 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
+import {
+  FiActivity,
+  FiAward,
+  FiBarChart2,
+  FiBookOpen,
+  FiCheckCircle,
+  FiCpu,
+  FiDollarSign,
+  FiFileText,
+  FiLifeBuoy,
+  FiVolume2,
+  FiPackage,
+  FiShield,
+  FiStar,
+  FiTool,
+  FiTrendingUp,
+  FiUsers,
+} from 'react-icons/fi';
 import ImageCarousel from './ImageCarousel';
+import FranchiseGetStartedSection from './FranchiseGetStartedSection';
+import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
 
 const franchiseDetailsData = {
   1: {
@@ -8,9 +28,9 @@ const franchiseDetailsData = {
     badge: 'Premium Listing',
     tagline: 'A premium burger franchise built for metro growth.',
     banner:
-      'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=1600&q=80',
       'https://images.unsplash.com/photo-1555992336-03a23c5b8f8a?auto=format&fit=crop&w=1600&q=80',
@@ -2047,7 +2067,7 @@ const franchiseDetailsData = {
     badge: 'Entertainment Leader',
     tagline: 'Children\'s entertainment and play center.',
     banner:
-      'https://images.unsplash.com/photo-1542744173-8e7a5d373a97?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1600&q=80',
     keyInfo: {
       investment: '$120K - $300K',
       space: '2000 - 4000 sq ft',
@@ -2181,7 +2201,7 @@ const THEME_GALLERIES = {
   burger: [
     'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1600&q=80',
     'https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=1600&q=80',
-    'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1600&q=80',
     'https://images.unsplash.com/photo-1555992336-03a23c5b8f8a?auto=format&fit=crop&w=1600&q=80',
     'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1600&q=80',
   ],
@@ -2288,6 +2308,88 @@ const getSelectedFranchiseId = () => {
   return '1';
 };
 
+function getWhyChooseIcon(title) {
+  const t = title.toLowerCase();
+  if (t.includes('market') || t.includes('growing') || t.includes('demand')) return FiTrendingUp;
+  if (t.includes('revenue') || t.includes('stream') || t.includes('income')) return FiDollarSign;
+  if (t.includes('family') || t.includes('children') || t.includes('focus')) return FiUsers;
+  if (t.includes('safety') || t.includes('standard') || t.includes('secure')) return FiShield;
+  if (t.includes('brand') || t.includes('recognition') || t.includes('premium')) return FiAward;
+  if (t.includes('supply') || t.includes('quality') || t.includes('ingredient')) return FiPackage;
+  if (t.includes('proven') || t.includes('model') || t.includes('track')) return FiBarChart2;
+  if (t.includes('training') || t.includes('comprehensive')) return FiBookOpen;
+  return FiStar;
+}
+
+function getTrainingSupportIcon(item) {
+  const t = item.toLowerCase();
+  if (t.includes('certification') || t.includes('training') || t.includes('week')) return FiAward;
+  if (t.includes('safety')) return FiShield;
+  if (t.includes('marketing') || t.includes('toolkit')) return FiVolume2;
+  if (t.includes('operations') || t.includes('manual')) return FiFileText;
+  if (t.includes('consulting') || t.includes('ongoing') || t.includes('support')) return FiLifeBuoy;
+  if (t.includes('equipment') || t.includes('procurement') || t.includes('supply')) return FiTool;
+  if (t.includes('technology') || t.includes('setup') || t.includes('curriculum')) return FiCpu;
+  if (t.includes('wellness') || t.includes('yoga') || t.includes('grooming') || t.includes('recipe')) return FiActivity;
+  return FiCheckCircle;
+}
+
+function renderAboutHighlight(text) {
+  const parts = String(text).split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} className="font-semibold text-black">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+}
+
+const FRANCHISE_STAT_ITEMS = [
+  { label: 'Investment', key: 'investment' },
+  { label: 'Space', key: 'space' },
+  { label: 'ROI', key: 'roi' },
+  { label: 'Payback', key: 'payback' },
+  { label: 'Outlets', key: 'outlets' },
+];
+
+function StarRating({ rating, max = 5 }) {
+  const safeRating = Math.min(max, Math.max(0, Number(rating) || 0));
+  return (
+    <span className="inline-flex items-center gap-0.5" role="img" aria-label={`${safeRating} out of ${max} stars`}>
+      {Array.from({ length: max }, (_, i) => (
+        <FiStar
+          key={i}
+          className={`h-4 w-4 ${i < safeRating ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`}
+          aria-hidden
+        />
+      ))}
+    </span>
+  );
+}
+
+function DualSectionRow({ children }) {
+  return (
+    <div className="fd-dual-row grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2 lg:gap-6">
+      {children}
+    </div>
+  );
+}
+
+function DualSectionPanel({ title, children }) {
+  return (
+    <article className="fd-dual-panel flex h-full min-h-0 flex-col rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_4px_24px_rgba(15,23,42,0.06)] sm:p-6 lg:p-7">
+      <div className="fd-dual-panel-header shrink-0 border-b border-slate-100 pb-4">
+        <h3 className="fd-dual-panel-title text-xl font-bold tracking-tight text-black sm:text-2xl">{title}</h3>
+      </div>
+      <div className="fd-dual-panel-body mt-5 flex min-h-0 flex-1 flex-col">{children}</div>
+    </article>
+  );
+}
+
 function FranchiseDetailsPage() {
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
@@ -2379,17 +2481,17 @@ function FranchiseDetailsPage() {
 
   const renderTabContent = () => {
     if (activeTab === 'Overview') {
-      return <p className="text-base leading-relaxed text-white">{selectedFranchise.overview}</p>;
+      return <p className="fd-tab-body text-base leading-relaxed text-slate-700">{selectedFranchise.overview}</p>;
     }
     if (activeTab === 'Business Model') {
-      return <p className="text-base leading-relaxed text-white">{selectedFranchise.businessModel}</p>;
+      return <p className="fd-tab-body text-base leading-relaxed text-slate-700">{selectedFranchise.businessModel}</p>;
     }
     if (activeTab === 'Investment Details') {
       return (
         <div className="grid gap-3 sm:grid-cols-2">
           {selectedFranchise.investmentDetails.map((item) => (
             <article key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-sm text-white">{item.label}</p>
+              <p className="text-sm text-slate-600">{item.label}</p>
               <p className="mt-1 text-lg font-semibold text-[#0b0f19]">{item.value}</p>
             </article>
           ))}
@@ -2413,7 +2515,7 @@ function FranchiseDetailsPage() {
           {selectedFranchise.faqs.map((item) => (
             <article key={item.q} className="rounded-xl border border-slate-200 bg-white p-4">
               <h4 className="text-base font-semibold text-[#0b0f19]">{item.q}</h4>
-              <p className="mt-2 text-sm leading-relaxed text-white">{item.a}</p>
+              <p className="fd-tab-body mt-2 text-sm leading-relaxed text-slate-700">{item.a}</p>
             </article>
           ))}
         </div>
@@ -2425,9 +2527,9 @@ function FranchiseDetailsPage() {
           <article key={review.name} className="rounded-xl border border-slate-200 bg-white p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-[#0b0f19]">{review.name}</p>
-              <p className="text-sm text-amber-500">{'★'.repeat(review.rating)}</p>
+              <StarRating rating={review.rating} />
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-white">{review.text}</p>
+            <p className="fd-tab-body mt-2 text-sm leading-relaxed text-slate-700">{review.text}</p>
           </article>
         ))}
       </div>
@@ -2435,11 +2537,11 @@ function FranchiseDetailsPage() {
   };
 
   return (
-    <main className="mx-auto w-full max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8 xl:px-12">
+    <main className="franchise-details-page mx-auto w-full max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8 xl:px-12">
       <div className="space-y-8">
         <section className="space-y-6">
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_22px_rgba(15,23,42,0.06)] lg:p-8">
-            {/* Title row — badges left, Download CTA right */}
+            {/* Title row ? badges left, Download CTA right */}
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               {/* Left: name + status badges */}
               <div className="flex flex-wrap items-center gap-3">
@@ -2454,7 +2556,7 @@ function FranchiseDetailsPage() {
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex w-fit items-center gap-2.5 rounded-xl btn-wave bg-[#0B1220] px-6 py-3 text-sm font-semibold text-white shadow-[0_4px_16px_rgba(11,18,32,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#111827] hover:shadow-[0_8px_28px_rgba(11,18,32,0.28)] active:scale-[0.98] lg:w-auto"
+                className="btn-purple-solid group inline-flex w-fit items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] lg:w-auto"
               >
                 {/* Download icon */}
                 <svg
@@ -2474,74 +2576,73 @@ function FranchiseDetailsPage() {
             <p className="mt-4 text-lg text-slate-600 lg:text-xl">{selectedFranchise.tagline}</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)] lg:items-stretch">
-            <div className="min-h-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
+          <div className="fd-gallery-full w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
+            <div className="fd-gallery-shell flex min-h-[320px] flex-col sm:min-h-[400px] lg:min-h-[480px]">
               <ImageCarousel
                 images={galleryImages}
                 alt={selectedFranchise.name}
                 category="food"
                 showThumbnails={false}
-                heightClassName="h-[min(52vh,480px)] sm:h-[min(48vh,440px)]"
+                fillParent
+                heightClassName="h-full min-h-[320px] sm:min-h-[400px] lg:min-h-[480px]"
               />
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
-              {[
-                { label: 'Investment', value: selectedFranchise.keyInfo.investment },
-                { label: 'Space', value: selectedFranchise.keyInfo.space },
-                { label: 'ROI', value: selectedFranchise.keyInfo.roi },
-                { label: 'Payback', value: selectedFranchise.keyInfo.payback },
-                { label: 'Outlets', value: selectedFranchise.keyInfo.outlets },
-              ].map((item) => (
-                <article key={item.label} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <p className="text-sm font-medium text-slate-600">{item.label}</p>
-                  <p className="mt-1 text-lg font-semibold text-[#0b0f19]">{item.value}</p>
-                </article>
-              ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <div className="flex flex-wrap gap-2">
+          <div className="fd-tabs-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
+            <div className="fd-tabs flex flex-wrap gap-2">
               {tabs.map((tab) => (
                 <button
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
-                    activeTab === tab ? 'btn-wave bg-[#0B1220] text-white' : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                  className={`fd-tab-btn rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    activeTab === tab ? 'fd-tab-btn--active btn-purple-solid' : 'fd-tab-btn--inactive'
                   }`}
                 >
                   {tab}
                 </button>
               ))}
             </div>
-            <div className="mt-6">{renderTabContent()}</div>
+            <div className="fd-tab-content mt-6">{renderTabContent()}</div>
           </div>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">About {selectedFranchise.name}</h3>
-            <div className="mt-6 grid gap-4 lg:grid-cols-2">
-              <p className="text-base leading-relaxed text-white">
-                {selectedFranchise.name} is a <strong>premium franchise brand</strong> designed for investors who want
-                predictable demand and a differentiated market position.
-              </p>
-              <p className="text-base leading-relaxed text-white">
-                The model combines <strong>strong unit economics</strong> with clear execution SOPs, helping partners
-                operate consistently across city tiers.
-              </p>
-              <p className="text-base leading-relaxed text-white">
-                With centralized sourcing and launch playbooks, investors get <strong>decision clarity</strong> from
-                location finalization to opening day.
-              </p>
-              <p className="text-base leading-relaxed text-white">
-                The brand focuses on loyalty and repeat behavior to create <strong>long-term growth support</strong>,
-                not just short-term spikes.
-              </p>
+          <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
+            <h3 className="fd-about-heading text-center text-2xl font-bold tracking-tight text-black lg:text-3xl">About {selectedFranchise.name}</h3>
+            <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+              <div className="fd-about-copy flex flex-col justify-center gap-4 lg:pr-2">
+                <p className="text-base leading-relaxed text-black lg:text-lg">{selectedFranchise.overview}</p>
+                {(selectedFranchise.aboutBrand || []).map((paragraph) => (
+                  <p key={paragraph} className="text-sm leading-relaxed text-black sm:text-base">
+                    {renderAboutHighlight(paragraph)}
+                  </p>
+                ))}
+                {selectedFranchise.businessModel && (
+                  <p className="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm leading-relaxed text-black">
+                    {selectedFranchise.businessModel}
+                  </p>
+                )}
+              </div>
+              <div className="fd-about-stats grid grid-cols-2 gap-3 lg:h-full lg:content-center">
+                {FRANCHISE_STAT_ITEMS.slice(0, 4).map((item) => (
+                  <article
+                    key={item.label}
+                    className="fd-stat-card fd-about-stat-card flex min-h-[92px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm"
+                  >
+                    <p className="w-full text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-black/55">{item.label}</p>
+                    <p className="mt-1.5 w-full text-base font-bold leading-tight text-black sm:text-lg">{selectedFranchise.keyInfo[item.key]}</p>
+                  </article>
+                ))}
+                <article className="fd-stat-card fd-about-stat-card col-span-2 flex min-h-[92px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm">
+                  <p className="w-full text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-black/55">Outlets</p>
+                  <p className="mt-1.5 w-full text-base font-bold leading-tight text-black sm:text-lg">{selectedFranchise.keyInfo.outlets}</p>
+                </article>
+              </div>
             </div>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Investment & Financials</h3>
+            <h3 className="fd-section-heading text-center text-2xl font-bold tracking-tight text-black lg:text-3xl">Investment & Financials</h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
               <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Investment Range</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
               <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Area Required</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
@@ -2566,126 +2667,124 @@ function FranchiseDetailsPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Franchise Models</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {selectedFranchise.franchiseModels.map((model) => (
-                <article key={model.name} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-lg font-bold text-[#0b0f19]">{model.name}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-white">{model.description}</p>
-                </article>
-              ))}
-            </div>
-          </section>
+          <div className="fd-dual-sections space-y-6">
+            <DualSectionRow>
+              <DualSectionPanel title="Franchise Models">
+                <div className="flex flex-1 flex-col gap-3">
+                  {selectedFranchise.franchiseModels.map((model) => (
+                    <article key={model.name} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+                      <p className="text-base font-bold text-black">{model.name}</p>
+                      <p className="mt-1.5 text-sm leading-relaxed text-black">{model.description}</p>
+                    </article>
+                  ))}
+                </div>
+              </DualSectionPanel>
+              <DualSectionPanel title="Why Choose This Franchise">
+                <div className="flex flex-1 flex-col gap-3">
+                  {selectedFranchise.whyChoose.map((item) => {
+                    const WhyIcon = getWhyChooseIcon(item.title);
+                    return (
+                      <article key={item.title} className="fd-mini-card flex gap-3 rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-700">
+                          <WhyIcon className="h-4 w-4" aria-hidden />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-black">{item.title}</p>
+                          <p className="mt-1 text-sm leading-relaxed text-black">{item.description}</p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </DualSectionPanel>
+            </DualSectionRow>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Why Choose This Franchise</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {selectedFranchise.whyChoose.map((item) => (
-                <article key={item.title} className="flex gap-4 rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <span className="mt-0.5 inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-violet-100 text-lg text-violet-700">✓</span>
-                  <div>
-                    <p className="text-base font-semibold text-[#0b0f19]">{item.title}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-white">{item.description}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+            <DualSectionRow>
+              <DualSectionPanel title="Franchise Structure">
+                <div className="grid flex-1 grid-cols-2 gap-3">
+                  {selectedFranchise.franchiseStructure.map((item) => (
+                    <article key={item} className="fd-mini-card flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50/80 p-4 text-center">
+                      <p className="text-sm font-semibold text-black">{item}</p>
+                    </article>
+                  ))}
+                </div>
+              </DualSectionPanel>
+              <DualSectionPanel title="Operations & Returns">
+                <div className="grid flex-1 grid-cols-2 gap-3">
+                  {[
+                    { label: 'ROI', value: selectedFranchise.operationsReturns.roi },
+                    { label: 'Payback Period', value: selectedFranchise.operationsReturns.payback },
+                    { label: 'Hours Required', value: selectedFranchise.operationsReturns.hours },
+                    { label: 'Staff Requirement', value: selectedFranchise.operationsReturns.staff },
+                  ].map((metric) => (
+                    <article key={metric.label} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-black">{metric.label}</p>
+                      <p className="mt-1 text-sm font-bold text-black">{metric.value}</p>
+                    </article>
+                  ))}
+                </div>
+              </DualSectionPanel>
+            </DualSectionRow>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Franchise Structure</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {selectedFranchise.franchiseStructure.map((item) => (
-                <article key={item} className="rounded-xl border border-slate-200 bg-slate-50 p-5 text-center">
-                  <p className="text-base font-semibold text-[#0b0f19]">{item}</p>
-                </article>
-              ))}
-            </div>
-          </section>
+            <DualSectionRow>
+              <DualSectionPanel title="Expansion Plans">
+                <div className="flex flex-1 flex-col gap-2.5">
+                  {selectedFranchise.expansionPlans.map((plan) => (
+                    <article key={plan} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                      <p className="text-sm font-semibold text-black">{plan}</p>
+                    </article>
+                  ))}
+                </div>
+              </DualSectionPanel>
+              <DualSectionPanel title="Requirements">
+                <div className="flex flex-1 flex-col gap-2.5">
+                  {selectedFranchise.requirements.map((item) => (
+                    <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-black">{item.label}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-black">{item.value}</p>
+                    </article>
+                  ))}
+                </div>
+              </DualSectionPanel>
+            </DualSectionRow>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Operations & Returns</h3>
-            <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-white">ROI</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.roi}</p></article>
-              </div>
-              <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-white">Payback Period</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.payback}</p></article>
-              </div>
-              <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-white">Hours Required</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.hours}</p></article>
-              </div>
-              <div className="space-y-4 rounded-xl bg-slate-50 p-5">
-                <article><p className="text-sm text-white">Staff Requirement</p><p className="mt-1 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.operationsReturns.staff}</p></article>
-              </div>
-            </div>
-          </section>
+            <DualSectionRow>
+              <DualSectionPanel title="Training & Support">
+                <div className="flex flex-1 flex-col gap-2.5">
+                  {selectedFranchise.trainingSupport.map((item) => {
+                    const SupportIcon = getTrainingSupportIcon(item);
+                    return (
+                      <article key={item} className="fd-mini-card flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                          <SupportIcon className="h-4 w-4" aria-hidden />
+                        </span>
+                        <p className="text-sm font-medium text-black">{item}</p>
+                      </article>
+                    );
+                  })}
+                </div>
+              </DualSectionPanel>
+              <DualSectionPanel title="Agreement Details">
+                <div className="flex flex-1 flex-col gap-2.5">
+                  {selectedFranchise.agreementDetails.map((item) => (
+                    <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-black">{item.label}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-black">{item.value}</p>
+                    </article>
+                  ))}
+                  <p className="mt-auto pt-2 text-xs leading-relaxed text-black">{selectedFranchise.disclaimer}</p>
+                </div>
+              </DualSectionPanel>
+            </DualSectionRow>
+          </div>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Expansion Plans</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {selectedFranchise.expansionPlans.map((plan) => (
-                <article key={plan} className="rounded-xl border border-slate-200 bg-slate-50 p-5 text-center">
-                  <p className="text-base font-semibold text-[#0b0f19]">{plan}</p>
-                </article>
-              ))}
-            </div>
-          </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Requirements</h3>
-            <div className="mt-6 space-y-4">
-              {selectedFranchise.requirements.map((item) => (
-                <article key={item.label} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
-                  <p className="text-sm font-semibold text-slate-700">{item.label}</p>
-                  <p className="text-sm text-white">{item.value}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Training & Support</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {selectedFranchise.trainingSupport.map((item) => (
-                <article key={item} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">✓</span>
-                  <p className="text-sm font-medium text-slate-700">{item}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Agreement Details</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {selectedFranchise.agreementDetails.map((item) => (
-                <article key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-sm text-white">{item.label}</p>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{item.value}</p>
-                </article>
-              ))}
-            </div>
-            <p className="mt-6 text-xs leading-relaxed text-white">{selectedFranchise.disclaimer}</p>
-          </section>
-
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">How to Get Started</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {['Apply', 'Evaluation', 'Approval', 'Launch'].map((step, idx) => (
-                <article key={step} className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-white">Step {idx + 1}</p>
-                  <p className="mt-3 text-lg font-semibold text-[#0b0f19]">{step}</p>
-                </article>
-              ))}
-            </div>
-          </section>
+          <FranchiseGetStartedSection />
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Explore Similar Opportunities</h3>
-              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white">Featured</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.12em] text-black/50">Featured</span>
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {relatedFranchises.map((franchise) => (
@@ -2695,11 +2794,9 @@ function FranchiseDetailsPage() {
                   className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)]"
                 >
                   <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={franchise.banner}
-                      alt={franchise.name}
+                    <FranchiseSimilarCardImage
+                      franchise={franchise}
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                      loading="lazy"
                     />
                     <span className="absolute left-3 top-3 rounded-full bg-emerald-500 px-3 py-1 text-xs font-semibold text-white">
                       {franchise.status.toUpperCase()}
@@ -2707,7 +2804,7 @@ function FranchiseDetailsPage() {
                   </div>
                   <div className="p-5">
                     <h4 className="text-xl font-bold tracking-tight text-[#0b0f19]">{franchise.name}</h4>
-                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-white">{franchise.tagline}</p>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-black">{franchise.tagline}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
                         {franchise.keyInfo.investment}
@@ -2718,12 +2815,12 @@ function FranchiseDetailsPage() {
                     </div>
                     <div className="mt-4 grid grid-cols-2 gap-3">
                       <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="text-xs font-medium text-white">ROI</p>
-                        <p className="text-lg font-bold text-[#0b0f19]">{franchise.keyInfo.roi}</p>
+                        <p className="text-xs font-medium text-black">ROI</p>
+                        <p className="text-lg font-bold text-black">{franchise.keyInfo.roi}</p>
                       </div>
                       <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="text-xs font-medium text-white">Payback</p>
-                        <p className="text-lg font-bold text-[#0b0f19]">{franchise.keyInfo.payback}</p>
+                        <p className="text-xs font-medium text-black">Payback</p>
+                        <p className="text-lg font-bold text-black">{franchise.keyInfo.payback}</p>
                       </div>
                     </div>
                     <button
@@ -2732,7 +2829,7 @@ function FranchiseDetailsPage() {
                         event.stopPropagation();
                         handleRelatedDetails(franchise.id);
                       }}
-                      className="mt-4 w-full rounded-full btn-wave bg-[#0B1220] px-4 py-2.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#0B1220]/25"
+                      className="btn-purple-solid mt-4 w-full rounded-full px-4 py-2.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5"
                     >
                       View Details
                     </button>

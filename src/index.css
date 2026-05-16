@@ -2819,11 +2819,18 @@ img[loading="lazy"]:not([src=""]) {
 
 .bg-white button.text-white,
 .bg-white button.text-white *,
+.bg-white a.btn-purple-solid,
+.bg-white a.btn-purple-solid *,
+.bg-white .btn-purple-solid,
+.bg-white .btn-purple-solid *,
 .bg-white .site-cta,
 .bg-white .site-cta *,
 .bg-slate-50 button.text-white,
-.bg-slate-50 button.text-white * {
+.bg-slate-50 button.text-white *,
+.bg-slate-50 .btn-purple-solid,
+.bg-slate-50 .btn-purple-solid * {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Violet checkboxes inside white navbar panels — keep tick marks white */
@@ -2911,8 +2918,8 @@ html[data-theme='light'] #main-content .theme-section-on-light .text-white\/90 {
 }
 
 /* White premium cards (not dark dashboards) */
-html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white,
-html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li) {
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white:not(.btn-purple-solid):not(.btn-purple-solid *),
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li):not(.btn-purple-solid):not(.btn-purple-solid *) {
   color: #0b0f19 !important;
 }
 
@@ -2956,8 +2963,12 @@ html[data-theme='light'] #main-content .site-cta,
 html[data-theme='light'] #main-content .site-cta *,
 html[data-theme='light'] #main-content .btn-wave,
 html[data-theme='light'] #main-content .btn-wave *,
+html[data-theme='light'] #main-content .btn-purple-solid,
+html[data-theme='light'] #main-content .btn-purple-solid *,
 html[data-theme='light'] #main-content button.text-white,
 html[data-theme='light'] #main-content button.text-white *,
+html[data-theme='light'] #main-content a.btn-purple-solid,
+html[data-theme='light'] #main-content a.btn-purple-solid *,
 html[data-theme='light'] #main-content a.text-white[class*='bg-violet'],
 html[data-theme='light'] #main-content a.text-white[class*='bg-violet'] *,
 html[data-theme='light'] #main-content [class*='bg-violet-6'].text-white,
@@ -2991,4 +3002,31 @@ html[data-theme='light'] #main-content .cinematic-hero .hero-cinematic-accent {
 
 html[data-theme='light'] #main-content .cinematic-hero p {
   color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* Purple solid CTAs — white label in light & dark (wins over panel/card overrides) */
+html[data-theme='light'] #main-content .btn-purple-solid,
+html[data-theme='light'] #main-content .btn-purple-solid *,
+html[data-theme='light'] #main-content a.btn-purple-solid,
+html[data-theme='light'] #main-content a.btn-purple-solid *,
+html[data-theme='light'] #main-content button.btn-purple-solid,
+html[data-theme='light'] #main-content button.btn-purple-solid *,
+html[data-theme='dark'] #main-content .btn-purple-solid,
+html[data-theme='dark'] #main-content .btn-purple-solid *,
+html[data-theme='dark'] #main-content a.btn-purple-solid,
+html[data-theme='dark'] #main-content a.btn-purple-solid *,
+html[data-theme='dark'] #main-content button.btn-purple-solid,
+html[data-theme='dark'] #main-content button.btn-purple-solid *,
+html[data-theme='light'] .card-premium-dark .btn-purple-solid,
+html[data-theme='light'] .card-premium-dark .btn-purple-solid *,
+html[data-theme='light'] .bg-white .btn-purple-solid,
+html[data-theme='light'] .bg-white .btn-purple-solid * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .btn-purple-solid svg,
+html[data-theme='dark'] #main-content .btn-purple-solid svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }

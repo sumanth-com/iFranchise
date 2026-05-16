@@ -52,12 +52,12 @@ export default function ServicesStyleIndustriesSection() {
   return (
     <section className="lyb-industries-section relative z-10 overflow-hidden py-10 lg:py-14">
       <motion.div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <motion.div className="theme-section-on-light mb-10 text-center">
+        <motion.div className="lyb-dark-heading mb-10 text-center">
           <SectionPill className="mb-4">Industries</SectionPill>
-          <h2 className="lyb-section-heading mb-3 text-3xl font-extrabold text-slate-900 sm:text-4xl">
+          <h2 className="lyb-section-heading-on-dark mb-3 text-3xl font-extrabold text-white sm:text-4xl">
             Industries We Help Scale Through Franchising
           </h2>
-          <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base">
+          <p className="lyb-section-subtext mx-auto max-w-xl text-sm leading-relaxed sm:text-base">
             Franchise services built for brands across sectors ready to expand through scalable models.
           </p>
         </motion.div>
@@ -70,24 +70,20 @@ export default function ServicesStyleIndustriesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="theme-light-card group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)] transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-200 hover:shadow-[0_20px_40px_rgba(109,40,217,0.14)]"
+              className="lyb-industry-card theme-light-card relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.08)]"
             >
-              <motion.div className="industry-card-media relative h-56 overflow-hidden bg-slate-100">
+              <div className="industry-card-media relative h-56 overflow-hidden bg-slate-100">
                 <IndustryCardImg src={ind.img} alt={ind.label} />
-                <motion.div
-                  className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/95 to-transparent"
+                <div
+                  className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent"
                   aria-hidden
                 />
-                <motion.div
-                  className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)` }}
-                />
-              </motion.div>
-              <motion.div className="flex flex-1 flex-col p-5">
-                <h3 className="mb-1.5 text-base font-bold leading-snug text-slate-900 transition-colors group-hover:text-violet-700">
+              </div>
+              <div className="flex flex-1 flex-col bg-white p-5">
+                <h3 className="mb-1.5 text-base font-bold leading-snug text-slate-900">
                   {ind.label}
                 </h3>
-                <p className="flex-1 text-[0.78rem] leading-relaxed text-slate-600">{ind.desc}</p>
+                <p className="flex-1 text-[0.8125rem] leading-relaxed text-slate-600">{ind.desc}</p>
                 <button
                   type="button"
                   className="industry-card-explore"
@@ -95,13 +91,13 @@ export default function ServicesStyleIndustriesSection() {
                 >
                   Explore opportunities <FiArrowRight className="h-3 w-3" />
                 </button>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
 
         <motion.div className="mt-14 text-center">
-          <p className="mb-5 text-sm text-slate-600">
+          <p className="lyb-section-subtext mb-5 text-sm">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
           <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>

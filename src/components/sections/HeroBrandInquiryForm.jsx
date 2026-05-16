@@ -11,15 +11,15 @@ const BUDGETS = ['Under Rs.25L', 'Rs.25L - Rs.50L', 'Rs.50L - Rs.1Cr', 'Rs.1Cr -
 const EXPANSION_GOALS = ['1-3 cities', '4-10 cities', '10-25 cities', '25+ cities'];
 
 const inputClass =
-  'w-full rounded-lg border border-slate-200/90 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-white shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20';
-const labelClass = 'mb-1 block text-[0.62rem] font-bold uppercase tracking-wider text-white';
+  'lyb-form-field w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-black placeholder:text-slate-400 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/25';
+const labelClass = 'mb-1 block text-[0.62rem] font-bold uppercase tracking-wider';
 
 function Field({ label, required, children, className = '' }) {
   return (
     <div className={`flex flex-col ${className}`}>
       <label className={labelClass}>
         {label}
-        {required && <span className="ml-0.5 text-white">*</span>}
+        {required && <span className="ml-0.5 text-violet-600">*</span>}
       </label>
       {children}
     </div>
@@ -58,15 +58,15 @@ export default function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="w-full justify-self-end lg:max-w-[440px]"
+      className="lyb-hero-form w-full justify-self-end lg:max-w-[480px]"
     >
-      <motion.div className="relative flex w-full flex-col overflow-hidden rounded-2xl border border-violet-400/35 bg-gradient-to-br from-white/[0.12] to-white/[0.06] p-5 shadow-[0_24px_64px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+      <motion.div className="lyb-form-panel relative flex w-full flex-col overflow-hidden rounded-2xl border border-violet-400/40 bg-gradient-to-br from-white/[0.14] to-white/[0.07] p-5 sm:p-6 shadow-[0_24px_64px_rgba(0,0,0,0.45)] backdrop-blur-xl">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" />
 
         <div className="mb-4 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 pb-3">
           <div>
-            <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white">Brand inquiry</p>
-            <h2 className="text-lg font-extrabold text-white">Start Your Listing</h2>
+            <p className="lyb-form-eyebrow text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white">Brand inquiry</p>
+            <h2 className="lyb-form-title text-lg font-extrabold text-white">Start Your Listing</h2>
           </div>
           <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/35 bg-emerald-500/15 px-2.5 py-1 text-[0.58rem] font-bold uppercase text-emerald-300">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
@@ -86,8 +86,8 @@ export default function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
               <p className="mt-1 text-xs text-white">We&apos;ll contact you within 24 hours.</p>
             </motion.div>
           ) : (
-            <motion.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-2.5">
-              <div className="grid grid-cols-2 gap-2.5">
+            <motion.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <Field label="Brand Name" required>
                   <input className={inputClass} value={form.brandName} onChange={(e) => set('brandName', e.target.value)} required />
                 </Field>
@@ -140,7 +140,7 @@ export default function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-bold text-slate-900 shadow-lg transition hover:bg-violet-50 disabled:opacity-60"
+                className="lyb-hero-form-submit mt-1 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold shadow-lg transition disabled:opacity-60"
               >
                 {submitting ? 'Submitting…' : 'Submit Brand Inquiry'}
               </button>
