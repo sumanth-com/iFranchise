@@ -10,7 +10,6 @@ import {
 } from 'react-icons/fi';
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
-import WhyIFranchiseSection from './sections/WhyIFranchiseSection';
 import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
@@ -671,7 +670,7 @@ export default function ServicesPage() {
   };
 
   return (
-    <main ref={pageRef} className="relative z-10 w-full bg-transparent text-theme-primary">
+    <main ref={pageRef} className="services-page relative z-10 w-full bg-transparent text-theme-primary">
 
       {/* HERO */}
       <section className="page-hero-light relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-8 pt-8 sm:px-6 lg:px-8">
@@ -936,19 +935,19 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* RIGHT: Content */}
-            <div>
+            <div className="theme-section-on-light services-audience-copy">
               <Reveal>
-                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
+                <span className={`theme-section-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] mb-6 ${isLight ? 'text-violet-700' : 'text-white'}`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
                   For Brands
                 </span>
-                <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-6 leading-tight">
+                <h2 className={`text-4xl font-extrabold md:text-5xl mb-6 leading-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   Franchise Services for Brands Looking to Expand
                 </h2>
               </Reveal>
               
               <Reveal delay={0.1}>
-                <p className="text-lg text-white leading-relaxed mb-8">
+                <p className={`text-lg leading-relaxed mb-8 ${isLight ? 'text-slate-700' : 'text-white'}`}>
                   We help businesses transform into scalable franchise models with the right structure, strategy, and investor network.
                 </p>
               </Reveal>
@@ -964,10 +963,10 @@ export default function ServicesPage() {
                 ].map((benefit, index) => (
                   <Reveal key={benefit} delay={0.15 + index * 0.05}>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600">
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
                         <FiCheck className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-base text-white">
+                      <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                         {benefit}
                       </span>
                     </div>
@@ -1333,13 +1332,13 @@ export default function ServicesPage() {
             </div>
 
             {/* RIGHT: Content */}
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-2 theme-section-on-light services-audience-copy">
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
+                <span className={`theme-section-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] mb-6 ${isLight ? 'text-violet-700' : 'text-white'}`}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
                   For Investors
                 </span>
-                <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-6 leading-tight">
+                <h2 className={`text-4xl font-extrabold md:text-5xl mb-6 leading-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
                   Helping Investors<br />
                   Discover the Right<br />
                   Franchise Opportunities
@@ -1347,7 +1346,7 @@ export default function ServicesPage() {
               </div>
               
               <div>
-                <p className="text-base text-white leading-relaxed mb-8">
+                <p className={`text-base leading-relaxed mb-8 ${isLight ? 'text-slate-700' : 'text-white'}`}>
                   We help investors explore verified franchise opportunities across industries with transparent business information and structured support.
                 </p>
               </div>
@@ -1360,13 +1359,13 @@ export default function ServicesPage() {
                   'Business model transparency',
                   'Industry-based opportunity matching',
                   'Investor onboarding support'
-                ].map((benefit, index) => (
+                ].map((benefit) => (
                   <div key={benefit}>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600">
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
                         <FiCheck className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-base text-white">
+                      <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                         {benefit}
                       </span>
                     </div>
@@ -1742,4 +1741,169 @@ export default function ServicesPage() {
   );
 }
 
+// ── Inlined section components ──
+
+/* WhyIFranchiseSection.jsx */
+const WHY_IFRANCHISE_CARDS = [
+  {
+    title: 'Verified Opportunities',
+    desc: 'Every opportunity is reviewed and structured to provide clarity and transparency.',
+    delay: 0,
+    icon: (
+      <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Faster Brand Expansion',
+    desc: 'We help brands connect with the right investors to scale faster across markets.',
+    delay: 0.07,
+    icon: (
+      <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Investor-Focused Discovery',
+    desc: 'Simplified franchise discovery experience designed around business goals and investment intent.',
+    delay: 0.14,
+    icon: (
+      <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Data-Driven Marketplace',
+    desc: 'Industry-focused insights and structured business information help users make better decisions.',
+    delay: 0.21,
+    icon: (
+      <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+  },
+];
+
+function WhyIReveal({ children, delay = 0, className = '' }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('is-visible');
+          obs.unobserve(el);
+        }
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className={`cinematic-scroll-reveal ${className}`} style={{ transitionDelay: `${delay}s` }}>
+      {children}
+    </div>
+  );
+}
+
+function WhyIFranchiseCard({ card, isLight }) {
+  const iconBase = isLight
+    ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff', boxShadow: '0 8px 24px rgba(109,40,217,0.25)' }
+    : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', boxShadow: 'none' };
+
+  return (
+    <WhyIReveal delay={card.delay} className="h-full">
+      <div
+        className="theme-light-card group relative flex h-full flex-col overflow-hidden rounded-2xl"
+        style={{ transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease' }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-6px)';
+          e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
+          e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+          e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
+        }}
+      >
+        <div
+          className="pointer-events-none absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)' }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0 -translate-x-full rounded-2xl transition-transform duration-700 group-hover:translate-x-full"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)' }}
+        />
+
+        <div className="relative flex h-44 items-center justify-center overflow-hidden">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(139,92,246,0.18) 0%, transparent 70%)' }}
+          />
+          <div
+            className="why-feature-icon relative z-10 flex h-20 w-20 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 [&_svg]:text-current"
+            style={iconBase}
+          >
+            {card.icon}
+          </div>
+        </div>
+
+        <div className="flex flex-1 flex-col p-6 pt-2">
+          <h3 className="why-card-title mb-2 text-[1rem] font-bold leading-snug">{card.title}</h3>
+          <p className="why-card-desc text-[0.8rem] leading-relaxed">{card.desc}</p>
+        </div>
+      </div>
+    </WhyIReveal>
+  );
+}
+
+function WhyIFranchiseSection({ className = '' }) {
+  const { isLight } = useTheme();
+
+  return (
+    <section className={`why-ifranchise-section relative w-full overflow-hidden py-12 sm:py-16 lg:py-20 ${className}`.trim()}>
+      <div className="section-container relative z-10">
+        <div className="theme-section-on-light mb-8 text-center sm:mb-10">
+          <SectionPill className="mb-4">Why iFranchise</SectionPill>
+          <h2 className="why-section-heading mx-auto mb-3 max-w-3xl px-4 text-[clamp(1.5rem,4.5vw,2.25rem)] font-extrabold leading-[1.15] tracking-tight">
+            Why Investors and Brands Choose iFranchise
+          </h2>
+          <p className="why-section-subtitle mx-auto max-w-2xl px-4 text-sm leading-relaxed">
+            Built to simplify franchise discovery, expansion, and investment through structured business intelligence.
+          </p>
+        </div>
+
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {WHY_IFRANCHISE_CARDS.map((card) => (
+            <WhyIFranchiseCard key={card.title} card={card} isLight={isLight} />
+          ))}
+        </div>
+
+        <div className="mt-10 text-center sm:mt-12">
+          <button
+            type="button"
+            onClick={() => {
+              window.history.pushState({}, '', '/franchise-opportunities');
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }}
+            className="why-section-cta group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+            style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)' }}
+          >
+            Explore Franchise Opportunities
+            <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
 

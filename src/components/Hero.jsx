@@ -4,6 +4,7 @@ import Button from './Button';
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
+import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
@@ -1073,14 +1074,13 @@ function FranchiseModelCard({ model, visible, delayMs }) {
 }
 
 function TestimonialStatCard({ item }) {
-  const { isLight } = useTheme();
   return (
-    <article className="rounded-[18px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+    <article className="testimonial-stat-card rounded-[18px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
       <div className="flex items-center gap-3">
         <img src={item.avatar} alt={item.name} className="h-10 w-10 rounded-full object-cover" loading="lazy" />
         <div className="flex-1">
-          <p className="text-sm font-semibold text-slate-900">{item.name}</p>
-          <p className={`text-xs ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>{item.role}</p>
+          <p className="testimonial-stat-card__name text-sm font-semibold text-slate-900">{item.name}</p>
+          <p className="testimonial-stat-card__role text-xs text-slate-600">{item.role}</p>
         </div>
       </div>
       {item.rating && (
@@ -1090,7 +1090,7 @@ function TestimonialStatCard({ item }) {
           ))}
         </div>
       )}
-      <p className={`mt-4 text-sm leading-relaxed ${isLight ? 'text-slate-700' : 'text-slate-200'}`}>{item.quote}</p>
+      <p className="testimonial-stat-card__quote mt-4 text-sm leading-relaxed text-slate-700">{item.quote}</p>
     </article>
   );
 }
@@ -2827,55 +2827,6 @@ function FAQAccordionItem({ faq, index }) {
   );
 }
 
-function PremiumFAQItem({ faq, index }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <Reveal delay={index * 0.04} direction="right" className={`group rounded-xl border border-slate-200/60 bg-white shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${isOpen ? 'shadow-lg border-slate-300/80 bg-slate-50/30' : ''}`}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors duration-200"
-      >
-        <div className="flex items-center gap-3 flex-1">
-          {/* Compact Number Badge */}
-          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#0b0f19] to-slate-700 text-white text-sm font-bold flex items-center justify-center shadow-sm">
-            {faq.number}
-          </div>
-          
-          {/* Question */}
-          <h3 className="text-sm font-semibold text-[#0b0f19] leading-tight pr-2">
-            {faq.question}
-          </h3>
-        </div>
-        
-        {/* Plus/Minus Icon */}
-        <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-          <svg 
-            className={`w-4 h-4 text-white transition-all duration-300 ${isOpen ? 'rotate-45 text-[#0b0f19]' : 'group-hover:text-white'}`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24" 
-            strokeWidth={2.5}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-        </div>
-      </button>
-      
-      {/* Answer Content */}
-      <div className={`overflow-hidden transition-all duration-200 ease-out ${isOpen ? 'max-h-32 pb-4' : 'max-h-0'}`}>
-        <div className="px-4">
-          <div className="pl-11 pr-2">
-            <p className="text-xs text-white leading-relaxed">
-              {faq.answer}
-            </p>
-          </div>
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
 // ── Hero CTA — white pill, purple text (excluded from site-wide violet CTAs) ──
 function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
@@ -3860,10 +3811,10 @@ function Hero() {
               animationDelay: '0.1s'
             }}
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 leading-tight mb-4">
+            <h2 className="home-faq-section__title text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
               Helpful Franchise Questions & Answers
             </h2>
-            <p className="text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="home-faq-section__subtitle text-base text-white/70 leading-relaxed max-w-2xl mx-auto">
               Everything founders, investors, and franchise buyers need to know before making expansion decisions.
             </p>
           </div>

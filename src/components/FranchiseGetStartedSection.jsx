@@ -1,4 +1,4 @@
-﻿import { useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { FiArrowRight, FiCheckCircle, FiEdit3, FiSearch, FiZap } from 'react-icons/fi';
 

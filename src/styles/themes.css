@@ -538,10 +538,17 @@ html[data-theme='dark'] .theme-light-card {
 }
 
 html[data-theme='dark'] .theme-light-pill {
-  background: #0f172a;
-  border: 1px solid rgba(51, 65, 85, 0.9);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
-  color: #ffffff;
+  background: #0f172a !important;
+  border: 1px solid rgba(51, 65, 85, 0.9) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .theme-light-pill .text-white,
+html[data-theme='dark'] #main-content .theme-light-pill p,
+html[data-theme='dark'] .theme-light-pill .text-white,
+html[data-theme='dark'] .theme-light-pill p {
+  color: #ffffff !important;
 }
 
 html[data-theme='light'] .theme-light-card,
@@ -729,6 +736,53 @@ html[data-theme='light'] .prefooter-unified-card .footer-jump-link {
 
 html[data-theme='light'] .prefooter-unified-card .footer-jump-link:hover {
   color: var(--theme-accent);
+}
+
+/* ─── Legal pages (Terms, Privacy, Licenses) ───────────────────────────────── */
+html[data-theme='light'] #main-content .legal-page,
+html[data-theme='light'] #main-content .legal-page h1,
+html[data-theme='light'] #main-content .legal-page h2,
+html[data-theme='light'] #main-content .legal-page p,
+html[data-theme='light'] #main-content .legal-page span,
+html[data-theme='light'] #main-content .legal-page .text-white,
+html[data-theme='light'] #main-content .legal-page a:not(:hover) {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .legal-page [class*='text-white/'] {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .legal-page .card-premium-dark,
+html[data-theme='light'] #main-content .legal-page .card-premium-dark-inner {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme='light'] #main-content .legal-page a:hover {
+  color: #5b21b6 !important;
+}
+
+html[data-theme='light'] #main-content .legal-page a svg {
+  color: #7c3aed !important;
+  stroke: #7c3aed !important;
+}
+
+html[data-theme='dark'] #main-content .legal-page h1,
+html[data-theme='dark'] #main-content .legal-page h2,
+html[data-theme='dark'] #main-content .legal-page p,
+html[data-theme='dark'] #main-content .legal-page .text-white,
+html[data-theme='dark'] #main-content .legal-page a {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .legal-page [class*='text-white/60'] {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+html[data-theme='dark'] #main-content .legal-page [class*='text-white/80'] {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 /* ─── Dark mode: preserve existing white-on-dark copy rules ─────────────────── */
@@ -1154,10 +1208,65 @@ html[data-theme='light'] #main-content textarea[class*='bg-black/']::placeholder
   color: #94a3b8 !important;
 }
 
-/* Testimonial / stat cards */
+/* Testimonial / stat cards — white cards, dark text (both themes) */
+html[data-theme='dark'] #main-content .testimonial-stat-card,
+html[data-theme='light'] #main-content .testimonial-stat-card {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .testimonial-stat-card__name,
+html[data-theme='light'] #main-content .testimonial-stat-card__name {
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .testimonial-stat-card__role,
+html[data-theme='light'] #main-content .testimonial-stat-card__role {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] #main-content .testimonial-stat-card__quote,
+html[data-theme='light'] #main-content .testimonial-stat-card__quote {
+  color: #334155 !important;
+}
+
 html[data-theme='light'] #main-content .testi-column [class*='card-premium'],
 html[data-theme='light'] #main-content [class*='Testimonial'] {
   color: #0b0f19;
+}
+
+/* Home FAQ section heading */
+html[data-theme='dark'] #main-content .home-faq-section__title {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .home-faq-section__subtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html[data-theme='light'] #main-content .home-faq-section__title {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .home-faq-section__subtitle {
+  color: #475569 !important;
+}
+
+/* Home-style FAQ cards — dark readable text on white surface */
+html[data-theme='dark'] #main-content .home-faq-item,
+html[data-theme='light'] #main-content .home-faq-item {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.85) !important;
+}
+
+html[data-theme='dark'] #main-content .home-faq-item h3,
+html[data-theme='light'] #main-content .home-faq-item h3 {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='dark'] #main-content .home-faq-item p,
+html[data-theme='light'] #main-content .home-faq-item p {
+  color: #475569 !important;
 }
 
 /* Skeleton loaders */
@@ -1379,8 +1488,10 @@ html[data-theme='light'] #main-content .theme-dark-surface[class*='bg-slate-900'
   color: #ffffff !important;
 }
 
-html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, a):not([class*='text-emerald']):not([class*='text-amber']):not([class*='text-indigo']):not([class*='text-blue']):not([class*='text-rose']):not([class*='text-purple']):not([class*='text-sky']):not([class*='text-violet-4']):not([class*='text-violet-5']):not([class*='text-violet-6']),
-html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) .text-white {
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, a):not([class*='text-emerald']):not([class*='text-amber']):not([class*='text-indigo']):not([class*='text-blue']):not([class*='text-rose']):not([class*='text-purple']):not([class*='text-sky']):not([class*='text-violet-4']):not([class*='text-violet-5']):not([class*='text-violet-6']),
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) .text-white,
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar :is(div, span),
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card :is(div, span) {
   color: #ffffff !important;
 }
 
@@ -1651,63 +1762,119 @@ html[data-theme='dark'] .list-your-brand-page .lyb-dark-heading > p {
   color: rgba(221, 214, 254, 0.85) !important;
 }
 
-/* ── Scale + industry cards — black text (both themes) ── */
-.list-your-brand-page .lyb-scale-card {
+/* ── Your path to scale — light mode: white cards, dark text ── */
+html[data-theme='light'] .list-your-brand-page .lyb-scale-card {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
   box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06) !important;
 }
 
-.list-your-brand-page .lyb-scale-card-title,
-.list-your-brand-page .lyb-scale-card h3,
+html[data-theme='light'] .list-your-brand-page .lyb-scale-card-title,
 html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card-title,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-title,
-html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card h3,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card h3 {
-  color: #000000 !important;
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card h3 {
+  color: #0b0f19 !important;
 }
 
-.list-your-brand-page .lyb-scale-card-body,
-.list-your-brand-page .lyb-scale-card p,
+html[data-theme='light'] .list-your-brand-page .lyb-scale-card-body,
 html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card-body,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-body,
-html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card p,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card p {
-  color: #334155 !important;
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-scale-card p {
+  color: #475569 !important;
 }
 
-.list-your-brand-page .lyb-industry-card {
+/* ── Your path to scale — dark mode: dark surfaces, white text ── */
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-card-title,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-title,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card h3 {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-card-body,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card-body,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-scale-card p {
+  color: rgba(237, 233, 254, 0.88) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-card .text-violet-400 {
+  color: #c4b5fd !important;
+}
+
+/* Industry cards — light mode: white cards, dark text */
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  transform: none !important;
-}
-
-.list-your-brand-page .lyb-industry-card:hover {
-  transform: none !important;
-  border-color: #e2e8f0 !important;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+  transform: none !important;
 }
 
-.list-your-brand-page .lyb-industry-card h3,
-html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card h3,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card h3 {
-  color: #000000 !important;
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card:hover {
+  transform: none !important;
+  border-color: #ddd6fe !important;
+  box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1), 0 2px 8px rgba(15, 23, 42, 0.06) !important;
 }
 
-.list-your-brand-page .lyb-industry-card p,
-html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card p,
-html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card p {
-  color: #334155 !important;
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card h3,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card h3 {
+  color: #0b0f19 !important;
 }
 
-.list-your-brand-page .lyb-industry-card .industry-card-explore {
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card p,
+html[data-theme='light'] #main-content .list-your-brand-page .lyb-industry-card p {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card .industry-card-explore {
   color: #7c3aed !important;
 }
 
-.list-your-brand-page .lyb-industry-card .industry-card-explore:hover {
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card .industry-card-explore:hover {
   color: #6d28d9 !important;
-  gap: 0.375rem !important;
-  transform: none !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card .industry-card-media {
+  background: #f1f5f9 !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-industry-card .industry-card-fade {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, transparent 100%) !important;
+}
+
+/* Industry cards — dark mode: dark surfaces like other LYB sections */
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card {
+  background: linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.18) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card h3,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card h3 {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card p,
+html[data-theme='dark'] #main-content .list-your-brand-page .lyb-industry-card p {
+  color: rgba(237, 233, 254, 0.9) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card .industry-card-explore {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card .industry-card-explore:hover {
+  color: #e9d5ff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card .industry-card-media {
+  background: #0a0618 !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-industry-card .industry-card-fade {
+  background: linear-gradient(to top, rgba(10, 6, 24, 0.92) 0%, transparent 100%) !important;
 }
 
 /* ── Hero inquiry form — typed text pure black ── */
@@ -1829,14 +1996,28 @@ html[data-theme='dark'] .list-your-brand-page .lyb-why-section .lyb-investor-sta
   color: #ffffff !important;
 }
 
-/* ── Your path to scale — white column shells (both themes) ── */
-.list-your-brand-page .lyb-scale-column {
+/* ── Your path to scale — column shells ── */
+html[data-theme='light'] .list-your-brand-page .lyb-scale-column {
   background: #ffffff !important;
   border-color: #e2e8f0 !important;
 }
 
-.list-your-brand-page .lyb-scale-column-label {
+html[data-theme='light'] .list-your-brand-page .lyb-scale-column-label {
   color: #475569 !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-column {
+  background: linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%) !important;
+  border-color: rgba(139, 92, 246, 0.18) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-column-label {
+  color: rgba(196, 181, 253, 0.9) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-scale-column .border-slate-200 {
+  border-color: rgba(139, 92, 246, 0.22) !important;
 }
 
 /* ── Proven Results — black readable text in light mode ── */
@@ -1986,6 +2167,64 @@ html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-de
   color: #c4b5fd !important;
 }
 
+/* Proven Results — dark mode: dark cards, white text */
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card {
+  background: linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card:hover {
+  border-color: rgba(167, 139, 250, 0.45) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card.lyb-proven-card-active {
+  background: rgba(91, 33, 182, 0.35) !important;
+  border-color: rgba(167, 139, 250, 0.55) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card-title {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card-meta {
+  color: rgba(221, 214, 254, 0.75) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-card-stat {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-after-panel {
+  background: rgba(46, 16, 101, 0.5) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-after-panel .text-violet-700,
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-after-panel .text-violet-800 {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .lyb-proven-chart-panel .border-slate-200 {
+  border-color: rgba(139, 92, 246, 0.22) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-city-pill {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-city-pill span {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .list-your-brand-page .lyb-proven-section .text-violet-700 {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='light'] .list-your-brand-page .lyb-scale-column {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+}
+
 /* ── FAQ primary CTA — purple + white (both themes) ── */
 .list-your-brand-page .lyb-faq-cta-primary,
 html[data-theme='light'] .list-your-brand-page .lyb-faq-cta-primary,
@@ -2002,31 +2241,115 @@ html[data-theme='dark'] .list-your-brand-page .lyb-faq-cta-primary:hover {
   color: #ffffff !important;
 }
 
-/* Services — dashboard: readable text on light sub-panels, white on dark metrics */
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light,
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light .text-white,
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light [class*='text-white'] {
-  color: #334155 !important;
+/* Services — For Brands / For Investors dashboards (light + dark theme) */
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(226, 232, 240, 0.85) !important;
 }
 
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light .text-slate-900,
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light .text-slate-800 {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option) {
   color: #0f172a !important;
 }
 
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light .text-emerald-400,
-html[data-theme='light'] .services-dashboard-panel .dashboard-surface-light .text-emerald-300 {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-900,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-800,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-900,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-800 {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-600,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-500,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-600,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-500 {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-400,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600 {
   color: #047857 !important;
 }
 
-html[data-theme='light'] .services-dashboard-panel .dashboard-metric-card,
-html[data-theme='light'] .services-dashboard-panel .dashboard-metric-card .text-white,
-html[data-theme='light'] .services-dashboard-panel .dashboard-header-bar .text-white {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-400,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-indigo-400,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-indigo-500,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-indigo-400,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-indigo-500 {
+  color: #4f46e5 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-violet-600,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-violet-600 {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light button:not(.bg-violet-600),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light button:not(.bg-violet-600) {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar :is(div, span),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar :is(div, span) {
   color: #ffffff !important;
 }
 
-html[data-theme='light'] .services-dashboard-panel .dashboard-header-bar .text-emerald-300 {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar .text-emerald-300,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar .text-emerald-300 {
   color: #6ee7b7 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-metric-card,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-metric-card :is(div, span),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-metric-card,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-metric-card :is(div, span) {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel button.bg-violet-600,
+html[data-theme='dark'] #main-content .services-dashboard-panel button.bg-violet-600,
+html[data-theme='light'] #main-content .services-dashboard-panel button.bg-violet-600 *,
+html[data-theme='dark'] #main-content .services-dashboard-panel button.bg-violet-600 * {
+  color: #ffffff !important;
+}
+
+/* Services page — For Brands / For Investors copy (readable on light background) */
+html[data-theme='light'] #main-content .services-audience-copy h2,
+html[data-theme='light'] #main-content .services-audience-copy .text-white,
+html[data-theme='light'] #main-content .services-audience-copy span:not(.site-cta):not(.site-cta *):not(.btn-purple-solid *):not([class*='rounded-full'] svg *) {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] #main-content .services-audience-copy p {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] #main-content .services-audience-copy .theme-section-badge {
+  color: #6d28d9 !important;
+}
+
+/* Services — audience section CTAs always white label */
+html[data-theme='light'] #main-content .services-audience-copy .site-cta,
+html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__label,
+html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__icon,
+html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__icon svg,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__label,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__icon,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__icon svg {
+  color: #ffffff !important;
 }
 
 /* ═══ Franchise details — full-width gallery + about layout ═══ */

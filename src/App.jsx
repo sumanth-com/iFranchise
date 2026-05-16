@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense, Component } from 'react';
+﻿import { useEffect, useState, lazy, Suspense, Component } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';

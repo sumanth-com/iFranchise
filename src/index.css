@@ -2917,6 +2917,13 @@ html[data-theme='light'] #main-content .theme-section-on-light .text-white\/90 {
   color: #475569 !important;
 }
 
+html[data-theme='light'] #main-content .services-audience-copy .site-cta,
+html[data-theme='light'] #main-content .services-audience-copy .site-cta *,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta,
+html[data-theme='dark'] #main-content .services-audience-copy .site-cta * {
+  color: #ffffff !important;
+}
+
 /* White premium cards (not dark dashboards) */
 html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white:not(.btn-purple-solid):not(.btn-purple-solid *),
 html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li):not(.btn-purple-solid):not(.btn-purple-solid *) {
@@ -2937,11 +2944,51 @@ html[data-theme='light'] #main-content .theme-light-pill p {
   color: #0b0f19 !important;
 }
 
-/* Dashboard panels only — keep white text */
-html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill),
-html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) .text-white,
-html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, div) {
+html[data-theme='dark'] #main-content .theme-light-pill .text-white,
+html[data-theme='dark'] #main-content .theme-light-pill p {
   color: #ffffff !important;
+}
+
+/* Dashboard panels only — keep white text */
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) .text-white,
+html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, div):not(.dashboard-surface-light):not(.dashboard-surface-light *) {
+  color: #ffffff !important;
+}
+
+/* Services dashboards — header/metrics white; inner panels dark text (wins over rules above) */
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar,
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar :is(div, span),
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card,
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card :is(div, span),
+html[data-theme='dark'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar,
+html[data-theme='dark'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar :is(div, span),
+html[data-theme='dark'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card,
+html[data-theme='dark'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card :is(div, span) {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option) {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light [class*='text-slate-'],
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light [class*='text-slate-'] {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-900,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-800,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-900,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-slate-800 {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600 {
+  color: #047857 !important;
 }
 
 html[data-theme='light'] #main-content .theme-dark-surface[class*='from-[#12082a'] .text-white,
