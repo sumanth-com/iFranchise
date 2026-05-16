@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CtaButton from '../ui/CtaButton';
 
 const FAQS = [
   {
@@ -169,15 +170,12 @@ export default function FAQSection() {
           className="text-center mt-10"
         >
           <p className="text-white text-sm mb-4">Still have questions? Our expansion team is ready to help.</p>
-          <button
+          <CtaButton
+            size="sm"
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-violet-700 transition-colors duration-200 shadow-md"
           >
             Talk to an Expansion Expert
-            <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </button>
+          </CtaButton>
         </motion.div>
 
       </div>

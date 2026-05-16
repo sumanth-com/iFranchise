@@ -1,8 +1,7 @@
-﻿import { useEffect, useState, lazy, Suspense, Component } from 'react';
+import { useEffect, useState, lazy, Suspense, Component } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
-import FloatingContactCTA from './components/FloatingContactCTA';
 import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
@@ -122,8 +121,7 @@ const getPathname = () => {
 function App() {
   const [pathname, setPathname] = useState(getPathname);
   const [pagePhase, setPagePhase] = useState('idle');
-  const assistantEligible =
-    pathname !== '/404' && pathname !== '/contact' && pathname !== '/franchise-opportunities';
+  const assistantEligible = pathname !== '/404';
   const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
   const showExpansionAssistant = assistantEligible && scrolledPastHero;
 
@@ -278,10 +276,6 @@ function App() {
 
       <PreFooterCTA />
       <Footer />
-
-      {!isNotFoundPage && (isFranchiseDetailsPage || isFranchiseOpportunitiesPage) && (
-        <FloatingContactCTA franchiseName="franchise opportunities" />
-      )}
 
         {showExpansionAssistant && (
           <Suspense fallback={null}>

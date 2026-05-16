@@ -105,16 +105,13 @@ export default function FinalCTA() {
         >
           <MagneticButton
             onClick={() => nav('/contact')}
-            className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-slate-900 text-white text-base font-bold shadow-xl shadow-slate-900/20 hover:bg-violet-700 hover:shadow-violet-200/50 transition-all duration-300 overflow-hidden"
+            className="site-cta site-cta--lg group"
           >
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            <span className="relative z-10 flex items-center gap-3">
-              Start Your Expansion Journey
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:translate-x-0.5">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-                </svg>
-              </span>
+            <span className="site-cta__label relative z-[1]">Start Your Expansion Journey</span>
+            <span className="site-cta__icon relative z-[1]" aria-hidden>
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+              </svg>
             </span>
           </MagneticButton>
 

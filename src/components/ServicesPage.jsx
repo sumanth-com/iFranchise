@@ -8,6 +8,7 @@ import {
   FiDollarSign, FiUserCheck, FiBookOpen, FiUserPlus, FiCompass, FiMap,
   FiChevronDown, FiPlus, FiMinus, FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
+import CtaButton from './ui/CtaButton';
 import BrandLogo from '../assets/BrandLogo.png';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../assets/IndImgs/Food & Beverage.png';
@@ -666,22 +667,26 @@ export default function ServicesPage() {
   };
 
   return (
-    <div 
-      ref={pageRef} 
-      className="relative w-full" 
-      style={{ 
-        background: 'transparent',
-        scrollBehavior: 'smooth',
-        scrollPaddingTop: '80px'
-      }}
-    >
+    <main ref={pageRef} className="relative z-10 w-full bg-transparent text-white">
 
       {/* HERO */}
-      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-8 pt-24 sm:px-6 lg:px-8">
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0a0618] via-[#0f0a1e] to-[#0a0618]"
-          aria-hidden
-        />
+      <section className="relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
+          <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="services-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white/15" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#services-hero-grid)" />
+          </svg>
+          <motion.div
+            animate={{ scale: [1, 1.18, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-400/15 blur-[140px]"
+          />
+        </div>
 
         <div className="relative z-10 mx-auto max-w-[900px] text-center">
 
@@ -712,19 +717,9 @@ export default function ServicesPage() {
             transition={{ duration: 0.3, delay: 0.1, ease: [0.22,1,0.36,1] }}
             className="mb-5"
           >
-            <button 
-              type="button" 
-              onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
-              className="group relative overflow-hidden rounded-2xl bg-violet-600 px-8 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-violet-500 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(15,23,42,0.25)]"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Schedule a Consultation
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-0.5">
-                  <FiArrowRight className="h-3 w-3" />
-                </span>
-              </span>
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-200 group-hover:translate-x-full" />
-            </button>
+            <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
+              Schedule a Consultation
+            </CtaButton>
           </motion.div>
 
           {/* Trust Badge with Avatars and Reviews */}
@@ -870,16 +865,9 @@ export default function ServicesPage() {
 
         {/* Bottom CTA */}
         <Reveal delay={0.5} className="text-center mt-12">
-          <button
-            type="button"
-            onClick={() => navigateTo('/contact')}
-            className="group inline-flex items-center gap-2.5 rounded-full bg-slate-900 px-8 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-slate-800 hover:shadow-[0_12px_40px_rgba(15,23,42,0.25)] hover:-translate-y-1"
-          >
-            <span>Get Started with Our Services</span>
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1">
-              <FiArrowRight className="h-3 w-3" />
-            </span>
-          </button>
+          <CtaButton type="button" onClick={() => navigateTo('/contact')}>
+            Get Started with Our Services
+          </CtaButton>
         </Reveal>
         
         </div>
@@ -931,16 +919,9 @@ export default function ServicesPage() {
           {/* CTA */}
           <Reveal delay={0.6}>
             <div className="text-center mt-10">
-              <button
-                type="button"
-                onClick={() => navigateTo('/contact')}
-                className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              >
-                <span className="relative z-10 flex items-center gap-2.5">
-                  Start Your Expansion Journey
-                  <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </span>
-              </button>
+              <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+                Start Your Expansion Journey
+              </CtaButton>
             </div>
           </Reveal>
 
@@ -995,16 +976,9 @@ export default function ServicesPage() {
 
               {/* CTA */}
               <Reveal delay={0.4}>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('/contact')}
-                  className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                >
-                  <span className="relative z-10 flex items-center gap-2.5">
-                    Grow Your Brand with iFranchise
-                    <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </span>
-                </button>
+                <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+                  Grow Your Brand with iFranchise
+                </CtaButton>
               </Reveal>
             </div>
 
@@ -1401,16 +1375,9 @@ export default function ServicesPage() {
 
               {/* CTA */}
               <div>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('/franchise-opportunities')}
-                  className="group relative overflow-hidden rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-                >
-                  <span className="relative z-10 flex items-center gap-2.5">
-                    Explore Franchise Opportunities
-                    <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </span>
-                </button>
+                <CtaButton type="button" size="lg" onClick={() => navigateTo('/franchise-opportunities')}>
+                  Explore Franchise Opportunities
+                </CtaButton>
               </div>
             </div>
 
@@ -1499,14 +1466,9 @@ export default function ServicesPage() {
             <p className="text-sm text-white mb-4">
               Don't see your industry? We work with businesses across all sectors.
             </p>
-            <button
-              type="button"
-              onClick={() => navigateTo('/contact')}
-              className="group inline-flex items-center gap-2.5 rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white hover:bg-violet-500 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-            >
-              <span>Discuss Your Industry</span>
-              <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </button>
+            <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+              Discuss Your Industry
+            </CtaButton>
           </Reveal>
 
         </div>
@@ -1543,10 +1505,9 @@ export default function ServicesPage() {
               viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.15 }}
               className="mt-8 flex flex-wrap items-center justify-center gap-4"
             >
-              <button type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
-                className="rounded-full btn-wave bg-[#0B1220] px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(15,23,42,0.22)]">
+              <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
                 Book a Call
-              </button>
+              </CtaButton>
               <button type="button" onClick={() => navigateTo('/franchise-opportunities')}
                 className="rounded-full border border-violet-500/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
                 View More
@@ -1938,7 +1899,7 @@ export default function ServicesPage() {
       </div>
 
 
-    </div>
+    </main>
   );
 }
 

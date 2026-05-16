@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import brandLogo from '../assets/BrandNav.png';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
@@ -777,7 +777,7 @@ function Navbar() {
             </a>
           </li>
 
-          {/* Franchise Opportunities — hover shows filter panel */}
+          {/* Franchise Opportunities — hover shows filter panel; click goes to listings */}
           <li
             className="relative"
             ref={franchiseRef}
@@ -786,6 +786,7 @@ function Navbar() {
           >
             <button
               type="button"
+              onClick={() => navigateTo('/franchise-opportunities')}
               className={`${NAV_LINK_BASE} ${
                 activeDropdown === 'franchiseFilters' ? NAV_LINK_ACTIVE : NAV_LINK_IDLE
               }`}

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CtaButton from '../ui/CtaButton';
 import {
   franchiseOpportunities,
   getTopOpportunitiesByROI,
@@ -243,15 +244,11 @@ export default function InvestorsSection() {
               ))}
             </div>
 
-            <button
+            <CtaButton
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-500 transition-colors duration-200 shadow-lg shadow-emerald-900/40"
             >
               Browse All Opportunities
-              <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-              </svg>
-            </button>
+            </CtaButton>
           </motion.div>
 
         </div>

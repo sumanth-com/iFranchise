@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiArrowRight } from 'react-icons/fi';
+import CtaButton from '../ui/CtaButton';
 import retailImg from '../../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../../assets/IndImgs/Food & Beverage.png';
 import healthcareImg from '../../assets/IndImgs/Healthcare & Wellness.png';
@@ -159,14 +159,9 @@ export default function ServicesStyleIndustriesSection() {
           <p className="mb-5 text-sm text-white">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
-          <button
-            type="button"
-            onClick={() => navigateTo('/contact')}
-            className="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-violet-600 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet-500 hover:shadow-xl"
-          >
-            <span>Discuss Your Industry</span>
-            <FiArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-          </button>
+          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+            Discuss Your Industry
+          </CtaButton>
         </div>
       </div>
     </section>

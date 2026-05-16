@@ -15,12 +15,12 @@ function initLenis() {
   if (prefersReducedMotion) return null
 
   const lenis = new Lenis({
-    duration: 0.85,
+    duration: 1.05,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothTouch: false,
-    touchMultiplier: 1.5,
-    wheelMultiplier: 0.9,
-    lerp: 0.14,
+    touchMultiplier: 1.4,
+    wheelMultiplier: 0.85,
+    lerp: 0.1,
   })
 
   window.__lenis = lenis
@@ -65,10 +65,17 @@ function initLenis() {
   }
 }
 
-// Defer Lenis until after first paint for faster perceived load
+// Homepage: start Lenis right after first paint for premium scroll feel
 const scheduleLenis = () => {
+  const isHome = path === '/' || path === ''
+  if (isHome) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => initLenis())
+    })
+    return
+  }
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => initLenis(), { timeout: 1200 })
+    requestIdleCallback(() => initLenis(), { timeout: 800 })
   } else {
     setTimeout(() => initLenis(), 1)
   }

@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 
 const MOBILE_MAX_WIDTH = 767;
 
+function showsAssistantImmediately(pathname) {
+  return pathname === '/contact' || pathname === '/franchise-opportunities';
+}
+
 function getMobileScrollThreshold(pathname) {
   if (pathname === '/') {
     const heroHeight = window.innerHeight - 80;
@@ -22,6 +26,7 @@ export function useScrollPastHero(pathname, enabled = true) {
   const [showAssistant, setShowAssistant] = useState(() => {
     if (!enabled) return false;
     if (typeof window === 'undefined') return false;
+    if (showsAssistantImmediately(pathname)) return true;
     return !isMobileViewport();
   });
 
@@ -34,7 +39,7 @@ export function useScrollPastHero(pathname, enabled = true) {
     const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
 
     const update = () => {
-      if (!mq.matches) {
+      if (!mq.matches || showsAssistantImmediately(pathname)) {
         setShowAssistant(true);
         return;
       }

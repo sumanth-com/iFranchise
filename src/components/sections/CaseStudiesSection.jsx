@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CtaButton from '../ui/CtaButton';
 
 const CASES = [
   {
@@ -377,15 +378,11 @@ export default function CaseStudiesSection() {
           className="text-center mt-14"
         >
           <p className="text-white text-sm mb-5">Ready to write your own success story?</p>
-          <button
+          <CtaButton
             onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-            className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-violet-700 transition-colors duration-200 shadow-lg"
           >
             Start Your Franchise Journey
-            <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-            </svg>
-          </button>
+          </CtaButton>
         </motion.div>
 
       </div>

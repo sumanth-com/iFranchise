@@ -11,22 +11,54 @@ const navTo = (path, setIsOpen) => {
 const PURPLE_BRAND = '#6d28d9';
 const PURPLE_BRIGHT = '#7c3aed';
 
-/** Stylised globe glyph—bold strokes read clearly at small sizes */
-function GlobeGlyph({ size = 18, emphasis }) {
-  const s = size;
-  const bold = emphasis === true || emphasis === 'strong';
-  const sw = bold
-    ? { o: 2.05, m: 1.85, a: 1.65 }
-    : { o: 1.65, m: 1.4, a: 1.25 };
-  const op = bold ? { o: 1, m: 0.96, a: 0.88 } : { o: 1, m: 0.88, a: 0.78 };
+function formatDeskDate(date) {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()}`;
+}
+
+function formatDeskTime(date) {
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+/** Live date (DD-MM-YYYY) and clock for panel header */
+function AssistantDateTime() {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const tick = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(tick);
+  }, []);
+
   return (
-    <svg width={s} height={s} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9.35" stroke="currentColor" strokeWidth={sw.o} opacity={op.o} strokeLinecap="round" />
-      <ellipse cx="12" cy="12" rx="4" ry="9.35" stroke="currentColor" strokeWidth={sw.m} opacity={op.m} strokeLinecap="round" />
-      <path d="M2.6 12h18.8" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
-      <path d="M12 2.7c3.15 4 3.15 14.6 0 18.6" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
-      <path d="M12 2.7c-3.15 4-3.15 14.6 0 18.6" stroke="currentColor" strokeWidth={sw.a} opacity={op.a} strokeLinecap="round" />
-    </svg>
+    <div>
+      <div className="assistant-desk-datetime-row">
+        <span className="assistant-desk-date">{formatDeskDate(now)}</span>
+        <span className="assistant-desk-time-pill">{formatDeskTime(now)}</span>
+      </div>
+      <div style={{ marginTop: 6 }}>
+        <LiveStatusPulse />
+      </div>
+    </div>
+  );
+}
+
+/** Fixed shell — 3D Earth surface rotates inside like the real planet */
+function RotatingGlobeIcon({ size = 22, className = '' }) {
+  return (
+    <span
+      className={`assistant-globe-frame ${className}`.trim()}
+      style={{ width: size, height: size }}
+      aria-hidden
+    >
+      <span className="assistant-globe-halo" />
+      <span className="assistant-globe-orbit" />
+      <span className="assistant-globe-sphere">
+        <span className="assistant-globe-surface-track" aria-hidden />
+        <span className="assistant-globe-shade" />
+        <span className="assistant-globe-sheen" />
+      </span>
+    </span>
   );
 }
 
@@ -78,40 +110,22 @@ function LiveStatusPulse({ label = 'Live' }) {
   );
 }
 
-/** Squircle tile: crisp purple globe on white—reads clearly on light chrome */
+/** Header tile — static shell, rotating globe inside */
 function AssistantGlyphTile({ dimension = 34 }) {
-  const glyph = Math.round(dimension * 0.52);
+  const glyph = Math.round(dimension * 0.58);
   return (
-    <motion.div
+    <div
+      className="assistant-globe-tile"
       aria-hidden
-      animate={{
-        boxShadow: [
-          '0 2px 8px rgba(124,58,237,0.12), 0 0 0 0 rgba(124,58,237,0.2)',
-          '0 4px 16px rgba(124,58,237,0.18), 0 0 0 4px rgba(124,58,237,0.06)',
-          '0 2px 8px rgba(124,58,237,0.12), 0 0 0 0 rgba(124,58,237,0.2)',
-        ],
-      }}
-      transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
       style={{
         width: dimension,
         height: dimension,
         borderRadius: Math.max(9, Math.round(dimension * 0.31)),
-        background: '#ffffff',
-        border: `1px solid rgba(124,58,237,0.38)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         color: PURPLE_BRAND,
       }}
     >
-      <motion.span
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        animate={{ scale: [1, 1.06, 1] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <GlobeGlyph size={glyph} emphasis />
-      </motion.span>
-    </motion.div>
+      <RotatingGlobeIcon size={glyph} />
+    </div>
   );
 }
 
@@ -145,14 +159,6 @@ const InvestorIcon = () => (
 const PhoneIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
-  </svg>
-);
-
-const InfoIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="8" x2="12" y2="12" />
-    <line x1="12" y1="16" x2="12.01" y2="16" />
   </svg>
 );
 
@@ -337,21 +343,14 @@ const PRIMARY_ROWS = [
   },
 ];
 
-const SECONDARY_ROWS = [
-  {
-    id: 'services',
-    path: '/services',
-    label: 'SERVICES',
-    title: 'How iFranchise works',
-    icon: <InfoIcon />,
-  },
-  {
-    id: 'support',
-    label: 'SUPPORT',
-    title: 'Navigate the platform',
-    icon: <HelpIcon />,
-  },
-];
+const SUPPORT_ROW = {
+  id: 'support',
+  label: 'SUPPORT',
+  title: 'Navigate the platform & get help',
+  iconBg: 'linear-gradient(135deg,rgba(148,163,184,0.22),rgba(100,116,139,0.12))',
+  iconColor: 'rgba(100,116,139,0.88)',
+  icon: <HelpIcon />,
+};
 
 function ActionRow({ row, onClick, index, secondary = false }) {
   const [hovered, setHovered] = useState(false);
@@ -448,36 +447,72 @@ function HomeView({ setView, setIsOpen }) {
       style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
     >
       {/* Welcome */}
-      <div style={{ padding: '16px 16px 10px', flexShrink: 0 }}>
-        <div style={{
-          fontSize: 15.5,
-          fontWeight: 700,
-          color: '#0f172a',
-          letterSpacing: '-0.03em',
-          lineHeight: 1.35,
-        }}>
-          How can we help you expand today?
+      <div style={{ padding: '12px 12px 6px', flexShrink: 0 }}>
+        <div
+          className="assistant-home-welcome"
+          style={{
+            padding: '14px 14px 12px',
+            borderRadius: 14,
+            background: 'linear-gradient(145deg, rgba(139,92,246,0.1) 0%, rgba(99,102,241,0.05) 45%, rgba(255,255,255,0.6) 100%)',
+            border: '1px solid rgba(237,233,254,0.95)',
+            boxShadow: '0 2px 12px rgba(124,58,237,0.06)',
+          }}
+        >
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              marginBottom: 8,
+              fontSize: 9.5,
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: PURPLE_BRAND,
+            }}
+          >
+            <span className="assistant-home-welcome-dot" />
+            Global franchise desk
+          </div>
+          <div
+            style={{
+              fontSize: 15.5,
+              fontWeight: 700,
+              color: '#0f172a',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.35,
+            }}
+          >
+            How can we help you expand today?
+          </div>
+          <p
+            style={{
+              marginTop: 6,
+              fontSize: 12,
+              lineHeight: 1.45,
+              color: 'rgba(71,85,105,0.88)',
+              letterSpacing: '-0.01em',
+            }}
+          >
+            Please select an option below to connect with our franchise advisory team.
+          </p>
         </div>
       </div>
 
       {/* Action rows */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 10px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '6px 10px 14px', display: 'flex', flexDirection: 'column', gap: 5 }}>
         {PRIMARY_ROWS.map((row, i) => (
           <ActionRow key={row.id} row={row} onClick={() => setView(row.id)} index={i} />
         ))}
 
-        {/* Thin divider */}
-        <div style={{ height: 1, background: 'rgba(226,232,240,1)', margin: '2px 4px' }} />
+        <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(226,232,240,1), transparent)', margin: '4px 2px' }} />
 
-        {SECONDARY_ROWS.map((row, i) => (
-          <ActionRow
-            key={row.id}
-            row={row}
-            onClick={() => row.path ? navTo(row.path, setIsOpen) : setView(row.id)}
-            index={PRIMARY_ROWS.length + 1 + i}
-            secondary
-          />
-        ))}
+        <ActionRow
+          row={SUPPORT_ROW}
+          onClick={() => setView('support')}
+          index={PRIMARY_ROWS.length}
+          secondary
+        />
       </div>
     </motion.div>
   );
@@ -1057,22 +1092,7 @@ export default function ExpansionAssistant() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
                   <AssistantGlyphTile dimension={36} />
-                  <div>
-                    <div
-                      style={{
-                        color: '#0f172a',
-                        fontSize: 14,
-                        fontWeight: 700,
-                        letterSpacing: '-0.03em',
-                        lineHeight: 1.2,
-                      }}
-                    >
-                      Strategic Franchise Desk
-                    </div>
-                    <div style={{ marginTop: 5 }}>
-                      <LiveStatusPulse />
-                    </div>
-                  </div>
+                  <AssistantDateTime />
                 </div>
                 <button
                   type="button"
@@ -1113,7 +1133,6 @@ export default function ExpansionAssistant() {
                 {view === 'brands' && <BrandsView key="brands" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'investors' && <InvestorsView key="investors" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'strategy' && <StrategyView key="strategy" setView={setView} setIsOpen={setIsOpen} />}
-                {view === 'services' && <ServicesView key="services" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'support' && <SupportView key="support" setView={setView} setIsOpen={setIsOpen} />}
               </AnimatePresence>
             </div>
@@ -1192,13 +1211,7 @@ export default function ExpansionAssistant() {
                     '0 8px 28px rgba(124,58,237,0.22), 0 2px 8px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1)';
                 }}
               >
-                <motion.span
-                  style={{ display: 'flex', color: PURPLE_BRIGHT }}
-                  animate={{ rotate: [0, 8, -6, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.8 }}
-                >
-                  <GlobeGlyph size={22} emphasis />
-                </motion.span>
+                <RotatingGlobeIcon size={24} className="assistant-fab-globe" />
               </motion.button>
             </motion.div>
           ) : (

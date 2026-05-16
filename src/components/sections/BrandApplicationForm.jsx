@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import CtaButton from "../ui/CtaButton";
 
 const STEPS = [
   {
@@ -347,22 +348,29 @@ export default function BrandApplicationForm() {
                   </div>
 
                   {step < STEPS.length ? (
-                    <button onClick={() => canNext() && setStep(s => s + 1)} disabled={!canNext()}
-                      className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-bold hover:bg-violet-700 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
+                    <CtaButton
+                      size="sm"
+                      onClick={() => canNext() && setStep((s) => s + 1)}
+                      disabled={!canNext()}
+                    >
                       Continue
-                      <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-                    </button>
+                    </CtaButton>
                   ) : (
-                    <button onClick={handleSubmit} disabled={!canNext() || submitting}
-                      className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-bold hover:bg-violet-700 transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed shadow-md">
+                    <CtaButton
+                      size="sm"
+                      onClick={handleSubmit}
+                      disabled={!canNext() || submitting}
+                      showArrow={!submitting}
+                    >
                       {submitting ? (
-                        <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Submitting...</>
+                        <span className="inline-flex items-center gap-2">
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                          Submitting...
+                        </span>
                       ) : (
-                        <>Submit Application
-                          <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-                        </>
+                        "Submit Application"
                       )}
-                    </button>
+                    </CtaButton>
                   )}
                 </div>
               </div>

@@ -177,19 +177,14 @@ function ContactPage() {
               whileTap={{ scale: 0.93 }}
               onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
               aria-label="Scroll to contact form"
-              className="relative group flex items-center gap-3 rounded-full bg-slate-900 pl-5 pr-4 py-3 shadow-[0_8px_32px_rgba(15,23,42,0.22)] hover:shadow-[0_12px_40px_rgba(99,102,241,0.35)] transition-all duration-300 hover:bg-slate-800"
+              className="site-cta site-cta--md group pl-5 pr-4"
             >
-              {/* Label */}
-              <span className="text-sm font-semibold text-white tracking-wide">Start the conversation</span>
-
-              {/* Arrow circle */}
-              <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/10 border border-white/20 overflow-hidden">
-                {/* Shine sweep on hover */}
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
+              <span className="site-cta__label relative z-[1] text-sm tracking-wide">Start the conversation</span>
+              <span className="site-cta__icon relative z-[1] h-8 w-8" aria-hidden>
                 <motion.svg
                   animate={{ y: [0, 3, 0] }}
                   transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-10 h-4 w-4 text-white"
+                  className="h-4 w-4 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

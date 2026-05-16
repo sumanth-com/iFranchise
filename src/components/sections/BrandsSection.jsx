@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import CtaButton from '../ui/CtaButton';
 import {
   franchiseOpportunities,
   getTotalCities,
@@ -114,15 +115,13 @@ export default function BrandsSection() {
                 ))}
               </div>
 
-              <button
+              <CtaButton
+                className="self-start"
+                size="sm"
                 onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                className="group self-start inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-slate-900 text-sm font-bold hover:bg-violet-50 transition-colors duration-200 shadow-lg shadow-violet-900/40"
               >
                 List Your Brand Today
-                <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-                </svg>
-              </button>
+              </CtaButton>
             </motion.div>
 
             {/* ── RIGHT — compact live dashboard ── */}

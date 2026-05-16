@@ -1,6 +1,8 @@
 ﻿import { useEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
+import CtaButton from './ui/CtaButton';
+import { useHeroParallax } from '../hooks/useHeroParallax';
 import TestimonialCard from './TestimonialCard';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
@@ -72,17 +74,11 @@ function useInView(threshold = 0.1) {
 // ── Animated wrapper — fades+slides in on scroll, resets when out ─────────────
 function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
   const [ref, visible] = useInView(0.1);
-  const transforms = { up: 'translateY(20px)', down: 'translateY(-12px)', right: 'translateX(-20px)' };
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translate3d(0,0,0)' : transforms[direction] || transforms.up,
-        transition: `opacity 0.3s cubic-bezier(0.22,1,0.36,1) ${delay}s, transform 0.3s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
-        willChange: visible ? 'auto' : 'transform, opacity',
-      }}
+      className={`${className} cinematic-scroll-reveal ${visible ? 'is-visible' : ''}`}
+      style={{ transitionDelay: `${delay}s` }}
     >
       {children}
     </div>
@@ -2861,9 +2857,8 @@ function PremiumFAQItem({ faq, index }) {
   );
 }
 
-// ── Hero CTA Button — white bg, purple on hover ───────────────────────────────
-function HeroCtaButton({ label, path, className = '' }) {
-  const [hovered, setHovered] = useState(false);
+// ── Hero CTA — white pill, purple text (excluded from site-wide violet CTAs) ──
+function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
     <button
       type="button"
@@ -2871,38 +2866,21 @@ function HeroCtaButton({ label, path, className = '' }) {
         window.history.pushState({}, '', path);
         window.dispatchEvent(new PopStateEvent('popstate'));
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={className}
-      style={{
-        backgroundColor: hovered ? '#7c3aed' : '#ffffff',
-        color: hovered ? '#ffffff' : '#0b0f19',
-        boxShadow: hovered
-          ? '0 6px 24px rgba(124,58,237,0.45)'
-          : '0 4px 16px rgba(0,0,0,0.25)',
-        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        transition: 'background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease',
-        borderRadius: '10px',
-        padding: '12px 20px',
-        fontSize: '14px',
-        fontWeight: 700,
-        border: 'none',
-        cursor: 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-      }}
+      className={`hero-cta group ${className}`.trim()}
+      style={{ animationDelay: animDelay }}
     >
-      {label}
-      <svg style={{ width: 16, height: 16 }} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
-      </svg>
+      <span className="hero-cta__label">{label}</span>
+      <span className="hero-cta__icon" aria-hidden>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+        </svg>
+      </span>
     </button>
   );
 }
 
 function Hero() {
+  const heroParallaxRef = useHeroParallax(true, 10);
   const leftLoopItems = [...testimonials.left, ...testimonials.left];
   const rightLoopItems = [...testimonials.right, ...testimonials.right];
     const growthRef = useRef(null);
@@ -3106,42 +3084,44 @@ function Hero() {
 
   return (
     <main className="relative isolate overflow-x-hidden bg-transparent">
-      {/* -- HERO SECTION -- */}
-      <section className="relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-[#0a0618]">
-        <img
-          src={homeHeroBg}
-          alt=""
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
-          aria-hidden
-        />
+      {/* -- HERO SECTION — cinematic entry -- */}
+      <section className="cinematic-hero relative flex h-[calc(100dvh-80px)] min-h-[calc(100dvh-80px)] w-full flex-col overflow-hidden bg-[#0a0618]">
+        <div ref={heroParallaxRef} className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
+          <div className="hero-cinematic-float-layer absolute inset-0">
+            <img
+              src={homeHeroBg}
+              alt=""
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+              className="hero-cinematic-media pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+              aria-hidden
+            />
+          </div>
+        </div>
+        <div className="hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48" aria-hidden />
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-44 bg-gradient-to-t from-[#0a0618]/90 via-[#0a0618]/40 to-transparent sm:hidden"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-44 bg-gradient-to-t from-[#0a0618]/90 via-[#0a0618]/40 to-transparent sm:hidden"
           aria-hidden
         />
 
         <div className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-5 pt-2 sm:items-center sm:justify-center sm:px-8 sm:pb-[8%] sm:pt-0">
           <div className="mx-auto flex min-h-0 w-full max-w-[900px] flex-1 flex-col items-center text-center sm:flex-none sm:justify-center">
             <div className="flex flex-1 flex-col items-center justify-center pt-[4vh] pb-2 sm:flex-none sm:justify-center sm:pt-0 sm:pb-0">
-            {/* Animated pill badge */}
             <div
-              className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
+              className="cinematic-enter-pill cinematic-delay-0 mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
               style={{
-                background: 'rgba(88,28,135,0.6)',
-                border: '1px solid rgba(192,132,252,0.65)',
+                background: 'rgba(88,28,135,0.55)',
+                border: '1px solid rgba(192,132,252,0.5)',
                 backdropFilter: 'blur(10px)',
                 WebkitBackdropFilter: 'blur(10px)',
-                animation: 'heroPillPulse 1.5s ease-in-out infinite',
               }}
             >
               <span
-                className="h-2 w-2 rounded-full flex-shrink-0"
+                className="h-2 w-2 flex-shrink-0 rounded-full"
                 style={{
                   backgroundColor: '#c084fc',
-                  boxShadow: '0 0 6px rgba(192,132,252,0.9)',
-                  animation: 'heroDotBlink 1.4s ease-in-out infinite',
+                  boxShadow: '0 0 8px rgba(192,132,252,0.85)',
                 }}
               />
               <span style={{ color: '#f3e8ff', fontSize: '11px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
@@ -3150,7 +3130,7 @@ function Hero() {
             </div>
 
             <h1
-              className="mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
+              className="cinematic-blur-reveal cinematic-delay-1 mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
               style={{
                 letterSpacing: '-0.01em',
                 textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
@@ -3163,7 +3143,7 @@ function Hero() {
             </h1>
 
             <p
-              className="max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
+              className="cinematic-fade-up cinematic-delay-2 max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
               style={{
                 color: 'rgba(255,255,255,0.92)',
                 textShadow: '0 1px 8px rgba(0,0,0,0.65)',
@@ -3172,35 +3152,29 @@ function Hero() {
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
             </div>
-            <div className="mt-auto flex w-full max-w-md shrink-0 flex-col gap-3 pt-3 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
-              {[
-                { label: 'Explore Opportunities', path: '/franchise-opportunities' },
-                { label: 'List Your Brand', path: '/list-your-brand' },
-              ].map(({ label, path }) => (
-                <HeroCtaButton key={label} label={label} path={path} className="w-full sm:w-auto" />
-              ))}
+            <div className="cinematic-fade-up cinematic-delay-3 mt-auto flex w-full max-w-md shrink-0 flex-col gap-3 pt-3 sm:mt-7 sm:max-w-none sm:flex-row sm:justify-center sm:pt-0">
+              <HeroCtaButton
+                label="Explore Opportunities"
+                path="/franchise-opportunities"
+                className="w-full sm:w-auto"
+                animDelay="220ms"
+              />
+              <HeroCtaButton
+                label="List Your Brand"
+                path="/list-your-brand"
+                className="w-full sm:w-auto"
+                animDelay="300ms"
+              />
             </div>
           </div>
         </div>
 
-        {/* Keyframe styles */}
-        <style>{`
-          @keyframes heroPillPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.5), 0 0 12px rgba(168,85,247,0.25); }
-            50% { box-shadow: 0 0 0 8px rgba(168,85,247,0), 0 0 22px rgba(168,85,247,0.4); }
-          }
-          @keyframes heroDotBlink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.35; transform: scale(0.65); }
-          }
-        `}</style>
-
       </section>
 
       {/* ── FEATURED OPPORTUNITIES (after hero) ── */}
-      <div className="relative w-full overflow-hidden bg-transparent">
+      <div className="section-reveal relative w-full overflow-hidden bg-transparent">
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
-          <div className="text-center mb-10">
+          <div className="reveal-child text-center mb-10">
             <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-4"
               style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', backdropFilter: 'blur(8px)' }}>
               <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
@@ -3224,15 +3198,12 @@ function Hero() {
           </div>
 
           <div className="text-center mt-8">
-            <button type="button"
+            <CtaButton
+              type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 4px 20px rgba(124,58,237,0.4)' }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 30px rgba(124,58,237,0.6)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,58,237,0.4)'}>
+            >
               View All Opportunities
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1"><FiArrowRight className="h-3 w-3" /></span>
-            </button>
+            </CtaButton>
           </div>
         </div>
 
@@ -3526,14 +3497,9 @@ function Hero() {
           </div>
 
           <div className="text-center mt-10">
-            <button type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
-              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'linear-gradient(135deg,#7c3aed,#4f46e5)', boxShadow: '0 4px 20px rgba(124,58,237,0.45)' }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 30px rgba(124,58,237,0.6)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 4px 20px rgba(124,58,237,0.45)'}>
+            <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
               Start Your Expansion Journey
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1"><FiArrowRight className="h-3 w-3" /></span>
-            </button>
+            </CtaButton>
           </div>
         </div>
 
@@ -3617,15 +3583,12 @@ function Hero() {
           </div>
 
           <div className="text-center mt-8">
-            <button type="button"
+            <CtaButton
+              type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="group inline-flex items-center gap-2.5 rounded-full px-7 py-3 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
-              style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.22)', backdropFilter: 'blur(8px)' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.18)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}>
+            >
               Explore All Industries
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform duration-200 group-hover:translate-x-1"><FiArrowRight className="h-3 w-3" /></span>
-            </button>
+            </CtaButton>
           </div>
         </div>
 
