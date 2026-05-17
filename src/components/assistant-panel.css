@@ -1,0 +1,69 @@
+/* Expansion Assistant — inverted panel theme (scoped via data-assistant-theme) */
+
+.assistant-panel .ea-text-input::placeholder {
+  opacity: 1;
+}
+
+.assistant-panel[data-assistant-theme='light'] .ea-text-input::placeholder {
+  color: rgba(100, 116, 139, 0.72);
+}
+
+.assistant-panel[data-assistant-theme='dark'] .ea-text-input::placeholder {
+  color: rgba(148, 163, 184, 0.78);
+}
+
+.assistant-panel .assistant-desk-datetime-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.assistant-panel .assistant-desk-time-pill {
+  border-radius: 999px;
+  line-height: 1.2;
+}
+
+.assistant-panel .assistant-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.assistant-panel .assistant-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.assistant-panel .assistant-globe-tile {
+  background: var(--ea-globe-tile-bg, #fff);
+  border: 1px solid var(--ea-globe-tile-border, rgba(124, 58, 237, 0.38));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.assistant-panel[data-assistant-theme='light'] .assistant-home-welcome {
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(99, 102, 241, 0.05) 45%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  border-color: rgba(237, 233, 254, 0.95);
+}
+
+.assistant-panel[data-assistant-theme='dark'] .assistant-home-welcome {
+  background: linear-gradient(
+    145deg,
+    rgba(124, 58, 237, 0.22) 0%,
+    rgba(99, 102, 241, 0.12) 45%,
+    rgba(30, 41, 59, 0.85) 100%
+  );
+  border-color: rgba(167, 139, 250, 0.28);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}

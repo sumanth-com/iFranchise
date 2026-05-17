@@ -90,7 +90,6 @@ export const RATE_LIMIT_KEYS = {
   FRANCHISE_INQUIRY: 'franchise_inquiry',
   BRAND_APPLICATION: 'brand_application',
   JOB_APPLICATION:   'job_application',
-  NEWSLETTER:        'newsletter',
   CHATBOT_BRAND:     'chatbot_brand',
   CHATBOT_INVESTOR:  'chatbot_investor',
 };

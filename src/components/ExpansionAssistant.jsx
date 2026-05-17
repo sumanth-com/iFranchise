@@ -1,6 +1,159 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead } from '../lib/forms';
+import { useTheme } from '../context/ThemeContext';
+import './assistant-panel.css';
+
+const AssistantPaletteContext = createContext(null);
+
+function getAssistantPalette(siteIsLight) {
+  if (siteIsLight) {
+    return {
+      mode: 'dark',
+      panel: '#0f172a',
+      header: '#1e293b',
+      text: '#f8fafc',
+      textMuted: '#cbd5e1',
+      mutedText: 'rgba(203,213,225,0.85)',
+      border: 'rgba(255,255,255,0.12)',
+      divider: 'rgba(255,255,255,0.1)',
+      inputBg: 'rgba(255,255,255,0.08)',
+      inputBorder: 'rgba(255,255,255,0.2)',
+      inputFocusBorder: 'rgba(167,139,250,0.65)',
+      inputFocusBg: 'rgba(124,58,237,0.18)',
+      chipBg: 'rgba(255,255,255,0.06)',
+      chipHoverBg: 'rgba(255,255,255,0.1)',
+      chipBorder: 'rgba(255,255,255,0.16)',
+      chipSelectedBg: 'rgba(124,58,237,0.35)',
+      chipSelectedBorder: 'rgba(167,139,250,0.6)',
+      chipText: '#e2e8f0',
+      chipSelectedText: '#ede9fe',
+      progressTrack: 'rgba(255,255,255,0.1)',
+      btnDisabledBg: 'rgba(109,40,217,0.55)',
+      btnDisabledText: '#f8fafc',
+      btnEnabledBg: 'linear-gradient(135deg,#7c3aed,#6366f1)',
+      btnEnabledText: '#fff',
+      liveLabel: '#e2e8f0',
+      livePillBg: 'rgba(34,197,94,0.14)',
+      livePillBorder: 'rgba(34,197,94,0.32)',
+      dateColor: '#94a3b8',
+      timeColor: '#e9d5ff',
+      timePillBg: 'rgba(124,58,237,0.28)',
+      timePillBorder: 'rgba(167,139,250,0.42)',
+      globeTileBg: '#1e293b',
+      globeTileBorder: 'rgba(167,139,250,0.45)',
+      flowHeaderBg: '#1e293b',
+      flowTitle: '#f8fafc',
+      flowStepBg: 'rgba(255,255,255,0.08)',
+      flowStepText: '#cbd5e1',
+      flowBackBg: 'rgba(255,255,255,0.08)',
+      flowBackBorder: 'rgba(255,255,255,0.14)',
+      flowBackColor: '#cbd5e1',
+      summaryBg: 'rgba(124,58,237,0.14)',
+      summaryBorder: 'rgba(167,139,250,0.28)',
+      summaryLabel: '#94a3b8',
+      summaryValue: '#f1f5f9',
+      summaryRowBorder: 'rgba(255,255,255,0.08)',
+      questionColor: '#f8fafc',
+      rowBg: 'rgba(255,255,255,0.06)',
+      rowBgHover: 'rgba(124,58,237,0.14)',
+      rowBorder: 'rgba(255,255,255,0.12)',
+      rowBorderHover: 'rgba(167,139,250,0.45)',
+      rowLabel: 'rgba(196,181,253,0.95)',
+      rowTitle: '#f1f5f9',
+      rowSecondaryBg: 'rgba(255,255,255,0.04)',
+      rowSecondaryTitle: '#cbd5e1',
+      welcomeTitle: '#f8fafc',
+      welcomeBody: 'rgba(203,213,225,0.9)',
+      linkBg: 'rgba(255,255,255,0.06)',
+      linkBgHover: 'rgba(255,255,255,0.1)',
+      linkBorder: 'rgba(255,255,255,0.12)',
+      linkBorderHover: 'rgba(167,139,250,0.45)',
+      linkTitle: '#f1f5f9',
+      linkIconBg: 'rgba(255,255,255,0.08)',
+      linkIconBorder: 'rgba(255,255,255,0.12)',
+      linkIconColor: '#94a3b8',
+      closeBg: 'rgba(255,255,255,0.08)',
+      closeBorder: 'rgba(255,255,255,0.14)',
+      closeColor: '#e2e8f0',
+      panelShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.45), 0 4px 16px rgba(0,0,0,0.25)',
+    };
+  }
+  return {
+    mode: 'light',
+    panel: 'rgba(255,255,255,0.99)',
+    header: 'rgba(248,249,252,1)',
+    text: '#0f172a',
+    textMuted: '#475569',
+    mutedText: 'rgba(100,116,139,0.85)',
+    border: 'rgba(0,0,0,0.08)',
+    divider: 'rgba(226,232,240,1)',
+    inputBg: '#f8fafc',
+    inputBorder: 'rgba(0,0,0,0.14)',
+    inputFocusBorder: 'rgba(124,58,237,0.5)',
+    inputFocusBg: 'rgba(124,58,237,0.06)',
+    chipBg: 'rgba(0,0,0,0.04)',
+    chipHoverBg: 'rgba(0,0,0,0.07)',
+    chipBorder: 'rgba(0,0,0,0.12)',
+    chipSelectedBg: 'rgba(124,58,237,0.12)',
+    chipSelectedBorder: 'rgba(124,58,237,0.45)',
+    chipText: '#475569',
+    chipSelectedText: '#5b21b6',
+    progressTrack: 'rgba(0,0,0,0.08)',
+    btnDisabledBg: '#8b5cf6',
+    btnDisabledText: '#ffffff',
+    btnEnabledBg: 'linear-gradient(135deg,#7c3aed,#6366f1)',
+    btnEnabledText: '#fff',
+    liveLabel: '#334155',
+    livePillBg: 'rgba(34,197,94,0.1)',
+    livePillBorder: 'rgba(34,197,94,0.28)',
+    dateColor: '#64748b',
+    timeColor: '#5b21b6',
+    timePillBg: 'rgba(124,58,237,0.1)',
+    timePillBorder: 'rgba(124,58,237,0.25)',
+    globeTileBg: '#fff',
+    globeTileBorder: 'rgba(124,58,237,0.38)',
+    flowHeaderBg: 'rgba(248,249,252,1)',
+    flowTitle: 'rgba(15,23,42,0.92)',
+    flowStepBg: 'rgba(0,0,0,0.05)',
+    flowStepText: 'rgba(71,85,105,0.9)',
+    flowBackBg: 'rgba(0,0,0,0.04)',
+    flowBackBorder: 'rgba(0,0,0,0.1)',
+    flowBackColor: 'rgba(71,85,105,0.75)',
+    summaryBg: 'rgba(124,58,237,0.06)',
+    summaryBorder: 'rgba(124,58,237,0.18)',
+    summaryLabel: 'rgba(100,116,139,0.9)',
+    summaryValue: 'rgba(15,23,42,0.92)',
+    summaryRowBorder: 'rgba(0,0,0,0.07)',
+    questionColor: 'rgba(15,23,42,0.92)',
+    rowBg: 'rgba(255,255,255,0.94)',
+    rowBgHover: 'rgba(248,246,255,0.98)',
+    rowBorder: 'rgba(237,233,254,0.95)',
+    rowBorderHover: 'rgba(167,139,250,0.5)',
+    rowLabel: 'rgba(124,58,237,0.88)',
+    rowTitle: 'rgba(15,23,42,0.92)',
+    rowSecondaryBg: 'rgba(249,250,251,0.95)',
+    rowSecondaryTitle: 'rgba(71,85,105,0.9)',
+    welcomeTitle: '#0f172a',
+    welcomeBody: 'rgba(71,85,105,0.9)',
+    linkBg: '#fff',
+    linkBgHover: 'rgba(248,250,252,1)',
+    linkBorder: 'rgba(226,232,240,0.98)',
+    linkBorderHover: 'rgba(196,181,253,0.55)',
+    linkTitle: 'rgba(15,23,42,0.9)',
+    linkIconBg: 'rgba(249,250,251,1)',
+    linkIconBorder: 'rgba(226,232,240,1)',
+    linkIconColor: 'rgba(100,116,139,0.8)',
+    closeBg: '#fff',
+    closeBorder: 'rgba(0,0,0,0.1)',
+    closeColor: '#64748b',
+    panelShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 20px 60px rgba(15,23,42,0.14), 0 4px 16px rgba(15,23,42,0.08)',
+  };
+}
+
+function useAssistantPalette() {
+  return useContext(AssistantPaletteContext) || getAssistantPalette(false);
+}
 
 // ── Navigation helper ─────────────────────────────────────────────────────────
 const navTo = (path, setIsOpen) => {
@@ -18,12 +171,12 @@ function formatDeskDate(date) {
 }
 
 function formatDeskTime(date) {
-  const pad = (n) => String(n).padStart(2, '0');
-  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 }
 
 /** Live date (DD-MM-YYYY) and clock for panel header */
 function AssistantDateTime() {
+  const p = useAssistantPalette();
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -32,14 +185,26 @@ function AssistantDateTime() {
   }, []);
 
   return (
-    <div>
-      <div className="assistant-desk-datetime-row">
-        <span className="assistant-desk-date">{formatDeskDate(now)}</span>
-        <span className="assistant-desk-time-pill">{formatDeskTime(now)}</span>
-      </div>
-      <div style={{ marginTop: 6 }}>
-        <LiveStatusPulse />
-      </div>
+    <div className="assistant-desk-datetime-row">
+      <span
+        className="assistant-desk-date"
+        style={{ color: p.dateColor, fontSize: 11, fontWeight: 600 }}
+      >
+        {formatDeskDate(now)}
+      </span>
+      <span
+        className="assistant-desk-time-pill"
+        style={{
+          color: p.timeColor,
+          background: p.timePillBg,
+          border: `1px solid ${p.timePillBorder}`,
+          fontSize: 10,
+          fontWeight: 600,
+          padding: '2px 8px',
+        }}
+      >
+        {formatDeskTime(now)}
+      </span>
     </div>
   );
 }
@@ -65,8 +230,9 @@ function RotatingGlobeIcon({ size = 22, className = '' }) {
 
 /** Pulsing “live” cue for header status */
 function LiveStatusPulse({ label = 'Live' }) {
+  const p = useAssistantPalette();
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div className="assistant-live-pill" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '4px 8px', borderRadius: 999, background: p.livePillBg, border: `1px solid ${p.livePillBorder}` }}>
       <span style={{ position: 'relative', width: 12, height: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <motion.span
           style={{
@@ -101,7 +267,7 @@ function LiveStatusPulse({ label = 'Live' }) {
         />
       </span>
       <motion.span
-        style={{ color: '#334155', fontSize: 11, fontWeight: 700, letterSpacing: '-0.01em' }}
+        style={{ color: p.liveLabel, fontSize: 10, fontWeight: 700, letterSpacing: '-0.01em' }}
         animate={{ opacity: [1, 0.72, 1] }}
         transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
       >
@@ -113,6 +279,7 @@ function LiveStatusPulse({ label = 'Live' }) {
 
 /** Header tile — static shell, rotating globe inside */
 function AssistantGlyphTile({ dimension = 34 }) {
+  const p = useAssistantPalette();
   const glyph = Math.round(dimension * 0.58);
   return (
     <div
@@ -123,6 +290,8 @@ function AssistantGlyphTile({ dimension = 34 }) {
         height: dimension,
         borderRadius: Math.max(9, Math.round(dimension * 0.31)),
         color: PURPLE_BRAND,
+        ['--ea-globe-tile-bg']: p.globeTileBg,
+        ['--ea-globe-tile-border']: p.globeTileBorder,
       }}
     >
       <RotatingGlobeIcon size={glyph} />
@@ -173,6 +342,7 @@ const HelpIcon = () => (
 
 // ── Chip Selector ─────────────────────────────────────────────────────────────
 function ChipSelect({ options, value, onChange, multi = false }) {
+  const p = useAssistantPalette();
   const isSelected = (opt) => multi ? (value || []).includes(opt) : value === opt;
   const handleClick = (opt) => {
     if (multi) {
@@ -184,61 +354,58 @@ function ChipSelect({ options, value, onChange, multi = false }) {
   };
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
-      {options.map((opt) => (
-        <button
-          key={opt}
-          onClick={() => handleClick(opt)}
-          style={{
-            padding: '6px 12px',
-            borderRadius: 8,
-            fontSize: 12,
-            fontWeight: 500,
-            border: isSelected(opt) ? '1px solid rgba(124,58,237,0.4)' : '1px solid rgba(0,0,0,0.1)',
-            background: isSelected(opt) ? 'rgba(124,58,237,0.08)' : 'rgba(0,0,0,0.03)',
-            color: isSelected(opt) ? 'rgba(109,40,217,1)' : 'rgba(71,85,105,0.85)',
-            cursor: 'pointer',
-            transition: 'all 0.12s ease',
-          }}
-          onMouseEnter={e => { if (!isSelected(opt)) e.currentTarget.style.background = 'rgba(0,0,0,0.06)'; }}
-          onMouseLeave={e => { if (!isSelected(opt)) e.currentTarget.style.background = 'rgba(0,0,0,0.03)'; }}
-        >
-          {opt}
-        </button>
-      ))}
+      {options.map((opt) => {
+        const selected = isSelected(opt);
+        return (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => handleClick(opt)}
+            style={{
+              padding: '6px 12px',
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 500,
+              border: `1px solid ${selected ? p.chipSelectedBorder : p.chipBorder}`,
+              background: selected ? p.chipSelectedBg : p.chipBg,
+              color: selected ? p.chipSelectedText : p.chipText,
+              cursor: 'pointer',
+              transition: 'all 0.12s ease',
+            }}
+            onMouseEnter={(e) => { if (!selected) e.currentTarget.style.background = p.chipHoverBg; }}
+            onMouseLeave={(e) => { if (!selected) e.currentTarget.style.background = p.chipBg; }}
+          >
+            {opt}
+          </button>
+        );
+      })}
     </div>
   );
 }
 
 // ── Text Input ────────────────────────────────────────────────────────────────
 function TextInput({ placeholder, value, onChange, type = 'text' }) {
+  const p = useAssistantPalette();
   return (
     <input
       type={type}
       placeholder={placeholder}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
-      className="mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] text-slate-900/90 outline-none transition-all duration-150 placeholder:text-white/90"
-      style={{
-        border: '1px solid rgba(0,0,0,0.1)',
-        background: 'rgba(0,0,0,0.03)',
-      }}
-      onFocus={(e) => {
-        e.target.style.border = '1px solid rgba(124,58,237,0.4)';
-        e.target.style.background = 'rgba(124,58,237,0.03)';
-      }}
-      onBlur={(e) => {
-        e.target.style.border = '1px solid rgba(0,0,0,0.1)';
-        e.target.style.background = 'rgba(0,0,0,0.03)';
-      }}
+      className="ea-text-input mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none transition-all duration-150"
+      style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
+      onFocus={(e) => { e.target.style.border = `1px solid ${p.inputFocusBorder}`; e.target.style.background = p.inputFocusBg; }}
+      onBlur={(e) => { e.target.style.border = `1px solid ${p.inputBorder}`; e.target.style.background = p.inputBg; }}
     />
   );
 }
 
 // ── Progress Bar ──────────────────────────────────────────────────────────────
 function ProgressBar({ current, total }) {
+  const p = useAssistantPalette();
   return (
     <div style={{ marginBottom: 20 }}>
-      <div style={{ height: 2, background: 'rgba(0,0,0,0.07)', borderRadius: 99, overflow: 'hidden' }}>
+      <div style={{ height: 2, background: p.progressTrack, borderRadius: 99, overflow: 'hidden' }}>
         <motion.div
           style={{ height: '100%', background: 'linear-gradient(90deg,#7c3aed,#818cf8)', borderRadius: 99 }}
           initial={{ width: 0 }}
@@ -252,6 +419,7 @@ function ProgressBar({ current, total }) {
 
 // ── Continue Button ───────────────────────────────────────────────────────────
 function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
+  const p = useAssistantPalette();
   return (
     <button
       onClick={onClick}
@@ -260,8 +428,8 @@ function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
         width: '100%',
         padding: '12px',
         borderRadius: 12,
-        background: disabled ? 'rgba(124,58,237,0.2)' : 'linear-gradient(135deg,#7c3aed,#6366f1)',
-        color: disabled ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.96)',
+        background: disabled ? p.btnDisabledBg : p.btnEnabledBg,
+        color: disabled ? p.btnDisabledText : p.btnEnabledText,
         fontSize: 13.5,
         fontWeight: 600,
         border: 'none',
@@ -280,20 +448,19 @@ function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
 
 // ── Flow Header ───────────────────────────────────────────────────────────────
 function FlowHeader({ title, onBack, step, total }) {
+  const p = useAssistantPalette();
   return (
-    <div style={{ padding: '13px 14px 12px', borderBottom: '1px solid rgba(0,0,0,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, background: 'rgba(248,249,252,1)' }}>
+    <div style={{ padding: '13px 14px 12px', borderBottom: `1px solid ${p.border}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, background: p.flowHeaderBg }}>
       <button
         type="button"
         onClick={onBack}
-        style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(71,85,105,0.7)', cursor: 'pointer', transition: 'all 0.15s ease' }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.07)'; e.currentTarget.style.color = 'rgba(15,23,42,0.8)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; e.currentTarget.style.color = 'rgba(71,85,105,0.7)'; }}
+        style={{ width: 30, height: 30, borderRadius: 9, background: p.flowBackBg, border: `1px solid ${p.flowBackBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: p.flowBackColor, cursor: 'pointer', transition: 'all 0.15s ease' }}
       >
         <ArrowLeft />
       </button>
-      <span style={{ color: 'rgba(15,23,42,0.9)', fontSize: 13.5, fontWeight: 600, letterSpacing: '-0.02em' }}>{title}</span>
+      <span style={{ color: p.flowTitle, fontSize: 13.5, fontWeight: 600, letterSpacing: '-0.02em' }}>{title}</span>
       {total ? (
-        <span style={{ color: 'rgba(71,85,105,0.85)', fontSize: 11, fontWeight: 600, background: 'rgba(0,0,0,0.04)', padding: '3px 8px', borderRadius: 20, border: '1px solid rgba(0,0,0,0.08)' }}>{step}/{total}</span>
+        <span style={{ color: p.flowStepText, fontSize: 11, fontWeight: 600, background: p.flowStepBg, padding: '3px 8px', borderRadius: 20, border: `1px solid ${p.border}` }}>{step}/{total}</span>
       ) : (
         <div style={{ width: 30 }} />
       )}
@@ -303,13 +470,14 @@ function FlowHeader({ title, onBack, step, total }) {
 
 // ── Summary Card ──────────────────────────────────────────────────────────────
 function SummaryCard({ rows }) {
+  const p = useAssistantPalette();
   return (
-    <div style={{ background: 'rgba(124,58,237,0.04)', border: '1px solid rgba(124,58,237,0.12)', borderRadius: 12, padding: 16 }}>
+    <div style={{ background: p.summaryBg, border: `1px solid ${p.summaryBorder}`, borderRadius: 12, padding: 16 }}>
       {rows.map(({ label, value }, i) =>
         value && (
-          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 6, paddingBottom: 6, borderBottom: i < rows.length - 1 ? '1px solid rgba(0,0,0,0.06)' : 'none' }}>
-            <span style={{ color: 'rgba(100,116,139,0.85)', fontSize: 11 }}>{label}</span>
-            <span style={{ color: 'rgba(15,23,42,0.9)', fontSize: 12, fontWeight: 500 }}>{value}</span>
+          <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 6, paddingBottom: 6, borderBottom: i < rows.length - 1 ? `1px solid ${p.summaryRowBorder}` : 'none' }}>
+            <span style={{ color: p.summaryLabel, fontSize: 11 }}>{label}</span>
+            <span style={{ color: p.summaryValue, fontSize: 12, fontWeight: 500 }}>{value}</span>
           </div>
         ))}
     </div>
@@ -354,6 +522,7 @@ const SUPPORT_ROW = {
 };
 
 function ActionRow({ row, onClick, index, secondary = false }) {
+  const p = useAssistantPalette();
   const [hovered, setHovered] = useState(false);
   return (
     <motion.button
@@ -371,11 +540,11 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         padding: secondary ? '10px 13px' : '11px 13px',
         borderRadius: 14,
         background: hovered
-          ? secondary ? 'rgba(0,0,0,0.04)' : 'rgba(248,246,255,0.92)'
-          : secondary ? 'rgba(249,250,251,0.92)' : 'rgba(255,255,255,0.94)',
+          ? (secondary ? p.rowBgHover : p.rowBgHover)
+          : (secondary ? p.rowSecondaryBg : p.rowBg),
         border: hovered
-          ? `1px solid ${secondary ? 'rgba(148,163,184,0.35)' : 'rgba(167,139,250,0.45)'}`
-          : `1px solid ${secondary ? 'rgba(226,232,240,1)' : 'rgba(237,233,254,0.9)'}`,
+          ? `1px solid ${secondary ? p.rowBorderHover : p.rowBorderHover}`
+          : `1px solid ${secondary ? p.rowBorder : p.rowBorder}`,
         cursor: 'pointer',
         textAlign: 'left',
         transform: hovered ? 'translateX(3px)' : 'translateX(0)',
@@ -408,7 +577,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
           fontWeight: 700,
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          color: secondary ? 'rgba(100,116,139,0.88)' : 'rgba(124,58,237,0.85)',
+          color: secondary ? p.textMuted : p.rowLabel,
           marginBottom: 3,
         }}>
           {row.label}
@@ -416,7 +585,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         <div style={{
           fontSize: 13.5,
           fontWeight: 500,
-          color: secondary ? 'rgba(71,85,105,0.88)' : 'rgba(15,23,42,0.9)',
+          color: secondary ? p.rowSecondaryTitle : p.rowTitle,
           letterSpacing: '-0.015em',
           lineHeight: 1.3,
         }}>
@@ -438,6 +607,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
 }
 
 function HomeView({ setView, setIsOpen }) {
+  const p = useAssistantPalette();
   return (
     <motion.div
       key="home"
@@ -479,7 +649,7 @@ function HomeView({ setView, setIsOpen }) {
             style={{
               fontSize: 15.5,
               fontWeight: 700,
-              color: '#0f172a',
+              color: p.welcomeTitle,
               letterSpacing: '-0.03em',
               lineHeight: 1.35,
             }}
@@ -491,7 +661,7 @@ function HomeView({ setView, setIsOpen }) {
               marginTop: 6,
               fontSize: 12,
               lineHeight: 1.45,
-              color: 'rgba(71,85,105,0.88)',
+              color: p.welcomeBody,
               letterSpacing: '-0.01em',
             }}
           >
@@ -506,7 +676,7 @@ function HomeView({ setView, setIsOpen }) {
           <ActionRow key={row.id} row={row} onClick={() => setView(row.id)} index={i} />
         ))}
 
-        <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(226,232,240,1), transparent)', margin: '4px 2px' }} />
+        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${p.divider}, transparent)`, margin: '4px 2px' }} />
 
         <ActionRow
           row={SUPPORT_ROW}
@@ -530,6 +700,7 @@ const BRAND_STEPS = [
 ];
 
 function BrandsView({ setView, setIsOpen }) {
+  const p = useAssistantPalette();
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
@@ -573,7 +744,7 @@ function BrandsView({ setView, setIsOpen }) {
             { label: 'Contact', value: data.contactName },
             { label: 'Phone', value: data.contactPhone },
           ]} />
-          <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
+          <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
             Our expansion team will reach out within 24 hours.
           </p>
           <ContinueBtn onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')} label="Schedule Expansion Consultation" />
@@ -599,7 +770,7 @@ function BrandsView({ setView, setIsOpen }) {
       />
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px 8px' }}>
         <ProgressBar current={step + 1} total={BRAND_STEPS.length} />
-        <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(15,23,42,0.9)', letterSpacing: '-0.02em', marginBottom: 4 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: p.questionColor, letterSpacing: '-0.02em', marginBottom: 4 }}>
           {current.q}
         </div>
         {current.type === 'text' && (
@@ -636,6 +807,7 @@ const INVESTOR_STEPS = [
 ];
 
 function InvestorsView({ setView, setIsOpen }) {
+  const p = useAssistantPalette();
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
@@ -675,7 +847,7 @@ function InvestorsView({ setView, setIsOpen }) {
             { label: 'Expected ROI', value: data.roi },
             { label: 'Timeline', value: data.timeline },
           ]} />
-          <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
+          <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
             We have curated opportunities matching your profile.
           </p>
           <ContinueBtn onClick={() => navTo('/franchise-opportunities', setIsOpen)} label="Browse Matching Opportunities" />
@@ -701,7 +873,7 @@ function InvestorsView({ setView, setIsOpen }) {
       />
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px 8px' }}>
         <ProgressBar current={step + 1} total={INVESTOR_STEPS.length} />
-        <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(15,23,42,0.9)', letterSpacing: '-0.02em', marginBottom: 4 }}>
+        <div style={{ fontSize: 14, fontWeight: 600, color: p.questionColor, letterSpacing: '-0.02em', marginBottom: 4 }}>
           {current.q}
         </div>
         <ChipSelect
@@ -957,6 +1129,7 @@ const SUPPORT_LINKS = [
 ];
 
 function SupportView({ setView, setIsOpen }) {
+  const p = useAssistantPalette();
   return (
     <motion.div
       key="support"
@@ -968,7 +1141,7 @@ function SupportView({ setView, setIsOpen }) {
     >
       <FlowHeader title="Quick Support" onBack={() => setView('home')} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '12px 12px 16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <p style={{ color: 'rgba(100,116,139,0.78)', fontSize: 12, margin: '4px 2px 8px', letterSpacing: '-0.01em' }}>
+        <p style={{ color: p.mutedText, fontSize: 12, margin: '4px 2px 8px', letterSpacing: '-0.01em' }}>
           Where would you like to go?
         </p>
         {SUPPORT_LINKS.map((link, i) => {
@@ -1012,6 +1185,8 @@ function SupportView({ setView, setIsOpen }) {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function ExpansionAssistant() {
+  const { isLight } = useTheme();
+  const palette = useMemo(() => getAssistantPalette(isLight), [isLight]);
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState('home');
   const [isMobile, setIsMobile] = useState(false);
@@ -1030,41 +1205,37 @@ export default function ExpansionAssistant() {
 
   const handleOpen = useCallback(() => setIsOpen(true), []);
 
-  // Panel styles
+  const panelBase = {
+    zIndex: 9999,
+    background: palette.panel,
+    backdropFilter: 'blur(40px)',
+    WebkitBackdropFilter: 'blur(40px)',
+    border: `1px solid ${palette.border}`,
+    boxShadow: palette.panelShadow,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    color: palette.text,
+  };
+
   const panelStyle = isMobile
     ? {
+        ...panelBase,
         position: 'fixed',
         bottom: 0,
         left: 0,
         right: 0,
         height: '78vh',
         borderRadius: '20px 20px 0 0',
-        zIndex: 9999,
-        background: 'rgba(255,255,255,0.99)',
-        backdropFilter: 'blur(40px)',
-        WebkitBackdropFilter: 'blur(40px)',
-        border: '1px solid rgba(0,0,0,0.07)',
-        boxShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 -20px 60px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
       }
     : {
+        ...panelBase,
         position: 'fixed',
         bottom: 80,
         right: 24,
         width: 360,
         maxHeight: 520,
         borderRadius: 16,
-        zIndex: 9999,
-        background: 'rgba(255,255,255,0.99)',
-        backdropFilter: 'blur(40px)',
-        WebkitBackdropFilter: 'blur(40px)',
-        border: '1px solid rgba(0,0,0,0.08)',
-        boxShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 20px 60px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
       };
 
   return (
@@ -1089,59 +1260,57 @@ export default function ExpansionAssistant() {
         {isOpen && (
           <motion.div
             key="panel"
+            className="assistant-panel"
+            data-assistant-theme={palette.mode}
             initial={{ opacity: 0, y: 16, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 500, damping: 35 }}
             style={panelStyle}
           >
-            {/* Header */}
+            <AssistantPaletteContext.Provider value={palette}>
             <div
               style={{
-                padding: '14px 16px 13px',
+                padding: '12px 14px 11px',
                 flexShrink: 0,
-                background: 'rgba(248,249,252,1)',
-                borderBottom: '1px solid rgba(0,0,0,0.07)',
+                background: palette.header,
+                borderBottom: `1px solid ${palette.border}`,
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-                  <AssistantGlyphTile dimension={36} />
+              <div className="assistant-header-top">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+                  <AssistantGlyphTile dimension={34} />
                   <AssistantDateTime />
                 </div>
-                <button
-                  type="button"
-                  onClick={handleClose}
-                  style={{
-                    width: 30,
-                    height: 30,
-                    borderRadius: 9,
-                    background: 'rgba(255,255,255,1)',
-                    border: '1px solid rgba(0,0,0,0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'rgba(71,85,105,0.75)',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(248,250,252,1)';
-                    e.currentTarget.style.color = 'rgba(15,23,42,0.88)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,1)';
-                    e.currentTarget.style.color = 'rgba(71,85,105,0.75)';
-                  }}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
+                <div className="assistant-header-actions">
+                  <LiveStatusPulse />
+                  <button
+                    type="button"
+                    onClick={handleClose}
+                    aria-label="Close assistant"
+                    style={{
+                      width: 30,
+                      height: 30,
+                      borderRadius: 9,
+                      background: palette.closeBg,
+                      border: `1px solid ${palette.closeBorder}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: palette.closeColor,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* View router */}
             <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
               <AnimatePresence mode="wait">
                 {view === 'home' && <HomeView key="home" setView={setView} setIsOpen={setIsOpen} />}
@@ -1151,6 +1320,7 @@ export default function ExpansionAssistant() {
                 {view === 'support' && <SupportView key="support" setView={setView} setIsOpen={setIsOpen} />}
               </AnimatePresence>
             </div>
+            </AssistantPaletteContext.Provider>
           </motion.div>
         )}
       </AnimatePresence>

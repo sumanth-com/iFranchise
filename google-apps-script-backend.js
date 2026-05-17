@@ -23,8 +23,7 @@ const SHEET_TABS = {
   brand_application: 'Brand_Applications',
   job_application: 'Job_Applications',
   chatbot_brand: 'Chatbot_Brands',
-  chatbot_investor: 'Chatbot_Investors',
-  newsletter: 'Newsletter_Subscribers'
+  chatbot_investor: 'Chatbot_Investors'
 };
 
 /**
@@ -98,12 +97,6 @@ const SHEET_HEADERS = {
     'Cities',
     'ROI',
     'Timeline',
-    'Submitted At'
-  ],
-  Newsletter_Subscribers: [
-    'Timestamp',
-    'Source Page',
-    'Email',
     'Submitted At'
   ]
 };
@@ -377,14 +370,6 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         data.cities || '',
         data.roi || '',
         data.timeline || '',
-        submittedAtTime
-      ];
-      
-    case 'newsletter':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.email || '',
         submittedAtTime
       ];
       
