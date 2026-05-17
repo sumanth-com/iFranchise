@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiTrendingUp, FiTarget, FiUsers, FiMessageSquare,
@@ -18,29 +18,7 @@ import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
 import educationImg from '../assets/IndImgs/Education & Training.png';
 import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
 import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
-
-function ServicesIndustryCardImg({ src, alt }) {
-  const [loaded, setLoaded] = useState(false);
-  return (
-    <>
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0618]" aria-hidden>
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500/25 border-t-violet-400" />
-        </div>
-      )}
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    </>
-  );
-}
+import IndustryCard from './IndustryCard';
 
 const SERVICES_INDUSTRIES = [
   { label: 'Retail & Jewelry', accent: '#f59e0b', desc: 'Scale your retail brand with proven franchise models', img: retailImg },
@@ -267,9 +245,9 @@ function FAQItem({ question, answer, index }) {
   return (
     <Reveal delay={index * 0.08}>
       <motion.div
-        className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300"
+        className={`services-faq-item group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300 ${isOpen ? 'is-open' : ''}`}
         animate={{
-          borderColor: isOpen ? 'rgba(15, 23, 42, 0.2)' : 'rgba(148, 163, 184, 0.6)',
+          borderColor: isOpen ? 'rgba(167, 139, 250, 0.45)' : 'rgba(139, 92, 246, 0.22)',
         }}
       >
         {/* Glowing active state */}
@@ -284,27 +262,18 @@ function FAQItem({ question, answer, index }) {
 
         {/* Question Button */}
         <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
           className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
         >
-          <span className={`text-base sm:text-lg font-bold transition-colors duration-300 ${
-            isOpen ? 'text-white' : 'text-white'
-          }`}>
+          <span className="services-faq-question text-base sm:text-lg font-bold text-white transition-colors duration-300">
             {question}
           </span>
-          
-          {/* Animated Icon */}
-          <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className={`flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${
-              isOpen 
-                ? 'bg-slate-900 text-white' 
-                : 'bg-slate-100 text-white group-hover:bg-slate-200'
-            }`}
-          >
-            <FiChevronDown className="w-4 h-4" />
-          </motion.div>
+
+          <span className={`services-faq-toggle flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${isOpen ? 'is-open' : ''}`}>
+            <FiChevronDown className={`services-faq-toggle-icon w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+          </span>
         </button>
 
         {/* Answer with smooth animation */}
@@ -332,7 +301,7 @@ function FAQItem({ question, answer, index }) {
             >
               <div className="px-6 pb-6 sm:px-8 sm:pb-8">
                 <div className="pt-2 border-t border-violet-500/20">
-                  <p className="text-sm sm:text-base text-white leading-relaxed mt-4">
+                  <p className="services-faq-answer text-sm sm:text-base text-white leading-relaxed mt-4">
                     {answer}
                   </p>
                 </div>
@@ -548,28 +517,33 @@ function InvestorDashboardContent({ navigateTo }) {
 // ── Process Steps — franchise expansion flow ─────────────────────────────────
 const PROCESS_STEPS = [
   {
-    number: '01', title: 'Understand Your Brand', color: 'violet',
-    desc: 'Deep-dive discovery — we map your business model, unit economics, target markets, and growth ambitions.',
+    title: 'Understand Your Brand',
+    color: 'violet',
+    desc: 'We learn your model, economics, and growth goals so every next step is built on facts.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>,
   },
   {
-    number: '02', title: 'Build Franchise Foundation', color: 'indigo',
-    desc: 'We architect your franchise model — SOPs, legal docs, brand guidelines, and operational systems.',
+    title: 'Build the Foundation',
+    color: 'indigo',
+    desc: 'Franchise structure, SOPs, legal docs, and brand systems — ready to launch and operate.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>,
   },
   {
-    number: '03', title: 'Attract Investors', color: 'emerald',
-    desc: 'Performance campaigns and lead qualification funnels bring capital-ready partners to your brand.',
+    title: 'Attract Investors',
+    color: 'emerald',
+    desc: 'Targeted outreach and screening bring serious partners who fit your brand and territory plan.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>,
   },
   {
-    number: '04', title: 'Match & Onboard', color: 'amber',
-    desc: 'We match the right investor to the right territory, manage agreements, and execute structured onboarding.',
+    title: 'Match & Onboard',
+    color: 'amber',
+    desc: 'We pair the right investor with the right market and guide agreements through launch.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
   },
   {
-    number: '05', title: 'Scale Across Markets', color: 'teal',
-    desc: 'With proven units live, we activate the next wave — new territories, new investors, compounding growth.',
+    title: 'Scale Across Markets',
+    color: 'teal',
+    desc: 'With units live, we help you open new cities and grow a repeatable franchise network.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
   },
 ];
@@ -633,9 +607,6 @@ function ProcessStepNode({ step, index, total }) {
         <div className={`relative w-11 h-11 rounded-full ${c.bg} flex items-center justify-center text-white shadow-lg ${c.glow} ring-2 ring-white`}>
           {step.icon}
         </div>
-        <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-white/70 backdrop-blur-sm border border-slate-200/50 flex items-center justify-center shadow-sm">
-          <span className={`text-[0.55rem] font-extrabold ${c.text}`}>{step.number}</span>
-        </div>
       </div>
 
       {/* content */}
@@ -643,8 +614,8 @@ function ProcessStepNode({ step, index, total }) {
         className={`text-center px-2 transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
         style={{ transitionDelay: `${index * 80 + 100}ms` }}
       >
-        <p className="text-[0.82rem] font-bold text-white mb-1.5 leading-snug">{step.title}</p>
-        <p className="text-[0.72rem] text-white leading-relaxed">{step.desc}</p>
+        <p className="text-sm font-bold text-white mb-1.5 leading-snug">{step.title}</p>
+        <p className="text-xs text-white/90 leading-relaxed max-w-[11rem] mx-auto">{step.desc}</p>
       </div>
     </div>
   );
@@ -891,7 +862,7 @@ export default function ServicesPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-white sm:text-lg">
-                A structured, repeatable system engineered to take your brand from concept to scaled franchise network.
+                Five clear stages — from understanding your brand to scaling into new markets.
               </p>
             </Reveal>
           </div>
@@ -1409,44 +1380,14 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES_INDUSTRIES.map((ind, i) => (
               <Reveal key={ind.label} delay={i * 0.05}>
-                <motion.div
-                  className="theme-light-card group relative flex flex-col overflow-hidden rounded-2xl"
-                  style={{
-                    transition:
-                      'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-6px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  <div className="industry-card-media relative h-56 overflow-hidden bg-[#0a0618]">
-                    <ServicesIndustryCardImg src={ind.img} alt={ind.label} />
-                    <div
-                      className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
-                      aria-hidden
-                    />
-                    <div
-                      className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)`,
-                      }}
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <h3 className="mb-1.5 text-base font-bold leading-snug text-white">{ind.label}</h3>
-                    <p className="flex-1 text-[0.78rem] leading-relaxed text-white">{ind.desc}</p>
-                    <button
-                      type="button"
-                      className="industry-card-explore"
-                      onClick={() => navigateTo('/franchise-opportunities')}
-                    >
-                      Explore opportunities <FiArrowRight className="h-3 w-3" />
-                    </button>
-                  </div>
-                </motion.div>
+                <IndustryCard
+                  label={ind.label}
+                  desc={ind.desc}
+                  img={ind.img}
+                  accent={ind.accent}
+                  mediaHeight="h-56"
+                  onExplore={() => navigateTo('/franchise-opportunities')}
+                />
               </Reveal>
             ))}
           </div>
@@ -1703,26 +1644,26 @@ export default function ServicesPage() {
       <WhyIFranchiseSection className="relative z-10" />
 
       {/* FAQ SECTION */}
-      <div className="relative z-10 w-full py-12 overflow-hidden">
+      <section className="services-faq-section relative z-10 w-full py-12 overflow-hidden">
         <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
           <div className="text-center mb-12">
             <Reveal>
               <div className="inline-flex items-center justify-center mb-6">
-                <span className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
+                <span className="services-faq-section__badge inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
                   FAQ
                 </span>
               </div>
-              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
+              <h2 className="services-faq-section__title text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
                 Frequently Asked Questions
               </h2>
             </Reveal>
           </div>
 
           {/* FAQ Accordion */}
-          <div className="space-y-4">
+          <div className="services-faq-list space-y-4">
             {FAQ_ITEMS.map((faq, index) => (
               <FAQItem
                 key={index}
@@ -1734,7 +1675,7 @@ export default function ServicesPage() {
           </div>
 
         </div>
-      </div>
+      </section>
 
 
     </main>

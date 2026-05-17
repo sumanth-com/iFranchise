@@ -392,7 +392,11 @@ function ContactPage() {
                       disabled={isSubmitting}
                       whileHover={{ scale: 1.02, y: -1 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-[#0B1220] hover:bg-[#1a2332] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed border border-white/10"
+                      className={`contact-send-btn w-full px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed ${
+                        isLight
+                          ? 'bg-[#0B1220] hover:bg-[#1a2332] text-white border border-white/10'
+                          : 'btn-purple-solid'
+                      }`}
                     >
                       {isSubmitting ? (
                         <div className="flex items-center justify-center gap-2">

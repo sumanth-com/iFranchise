@@ -272,7 +272,7 @@ function CareerDetailPage({ roleId }) {
 
             <section>
               <h2 className={sectionTitle}>Hiring Process</h2>
-              <motion.div className="space-y-4">
+              <div className="space-y-4">
                 {HIRING_STEPS.map((s, i) => (
                   <div key={i} className="flex gap-4 items-start">
                     <div className="shrink-0 w-8 h-8 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold">{s.step}</div>
@@ -282,7 +282,7 @@ function CareerDetailPage({ roleId }) {
                     </div>
                   </div>
                 ))}
-              </motion.div>
+              </div>
             </section>
 
             <section>

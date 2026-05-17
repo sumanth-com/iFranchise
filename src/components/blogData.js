@@ -306,12 +306,21 @@ const makeSections = (slug) => [
   },
 ];
 
+const takeawayPool = [
+  ['Focus beats breadth — narrow to one 90-day objective', 'Weekly review rhythm prevents strategy drift', 'Leading indicators surface problems early', 'Named owners turn plans into outcomes'],
+  ['Document assumptions before you commit capital', 'Build downside triggers into every thesis', 'Liquidity planning is part of return planning', 'Diversification works when cycles differ'],
+  ['Activation quality predicts long-term retention', 'Ship in small batches with clear acceptance criteria', 'Customer feedback loops should be weekly, not quarterly', 'Metrics must drive a decision or they are noise'],
+  ['Position size matters more than entry timing', 'Custody and compliance are non-negotiable foundations', 'Volatility is a feature — plan for it in advance', 'Conviction assets need explicit allocation caps'],
+];
+
 export const blogPosts = basePosts.map((post, index) => ({
   ...post,
   readTime: ['12 min read', '14 min read', '11 min read', '13 min read'][index % 4],
   sections: makeSections(post.slug),
   author: authors[index % authors.length],
   subImage: secondaryImages[index % secondaryImages.length],
+  takeaways: takeawayPool[index % takeawayPool.length],
+  introHighlight: 'The teams that compound results are not the busiest — they are the most deliberate about focus, ownership, and review cadence.',
   heroImages: [
     post.image,
     secondaryImages[index % secondaryImages.length],

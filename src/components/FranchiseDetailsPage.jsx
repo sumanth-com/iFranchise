@@ -2339,7 +2339,7 @@ function renderAboutHighlight(text) {
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return (
-        <strong key={i} className="font-semibold text-black">
+        <strong key={i} className="fd-about-highlight font-semibold text-violet-700">
           {part.slice(2, -2)}
         </strong>
       );
@@ -2618,7 +2618,7 @@ function FranchiseDetailsPage() {
                   </p>
                 ))}
                 {selectedFranchise.businessModel && (
-                  <p className="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm leading-relaxed text-black">
+                  <p className="fd-about-callout rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm leading-relaxed text-slate-700">
                     {selectedFranchise.businessModel}
                   </p>
                 )}
@@ -2641,17 +2641,17 @@ function FranchiseDetailsPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
+          <section className="fd-financial-section rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <h3 className="fd-section-heading text-center text-2xl font-bold tracking-tight text-black lg:text-3xl">Investment & Financials</h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Investment Range</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Area Required</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
-              <article className="rounded-xl bg-slate-50 p-5"><p className="text-sm text-white">Franchise Fee</p><p className="mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.franchiseFee}</p></article>
+            <div className="fd-financial-highlights mt-6 grid gap-4 sm:grid-cols-3">
+              <article className="fd-financial-highlight rounded-xl bg-slate-50 p-5"><p className="fd-financial-highlight__label text-sm text-slate-500">Investment Range</p><p className="fd-financial-highlight__value mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
+              <article className="fd-financial-highlight rounded-xl bg-slate-50 p-5"><p className="fd-financial-highlight__label text-sm text-slate-500">Area Required</p><p className="fd-financial-highlight__value mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
+              <article className="fd-financial-highlight rounded-xl bg-slate-50 p-5"><p className="fd-financial-highlight__label text-sm text-slate-500">Franchise Fee</p><p className="fd-financial-highlight__value mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.franchiseFee}</p></article>
             </div>
-            <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
-              <div className="grid grid-cols-1 gap-px bg-slate-200 md:grid-cols-4">
+            <div className="fd-financial-table mt-6 overflow-hidden rounded-xl border border-slate-200">
+              <div className="fd-financial-table__head grid grid-cols-1 gap-px bg-slate-200 md:grid-cols-4">
                 {['Store Size', 'Investment Cost', 'Royalty Fees', 'Franchise Fees'].map((header) => (
-                  <div key={header} className="bg-slate-100 px-5 py-4 text-sm font-semibold text-slate-700">{header}</div>
+                  <div key={header} className="fd-financial-table__header bg-slate-100 px-5 py-4 text-sm font-semibold text-slate-700">{header}</div>
                 ))}
               </div>
               <div className="divide-y divide-slate-200">

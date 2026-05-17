@@ -115,8 +115,8 @@ function RevealSection({ children, className = '', delay = 0 }) {
 
 function SectionLabel({ text }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
-      <span className="w-1.5 h-1.5 rounded-full bg-violet-600 inline-block" />
+    <span className="careers-section-label inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
+      <span className="careers-section-label-dot w-1.5 h-1.5 rounded-full bg-violet-600 inline-block" />
       {text}
     </span>
   );
@@ -133,7 +133,7 @@ function BenefitCard({ icon, title, desc, delay }) {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-      className="group rounded-2xl border border-slate-200 bg-white p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:shadow-[0_16px_40px_rgba(109,40,217,0.12)] hover:-translate-y-1 hover:border-violet-200 transition-all duration-300"
+      className="careers-benefit-card group rounded-2xl border border-slate-200 bg-white p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:shadow-[0_16px_40px_rgba(109,40,217,0.12)] hover:-translate-y-1 hover:border-violet-200 transition-all duration-300"
     >
       <div className="w-12 h-12 rounded-xl bg-violet-100 border border-violet-200 flex items-center justify-center text-violet-700 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
         {icon}
@@ -224,18 +224,22 @@ function RoleCard({ role, index, onApply }) {
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`rounded-2xl border transition-all duration-300 ${open ? 'border-violet-300 bg-violet-50' : 'border-slate-200 bg-white hover:border-violet-200'}`}>
+    <motion.div className={`careers-faq-item rounded-2xl border transition-all duration-300 ${open ? 'is-open border-violet-300 bg-violet-50' : 'border-slate-200 bg-white hover:border-violet-200'}`}>
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left group"
+        aria-expanded={open}
       >
-        <span className={`text-[15px] font-semibold leading-snug transition-colors duration-200 ${open ? 'text-slate-900' : 'text-slate-800 group-hover:text-violet-700'}`}>
+        <span className="careers-faq-question text-[15px] font-semibold leading-snug text-slate-800 transition-colors duration-200">
           {q}
         </span>
-        <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'bg-violet-600 text-white rotate-45' : 'bg-slate-100 text-slate-600 group-hover:bg-violet-100 group-hover:text-violet-700'}`}>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
+        <span
+          className={`careers-faq-toggle shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'is-open' : ''}`}
+          aria-hidden
+        >
+          <span className={`careers-faq-toggle-icon block text-[1.35rem] font-bold leading-none transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>
+            +
+          </span>
         </span>
       </button>
       <AnimatePresence initial={false}>
@@ -248,11 +252,11 @@ function FaqItem({ q, a }) {
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-sm text-slate-600 leading-relaxed px-6 pb-5">{a}</p>
+            <p className="careers-faq-answer text-sm text-slate-600 leading-relaxed px-6 pb-5">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 
@@ -287,26 +291,26 @@ function CareersPage() {
       <PageCurtain onDone={() => setCurtainDone(true)} />
 
       {/* ── HERO ── */}
-      <section ref={heroRef} className="relative overflow-hidden bg-white">
+      <section ref={heroRef} className="careers-hero-section careers-section relative overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 pt-12 pb-0 sm:pt-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={curtainDone ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           >
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-600 inline-block" />
+            <span className="careers-hero-label careers-section-label inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
+              <span className="careers-section-label-dot w-1.5 h-1.5 rounded-full bg-violet-600 inline-block" />
               We're Hiring
             </span>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.05] mb-4">
+            <h1 className="careers-hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.05] mb-4">
               Be part of<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">
+              <span className="careers-hero-gradient text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">
                 something bold.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
+            <p className="careers-hero-lead text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
               At iFranchise, we build category-defining growth systems, creative ecosystems, and careers that matter.
             </p>
           </motion.div>
@@ -318,7 +322,7 @@ function CareersPage() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
             className="relative mx-auto max-w-4xl"
           >
-            <div className="rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.12)] border border-slate-200 bg-white">
+            <div className="careers-hero-image-frame rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.12)] border border-slate-200 bg-white">
               <img
                 src={careerImage}
                 alt="iFranchise Careers"
@@ -332,7 +336,7 @@ function CareersPage() {
       </section>
 
       {/* ── BENEFITS ── */}
-      <section className="max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20 bg-white">
+      <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
         <RevealSection className="text-center mb-10">
           <div className="flex justify-center">
             <SectionLabel text="Benefits" />
@@ -353,7 +357,7 @@ function CareersPage() {
       </section>
 
       {/* ── OPEN ROLES ── */}
-      <section className="careers-open-roles border-y border-slate-200 bg-white">
+      <section className="careers-open-roles careers-section border-y border-slate-200">
         <div className="max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
           <RevealSection className="text-center mb-10">
             <div className="flex justify-center">
@@ -376,19 +380,19 @@ function CareersPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="bg-white py-14 sm:py-20">
+      <section className="careers-faq-section careers-section py-14 sm:py-20">
         <div className="max-w-2xl mx-auto px-6 sm:px-8">
           <RevealSection className="text-center mb-8">
             <div className="flex justify-center">
               <SectionLabel text="FAQ" />
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+            <h2 className="careers-faq-heading text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
               Got a question?{' '}
-              <span className="text-slate-600 font-semibold">We've got answers.</span>
+              <span className="careers-faq-subtitle text-slate-600 font-semibold">We've got answers.</span>
             </h2>
-            <p className="text-sm text-slate-600">
+            <p className="careers-faq-intro text-sm text-slate-600">
               Still unsure? Email{' '}
-              <a href="mailto:careers@ifranchise.in" className="text-violet-700 hover:text-violet-900 hover:underline font-medium">
+              <a href="mailto:careers@ifranchise.in" className="careers-faq-email text-violet-700 hover:text-violet-900 hover:underline font-medium">
                 careers@ifranchise.in
               </a>
             </p>

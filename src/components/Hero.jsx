@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import CtaButton from './ui/CtaButton';
@@ -31,6 +31,8 @@ import {
   calculateGrowthMetrics
 } from '../data/franchiseData';
 import { useTheme } from '../context/ThemeContext';
+import ProcessGrowthEngineVisual from './ProcessGrowthEngineVisual';
+import IndustryCard from './IndustryCard';
 import {
   getCardBaseStyle,
   cardHoverHandlers,
@@ -46,31 +48,8 @@ import {
   cardListClass,
 } from '../lib/cardThemeStyles';
 
-// ── Lightweight scroll-triggered visibility hook ──────────────────────────────
-// Returns [ref, isVisible] — isVisible toggles true/false on every enter/leave
-function HeroIndustryCardImg({ src, alt }) {
-  const [loaded, setLoaded] = useState(false);
-  return (
-    <>
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0a0618]" aria-hidden>
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500/25 border-t-violet-400" />
-        </div>
-      )}
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        className={`h-auto max-h-full w-full object-contain object-center transition-opacity duration-300 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    </>
-  );
-}
-
+// -- Lightweight scroll-triggered visibility hook ------------------------------
+// Returns [ref, isVisible] ? isVisible toggles true/false on every enter/leave
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -87,7 +66,7 @@ function useInView(threshold = 0.1) {
   return [ref, visible];
 }
 
-// ── Animated wrapper — fades+slides in on scroll, resets when out ─────────────
+// -- Animated wrapper ? fades+slides in on scroll, resets when out -------------
 function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
   const [ref, visible] = useInView(0.1);
   return (
@@ -139,7 +118,7 @@ const growthCards = [
     tags: ['Invest', 'Own', 'Grow'],
     title: 'Invest in Proven Franchise Opportunities',
     description:
-      'Discover vetted franchise businesses across high-growth industries. Find the right investment based on your budget, goals, and market demand — with clarity and confidence.',
+      'Discover vetted franchise businesses across high-growth industries. Find the right investment based on your budget, goals, and market demand ? with clarity and confidence.',
     linkText: 'For Investors',
     href: '/contact',
     image:
@@ -501,7 +480,7 @@ function GrowthCard({ card }) {
       }}
       onClick={() => navigateTo(card.href)}
     >
-      {/* Image — 16/9 ratio, fits fully in viewport */}
+      {/* Image ? 16/9 ratio, fits fully in viewport */}
       <div
         className="relative overflow-hidden shrink-0"
         style={{ aspectRatio: '16/9', backgroundColor: '#f8f9fa' }}
@@ -516,7 +495,7 @@ function GrowthCard({ card }) {
             <span className="text-5xl font-black text-white">{card.eyebrow[0]}</span>
           </div>
         )}
-        {/* Image — contain so nothing is cut */}
+        {/* Image ? contain so nothing is cut */}
         {!imgError && (
           <img
             ref={imgRef}
@@ -549,7 +528,7 @@ function GrowthCard({ card }) {
           className="absolute inset-0 pointer-events-none"
           style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.02), rgba(0,0,0,0.10))' }}
         />
-        {/* Tag pill — top right, colored glassmorphism */}
+        {/* Tag pill ? top right, colored glassmorphism */}
         <div className="absolute top-3 right-3 z-10">
           <span
             className="inline-flex items-center text-[10px] font-bold uppercase tracking-[0.14em] text-white px-3 py-1.5 rounded-full"
@@ -680,7 +659,7 @@ function StatCard({ stat, active }) {
   );
 }
 
-// ── Franchise Model Modal Data ────────────────────────────────────────────────
+// -- Franchise Model Modal Data ------------------------------------------------
 const MODEL_DETAILS = {
   FOCO: {
     badge: 'FOCO',
@@ -695,14 +674,14 @@ const MODEL_DETAILS = {
       'You receive regular performance reports and profit distributions',
       'Brand maintains quality standards across all units',
     ],
-    investment: '₹15L – ₹50L',
+    investment: '?15L ? ?50L',
     whoShouldChoose:
       'Ideal for passive investors, working professionals, or HNIs who want franchise returns without operational involvement.',
     pros: [
-      'Truly passive income — no daily involvement needed',
+      'Truly passive income ? no daily involvement needed',
       'Brand expertise drives operational quality',
       'Lower personal risk from management errors',
-      'Scalable — own multiple units simultaneously',
+      'Scalable ? own multiple units simultaneously',
     ],
     considerations: [
       'Lower control over day-to-day decisions',
@@ -723,12 +702,12 @@ const MODEL_DETAILS = {
       'You hire, manage staff, and run daily operations',
       'Ongoing support from franchisor for marketing and systems',
     ],
-    investment: '₹20L – ₹80L',
+    investment: '?20L ? ?80L',
     whoShouldChoose:
       'Best for entrepreneurs, ex-professionals, or business-minded individuals who want hands-on ownership with a proven brand behind them.',
     pros: [
       'Full operational control and decision-making authority',
-      'Higher profit margins — no management fee to franchisor',
+      'Higher profit margins ? no management fee to franchisor',
       'Direct relationship with customers and team',
       'Faster adaptation to local market needs',
     ],
@@ -751,9 +730,9 @@ const MODEL_DETAILS = {
       'You receive periodic returns based on agreed terms',
       'Transparent reporting on revenue, costs, and performance',
     ],
-    investment: '₹10L – ₹40L',
+    investment: '?10L ? ?40L',
     whoShouldChoose:
-      'Perfect for investors seeking structured returns without any operational role — similar to a business investment with brand-backed security.',
+      'Perfect for investors seeking structured returns without any operational role ? similar to a business investment with brand-backed security.',
     pros: [
       'Zero operational involvement required',
       'Structured, predictable return framework',
@@ -768,7 +747,7 @@ const MODEL_DETAILS = {
   },
 };
 
-// ── Franchise Model Modal ─────────────────────────────────────────────────────
+// -- Franchise Model Modal -----------------------------------------------------
 function FranchiseModelModal({ model, onClose }) {
   const details = MODEL_DETAILS[model.code];
   const navigateTo = (path) => {
@@ -793,7 +772,7 @@ function FranchiseModelModal({ model, onClose }) {
   if (!details) return null;
 
   const modal = (
-    /* ── Full-screen backdrop — always fixed to viewport ── */
+    /* -- Full-screen backdrop ? always fixed to viewport -- */
     <div
       style={{
         position: 'fixed',
@@ -809,7 +788,7 @@ function FranchiseModelModal({ model, onClose }) {
       }}
       onClick={onClose}
     >
-      {/* ── Modal panel — centered, never affected by scroll ── */}
+      {/* -- Modal panel ? centered, never affected by scroll -- */}
       <div
         role="dialog"
         aria-modal="true"
@@ -828,9 +807,9 @@ function FranchiseModelModal({ model, onClose }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Scrollable inner wrapper — clips inside the rounded container ── */}
+        {/* -- Scrollable inner wrapper ? clips inside the rounded container -- */}
         <div style={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', flex: 1 }}>
-        {/* ── HEADER ── */}
+        {/* -- HEADER -- */}
         <div className="flex items-start justify-between gap-4 px-8 pt-8 pb-6 border-b border-slate-100 shrink-0">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-2">
@@ -854,7 +833,7 @@ function FranchiseModelModal({ model, onClose }) {
           </button>
         </div>
 
-        {/* ── BODY ── */}
+        {/* -- BODY -- */}
         <div className="px-8 py-6 space-y-7 flex-1">
 
           {/* Overview */}
@@ -892,7 +871,7 @@ function FranchiseModelModal({ model, onClose }) {
             </ul>
           </div>
 
-          {/* Investment + Who Should Choose — 2 col */}
+          {/* Investment + Who Should Choose ? 2 col */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-2xl border border-slate-100 bg-slate-50 p-5">
               <div className="flex items-center gap-2 mb-2">
@@ -914,7 +893,7 @@ function FranchiseModelModal({ model, onClose }) {
             </div>
           </div>
 
-          {/* Pros + Considerations — 2 col */}
+          {/* Pros + Considerations ? 2 col */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <div className="flex items-center gap-2.5 mb-3">
@@ -959,7 +938,7 @@ function FranchiseModelModal({ model, onClose }) {
           </div>
         </div>
 
-        {/* ── FOOTER ── */}
+        {/* -- FOOTER -- */}
         <div className="flex items-center justify-between gap-3 px-8 py-5 border-t border-slate-100 bg-slate-50/60 rounded-b-[20px] shrink-0">
           <button
             onClick={() => navigateTo('/franchise-opportunities')}
@@ -978,12 +957,12 @@ function FranchiseModelModal({ model, onClose }) {
             </svg>
           </button>
         </div>
-        </div>{/* ── end inner scrollable wrapper ── */}
+        </div>{/* -- end inner scrollable wrapper -- */}
       </div>
     </div>
   );
 
-  // Render into document.body — completely outside card/section DOM tree
+  // Render into document.body ? completely outside card/section DOM tree
   return createPortal(modal, document.body);
 }
 
@@ -1043,7 +1022,7 @@ function FranchiseModelCard({ model, visible, delayMs }) {
             </p>
           </div>
 
-          {/* CTA — only these buttons are interactive */}
+          {/* CTA ? only these buttons are interactive */}
           <div className="mt-6 flex items-center justify-center gap-3">
             <button
               type="button"
@@ -1387,7 +1366,7 @@ function FranchiseEduCard({ card, index }) {
   const [fallbackIdx, setFallbackIdx] = useState(0);
 
   // Force-trigger load: if the browser already cached the image,
-  // onLoad won't fire — so we check naturalWidth after mount.
+  // onLoad won't fire ? so we check naturalWidth after mount.
   const imgRef = useRef(null);
   useEffect(() => {
     if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
@@ -1408,7 +1387,7 @@ function FranchiseEduCard({ card, index }) {
 
   return (
     <Reveal delay={index * 0.06} className="group bg-white rounded-[28px] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col">
-      {/* Image container — fixed height, consistent ratio */}
+      {/* Image container ? fixed height, consistent ratio */}
       <div className="relative h-48 sm:h-52 overflow-hidden shrink-0 bg-slate-100">
         {/* Skeleton shimmer shown while loading */}
         {!imgLoaded && !imgError && (
@@ -1712,7 +1691,7 @@ function NodeGraph({ active }) {
   );
 }
 
-/* Card 2 — Opportunity Gauge */
+/* Card 2 ? Opportunity Gauge */
 function OpportunityGauge({ active }) {
   const [angle, setAngle] = useState(0);
   const targetAngle = 210; // ~70% of 300deg arc
@@ -1785,7 +1764,7 @@ function OpportunityGauge({ active }) {
   );
 }
 
-/* Card 3 — Benchmark Speedometer bars */
+/* Card 3 ? Benchmark Speedometer bars */
 function BenchmarkBars({ active }) {
   const segments = [
     { label: 'Food & Bev',  score: 88, color: '#7c3aed' },
@@ -1816,14 +1795,14 @@ function BenchmarkBars({ active }) {
       <div className="flex items-center justify-between pt-1">
         <span className="text-[10px] text-white font-medium">Scalability Index</span>
         <span className="text-[11px] font-bold text-violet-600">
-          {active ? '✓ Optimised' : '—'}
+          {active ? '? Optimised' : '?'}
         </span>
       </div>
     </div>
   );
 }
 
-/* Card 4 — Investor Signal Stream */
+/* Card 4 ? Investor Signal Stream */
 function InvestorSignals({ active }) {
   const signals = [
     {
@@ -1922,7 +1901,7 @@ function MarketIntelligenceSection() {
     if (!el) return;
     const obs = new IntersectionObserver(
       ([e]) => {
-        // Toggle active on every enter/leave — animations replay each time
+        // Toggle active on every enter/leave ? animations replay each time
         setActive(e.isIntersecting);
       },
       { threshold: 0.15 }
@@ -1997,7 +1976,7 @@ function MarketIntelligenceSection() {
             <div className="relative overflow-hidden flex-1">
               <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-transparent to-transparent z-10" />
               <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-transparent to-transparent z-10" />
-              {/* Duplicated text for seamless RIGHT→LEFT loop */}
+              {/* Duplicated text for seamless RIGHT?LEFT loop */}
               <div className="flex w-max animate-marquee-left">
                 {[0, 1].map((n) => (
                   <p key={n} className="text-xs text-white font-medium whitespace-nowrap pr-16">
@@ -2041,7 +2020,7 @@ function MarketIntelligenceSection() {
         <div className="theme-dark-surface rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_280px]">
 
-            {/* LEFT – Premium Chart panel */}
+            {/* LEFT ? Premium Chart panel */}
             <div className="p-5 border-b lg:border-b-0 lg:border-r border-white/10">
 
               {/* Chart header row */}
@@ -2101,7 +2080,7 @@ function MarketIntelligenceSection() {
                   preserveAspectRatio="none"
                 >
                   <defs>
-                    {/* 3D Pipe gradients — white/silver */}
+                    {/* 3D Pipe gradients ? white/silver */}
                     <linearGradient id="miBarGrad3D" x1="0" y1="0" x2="1" y2="0">
                       <stop offset="0%" stopColor="#94a3b8" stopOpacity="0.5" />
                       <stop offset="15%" stopColor="#cbd5e1" stopOpacity="0.75" />
@@ -2305,7 +2284,7 @@ function MarketIntelligenceSection() {
               </div>
             </div>
 
-            {/* RIGHT – Compact Donut + Category bars */}
+            {/* RIGHT ? Compact Donut + Category bars */}
             <div className="flex flex-col divide-y divide-white/10">
 
               {/* Compact Donut */}
@@ -2456,151 +2435,6 @@ const PROCESS_FLOWS = {
   ],
 };
 
-const PROCESS_VISUAL_STATS = {
-  Investors: [
-    { label: 'Opportunities', value: '500+' },
-    { label: 'Avg. match time', value: '14d' },
-    { label: 'Verified brands', value: '120+' },
-  ],
-  Brands: [
-    { label: 'Investor reach', value: '50K+' },
-    { label: 'Markets mapped', value: '28' },
-    { label: 'Launch support', value: '360°' },
-  ],
-};
-
-function ProcessCinematicVisual({ mode, visible }) {
-  const stats = PROCESS_VISUAL_STATS[mode];
-  const nodes = [
-    { x: '18%', y: '28%', delay: '0s', size: 'h-3 w-3' },
-    { x: '78%', y: '22%', delay: '0.6s', size: 'h-2.5 w-2.5' },
-    { x: '82%', y: '62%', delay: '1.1s', size: 'h-3.5 w-3.5' },
-    { x: '22%', y: '68%', delay: '0.3s', size: 'h-2.5 w-2.5' },
-    { x: '50%', y: '18%', delay: '0.9s', size: 'h-2 w-2' },
-  ];
-
-  return (
-    <div
-      className="process-cinematic-panel relative flex h-full min-h-[420px] flex-1 flex-col overflow-hidden rounded-2xl"
-      style={{
-        background:
-          'linear-gradient(145deg, rgba(109,40,217,0.18) 0%, rgba(15,10,35,0.92) 45%, rgba(10,6,24,0.98) 100%)',
-        border: '1px solid rgba(167,139,250,0.35)',
-        boxShadow: '0 8px 40px rgba(109,40,217,0.22), inset 0 1px 0 rgba(255,255,255,0.06)',
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(16px)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease',
-      }}
-    >
-      <div className="process-cinematic-grid pointer-events-none absolute inset-0 opacity-50" aria-hidden />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 45%, rgba(139,92,246,0.35) 0%, transparent 70%)',
-        }}
-        aria-hidden
-      />
-
-      <div className="process-live-badge absolute top-5 left-5 z-10 inline-flex items-center gap-2 rounded-full px-3 py-1.5">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-        </span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-white">
-          Live growth engine
-        </span>
-      </div>
-
-      <div className="relative z-[1] flex flex-1 items-center justify-center p-8 pt-14">
-        <div className="relative h-[220px] w-full max-w-[320px]">
-          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 320 220" fill="none" aria-hidden>
-            <path
-              d="M40 110 Q 100 40, 160 110 T 280 110"
-              stroke="url(#processFlowGrad)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className="process-flow-line"
-            />
-            <path
-              d="M60 160 Q 160 60, 260 80"
-              stroke="rgba(167,139,250,0.25)"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-              className="process-flow-line-alt"
-            />
-            <defs>
-              <linearGradient id="processFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(167,139,250,0.2)" />
-                <stop offset="50%" stopColor="#c4b5fd" />
-                <stop offset="100%" stopColor="rgba(99,102,241,0.5)" />
-              </linearGradient>
-            </defs>
-          </svg>
-
-          <div
-            className="process-hub-pulse absolute left-1/2 top-1/2 z-10 flex h-[72px] w-[72px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl"
-            style={{
-              background: 'linear-gradient(135deg, rgba(124,58,237,0.5), rgba(79,70,229,0.35))',
-              border: '1px solid rgba(196,181,253,0.5)',
-              boxShadow: '0 0 40px rgba(124,58,237,0.45)',
-            }}
-          >
-            <svg
-              className="h-8 w-8 text-violet-100"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={1.6}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-          </div>
-
-          {nodes.map((node, i) => (
-            <span
-              key={i}
-              className={`process-orbit-node absolute ${node.size} rounded-full bg-violet-300`}
-              style={{ left: node.x, top: node.y, animationDelay: node.delay }}
-            />
-          ))}
-
-          <div
-            className="process-float-badge absolute left-[8%] top-[42%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-white/90"
-            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(167,139,250,0.25)' }}
-          >
-            {mode === 'Investors' ? 'Match' : 'List'}
-          </div>
-          <div
-            className="process-float-badge absolute right-[6%] top-[48%] rounded-lg px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-wide text-white/90"
-            style={{
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(167,139,250,0.25)',
-              animationDelay: '0.5s',
-            }}
-          >
-            {mode === 'Investors' ? 'Scale' : 'Expand'}
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="relative z-10 grid grid-cols-3 gap-2 border-t border-violet-500/20 px-5 py-4"
-        style={{ background: 'rgba(0,0,0,0.25)' }}
-      >
-        {stats.map((stat) => (
-          <div key={stat.label} className="text-center">
-            <p className="text-sm font-extrabold text-white">{stat.value}</p>
-            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-white/80">
-              {stat.label}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function ProcessStepCard({ step, index, visible, isLight }) {
   const cardSurface = isLight
     ? { background: '#ffffff', border: '1px solid #e2e8f0', boxShadow: '0 8px 24px rgba(15, 23, 42, 0.08)' }
@@ -2725,7 +2559,7 @@ function ProcessTimeline({ isLight }) {
       `}</style>
 
       <div ref={ref} className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
-        <ProcessCinematicVisual mode={mode} visible={visible} />
+        <ProcessGrowthEngineVisual mode={mode} visible={visible} isLight={isLight} />
         <div className="flex min-h-[420px] flex-col gap-5">
           <div
             className={`process-mode-toggle inline-flex w-fit items-center gap-1 rounded-2xl p-1 ${isLight ? 'bg-slate-100 border border-slate-200' : ''}`}
@@ -2827,7 +2661,7 @@ function FAQAccordionItem({ faq, index }) {
   );
 }
 
-// ── Hero CTA — white pill, purple text (excluded from site-wide violet CTAs) ──
+// -- Hero CTA ? white pill, purple text (excluded from site-wide violet CTAs) --
 function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
     <button
@@ -2899,7 +2733,7 @@ function Hero() {
     };
   }, []);
 
-  // Section reveal — replays every time section enters viewport
+  // Section reveal ? replays every time section enters viewport
   useEffect(() => {
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -3054,7 +2888,7 @@ function Hero() {
 
   return (
     <main className="relative isolate overflow-x-hidden bg-transparent">
-      {/* -- HERO SECTION — cinematic entry -- */}
+      {/* -- HERO SECTION ? cinematic entry -- */}
       <section className="cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden bg-[#0a0618]">
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
           <img
@@ -3140,7 +2974,7 @@ function Hero() {
 
       </section>
 
-      {/* ── FEATURED OPPORTUNITIES (after hero) ── */}
+      {/* -- FEATURED OPPORTUNITIES (after hero) -- */}
       <div className="section-reveal relative w-full overflow-hidden bg-transparent">
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="reveal-child text-center mb-10">
@@ -3173,23 +3007,23 @@ function Hero() {
           </div>
         </div>
 
-        {/* ── thin divider line replaced by gradient fade ── */}
+        {/* -- thin divider line replaced by gradient fade -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          CONTINUOUS DARK SECTION: Who We Serve → Services → Process
+      {/* ---------------------------------------------------------------
+          CONTINUOUS DARK SECTION: Who We Serve ? Services ? Process
           One living animated background, no dividers, no gaps
-      ═══════════════════════════════════════════════════════════════ */}
+      --------------------------------------------------------------- */}
       <div className="relative w-full overflow-hidden bg-transparent">
 
-        {/* ── WHO WE SERVE ── */}
+        {/* -- WHO WE SERVE -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
             <SectionPill className="mb-4">Who We Serve</SectionPill>
             <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Built for Investors and Growing Brands</h2>
             <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
-              Whether investing in franchise businesses or expanding your brand — iFranchise provides the infrastructure for long-term growth.
+              Whether investing in franchise businesses or expanding your brand ? iFranchise provides the infrastructure for long-term growth.
             </p>
           </div>
 
@@ -3222,7 +3056,7 @@ function Hero() {
                 <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)' }} />
 
-                {/* Image — full card width, natural height */}
+                {/* Image ? full card width, natural height */}
                 <div className="relative w-full overflow-hidden leading-none">
                   <img
                     src={card.img}
@@ -3278,10 +3112,10 @@ function Hero() {
           </div>
         </div>
 
-        {/* ── thin gradient divider ── */}
+        {/* -- thin gradient divider -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
-        {/* ── SERVICES ── */}
+        {/* -- SERVICES -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12">
           <div className="text-center mb-14">
             <SectionPill className="mb-5">Our Services</SectionPill>
@@ -3289,7 +3123,7 @@ function Hero() {
               Complete Franchise Growth &amp; Expansion Services
             </h2>
             <p className={`mx-auto max-w-2xl text-sm leading-relaxed sm:text-base ${sectionBodyClass(isLight)}`}>
-              End-to-end franchise services — from strategy and documentation to investor onboarding and brand positioning.
+              End-to-end franchise services ? from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </div>
 
@@ -3350,7 +3184,7 @@ function Hero() {
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)', transition: 'transform 0.7s ease' }} />
 
                 <div className="relative z-10 p-7 flex flex-col h-full">
-                  {/* Icon — top left, animated */}
+                  {/* Icon ? top left, animated */}
                   <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl"
                     style={{
                       ...serviceIconStyle(isLight),
@@ -3408,23 +3242,23 @@ function Hero() {
           </div>
         </div>
 
-        {/* ── thin divider line replaced by gradient fade ── */}
+        {/* -- thin divider line replaced by gradient fade -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
-        {/* ── thin divider line replaced by gradient fade ── */}
+        {/* -- thin divider line replaced by gradient fade -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
-        {/* ── PROCESS ── */}
+        {/* -- PROCESS -- */}
         <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-14">
             <SectionPill className="mb-4">iFranchise Process</SectionPill>
             <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Two Strategic Paths. One Growth Engine.</h2>
             <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
-              Whether scaling a franchise brand or investing in the right opportunity — iFranchise simplifies every critical step.
+              Whether scaling a franchise brand or investing in the right opportunity ? iFranchise simplifies every critical step.
             </p>
           </div>
 
-          {/* Full ProcessTimeline — free scroll, no viewport constraint */}
+          {/* Full ProcessTimeline ? free scroll, no viewport constraint */}
           <ProcessTimeline isLight={isLight} />
 
           {/* Outcome metrics */}
@@ -3451,13 +3285,13 @@ function Hero() {
 
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          CONTINUOUS DARK SECTION: Industries → Featured Opportunities
+      {/* ---------------------------------------------------------------
+          CONTINUOUS DARK SECTION: Industries ? Featured Opportunities
           Same living animated background, seamless flow
-      ═══════════════════════════════════════════════════════════════ */}
+      --------------------------------------------------------------- */}
       <div className="relative w-full overflow-hidden bg-transparent">
 
-        {/* ── INDUSTRIES ── */}
+        {/* -- INDUSTRIES -- */}
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
           <div className="theme-section-on-light text-center mb-10">
             <SectionPill className="mb-4">Industries</SectionPill>
@@ -3465,7 +3299,7 @@ function Hero() {
               Opportunities Across High-Growth Industries
             </h2>
             <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
-              Franchise opportunities across India's most dynamic sectors — each with proven models and qualified investors.
+              Franchise opportunities across India's most dynamic sectors ? each with proven models and qualified investors.
             </p>
           </div>
 
@@ -3502,27 +3336,17 @@ function Hero() {
                 img: beautyImg,
               },
             ].map((ind, i) => (
-              <div key={ind.label} className="theme-light-card group relative overflow-hidden rounded-2xl flex flex-col"
-                style={{ animation: `cardReveal 0.4s ease ${i*0.07+0.1}s both`, transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
-              >
-                <div className="industry-card-media relative h-52 overflow-hidden bg-[#0a0618]">
-                  <HeroIndustryCardImg src={ind.img} alt={ind.label} />
-                  <div className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent" aria-hidden />
-                  <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)` }} />
-                </div>
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className={`text-base font-bold mb-1.5 leading-snug ${cardTitleClass(isLight)}`}>{ind.label}</h3>
-                  <p className={`text-[0.78rem] leading-relaxed flex-1 ${cardBodyClass(isLight)}`}>{ind.desc}</p>
-                  <button
-                    type="button"
-                    className="industry-card-explore"
-                    onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                  >
-                    Explore opportunities <FiArrowRight className="h-3 w-3" />
-                  </button>
-                </div>
+              <div key={ind.label} style={{ animation: `cardReveal 0.4s ease ${i * 0.07 + 0.1}s both` }}>
+                <IndustryCard
+                  label={ind.label}
+                  desc={ind.desc}
+                  img={ind.img}
+                  accent={ind.accent}
+                  onExplore={() => {
+                    window.history.pushState({}, '', '/franchise-opportunities');
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -3542,9 +3366,9 @@ function Hero() {
 
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          CONTINUOUS DARK SECTION: Why iFranchise → Testimonials → Market Intelligence → FAQ
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* ---------------------------------------------------------------
+          CONTINUOUS DARK SECTION: Why iFranchise ? Testimonials ? Market Intelligence ? FAQ
+      --------------------------------------------------------------- */}
       <div className="relative w-full overflow-hidden bg-transparent">
 
       {/* -- WHY iFRANCHISE SECTION -- */}
@@ -3700,7 +3524,7 @@ function Hero() {
             </div>
           </div>
 
-          {/* Stats — premium glassmorphism cards */}
+          {/* Stats ? premium glassmorphism cards */}
           <div ref={statsRef} className="mb-16 sm:mb-20">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
@@ -3744,7 +3568,7 @@ function Hero() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {[
                 { label: '500+ franchise launches', color: '#a78bfa' },
-                { label: '₹800Cr+ ecosystem influenced', color: '#34d399' },
+                { label: '?800Cr+ ecosystem influenced', color: '#34d399' },
                 { label: '72% investor preference', color: '#60a5fa' },
                 { label: '30% CAGR aligned', color: '#fb923c' },
               ].map((item) => (

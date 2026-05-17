@@ -19,70 +19,232 @@ import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
 import educationImg from '../assets/IndImgs/Education & Training.png';
 import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
 import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
+import IndustryCard from './IndustryCard';
 
 /** Shared layout — continuous dark page, minimal vertical gaps */
 const LYB_SECTION = 'relative overflow-hidden bg-transparent py-10 lg:py-14';
 const LYB_CONTAINER = 'relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10';
 const VIEWPORT_SECTION = `${LYB_SECTION} lg:min-h-[min(100vh,900px)] flex items-center`;
+const LYB_REVEAL_HERO_FORM = 'lyb-reveal-hero-form';
+
+function scrollToHeroInquiry() {
+  window.dispatchEvent(new CustomEvent(LYB_REVEAL_HERO_FORM));
+  window.setTimeout(() => {
+    document.getElementById('lyb-hero-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 120);
+}
+
+const HERO_VIEWPORT_H = 'calc(100vh - 80px)';
+const LYB_EASE = [0.22, 1, 0.36, 1];
+const LYB_ENTER = { duration: 0.42, ease: LYB_EASE };
+const LYB_FAST = { duration: 0.28, ease: LYB_EASE };
+const LYB_REVEAL = { duration: 0.36, ease: LYB_EASE };
 
 const IcoUsers = () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" /></svg>;
 const IcoTrend = () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>;
 const IcoShield = () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>;
 const IcoArrow = () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" /></svg>;
 
-export default function ForBrandOwnersPage() {
-  const scrollToInquiry = () => {
-    document.getElementById('hero-brand-inquiry')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+function HeroFormTeaser() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 28, scale: 0.97 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 18, scale: 0.98 }}
+      transition={LYB_REVEAL}
+      className="lyb-hero-form-teaser absolute inset-0 hidden h-full max-h-full min-h-0 w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-violet-400/40 bg-violet-500/[0.08] px-8 py-8 text-center backdrop-blur-sm lg:flex"
+      style={{ willChange: 'transform, opacity' }}
+    >
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500/10 via-transparent to-violet-400/5"
+        animate={{ opacity: [0.5, 0.85, 0.5] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ y: [0, -5, 0], opacity: 1 }}
+        transition={{
+          y: { duration: 2.8, repeat: Infinity, ease: 'easeInOut' },
+          opacity: { delay: 0.18, duration: 0.35 },
+        }}
+        className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-violet-400/35 bg-violet-500/20 shadow-[0_0_24px_rgba(139,92,246,0.25)]"
+      >
+        <svg className="h-7 w-7 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </motion.div>
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.22, ...LYB_FAST }}
+        className="relative text-base font-bold text-white"
+      >
+        Your listing form opens here
+      </motion.p>
+      <motion.p
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.28, ...LYB_FAST }}
+        className="lyb-hero-subtext relative mt-2 max-w-[260px] text-sm leading-relaxed"
+      >
+        Click <span className="font-semibold text-violet-200">Start Franchise Listing</span> on the left to reveal it.
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.34, ...LYB_FAST }}
+        className="relative mt-6 flex items-center gap-2 text-violet-300/90"
+      >
+        <motion.span
+          animate={{ width: ['2rem', '2.75rem', '2rem'] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          className="h-px bg-violet-400/50"
+        />
+        <motion.span
+          animate={{ x: [-3, 0, -3] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+          className="inline-flex rotate-180"
+        >
+          <IcoArrow />
+        </motion.span>
+        <span className="text-xs font-medium uppercase tracking-widest">Waiting for you</span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function ListYourBrandHeroSection() {
+  const [formRevealed, setFormRevealed] = useState(false);
+
+  useEffect(() => {
+    const onReveal = () => setFormRevealed(true);
+    window.addEventListener(LYB_REVEAL_HERO_FORM, onReveal);
+    return () => window.removeEventListener(LYB_REVEAL_HERO_FORM, onReveal);
+  }, []);
+
+  const revealForm = () => {
+    setFormRevealed(true);
+    window.dispatchEvent(new CustomEvent(LYB_REVEAL_HERO_FORM));
   };
 
   return (
-    <main className="list-your-brand-page relative z-10 overflow-x-hidden bg-transparent text-white">
-      <section
-        className={`${LYB_SECTION} w-full flex flex-col justify-center py-6 lg:py-8 overflow-hidden`}
-        style={{ minHeight: 'calc(100vh - 80px)', maxHeight: 'calc(100vh - 80px)' }}
-      >
-        <motion.div className="relative z-10 flex h-full min-h-0 items-center">
-          <motion.div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10">
+    <section
+      id="lyb-hero-section"
+      className={`lyb-hero-section ${LYB_SECTION} flex w-full flex-col justify-center overflow-hidden py-4 sm:py-5 lg:py-6`}
+      style={{ height: HERO_VIEWPORT_H, minHeight: HERO_VIEWPORT_H, maxHeight: HERO_VIEWPORT_H }}
+    >
+      <div className="relative z-10 flex h-full min-h-0 w-full items-center">
+        <motion.div className="mx-auto h-full max-h-full w-full min-h-0 max-w-[1320px] px-6 lg:px-10">
+          <motion.div
+            layout
+            className={`grid h-full min-h-0 gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(520px,620px)] lg:items-center lg:gap-8 xl:gap-12 ${
+              formRevealed ? 'grid-rows-[auto_minmax(0,1fr)] lg:grid-rows-1' : ''
+            }`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={LYB_ENTER}
+          >
             <motion.div
-              className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(400px,480px)] xl:gap-12"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={LYB_ENTER}
+              className={`lyb-hero-copy flex min-h-0 flex-col justify-center ${formRevealed ? 'gap-2' : 'gap-3 sm:gap-4'}`}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="lyb-hero-copy flex flex-col gap-4"
+              <span className="lyb-hero-badge inline-flex w-fit items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-100">
+                <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+                For brand founders
+              </span>
+              <motion.h1
+                layout
+                transition={LYB_FAST}
+                className={`lyb-hero-title max-w-lg font-extrabold leading-[1.08] tracking-tight ${
+                  formRevealed ? 'text-2xl sm:text-3xl lg:text-[2rem]' : 'text-3xl sm:text-4xl lg:text-[2.5rem]'
+                }`}
               >
-                <span className="lyb-hero-badge inline-flex w-fit items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-100">
-                  <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-                  For brand founders
-                </span>
-                <h1 className="lyb-hero-title text-3xl sm:text-4xl lg:text-[2.5rem] font-extrabold leading-[1.1] tracking-tight max-w-lg">
-                  List your brand. Scale with capital.
-                </h1>
-                <p className="lyb-hero-subtext text-sm leading-relaxed max-w-md">
-                  Investor-ready franchise listing — model design, verified capital, and multi-city rollout.
-                </p>
-                <ul className="lyb-hero-subtext flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem]">
-                  <li className="flex items-center gap-1.5"><IcoUsers /><span>1,800+ investors</span></li>
-                  <li className="flex items-center gap-1.5"><IcoShield /><span>SEBI-aligned</span></li>
-                  <li className="flex items-center gap-1.5"><IcoTrend /><span>30-day readiness</span></li>
-                </ul>
-                <button
-                  type="button"
-                  onClick={scrollToInquiry}
-                  className="btn-purple-solid group inline-flex w-fit items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-lg transition hover:-translate-y-0.5"
+                List your brand. Scale with capital.
+              </motion.h1>
+              <AnimatePresence initial={false}>
+                {!formRevealed && (
+                  <motion.div
+                    key="hero-extra"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={LYB_FAST}
+                  >
+                    <p className="lyb-hero-subtext max-w-md text-sm leading-relaxed">
+                      Investor-ready franchise listing — model design, verified capital, and multi-city rollout.
+                    </p>
+                    <ul className="lyb-hero-subtext mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem]">
+                      <li className="flex items-center gap-1.5"><IcoUsers /><span>1,800+ investors</span></li>
+                      <li className="flex items-center gap-1.5"><IcoShield /><span>SEBI-aligned</span></li>
+                      <li className="flex items-center gap-1.5"><IcoTrend /><span>30-day readiness</span></li>
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              {!formRevealed && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, ...LYB_ENTER }}
+                  className="mt-1 flex flex-col gap-2"
                 >
-                  Start Franchise Listing
-                  <IcoArrow />
-                </button>
-              </motion.div>
-              <HeroBrandInquiryForm id="hero-brand-inquiry" />
+                  <motion.button
+                    type="button"
+                    onClick={revealForm}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="lyb-hero-cta btn-purple-solid group relative inline-flex w-fit items-center gap-2 overflow-hidden rounded-xl px-6 py-3 text-sm font-bold shadow-lg shadow-violet-900/30"
+                  >
+                    <span
+                      className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-r from-violet-400/0 via-violet-300/25 to-violet-400/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      aria-hidden
+                    />
+                    <span className="relative">Start Franchise Listing</span>
+                    <motion.span
+                      className="relative inline-flex"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                      <IcoArrow />
+                    </motion.span>
+                  </motion.button>
+                  <p className="lyb-hero-cta-hint hidden items-center gap-2 text-[0.7rem] font-medium text-violet-200/80 lg:flex">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+                    Opens your live listing form on the right
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+
+            <motion.div
+              layout
+              initial={{ opacity: 0, x: 32 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1, ...LYB_ENTER }}
+              className={`relative min-h-0 w-full ${formRevealed ? 'block h-full max-h-full' : 'hidden lg:block lg:h-full'}`}
+            >
+              <AnimatePresence initial={false}>
+                {formRevealed ? (
+                  <HeroBrandInquiryForm key="form" id="hero-brand-inquiry" fitViewport />
+                ) : (
+                  <HeroFormTeaser key="teaser" />
+                )}
+              </AnimatePresence>
             </motion.div>
           </motion.div>
         </motion.div>
-      </section>
+      </div>
+    </section>
+  );
+}
+
+export default function ForBrandOwnersPage() {
+  return (
+    <main className="list-your-brand-page relative z-10 overflow-x-hidden bg-transparent text-white">
+      <ListYourBrandHeroSection />
 
       <TrustStrip />
       
@@ -336,21 +498,22 @@ function ProblemsSection() {
   const item = active !== null ? ITEMS[active] : null;
 
   return (
-    <section className={LYB_SECTION}>
+    <section className={`lyb-problems-section ${LYB_SECTION}`}>
       <div className={LYB_CONTAINER}>
 
-        {/* â"€â"€ section header â€" same style as home sections â"€â"€ */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="mb-10 text-center max-w-4xl mx-auto"
+          className="lyb-problems-heading-wrap lyb-dark-heading mb-10 mx-auto max-w-4xl text-center"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-400/40 bg-red-500/10 text-[0.68rem] font-bold uppercase tracking-widest text-red-300 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-            The Hard Truth
-          </span>
+          <div className="mb-4 flex justify-center">
+            <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+              The Hard Truth
+            </span>
+          </div>
           <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-xl sm:text-2xl lg:text-[2.1rem] font-extrabold tracking-tight leading-[1.15]">
             <span className="lyb-problems-heading bg-gradient-to-r from-white via-violet-100 to-indigo-200 bg-clip-text text-transparent">
               Why Most Brands Fail to Scale — and How iFranchise Fixes It
@@ -546,22 +709,60 @@ const BUDGETS = ['Under Rs.25L', 'Rs.25L - Rs.50L', 'Rs.50L - Rs.1Cr', 'Rs.1Cr -
 const EXPANSION_GOALS = ['1-3 cities', '4-10 cities', '10-25 cities', '25+ cities'];
 
 const inputClass =
-  'lyb-form-field w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-black placeholder:text-slate-400 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/25';
-const labelClass = 'mb-1 block text-[0.62rem] font-bold uppercase tracking-wider';
+  'lyb-form-field w-full min-h-[42px] rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px] text-black placeholder:text-slate-500 placeholder:opacity-100 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/25';
+const inputClassCompact =
+  'lyb-form-field w-full min-h-[38px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-[13px] leading-snug text-black placeholder:text-slate-500 placeholder:opacity-100 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/25';
+const selectClass = `${inputClassCompact} lyb-form-select cursor-pointer pr-9`;
+const selectClassFull = `${inputClass} lyb-form-select cursor-pointer pr-10`;
 
-function Field({ label, required, children, className = '' }) {
+function SelectChevron() {
+  return (
+    <svg className="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+      <path
+        fillRule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0l-4.24-4.5a.75.75 0 01.02-1.06z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function SelectField({ className, children, ...props }) {
+  return (
+    <div className="lyb-form-select-wrap relative">
+      <select className={className} {...props}>
+        {children}
+      </select>
+      <span className="lyb-form-select-chevron pointer-events-none absolute inset-y-0 right-2.5 flex items-center" aria-hidden>
+        <SelectChevron />
+      </span>
+    </div>
+  );
+}
+
+function Field({ label, required, children, className = '', compact = false }) {
   return (
     <div className={`flex flex-col ${className}`}>
-      <label className={labelClass}>
+      <label
+        className={`lyb-form-label mb-1 block font-extrabold uppercase tracking-wide ${
+          compact ? 'text-[0.62rem] leading-tight' : 'text-[0.65rem]'
+        }`}
+      >
         {label}
-        {required && <span className="ml-0.5 text-violet-600">*</span>}
+        {required && (
+          <span className="lyb-form-required ml-0.5 inline-block text-[0.85em] font-black text-rose-400" aria-hidden="true">
+            *
+          </span>
+        )}
       </label>
       {children}
     </div>
   );
 }
 
-function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
+function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }) {
+  const fieldClass = fitViewport ? inputClassCompact : inputClass;
+  const selectFieldClass = fitViewport ? selectClass : selectClassFull;
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -590,25 +791,26 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
   return (
     <motion.div
       id={id}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="lyb-hero-form w-full justify-self-end lg:max-w-[480px]"
+      initial={{ opacity: 0, x: 24, scale: 0.98 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 12, scale: 0.99 }}
+      transition={LYB_REVEAL}
+      className={`lyb-hero-form absolute inset-0 w-full justify-self-stretch lg:max-w-none ${fitViewport ? 'flex h-full max-h-full min-h-0 flex-col' : ''}`}
+      style={{ willChange: 'transform, opacity' }}
     >
-      <motion.div className="lyb-form-panel relative flex w-full flex-col overflow-hidden rounded-2xl border border-violet-400/40 bg-gradient-to-br from-white/[0.14] to-white/[0.07] p-5 sm:p-6 shadow-[0_24px_64px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+      <motion.div
+        className={`lyb-form-panel relative flex w-full flex-col overflow-hidden rounded-2xl border border-violet-400/40 bg-gradient-to-br from-white/[0.14] to-white/[0.07] shadow-[0_24px_64px_rgba(0,0,0,0.45)] backdrop-blur-xl ${
+          fitViewport ? 'h-full max-h-full min-h-0 px-4 pt-4 pb-3 sm:px-5 sm:pt-4 sm:pb-3' : 'p-6 sm:p-7 lg:p-8'
+        }`}
+      >
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" />
 
-        <div className="mb-4 flex shrink-0 items-center justify-between gap-3 border-b border-white/10 pb-3">
-          <div>
-            <p className="lyb-form-eyebrow text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white">Brand inquiry</p>
-            <h2 className="lyb-form-title text-lg font-extrabold text-white">Start Your Listing</h2>
-          </div>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/35 bg-emerald-500/15 px-2.5 py-1 text-[0.58rem] font-bold uppercase text-emerald-300">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            Live
-          </span>
+        <div className={`shrink-0 border-b border-white/10 ${fitViewport ? 'mb-2.5 pb-2' : 'mb-4 pb-3'}`}>
+          <p className="lyb-form-eyebrow text-[0.58rem] font-bold uppercase tracking-[0.2em] text-white sm:text-[0.62rem]">Brand inquiry</p>
+          <h2 className={`lyb-form-title font-extrabold text-white ${fitViewport ? 'text-base' : 'text-lg'}`}>Start Your Listing</h2>
         </div>
 
+        <div className={fitViewport ? 'flex min-h-0 flex-1 flex-col' : ''}>
         <AnimatePresence mode="wait">
           {submitted ? (
             <motion.div key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-8 text-center">
@@ -621,67 +823,133 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
               <p className="mt-1 text-xs text-white">We&apos;ll contact you within 24 hours.</p>
             </motion.div>
           ) : (
-            <motion.form key="form" onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Field label="Brand Name" required>
-                  <input className={inputClass} value={form.brandName} onChange={(e) => set('brandName', e.target.value)} required />
-                </Field>
-                <Field label="Founder" required>
-                  <input className={inputClass} value={form.name} onChange={(e) => set('name', e.target.value)} required />
-                </Field>
-                <Field label="Email" required>
-                  <input type="email" className={inputClass} value={form.email} onChange={(e) => set('email', e.target.value)} required />
-                </Field>
-                <Field label="Phone" required>
-                  <input type="tel" className={inputClass} value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+91" required />
-                </Field>
-                <Field label="Category" required>
-                  <select className={inputClass} value={form.industry} onChange={(e) => set('industry', e.target.value)} required>
-                    <option value="">Select</option>
-                    {HERO_FORM_INDUSTRIES.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </Field>
-                <Field label="Locations">
-                  <input className={inputClass} value={form.outlets} onChange={(e) => set('outlets', e.target.value)} placeholder="e.g. 12" />
-                </Field>
-                <Field label="Investment">
-                  <select className={inputClass} value={form.budget} onChange={(e) => set('budget', e.target.value)}>
-                    <option value="">Range</option>
-                    {BUDGETS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </Field>
-                <Field label="Expansion Goal" required>
-                  <select className={inputClass} value={form.cityGoal} onChange={(e) => set('cityGoal', e.target.value)} required>
-                    <option value="">Goal</option>
-                    {EXPANSION_GOALS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </Field>
-                <Field label="Franchise Model" required className="col-span-2">
-                  <select className={inputClass} value={form.model} onChange={(e) => set('model', e.target.value)} required>
-                    <option value="">Select model</option>
-                    {MODELS.map((o) => <option key={o} value={o}>{o}</option>)}
-                  </select>
-                </Field>
-                <Field label="Expansion vision" className="col-span-2">
+            <motion.form
+              key="form"
+              onSubmit={handleSubmit}
+              className={`flex min-h-0 flex-col ${fitViewport ? 'h-full flex-1' : 'gap-4'}`}
+            >
+              <div
+                className={
+                  fitViewport
+                    ? 'lyb-hero-form-scroll flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain pr-0.5'
+                    : ''
+                }
+              >
+                <div className={`grid shrink-0 grid-cols-1 sm:grid-cols-2 ${fitViewport ? 'gap-x-2.5 gap-y-2.5' : 'gap-4'}`}>
+                  <Field label="Brand Name" required compact={fitViewport}>
+                    <input
+                      className={fieldClass}
+                      value={form.brandName}
+                      onChange={(e) => set('brandName', e.target.value)}
+                      placeholder="e.g. Chai & Co"
+                      required
+                    />
+                  </Field>
+                  <Field label="Your Full Name" required compact={fitViewport}>
+                    <input
+                      className={fieldClass}
+                      value={form.name}
+                      onChange={(e) => set('name', e.target.value)}
+                      placeholder="e.g. Priya Sharma"
+                      required
+                    />
+                  </Field>
+                  <Field label="Email" required compact={fitViewport}>
+                    <input
+                      type="email"
+                      className={fieldClass}
+                      value={form.email}
+                      onChange={(e) => set('email', e.target.value)}
+                      placeholder="you@brand.com"
+                      required
+                    />
+                  </Field>
+                  <Field label="Phone" required compact={fitViewport}>
+                    <input
+                      type="tel"
+                      className={fieldClass}
+                      value={form.phone}
+                      onChange={(e) => set('phone', e.target.value)}
+                      placeholder="+91 98765 43210"
+                      required
+                    />
+                  </Field>
+                  <Field label="Category" required compact={fitViewport}>
+                    <SelectField className={selectFieldClass} value={form.industry} onChange={(e) => set('industry', e.target.value)} required>
+                      <option value="">Select category</option>
+                      {HERO_FORM_INDUSTRIES.map((o) => (
+                        <option key={o} value={o}>
+                          {o}
+                        </option>
+                      ))}
+                    </SelectField>
+                  </Field>
+                  <Field label="Locations" compact={fitViewport}>
+                    <input
+                      className={fieldClass}
+                      value={form.outlets}
+                      onChange={(e) => set('outlets', e.target.value)}
+                      placeholder="e.g. 12 outlets"
+                    />
+                  </Field>
+                  <Field label="Investment" compact={fitViewport}>
+                    <SelectField className={selectFieldClass} value={form.budget} onChange={(e) => set('budget', e.target.value)}>
+                      <option value="">Select range</option>
+                      {BUDGETS.map((o) => (
+                        <option key={o} value={o}>
+                          {o}
+                        </option>
+                      ))}
+                    </SelectField>
+                  </Field>
+                  <Field label="Expansion Goal" required compact={fitViewport}>
+                    <SelectField className={selectFieldClass} value={form.cityGoal} onChange={(e) => set('cityGoal', e.target.value)} required>
+                      <option value="">Select goal</option>
+                      {EXPANSION_GOALS.map((o) => (
+                        <option key={o} value={o}>
+                          {o}
+                        </option>
+                      ))}
+                    </SelectField>
+                  </Field>
+                  <Field label="Franchise Model" required compact={fitViewport} className="col-span-2">
+                    <SelectField className={selectFieldClass} value={form.model} onChange={(e) => set('model', e.target.value)} required>
+                      <option value="">Choose franchise model</option>
+                      {MODELS.map((o) => (
+                        <option key={o} value={o}>
+                          {o}
+                        </option>
+                      ))}
+                    </SelectField>
+                  </Field>
+                </div>
+                <Field
+                  label="Expansion Vision"
+                  compact={fitViewport}
+                  className={fitViewport ? 'mt-2.5 flex min-h-[88px] flex-1 flex-col' : 'mt-4'}
+                >
                   <textarea
-                    className={`${inputClass} min-h-[52px] resize-none`}
+                    className={`${fieldClass} resize-none ${fitViewport ? 'min-h-[88px] flex-1' : 'min-h-[88px]'}`}
                     value={form.vision}
                     onChange={(e) => set('vision', e.target.value)}
-                    rows={2}
-                    placeholder="Target cities, timeline, goals…"
+                    rows={fitViewport ? 4 : 3}
+                    placeholder="Target cities, timeline, franchise goals, and how you want to scale…"
                   />
                 </Field>
               </div>
               <button
                 type="submit"
                 disabled={submitting}
-                className="lyb-hero-form-submit mt-1 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold shadow-lg transition disabled:opacity-60"
+                className={`lyb-hero-form-submit flex w-full shrink-0 items-center justify-center gap-2 rounded-xl font-bold shadow-lg transition disabled:opacity-60 ${
+                  fitViewport ? 'mt-2 mb-0 py-2.5 text-[13px]' : 'mt-1 py-3 text-sm'
+                }`}
               >
                 {submitting ? 'Submitting…' : 'Submit Brand Inquiry'}
               </button>
             </motion.form>
           )}
         </AnimatePresence>
+        </div>
       </motion.div>
     </motion.div>
   );
@@ -941,11 +1209,11 @@ function ExpansionVisualPanel() {
 }
 
 /* BrandsSection.jsx */
-function MiniBar({ value, max, color = 'violet', delay = 0 }) {
+function MiniBar({ value, max, color = 'violet', delay = 0, live = false }) {
   const pct = Math.round((value / max) * 100);
   return (
     <div className="flex items-center gap-1.5">
-      <div className="flex-1 h-1 rounded-full bg-slate-200 overflow-hidden">
+      <div className="lyb-mini-bar-track h-1 flex-1 overflow-hidden rounded-full">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${pct}%` }}
@@ -958,17 +1226,80 @@ function MiniBar({ value, max, color = 'violet', delay = 0 }) {
           }`}
         />
       </div>
-      <span className="text-[0.58rem] font-bold text-slate-900/50 w-6 text-right tabular-nums">{pct}%</span>
+      <span className="lyb-mini-bar-pct w-6 text-right text-[0.58rem] font-bold tabular-nums">{pct}%</span>
     </div>
   );
 }
 
 const BRANDS_SECTION_BENEFITS = [
-  { title: 'Franchise-Ready in 30 Days',   desc: 'Complete model, docs & systems built fast.' },
-  { title: 'Qualified Investor Pipeline',  desc: 'Only serious, capital-ready investors reach you.' },
-  { title: 'Multi-City Expansion Roadmap', desc: 'Data-driven territory strategy for every market.' },
-  { title: 'Ongoing Operational Support',  desc: 'We stay with you through every unit launch.' },
+  { title: 'Franchise-Ready in 30 Days', stat: '30 days', desc: 'Complete model, docs & systems built fast.' },
+  { title: 'Qualified Investor Pipeline', stat: '1,800+', desc: 'Only serious, capital-ready investors reach you.' },
+  { title: 'Multi-City Expansion Roadmap', stat: '17+ cities', desc: 'Data-driven territory strategy for every market.' },
+  { title: 'Ongoing Operational Support', stat: 'Always on', desc: 'We stay with you through every unit launch.' },
 ];
+
+function LiveCounter({ display, className = '' }) {
+  const match = String(display).match(/([\d.]+)(.*)/);
+  const target = match ? parseFloat(match[1]) : 0;
+  const suffix = match ? match[2] : display;
+  const [val, setVal] = useState(0);
+  const ref = useRef(null);
+  const done = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !target) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !done.current) {
+        done.current = true;
+        const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - start) / 1200, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          setVal(eased * target);
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        io.disconnect();
+      }
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target]);
+
+  const shown = Number.isInteger(target) ? Math.round(val) : val.toFixed(1);
+  return (
+    <span ref={ref} className={`tabular-nums ${className}`}>
+      {target ? shown : display}{suffix}
+    </span>
+  );
+}
+
+function BenefitCard({ benefit, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
+      whileHover={{ y: -4, scale: 1.02 }}
+      className="lyb-benefit-card group relative flex h-full min-h-[140px] flex-col items-center justify-center gap-2.5 rounded-xl border border-violet-500/20 p-4 text-center shadow-sm transition-shadow hover:border-violet-400/35 hover:shadow-md"
+    >
+      <motion.div
+        className="lyb-benefit-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-600 shadow-lg shadow-violet-600/25"
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35, ease: 'easeInOut' }}
+      >
+        <span className="lyb-benefit-icon-num text-sm font-extrabold leading-none text-white">{index + 1}</span>
+      </motion.div>
+      <p className="lyb-benefit-title text-[0.84rem] font-bold leading-snug sm:text-[0.9rem]">{benefit.title}</p>
+      <p className="lyb-benefit-desc max-w-[200px] text-[0.72rem] leading-relaxed sm:text-[0.76rem]">{benefit.desc}</p>
+      <span className="lyb-benefit-stat rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide">
+        {benefit.stat}
+      </span>
+    </motion.div>
+  );
+}
 
 const ONBOARDING = [
   { label: 'Brand Discovery & Audit',   status: 'live'     },
@@ -983,6 +1314,18 @@ const STATUS_COLOR = { live: 'bg-emerald-500', progress: 'bg-amber-400', pending
 const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-white' };
 const STATUS_LABEL = { live: 'Live', progress: 'In Progress', pending: 'Pending' };
 
+function LiveStatusDot({ status }) {
+  const pulse = status === 'live' || status === 'progress';
+  return (
+    <span className="relative flex h-2 w-2 shrink-0">
+      {pulse && (
+        <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${STATUS_COLOR[status]}`} />
+      )}
+      <span className={`relative inline-flex h-2 w-2 rounded-full ${STATUS_COLOR[status]}`} />
+    </span>
+  );
+}
+
 function BrandsSection() {
   const markets     = useMemo(() => getMarketTrends(), []);
   const topCities   = useMemo(() => getTopCities(4), []);
@@ -993,190 +1336,192 @@ function BrandsSection() {
   const maxCount    = useMemo(() => Math.max(...markets.map(m => m.count)), [markets]);
 
   return (
-    <section className="relative overflow-hidden bg-transparent py-10 lg:py-14">
-      <div className="relative z-10">
-        <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+    <section className="lyb-brands-section relative overflow-hidden bg-transparent py-10 lg:py-14">
+      <motion.div className={`${LYB_CONTAINER} relative z-10`}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="lyb-dark-heading lyb-brands-heading mb-8 text-center lg:mb-10"
+        >
+          <motion.div className="mb-4 flex justify-center">
+            <span className="lyb-section-badge lyb-brands-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+              For Brand Owners
+            </span>
+          </motion.div>
+          <h2 className="lyb-page-h2 lyb-section-heading-on-dark mx-auto max-w-3xl text-2xl font-extrabold leading-[1.1] tracking-tight sm:text-3xl lg:text-[2rem] xl:text-[2.3rem]">
+            Everything Your Brand Needs to{' '}
+            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+              Franchise at Scale
+            </span>
+          </h2>
+          <p className="lyb-section-subtext mx-auto mt-3 max-w-2xl text-[0.88rem] leading-relaxed sm:text-[0.92rem]">
+            From franchise model design to investor acquisition — we handle the full expansion infrastructure so you focus on building your brand.
+          </p>
+        </motion.div>
 
-            {/* ── LEFT ── */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col gap-5"
-            >
-              <div>
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.65rem] font-bold uppercase tracking-widest text-white mb-4 block w-fit">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-                  For Brand Owners
-                </span>
-                <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-2xl sm:text-3xl lg:text-[2rem] xl:text-[2.3rem] font-extrabold leading-[1.1] tracking-tight mb-3">
-                  Everything Your Brand Needs to{' '}
-                  <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
-                    Franchise at Scale
-                  </span>
-                </h2>
-                <p className="lyb-section-subtext text-[0.88rem] leading-relaxed max-w-md">
-                  From franchise model design to investor acquisition — we handle the full expansion infrastructure so you focus on building your brand.
-                </p>
-              </div>
+        <motion.div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex h-full min-h-0 flex-col justify-between gap-6"
+          >
+            <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+              {BRANDS_SECTION_BENEFITS.map((b, i) => (
+                <BenefitCard key={b.title} benefit={b} index={i} />
+              ))}
+            </div>
 
-              {/* benefit list — compact */}
-              <div className="grid grid-cols-2 gap-2">
-                {BRANDS_SECTION_BENEFITS.map((b, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.35, delay: i * 0.07 }}
-                    className="card-premium-dark-inner flex items-start gap-2 p-3 rounded-xl"
-                  >
-                    <div className="w-5 h-5 rounded-md bg-violet-600 flex items-center justify-center shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-[0.75rem] font-bold text-white leading-snug">{b.title}</p>
-                      <p className="text-[0.65rem] text-white mt-0.5">{b.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
+            <motion.div className="flex justify-center pt-2">
               <CtaButton
-                className="self-start"
+                className="mx-auto"
                 size="sm"
                 onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
               >
                 List Your Brand Today
               </CtaButton>
             </motion.div>
+          </motion.div>
 
-            {/* ── RIGHT — compact live dashboard ── */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="flex h-full min-h-0 flex-col"
+          >
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="lyb-live-dashboard theme-dark-surface card-premium-dark relative flex h-full min-h-[420px] flex-col overflow-hidden rounded-2xl shadow-xl lg:min-h-0"
+              animate={{ boxShadow: ['0 20px 50px rgba(109,40,217,0.15)', '0 24px 56px rgba(109,40,217,0.28)', '0 20px 50px rgba(109,40,217,0.15)'] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <motion.div className="theme-dark-surface card-premium-dark rounded-2xl overflow-hidden shadow-xl">
+              <motion.div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.5, repeat: Infinity }} />
+              <motion.div className="lyb-dash-header flex items-center justify-between border-b border-violet-500/25 px-4 py-2.5">
+                <motion.div>
+                  <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
+                  <p className="text-[0.6rem] text-white">Operational intelligence · Live data</p>
+                </motion.div>
+                <motion.div className="lyb-live-pill flex items-center justify-center gap-1.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  </span>
+                  <span className="text-[0.58rem] font-bold uppercase tracking-wider text-emerald-400">Live</span>
+                </motion.div>
+              </motion.div>
 
-                {/* header */}
-                <div className="flex items-center justify-between px-4 py-2.5 border-b border-violet-500/25 bg-violet-950/40">
-                  <div>
-                    <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
-                    <p className="text-[0.6rem] text-white">Operational intelligence · Live data</p>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"/>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"/>
-                    </span>
-                    <span className="text-[0.58rem] font-bold text-emerald-400 uppercase tracking-wider">Live</span>
-                  </div>
-                </div>
+              <motion.div className="flex flex-1 flex-col space-y-3 p-3">
+                <motion.div className="grid grid-cols-3 gap-2">
+                  {[
+                    { label: 'Active Brands', value: `${totalBrands}+`, color: 'text-violet-400' },
+                    { label: 'Cities', value: `${cityCount}+`, color: 'text-indigo-400' },
+                    { label: 'Avg ROI', value: `${avgROI}%`, color: 'text-emerald-400' },
+                  ].map((k, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 6 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ scale: 1.03 }}
+                      className="lyb-dash-panel lyb-kpi-tile flex flex-col items-center justify-center rounded-xl border border-violet-500/25 py-3"
+                    >
+                      <p className={`text-lg font-extrabold ${k.color}`}>
+                        <LiveCounter display={k.value} />
+                      </p>
+                      <p className="mt-0.5 text-center text-[0.58rem] text-white">{k.label}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
 
-                <div className="p-3 space-y-3">
-
-                  {/* KPI row */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { label: 'Active Brands', value: `${totalBrands}+`, color: 'text-violet-400'  },
-                      { label: 'Cities',         value: `${cityCount}+`,  color: 'text-indigo-400'  },
-                      { label: 'Avg ROI',        value: `${avgROI}%`,     color: 'text-emerald-400' },
-                    ].map((k, i) => (
-                      <div key={i} className="flex flex-col items-center py-2 rounded-xl bg-violet-950/50 border border-violet-500/25">
-                        <p className={`text-lg font-extrabold ${k.color} tabular-nums`}>{k.value}</p>
-                        <p className="text-[0.58rem] text-white mt-0.5">{k.label}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* market tracker + onboarding side by side */}
-                  <div className="grid grid-cols-2 gap-2">
-
-                    {/* market tracker */}
-                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Market Tracker</p>
-                      <div className="space-y-1.5">
-                        {markets.slice(0, 4).map((m, i) => (
-                          <div key={i} className="space-y-0.5">
-                            <div className="flex items-center justify-between">
-                              <span className="text-[0.62rem] text-white truncate max-w-[80px]">{m.industry}</span>
-                              <span className="text-[0.58rem] text-white">{m.count}</span>
-                            </div>
-                            <MiniBar value={m.count} max={maxCount} color={i % 2 === 0 ? 'violet' : 'emerald'} delay={i * 0.08} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* onboarding pipeline */}
-                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Onboarding Pipeline</p>
-                      <div className="space-y-1.5">
-                        {ONBOARDING.map((o, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -6 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.3, delay: i * 0.05 }}
-                            className="flex items-center justify-between"
-                          >
-                            <span className="text-[0.62rem] text-violet-100/80 truncate max-w-[90px]">{o.label}</span>
-                            <div className="flex items-center gap-1 shrink-0">
-                              <span className={`w-1.5 h-1.5 rounded-full ${STATUS_COLOR[o.status]}`} />
-                              <span className={`text-[0.58rem] font-bold ${STATUS_TEXT[o.status]}`}>{STATUS_LABEL[o.status]}</span>
-                            </div>
+                <motion.div className="grid grid-cols-2 gap-2">
+                  <motion.div className="lyb-dash-panel rounded-xl border border-violet-500/25 p-2.5">
+                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Market Tracker</p>
+                    <motion.div className="space-y-1.5">
+                      {markets.slice(0, 4).map((m, i) => (
+                        <motion.div key={i} className="space-y-0.5">
+                          <motion.div className="flex items-center justify-between">
+                            <span className="max-w-[80px] truncate text-[0.62rem] text-white">{m.industry}</span>
+                            <span className="text-[0.58rem] text-white">{m.count}</span>
                           </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                          <MiniBar value={m.count} max={maxCount} color={i % 2 === 0 ? 'violet' : 'emerald'} delay={i * 0.08} live />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
 
-                  {/* city growth + analytics */}
-                  <div className="grid grid-cols-2 gap-2">
-
-                    {/* top cities */}
-                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white/80 mb-2">Top Cities</p>
-                      <div className="space-y-1">
-                        {topCities.map((c, i) => (
-                          <div key={i} className="flex items-center justify-between">
-                            <span className="text-[0.65rem] text-white truncate">{c.city}</span>
-                            <span className="text-[0.6rem] font-bold text-violet-400">{c.count}</span>
+                  <motion.div className="lyb-dash-panel rounded-xl border border-violet-500/25 p-2.5">
+                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Onboarding Pipeline</p>
+                    <motion.div className="space-y-1.5">
+                      {ONBOARDING.map((o, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -6 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.3, delay: i * 0.05 }}
+                          className="flex flex-col items-center gap-1 text-center sm:flex-row sm:justify-between sm:text-left"
+                        >
+                          <span className="max-w-[90px] truncate text-[0.62rem] text-violet-100/80">{o.label}</span>
+                          <div className="lyb-status-pill flex items-center justify-center gap-1.5">
+                            <LiveStatusDot status={o.status} />
+                            <span className={`text-[0.58rem] font-bold ${STATUS_TEXT[o.status]}`}>{STATUS_LABEL[o.status]}</span>
                           </div>
-                        ))}
-                      </div>
-                    </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
 
-                    {/* growth analytics */}
-                    <div className="rounded-xl bg-violet-950/50 border border-violet-500/25 p-2.5 flex flex-col gap-2">
-                      <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white">Growth Analytics</p>
-                      <div className="flex flex-col gap-2 flex-1 justify-center">
-                        <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
-                          <span className="text-base font-extrabold text-emerald-400 tabular-nums">{growth.growthRate}%</span>
-                          <span className="text-[0.58rem] text-white">Growth Rate</span>
-                        </div>
-                        <div className="flex flex-col p-2 rounded-lg bg-violet-900/30">
-                          <span className="text-base font-extrabold text-violet-400 tabular-nums">{growth.recentCount}</span>
-                          <span className="text-[0.58rem] text-white">New This Quarter</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <motion.div className="grid grid-cols-2 gap-2">
+                  <motion.div className="lyb-dash-panel lyb-top-cities-panel rounded-xl border border-violet-500/25 p-2.5">
+                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Top Cities</p>
+                    <motion.div className="space-y-1">
+                      {topCities.map((c, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, x: -4 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.08 }}
+                          className="lyb-top-cities-row flex items-center justify-between rounded-md px-2 py-1"
+                        >
+                          <span className="lyb-top-cities-city truncate text-[0.65rem] font-medium">{c.city}</span>
+                          <motion.span
+                            animate={{ opacity: [0.85, 1, 0.85] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                            className="lyb-top-cities-count text-[0.6rem] font-bold tabular-nums"
+                          >
+                            {c.count}
+                          </motion.span>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </motion.div>
 
-                </div>
+                  <motion.div className="lyb-dash-panel flex flex-col gap-2 rounded-xl border border-violet-500/25 p-2.5">
+                    <p className="lyb-dash-panel-title text-center text-[0.6rem] font-bold uppercase tracking-wider">Growth Analytics</p>
+                    <motion.div className="flex flex-1 flex-col justify-center gap-2">
+                      <motion.div className="lyb-dash-metric flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                        <LiveCounter display={`${growth.growthRate}%`} className="text-base font-extrabold text-emerald-400" />
+                        <span className="lyb-dash-metric-label text-[0.58rem]">Growth Rate</span>
+                      </motion.div>
+                      <motion.div className="lyb-dash-metric flex flex-col items-center justify-center rounded-lg p-2 text-center">
+                        <LiveCounter display={String(growth.recentCount)} className="text-base font-extrabold text-violet-400" />
+                        <span className="lyb-dash-metric-label text-[0.58rem]">New This Quarter</span>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
               </motion.div>
             </motion.div>
-
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -1196,30 +1541,6 @@ const LYB_STYLE_INDUSTRIES = [
   { label: 'Logistics & Infrastructure', accent: '#94a3b8', desc: 'Scale logistics operations with franchise models', img: logisticsImg },
 ];
 
-function IndustryCardImg({ src, alt }) {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <>
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-100" aria-hidden>
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-200 border-t-violet-600" />
-        </div>
-      )}
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-300 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
-    </>
-  );
-}
-
 function ServicesStyleIndustriesSection() {
   return (
     <section className="lyb-industries-section relative z-10 overflow-hidden py-10 lg:py-14">
@@ -1236,41 +1557,16 @@ function ServicesStyleIndustriesSection() {
 
         <motion.div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {LYB_STYLE_INDUSTRIES.map((ind, i) => (
-            <motion.div
+            <IndustryCard
               key={ind.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="lyb-industry-card theme-light-card group relative flex flex-col overflow-hidden rounded-2xl"
-            >
-              <motion.div className="industry-card-media relative h-56 overflow-hidden bg-[#0a0618]">
-                <IndustryCardImg src={ind.img} alt={ind.label} />
-                <div
-                  className="industry-card-fade pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0a0618]/90 to-transparent"
-                  aria-hidden
-                />
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${ind.accent}, transparent)`,
-                  }}
-                />
-              </motion.div>
-              <div className="flex flex-1 flex-col p-5">
-                <h3 className="mb-1.5 text-base font-bold leading-snug text-white">
-                  {ind.label}
-                </h3>
-                <p className="flex-1 text-[0.8125rem] leading-relaxed text-white/90">{ind.desc}</p>
-                <button
-                  type="button"
-                  className="industry-card-explore"
-                  onClick={() => navigateTo('/franchise-opportunities')}
-                >
-                  Explore opportunities <FiArrowRight className="h-3 w-3" />
-                </button>
-              </div>
-            </motion.div>
+              className="lyb-industry-card"
+              label={ind.label}
+              desc={ind.desc}
+              img={ind.img}
+              accent={ind.accent}
+              mediaHeight="h-56"
+              onExplore={() => navigateTo('/franchise-opportunities')}
+            />
           ))}
         </motion.div>
 
@@ -1735,7 +2031,7 @@ function ListYourBrandFAQSection() {
               <div className="space-y-3">
                 <button
                   type="button"
-                  onClick={() => document.getElementById('hero-brand-inquiry')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                  onClick={scrollToHeroInquiry}
                   className="lyb-faq-cta-primary w-full rounded-xl py-3 text-sm font-bold shadow-lg transition hover:bg-violet-700"
                 >
                   Start Brand Inquiry
@@ -1775,13 +2071,15 @@ function SectionHeader({ badge, title, subtitle, center = true }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className={`lyb-dark-heading mb-6 lg:mb-8 ${center ? 'text-center mx-auto max-w-3xl' : ''}`}
+      className={`lyb-dark-heading mb-6 lg:mb-8 ${center ? 'mx-auto max-w-3xl text-center' : ''}`}
     >
       {badge && (
-        <span className="lyb-section-badge inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-          {badge}
-        </span>
+        <div className={center ? 'mb-3 flex justify-center' : 'mb-3'}>
+          <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+            {badge}
+          </span>
+        </div>
       )}
       <h2 className="lyb-section-heading-on-dark text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold tracking-tight text-white leading-[1.12]">{title}</h2>
       {subtitle && <p className="lyb-section-subtext mt-2 text-sm sm:text-base leading-relaxed text-violet-100/80">{subtitle}</p>}
