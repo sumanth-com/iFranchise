@@ -1,22 +1,10 @@
-/**
- * chatbotTransformer.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Transform chatbot session data into standardized Google Sheets payload format.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import { FORM_TYPES } from '../constants/formTypes.js';
+import { SHEET_TABS } from '../constants/formEndpoints.js';
 
-/**
- * Transform brand chatbot data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
 export function transformBrandChatbotData(formData, sourcePage = 'chatbot') {
   return {
-    form_type: 'chatbot_brand',
-    sheet_tab: 'Chatbot_Brands',
+    form_type: FORM_TYPES.CHATBOT_BRAND,
+    sheet_tab: SHEET_TABS[FORM_TYPES.CHATBOT_BRAND],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
@@ -27,30 +15,24 @@ export function transformBrandChatbotData(formData, sourcePage = 'chatbot') {
       investment: formData.investment || '',
       contact_name: formData.contactName,
       contact_phone: formData.contactPhone,
-    }
+    },
   };
 }
 
-/**
- * Transform investor chatbot data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
 export function transformInvestorChatbotData(formData, sourcePage = 'chatbot') {
   return {
-    form_type: 'chatbot_investor',
-    sheet_tab: 'Chatbot_Investors',
+    form_type: FORM_TYPES.CHATBOT_INVESTOR,
+    sheet_tab: SHEET_TABS[FORM_TYPES.CHATBOT_INVESTOR],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
-      industries: Array.isArray(formData.industries) ? formData.industries.join(', ') : formData.industries || '',
+      industries: Array.isArray(formData.industries)
+        ? formData.industries.join(', ')
+        : formData.industries || '',
       budget: formData.budget || '',
       cities: formData.cities || '',
       roi: formData.roi || '',
       timeline: formData.timeline || '',
-    }
+    },
   };
 }

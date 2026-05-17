@@ -1,40 +1,42 @@
-/**
- * applicationTransformer.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Transform brand application form data into standardized Google Sheets payload format.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import { FORM_TYPES } from '../constants/formTypes.js';
+import { SHEET_TABS } from '../constants/formEndpoints.js';
 
-/**
- * Transform brand application data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
+function buildDescription(formData) {
+  const lines = [];
+  if (formData.model) lines.push(`Franchise model: ${formData.model}`);
+  if (formData.timeline) lines.push(`Timeline: ${formData.timeline}`);
+  if (formData.budget) lines.push(`Budget: ${formData.budget}`);
+  if (formData.hasSOPs) lines.push(`SOPs: ${formData.hasSOPs}`);
+  if (formData.hasDocs) lines.push(`Documentation: ${formData.hasDocs}`);
+  if (formData.founded) lines.push(`Founded: ${formData.founded}`);
+  if (formData.vision) lines.push(`Vision: ${formData.vision}`);
+  if (formData.company && formData.company !== formData.brandName) {
+    lines.push(`Company: ${formData.company}`);
+  }
+  return lines.join('\n');
+}
+
+function buildLocations(formData) {
+  const parts = [];
+  if (formData.outlets) parts.push(`Outlets: ${formData.outlets}`);
+  if (formData.cityGoal) parts.push(`Expansion goal: ${formData.cityGoal}`);
+  return parts.join(' | ') || '';
+}
+
 export function transformApplicationData(formData, sourcePage = 'brand_owners_page') {
   return {
-    form_type: 'brand_application',
-    sheet_tab: 'Brand_Applications',
+    form_type: FORM_TYPES.BRAND_APPLICATION,
+    sheet_tab: SHEET_TABS[FORM_TYPES.BRAND_APPLICATION],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
-      brand_name: formData.brandName,
+      brandName: formData.brandName,
       industry: formData.industry,
-      year_founded: formData.founded ? parseInt(formData.founded, 10) : null,
-      current_outlets: formData.outlets ? parseInt(formData.outlets, 10) : null,
-      franchise_model: formData.model,
-      has_sops: formData.hasSOPs || null,
-      has_docs: formData.hasDocs || null,
-      city_goal: formData.cityGoal,
-      timeline: formData.timeline,
-      budget: formData.budget || null,
-      vision: formData.vision || null,
-      contact_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      company: formData.company || '',
-    }
+      locations: buildLocations(formData),
+      contactName: formData.name,
+      contactEmail: formData.email,
+      contactPhone: formData.phone,
+      description: buildDescription(formData),
+    },
   };
 }

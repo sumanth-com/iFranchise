@@ -1,34 +1,27 @@
-/**
- * jobApplicationTransformer.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Transform job application form data into standardized Google Sheets payload format.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import { FORM_TYPES } from '../constants/formTypes.js';
+import { SHEET_TABS } from '../constants/formEndpoints.js';
 
-/**
- * Transform job application data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
+function buildExperience(formData) {
+  const parts = [];
+  if (formData.portfolio) parts.push(`Portfolio: ${formData.portfolio}`);
+  if (formData.linkedin) parts.push(`LinkedIn: ${formData.linkedin}`);
+  return parts.join(' | ');
+}
+
 export function transformJobApplicationData(formData, sourcePage = 'career_detail') {
   return {
-    form_type: 'job_application',
-    sheet_tab: 'Job_Applications',
+    form_type: FORM_TYPES.JOB_APPLICATION,
+    sheet_tab: SHEET_TABS[FORM_TYPES.JOB_APPLICATION],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
-      role_id: formData.roleId || null,
-      role_title: formData.roleTitle || null,
-      full_name: formData.name,
+      roleTitle: formData.roleTitle || formData.roleId || '',
+      name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      portfolio_url: formData.portfolio || null,
-      resume_url: formData.resume,
-      linkedin_url: formData.linkedin || null,
-      interest_statement: formData.interest,
-    }
+      resumeUrl: formData.resume,
+      coverLetter: formData.interest,
+      experience: buildExperience(formData),
+    },
   };
 }

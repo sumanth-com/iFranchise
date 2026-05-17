@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { formatDisplayDate } from '../blogData';
 import ShareIcons from './ShareIcons';
+import { submitNewsletterForm, HONEYPOT_FIELD } from '../../lib/forms';
 
 function navigateTo(path) {
   window.history.pushState({}, '', path);
@@ -7,6 +9,30 @@ function navigateTo(path) {
 }
 
 function BlogSidebar({ headings, activeHeadingId, onHeadingClick, shareUrl, shareTitle, relatedPosts = [], className = '' }) {
+  const [email, setEmail] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    const result = await submitNewsletterForm(
+      { email, [HONEYPOT_FIELD]: honeypot },
+      'blog_sidebar'
+    );
+    setIsSubmitting(false);
+
+    if (!result.success) {
+      alert(result.error || 'Subscription failed. Please try again.');
+      return;
+    }
+
+    setEmail('');
+    setHoneypot('');
+  };
+
   return (
     <aside className={`w-full ${className}`}>
       <div className="space-y-4">
@@ -44,18 +70,32 @@ function BlogSidebar({ headings, activeHeadingId, onHeadingClick, shareUrl, shar
           <p className="text-sm leading-relaxed text-white">
             Join 1,000,000+ subscribers receiving expert tips on earning more, investing smarter and living better, all in our free newsletter.
           </p>
-          <form className="mt-4 flex gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form className="mt-4 flex gap-2" onSubmit={handleNewsletterSubmit}>
+            <input
+              type="text"
+              name={HONEYPOT_FIELD}
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0, padding: 0, border: 0 }}
+            />
             <input
               type="email"
               required
               placeholder="name@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
               className="h-10 min-w-0 flex-1 rounded-lg border border-slate-200 px-3 text-sm outline-none transition focus:border-slate-400"
             />
             <button
               type="submit"
-              className="h-10 flex-shrink-0 rounded-lg bg-[#0b1f3b] px-4 text-sm font-semibold text-white transition duration-200 hover:bg-[#08152b]"
+              disabled={isSubmitting}
+              className="h-10 flex-shrink-0 rounded-lg bg-[#0b1f3b] px-4 text-sm font-semibold text-white transition duration-200 hover:bg-[#08152b] disabled:opacity-60"
             >
-              Subscribe
+              {isSubmitting ? '…' : 'Subscribe'}
             </button>
           </form>
         </div>

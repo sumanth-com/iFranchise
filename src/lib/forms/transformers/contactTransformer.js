@@ -1,31 +1,25 @@
-/**
- * contactTransformer.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Transform contact form data into standardized Google Sheets payload format.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import { FORM_TYPES } from '../constants/formTypes.js';
+import { SHEET_TABS } from '../constants/formEndpoints.js';
 
-/**
- * Transform contact form data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
+function buildMessage(formData) {
+  const parts = [];
+  if (formData.website) parts.push(`Website: ${formData.website}`);
+  parts.push(formData.message);
+  return parts.join('\n\n');
+}
+
 export function transformContactData(formData, sourcePage = 'contact_page') {
   return {
-    form_type: 'contact',
-    sheet_tab: 'Contact_Leads',
+    form_type: FORM_TYPES.CONTACT,
+    sheet_tab: SHEET_TABS[FORM_TYPES.CONTACT],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
-      full_name: formData.fullName,
-      contact_number: formData.contactNumber,
+      name: formData.fullName,
       email: formData.email,
-      website: formData.website || '',
+      phone: formData.contactNumber,
       company: formData.company || '',
-      message: formData.message,
-    }
+      message: buildMessage(formData),
+    },
   };
 }

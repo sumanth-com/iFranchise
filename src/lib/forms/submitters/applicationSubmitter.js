@@ -1,25 +1,14 @@
+import { FORM_TYPES } from '../constants/formTypes.js';
 import { validateApplicationForm } from '../validators/applicationValidator.js';
 import { transformApplicationData } from '../transformers/applicationTransformer.js';
-import { submitToGoogleSheets } from '../utils/googleSheetsClient.js';
-import { checkRateLimit, recordSubmission } from '../../rateLimiter.js';
+import { runFormSubmission } from '../utils/submitPipeline.js';
 
 export async function submitBrandApplication(formData, sourcePage = 'brand_owners_page') {
-  const rateLimitCheck = checkRateLimit('brand_application');
-  if (!rateLimitCheck.allowed) {
-    return { success: false, error: 'Please wait before submitting again.' };
-  }
-
-  const validation = validateApplicationForm(formData);
-  if (!validation.success) {
-    return { success: false, error: 'Please fix the errors in the form.', errors: validation.errors };
-  }
-
-  const payload = transformApplicationData(validation.data, sourcePage);
-  const result = await submitToGoogleSheets(payload);
-
-  if (result.success) {
-    recordSubmission('brand_application');
-  }
-
-  return result;
+  return runFormSubmission({
+    formType: FORM_TYPES.BRAND_APPLICATION,
+    rawData: formData,
+    sourcePage,
+    validate: validateApplicationForm,
+    transform: transformApplicationData,
+  });
 }

@@ -40,7 +40,7 @@ export function validateApplicationForm(formData) {
   // Industry validation
   const validIndustries = [
     'Food & Beverage', 'Health & Wellness', 'Education', 'Retail',
-    'Technology', 'Home Services', 'Entertainment', 'Other'
+    'Technology', 'Home Services', 'Entertainment', 'Other',
   ];
   if (!data.industry || !validIndustries.includes(data.industry)) {
     errors.industry = 'Please select an industry';
@@ -62,28 +62,26 @@ export function validateApplicationForm(formData) {
     data.founded = '';
   }
 
-  // Current outlets validation (optional)
+  // Current outlets validation (optional — free text or numeric)
   if (data.outlets && data.outlets.trim()) {
-    if (!/^\d+$/.test(data.outlets.trim())) {
-      errors.outlets = 'Enter a valid number';
+    if (data.outlets.trim().length > 100) {
+      errors.outlets = 'Locations value is too long';
     } else {
-      const outlets = parseInt(data.outlets.trim(), 10);
-      if (outlets < 0 || outlets > 100000) {
-        errors.outlets = 'Enter a valid number of outlets';
-      } else {
-        data.outlets = data.outlets.trim();
-      }
+      data.outlets = data.outlets.trim();
     }
   } else {
     data.outlets = '';
   }
 
-  // Franchise model validation
+  // Franchise model validation (hero short codes + full labels)
   const validModels = [
+    'FOFO',
+    'FOCO',
+    'FICO',
+    'Not Sure Yet',
     'FOFO - Franchise Owned & Operated',
     'FOCO - Franchise Owned, Company Operated',
     'FICO - Franchise Invested, Company Operated',
-    'Not Sure Yet'
   ];
   if (!data.model || !validModels.includes(data.model)) {
     errors.model = 'Please select a franchise model';
@@ -105,7 +103,11 @@ export function validateApplicationForm(formData) {
 
   // City goal validation
   const validCityGoals = [
-    '1-3 cities', '4-10 cities', '10-25 cities', '25+ cities (National)'
+    '1-3 cities',
+    '4-10 cities',
+    '10-25 cities',
+    '25+ cities',
+    '25+ cities (National)',
   ];
   if (!data.cityGoal || !validCityGoals.includes(data.cityGoal)) {
     errors.cityGoal = 'Please select a city expansion target';

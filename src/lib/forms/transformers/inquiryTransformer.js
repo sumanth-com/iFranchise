@@ -1,35 +1,29 @@
-/**
- * inquiryTransformer.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Transform franchise inquiry form data into standardized Google Sheets payload format.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import { FORM_TYPES } from '../constants/formTypes.js';
+import { SHEET_TABS } from '../constants/formEndpoints.js';
 
-/**
- * Transform franchise inquiry data for Google Sheets submission
- * 
- * @param {object} formData - Validated form data
- * @param {string} sourcePage - Page where form was submitted
- * 
- * @returns {object} Standardized payload for Google Sheets
- */
 export function transformInquiryData(formData, sourcePage = 'floating_cta') {
+  const name = `${formData.firstName} ${formData.lastName}`.trim();
+  const locationParts = [formData.city, formData.state].filter(Boolean);
+  const messageParts = [
+    formData.message,
+    formData.website ? `Website: ${formData.website}` : '',
+    formData.franchiseName ? `Franchise: ${formData.franchiseName}` : '',
+    locationParts.length ? `Location: ${locationParts.join(', ')}` : '',
+  ].filter(Boolean);
+
   return {
-    form_type: 'franchise_inquiry',
-    sheet_tab: 'Franchise_Inquiries',
+    form_type: FORM_TYPES.FRANCHISE_INQUIRY,
+    sheet_tab: SHEET_TABS[FORM_TYPES.FRANCHISE_INQUIRY],
     submitted_at: new Date().toISOString(),
     source_page: sourcePage,
     data: {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      phone: formData.phone,
+      name,
       email: formData.email,
-      investment_range: formData.investmentRange,
-      state: formData.state,
-      city: formData.city,
-      website: formData.website || '',
-      message: formData.message || '',
-      franchise_name: formData.franchiseName || '',
-    }
+      phone: formData.phone,
+      franchiseInterest: formData.franchiseName || locationParts.join(', ') || '',
+      investmentBudget: formData.investmentRange,
+      timeline: formData.timeline || '',
+      message: messageParts.join('\n'),
+    },
   };
 }

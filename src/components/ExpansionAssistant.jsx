@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { submitChatbotLead } from '../lib/forms';
 
 // ── Navigation helper ─────────────────────────────────────────────────────────
 const navTo = (path, setIsOpen) => {
@@ -532,6 +533,13 @@ function BrandsView({ setView, setIsOpen }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
+  const submittedRef = useRef(false);
+
+  useEffect(() => {
+    if (!done || submittedRef.current) return;
+    submittedRef.current = true;
+    submitChatbotLead(data, 'brand', 'expansion_assistant_brand');
+  }, [done, data]);
 
   const current = BRAND_STEPS[step];
   const val = data[current?.key];
@@ -554,7 +562,7 @@ function BrandsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Your Summary" onBack={() => { setDone(false); setStep(0); setData({}); setView('home'); }} />
+        <FlowHeader title="Your Summary" onBack={() => { submittedRef.current = false; setDone(false); setStep(0); setData({}); setView('home'); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Brand', value: data.brandName },
@@ -631,6 +639,13 @@ function InvestorsView({ setView, setIsOpen }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
+  const submittedRef = useRef(false);
+
+  useEffect(() => {
+    if (!done || submittedRef.current) return;
+    submittedRef.current = true;
+    submitChatbotLead(data, 'investor', 'expansion_assistant_investor');
+  }, [done, data]);
 
   const current = INVESTOR_STEPS[step];
   const val = data[current?.key];
@@ -651,7 +666,7 @@ function InvestorsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Matching Opportunities" onBack={() => { setDone(false); setStep(0); setData({}); setView('home'); }} />
+        <FlowHeader title="Matching Opportunities" onBack={() => { submittedRef.current = false; setDone(false); setStep(0); setData({}); setView('home'); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Industries', value: Array.isArray(data.industries) ? data.industries.join(', ') : data.industries },

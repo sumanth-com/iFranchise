@@ -7,6 +7,7 @@ import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
+import { submitContactForm, HONEYPOT_FIELD } from '../lib/forms';
 import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
 import foodImg from '../assets/IndImgs/Food & Beverage.png';
 import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
@@ -1272,6 +1273,45 @@ function ContactIcon({ type }) {
 }
 
 function ContactSection() {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    website: '',
+    contactNumber: '',
+    message: '',
+    company: '',
+    [HONEYPOT_FIELD]: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    const result = await submitContactForm(formData, 'homepage_contact');
+    setIsSubmitting(false);
+
+    if (!result.success) {
+      alert(result.error || 'Something went wrong. Please try again.');
+      return;
+    }
+
+    setFormData({
+      fullName: '',
+      email: '',
+      website: '',
+      contactNumber: '',
+      message: '',
+      company: '',
+      [HONEYPOT_FIELD]: '',
+    });
+  };
+
   return (
     <section className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       <div className="relative overflow-hidden rounded-2xl sm:rounded-[28px] md:rounded-[32px] border border-emerald-300/20 bg-[radial-gradient(circle_at_50%_30%,rgba(16,185,129,0.16),transparent_50%),linear-gradient(130deg,#020506_0%,#051414_48%,#020506_100%)] px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
@@ -1317,37 +1357,62 @@ function ContactSection() {
           </div>
 
           <div className="rounded-xl sm:rounded-2xl border border-white/15 bg-white/5 p-4 sm:p-5 md:p-6 backdrop-blur-md">
-            <form className="space-y-3 sm:space-y-4">
+            <form className="space-y-3 sm:space-y-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name={HONEYPOT_FIELD}
+                value={formData[HONEYPOT_FIELD]}
+                onChange={(e) => handleInputChange(HONEYPOT_FIELD, e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0, padding: 0, border: 0 }}
+              />
               <input
                 type="text"
                 placeholder="Full Name"
+                value={formData.fullName}
+                onChange={(e) => handleInputChange('fullName', e.target.value)}
+                required
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="email"
                 placeholder="Email Address"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                required
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="url"
                 placeholder="Website"
+                value={formData.website}
+                onChange={(e) => handleInputChange('website', e.target.value)}
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
                 type="tel"
                 placeholder="Contact Number"
+                value={formData.contactNumber}
+                onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                required
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <textarea
                 placeholder="Message"
                 rows={5}
+                value={formData.message}
+                onChange={(e) => handleInputChange('message', e.target.value)}
+                required
                 className="w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <button
                 type="submit"
-                className="w-full rounded-lg sm:rounded-xl bg-white px-4 sm:px-5 py-2.5 sm:py-3 text-sm font-bold text-[#091115] transition duration-300 hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-[0_12px_25px_rgba(255,255,255,0.2)]"
+                disabled={isSubmitting}
+                className="w-full rounded-lg sm:rounded-xl bg-white px-4 sm:px-5 py-2.5 sm:py-3 text-sm font-bold text-[#091115] transition duration-300 hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-[0_12px_25px_rgba(255,255,255,0.2)] disabled:opacity-60"
               >
-                Submit
+                {isSubmitting ? 'Submitting?' : 'Submit'}
               </button>
             </form>
           </div>
