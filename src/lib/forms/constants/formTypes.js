@@ -13,6 +13,7 @@ export const FORM_TYPES = {
   JOB_APPLICATION: 'job_application',
   CHATBOT_BRAND: 'chatbot_brand',
   CHATBOT_INVESTOR: 'chatbot_investor',
+  CHATBOT_STRATEGY: 'chatbot_strategy',
 };
 
 export const FORM_LABELS = {
@@ -22,4 +23,5 @@ export const FORM_LABELS = {
   [FORM_TYPES.JOB_APPLICATION]: 'Job Application',
   [FORM_TYPES.CHATBOT_BRAND]: 'Brand Chatbot Session',
   [FORM_TYPES.CHATBOT_INVESTOR]: 'Investor Chatbot Session',
+  [FORM_TYPES.CHATBOT_STRATEGY]: 'Strategy Call Request',
 };

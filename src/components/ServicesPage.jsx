@@ -1417,19 +1417,6 @@ export default function ServicesPage() {
             >
               iFranchise helps you discover verified opportunities, make confident investment decisions, and scale smarter with real data and insights.
             </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.15 }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-4"
-            >
-              <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
-                Book a Call
-              </CtaButton>
-              <button type="button" onClick={() => navigateTo('/franchise-opportunities')}
-                className="rounded-full border border-violet-500/30 bg-white/5 px-8 py-3.5 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(15,23,42,0.10)]">
-                View More
-              </button>
-            </motion.div>
           </div>
 
           {/* Desktop â€” Premium Strategic Ecosystem Layout */}

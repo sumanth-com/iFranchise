@@ -711,6 +711,43 @@ html[data-theme='light'] .page-hero-light__bg svg {
   opacity: 0.04 !important;
 }
 
+/* Contact hero — dark purple only when .contact-hero-dark (site dark theme) */
+html[data-theme='light'] .contact-page #contact-form.contact-hero-dark.page-hero-light {
+  background: transparent !important;
+}
+
+html[data-theme='light'] .contact-page #contact-form.contact-hero-dark .page-hero-light__gradient {
+  display: block !important;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 16, 101, 0.92) 0%,
+    rgba(15, 6, 32, 0.96) 45%,
+    rgba(30, 27, 75, 0.88) 100%
+  ) !important;
+}
+
+html[data-theme='light'] .contact-page #contact-form.contact-hero-dark .page-hero-light__bg .rounded-full {
+  display: block !important;
+}
+
+html[data-theme='light'] .contact-page #contact-form.contact-hero-dark .page-hero-light__bg svg {
+  opacity: 0.035 !important;
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Light site theme: white hero uses default page-hero-light rules above */
+html[data-theme='light'] .contact-page #contact-form.page-hero-light:not(.contact-hero-dark) .contact-hero-social .contact-social-btn {
+  background: #0b0f19 !important;
+  border: 1px solid #0b0f19 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .contact-page #contact-form.page-hero-light:not(.contact-hero-dark) .contact-hero-social .contact-social-btn:hover {
+  background: #1e293b !important;
+  border-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
 /* FAQ number badges — keep white digits on dark circle */
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\].text-white,
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\] .text-white,

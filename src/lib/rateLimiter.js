@@ -92,4 +92,5 @@ export const RATE_LIMIT_KEYS = {
   JOB_APPLICATION:   'job_application',
   CHATBOT_BRAND:     'chatbot_brand',
   CHATBOT_INVESTOR:  'chatbot_investor',
+  CHATBOT_STRATEGY:  'chatbot_strategy',
 };

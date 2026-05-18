@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { submitChatbotLead } from '../lib/forms';
+import { submitBrandConsultation, submitChatbotLead } from '../lib/forms';
+
+const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
+
+const PURPLE_ICON_GRADIENT = 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 52%, #6366f1 100%)';
+const PURPLE_ICON_SHADOW = '0 6px 16px rgba(124, 58, 237, 0.32)';
 import { useTheme } from '../context/ThemeContext';
+import AssistantBotIcon from './AssistantBotIcon';
 import './assistant-panel.css';
 
 const AssistantPaletteContext = createContext(null);
@@ -127,9 +133,9 @@ function getAssistantPalette(siteIsLight) {
     summaryRowBorder: 'rgba(0,0,0,0.07)',
     questionColor: 'rgba(15,23,42,0.92)',
     rowBg: 'rgba(255,255,255,0.94)',
-    rowBgHover: 'rgba(248,246,255,0.98)',
-    rowBorder: 'rgba(237,233,254,0.95)',
-    rowBorderHover: 'rgba(167,139,250,0.5)',
+      rowBgHover: 'rgba(124,58,237,0.07)',
+      rowBorder: 'rgba(226,232,240,0.95)',
+      rowBorderHover: 'rgba(167,139,250,0.45)',
     rowLabel: 'rgba(124,58,237,0.88)',
     rowTitle: 'rgba(15,23,42,0.92)',
     rowSecondaryBg: 'rgba(249,250,251,0.95)',
@@ -137,7 +143,7 @@ function getAssistantPalette(siteIsLight) {
     welcomeTitle: '#0f172a',
     welcomeBody: 'rgba(71,85,105,0.9)',
     linkBg: '#fff',
-    linkBgHover: 'rgba(248,250,252,1)',
+      linkBgHover: 'rgba(124,58,237,0.06)',
     linkBorder: 'rgba(226,232,240,0.98)',
     linkBorderHover: 'rgba(196,181,253,0.55)',
     linkTitle: 'rgba(15,23,42,0.9)',
@@ -209,48 +215,22 @@ function AssistantDateTime() {
   );
 }
 
-/** Clean chat assistant glyph — color via currentColor (theme-aware on FAB) */
-function AssistantChatIcon({ size = 24, className = '' }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden
-    >
-      <path
-        d="M12 3C7.03 3 3 6.58 3 11c0 2.35 1.17 4.45 3.03 5.9L5 21l4.2-1.75c.98.28 2.02.43 3.1.43 4.97 0 9-3.58 9-8s-4.03-8-9-8Z"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinejoin="round"
-      />
-      <circle cx="8.25" cy="11" r="1.1" fill="currentColor" />
-      <circle cx="12" cy="11" r="1.1" fill="currentColor" />
-      <circle cx="15.75" cy="11" r="1.1" fill="currentColor" />
-    </svg>
-  );
-}
-
 function getAssistantFabTheme(isLight) {
   if (isLight) {
     return {
-      background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
-      border: '1.5px solid rgba(15, 23, 42, 0.14)',
-      boxShadow: '0 10px 28px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255,255,255,1)',
-      iconColor: '#0f172a',
-      hoverBorder: 'rgba(15, 23, 42, 0.28)',
-      hoverShadow: '0 14px 36px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255,255,255,1)',
+      background: 'transparent',
+      border: 'none',
+      boxShadow: '0 12px 32px rgba(49, 46, 129, 0.22), 0 0 20px rgba(56, 189, 248, 0.14)',
+      hoverBorder: 'none',
+      hoverShadow: '0 16px 40px rgba(49, 46, 129, 0.28), 0 0 28px rgba(56, 189, 248, 0.22)',
     };
   }
   return {
-    background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
-    border: '1.5px solid rgba(196, 181, 253, 0.45)',
-    boxShadow: '0 10px 32px rgba(91, 33, 182, 0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
-    iconColor: '#ffffff',
-    hoverBorder: 'rgba(233, 213, 255, 0.65)',
-    hoverShadow: '0 14px 40px rgba(109, 40, 217, 0.55), inset 0 1px 0 rgba(255,255,255,0.16)',
+    background: 'transparent',
+    border: 'none',
+    boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45), 0 0 22px rgba(56, 189, 248, 0.18)',
+    hoverBorder: 'none',
+    hoverShadow: '0 16px 44px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.28)',
   };
 }
 
@@ -303,11 +283,9 @@ function LiveStatusPulse({ label = 'Live' }) {
   );
 }
 
-/** Header tile — chat glyph matching site theme */
-function AssistantGlyphTile({ dimension = 34, siteIsLight }) {
-  const p = useAssistantPalette();
-  const glyph = Math.round(dimension * 0.58);
-  const iconColor = siteIsLight ? '#0f172a' : '#ffffff';
+/** Header — rounded-square bot, tight fit */
+function AssistantGlyphTile({ dimension = 38, siteIsLight }) {
+  const corner = Math.round(dimension * 0.24);
   return (
     <div
       className="assistant-glyph-tile"
@@ -315,19 +293,12 @@ function AssistantGlyphTile({ dimension = 34, siteIsLight }) {
       style={{
         width: dimension,
         height: dimension,
-        borderRadius: Math.max(9, Math.round(dimension * 0.31)),
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: p.globeTileBg,
-        border: `1px solid ${p.globeTileBorder}`,
-        color: iconColor,
-        boxShadow: siteIsLight
-          ? '0 2px 10px rgba(15, 23, 42, 0.08)'
-          : '0 2px 12px rgba(91, 33, 182, 0.35)',
+        borderRadius: corner,
+        overflow: 'hidden',
+        flexShrink: 0,
       }}
     >
-      <AssistantChatIcon size={glyph} />
+      <AssistantBotIcon size={dimension} variant={siteIsLight ? 'light' : 'dark'} animate className="assistant-bot-icon--fill" />
     </div>
   );
 }
@@ -344,39 +315,161 @@ const ArrowLeft = () => (
   </svg>
 );
 
-// ── Row icons ─────────────────────────────────────────────────────────────────
+// ── Home row icons — white on unified purple tiles ─────────────────────────────
+const HOME_ICON = 17;
+
+/** Franchise network — connected hubs */
 const BrandIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
+  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="6" cy="9" r="2.25" />
+    <circle cx="18" cy="9" r="2.25" />
+    <circle cx="12" cy="18" r="2.25" />
+    <path d="M7.5 10.2 10.5 16M16.5 10.2 13.5 16M8 9h8" />
+    <path d="M12 4.5v2.5" />
+    <path d="M10.5 4.5h3" strokeWidth="2.2" />
   </svg>
 );
 
+/** Portfolio — briefcase + growth sparkline */
 const InvestorIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="1" x2="12" y2="23" />
-    <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 10h16v9H4z" />
+    <path d="M8 10V8a2 2 0 012-2h4a2 2 0 012 2v2" />
+    <path d="M7 16l2.5-3 2.5 1.5 3.5-4.5" />
+    <circle cx="18" cy="6" r="2.25" />
+    <path d="M18 4.2v3.6M16.2 6h3.6" strokeWidth="2" />
   </svg>
 );
 
-const PhoneIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+/** Strategy session — calendar + confirmed slot */
+const CalendarIcon = () => (
+  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="6" width="13" height="13" rx="2.25" />
+    <path d="M7 4v3M12 4v3M3 11h13" />
+    <path d="M7 14.5h2M11 14.5h2" />
+    <circle cx="18.5" cy="16.5" r="3.25" />
+    <path d="M17.2 16.5l1 1 2.6-2.6" strokeWidth="2" />
   </svg>
 );
 
-const HelpIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10" />
-    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+/** Support — dual chat with check */
+const SupportIcon = () => (
+  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 17l-2 2v-4.5a5.5 5.5 0 019.2-4" />
+    <path d="M13 7.5a5.5 5.5 0 015.5 5.5c0 1.2-.4 2.3-1 3.2L19 19l-2.8-1.2" />
+    <path d="M11.5 9.5 13 11l3-3" strokeWidth="2.1" />
+  </svg>
+);
+
+function PremiumRowIcon({ children, hovered }) {
+  return (
+    <div
+      className="assistant-row-icon"
+      style={{
+        width: 38,
+        height: 38,
+        borderRadius: 11,
+        background: PURPLE_ICON_GRADIENT,
+        boxShadow: hovered
+          ? `${PURPLE_ICON_SHADOW}, inset 0 1px 0 rgba(255,255,255,0.28)`
+          : `${PURPLE_ICON_SHADOW}, inset 0 1px 0 rgba(255,255,255,0.22)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        color: '#fff',
+        transition: 'transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s ease',
+        transform: hovered ? 'scale(1.06)' : 'scale(1)',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+const ClockMiniIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 2" />
+  </svg>
+);
+
+const RouteMiniIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="6" cy="19" r="2" />
+    <circle cx="18" cy="5" r="2" />
+    <path d="M8 19h5.5a4 4 0 000-8H8M8 11V5" />
+  </svg>
+);
+
+const UsersMiniIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
+    <circle cx="9" cy="7" r="3" />
+    <path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+  </svg>
+);
+
+const HelpMiniIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 2-3 4" />
     <line x1="12" y1="17" x2="12.01" y2="17" />
   </svg>
 );
 
+const SearchMiniIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-3.5-3.5" />
+  </svg>
+);
+
+const StoreMiniIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 9l2-4h14l2 4" />
+    <path d="M5 9v11h14V9" />
+    <path d="M9 20v-6h6v6" />
+  </svg>
+);
+
+const MailMiniIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="M3 7l9 6 9-6" />
+  </svg>
+);
+
+const ExternalLinkIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </svg>
+);
+
+const SparkleIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2l1.4 4.6L18 8l-4.6 1.4L12 14l-1.4-4.6L6 8l4.6-1.4L12 2zM5 16l.8 2.6L8.5 19l-2.7.8L5 22.5l-.8-2.7L1.5 19l2.7-.8L5 16zm14 0l.8 2.6 2.7.8-2.7.8-.8 2.7-.8-2.7-2.7-.8 2.7-.8.8-2.6z" />
+  </svg>
+);
+
+const CONSULT_TIME_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
+
 // ── Chip Selector ─────────────────────────────────────────────────────────────
-function ChipSelect({ options, value, onChange, multi = false }) {
+function ChipSelect({
+  options,
+  value,
+  onChange,
+  multi = false,
+  otherKey,
+  otherValue,
+  onOtherChange,
+  otherPlaceholder = 'Type your city...',
+}) {
   const p = useAssistantPalette();
-  const isSelected = (opt) => multi ? (value || []).includes(opt) : value === opt;
+  const isSelected = (opt) => (multi ? (value || []).includes(opt) : value === opt);
+  const showOther = otherKey && (multi ? (value || []).includes('Other') : value === 'Other');
   const handleClick = (opt) => {
     if (multi) {
       const current = value || [];
@@ -386,35 +479,94 @@ function ChipSelect({ options, value, onChange, multi = false }) {
     }
   };
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 14 }}>
-      {options.map((opt) => {
-        const selected = isSelected(opt);
-        return (
-          <button
-            key={opt}
-            type="button"
-            onClick={() => handleClick(opt)}
-            style={{
-              padding: '6px 12px',
-              borderRadius: 8,
-              fontSize: 12,
-              fontWeight: 500,
-              border: `1px solid ${selected ? p.chipSelectedBorder : p.chipBorder}`,
-              background: selected ? p.chipSelectedBg : p.chipBg,
-              color: selected ? p.chipSelectedText : p.chipText,
-              cursor: 'pointer',
-              transition: 'all 0.12s ease',
-            }}
-            onMouseEnter={(e) => { if (!selected) e.currentTarget.style.background = p.chipHoverBg; }}
-            onMouseLeave={(e) => { if (!selected) e.currentTarget.style.background = p.chipBg; }}
-          >
-            {opt}
-          </button>
-        );
-      })}
+    <motion.div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 14 }}>
+      <motion.div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {options.map((opt) => {
+          const selected = isSelected(opt);
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => handleClick(opt)}
+              style={{
+                padding: '6px 12px',
+                borderRadius: 8,
+                fontSize: 12,
+                fontWeight: 500,
+                border: `1px solid ${selected ? p.chipSelectedBorder : p.chipBorder}`,
+                background: selected ? p.chipSelectedBg : p.chipBg,
+                color: selected ? p.chipSelectedText : p.chipText,
+                cursor: 'pointer',
+                transition: 'all 0.12s ease',
+              }}
+              onMouseEnter={(e) => { if (!selected) e.currentTarget.style.background = p.chipHoverBg; }}
+              onMouseLeave={(e) => { if (!selected) e.currentTarget.style.background = p.chipBg; }}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </motion.div>
+      {showOther && (
+        <TextInput
+          placeholder={otherPlaceholder}
+          value={otherValue}
+          onChange={onOtherChange}
+        />
+      )}
+    </motion.div>
+  );
+}
+
+function FormError({ message }) {
+  if (!message) return null;
+  return (
+    <p style={{ color: '#f87171', fontSize: 12, margin: '8px 0 0', textAlign: 'center' }}>
+      {message}
+    </p>
+  );
+}
+
+function ConsultationScheduleFields({ schedule, setSchedule }) {
+  const p = useAssistantPalette();
+  const today = new Date().toISOString().split('T')[0];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div>
+        <div style={{ fontSize: 12, fontWeight: 600, color: p.questionColor, marginBottom: 6 }}>Preferred date</div>
+        <input
+          type="date"
+          min={today}
+          value={schedule.preferredDate || ''}
+          onChange={(e) => setSchedule(s => ({ ...s, preferredDate: e.target.value }))}
+          className="ea-text-input w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none"
+          style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
+        />
+      </div>
+      <div>
+        <div style={{ fontSize: 12, fontWeight: 600, color: p.questionColor, marginBottom: 6 }}>Preferred time</div>
+        <ChipSelect
+          options={CONSULT_TIME_SLOTS}
+          value={schedule.preferredTime}
+          onChange={(v) => setSchedule(s => ({ ...s, preferredTime: v }))}
+        />
+      </div>
+      <TextInput
+        placeholder="Email (optional)"
+        type="email"
+        value={schedule.email}
+        onChange={(v) => setSchedule(s => ({ ...s, email: v }))}
+      />
+      <TextInput
+        placeholder="Anything else we should know? (optional)"
+        value={schedule.notes}
+        onChange={(v) => setSchedule(s => ({ ...s, notes: v }))}
+      />
     </div>
   );
 }
+
 
 // ── Text Input ────────────────────────────────────────────────────────────────
 function TextInput({ placeholder, value, onChange, type = 'text' }) {
@@ -523,25 +675,19 @@ const PRIMARY_ROWS = [
     id: 'brands',
     label: 'FOR BRANDS',
     title: 'Scale my brand through franchising',
-    iconBg: 'linear-gradient(135deg,rgba(139,92,246,0.3),rgba(99,102,241,0.2))',
-    iconColor: 'rgba(167,139,250,0.9)',
     icon: <BrandIcon />,
   },
   {
     id: 'investors',
     label: 'FOR INVESTORS',
     title: 'Discover franchise opportunities',
-    iconBg: 'linear-gradient(135deg,rgba(16,185,129,0.25),rgba(5,150,105,0.15))',
-    iconColor: 'rgba(52,211,153,0.9)',
     icon: <InvestorIcon />,
   },
   {
     id: 'strategy',
     label: 'STRATEGY CALL',
     title: 'Speak with expansion experts',
-    iconBg: 'linear-gradient(135deg,rgba(59,130,246,0.25),rgba(37,99,235,0.15))',
-    iconColor: 'rgba(96,165,250,0.9)',
-    icon: <PhoneIcon />,
+    icon: <CalendarIcon />,
   },
 ];
 
@@ -549,9 +695,7 @@ const SUPPORT_ROW = {
   id: 'support',
   label: 'SUPPORT',
   title: 'Navigate the platform & get help',
-  iconBg: 'linear-gradient(135deg,rgba(148,163,184,0.22),rgba(100,116,139,0.12))',
-  iconColor: 'rgba(100,116,139,0.88)',
-  icon: <HelpIcon />,
+  icon: <SupportIcon />,
 };
 
 function ActionRow({ row, onClick, index, secondary = false }) {
@@ -559,6 +703,8 @@ function ActionRow({ row, onClick, index, secondary = false }) {
   const [hovered, setHovered] = useState(false);
   return (
     <motion.button
+      type="button"
+      className="assistant-action-row"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
@@ -582,26 +728,12 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         textAlign: 'left',
         transform: hovered ? 'translateX(3px)' : 'translateX(0)',
         transition: 'all 0.18s cubic-bezier(0.22,1,0.36,1)',
-        boxShadow: hovered && !secondary ? '0 2px 14px rgba(139,92,246,0.12)' : 'none',
+        boxShadow: hovered && !secondary ? '0 2px 12px rgba(124,58,237,0.1)' : 'none',
       }}
     >
-      {/* Icon */}
-      <div style={{
-        width: 36,
-        height: 36,
-        borderRadius: 10,
-        background: secondary ? 'rgba(0,0,0,0.04)' : row.iconBg,
-        border: secondary ? '1px solid rgba(0,0,0,0.06)' : '1px solid rgba(255,255,255,0.15)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-        color: secondary ? 'rgba(100,116,139,0.75)' : row.iconColor,
-        transition: 'transform 0.18s ease',
-        transform: hovered ? 'scale(1.05)' : 'scale(1)',
-      }}>
+      <PremiumRowIcon hovered={hovered}>
         {row.icon}
-      </div>
+      </PremiumRowIcon>
 
       {/* Text */}
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -657,9 +789,6 @@ function HomeView({ setView, setIsOpen }) {
           style={{
             padding: '14px 14px 12px',
             borderRadius: 14,
-            background: 'linear-gradient(145deg, rgba(139,92,246,0.1) 0%, rgba(99,102,241,0.05) 45%, rgba(255,255,255,0.6) 100%)',
-            border: '1px solid rgba(237,233,254,0.95)',
-            boxShadow: '0 2px 12px rgba(124,58,237,0.06)',
           }}
         >
           <div
@@ -725,36 +854,111 @@ function HomeView({ setView, setIsOpen }) {
 // ── Brands Flow ───────────────────────────────────────────────────────────────
 const BRAND_STEPS = [
   { q: "What's your brand name?", type: 'text', key: 'brandName', placeholder: 'e.g. Chai Point, FitZone...' },
-  { q: 'Which industry?', type: 'chips', key: 'industry', options: ['Food & Beverage', 'Health & Wellness', 'Education', 'Retail', 'Technology', 'Home Services', 'Other'] },
+  { q: 'Which industry?', type: 'chips', key: 'industry', otherKey: 'industryOther', otherPlaceholder: 'Type your industry...', options: ['Food & Beverage', 'Health & Wellness', 'Education', 'Retail', 'Technology', 'Home Services', 'Other'] },
   { q: 'How many locations currently?', type: 'chips', key: 'locations', options: ['1', '2–5', '6–15', '15+'] },
-  { q: 'Target expansion cities?', type: 'chips', key: 'cities', options: ['3–5', '5–10', '10–20', '20+ (National)'] },
+  { q: 'Target expansion cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Enter your target city', options: ['3–5', '5–10', '10–20', '20+ (National)', 'Other'] },
   { q: 'Franchise investment range?', type: 'chips', key: 'investment', options: ['Under ₹25L', '₹25L–₹50L', '₹50L–₹1Cr', '₹1Cr+'] },
   { q: 'Your name & contact?', type: 'contact', key: 'contact' },
 ];
 
-function BrandsView({ setView, setIsOpen }) {
+function BrandsView({ setView }) {
   const p = useAssistantPalette();
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
-  const submittedRef = useRef(false);
-
-  useEffect(() => {
-    if (!done || submittedRef.current) return;
-    submittedRef.current = true;
-    submitChatbotLead(data, 'brand', 'expansion_assistant_brand');
-  }, [done, data]);
+  const [scheduling, setScheduling] = useState(false);
+  const [schedule, setSchedule] = useState({});
+  const [complete, setComplete] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const current = BRAND_STEPS[step];
   const val = data[current?.key];
-  const canContinue = current?.type === 'contact'
-    ? (data.contactName?.trim() && data.contactPhone?.trim())
-    : (Array.isArray(val) ? val.length > 0 : Boolean(val?.trim?.() ?? val));
+  const canContinue = (() => {
+    if (current?.type === 'contact') {
+      return Boolean(data.contactName?.trim() && data.contactPhone?.trim());
+    }
+    if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
+      return Boolean(data[current.otherKey]?.trim());
+    }
+    return Array.isArray(val) ? val.length > 0 : Boolean(val?.trim?.() ?? val);
+  })();
+
+  const canSubmitSchedule = Boolean(schedule.preferredDate && schedule.preferredTime);
 
   const handleContinue = () => {
     if (step < BRAND_STEPS.length - 1) setStep(s => s + 1);
     else setDone(true);
   };
+
+  const handleScheduleSubmit = async () => {
+    if (!canSubmitSchedule || submitting) return;
+    setSubmitting(true);
+    setSubmitError('');
+    const result = await submitBrandConsultation(
+      { ...data, ...schedule },
+      'expansion_assistant_brand_consultation',
+    );
+    setSubmitting(false);
+    if (result.success) {
+      setComplete(true);
+      setScheduling(false);
+    } else {
+      setSubmitError(result.error || 'Something went wrong. Please try again.');
+    }
+  };
+
+  if (complete) {
+    return (
+      <motion.div
+        key="brands-complete"
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -12 }}
+        transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      >
+        <FlowHeader title="Request Received" onBack={() => setView('home')} />
+        <motion.div style={{ flex: 1, overflowY: 'auto', padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, textAlign: 'center' }}>
+          <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>✓</div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}>Consultation scheduled</div>
+          <p style={{ color: p.mutedText, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
+            Our expansion team will contact you within 24 hours to confirm your slot.
+          </p>
+          <ContinueBtn onClick={() => setView('home')} label="Back to Home" />
+        </motion.div>
+      </motion.div>
+    );
+  }
+
+  if (done && scheduling) {
+    return (
+      <motion.div
+        key="brands-schedule"
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -12 }}
+        transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      >
+        <FlowHeader title="Schedule Consultation" onBack={() => setScheduling(false)} />
+        <motion.div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px 8px' }}>
+          <p style={{ fontSize: 13, color: p.mutedText, marginBottom: 12, lineHeight: 1.45 }}>
+            Pick a time that works for you. We will save your brand details and confirm by phone or email.
+          </p>
+          <ConsultationScheduleFields schedule={schedule} setSchedule={setSchedule} />
+          <FormError message={submitError} />
+        </motion.div>
+        <motion.div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
+          <ContinueBtn
+            onClick={handleScheduleSubmit}
+            disabled={!canSubmitSchedule || submitting}
+            label={submitting ? 'Submitting...' : 'Confirm Consultation'}
+          />
+        </motion.div>
+      </motion.div>
+    );
+  }
 
   if (done) {
     return (
@@ -766,13 +970,13 @@ function BrandsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Your Summary" onBack={() => { submittedRef.current = false; setDone(false); setStep(0); setData({}); setView('home'); }} />
+        <FlowHeader title="Your Summary" onBack={() => { setDone(false); setStep(BRAND_STEPS.length - 1); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Brand', value: data.brandName },
-            { label: 'Industry', value: data.industry },
+            { label: 'Industry', value: data.industry === 'Other' ? data.industryOther : data.industry },
             { label: 'Locations', value: data.locations },
-            { label: 'Target Cities', value: data.cities },
+            { label: 'Target Cities', value: data.cities === 'Other' ? data.citiesOther : data.cities },
             { label: 'Investment', value: data.investment },
             { label: 'Contact', value: data.contactName },
             { label: 'Phone', value: data.contactPhone },
@@ -780,7 +984,7 @@ function BrandsView({ setView, setIsOpen }) {
           <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
             Our expansion team will reach out within 24 hours.
           </p>
-          <ContinueBtn onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')} label="Schedule Expansion Consultation" />
+          <ContinueBtn onClick={() => setScheduling(true)} label="Schedule Expansion Consultation" />
         </div>
       </motion.div>
     );
@@ -810,7 +1014,16 @@ function BrandsView({ setView, setIsOpen }) {
           <TextInput placeholder={current.placeholder} value={data[current.key]} onChange={v => setData(d => ({ ...d, [current.key]: v }))} />
         )}
         {current.type === 'chips' && (
-          <ChipSelect options={current.options} value={data[current.key]} onChange={v => setData(d => ({ ...d, [current.key]: v }))} />
+          <ChipSelect
+            options={current.options}
+            value={data[current.key]}
+            onChange={v => setData(d => ({ ...d, [current.key]: v }))}
+            multi={current.multi}
+            otherKey={current.otherKey}
+            otherValue={current.otherKey ? data[current.otherKey] : undefined}
+            onOtherChange={current.otherKey ? v => setData(d => ({ ...d, [current.otherKey]: v })) : undefined}
+            otherPlaceholder={current.otherPlaceholder || 'Enter details...'}
+          />
         )}
         {current.type === 'contact' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -834,8 +1047,7 @@ function BrandsView({ setView, setIsOpen }) {
 const INVESTOR_STEPS = [
   { q: 'Preferred industries?', type: 'chips', key: 'industries', multi: true, options: ['Food & Beverage', 'Health & Wellness', 'Education', 'Retail', 'Technology', 'Home Services', 'Other'] },
   { q: 'Investment budget?', type: 'chips', key: 'budget', options: ['Under ₹25L', '₹25L–₹50L', '₹50L–₹1Cr', '₹1Cr–₹5Cr', '₹5Cr+'] },
-  { q: 'Target cities?', type: 'chips', key: 'cities', options: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pan India'] },
-  { q: 'Expected ROI?', type: 'chips', key: 'roi', options: ['20–30%', '30–40%', '40%+'] },
+  { q: 'Target cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Type your city...', options: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pan India', 'Other'] },
   { q: 'Investment timeline?', type: 'chips', key: 'timeline', options: ['Immediate', '3 months', '6 months', '12 months+'] },
 ];
 
@@ -854,7 +1066,12 @@ function InvestorsView({ setView, setIsOpen }) {
 
   const current = INVESTOR_STEPS[step];
   const val = data[current?.key];
-  const canContinue = Array.isArray(val) ? val.length > 0 : Boolean(val);
+  const canContinue = (() => {
+    if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
+      return Boolean(data[current.otherKey]?.trim());
+    }
+    return Array.isArray(val) ? val.length > 0 : Boolean(val);
+  })();
 
   const handleContinue = () => {
     if (step < INVESTOR_STEPS.length - 1) setStep(s => s + 1);
@@ -871,13 +1088,12 @@ function InvestorsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Matching Opportunities" onBack={() => { submittedRef.current = false; setDone(false); setStep(0); setData({}); setView('home'); }} />
+        <FlowHeader title="Matching Opportunities" onBack={() => { setDone(false); setStep(INVESTOR_STEPS.length - 1); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Industries', value: Array.isArray(data.industries) ? data.industries.join(', ') : data.industries },
             { label: 'Budget', value: data.budget },
-            { label: 'Cities', value: data.cities },
-            { label: 'Expected ROI', value: data.roi },
+            { label: 'Cities', value: data.cities === 'Other' ? data.citiesOther : data.cities },
             { label: 'Timeline', value: data.timeline },
           ]} />
           <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
@@ -914,26 +1130,35 @@ function InvestorsView({ setView, setIsOpen }) {
           value={data[current.key]}
           onChange={v => setData(d => ({ ...d, [current.key]: v }))}
           multi={current.multi}
+          otherKey={current.otherKey}
+          otherValue={current.otherKey ? data[current.otherKey] : undefined}
+          onOtherChange={current.otherKey ? v => setData(d => ({ ...d, [current.otherKey]: v })) : undefined}
+          otherPlaceholder={current.otherPlaceholder || 'Enter details...'}
         />
       </div>
-      <div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
+      <motion.div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
         <ContinueBtn
           onClick={handleContinue}
           disabled={!canContinue}
           label={step === INVESTOR_STEPS.length - 1 ? 'View Matches' : 'Continue'}
         />
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
 
 // ── Strategy Call View ────────────────────────────────────────────────────────
-function StrategyView({ setView, setIsOpen }) {
-  const features = [
-    { label: '30', text: '30-min discovery call with an expansion expert' },
-    { label: '→', text: 'Custom expansion roadmap tailored to your brand' },
-    { label: '★', text: 'Investor matching preview for your opportunity' },
+function StrategyView({ setView }) {
+  const p = useAssistantPalette();
+  const [ctaHover, setCtaHover] = useState(false);
+
+  const perks = [
+    { icon: <ClockMiniIcon />, title: '30-min discovery', desc: 'Speak with an expansion expert' },
+    { icon: <RouteMiniIcon />, title: 'Growth roadmap', desc: 'Tailored plan for your brand' },
+    { icon: <UsersMiniIcon />, title: 'Investor preview', desc: 'See matching opportunities' },
   ];
+
+  const openCal = () => window.open(STRATEGY_CAL_URL, '_blank', 'noopener,noreferrer');
 
   return (
     <motion.div
@@ -942,69 +1167,160 @@ function StrategyView({ setView, setIsOpen }) {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -12 }}
       transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-      style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}
     >
       <FlowHeader title="Book Strategy Call" onBack={() => setView('home')} />
-      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <div style={{ background: 'rgba(59,130,246,0.04)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: 12, padding: 16 }}>
-          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(37,99,235,0.82)', marginBottom: 10 }}>
-            Strategy Consultation
-          </div>
-          <div style={{ fontSize: 14, fontWeight: 600, color: 'rgba(15,23,42,0.9)', letterSpacing: '-0.02em', marginBottom: 14 }}>
-            Book a Strategy Consultation
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {features.map(({ label, text }, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                <div style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: 7,
-                  background: 'rgba(59,130,246,0.15)',
-                  border: '1px solid rgba(59,130,246,0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  marginTop: 1,
-                }}>
-                  <span style={{ color: 'rgba(37,99,235,0.88)', fontSize: 9, fontWeight: 700 }}>{label}</span>
-                </div>
-                <p style={{ color: 'rgba(71,85,105,0.88)', fontSize: 12, lineHeight: 1.5, margin: 0 }}>{text}</p>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid rgba(226,232,240,0.9)', display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', boxShadow: '0 0 6px rgba(52,211,153,0.6)' }} />
-            <span style={{ color: 'rgba(52,211,153,0.95)', fontSize: 11, fontWeight: 500 }}>Response within 24 hours</span>
-          </div>
-        </div>
-        <button
-          onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')} style={{
-            width: '100%',
-            padding: '11px',
-            borderRadius: 10,
-            background: 'linear-gradient(135deg,#2563eb,#1d4ed8)',
-            color: 'white',
-            fontSize: 13,
-            fontWeight: 600,
-            border: 'none',
-            cursor: 'pointer',
-            boxShadow: '0 4px 20px rgba(37,99,235,0.3)',
-            letterSpacing: '-0.01em',
-            transition: 'filter 0.15s ease',
+      <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', padding: '10px 14px 14px', display: 'flex', flexDirection: 'column' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.28 }}
+          style={{
+            position: 'relative',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: 16,
+            padding: 14,
+            background: 'linear-gradient(165deg, rgba(245,243,255,0.98) 0%, rgba(237,233,254,0.96) 45%, rgba(224,231,255,0.94) 100%)',
+            border: '1px solid rgba(139,92,246,0.2)',
+            boxShadow: '0 4px 20px rgba(124, 58, 237, 0.08)',
           }}
-          onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.1)'; }}
-          onMouseLeave={e => { e.currentTarget.style.filter = 'none'; }}
         >
-          Schedule Now
-        </button>
-        <p style={{ color: 'rgba(100,116,139,0.75)', fontSize: 12, textAlign: 'center', margin: 0 }}>
-          Or call us directly:{' '}
-          <a href="tel:+919876543210" style={{ color: 'rgba(15,23,42,0.75)', textDecoration: 'none', fontWeight: 500 }}>
-            +91 98765 43210
-          </a>
-        </p>
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              top: -24,
+              right: -16,
+              width: 88,
+              height: 88,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(139,92,246,0.22) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }}
+          />
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 12 }}>
+            <div style={{
+              width: 40,
+              height: 40,
+              borderRadius: 11,
+              background: PURPLE_ICON_GRADIENT,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#fff',
+              flexShrink: 0,
+              boxShadow: PURPLE_ICON_SHADOW,
+            }}>
+              <CalendarIcon />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                padding: '3px 9px',
+                borderRadius: 20,
+                background: 'rgba(255,255,255,0.85)',
+                border: '1px solid rgba(139,92,246,0.18)',
+                fontSize: 9.5,
+                fontWeight: 700,
+                letterSpacing: '0.07em',
+                textTransform: 'uppercase',
+                color: '#7c3aed',
+                marginBottom: 6,
+              }}>
+                <SparkleIcon />
+                Free consultation
+              </div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: p.questionColor, letterSpacing: '-0.03em', lineHeight: 1.3 }}>
+                Book a 30-min strategy session
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              borderRadius: 12,
+              padding: 12,
+              background: '#fff',
+              border: '1px solid rgba(226,232,240,0.95)',
+              boxShadow: '0 1px 3px rgba(15,23,42,0.04)',
+            }}
+          >
+            <motion.button
+              type="button"
+              onClick={openCal}
+              onMouseEnter={() => setCtaHover(true)}
+              onMouseLeave={() => setCtaHover(false)}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                width: '100%',
+                boxSizing: 'border-box',
+                padding: '11px 14px',
+                borderRadius: 10,
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                color: '#fff',
+                background: ctaHover
+                  ? 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)'
+                  : PURPLE_ICON_GRADIENT,
+                boxShadow: '0 2px 8px rgba(124,58,237,0.22)',
+                transition: 'background 0.2s ease',
+              }}
+            >
+              Pick Your Time Slot
+              <ExternalLinkIcon />
+            </motion.button>
+
+            <div style={{ marginTop: 10, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              {perks.map(({ icon, title, desc }, i) => (
+                <motion.div
+                  key={title}
+                  initial={{ opacity: 0, y: 3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 + i * 0.03 }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    padding: '8px 4px',
+                    borderTop: i > 0 ? '1px solid rgba(241,245,249,1)' : 'none',
+                  }}
+                >
+                  <div style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 9,
+                    background: PURPLE_ICON_GRADIENT,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    color: '#fff',
+                  }}>
+                    {icon}
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: '#1e1b4b', letterSpacing: '-0.02em', lineHeight: 1.25 }}>{title}</div>
+                    <div style={{ fontSize: 10.5, color: 'rgba(71,85,105,0.78)', lineHeight: 1.35, marginTop: 1 }}>{desc}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -1125,41 +1441,93 @@ function ServicesView({ setView, setIsOpen }) {
 const SUPPORT_LINKS = [
   {
     title: 'How does iFranchise work?',
+    desc: 'Platform overview & services',
     path: '/services',
-    icon: (
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-      </svg>
-    ),
+    icon: <HelpMiniIcon />,
   },
   {
     title: 'Browse franchise opportunities',
+    desc: 'Explore verified listings',
     path: '/franchise-opportunities',
-    icon: (
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-    ),
+    icon: <SearchMiniIcon />,
   },
   {
     title: 'List your brand',
+    desc: 'Partner with our expansion desk',
     path: '/list-your-brand',
-    icon: (
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 5v14M5 12h14" />
-      </svg>
-    ),
+    icon: <StoreMiniIcon />,
   },
   {
     title: 'Contact our team',
+    desc: 'Talk to franchise advisors',
     path: '/contact',
-    icon: (
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
-      </svg>
-    ),
+    icon: <MailMiniIcon />,
   },
 ];
+
+function SupportLinkRow({ link, index, setIsOpen }) {
+  const p = useAssistantPalette();
+  const [hovered, setHovered] = useState(false);
+  return (
+    <motion.button
+      type="button"
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.22 }}
+      onClick={() => navTo(link.path, setIsOpen)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        padding: '13px 14px',
+        borderRadius: 14,
+        background: hovered ? p.linkBgHover : p.linkBg,
+        border: hovered ? `1px solid ${p.linkBorderHover}` : `1px solid ${p.linkBorder}`,
+        cursor: 'pointer',
+        textAlign: 'left',
+        transform: hovered ? 'translateX(3px)' : 'translateX(0)',
+        boxShadow: hovered ? '0 6px 18px rgba(15,23,42,0.08)' : '0 1px 4px rgba(15,23,42,0.04)',
+        transition: 'all 0.18s ease',
+      }}
+    >
+      <div style={{
+        width: 38,
+        height: 38,
+        borderRadius: 11,
+        background: PURPLE_ICON_GRADIENT,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        color: '#fff',
+        boxShadow: PURPLE_ICON_SHADOW,
+      }}>
+        {link.icon}
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: p.linkTitle, letterSpacing: '-0.02em' }}>{link.title}</div>
+        <div style={{ fontSize: 11, color: p.mutedText, marginTop: 2 }}>{link.desc}</div>
+      </div>
+      <div style={{
+        width: 26,
+        height: 26,
+        borderRadius: 8,
+        background: hovered ? 'rgba(124,58,237,0.12)' : 'rgba(148,163,184,0.1)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        color: hovered ? 'rgba(124,58,237,0.85)' : 'rgba(148,163,184,0.85)',
+        transition: 'all 0.15s ease',
+      }}>
+        <ChevronRight />
+      </div>
+    </motion.button>
+  );
+}
 
 function SupportView({ setView, setIsOpen }) {
   const p = useAssistantPalette();
@@ -1173,44 +1541,40 @@ function SupportView({ setView, setIsOpen }) {
       style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
     >
       <FlowHeader title="Quick Support" onBack={() => setView('home')} />
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 12px 16px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <p style={{ color: p.mutedText, fontSize: 12, margin: '4px 2px 8px', letterSpacing: '-0.01em' }}>
-          Where would you like to go?
-        </p>
-        {SUPPORT_LINKS.map((link, i) => {
-          const [hovered, setHovered] = useState(false);
-          return (
-            <motion.button
-              key={link.path}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.04, duration: 0.2 }}
-              onClick={() => navTo(link.path, setIsOpen)}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '12px 14px',
-                borderRadius: 12,
-                background: hovered ? 'rgba(248,250,252,1)' : 'rgba(255,255,255,1)',
-                border: hovered ? '1px solid rgba(196,181,253,0.55)' : '1px solid rgba(226,232,240,0.98)',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transform: hovered ? 'translateX(2px)' : 'translateX(0)',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(249,250,251,1)', border: '1px solid rgba(226,232,240,1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'rgba(100,116,139,0.78)' }}>
-                {link.icon}
-              </div>
-              <span style={{ flex: 1, fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.88)', letterSpacing: '-0.01em' }}>{link.title}</span>
-              <span style={{ color: 'rgba(148,163,184,0.82)', fontSize: 14, flexShrink: 0 }}>→</span>
-            </motion.button>
-          );
-        })}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 12px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            padding: '12px 14px',
+            borderRadius: 14,
+            background: 'linear-gradient(135deg, rgba(148,163,184,0.12), rgba(100,116,139,0.06))',
+            border: `1px solid ${p.linkBorder}`,
+            marginBottom: 4,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{
+              width: 36,
+              height: 36,
+              borderRadius: 10,
+              background: PURPLE_ICON_GRADIENT,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#fff',
+            }}>
+              <SupportIcon />
+            </div>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: p.linkTitle, letterSpacing: '-0.02em' }}>Need a hand?</div>
+              <p style={{ margin: '2px 0 0', fontSize: 11, color: p.mutedText }}>Jump to the right place in one tap.</p>
+            </div>
+          </div>
+        </motion.div>
+        {SUPPORT_LINKS.map((link, i) => (
+          <SupportLinkRow key={link.path} link={link} index={i} setIsOpen={setIsOpen} />
+        ))}
       </div>
     </motion.div>
   );
@@ -1223,74 +1587,47 @@ function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
   return (
     <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
       <AnimatePresence mode="wait">
-        {!isOpen ? (
-          <motion.button
-            key="launcher"
-            type="button"
-            onClick={onOpen}
-            initial={{ opacity: 0, scale: 0.88 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.88 }}
-            transition={{ duration: 0.2 }}
-            whileHover={{ scale: 1.06, y: -2 }}
-            whileTap={{ scale: 0.94 }}
-            aria-label="Open iFranchise assistant"
-            className="assistant-fab"
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 16,
-              background: fab.background,
-              border: fab.border,
-              boxShadow: fab.boxShadow,
-              color: fab.iconColor,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.border = `1.5px solid ${fab.hoverBorder}`;
-              e.currentTarget.style.boxShadow = fab.hoverShadow;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.border = fab.border;
-              e.currentTarget.style.boxShadow = fab.boxShadow;
-            }}
-          >
-            <AssistantChatIcon size={26} />
-          </motion.button>
-        ) : (
-          <motion.button
-            key="close-fab"
-            type="button"
-            onClick={onClose}
-            initial={{ opacity: 0, scale: 0.88 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.88 }}
-            transition={{ duration: 0.2 }}
-            whileHover={{ scale: 1.06, y: -2 }}
-            whileTap={{ scale: 0.94 }}
-            aria-label="Close iFranchise assistant"
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: 16,
-              background: fab.background,
-              border: fab.border,
-              boxShadow: fab.boxShadow,
-              color: fab.iconColor,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </motion.button>
-        )}
+        <motion.button
+          key={isOpen ? 'fab-open' : 'fab-closed'}
+          type="button"
+          onClick={isOpen ? onClose : onOpen}
+          initial={{ opacity: 0, scale: 0.88 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.88 }}
+          transition={{ duration: 0.2 }}
+          whileHover={{ scale: 1.06, y: -2 }}
+          whileTap={{ scale: 0.94 }}
+          aria-label={isOpen ? 'Close iFranchise assistant' : 'Open iFranchise assistant'}
+          className="assistant-fab"
+          style={{
+            width: 56,
+            height: 56,
+            padding: 0,
+            borderRadius: 16,
+            background: 'linear-gradient(165deg, #4f9cf9 0%, #3b82f6 42%, #2563eb 100%)',
+            border: 'none',
+            boxShadow: isOpen ? fab.hoverShadow : fab.boxShadow,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            overflow: 'hidden',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = fab.hoverShadow;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = isOpen ? fab.hoverShadow : fab.boxShadow;
+          }}
+        >
+          <AssistantBotIcon
+            size={56}
+            variant={isLight ? 'light' : 'dark'}
+            animate
+            open={isOpen}
+            className="assistant-bot-icon--fill"
+          />
+        </motion.button>
       </AnimatePresence>
     </div>
   );
@@ -1428,7 +1765,7 @@ export default function ExpansionAssistant() {
                 {view === 'home' && <HomeView key="home" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'brands' && <BrandsView key="brands" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'investors' && <InvestorsView key="investors" setView={setView} setIsOpen={setIsOpen} />}
-                {view === 'strategy' && <StrategyView key="strategy" setView={setView} setIsOpen={setIsOpen} />}
+                {view === 'strategy' && <StrategyView key="strategy" setView={setView} />}
                 {view === 'support' && <SupportView key="support" setView={setView} setIsOpen={setIsOpen} />}
               </AnimatePresence>
             </div>

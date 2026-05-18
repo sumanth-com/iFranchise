@@ -1,34 +1,424 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import contactImage2 from '../assets/contact2.png';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
 import { useTheme } from '../context/ThemeContext';
 import FooterSocialButtons from './footer/FooterSocialButtons';
-import SectionPill from './ui/SectionPill';
+
+const FAQ_ITEMS = [
+  {
+    question: 'What is the typical investment range?',
+    answer: 'Most opportunities on our platform start around â‚¹20L and can go beyond â‚¹2.5Cr depending on brand category and market potential.',
+  },
+  {
+    question: 'How long does it take to break even?',
+    answer: 'Break-even timelines vary by sector, but many franchise models we work with target 12 to 24 months with disciplined execution.',
+  },
+  {
+    question: 'Do I need prior business experience?',
+    answer: 'Not necessarily. Many successful partners are first-time operators and rely on structured onboarding, SOPs, and advisory support.',
+  },
+  {
+    question: 'What support does iFranchise provide?',
+    answer: 'We support brand matching, diligence, financial understanding, launch planning, and ongoing growth guidance after onboarding.',
+  },
+  {
+    question: 'Can I operate multiple franchise units?',
+    answer: 'Yes. Multi-unit expansion is available for many brands after performance milestones and market readiness checks are met.',
+  },
+];
+
+const CONTACT_LINKS = [
+  {
+    title: 'Email us',
+    value: 'hello@ifranchise.in',
+    href: 'mailto:hello@ifranchise.in',
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    ),
+  },
+  {
+    title: 'Call us',
+    value: '+91 98765 43210',
+    href: 'tel:+919876543210',
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+    ),
+  },
+  {
+    title: 'Our location',
+    value: 'Bangalore, Karnataka, India',
+    href: 'https://maps.google.com/?q=Bangalore,Karnataka,India',
+    external: true,
+    icon: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </>
+    ),
+  },
+];
+
+function ContactFAQItem({ question, answer, index }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06, duration: 0.35 }}
+      className={`services-faq-item group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300 ${isOpen ? 'is-open' : ''}`}
+    >
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-violet-600/10 via-purple-600/5 to-indigo-600/10"
+        />
+      )}
+
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        className="relative flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors duration-300 sm:px-6 sm:py-5"
+      >
+        <span className="services-faq-question text-sm font-bold text-white transition-colors duration-300 sm:text-base">
+          {question}
+        </span>
+        <span className={`services-faq-toggle flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'is-open' : ''}`}>
+          <FiChevronDown className={`services-faq-toggle-icon h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              transition: {
+                height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                opacity: { duration: 0.25, delay: 0.1 },
+              },
+            }}
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: {
+                height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                opacity: { duration: 0.2 },
+              },
+            }}
+            className="relative overflow-hidden"
+          >
+            <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+              <div className="border-t border-violet-500/20 pt-2">
+                <p className="services-faq-answer mt-3 text-sm leading-relaxed text-white sm:text-[15px]">
+                  {answer}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-200 group-hover:translate-x-full" />
+    </motion.div>
+  );
+}
+
+function ArrowUpRightIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 17L17 7M17 7H9M17 7v8" />
+    </svg>
+  );
+}
+
+const CONTACT_INPUT_DARK =
+  'w-full rounded-lg border border-white/12 bg-white/[0.06] px-3 py-2.5 text-sm text-white transition placeholder:text-white/35 focus:border-violet-400/45 focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-violet-500/20';
+
+const CONTACT_INPUT_LIGHT =
+  'w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/15';
+
+function ContactField({ label, required, className = '', isLight, children }) {
+  return (
+    <div className={className}>
+      <label
+        className={`mb-1 block text-xs font-medium ${isLight ? 'text-slate-700' : 'text-white/75'}`}
+      >
+        {label}
+        {required && <span className={isLight ? 'text-violet-600' : 'text-violet-300'}> *</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+function ContactLeftPanel({ isLight }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      className="contact-hero-left lg:flex lg:max-h-full lg:flex-col lg:justify-center"
+    >
+      <h1
+        className={`contact-hero-left__title mb-1.5 text-[1.75rem] font-extrabold tracking-tight sm:text-3xl lg:text-[2.15rem] lg:leading-[1.12] ${
+          isLight ? 'text-slate-900' : 'text-white'
+        }`}
+      >
+        Get in touch
+      </h1>
+      <p
+        className={`contact-hero-left__subtitle mb-4 max-w-md text-[13px] leading-relaxed sm:text-sm lg:mb-5 ${
+          isLight ? 'text-slate-600' : 'text-white/70'
+        }`}
+      >
+        Questions about franchise expansion? Our advisory team responds within one business day.
+      </p>
+
+      <div className="space-y-2">
+        {CONTACT_LINKS.map((item, i) => (
+          <motion.a
+            key={item.title}
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.12 + i * 0.08, duration: 0.45 }}
+            whileHover={{ x: 4 }}
+            className={`contact-hero-card group flex items-center gap-3 rounded-xl px-3.5 py-3 transition-all duration-300 ${
+              isLight
+                ? 'border border-slate-200/90 bg-white shadow-sm hover:border-violet-300 hover:shadow-md'
+                : 'border border-white/[0.12] bg-white/[0.06] backdrop-blur-md hover:border-violet-400/45 hover:bg-white/[0.1] hover:shadow-[0_12px_40px_rgba(109,40,217,0.18)]'
+            }`}
+          >
+            <div
+              className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg shadow-inner ${
+                isLight
+                  ? 'border border-violet-100 bg-violet-50 text-violet-700'
+                  : 'border border-white/10 bg-gradient-to-br from-violet-500/20 to-white/5 text-white'
+              }`}
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {item.icon}
+              </svg>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className={`text-[13px] font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>{item.title}</p>
+              <p className={`truncate text-xs ${isLight ? 'text-slate-500' : 'text-white/55'}`}>{item.value}</p>
+            </div>
+            <span
+              className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                isLight
+                  ? 'border-slate-200 text-slate-500 group-hover:border-violet-300 group-hover:bg-violet-50 group-hover:text-violet-700'
+                  : 'border-white/10 text-white/70 group-hover:border-violet-400/50 group-hover:bg-violet-500/20 group-hover:text-white'
+              }`}
+            >
+              <ArrowUpRightIcon />
+            </span>
+          </motion.a>
+        ))}
+      </div>
+
+      <div className="contact-hero-social mt-5 flex flex-col items-center text-center sm:mt-6">
+        <p
+          className={`mb-3 text-xs font-semibold uppercase tracking-[0.16em] ${
+            isLight ? 'text-slate-500' : 'text-white/50'
+          }`}
+        >
+          Follow us
+        </p>
+        <FooterSocialButtons variant="contact" className="justify-center gap-2.5" />
+      </div>
+    </motion.div>
+  );
+}
+
+function ContactHeroForm({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  isSubmitting,
+  isSubmitted,
+  submitError,
+  isLight,
+}) {
+  const inputClass = isLight ? CONTACT_INPUT_LIGHT : CONTACT_INPUT_DARK;
+
+  return (
+    <div
+      className={`contact-hero-form relative flex w-full max-h-full flex-col overflow-hidden rounded-2xl lg:max-h-full ${
+        isLight
+          ? 'border border-slate-200/90 bg-white shadow-lg shadow-slate-200/50'
+          : 'border border-white/[0.12] bg-[#0c0816]/95 shadow-[0_20px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl'
+      }`}
+    >
+      <div className="flex flex-col p-5 sm:p-6">
+        <div className="mb-4 shrink-0">
+          <h2
+            className={`text-xl font-bold tracking-tight sm:text-[1.35rem] ${
+              isLight ? 'text-slate-900' : 'text-white'
+            }`}
+          >
+            Send Message
+          </h2>
+          <p
+            className={`mt-1 text-xs leading-relaxed sm:text-[13px] ${
+              isLight ? 'text-slate-500' : 'text-white/55'
+            }`}
+          >
+            We&apos;ll get back to you within 24 hours.
+          </p>
+        </div>
+
+        {isSubmitted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center justify-center py-10 text-center"
+          >
+            <div
+              className={`mb-4 flex h-12 w-12 items-center justify-center rounded-full border ${
+                isLight ? 'border-emerald-200 bg-emerald-50' : 'border-emerald-400/30 bg-emerald-500/15'
+              }`}
+            >
+              <svg
+                className={`h-6 w-6 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className={`text-lg font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>Message sent</h3>
+            <p className={`mt-1 text-sm ${isLight ? 'text-slate-500' : 'text-white/55'}`}>
+              We&apos;ll be in touch within 24 hours.
+            </p>
+          </motion.div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
+              <ContactField label="Full Name" required isLight={isLight}>
+                <input
+                  type="text"
+                  required
+                  value={formData.fullName}
+                  onChange={(e) => handleInputChange('fullName', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your full name"
+                />
+              </ContactField>
+              <ContactField label="Contact Number" required isLight={isLight}>
+                <input
+                  type="tel"
+                  required
+                  value={formData.contactNumber}
+                  onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your phone number"
+                />
+              </ContactField>
+            </div>
+
+            <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
+              <ContactField label="Email Address" required isLight={isLight}>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className={inputClass}
+                  placeholder="Enter your email"
+                />
+              </ContactField>
+              <ContactField label="Website / Portfolio" isLight={isLight}>
+                <input
+                  type="url"
+                  value={formData.website}
+                  onChange={(e) => handleInputChange('website', e.target.value)}
+                  className={inputClass}
+                  placeholder="https://yourwebsite.com"
+                />
+              </ContactField>
+            </div>
+
+            <ContactField label="Company Name" className="shrink-0" isLight={isLight}>
+              <input
+                type="text"
+                value={formData.company}
+                onChange={(e) => handleInputChange('company', e.target.value)}
+                className={inputClass}
+                placeholder="Enter your company name"
+              />
+            </ContactField>
+
+            <ContactField label="Message" required isLight={isLight}>
+              <textarea
+                rows={2}
+                required
+                value={formData.message}
+                onChange={(e) => handleInputChange('message', e.target.value)}
+                className={`${inputClass} min-h-[4.5rem] resize-none py-2.5`}
+                placeholder="Tell us about your project..."
+              />
+            </ContactField>
+
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={{ scale: 1.005 }}
+              whileTap={{ scale: 0.995 }}
+              className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
+                isLight
+                  ? 'bg-slate-900 text-white shadow-slate-900/20 hover:bg-slate-800'
+                  : 'bg-white text-slate-900 shadow-black/20 hover:bg-white/90'
+              }`}
+            >
+              {isSubmitting ? 'Sending…' : 'Send Message'}
+            </motion.button>
+
+            {submitError && (
+              <p className={`shrink-0 text-center text-sm ${isLight ? 'text-red-600' : 'text-red-400'}`}>
+                {submitError}
+              </p>
+            )}
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
 
 function ContactPage() {
-  const { isLight } = useTheme();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
     email: '',
     website: '',
     company: '',
-    message: ''
+    message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const [openFaq, setOpenFaq] = useState(0);
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Prevent duplicate submissions while one is in flight
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -43,7 +433,6 @@ function ContactPage() {
       return;
     }
 
-    // Success — show the existing success UI then reset
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
@@ -54,399 +443,98 @@ function ContactPage() {
         email: '',
         website: '',
         company: '',
-        message: ''
+        message: '',
       });
     }, 3000);
   };
 
-  const FAQ_ITEMS = [
-    {
-      question: 'What is the typical investment range?',
-      answer: 'Most opportunities on our platform start around ₹20L and can go beyond ₹2.5Cr depending on brand category and market potential.'
-    },
-    {
-      question: 'How long does it take to break even?',
-      answer: 'Break-even timelines vary by sector, but many franchise models we work with target 12 to 24 months with disciplined execution.'
-    },
-    {
-      question: 'Do I need prior business experience?',
-      answer: 'Not necessarily. Many successful partners are first-time operators and rely on structured onboarding, SOPs, and advisory support.'
-    },
-    {
-      question: 'What support does iFranchise provide?',
-      answer: 'We support brand matching, diligence, financial understanding, launch planning, and ongoing growth guidance after onboarding.'
-    },
-    {
-      question: 'Can I operate multiple franchise units?',
-      answer: 'Yes. Multi-unit expansion is available for many brands after performance milestones and market readiness checks are met.'
-    }
-  ];
-
   return (
-    <main className="relative z-10 bg-transparent text-theme-primary">
-      {/* ═══════════════════════════════════════════════════════════
-          SECTION 1 — HERO (CENTERED, CLEAN)
-          ═══════════════════════════════════════════════════════════ */}
-      <section className="page-hero-light relative w-full min-h-[calc(100vh-80px)] flex flex-col items-center justify-center overflow-hidden bg-transparent" id="hero-section">
-
-        {/* ── Background layer ── */}
+    <main className="contact-page services-page relative z-10 bg-transparent text-theme-primary">
+      {/* Hero â€” left contact links, right form */}
+      <section
+        id="contact-form"
+        className={`page-hero-light relative flex w-full items-center bg-transparent py-8 sm:py-10 lg:h-[calc(100dvh-4rem)] lg:max-h-[calc(100dvh-4rem)] lg:min-h-0 lg:overflow-hidden lg:py-5 ${!isLight ? 'contact-hero-dark' : ''}`}
+      >
         <div className="page-hero-light__bg pointer-events-none absolute inset-0">
-          <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
+          <motion.div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/45 via-transparent to-indigo-950/30" />
           <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white/15" />
+              <pattern id="contact-hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path
+                  d="M 40 0 L 0 0 0 40"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="0.5"
+                  className={isLight ? 'text-slate-300/60' : 'text-white/20'}
+                />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#hero-grid)" />
+            <rect width="100%" height="100%" fill="url(#contact-hero-grid)" />
           </svg>
           <motion.div
-            animate={{ scale: [1, 1.18, 1], opacity: [0.10, 0.20, 0.10] }}
+            animate={{ scale: [1, 1.12, 1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-violet-400/15 blur-[140px]"
+            className="absolute -left-20 top-1/4 h-[320px] w-[320px] rounded-full bg-violet-500/20 blur-[100px] lg:h-[380px] lg:w-[380px]"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.16, 0.08] }}
+            transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+            className="absolute right-0 top-0 h-[260px] w-[260px] rounded-full bg-emerald-500/10 blur-[80px] lg:h-[300px] lg:w-[300px]"
           />
         </div>
 
-        {/* ── Centered content ── */}
-        <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-start gap-6 lg:grid-cols-2 lg:items-center lg:gap-8 xl:gap-10">
+            <ContactLeftPanel isLight={isLight} />
 
-          {/* Trust badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={`mb-7 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-sm ${isLight ? 'border-violet-200 bg-violet-50' : 'border-violet-500/35 bg-violet-500/15'}`}
-          >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
-            <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              India's Trusted Franchise Growth Platform
-            </span>
-          </motion.div>
-
-          {/* Headline — strategic, multi-line */}
-          <motion.h1
-            initial={{ opacity: 0, y: 32 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className={`text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl xl:text-6xl mb-4 ${isLight ? 'text-slate-900' : 'text-white'}`}
-          >
-            Build Smarter.{' '}
-            <span className="relative inline-block">
-              <span className={isLight ? 'text-violet-700' : 'bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent'}>
-                Scale Faster.
-              </span>
-              <motion.span
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.7, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -bottom-1 left-0 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-violet-400 to-indigo-400"
+            <motion.div
+              initial={{ opacity: 0, x: 28 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="flex w-full lg:justify-center"
+            >
+              <ContactHeroForm
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                isSubmitted={isSubmitted}
+                submitError={submitError}
+                isLight={isLight}
               />
-            </span>
-            <br />
-            <span className={isLight ? 'text-slate-900' : 'text-white'}>Win with Precision.</span>
-          </motion.h1>
-
-          {/* Sub-headline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.3, ease: 'easeOut' }}
-            className={`text-base sm:text-lg max-w-xl leading-relaxed mb-8 ${isLight ? 'text-slate-600' : 'text-white'}`}
-          >
-            Strategic franchise intelligence for founders who think in systems, move with conviction, and build for legacy.
-          </motion.p>
-
-          {/* Creative animated down arrow pill */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
-            className="relative"
-          >
-            {/* Outer pulse rings */}
-            <motion.span
-              animate={{ scale: [1, 1.55, 1], opacity: [0.35, 0, 0.35] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }}
-              className="absolute inset-0 rounded-full bg-violet-400/30 pointer-events-none"
-            />
-            <motion.span
-              animate={{ scale: [1, 1.9, 1], opacity: [0.2, 0, 0.2] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut', delay: 0.4 }}
-              className="absolute inset-0 rounded-full bg-violet-300/20 pointer-events-none"
-            />
-
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.93 }}
-              onClick={() => document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth' })}
-              aria-label="Scroll to contact form"
-              className="site-cta site-cta--md group pl-5 pr-4"
-            >
-              <span className="site-cta__label relative z-[1] text-sm tracking-wide">Start the conversation</span>
-              <span className="site-cta__icon relative z-[1] h-8 w-8" aria-hidden>
-                <motion.svg
-                  animate={{ y: [0, 3, 0] }}
-                  transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="h-4 w-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                </motion.svg>
-              </span>
-            </motion.button>
-          </motion.div>
-
-          {/* Floating micro-stats below arrow */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="mt-10 flex items-center gap-6 text-center"
-          >
-            {[
-              { value: '200+', label: 'Brands Scaled' },
-              { value: '₹500Cr+', label: 'Capital Deployed' },
-              { value: '15+', label: 'Industries' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1 + i * 0.1 }}
-                className="flex flex-col items-center"
-              >
-                <span className={`text-xl font-extrabold ${isLight ? 'text-slate-900' : 'text-white'}`}>{stat.value}</span>
-                <span className={`text-xs font-medium mt-0.5 ${isLight ? 'text-slate-600' : 'text-white'}`}>{stat.label}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SECTION 2 - CONTACT FORM (FULL VIEWPORT FIT) */}
-      <section className="w-full bg-transparent min-h-[calc(100vh-80px)] flex items-center overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 lg:py-8">
-          <div id="contact-form" className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left Side - Large Image + Social Links */}
-            <motion.div
-              initial={{ opacity: 0, x: -30, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative flex flex-col items-center justify-center order-last lg:order-first space-y-6"
-            >
-              {/* Image Container */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-[400px] h-[400px] lg:w-[480px] lg:h-[480px] bg-gradient-to-br from-slate-100/40 via-purple-50/30 to-slate-100/40 rounded-[40%_60%_70%_30%] blur-sm"></div>
-                </div>
-                
-                <div className="relative z-10">
-                  <motion.img
-                    initial={{ scale: 0.9 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
-                    src={contactImage2}
-                    alt="Contact support"
-                    className="w-full max-w-md lg:max-w-lg xl:max-w-xl h-auto object-contain drop-shadow-lg"
-                  />
-                  
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut", delay: 0.8 }}
-                    className="absolute -top-8 left-1/2 transform -translate-x-1/2 lg:-top-12 lg:left-2/3 lg:-translate-x-1/2"
-                  >
-                    <div className="card-premium-dark-inner rounded-2xl px-5 py-3 shadow-xl relative">
-                      <p className="text-base font-medium text-white">Let's Connect!</p>
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[rgba(139,92,246,0.25)]" />
-                    </div>
-                  </motion.div>
-                  
-                  <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-3/4 h-12 bg-slate-200/30 rounded-full blur-xl"></div>
-                </div>
-              </div>
-
-              {/* Premium Social Links */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
-                className="flex flex-col items-center space-y-4"
-              >
-                <p className="text-sm font-medium text-white">Connect with iFranchise</p>
-                
-                <FooterSocialButtons variant="contact" className="justify-center" />
-              </motion.div>
-            </motion.div>
-
-            {/* Right Side - Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-              className="order-first lg:order-last"
-            >
-              <div className="card-premium-dark rounded-2xl p-6 lg:p-8 relative overflow-hidden transition-all duration-300 hover:border-[rgba(139,92,246,0.45)] hover:shadow-[0_20px_50px_rgba(109,40,217,0.25)]">
-                <div className="absolute top-0 left-0 right-0 h-px opacity-60 pointer-events-none bg-gradient-to-r from-transparent via-violet-500/70 to-transparent" />
-                <div className="mb-6 relative z-10">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-3">
-                    Send Message
-                  </h2>
-                  <p className="text-white leading-relaxed">
-                    Ready to scale your business? Fill out the form and we'll get back to you within 24 hours.
-                  </p>
-                </div>
-
-                {isSubmitted ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-8"
-                  >
-                    <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-emerald-400/35">
-                      <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-white mb-1">Message Sent!</h3>
-                    <p className="text-white text-sm">Thank you for reaching out. We'll be in touch soon.</p>
-                  </motion.div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-medium text-white mb-1">Full Name *</label>
-                        <input
-                          type="text"
-                          required
-                          value={formData.fullName}
-                          onChange={(e) => handleInputChange('fullName', e.target.value)}
-                          className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 text-sm"
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-white mb-1">Contact Number *</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formData.contactNumber}
-                          onChange={(e) => handleInputChange('contactNumber', e.target.value)}
-                          className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 text-sm"
-                          placeholder="Enter your phone number"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-medium text-white mb-1">Email Address *</label>
-                        <input
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 text-sm"
-                          placeholder="Enter your email address"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-white mb-1">Website / Portfolio</label>
-                        <input
-                          type="url"
-                          value={formData.website}
-                          onChange={(e) => handleInputChange('website', e.target.value)}
-                          className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 text-sm"
-                          placeholder="https://yourwebsite.com"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-white mb-1">Company Name</label>
-                      <input
-                        type="text"
-                        value={formData.company}
-                        onChange={(e) => handleInputChange('company', e.target.value)}
-                        className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 text-sm"
-                        placeholder="Enter your company name"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-white mb-1">Message *</label>
-                      <textarea
-                        rows={4}
-                        required
-                        value={formData.message}
-                        onChange={(e) => handleInputChange('message', e.target.value)}
-                        className="w-full px-3 py-3 rounded-lg border border-slate-200 focus:border-purple-400 focus:ring-3 focus:ring-purple-100 transition-all duration-300 bg-white/80 text-slate-900 placeholder-slate-500 resize-none text-sm"
-                        placeholder="Tell us about your project and goals..."
-                      />
-                    </div>
-
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      whileHover={{ scale: 1.02, y: -1 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`contact-send-btn w-full px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed ${
-                        isLight
-                          ? 'bg-[#0B1220] hover:bg-[#1a2332] text-white border border-white/10'
-                          : 'btn-purple-solid'
-                      }`}
-                    >
-                      {isSubmitting ? (
-                        <div className="flex items-center justify-center gap-2">
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          Sending...
-                        </div>
-                      ) : (
-                        'Send Message'
-                      )}
-                    </motion.button>
-
-                    {/* Error message — only shown on submission failure, uses existing text styles */}
-                    {submitError && (
-                      <p className="text-sm text-red-600 text-center pt-1">{submitError}</p>
-                    )}
-                  </form>
-                )}
-              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3 - OUR LOCATION MAP (TIGHT SPACING) */}
+      {/* Location */}
       <section className="w-full py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-8"
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true }}
+            className="mb-8 text-center"
           >
-            <SectionPill className="mb-4">Our Location</SectionPill>
-            
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
-              Built in Bangalore. Scaling Across India.
-            </h2>
-            
-            <p className="text-lg text-white max-w-2xl mx-auto leading-relaxed">
-              Strategically positioned in India's innovation capital to connect founders, investors, and franchise ecosystems.
+            <span className="services-faq-section__badge mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
+              Our Location
+            </span>
+            <h2 className="mb-3 text-3xl font-bold text-white lg:text-4xl">Built in Bangalore. Scaling Across India.</h2>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/85">
+              Strategically positioned in India&apos;s innovation capital to connect founders, investors, and franchise ecosystems.
             </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="relative group"
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+            viewport={{ once: true }}
+            className="group relative"
           >
-            <div className="relative overflow-hidden rounded-2xl border border-[rgba(139,92,246,0.25)] shadow-[0_20px_50px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(109,40,217,0.2)] transition-all duration-500">
+            <div className="relative overflow-hidden rounded-2xl border border-[rgba(139,92,246,0.25)] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-500 hover:shadow-[0_24px_60px_rgba(109,40,217,0.2)]">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d77.49085452148437!3d12.953945614117967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4aa0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
                 width="100%"
@@ -455,167 +543,50 @@ function ContactPage() {
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-[500px] transition-all duration-300"
+                className="h-[500px] w-full"
                 title="Bangalore Location Map"
-              ></iframe>
-              
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-violet-500/30 transition-all duration-300 pointer-events-none" />
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent transition-all duration-300 group-hover:border-violet-500/30" />
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* SECTION 4 - FAQ WITH CONTACT CARD (BALANCED LAYOUT) */}
-      <section className="w-full py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-lg text-white max-w-2xl mx-auto">
-              Everything founders, investors, and franchise partners need to know.
-            </p>
-          </motion.div>
-
-          {/* Two-column: Contact card left, FAQs right */}
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
-
-            {/* LEFT — Contact Info Card */}
+      {/* FAQ â€” after location, Services style */}
+      <section className="services-faq-section relative w-full overflow-hidden py-12 md:py-16">
+        <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="h-full"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="relative group h-full">
-                <div className="relative card-premium-dark rounded-2xl p-8 lg:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_50px_rgba(109,40,217,0.25)] transition-all duration-500 h-full flex flex-col justify-between border border-[rgba(139,92,246,0.18)]">
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent opacity-70" aria-hidden />
-                  <div className="space-y-2 relative z-10">
-                    {/* Email */}
-                    <motion.a href="mailto:hello@ifranchise.in" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
-                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Email</p>
-                          <p className="text-white font-semibold group-hover/item:text-white transition-colors duration-300">hello@ifranchise.in</p>
-                        </div>
-                        <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </div>
-                      </div>
-                    </motion.a>
-
-                    {/* Phone */}
-                    <motion.a href="tel:+919876543210" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
-                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Phone</p>
-                          <p className="text-white font-semibold group-hover/item:text-white transition-colors duration-300">+91 98765 43210</p>
-                        </div>
-                        <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </div>
-                      </div>
-                    </motion.a>
-
-                    {/* Address */}
-                    <motion.a href="https://maps.google.com/?q=Bangalore,Karnataka,India" target="_blank" rel="noopener noreferrer" whileHover={{ x: 4 }} className="group/item cursor-pointer block">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
-                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Address</p>
-                          <p className="text-white font-semibold group-hover/item:text-white transition-colors duration-300">Bangalore, Karnataka, India</p>
-                        </div>
-                        <div className="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                          <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </div>
-                      </div>
-                    </motion.a>
-
-                    {/* Availability */}
-                    <motion.div whileHover={{ x: 4 }} className="group/item">
-                      <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[rgba(139,92,246,0.35)]">
-                        <div className="w-12 h-12 bg-[rgba(139,92,246,0.15)] rounded-lg flex items-center justify-center border border-[rgba(139,92,246,0.35)]">
-                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-xs text-white font-medium mb-0.5 uppercase tracking-wide">Availability</p>
-                          <p className="text-white font-semibold">Monday to Saturday, 9 AM – 7 PM IST</p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
+              <span className="services-faq-section__badge mb-6 inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
+                FAQ
+              </span>
+              <h2 className="services-faq-section__title mb-5 text-4xl font-extrabold leading-tight text-white md:text-5xl">
+                Frequently Asked Questions
+              </h2>
+              <p className="mx-auto max-w-xl text-base text-white/75 sm:text-lg">
+                Everything founders, investors, and franchise partners need to know.
+              </p>
             </motion.div>
+          </div>
 
-            {/* RIGHT — FAQ accordion */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-              className="flex flex-col gap-3"
-            >
-              {FAQ_ITEMS.map((item, index) => {
-                const isOpen = openFaq === index;
-                return (
-                  <motion.button
-                    key={item.question}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.07 }}
-                    onClick={() => setOpenFaq(prev => prev === index ? -1 : index)}
-                    className="text-left card-premium-dark rounded-xl p-5 transition duration-300 hover:border-[rgba(139,92,246,0.45)] hover:shadow-[0_12px_40px_rgba(109,40,217,0.2)]"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <p className="font-semibold text-white pr-2">{item.question}</p>
-                      <span className="text-lg font-semibold text-white flex-shrink-0">
-                        {isOpen ? '−' : '+'}
-                      </span>
-                    </div>
-                    <div className={`grid transition-all duration-300 ease-out ${
-                      isOpen ? 'mt-3 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                    }`}>
-                      <div className="overflow-hidden">
-                        <p className="text-sm leading-relaxed text-white">{item.answer}</p>
-                      </div>
-                    </div>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-
+          <div className="services-faq-list space-y-4">
+            {FAQ_ITEMS.map((item, index) => (
+              <ContactFAQItem
+                key={item.question}
+                question={item.question}
+                answer={item.answer}
+                index={index}
+              />
+            ))}
           </div>
         </div>
       </section>
-
     </main>
   );
 }
