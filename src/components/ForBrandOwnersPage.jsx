@@ -1,6 +1,22 @@
-﻿import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
+import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
+import FormSuccessState from './forms/FormSuccessState';
+import HoneypotField from './forms/HoneypotField';
+
+const BRAND_APP_INITIAL = withHoneypot({
+  brandName: '',
+  name: '',
+  email: '',
+  phone: '',
+  industry: '',
+  outlets: '',
+  budget: '',
+  cityGoal: '',
+  model: '',
+  vision: '',
+});
 import CtaButton from './ui/CtaButton';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import {
@@ -764,30 +780,28 @@ function Field({ label, required, children, className = '', compact = false }) {
 function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }) {
   const fieldClass = fitViewport ? inputClassCompact : inputClass;
   const selectFieldClass = fitViewport ? selectClass : selectClassFull;
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({
-    brandName: '', name: '', email: '', phone: '',
-    industry: '', outlets: '', budget: '', cityGoal: '', model: '', vision: '',
+  const {
+    values: form,
+    setField: set,
+    isSubmitting: submitting,
+    isSuccess: submitted,
+    submitError,
+    handleSubmit,
+    resetForm,
+  } = useFormSubmission({
+    initialValues: BRAND_APP_INITIAL,
+    onSubmit: (formValues) => {
+      const payload = {
+        ...formValues,
+        timeline: '3-6 months',
+        founded: '',
+        hasSOPs: '',
+        hasDocs: '',
+        company: formValues.brandName,
+      };
+      return submitBrandApplication(payload, 'list_your_brand_hero');
+    },
   });
-  const set = (key, val) => setForm((f) => ({ ...f, [key]: val }));
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    const payload = {
-      ...form,
-      timeline: '3-6 months',
-      founded: '',
-      hasSOPs: '',
-      hasDocs: '',
-      company: form.brandName,
-    };
-    const result = await submitBrandApplication(payload, 'list_your_brand_hero');
-    setSubmitting(false);
-    if (result.success) setSubmitted(true);
-    else alert(result.error || 'Submission failed. Please try again.');
-  };
 
   return (
     <motion.div
@@ -814,21 +828,21 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
         <div className={fitViewport ? 'flex min-h-0 flex-1 flex-col' : ''}>
         <AnimatePresence mode="wait">
           {submitted ? (
-            <motion.div key="ok" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-8 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-violet-600">
-                <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <p className="text-sm font-bold text-white">Application received</p>
-              <p className="mt-1 text-xs text-white">We&apos;ll contact you within 24 hours.</p>
-            </motion.div>
+            <FormSuccessState
+              key="ok"
+              title="Application received"
+              description="We'll contact you within 24 hours."
+              onReset={resetForm}
+              variant="dark"
+              className="py-4"
+            />
           ) : (
             <motion.form
               key="form"
               onSubmit={handleSubmit}
-              className={`flex min-h-0 flex-col ${fitViewport ? 'h-full flex-1' : 'gap-4'}`}
+              className={`relative flex min-h-0 flex-col ${fitViewport ? 'h-full flex-1' : 'gap-4'}`}
             >
+              <HoneypotField value={form._hp} onChange={set} />
               <div
                 className={
                   fitViewport
@@ -938,6 +952,11 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                   />
                 </Field>
               </div>
+              {submitError && (
+                <p className="shrink-0 text-center text-xs text-red-300" role="alert">
+                  {submitError}
+                </p>
+              )}
               <button
                 type="submit"
                 disabled={submitting}

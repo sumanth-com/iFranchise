@@ -2393,17 +2393,6 @@ function DualSectionPanel({ title, children }) {
 function FranchiseDetailsPage() {
   const [activeTab, setActiveTab] = useState('Overview');
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    investmentRange: '',
-    state: '',
-    city: '',
-    message: '',
-  });
-
   const selectedFranchise = useMemo(() => {
     return franchiseDetailsData[selectedFranchiseId] || franchiseDetailsData[1];
   }, [selectedFranchiseId]);
@@ -2463,15 +2452,6 @@ function FranchiseDetailsPage() {
       window.removeEventListener('popstate', handleRouteUpdate);
     };
   }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
 
   const handleRelatedDetails = (id) => {
     window.history.pushState({}, '', `/franchise-details?id=${id}`);

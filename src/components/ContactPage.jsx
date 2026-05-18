@@ -3,7 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
 import { useTheme } from '../context/ThemeContext';
+import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
+import FormSuccessState from './forms/FormSuccessState';
+import HoneypotField from './forms/HoneypotField';
 import FooterSocialButtons from './footer/FooterSocialButtons';
+
+const CONTACT_FORM_INITIAL = withHoneypot({
+  fullName: '',
+  contactNumber: '',
+  email: '',
+  website: '',
+  company: '',
+  message: '',
+});
 
 const FAQ_ITEMS = [
   {
@@ -245,8 +257,9 @@ function ContactHeroForm({
   handleInputChange,
   handleSubmit,
   isSubmitting,
-  isSubmitted,
+  isSuccess,
   submitError,
+  onResetSuccess,
   isLight,
 }) {
   const inputClass = isLight ? CONTACT_INPUT_LIGHT : CONTACT_INPUT_DARK;
@@ -277,33 +290,16 @@ function ContactHeroForm({
           </p>
         </div>
 
-        {isSubmitted ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-10 text-center"
-          >
-            <div
-              className={`mb-4 flex h-12 w-12 items-center justify-center rounded-full border ${
-                isLight ? 'border-emerald-200 bg-emerald-50' : 'border-emerald-400/30 bg-emerald-500/15'
-              }`}
-            >
-              <svg
-                className={`h-6 w-6 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h3 className={`text-lg font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>Message sent</h3>
-            <p className={`mt-1 text-sm ${isLight ? 'text-slate-500' : 'text-white/55'}`}>
-              We&apos;ll be in touch within 24 hours.
-            </p>
-          </motion.div>
+        {isSuccess ? (
+          <FormSuccessState
+            title="Message sent"
+            description="We'll be in touch within 24 hours."
+            onReset={onResetSuccess}
+            variant={isLight ? 'default' : 'dark'}
+          />
         ) : (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <form onSubmit={handleSubmit} className="relative flex flex-col gap-3">
+            <HoneypotField value={formData._hp} onChange={handleInputChange} />
             <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
               <ContactField label="Full Name" required isLight={isLight}>
                 <input
@@ -401,52 +397,20 @@ function ContactPage() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
 
-  const [formData, setFormData] = useState({
-    fullName: '',
-    contactNumber: '',
-    email: '',
-    website: '',
-    company: '',
-    message: '',
+  const {
+    values: formData,
+    setField: handleInputChange,
+    isSubmitting,
+    isSuccess,
+    submitError,
+    handleSubmit,
+    resetForm,
+  } = useFormSubmission({
+    initialValues: CONTACT_FORM_INITIAL,
+    onSubmit: (data) => submitContactForm(data, 'contact_page'),
+    successTitle: 'Message sent',
+    successDescription: "We'll be in touch within 24 hours.",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    setIsSubmitting(true);
-    setSubmitError('');
-
-    const result = await submitContactForm(formData, 'contact_page');
-
-    setIsSubmitting(false);
-
-    if (!result.success) {
-      setSubmitError(result.error || 'Something went wrong. Please try again.');
-      return;
-    }
-
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setSubmitError('');
-      setFormData({
-        fullName: '',
-        contactNumber: '',
-        email: '',
-        website: '',
-        company: '',
-        message: '',
-      });
-    }, 3000);
-  };
 
   return (
     <main className="contact-page services-page relative z-10 bg-transparent text-theme-primary">
@@ -498,8 +462,9 @@ function ContactPage() {
                 handleInputChange={handleInputChange}
                 handleSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
-                isSubmitted={isSubmitted}
+                isSuccess={isSuccess}
                 submitError={submitError}
+                onResetSuccess={resetForm}
                 isLight={isLight}
               />
             </motion.div>

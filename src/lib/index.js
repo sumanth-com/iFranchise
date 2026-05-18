@@ -5,7 +5,7 @@
  * Import from here instead of individual files to keep imports clean.
  *
  * Usage:
- *   import { submitContactForm, submitFranchiseInquiry } from '@/lib';
+ *   import { submitContactForm } from '@/lib';
  *   import { FORM_TYPES, SHEET_TABS } from '@/lib/forms';
  * ─────────────────────────────────────────────────────────────────────────────
  */

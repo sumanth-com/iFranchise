@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { submitBrandConsultation, submitChatbotLead } from '../lib/forms';
+import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
 
@@ -866,8 +866,6 @@ function BrandsView({ setView }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
-  const [scheduling, setScheduling] = useState(false);
-  const [schedule, setSchedule] = useState({});
   const [complete, setComplete] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -884,25 +882,19 @@ function BrandsView({ setView }) {
     return Array.isArray(val) ? val.length > 0 : Boolean(val?.trim?.() ?? val);
   })();
 
-  const canSubmitSchedule = Boolean(schedule.preferredDate && schedule.preferredTime);
-
   const handleContinue = () => {
     if (step < BRAND_STEPS.length - 1) setStep(s => s + 1);
     else setDone(true);
   };
 
-  const handleScheduleSubmit = async () => {
-    if (!canSubmitSchedule || submitting) return;
+  const handleSubmit = async () => {
+    if (submitting) return;
     setSubmitting(true);
     setSubmitError('');
-    const result = await submitBrandConsultation(
-      { ...data, ...schedule },
-      'expansion_assistant_brand_consultation',
-    );
+    const result = await submitChatbotLead(data, 'brand', 'expansion_assistant_brand');
     setSubmitting(false);
     if (result.success) {
       setComplete(true);
-      setScheduling(false);
     } else {
       setSubmitError(result.error || 'Something went wrong. Please try again.');
     }
@@ -918,43 +910,14 @@ function BrandsView({ setView }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Request Received" onBack={() => setView('home')} />
+        <FlowHeader title="Thank you" onBack={() => setView('home')} />
         <motion.div style={{ flex: 1, overflowY: 'auto', padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, textAlign: 'center' }}>
           <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>✓</div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}>Consultation scheduled</div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}>Request received</div>
           <p style={{ color: p.mutedText, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
-            Our expansion team will contact you within 24 hours to confirm your slot.
+            Our expansion team will contact you within 24 hours.
           </p>
           <ContinueBtn onClick={() => setView('home')} label="Back to Home" />
-        </motion.div>
-      </motion.div>
-    );
-  }
-
-  if (done && scheduling) {
-    return (
-      <motion.div
-        key="brands-schedule"
-        initial={{ opacity: 0, x: 12 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -12 }}
-        transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
-      >
-        <FlowHeader title="Schedule Consultation" onBack={() => setScheduling(false)} />
-        <motion.div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px 8px' }}>
-          <p style={{ fontSize: 13, color: p.mutedText, marginBottom: 12, lineHeight: 1.45 }}>
-            Pick a time that works for you. We will save your brand details and confirm by phone or email.
-          </p>
-          <ConsultationScheduleFields schedule={schedule} setSchedule={setSchedule} />
-          <FormError message={submitError} />
-        </motion.div>
-        <motion.div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
-          <ContinueBtn
-            onClick={handleScheduleSubmit}
-            disabled={!canSubmitSchedule || submitting}
-            label={submitting ? 'Submitting...' : 'Confirm Consultation'}
-          />
         </motion.div>
       </motion.div>
     );
@@ -981,10 +944,14 @@ function BrandsView({ setView }) {
             { label: 'Contact', value: data.contactName },
             { label: 'Phone', value: data.contactPhone },
           ]} />
-          <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
-            Our expansion team will reach out within 24 hours.
-          </p>
-          <ContinueBtn onClick={() => setScheduling(true)} label="Schedule Expansion Consultation" />
+          <FormError message={submitError} />
+        </div>
+        <div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
+          <ContinueBtn
+            onClick={handleSubmit}
+            disabled={submitting}
+            label={submitting ? 'Submitting…' : 'Submit'}
+          />
         </div>
       </motion.div>
     );
@@ -1058,10 +1025,18 @@ function InvestorsView({ setView, setIsOpen }) {
   const [done, setDone] = useState(false);
   const submittedRef = useRef(false);
 
+  const [submitError, setSubmitError] = useState('');
+
   useEffect(() => {
     if (!done || submittedRef.current) return;
     submittedRef.current = true;
-    submitChatbotLead(data, 'investor', 'expansion_assistant_investor');
+    (async () => {
+      const result = await submitChatbotLead(data, 'investor', 'expansion_assistant_investor');
+      if (!result?.success) {
+        submittedRef.current = false;
+        setSubmitError(result?.error || 'Could not save your preferences. Please try again.');
+      }
+    })();
   }, [done, data]);
 
   const current = INVESTOR_STEPS[step];
@@ -1099,6 +1074,9 @@ function InvestorsView({ setView, setIsOpen }) {
           <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
             We have curated opportunities matching your profile.
           </p>
+          {submitError ? (
+            <p style={{ color: '#f87171', fontSize: 12, textAlign: 'center', margin: 0 }}>{submitError}</p>
+          ) : null}
           <ContinueBtn onClick={() => navTo('/franchise-opportunities', setIsOpen)} label="Browse Matching Opportunities" />
         </div>
       </motion.div>
@@ -1158,7 +1136,20 @@ function StrategyView({ setView }) {
     { icon: <UsersMiniIcon />, title: 'Investor preview', desc: 'See matching opportunities' },
   ];
 
-  const openCal = () => window.open(STRATEGY_CAL_URL, '_blank', 'noopener,noreferrer');
+  const openCal = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    submitStrategyCall(
+      {
+        name: 'Strategy call',
+        phone: '0000000000',
+        preferredDate: today,
+        preferredTime: 'Cal.com booking',
+        message: 'User opened external strategy calendar',
+      },
+      'expansion_assistant_strategy_calendar',
+    );
+    window.open(STRATEGY_CAL_URL, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <motion.div

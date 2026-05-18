@@ -88,7 +88,9 @@ async function postWithNoCors(payload) {
  * Tries CORS (readable response) with retries, then falls back to no-cors.
  */
 export async function submitToGoogleSheets(payload) {
-  logger.log('[GoogleSheetsClient] Submission started', payload.form_type);
+  if (import.meta.env.DEV) {
+    logger.log('[GoogleSheetsClient] Submission started', payload.form_type);
+  }
 
   if (!GOOGLE_APPS_SCRIPT_URL) {
     logger.error('[GoogleSheetsClient] VITE_GOOGLE_APPS_SCRIPT_URL not configured');
@@ -115,7 +117,7 @@ export async function submitToGoogleSheets(payload) {
     try {
       const result = await postWithCors(payload, attempt);
       if (result.success) {
-        logger.log('[GoogleSheetsClient] CORS submission succeeded');
+        if (import.meta.env.DEV) logger.log('[GoogleSheetsClient] CORS submission succeeded');
         return result;
       }
       return result;
@@ -134,7 +136,7 @@ export async function submitToGoogleSheets(payload) {
   }
 
   try {
-    logger.log('[GoogleSheetsClient] Falling back to no-cors mode');
+    if (import.meta.env.DEV) logger.log('[GoogleSheetsClient] Falling back to no-cors mode');
     return await postWithNoCors(payload);
   } catch (error) {
     logger.error('[GoogleSheetsClient] All submission attempts failed:', lastError || error);
@@ -148,6 +150,3 @@ export async function submitToGoogleSheets(payload) {
     };
   }
 }
-
-/** @deprecated Use submitToGoogleSheets — kept for backward compatibility */
-export const submitToGoogleSheetsWithCORS = submitToGoogleSheets;

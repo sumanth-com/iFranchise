@@ -7,7 +7,10 @@ import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
-import { submitContactForm, HONEYPOT_FIELD } from '../lib/forms';
+import { submitContactForm } from '../lib/forms';
+import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
+import FormSuccessState from './forms/FormSuccessState';
+import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK } from '../data/sectionImages';
 import brandLogo from '../assets/BrandLogo.png';
 import {
@@ -1265,45 +1268,28 @@ function ContactIcon({ type }) {
   );
 }
 
+const HOMEPAGE_CONTACT_INITIAL = withHoneypot({
+  fullName: '',
+  email: '',
+  website: '',
+  contactNumber: '',
+  message: '',
+  company: '',
+});
+
 function ContactSection() {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    website: '',
-    contactNumber: '',
-    message: '',
-    company: '',
-    [HONEYPOT_FIELD]: '',
+  const {
+    values: formData,
+    setField: handleInputChange,
+    isSubmitting,
+    isSuccess,
+    submitError,
+    handleSubmit,
+    resetForm,
+  } = useFormSubmission({
+    initialValues: HOMEPAGE_CONTACT_INITIAL,
+    onSubmit: (data) => submitContactForm(data, 'homepage_contact'),
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    setIsSubmitting(true);
-    const result = await submitContactForm(formData, 'homepage_contact');
-    setIsSubmitting(false);
-
-    if (!result.success) {
-      alert(result.error || 'Something went wrong. Please try again.');
-      return;
-    }
-
-    setFormData({
-      fullName: '',
-      email: '',
-      website: '',
-      contactNumber: '',
-      message: '',
-      company: '',
-      [HONEYPOT_FIELD]: '',
-    });
-  };
 
   return (
     <section className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -1350,17 +1336,16 @@ function ContactSection() {
           </div>
 
           <div className="rounded-xl sm:rounded-2xl border border-white/15 bg-white/5 p-4 sm:p-5 md:p-6 backdrop-blur-md">
-            <form className="space-y-3 sm:space-y-4" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name={HONEYPOT_FIELD}
-                value={formData[HONEYPOT_FIELD]}
-                onChange={(e) => handleInputChange(HONEYPOT_FIELD, e.target.value)}
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0, padding: 0, border: 0 }}
+            {isSuccess ? (
+              <FormSuccessState
+                title="Thank you!"
+                description="Your message was received. Our team will respond within one business day."
+                onReset={resetForm}
+                variant="emerald"
               />
+            ) : (
+            <form className="relative space-y-3 sm:space-y-4" onSubmit={handleSubmit}>
+              <HoneypotField value={formData._hp} onChange={handleInputChange} />
               <input
                 type="text"
                 placeholder="Full Name"
@@ -1405,9 +1390,15 @@ function ContactSection() {
                 disabled={isSubmitting}
                 className="w-full rounded-lg sm:rounded-xl bg-white px-4 sm:px-5 py-2.5 sm:py-3 text-sm font-bold text-[#091115] transition duration-300 hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-[0_12px_25px_rgba(255,255,255,0.2)] disabled:opacity-60"
               >
-                {isSubmitting ? 'Submitting?' : 'Submit'}
+                {isSubmitting ? 'Submitting…' : 'Submit'}
               </button>
+              {submitError && (
+                <p className="text-center text-sm text-red-300" role="alert">
+                  {submitError}
+                </p>
+              )}
             </form>
+            )}
           </div>
         </div>
       </div>

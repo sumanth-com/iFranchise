@@ -3,6 +3,7 @@
  */
 
 import { sanitizeObjectStrings } from '../../sanitize.js';
+import { isValidEmail, isValidPhone, validateRequiredString } from '../utils/fieldValidators.js';
 
 /**
  * Validate contact form data
@@ -21,32 +22,18 @@ export function validateContactForm(formData) {
   const errors = {};
   const data = sanitizeObjectStrings({ ...formData });
 
-  // Full name validation
-  if (!data.fullName || data.fullName.trim().length < 2) {
-    errors.fullName = 'Name must be at least 2 characters';
-  } else if (data.fullName.trim().length > 100) {
-    errors.fullName = 'Name must be under 100 characters';
-  } else {
-    data.fullName = data.fullName.trim();
-  }
+  const nameResult = validateRequiredString(data.fullName, 'Name', { min: 2, max: 100 });
+  if (!nameResult.ok) errors.fullName = nameResult.error;
+  else data.fullName = nameResult.value;
 
-  // Contact number validation
-  if (!data.contactNumber || data.contactNumber.trim().length < 7) {
-    errors.contactNumber = 'Phone number is too short';
-  } else if (data.contactNumber.trim().length > 20) {
-    errors.contactNumber = 'Phone number is too long';
-  } else if (!/^[\+]?[0-9\s\-\(\)]{7,20}$/.test(data.contactNumber.trim())) {
+  if (!isValidPhone(data.contactNumber)) {
     errors.contactNumber = 'Please enter a valid phone number';
   } else {
     data.contactNumber = data.contactNumber.trim();
   }
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!data.email || !emailRegex.test(data.email.trim())) {
+  if (!isValidEmail(data.email)) {
     errors.email = 'Please enter a valid email address';
-  } else if (data.email.trim().length > 254) {
-    errors.email = 'Email address is too long';
   } else {
     data.email = data.email.trim().toLowerCase();
   }

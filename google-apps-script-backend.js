@@ -19,11 +19,11 @@
  */
 const SHEET_TABS = {
   contact: 'Contact_Leads',
-  franchise_inquiry: 'Franchise_Inquiries',
   brand_application: 'Brand_Applications',
   job_application: 'Job_Applications',
   chatbot_brand: 'Chatbot_Brands',
-  chatbot_investor: 'Chatbot_Investors'
+  chatbot_investor: 'Chatbot_Investors',
+  chatbot_strategy: 'Chatbot_Strategy'
 };
 
 /**
@@ -38,18 +38,6 @@ const SHEET_HEADERS = {
     'Email',
     'Phone',
     'Company',
-    'Message',
-    'Submitted At'
-  ],
-  Franchise_Inquiries: [
-    'Timestamp',
-    'Source Page',
-    'Name',
-    'Email',
-    'Phone',
-    'Franchise Interest',
-    'Investment Budget',
-    'Timeline',
     'Message',
     'Submitted At'
   ],
@@ -97,6 +85,17 @@ const SHEET_HEADERS = {
     'Cities',
     'ROI',
     'Timeline',
+    'Submitted At'
+  ],
+  Chatbot_Strategy: [
+    'Timestamp',
+    'Source Page',
+    'Name',
+    'Phone',
+    'Email',
+    'Preferred Date',
+    'Preferred Time',
+    'Message',
     'Submitted At'
   ]
 };
@@ -305,20 +304,6 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         submittedAtTime
       ];
       
-    case 'franchise_inquiry':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.name || '',
-        data.email || '',
-        data.phone || '',
-        data.franchiseInterest || '',
-        data.investmentBudget || '',
-        data.timeline || '',
-        data.message || '',
-        submittedAtTime
-      ];
-      
     case 'brand_application':
       return [
         timestamp,
@@ -370,6 +355,19 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         data.cities || '',
         data.roi || '',
         data.timeline || '',
+        submittedAtTime
+      ];
+
+    case 'chatbot_strategy':
+      return [
+        timestamp,
+        sourcePage || 'unknown',
+        data.name || '',
+        data.phone || '',
+        data.email || '',
+        data.preferred_date || '',
+        data.preferred_time || '',
+        data.message || '',
         submittedAtTime
       ];
       

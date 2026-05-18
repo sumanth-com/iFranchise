@@ -8,7 +8,6 @@
 
 export const FORM_TYPES = {
   CONTACT: 'contact',
-  FRANCHISE_INQUIRY: 'franchise_inquiry',
   BRAND_APPLICATION: 'brand_application',
   JOB_APPLICATION: 'job_application',
   CHATBOT_BRAND: 'chatbot_brand',
@@ -18,7 +17,6 @@ export const FORM_TYPES = {
 
 export const FORM_LABELS = {
   [FORM_TYPES.CONTACT]: 'Contact Form',
-  [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise Inquiry',
   [FORM_TYPES.BRAND_APPLICATION]: 'Brand Application',
   [FORM_TYPES.JOB_APPLICATION]: 'Job Application',
   [FORM_TYPES.CHATBOT_BRAND]: 'Brand Chatbot Session',

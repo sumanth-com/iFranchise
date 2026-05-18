@@ -87,7 +87,6 @@ export function recordSubmission(formKey) {
  */
 export const RATE_LIMIT_KEYS = {
   CONTACT:           'contact',
-  FRANCHISE_INQUIRY: 'franchise_inquiry',
   BRAND_APPLICATION: 'brand_application',
   JOB_APPLICATION:   'job_application',
   CHATBOT_BRAND:     'chatbot_brand',

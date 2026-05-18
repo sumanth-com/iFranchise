@@ -2,6 +2,19 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ROLES, DEPT_COLORS, MODE_COLORS, ROLE_TOOLS, HIRING_STEPS } from './careersData.jsx';
 import { submitJobApplication } from '@/lib/forms';
+import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
+import FormSuccessState from './forms/FormSuccessState';
+import HoneypotField from './forms/HoneypotField';
+
+const JOB_APP_INITIAL = withHoneypot({
+  name: '',
+  portfolio: '',
+  resume: '',
+  email: '',
+  phone: '',
+  linkedin: '',
+  interest: '',
+});
 
 const fmt = (d) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -13,43 +26,29 @@ function navigateTo(path) {
 // ─── Application Form ─────────────────────────────────────────────────────────
 
 function ApplicationForm({ roleTitle }) {
-  const [form, setForm] = useState({ name: '', portfolio: '', resume: '', email: '', phone: '', linkedin: '', interest: '' });
-  const [status, setStatus] = useState('idle');
-  const set = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const {
+    values: form,
+    setField,
+    isSubmitting,
+    isSuccess,
+    submitError,
+    handleSubmit,
+    resetForm,
+  } = useFormSubmission({
+    initialValues: JOB_APP_INITIAL,
+    onSubmit: (data) =>
+      submitJobApplication({ ...data, roleId: roleTitle, roleTitle }, 'career_detail'),
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus('loading');
-    const formDataWithRole = {
-      ...form,
-      roleId: roleTitle,
-      roleTitle: roleTitle
-    };
-    
-    const result = await submitJobApplication(formDataWithRole, 'career_detail');
-    
-    if (result.success) {
-      setStatus('success');
-    } else {
-      console.error('[CareerDetailPage] Submission failed:', result.error);
-      setStatus('idle');
-      alert(result.error || 'Submission failed. Please try again.');
-    }
-  };
+  const set = (e) => setField(e.target.name, e.target.value);
 
-  if (status === 'success') {
+  if (isSuccess) {
     return (
-      <motion.div className="flex flex-col items-center justify-center py-10 text-center">
-        <div className="w-14 h-14 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center mb-4">
-          <svg className="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="text-base font-bold text-slate-900 mb-1.5">Application Submitted!</h3>
-        <p className="text-sm text-slate-600 max-w-xs leading-relaxed">
-          We'll review your application for <strong className="text-slate-900">{roleTitle}</strong> and get back within 5 business days.
-        </p>
-      </motion.div>
+      <FormSuccessState
+        title="Application submitted!"
+        description={`We'll review your application for ${roleTitle} and get back within 5 business days.`}
+        onReset={resetForm}
+      />
     );
   }
 
@@ -57,7 +56,8 @@ function ApplicationForm({ roleTitle }) {
   const lbl = "block text-[10px] font-bold text-slate-600 mb-1.5 uppercase tracking-wider";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3.5">
+    <form onSubmit={handleSubmit} className="relative space-y-3.5">
+      <HoneypotField value={form._hp} onChange={setField} />
       <div>
         <label className={lbl}>Full Name</label>
         <input name="name" value={form.name} onChange={set} required placeholder="Your full name" className={inp} />
@@ -90,10 +90,10 @@ function ApplicationForm({ roleTitle }) {
       </div>
       <button
         type="submit"
-        disabled={status === 'loading'}
+        disabled={isSubmitting}
         className="btn-purple-solid w-full flex items-center justify-center gap-2 text-sm font-bold py-3 rounded-xl transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]"
       >
-        {status === 'loading' ? (
+        {isSubmitting ? (
           <>
             <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -110,6 +110,11 @@ function ApplicationForm({ roleTitle }) {
           </>
         )}
       </button>
+      {submitError && (
+        <p className="text-center text-sm text-red-600" role="alert">
+          {submitError}
+        </p>
+      )}
       <div className="flex items-start gap-2 pt-0.5">
         <svg className="w-3.5 h-3.5 text-violet-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />

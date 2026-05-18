@@ -27,7 +27,6 @@ export const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_UR
  */
 export const SHEET_TABS = {
   [FORM_TYPES.CONTACT]: 'Contact_Leads',
-  [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise_Inquiries',
   [FORM_TYPES.BRAND_APPLICATION]: 'Brand_Applications',
   [FORM_TYPES.JOB_APPLICATION]: 'Job_Applications',
   [FORM_TYPES.CHATBOT_BRAND]: 'Chatbot_Brands',
@@ -41,12 +40,10 @@ export const SHEET_TABS = {
  */
 export const SOURCE_PAGES = {
   CONTACT_PAGE: 'contact_page',
-  FRANCHISE_DETAILS: 'franchise_details',
   BRAND_OWNERS_PAGE: 'brand_owners_page',
   CAREERS_PAGE: 'careers_page',
   CAREER_DETAIL: 'career_detail',
   HOMEPAGE: 'homepage',
-  FLOATING_CTA: 'floating_cta',
   CHATBOT: 'chatbot',
 };
 
@@ -56,7 +53,6 @@ export const SOURCE_PAGES = {
  */
 export const RATE_LIMITS = {
   [FORM_TYPES.CONTACT]: 30000, // 30 seconds
-  [FORM_TYPES.FRANCHISE_INQUIRY]: 30000, // 30 seconds
   [FORM_TYPES.BRAND_APPLICATION]: 60000, // 60 seconds
   [FORM_TYPES.JOB_APPLICATION]: 60000, // 60 seconds
   [FORM_TYPES.CHATBOT_BRAND]: 30000, // 30 seconds
@@ -69,7 +65,6 @@ export const RATE_LIMITS = {
  */
 export const MAX_SUBMISSIONS_PER_SESSION = {
   [FORM_TYPES.CONTACT]: 5,
-  [FORM_TYPES.FRANCHISE_INQUIRY]: 5,
   [FORM_TYPES.BRAND_APPLICATION]: 3,
   [FORM_TYPES.JOB_APPLICATION]: 3,
   [FORM_TYPES.CHATBOT_BRAND]: 5,

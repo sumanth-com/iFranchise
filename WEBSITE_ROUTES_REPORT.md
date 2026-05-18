@@ -312,10 +312,10 @@ Opens franchise inquiry modal (submits to Google Sheets backend).
 | Contact | `/contact` | Contact | `submitContactForm` → Google Sheets | **Live** |
 | Career detail | `/careers/{roleId}` | Job application | `submitJobApplication` → Google Sheets | **Live** |
 | List Your Brand | `/list-your-brand` | Brand application | `submitBrandApplication` → Google Sheets | **Live** |
-| Floating CTA modal | Franchise pages | Franchise inquiry | `submitFranchiseInquiry` → Google Sheets | **Live** |
-| Franchise details inline form | `/franchise/*`, `/franchise-details` | Inquiry UI | `preventDefault` only | **Not wired** |
-| Blog sidebar / detail newsletter | `/blog`, `/blog/{slug}` | Newsletter UI | `preventDefault` only | **Not wired** |
-| Expansion Assistant chatbot | Global widget | Chatbot (defined in constants) | No submit handler found | **UI only** |
+| Homepage contact | `/` | Contact | `submitContactForm` → Google Sheets | **Live** |
+| Expansion Assistant — Brands | Global widget | Brand consultation | `submitBrandConsultation` → Google Sheets | **Live** |
+| Expansion Assistant — Investors | Global widget | Investor lead | `submitChatbotLead` → Google Sheets | **Live** |
+| Expansion Assistant — Strategy | Global widget | Strategy calendar click | `submitStrategyCall` → Google Sheets | **Live** |
 
 ---
 
@@ -390,7 +390,6 @@ All routes are public. No authenticated or admin routes detected.
 | `/franchise/foco-model` etc. not in slug map | `FranchiseDetailsPage.jsx` | All show franchise ID 1 | Add slugs to map or dedicated model pages |
 | Careers badge “4” vs 6 roles | `Navbar.jsx` | Stale UI | Update badge to `6` |
 | `/team` not in main nav | — | Low discoverability | Add to Company dropdown if intentional |
-| Franchise details form not submitting | `FranchiseDetailsPage.jsx` | Lost leads on detail page | Wire to `submitFranchiseInquiry` |
 | No `sitemap.xml` / `robots.txt` | `public/` | Crawl efficiency | Generate sitemap for static + dynamic URLs |
 
 ### Unused / orphan routes

@@ -35,14 +35,13 @@ This guide will walk you through deploying the Google Apps Script backend to han
 1. In the Apps Script editor, select the function `setupSheets` from the toolbar dropdown
 2. Click **Run**
 3. Grant permissions when prompted (see Permissions section below)
-4. This will create all 7 sheet tabs with proper headers:
+4. This will create all sheet tabs with proper headers:
    - Contact_Leads
-   - Franchise_Inquiries
    - Brand_Applications
    - Job_Applications
    - Chatbot_Brands
    - Chatbot_Investors
-   - Newsletter_Subscribers
+   - Chatbot_Strategy
 
 ## Step 5: Test the Script
 
@@ -194,9 +193,6 @@ To make changes after deployment:
 ### Contact_Leads
 - Timestamp, Source Page, Name, Email, Phone, Company, Message, Submitted At
 
-### Franchise_Inquiries
-- Timestamp, Source Page, Name, Email, Phone, Franchise Interest, Investment Budget, Timeline, Message, Submitted At
-
 ### Brand_Applications
 - Timestamp, Source Page, Brand Name, Industry, Locations, Contact Name, Contact Email, Contact Phone, Description, Submitted At
 
@@ -209,8 +205,8 @@ To make changes after deployment:
 ### Chatbot_Investors
 - Timestamp, Source Page, Industries, Budget, Cities, ROI, Timeline, Submitted At
 
-### Newsletter_Subscribers
-- Timestamp, Source Page, Email, Submitted At
+### Chatbot_Strategy
+- Timestamp, Source Page, Name, Phone, Email, Preferred Date, Preferred Time, Message, Submitted At
 
 ## Support
 

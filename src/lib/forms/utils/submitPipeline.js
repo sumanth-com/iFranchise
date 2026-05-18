@@ -8,11 +8,11 @@ import { RATE_LIMITS, MAX_SUBMISSIONS_PER_SESSION } from '../constants/formEndpo
 import { checkHoneypot, stripHoneypot } from './honeypot.js';
 import { createValidationErrorResponse } from './responseHandler.js';
 import { submitToGoogleSheets } from './googleSheetsClient.js';
+import { checkDuplicateSubmission, recordDuplicateSubmission } from './duplicateGuard.js';
 import { checkRateLimit, recordSubmission, RATE_LIMIT_KEYS } from '../../rateLimiter.js';
 
 const FORM_TYPE_TO_RATE_KEY = {
   [FORM_TYPES.CONTACT]: RATE_LIMIT_KEYS.CONTACT,
-  [FORM_TYPES.FRANCHISE_INQUIRY]: RATE_LIMIT_KEYS.FRANCHISE_INQUIRY,
   [FORM_TYPES.BRAND_APPLICATION]: RATE_LIMIT_KEYS.BRAND_APPLICATION,
   [FORM_TYPES.JOB_APPLICATION]: RATE_LIMIT_KEYS.JOB_APPLICATION,
   [FORM_TYPES.CHATBOT_BRAND]: RATE_LIMIT_KEYS.CHATBOT_BRAND,
@@ -74,11 +74,23 @@ export async function runFormSubmission({ formType, rawData, sourcePage, validat
     return createValidationErrorResponse(validation.errors);
   }
 
+  const duplicateCheck = checkDuplicateSubmission(formType, validation.data);
+  if (!duplicateCheck.ok) {
+    return {
+      success: false,
+      error: duplicateCheck.error,
+      code: duplicateCheck.code,
+    };
+  }
+
   const payload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
   const result = await submitToGoogleSheets(payload);
 
   if (result.success) {
     recordSubmission(rateKey);
+    if (duplicateCheck.storageKey) {
+      recordDuplicateSubmission(duplicateCheck.storageKey);
+    }
   }
 
   return result;
