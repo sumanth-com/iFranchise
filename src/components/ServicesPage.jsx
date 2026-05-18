@@ -12,22 +12,8 @@ import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
-import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
-import foodImg from '../assets/IndImgs/Food & Beverage.png';
-import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
-import educationImg from '../assets/IndImgs/Education & Training.png';
-import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
-import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
+import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import IndustryCard from './IndustryCard';
-
-const SERVICES_INDUSTRIES = [
-  { label: 'Retail & Jewelry', accent: '#f59e0b', desc: 'Scale your retail brand with proven franchise models', img: retailImg },
-  { label: 'Food & Beverage', accent: '#f97316', desc: 'Expand your F&B concept across multiple locations', img: foodImg },
-  { label: 'Healthcare & Wellness', accent: '#10b981', desc: 'Grow your wellness business with franchise support', img: healthcareImg },
-  { label: 'Education & Training', accent: '#3b82f6', desc: 'Build an education empire through franchising', img: educationImg },
-  { label: 'Beauty & Lifestyle', accent: '#ec4899', desc: 'Transform beauty concepts into franchise networks', img: beautyImg },
-  { label: 'Logistics & Infrastructure', accent: '#94a3b8', desc: 'Scale logistics operations with franchise models', img: logisticsImg },
-];
 
 // â”€â”€ Lightweight CSS-only reveal â€” no framer-motion per element â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Reveal({ children, delay = 0, className = '' }) {

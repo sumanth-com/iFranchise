@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext';
+import { IMAGE_FALLBACK } from '../data/sectionImages';
 
 function IndustryCardImg({ src, alt, isLight }) {
   const [loaded, setLoaded] = useState(false);
@@ -22,7 +23,12 @@ function IndustryCardImg({ src, alt, isLight }) {
         loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}
-        className={`industry-card-img transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = IMAGE_FALLBACK;
+          setLoaded(true);
+        }}
+        className={`industry-card-img h-full w-full object-cover transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
       />
     </>
   );

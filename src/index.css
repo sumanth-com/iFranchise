@@ -2467,7 +2467,19 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* ─── Expansion assistant — 3D Earth globe (surface spins inside fixed shell) ─ */
+/* ─── Expansion assistant — FAB & header glyph ──────────────────────────────── */
+.assistant-glyph-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.assistant-fab {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ─── Expansion assistant — 3D Earth globe (legacy, unused) ───────────────── */
 .assistant-globe-frame {
   position: relative;
   display: inline-flex;

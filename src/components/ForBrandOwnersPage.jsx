@@ -13,12 +13,7 @@ import {
 } from '../data/franchiseData';
 import { FiArrowRight } from 'react-icons/fi';
 import SectionPill from './ui/SectionPill';
-import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
-import foodImg from '../assets/IndImgs/Food & Beverage.png';
-import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
-import educationImg from '../assets/IndImgs/Education & Training.png';
-import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
-import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
+import { BRAND_OWNERS_INDUSTRIES } from '../data/sectionImages';
 import IndustryCard from './IndustryCard';
 
 /** Shared layout — continuous dark page, minimal vertical gaps */
@@ -31,6 +26,12 @@ function scrollToHeroInquiry() {
   window.dispatchEvent(new CustomEvent(LYB_REVEAL_HERO_FORM));
   window.setTimeout(() => {
     document.getElementById('lyb-hero-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => {
+      const firstField = document.querySelector(
+        '#hero-brand-inquiry input:not([type="hidden"]), #hero-brand-inquiry select, #hero-brand-inquiry textarea',
+      );
+      firstField?.focus({ preventScroll: true });
+    }, 380);
   }, 120);
 }
 
@@ -1380,9 +1381,10 @@ function BrandsSection() {
               <CtaButton
                 className="mx-auto"
                 size="sm"
-                onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                type="button"
+                onClick={scrollToHeroInquiry}
               >
-                List Your Brand Today
+                Begin Your Listing Application
               </CtaButton>
             </motion.div>
           </motion.div>
@@ -1532,15 +1534,6 @@ const navigateTo = (path) => {
   window.dispatchEvent(new PopStateEvent('popstate'));
 };
 
-const LYB_STYLE_INDUSTRIES = [
-  { label: 'Retail & Jewelry', accent: '#f59e0b', desc: 'Scale your retail brand with proven franchise models', img: retailImg },
-  { label: 'Food & Beverage', accent: '#f97316', desc: 'Expand your F&B concept across multiple locations', img: foodImg },
-  { label: 'Healthcare & Wellness', accent: '#10b981', desc: 'Grow your wellness business with franchise support', img: healthcareImg },
-  { label: 'Education & Training', accent: '#3b82f6', desc: 'Build an education empire through franchising', img: educationImg },
-  { label: 'Beauty & Lifestyle', accent: '#ec4899', desc: 'Transform beauty concepts into franchise networks', img: beautyImg },
-  { label: 'Logistics & Infrastructure', accent: '#94a3b8', desc: 'Scale logistics operations with franchise models', img: logisticsImg },
-];
-
 function ServicesStyleIndustriesSection() {
   return (
     <section className="lyb-industries-section relative z-10 overflow-hidden py-10 lg:py-14">
@@ -1556,7 +1549,7 @@ function ServicesStyleIndustriesSection() {
         </motion.div>
 
         <motion.div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {LYB_STYLE_INDUSTRIES.map((ind, i) => (
+          {BRAND_OWNERS_INDUSTRIES.map((ind) => (
             <IndustryCard
               key={ind.label}
               className="lyb-industry-card"

@@ -8,14 +8,7 @@ import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
 import { homeHeroBg } from '../lib/preloadHomeHero.js';
 import { submitContactForm, HONEYPOT_FIELD } from '../lib/forms';
-import retailImg from '../assets/IndImgs/Retail & Jewelry.png';
-import foodImg from '../assets/IndImgs/Food & Beverage.png';
-import healthcareImg from '../assets/IndImgs/Healthcare & Wellness.png';
-import educationImg from '../assets/IndImgs/Education & Training.png';
-import beautyImg from '../assets/IndImgs/Beauty & Lifestyle.png';
-import logisticsImg from '../assets/IndImgs/Logistics & Infrastructure.png';
-import forInvestorsImg from '../assets/ForInvestors.png';
-import forBrandsImg from '../assets/ForBrands.png';
+import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK } from '../data/sectionImages';
 import brandLogo from '../assets/BrandLogo.png';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
@@ -3096,7 +3089,7 @@ function Hero() {
             {[
               {
                 tag: 'For Investors',
-                img: forInvestorsImg,
+                img: WHO_WE_SERVE_IMAGES.investors,
                 heading: 'Invest in Businesses Built for Long-Term Growth',
                 points: ['Explore verified franchise opportunities', 'Compare business models & investment requirements', 'Discover opportunities across multiple industries', 'Connect directly with franchise brands'],
                 cta: 'Explore Opportunities',
@@ -3105,7 +3098,7 @@ function Hero() {
               },
               {
                 tag: 'For Brands',
-                img: forBrandsImg,
+                img: WHO_WE_SERVE_IMAGES.brands,
                 heading: 'Turn Your Brand Into a Scalable Franchise Network',
                 points: ['Reach serious investors actively looking for opportunities', 'Expand into new markets and cities', 'Generate qualified franchise leads', 'Build a stronger brand presence'],
                 cta: 'List Your Brand',
@@ -3122,13 +3115,17 @@ function Hero() {
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)' }} />
 
                 {/* Image ? full card width, natural height */}
-                <div className="relative w-full overflow-hidden leading-none">
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
                   <img
                     src={card.img}
                     alt={card.tag}
-                    className="block h-auto w-full transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]"
+                    className="block h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                     loading="lazy"
                     decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = IMAGE_FALLBACK;
+                    }}
                   />
                   {/* Tag badge */}
                   <span
@@ -3369,38 +3366,7 @@ function Hero() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              {
-                label: 'Retail & Jewelry', accent: '#f59e0b',
-                desc: 'Growing consumer demand and scalable business models.',
-                img: retailImg,
-              },
-              {
-                label: 'Food & Beverage', accent: '#f97316',
-                desc: 'Proven concepts with strong customer loyalty and repeat business.',
-                img: foodImg,
-              },
-              {
-                label: 'Healthcare & Wellness', accent: '#10b981',
-                desc: 'Rising health consciousness driving sustainable growth.',
-                img: healthcareImg,
-              },
-              {
-                label: 'Education & Training', accent: '#3b82f6',
-                desc: 'Lifelong learning trends creating consistent demand.',
-                img: educationImg,
-              },
-              {
-                label: 'Logistics & Infrastructure', accent: '#94a3b8',
-                desc: 'E-commerce boom fueling supply chain opportunities.',
-                img: logisticsImg,
-              },
-              {
-                label: 'Beauty & Lifestyle', accent: '#ec4899',
-                desc: 'Premium services with high customer retention rates.',
-                img: beautyImg,
-              },
-            ].map((ind, i) => (
+            {HOME_INDUSTRIES.map((ind, i) => (
               <div key={ind.label} style={{ animation: `cardReveal 0.4s ease ${i * 0.07 + 0.1}s both` }}>
                 <IndustryCard
                   label={ind.label}

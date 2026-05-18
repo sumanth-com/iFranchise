@@ -209,23 +209,49 @@ function AssistantDateTime() {
   );
 }
 
-/** Fixed shell — 3D Earth surface rotates inside like the real planet */
-function RotatingGlobeIcon({ size = 22, className = '' }) {
+/** Clean chat assistant glyph — color via currentColor (theme-aware on FAB) */
+function AssistantChatIcon({ size = 24, className = '' }) {
   return (
-    <span
-      className={`assistant-globe-frame ${className}`.trim()}
-      style={{ width: size, height: size }}
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
       aria-hidden
     >
-      <span className="assistant-globe-halo" />
-      <span className="assistant-globe-orbit" />
-      <span className="assistant-globe-sphere">
-        <span className="assistant-globe-surface-track" aria-hidden />
-        <span className="assistant-globe-shade" />
-        <span className="assistant-globe-sheen" />
-      </span>
-    </span>
+      <path
+        d="M12 3C7.03 3 3 6.58 3 11c0 2.35 1.17 4.45 3.03 5.9L5 21l4.2-1.75c.98.28 2.02.43 3.1.43 4.97 0 9-3.58 9-8s-4.03-8-9-8Z"
+        stroke="currentColor"
+        strokeWidth="1.65"
+        strokeLinejoin="round"
+      />
+      <circle cx="8.25" cy="11" r="1.1" fill="currentColor" />
+      <circle cx="12" cy="11" r="1.1" fill="currentColor" />
+      <circle cx="15.75" cy="11" r="1.1" fill="currentColor" />
+    </svg>
   );
+}
+
+function getAssistantFabTheme(isLight) {
+  if (isLight) {
+    return {
+      background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)',
+      border: '1.5px solid rgba(15, 23, 42, 0.14)',
+      boxShadow: '0 10px 28px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255,255,255,1)',
+      iconColor: '#0f172a',
+      hoverBorder: 'rgba(15, 23, 42, 0.28)',
+      hoverShadow: '0 14px 36px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255,255,255,1)',
+    };
+  }
+  return {
+    background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
+    border: '1.5px solid rgba(196, 181, 253, 0.45)',
+    boxShadow: '0 10px 32px rgba(91, 33, 182, 0.5), inset 0 1px 0 rgba(255,255,255,0.12)',
+    iconColor: '#ffffff',
+    hoverBorder: 'rgba(233, 213, 255, 0.65)',
+    hoverShadow: '0 14px 40px rgba(109, 40, 217, 0.55), inset 0 1px 0 rgba(255,255,255,0.16)',
+  };
 }
 
 /** Pulsing “live” cue for header status */
@@ -277,24 +303,31 @@ function LiveStatusPulse({ label = 'Live' }) {
   );
 }
 
-/** Header tile — static shell, rotating globe inside */
-function AssistantGlyphTile({ dimension = 34 }) {
+/** Header tile — chat glyph matching site theme */
+function AssistantGlyphTile({ dimension = 34, siteIsLight }) {
   const p = useAssistantPalette();
   const glyph = Math.round(dimension * 0.58);
+  const iconColor = siteIsLight ? '#0f172a' : '#ffffff';
   return (
     <div
-      className="assistant-globe-tile"
+      className="assistant-glyph-tile"
       aria-hidden
       style={{
         width: dimension,
         height: dimension,
         borderRadius: Math.max(9, Math.round(dimension * 0.31)),
-        color: PURPLE_BRAND,
-        ['--ea-globe-tile-bg']: p.globeTileBg,
-        ['--ea-globe-tile-border']: p.globeTileBorder,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: p.globeTileBg,
+        border: `1px solid ${p.globeTileBorder}`,
+        color: iconColor,
+        boxShadow: siteIsLight
+          ? '0 2px 10px rgba(15, 23, 42, 0.08)'
+          : '0 2px 12px rgba(91, 33, 182, 0.35)',
       }}
     >
-      <RotatingGlobeIcon size={glyph} />
+      <AssistantChatIcon size={glyph} />
     </div>
   );
 }
@@ -1184,6 +1217,85 @@ function SupportView({ setView, setIsOpen }) {
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
+function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
+  const fab = useMemo(() => getAssistantFabTheme(isLight), [isLight]);
+
+  return (
+    <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
+      <AnimatePresence mode="wait">
+        {!isOpen ? (
+          <motion.button
+            key="launcher"
+            type="button"
+            onClick={onOpen}
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.88 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.94 }}
+            aria-label="Open iFranchise assistant"
+            className="assistant-fab"
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: 16,
+              background: fab.background,
+              border: fab.border,
+              boxShadow: fab.boxShadow,
+              color: fab.iconColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.border = `1.5px solid ${fab.hoverBorder}`;
+              e.currentTarget.style.boxShadow = fab.hoverShadow;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.border = fab.border;
+              e.currentTarget.style.boxShadow = fab.boxShadow;
+            }}
+          >
+            <AssistantChatIcon size={26} />
+          </motion.button>
+        ) : (
+          <motion.button
+            key="close-fab"
+            type="button"
+            onClick={onClose}
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.88 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.06, y: -2 }}
+            whileTap={{ scale: 0.94 }}
+            aria-label="Close iFranchise assistant"
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: 16,
+              background: fab.background,
+              border: fab.border,
+              boxShadow: fab.boxShadow,
+              color: fab.iconColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function ExpansionAssistant() {
   const { isLight } = useTheme();
   const palette = useMemo(() => getAssistantPalette(isLight), [isLight]);
@@ -1279,7 +1391,7 @@ export default function ExpansionAssistant() {
             >
               <div className="assistant-header-top">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-                  <AssistantGlyphTile dimension={34} />
+                  <AssistantGlyphTile dimension={34} siteIsLight={isLight} />
                   <AssistantDateTime />
                 </div>
                 <div className="assistant-header-actions">
@@ -1325,112 +1437,12 @@ export default function ExpansionAssistant() {
         )}
       </AnimatePresence>
 
-      {/* Launcher button */}
-      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
-        <AnimatePresence mode="wait">
-          {!isOpen ? (
-            <motion.div
-              key="launcher"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.18 }}
-              style={{ position: 'relative' }}
-            >
-              {/* Live pulse halo around launcher */}
-              <motion.div
-                aria-hidden
-                animate={{ opacity: [0.45, 0.85, 0.45], scale: [1, 1.12, 1] }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                style={{
-                  position: 'absolute',
-                  inset: -12,
-                  borderRadius: 24,
-                  background: `radial-gradient(circle at 50% 50%, ${PURPLE_BRIGHT}22 0%, transparent 72%)`,
-                  pointerEvents: 'none',
-                }}
-              />
-              <motion.span
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  inset: -4,
-                  borderRadius: 20,
-                  border: `2px solid ${PURPLE_BRIGHT}`,
-                  pointerEvents: 'none',
-                  opacity: 0.55,
-                }}
-                animate={{ scale: [1, 1.12, 1], opacity: [0.48, 0.12, 0.48] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
-              />
-              <motion.button
-                onClick={handleOpen}
-                animate={{ scale: [1, 1.025, 1] }}
-                transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Open iFranchise assistant"
-                style={{
-                  position: 'relative',
-                  width: 48,
-                  height: 48,
-                  borderRadius: 16,
-                  background: 'linear-gradient(180deg,#ffffff 0%,#faf8ff 100%)',
-                  border: `1.5px solid rgba(124,58,237,0.42)`,
-                  boxShadow:
-                    '0 8px 28px rgba(124,58,237,0.22), 0 2px 8px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'rgba(109,40,217,0.65)';
-                  e.currentTarget.style.boxShadow =
-                    '0 12px 36px rgba(124,58,237,0.32), 0 2px 10px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,1)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'rgba(124,58,237,0.42)';
-                  e.currentTarget.style.boxShadow =
-                    '0 8px 28px rgba(124,58,237,0.22), 0 2px 8px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1)';
-                }}
-              >
-                <RotatingGlobeIcon size={24} className="assistant-fab-globe" />
-              </motion.button>
-            </motion.div>
-          ) : (
-            <motion.button
-              key="close-fab"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.18 }}
-              onClick={handleClose}
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Close iFranchise assistant"
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 16,
-                background: 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)',
-                border: '1px solid rgba(148,163,184,0.38)',
-                boxShadow: '0 6px 20px rgba(15,23,42,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                color: 'rgba(71,85,105,0.9)',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </motion.button>
-          )}
-        </AnimatePresence>
-      </div>
+      <AssistantFabLauncher
+        isOpen={isOpen}
+        isLight={isLight}
+        onOpen={handleOpen}
+        onClose={handleClose}
+      />
     </>
   );
 }
