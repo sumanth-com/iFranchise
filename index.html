@@ -13,6 +13,89 @@
     <script>
       (function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();
     </script>
+  <!-- Critical CSS: paint correct background + hide skip link before the JS bundle loads -->
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      html {
+        background-color: #0a0618;
+      }
+      html[data-theme='light'] {
+        background-color: #f8f9fc;
+      }
+      body {
+        background: inherit;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      .skip-link {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+      .skip-link:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 9999;
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 0.75rem 1.25rem;
+        overflow: visible;
+        clip: auto;
+        clip-path: none;
+        background: #6d28d9;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+      }
+      #root {
+        min-height: 100dvh;
+      }
+      .app-boot {
+        display: flex;
+        min-height: 100dvh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: inherit;
+      }
+      .app-boot__spinner {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        border-top-color: #a78bfa;
+        border-radius: 50%;
+        animation: app-boot-spin 0.8s linear infinite;
+      }
+      @keyframes app-boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .app-boot__label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.65);
+      }
+      html[data-theme='light'] .app-boot__label {
+        color: #64748b;
+      }
+    </style>
     <title>iFranchise — India's Trusted Franchise Growth Platform</title>
 
     <!-- Preconnect to font origins for zero-latency font load -->
@@ -35,7 +118,12 @@
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div id="root"></div>
+    <div id="root">
+      <div class="app-boot" role="status" aria-live="polite" aria-label="Loading iFranchise">
+        <div class="app-boot__spinner" aria-hidden="true"></div>
+        <span class="app-boot__label">Loading</span>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
