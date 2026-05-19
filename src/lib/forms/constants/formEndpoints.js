@@ -47,27 +47,3 @@ export const SOURCE_PAGES = {
   CHATBOT: 'chatbot',
 };
 
-/**
- * Rate limiting configuration per form type
- * Values in milliseconds
- */
-export const RATE_LIMITS = {
-  [FORM_TYPES.CONTACT]: 30000, // 30 seconds
-  [FORM_TYPES.BRAND_APPLICATION]: 60000, // 60 seconds
-  [FORM_TYPES.JOB_APPLICATION]: 60000, // 60 seconds
-  [FORM_TYPES.CHATBOT_BRAND]: 30000, // 30 seconds
-  [FORM_TYPES.CHATBOT_INVESTOR]: 30000, // 30 seconds
-  [FORM_TYPES.CHATBOT_STRATEGY]: 30000, // 30 seconds
-};
-
-/**
- * Maximum submissions per session per form type
- */
-export const MAX_SUBMISSIONS_PER_SESSION = {
-  [FORM_TYPES.CONTACT]: 5,
-  [FORM_TYPES.BRAND_APPLICATION]: 3,
-  [FORM_TYPES.JOB_APPLICATION]: 3,
-  [FORM_TYPES.CHATBOT_BRAND]: 5,
-  [FORM_TYPES.CHATBOT_INVESTOR]: 5,
-  [FORM_TYPES.CHATBOT_STRATEGY]: 5,
-};

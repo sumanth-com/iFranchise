@@ -258,17 +258,22 @@
   .cinematic-hero .hero-cinematic-title {
     white-space: normal;
     text-wrap: balance;
-    font-size: clamp(1.7rem, 6.75vw, 2.25rem);
-    line-height: 1.2;
-    margin-bottom: 0.875rem;
+    font-size: clamp(1.625rem, 6.25vw, 2.05rem);
+    font-weight: 600 !important;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   .cinematic-hero .hero-cinematic-lead {
-    font-size: clamp(0.9rem, 3.6vw, 1.02rem);
-    line-height: 1.58;
-    max-width: min(100%, 28rem);
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    font-weight: 400 !important;
+    line-height: 1.55;
+    max-width: min(100%, 26rem);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   .cinematic-hero .hero-cinematic-pill-text {
@@ -276,8 +281,42 @@
     letter-spacing: 0.12em;
   }
 
-  .cinematic-hero--dark .hero-cinematic-accent {
-    color: #e9d5ff !important;
+  /* Dark mobile — clean white copy, no heavy shadow stack */
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-title {
+    color: #ffffff !important;
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-lead {
+    color: rgba(255, 255, 255, 0.92) !important;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.32) !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-accent {
+    color: #f3e8ff !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-pill-text {
+    color: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  /* Light mobile — crisp readable contrast */
+  html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-title {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+  }
+
+  html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-lead {
+    color: #475569 !important;
+    text-shadow: none !important;
+  }
+
+  html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-accent {
+    color: #6d28d9 !important;
+    text-shadow: none !important;
   }
 
   .home-faq-section__title,
@@ -285,7 +324,37 @@
     padding-left: 0.25rem;
     padding-right: 0.25rem;
   }
+}
 
+/* Large phones / small portrait (640–767px) — same clean hero copy as mobile */
+@media (min-width: 640px) and (max-width: 767px) {
+  .cinematic-hero .hero-cinematic-title {
+    font-weight: 600 !important;
+    text-wrap: balance;
+    line-height: 1.2;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .cinematic-hero .hero-cinematic-lead {
+    font-weight: 400 !important;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-title {
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.38) !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-lead {
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-accent {
+    text-shadow: none !important;
+  }
+}
+
+@media (max-width: 639px) {
   .navbar-mobile-panel {
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }

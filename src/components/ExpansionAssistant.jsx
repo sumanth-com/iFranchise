@@ -10,6 +10,7 @@ const PURPLE_ICON_GRADIENT = 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 52%, #
 const PURPLE_ICON_SHADOW = '0 6px 16px rgba(124, 58, 237, 0.32)';
 import { useTheme } from '../context/ThemeContext';
 import AssistantBotIcon from './AssistantBotIcon';
+import AssistantFlowSuccess from './forms/AssistantFlowSuccess';
 import './assistant-panel.css';
 
 const AssistantPaletteContext = createContext(null);
@@ -900,14 +901,25 @@ function BrandsView({ setView }) {
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
         <FlowHeader title="Thank you" onBack={() => setView('home')} />
-        <motion.div style={{ flex: 1, overflowY: 'auto', padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, textAlign: 'center' }}>
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>✓</div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}>Request received</div>
-          <p style={{ color: p.mutedText, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
-            Our expansion team will contact you within 24 hours.
-          </p>
+        <AssistantFlowSuccess
+          iconStyle={{
+            width: 48,
+            height: 48,
+            borderRadius: 14,
+            background: 'rgba(34,197,94,0.15)',
+            border: '1px solid rgba(34,197,94,0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 22,
+          }}
+          titleStyle={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}
+          bodyStyle={{ color: p.mutedText, fontSize: 12, margin: 0, lineHeight: 1.5 }}
+          title="Request received"
+          description="Our expansion team will contact you within 24 hours."
+        >
           <ContinueBtn onClick={() => setView('home')} label="Back to Home" />
-        </motion.div>
+        </AssistantFlowSuccess>
       </motion.div>
     );
   }

@@ -8,7 +8,8 @@ import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
 import { homeHeroBgDark, homeHeroBgLight, preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
 import { submitContactForm } from '../lib/forms';
-import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
+import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
+import { navigateTo } from '@/lib/navigation';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
@@ -1292,6 +1293,8 @@ function ContactSection() {
     onSubmit: (data) => submitContactForm(data, 'homepage_contact'),
   });
 
+  const canSend = isContactFormReady(formData);
+
   return (
     <section className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       <div className="relative overflow-hidden rounded-2xl sm:rounded-[28px] md:rounded-[32px] border border-emerald-300/20 bg-[radial-gradient(circle_at_50%_30%,rgba(16,185,129,0.16),transparent_50%),linear-gradient(130deg,#020506_0%,#051414_48%,#020506_100%)] px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
@@ -1372,10 +1375,15 @@ function ContactSection() {
               />
               <input
                 type="tel"
-                placeholder={PHONE_PLACEHOLDER}
+                inputMode="numeric"
+                autoComplete="tel-national"
+                maxLength={10}
+                placeholder="10-digit mobile number"
                 value={formData.contactNumber}
-                onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
                 required
+                pattern="[0-9]{10}"
+                title="Enter a 10-digit mobile number"
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <textarea
@@ -1388,8 +1396,12 @@ function ContactSection() {
               />
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-lg sm:rounded-xl bg-white px-4 sm:px-5 py-2.5 sm:py-3 text-sm font-bold text-[#091115] transition duration-300 hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-[0_12px_25px_rgba(255,255,255,0.2)] disabled:opacity-60"
+                disabled={isSubmitting || !canSend}
+                className={`w-full rounded-lg sm:rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 text-sm font-bold transition duration-300 disabled:cursor-not-allowed ${
+                  canSend && !isSubmitting
+                    ? 'bg-white text-[#091115] hover:-translate-y-0.5 hover:bg-emerald-50 hover:shadow-[0_12px_25px_rgba(255,255,255,0.2)]'
+                    : 'bg-white/20 text-white/45 shadow-none'
+                }`}
               >
                 {isSubmitting ? 'Submitting…' : 'Submit'}
               </button>
@@ -2711,21 +2723,18 @@ function FAQAccordionItem({ faq, index }) {
   );
 }
 
-// -- Hero CTA ? white pill, purple text (excluded from site-wide violet CTAs) --
+// -- Hero CTA — white pill, purple text (excluded from site-wide violet CTAs) --
 function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
     <button
       type="button"
-      onClick={() => {
-        window.history.pushState({}, '', path);
-        window.dispatchEvent(new PopStateEvent('popstate'));
-      }}
+      onClick={() => navigateTo(path)}
       className={`hero-cta group ${className}`.trim()}
       style={{ animationDelay: animDelay }}
     >
       <span className="hero-cta__label">{label}</span>
       <span className="hero-cta__icon" aria-hidden>
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+        <svg className="hero-cta__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
         </svg>
       </span>
@@ -3031,7 +3040,7 @@ function Hero() {
             </div>
 
             <h1
-              className={`hero-cinematic-title mb-3.5 max-w-full px-0.5 font-extrabold tracking-tight max-sm:mb-3 sm:mb-5 xl:whitespace-nowrap ${
+              className={`hero-cinematic-title mb-3.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-3 sm:mb-5 xl:mb-3 xl:whitespace-nowrap ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
               style={
@@ -3051,7 +3060,7 @@ function Hero() {
             </h1>
 
             <p
-              className={`hero-cinematic-lead mx-auto max-w-[min(100%,28rem)] font-medium sm:max-w-[34rem] ${
+              className={`hero-cinematic-lead mx-auto max-w-[min(100%,28rem)] font-normal sm:max-w-[34rem] ${
                 isLight ? 'text-slate-600' : 'text-white/95'
               }`}
               style={
@@ -3065,21 +3074,22 @@ function Hero() {
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
             </div>
-          </div>
 
-          <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-col items-center gap-3.5 pt-2 max-sm:px-1 min-[640px]:max-xl:flex-row min-[640px]:max-xl:justify-center min-[640px]:max-xl:gap-5 xl:mt-7 xl:flex-row xl:justify-center xl:gap-6 xl:pt-0 2xl:gap-8">
-            <HeroCtaButton
-              label="Explore Opportunities"
-              path="/franchise-opportunities"
-              className="w-full max-xl:max-w-[18rem] xl:w-auto"
-              animDelay="220ms"
-            />
-            <HeroCtaButton
-              label="List Your Brand"
-              path="/list-your-brand"
-              className="w-full max-xl:max-w-[18rem] xl:w-auto"
-              animDelay="300ms"
-            />
+            {/* Mobile/tablet: mt-auto pins to hero bottom; desktop (xl+): directly under copy */}
+            <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-col items-center gap-3.5 pt-2 max-sm:px-1 min-[640px]:max-xl:flex-row min-[640px]:max-xl:justify-center min-[640px]:max-xl:gap-5 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:pt-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
+              <HeroCtaButton
+                label="Explore Opportunities"
+                path="/franchise-opportunities"
+                className="w-full max-xl:max-w-[18rem] xl:w-full xl:max-w-none"
+                animDelay="220ms"
+              />
+              <HeroCtaButton
+                label="List Your Brand"
+                path="/list-your-brand"
+                className="w-full max-xl:max-w-[18rem] xl:w-full xl:max-w-none"
+                animDelay="300ms"
+              />
+            </div>
           </div>
         </div>
 

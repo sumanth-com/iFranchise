@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
-import { PHONE_PLACEHOLDER, PHONE_INPUT_PATTERN } from '@/lib/phoneInput';
+import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -264,6 +264,7 @@ function ContactHeroForm({
   isLight,
 }) {
   const inputClass = isLight ? CONTACT_INPUT_LIGHT : CONTACT_INPUT_DARK;
+  const canSend = isContactFormReady(formData);
 
   return (
     <div
@@ -316,11 +317,15 @@ function ContactHeroForm({
                 <input
                   type="tel"
                   required
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  maxLength={10}
                   value={formData.contactNumber}
-                  onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                  onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
                   className={inputClass}
-                  placeholder={PHONE_PLACEHOLDER}
-                  pattern={PHONE_INPUT_PATTERN}
+                  placeholder="10-digit mobile number"
+                  pattern="[0-9]{10}"
+                  title="Enter a 10-digit mobile number"
                 />
               </ContactField>
             </div>
@@ -370,13 +375,17 @@ function ContactHeroForm({
 
             <motion.button
               type="submit"
-              disabled={isSubmitting}
-              whileHover={{ scale: 1.005 }}
-              whileTap={{ scale: 0.995 }}
-              className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
-                isLight
-                  ? 'bg-violet-600 text-white shadow-violet-600/25 hover:bg-violet-700'
-                  : 'bg-white text-slate-900 shadow-black/20 hover:bg-white/90'
+              disabled={isSubmitting || !canSend}
+              whileHover={canSend && !isSubmitting ? { scale: 1.02, y: -1 } : undefined}
+              whileTap={canSend && !isSubmitting ? { scale: 0.98 } : undefined}
+              className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-all duration-300 disabled:cursor-not-allowed ${
+                canSend && !isSubmitting
+                  ? isLight
+                    ? 'bg-violet-600 text-white shadow-violet-600/30 hover:bg-violet-700 hover:shadow-violet-600/40'
+                    : 'bg-white text-slate-900 shadow-[0_8px_28px_rgba(255,255,255,0.15)] hover:bg-white/95'
+                  : isLight
+                    ? 'bg-violet-400/40 text-white/70 shadow-none'
+                    : 'bg-white/20 text-white/45 shadow-none'
               }`}
             >
               {isSubmitting ? 'Sending…' : 'Send Message'}

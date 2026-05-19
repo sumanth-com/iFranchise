@@ -1,0 +1,751 @@
+/* Premium inline form success — shared across all forms */
+
+.form-success-state {
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.form-success-state__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.form-success-state__content {
+  position: relative;
+  z-index: 1;
+}
+
+.form-success-state__shimmer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.12) 48%,
+    transparent 62%
+  );
+  transform: translateX(-120%);
+  animation: formSuccessShimmer 1.8s ease-in-out 0.35s 1;
+}
+
+.form-success-state--default .form-success-state__shimmer {
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.65) 48%,
+    transparent 62%
+  );
+}
+
+.form-success-state__confetti {
+  pointer-events: none;
+  position: absolute;
+  width: 5px;
+  height: 9px;
+  border-radius: 1px;
+  opacity: 0;
+  animation: formSuccessConfetti 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.form-success-state--dark .form-success-state__confetti,
+.form-success-state--emerald .form-success-state__confetti {
+  background: linear-gradient(180deg, #a78bfa, #34d399);
+}
+
+.form-success-state--default .form-success-state__confetti {
+  background: linear-gradient(180deg, #8b5cf6, #10b981);
+}
+
+.form-success-state__confetti--1 {
+  left: 18%;
+  top: 42%;
+  --fx: -28px;
+  --fy: -52px;
+  animation-delay: 0.12s;
+}
+
+.form-success-state__confetti--2 {
+  left: 72%;
+  top: 38%;
+  --fx: 32px;
+  --fy: -48px;
+  animation-delay: 0.18s;
+}
+
+.form-success-state__confetti--3 {
+  left: 50%;
+  top: 55%;
+  --fx: 8px;
+  --fy: -58px;
+  animation-delay: 0.08s;
+}
+
+.form-success-state__confetti--4 {
+  left: 28%;
+  top: 62%;
+  --fx: -18px;
+  --fy: -44px;
+  animation-delay: 0.22s;
+}
+
+.form-success-state__confetti--5 {
+  left: 82%;
+  top: 58%;
+  --fx: 24px;
+  --fy: -50px;
+  animation-delay: 0.15s;
+}
+
+.form-success-state__confetti--6 {
+  left: 44%;
+  top: 48%;
+  --fx: -6px;
+  --fy: -62px;
+  animation-delay: 0.25s;
+}
+
+.form-success-state__confetti--7 {
+  left: 8%;
+  top: 35%;
+  --fx: -22px;
+  --fy: -38px;
+  animation-delay: 0.1s;
+}
+
+.form-success-state__confetti--8 {
+  left: 90%;
+  top: 45%;
+  --fx: 26px;
+  --fy: -42px;
+  animation-delay: 0.2s;
+}
+
+.form-success-state__confetti--9 {
+  left: 62%;
+  top: 68%;
+  --fx: 14px;
+  --fy: -36px;
+  animation-delay: 0.14s;
+}
+
+.form-success-state__confetti--10 {
+  left: 35%;
+  top: 30%;
+  --fx: -12px;
+  --fy: -55px;
+  animation-delay: 0.28s;
+}
+
+.form-success-state__confetti--11 {
+  left: 55%;
+  top: 25%;
+  --fx: 4px;
+  --fy: -48px;
+  animation-delay: 0.16s;
+}
+
+.form-success-state__confetti--12 {
+  left: 78%;
+  top: 70%;
+  --fx: 20px;
+  --fy: -40px;
+  animation-delay: 0.24s;
+}
+
+.form-success-state__aurora {
+  pointer-events: none;
+  position: absolute;
+  inset: -30%;
+  opacity: 0;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(167, 139, 250, 0.12) 60deg,
+    transparent 120deg,
+    rgba(52, 211, 153, 0.1) 200deg,
+    transparent 280deg
+  );
+  animation: formSuccessAurora 4s linear infinite;
+}
+
+.form-success-state__shimmer--second {
+  animation-delay: 0.9s;
+  animation-duration: 1.4s;
+}
+
+.form-success-state__burst-line {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 2px;
+  height: 28px;
+  margin-left: -1px;
+  transform-origin: center bottom;
+  transform: rotate(calc(var(--burst-i, 0) * 45deg)) scaleY(0);
+  opacity: 0;
+  background: linear-gradient(to top, transparent, rgba(167, 139, 250, 0.5));
+  animation: formSuccessBurst 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.08s + var(--burst-i, 0) * 0.03s);
+}
+
+.form-success-state--default .form-success-state__burst-line {
+  background: linear-gradient(to top, transparent, rgba(109, 40, 217, 0.35));
+}
+
+.form-success-state--default .form-success-state__card {
+  background: linear-gradient(165deg, #ffffff 0%, #f8f5ff 48%, #f0fdf4 100%);
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  box-shadow:
+    0 4px 24px rgba(109, 40, 217, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.form-success-state--dark .form-success-state__card,
+.form-success-state--emerald .form-success-state__card {
+  background: linear-gradient(165deg, rgba(30, 18, 55, 0.95) 0%, rgba(15, 10, 35, 0.92) 55%, rgba(6, 40, 30, 0.35) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 40px rgba(16, 185, 129, 0.08);
+}
+
+.form-success-state__glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -40% -20%;
+  background: radial-gradient(ellipse 50% 45% at 50% 0%, rgba(167, 139, 250, 0.22), transparent 70%);
+  opacity: 0.85;
+}
+
+.form-success-state--default .form-success-state__glow {
+  background: radial-gradient(ellipse 55% 50% at 50% 0%, rgba(139, 92, 246, 0.14), transparent 72%);
+}
+
+.form-success-state__spark {
+  pointer-events: none;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.9);
+  box-shadow: 0 0 12px rgba(167, 139, 250, 0.8);
+  animation: formSuccessSpark 2.4s ease-in-out infinite;
+}
+
+.form-success-state--default .form-success-state__spark {
+  background: rgba(109, 40, 217, 0.75);
+  box-shadow: 0 0 10px rgba(109, 40, 217, 0.45);
+}
+
+.form-success-state__spark--1 {
+  top: 18%;
+  left: 14%;
+  animation-delay: 0s;
+}
+
+.form-success-state__spark--2 {
+  top: 22%;
+  right: 12%;
+  animation-delay: 0.4s;
+}
+
+.form-success-state__spark--3 {
+  bottom: 28%;
+  left: 18%;
+  animation-delay: 0.8s;
+}
+
+.form-success-state__spark--4 {
+  bottom: 22%;
+  right: 20%;
+  animation-delay: 1.1s;
+}
+
+.form-success-state__icon-wrap {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.form-success-state__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(16, 185, 129, 0.35);
+  animation: formSuccessRing 1.8s ease-out infinite;
+}
+
+.form-success-state__ring--delayed {
+  inset: -6px;
+  border-color: rgba(167, 139, 250, 0.25);
+  animation-delay: 0.35s;
+}
+
+.form-success-state__ring--orbit {
+  inset: -10px;
+  border-style: dashed;
+  border-color: rgba(167, 139, 250, 0.2);
+  animation: formSuccessOrbit 3.2s linear infinite;
+  opacity: 0.6;
+}
+
+.form-success-state__icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.15));
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.22);
+  animation: formSuccessIconFloat 3.5s ease-in-out infinite;
+}
+
+.form-success-state--default .form-success-state__icon {
+  background: linear-gradient(145deg, #ecfdf5, #d1fae5);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.18);
+}
+
+.form-success-state__check {
+  width: 2rem;
+  height: 2rem;
+  color: #34d399;
+}
+
+.form-success-state--default .form-success-state__check {
+  color: #059669;
+}
+
+.form-success-state__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.65rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.form-success-state--default .form-success-state__badge {
+  background: rgba(109, 40, 217, 0.08);
+  color: #6d28d9;
+  border: 1px solid rgba(109, 40, 217, 0.15);
+}
+
+.form-success-state--dark .form-success-state__badge,
+.form-success-state--emerald .form-success-state__badge {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+}
+
+.form-success-state__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.9);
+  animation: formSuccessPulse 1.6s ease-in-out infinite;
+}
+
+.form-success-state__title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.form-success-state--default .form-success-state__title {
+  color: #0f172a;
+}
+
+.form-success-state--dark .form-success-state__title,
+.form-success-state--emerald .form-success-state__title {
+  color: #ffffff;
+}
+
+.form-success-state__description {
+  position: relative;
+  z-index: 1;
+  margin: 0.5rem auto 0;
+  max-width: 22rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.form-success-state--default .form-success-state__description {
+  color: #475569;
+}
+
+.form-success-state--dark .form-success-state__description,
+.form-success-state--emerald .form-success-state__description {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.form-success-state__timeline {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1.1rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.form-success-state--default .form-success-state__timeline {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #64748b;
+}
+
+.form-success-state--dark .form-success-state__timeline,
+.form-success-state--emerald .form-success-state__timeline {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.form-success-state__timeline-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.form-success-state__timeline-step--active {
+  color: #34d399;
+  animation: formSuccessStepGlow 2.4s ease-in-out infinite;
+}
+
+.form-success-state__timeline-step--reveal {
+  animation: formSuccessStepReveal 0.55s cubic-bezier(0.34, 1.45, 0.64, 1) both;
+  animation-delay: 0.55s;
+}
+
+.form-success-state__timeline-step--reveal-late {
+  animation-delay: 0.72s;
+}
+
+.form-success-state--default .form-success-state__timeline-step--active {
+  color: #059669;
+}
+
+.form-success-state__timeline-sep {
+  opacity: 0.45;
+}
+
+.form-success-state__reset {
+  position: relative;
+  z-index: 1;
+  margin-top: 1.25rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-success-state--default .form-success-state__reset {
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  background: #ffffff;
+  color: #5b21b6;
+  box-shadow: 0 2px 12px rgba(109, 40, 217, 0.1);
+}
+
+.form-success-state--default .form-success-state__reset:hover {
+  border-color: rgba(109, 40, 217, 0.35);
+  background: #faf5ff;
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.14);
+}
+
+.form-success-state--dark .form-success-state__reset,
+.form-success-state--emerald .form-success-state__reset {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.form-success-state--dark .form-success-state__reset:hover,
+.form-success-state--emerald .form-success-state__reset:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(167, 139, 250, 0.35);
+}
+
+@keyframes formSuccessRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  55% {
+    transform: scale(1.14);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
+
+@keyframes formSuccessOrbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes formSuccessAurora {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.35;
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    opacity: 0.5;
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes formSuccessBurst {
+  0% {
+    transform: rotate(calc(var(--burst-i, 0) * 45deg)) scaleY(0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(calc(var(--burst-i, 0) * 45deg)) scaleY(1);
+    opacity: 0;
+  }
+}
+
+@keyframes formSuccessStepGlow {
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.85;
+    filter: brightness(1.15);
+  }
+}
+
+@keyframes formSuccessStepReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes formSuccessSpark {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-8px) scale(1.25);
+    opacity: 1;
+  }
+}
+
+@keyframes formSuccessIconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes formSuccessPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes formSuccessCardPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes formSuccessShimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes formSuccessConfetti {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0deg) scale(0.3);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(calc(var(--fx, 0) * 0.15), calc(var(--fy, 0) * 0.15)) rotate(45deg) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--fx, 0), var(--fy, -40px)) rotate(280deg) scale(0.85);
+  }
+}
+
+.form-success-state__timeline-step--active {
+  animation: formSuccessStepPulse 2s ease-in-out infinite;
+}
+
+@keyframes formSuccessStepPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+/* Assistant panel — motion layers only */
+.assistant-flow-success {
+  overflow: hidden;
+}
+
+.assistant-flow-success__ring {
+  pointer-events: none;
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 18%;
+  left: 50%;
+  margin-left: -60px;
+  border-radius: 50%;
+  border: 2px solid rgba(52, 211, 153, 0.35);
+  animation: formSuccessRing 1.6s ease-out infinite;
+}
+
+.assistant-flow-success__particle {
+  pointer-events: none;
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  border-radius: 1px;
+  background: linear-gradient(180deg, #a78bfa, #34d399);
+  opacity: 0;
+  animation: formSuccessConfetti 1s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+}
+
+.assistant-flow-success__particle--1 {
+  left: 30%;
+  top: 32%;
+  --fx: -20px;
+  --fy: -40px;
+  animation-delay: 0.15s;
+}
+
+.assistant-flow-success__particle--2 {
+  left: 68%;
+  top: 28%;
+  --fx: 18px;
+  --fy: -44px;
+  animation-delay: 0.22s;
+}
+
+.assistant-flow-success__particle--3 {
+  left: 50%;
+  top: 40%;
+  --fx: 0;
+  --fy: -52px;
+  animation-delay: 0.08s;
+}
+
+.assistant-flow-success__icon {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-success-state__icon {
+    animation: none;
+  }
+
+  .form-success-state__ring,
+  .form-success-state__spark,
+  .form-success-state__badge-dot,
+  .form-success-state__shimmer,
+  .form-success-state__confetti,
+  .form-success-state__aurora,
+  .form-success-state__burst-line,
+  .form-success-state__timeline-step--active,
+  .form-success-state__timeline-step--reveal,
+  .assistant-flow-success__ring,
+  .assistant-flow-success__particle {
+    animation: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .form-success-state__card {
+    padding: 2rem 1.5rem 1.65rem;
+  }
+
+  .form-success-state__title {
+    font-size: 1.5rem;
+  }
+}

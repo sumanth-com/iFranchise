@@ -45,7 +45,14 @@ export function useFormSubmission({
       setIsSubmitting(true);
       setSubmitError('');
 
-      const result = await onSubmit(values);
+      let result;
+      try {
+        result = await onSubmit(values);
+      } catch {
+        setIsSubmitting(false);
+        setSubmitError('Something went wrong. Please try again.');
+        return;
+      }
 
       setIsSubmitting(false);
 

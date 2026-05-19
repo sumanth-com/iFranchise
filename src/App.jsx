@@ -6,6 +6,7 @@ import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
 import { logger } from './lib/logger';
+import PageSEO from './components/seo/PageSEO';
 import {
   NAVIGATE_EVENT,
   getLogicalPathname,
@@ -237,6 +238,7 @@ function App() {
   return (
     <FranchiseOpportunityNavbarFiltersProvider>
       <div className="relative min-h-screen scroll-smooth bg-transparent text-theme-primary">
+        <PageSEO pathname={pathname} />
         <AnimatedSiteBackdrop />
         <Navbar />
 

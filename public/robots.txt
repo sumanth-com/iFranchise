@@ -1,0 +1,7 @@
+# iFranchise — production robots.txt
+User-agent: *
+Allow: /
+
+Disallow: /404
+
+Sitemap: https://www.ifranchise.in/sitemap.xml

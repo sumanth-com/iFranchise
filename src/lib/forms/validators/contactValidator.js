@@ -2,8 +2,9 @@
  * contactValidator.js - Validation logic for contact forms.
  */
 
+import { digitsOnlyPhone, isValidContactEmail, isValidContactPhone10 } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { isValidEmail, isValidPhone, validateRequiredString } from '../utils/fieldValidators.js';
+import { validateRequiredString } from '../utils/fieldValidators.js';
 
 /**
  * Validate contact form data
@@ -26,13 +27,13 @@ export function validateContactForm(formData) {
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  if (!isValidPhone(data.contactNumber)) {
-    errors.contactNumber = 'Please enter a valid phone number';
+  if (!isValidContactPhone10(data.contactNumber)) {
+    errors.contactNumber = 'Please enter a valid 10-digit phone number';
   } else {
-    data.contactNumber = data.contactNumber.trim();
+    data.contactNumber = digitsOnlyPhone(data.contactNumber);
   }
 
-  if (!isValidEmail(data.email)) {
+  if (!isValidContactEmail(data.email)) {
     errors.email = 'Please enter a valid email address';
   } else {
     data.email = data.email.trim().toLowerCase();
@@ -62,9 +63,8 @@ export function validateContactForm(formData) {
     data.company = '';
   }
 
-  // Message validation
-  if (!data.message || data.message.trim().length < 10) {
-    errors.message = 'Message must be at least 10 characters';
+  if (!data.message || !data.message.trim()) {
+    errors.message = 'Please enter a message';
   } else if (data.message.trim().length > 2000) {
     errors.message = 'Message must be under 2000 characters';
   } else {
