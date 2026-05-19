@@ -1,4 +1,4 @@
-/** Honeypot spam prevention — bots often fill hidden fields. */
+/** Honeypot spam prevention - bots often fill hidden fields. */
 
 export const HONEYPOT_FIELD = '_hp';
 

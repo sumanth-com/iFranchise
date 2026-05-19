@@ -7,7 +7,7 @@ const SIZE_CLASSES = {
 };
 
 /**
- * Primary site CTA — violet pill, white label, arrow in frosted circle.
+ * Primary site CTA - violet pill, white label, arrow in frosted circle.
  * Excluded zones: home hero (.cinematic-hero), navbar (header), footer.
  */
 export default function CtaButton({

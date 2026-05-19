@@ -1,10 +1,10 @@
-/* Font loaded via <link> in index.html — non-blocking */
+/* Font loaded via <link> in index.html - non-blocking */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base ─────────────────────────────────────────────────────────────────── */
+/* --- Base ------------------------------------------------------------------- */
 @layer base {
   :root {
     font-family: 'Inter', system-ui, sans-serif;
@@ -14,7 +14,7 @@
     --motion-micro: 160ms;
     --motion-standard: 300ms;
     --motion-page: 520ms;
-    /* Tighter section spacing — prevents giant gaps */
+    /* Tighter section spacing - prevents giant gaps */
     --section-spacing: clamp(40px, 5vw, 80px);
     --content-spacing: clamp(32px, 4vw, 64px);
   }
@@ -23,7 +23,7 @@
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    /* Removed scroll-snap-type — it causes section-to-section jank with Lenis */
+    /* Removed scroll-snap-type - it causes section-to-section jank with Lenis */
   }
 
   body {
@@ -37,10 +37,10 @@
     background: var(--theme-bg-base);
     /* Prevent layout shift from scrollbar */
     scrollbar-gutter: stable;
-    /* NOTE: overflow-x:hidden removed — it breaks position:sticky on child elements */
+    /* NOTE: overflow-x:hidden removed - it breaks position:sticky on child elements */
   }
 
-  /* Subtle global grain — static, not fixed, so it doesn't repaint on scroll */
+  /* Subtle global grain - static, not fixed, so it doesn't repaint on scroll */
   body::before {
     content: '';
     position: fixed;
@@ -67,10 +67,10 @@
   * { scroll-margin-top: 80px; }
 }
 
-/* ─── Image performance ─────────────────────────────────────────────────────── */
+/* --- Image performance ------------------------------------------------------- */
 img {
   transition: opacity 0.3s ease;
-  /* Prevent layout shift — images reserve space */
+  /* Prevent layout shift - images reserve space */
   max-width: 100%;
   height: auto;
 }
@@ -83,7 +83,7 @@ img.loaded {
   opacity: 1;
 }
 
-/* ─── Reduced motion ────────────────────────────────────────────────────────── */
+/* --- Reduced motion ---------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -102,7 +102,7 @@ img.loaded {
   }
 }
 
-/* Homepage / shared motion — injected once (Hero formerly duplicated these) */
+/* Homepage / shared motion - injected once (Hero formerly duplicated these) */
 @keyframes cardReveal {
   to {
     opacity: 1;
@@ -189,17 +189,17 @@ img.loaded {
   50% { transform: translate3d(-3%, 2%, 0) scale(1.05); opacity: 0.6; }
 }
 
-/* ─── Utilities ─────────────────────────────────────────────────────────────── */
+/* --- Utilities --------------------------------------------------------------- */
 @layer utilities {
 
-  /* ── Section system ── */
+  /* -- Section system -- */
   .section-premium {
     @apply relative w-full;
     padding-top: var(--content-spacing);
     padding-bottom: var(--content-spacing);
   }
 
-  /* First section (hero) — no top margin */
+  /* First section (hero) - no top margin */
   .section-premium:first-of-type {
     padding-top: 0;
   }
@@ -208,7 +208,7 @@ img.loaded {
     @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* ── Section headers ── */
+  /* -- Section headers -- */
   .section-header {
     @apply text-center mb-10 sm:mb-14;
   }
@@ -239,7 +239,7 @@ img.loaded {
     @apply text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto;
   }
 
-  /* ── CTA row (text left, button right) ── */
+  /* -- CTA row (text left, button right) -- */
   .cta-row {
     @apply flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-4 max-w-4xl mx-auto;
   }
@@ -256,7 +256,7 @@ img.loaded {
            relative overflow-hidden;
   }
 
-  /* ── Button system ── */
+  /* -- Button system -- */
   .btn-premium {
     @apply inline-flex items-center gap-2 rounded-full font-semibold transition-all duration-300
            hover:-translate-y-0.5 active:scale-95;
@@ -273,7 +273,7 @@ img.loaded {
            hover:border-[#0B1220] hover:bg-slate-50;
   }
 
-  /* ── Hover utilities ── */
+  /* -- Hover utilities -- */
   .hover-lift {
     transition: transform 0.3s var(--ease-premium), box-shadow 0.3s var(--ease-premium);
     will-change: transform;
@@ -287,7 +287,7 @@ img.loaded {
     box-shadow: 0 10px 24px rgba(11, 15, 25, 0.25);
   }
 
-  /* ── Section reveal — cinematic blur fade-up on scroll ── */
+  /* -- Section reveal - cinematic blur fade-up on scroll -- */
   .section-reveal {
     opacity: 1;
     transform: translate3d(0, 0, 0);
@@ -325,7 +325,7 @@ img.loaded {
   .reveal-stagger-3 { transition-delay: 0.3s; }
   .reveal-stagger-4 { transition-delay: 0.4s; }
 
-  /* ── Data-reveal system ── */
+  /* -- Data-reveal system -- */
   [data-reveal] {
     opacity: 0;
     transform: translate3d(0, 20px, 0);
@@ -340,13 +340,13 @@ img.loaded {
     transform: translate3d(0, 0, 0);
   }
 
-  /* ── Dot grid ── */
+  /* -- Dot grid -- */
   .bg-dot-grid {
     background-image: radial-gradient(circle, rgba(15, 23, 42, 0.11) 1px, transparent 1px);
     background-size: 18px 18px;
   }
 
-  /* ── Scroll animations ── */
+  /* -- Scroll animations -- */
   .animate-dot-pulse {
     animation: dot-pulse 1.5s ease-in-out infinite;
     will-change: transform, opacity;
@@ -427,14 +427,14 @@ img.loaded {
     will-change: transform;
   }
 
-  /* ── Scrollbar ── */
+  /* -- Scrollbar -- */
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
   .hide-scrollbar::-webkit-scrollbar { display: none; }
 
-  /* Franchise navbar filter panel — single scroll region */
+  /* Franchise navbar filter panel - single scroll region */
   .franchise-filter-scroll {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
@@ -456,7 +456,7 @@ img.loaded {
     background: linear-gradient(180deg, rgba(167, 139, 250, 0.65), rgba(124, 58, 237, 0.5));
   }
 
-  /* ── Motion tokens ── */
+  /* -- Motion tokens -- */
   .motion-micro {
     transition-duration: var(--motion-micro);
     transition-timing-function: var(--ease-micro);
@@ -466,7 +466,7 @@ img.loaded {
     transition-timing-function: var(--ease-standard);
   }
 
-  /* ── Interactive card ── */
+  /* -- Interactive card -- */
   .interactive-card {
     transition-property: transform, box-shadow, border-color, background-color, opacity;
     transition-duration: var(--motion-standard);
@@ -475,7 +475,7 @@ img.loaded {
   }
   .interactive-card:hover { transform: translateY(-6px); }
 
-  /* ── Button motion ── */
+  /* -- Button motion -- */
   .button-motion {
     transition-property: transform, box-shadow, background-color, border-color, color;
     transition-duration: var(--motion-micro);
@@ -484,7 +484,7 @@ img.loaded {
   }
   .button-motion:active { transform: scale(0.97); }
 
-  /* ── Image zoom ── */
+  /* -- Image zoom -- */
   .image-hover-zoom {
     transition: transform var(--motion-standard) var(--ease-standard),
                 filter var(--motion-standard) var(--ease-standard);
@@ -495,7 +495,7 @@ img.loaded {
     filter: brightness(1.03);
   }
 
-  /* ── Footer ── */
+  /* -- Footer -- */
   .footer-link {
     @apply text-slate-400 transition-all duration-300 hover:text-white hover:translate-x-1;
     position: relative;
@@ -517,7 +517,7 @@ img.loaded {
            transition-all duration-300 hover:bg-slate-600 hover:text-white;
   }
 
-  /* ── Connect flow ── */
+  /* -- Connect flow -- */
   .connect-flow {
     --stream-duration: 14s;
     --stream-gap: 2.15s;
@@ -537,11 +537,11 @@ img.loaded {
     will-change: box-shadow;
   }
 
-  /* ── Footer network ── */
+  /* -- Footer network -- */
   .animate-network-flow { animation: network-flow 40s linear infinite; }
   .animate-node-pulse   { animation: node-pulse 3s ease-in-out infinite; }
 
-  /* ── Benefits orbit ── */
+  /* -- Benefits orbit -- */
   .benefits-core {
     background: radial-gradient(circle at 30% 25%, #ffffff 0%, #eef2ff 38%, #dbeafe 72%, #cbd5e1 100%);
     border: 1px solid rgba(148, 163, 184, 0.3);
@@ -561,14 +561,14 @@ img.loaded {
     animation: orbit-reverse 14s linear infinite;
   }
 
-  /* ── Testimonials ── */
+  /* -- Testimonials -- */
   .testi-track-up,
   .testi-track-down {
     will-change: transform;
   }
 }
 
-/* ─── Testimonial scroll (only on md+) ─────────────────────────────────────── */
+/* --- Testimonial scroll (only on md+) --------------------------------------- */
 @media (min-width: 768px) {
   .testi-track-up   { animation: scroll-up   24s linear infinite; }
   .testi-track-down { animation: scroll-down 24s linear infinite; }
@@ -578,10 +578,10 @@ img.loaded {
   }
 }
 
-/* ─── Blog ──────────────────────────────────────────────────────────────────── */
+/* --- Blog -------------------------------------------------------------------- */
 .blog-wrapper { position: relative; }
 
-/* ─── Keyframes ─────────────────────────────────────────────────────────────── */
+/* --- Keyframes --------------------------------------------------------------- */
 @keyframes dot-pulse {
   0%, 100% { transform: scale(1);   opacity: 1;   }
   50%       { transform: scale(1.4); opacity: 0.5; }
@@ -607,10 +607,51 @@ img.loaded {
   to   { transform: translate3d(-50%, 0, 0);  }
 }
 
-/* marquee-right = content moves LEFT→RIGHT (starts at -50%, ends at 0) */
+/* marquee-right = content moves LEFT->RIGHT (starts at -50%, ends at 0) */
 @keyframes marquee-right {
   from { transform: translate3d(-50%, 0, 0);  }
   to   { transform: translate3d(0, 0, 0);     }
+}
+
+/* Culture gallery - edge fade, pause on hover, accessible reduced motion */
+.culture-gallery-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+.culture-gallery-card:focus-within {
+  outline: 2px solid rgba(139, 92, 246, 0.65);
+  outline-offset: 3px;
+}
+
+.culture-gallery-caption {
+  color: #ffffff;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .culture-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .culture-gallery-row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    padding-bottom: 0.5rem;
+  }
+
+  .culture-gallery-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .culture-gallery-card {
+    scroll-snap-align: center;
+  }
 }
 
 @keyframes mega-in {
@@ -746,7 +787,7 @@ img.loaded {
   50%       { transform: translateY(-8px); }
 }
 
-/* ─── Premium animations used in Hero sections ──────────────────────────────── */
+/* --- Premium animations used in Hero sections -------------------------------- */
 @keyframes premiumFloat {
   0%, 100% { transform: translateY(0) rotate(0deg);      }
   33%       { transform: translateY(-8px) rotate(0.5deg); }
@@ -878,14 +919,14 @@ img.loaded {
   50%       { transform: scale(1.05); opacity: 1;   }
 }
 
-/* ── Footer ambient background drift ── */
+/* -- Footer ambient background drift -- */
 @keyframes footerGradientDrift {
   0%, 100% { transform: translate(0%, 0%) scale(1);      }
   33%       { transform: translate(2%, -3%) scale(1.04);  }
   66%       { transform: translate(-2%, 2%) scale(0.97);  }
 }
 
-/* ── Floating blobs ── */
+/* -- Floating blobs -- */
 @keyframes footerBlob1 {
   0%, 100% { transform: translate(0px, 0px);    }
   50%       { transform: translate(18px, -22px); }
@@ -899,7 +940,7 @@ img.loaded {
   50%       { transform: translate(10px, 20px);  }
 }
 
-/* ── Heading stagger reveal ── */
+/* -- Heading stagger reveal -- */
 @keyframes footerHeadIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0);    }
@@ -909,7 +950,7 @@ img.loaded {
   to   { opacity: 0.38; transform: translateY(0); }
 }
 
-/* ── Link underline slide ── */
+/* -- Link underline slide -- */
 @keyframes footerUnderlineIn {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
@@ -964,7 +1005,7 @@ img.loaded {
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Chart bar breathing — subtle height pulse when active */
+/* Chart bar breathing - subtle height pulse when active */
 @keyframes barBreathe {
   0%, 100% { opacity: 0.85; }
   50%       { opacity: 1;    }
@@ -976,7 +1017,7 @@ img.loaded {
   100% { stroke-dashoffset: 0;   }
 }
 
-/* ─── Site footer (PreFooterCTA) ───────────────────────────────────────────── */
+/* --- Site footer (PreFooterCTA) --------------------------------------------- */
 .footer-main-grid {
   display: grid;
   grid-template-columns: minmax(200px, 1.35fr) repeat(4, minmax(0, 1fr));
@@ -1223,7 +1264,7 @@ img.loaded {
   70% { transform: translateY(-2px); }
 }
 
-/* ─── Footer Mobile Alignment ──────────────────────────────────────────────── */
+/* --- Footer Mobile Alignment ------------------------------------------------ */
 @media (max-width: 640px) {
   .footer-bottom-bar {
     flex-direction: column !important;
@@ -1258,7 +1299,7 @@ img.loaded {
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ─── Site CTA — violet pill + arrow (excludes hero, navbar, footer) ───────── */
+/* --- Site CTA - violet pill + arrow (excludes hero, navbar, footer) --------- */
 .site-cta {
   position: relative;
   display: inline-flex;
@@ -1373,7 +1414,7 @@ img.loaded {
   transform: translateX(50%);
 }
 
-/* Legacy .btn-wave → site CTA (navbar / footer / hero excluded below) */
+/* Legacy .btn-wave -> site CTA (navbar / footer / hero excluded below) */
 button.btn-wave,
 a.btn-wave {
   border-radius: 9999px !important;
@@ -1390,7 +1431,7 @@ a.btn-wave:hover {
   box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45) !important;
 }
 
-/* ─── Flowing wave — dark CTA buttons site-wide ─────────────────────────────── */
+/* --- Flowing wave - dark CTA buttons site-wide ------------------------------- */
 /* Targets bg-slate-900 buttons + opt-in .btn-wave class */
 
 .btn-wave,
@@ -1441,7 +1482,7 @@ button.bg-slate-900:not([class*="border-"]):not([class*="outline"]):not([class*=
   100% { left: 100%; opacity: 0; }
 }
 
-/* Navbar, footer, and pre-footer — do not use site violet CTA */
+/* Navbar, footer, and pre-footer - do not use site violet CTA */
 header button.btn-wave,
 header a.btn-wave,
 footer button.btn-wave,
@@ -1464,7 +1505,7 @@ header button[class*='0B1220'] {
   box-shadow: 0 4px 20px rgba(11, 18, 32, 0.25) !important;
 }
 
-/* ─── Animated Line Flow for Service Cards ──────────────────────────────────── */
+/* --- Animated Line Flow for Service Cards ------------------------------------ */
 /* Horizontal line animation - flows left to right */
 @keyframes lineFlow {
   0% {
@@ -1510,7 +1551,7 @@ header button[class*='0B1220'] {
   animation: lineFlowVertical 2s ease-in-out infinite;
 }
 
-/* ─── Card-to-Card Connection Animations ────────────────────────────────────── */
+/* --- Card-to-Card Connection Animations -------------------------------------- */
 /* Connection line flow animation */
 @keyframes connectionFlow {
   0% {
@@ -1609,7 +1650,7 @@ header button[class*='0B1220'] {
   animation: particleFlow3 3s ease-in-out infinite 1s;
 }
 
-/* ─── Card Background Animations ────────────────────────────────────────────── */
+/* --- Card Background Animations ---------------------------------------------- */
 /* Gradient shift animation for card backgrounds */
 @keyframes gradientShift {
   0%, 100% {
@@ -1630,7 +1671,7 @@ header button[class*='0B1220'] {
   animation: gradientShift 8s ease-in-out infinite;
 }
 
-/* ─── Premium Centered Badge Animations ─────────────────────────────────────── */
+/* --- Premium Centered Badge Animations --------------------------------------- */
 /* Pulsing glow that expands outward */
 @keyframes pulseGlow {
   0%, 100% {
@@ -1740,7 +1781,7 @@ header button[class*='0B1220'] {
   animation: breathePill 2.5s ease-in-out infinite;
 }
 
-/* ─── Old Attention-Grabbing Badge Animations (Deprecated) ──────────────────── */
+/* --- Old Attention-Grabbing Badge Animations (Deprecated) -------------------- */
 /* Pulsing ring that expands outward - always visible */
 @keyframes pulseRing {
   0% {
@@ -1816,7 +1857,7 @@ header button[class*='0B1220'] {
   animation: shimmerSweep 4s ease-in-out infinite;
 }
 
-/* ─── Premium SaaS Connection Animations ────────────────────────────────────── */
+/* --- Premium SaaS Connection Animations -------------------------------------- */
 /* Animated dashed line flow */
 @keyframes dashFlow {
   0% {
@@ -1920,7 +1961,7 @@ header button[class*='0B1220'] {
   animation: floatParticle3 8s ease-in-out infinite 1s;
 }
 
-/* ─── Premium Industries Section Animations ─────────────────────────────────── */
+/* --- Premium Industries Section Animations ----------------------------------- */
 /* Continuous breathing glow - subtle and smooth */
 @keyframes industryBreathe {
   0%, 100% {
@@ -2093,7 +2134,7 @@ header button[class*='0B1220'] {
 }
 
 
-/* ─── Lenis Smooth Scroll ───────────────────────────────────────────────────── */
+/* --- Lenis Smooth Scroll ----------------------------------------------------- */
 html.lenis {
   height: auto;
 }
@@ -2110,7 +2151,7 @@ html.lenis {
   pointer-events: none;
 }
 
-/* ─── GPU-accelerated layers for animated elements ──────────────────────────── */
+/* --- GPU-accelerated layers for animated elements ---------------------------- */
 .will-change-transform {
   will-change: transform;
   transform: translateZ(0);
@@ -2123,7 +2164,7 @@ html.lenis {
   will-change: auto;
 }
 
-/* ─── Premium Framer Motion section entrance variants ───────────────────────── */
+/* --- Premium Framer Motion section entrance variants ------------------------- */
 /* Used via data attributes for CSS-only fallback */
 [data-motion="fade-up"] {
   opacity: 0;
@@ -2170,7 +2211,7 @@ html.lenis {
   transform: scale(1);
 }
 
-/* ─── Page transition ────────────────────────────────────────────────────────── */
+/* --- Page transition ---------------------------------------------------------- */
 .page-enter {
   animation: pageEnter 0.35s cubic-bezier(0.22,1,0.36,1) both;
 }
@@ -2179,7 +2220,7 @@ html.lenis {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Stagger children utility ───────────────────────────────────────────────── */
+/* --- Stagger children utility ------------------------------------------------- */
 .stagger-children > *:nth-child(1)  { transition-delay: 0.00s; }
 .stagger-children > *:nth-child(2)  { transition-delay: 0.06s; }
 .stagger-children > *:nth-child(3)  { transition-delay: 0.12s; }
@@ -2187,7 +2228,7 @@ html.lenis {
 .stagger-children > *:nth-child(5)  { transition-delay: 0.24s; }
 .stagger-children > *:nth-child(6)  { transition-delay: 0.30s; }
 
-/* ─── Image lazy load fade-in ────────────────────────────────────────────────── */
+/* --- Image lazy load fade-in -------------------------------------------------- */
 img[loading="lazy"] {
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -2197,7 +2238,7 @@ img[loading="lazy"]:not([src=""]) {
   opacity: 1;
 }
 
-/* ─── Contain paint for heavy sections ──────────────────────────────────────── */
+/* --- Contain paint for heavy sections ---------------------------------------- */
 .contain-paint {
   contain: paint;
 }
@@ -2208,13 +2249,13 @@ img[loading="lazy"]:not([src=""]) {
   contain: strict;
 }
 
-/* ─── Smooth anchor scroll offset ───────────────────────────────────────────── */
+/* --- Smooth anchor scroll offset --------------------------------------------- */
 :target {
   scroll-margin-top: 88px;
 }
 
-/* ─── Premium Ambient Background Drift Animations ───────────────────────────── */
-/* Slow, cinematic, elegant — like Apple/Stripe/Linear */
+/* --- Premium Ambient Background Drift Animations ----------------------------- */
+/* Slow, cinematic, elegant - like Apple/Stripe/Linear */
 
 @keyframes ambientDrift1 {
   0%   { transform: translate(0px, 0px) scale(1); }
@@ -2239,7 +2280,7 @@ img[loading="lazy"]:not([src=""]) {
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
-/* ─── Premium card glass shimmer on hover ───────────────────────────────────── */
+/* --- Premium card glass shimmer on hover ------------------------------------- */
 @keyframes glassShimmer {
   0%   { transform: translateX(-100%) skewX(-12deg); opacity: 0; }
   20%  { opacity: 0.6; }
@@ -2251,7 +2292,7 @@ img[loading="lazy"]:not([src=""]) {
   animation: glassShimmer 1.2s ease-in-out;
 }
 
-/* ─── Ambient glow pulse for section orbs ───────────────────────────────────── */
+/* --- Ambient glow pulse for section orbs ------------------------------------- */
 @keyframes glowPulse {
   0%, 100% { opacity: 0.15; }
   50%       { opacity: 0.28; }
@@ -2261,7 +2302,7 @@ img[loading="lazy"]:not([src=""]) {
   animation: glowPulse 6s ease-in-out infinite;
 }
 
-/* ─── Global Living Background Orb Animations ───────────────────────────────── */
+/* --- Global Living Background Orb Animations --------------------------------- */
 @keyframes globalOrb1 {
   0%   { transform: translate(0px, 0px) scale(1); }
   20%  { transform: translate(40px, -30px) scale(1.06); }
@@ -2283,7 +2324,7 @@ img[loading="lazy"]:not([src=""]) {
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
-/* ─── Skip link (accessibility) ─────────────────────────────────────────────── */
+/* --- Skip link (accessibility) ----------------------------------------------- */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -2302,7 +2343,7 @@ img[loading="lazy"]:not([src=""]) {
   top: 1rem;
 }
 
-/* ─── Cinematic homepage hero ───────────────────────────────────────────────── */
+/* --- Cinematic homepage hero ------------------------------------------------- */
 .cinematic-hero {
   contain: layout style;
   height: 100dvh;
@@ -2318,24 +2359,34 @@ img[loading="lazy"]:not([src=""]) {
   filter: saturate(1.05) contrast(1.02);
 }
 
+.cinematic-hero--light .hero-cinematic-media {
+  filter: saturate(1.02) contrast(1.04) brightness(1.02);
+}
+
 .hero-cinematic-media-shadow {
   background:
     radial-gradient(ellipse 55% 35% at 50% 55%, transparent 35%, rgba(0, 0, 0, 0.12) 100%),
     radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0, 0, 0, 0.28), transparent 72%);
 }
 
-/* Hero copy — sit slightly above vertical center */
+.hero-cinematic-media-shadow--light {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 100%, rgba(255, 255, 255, 0.55), transparent 70%),
+    radial-gradient(ellipse 55% 35% at 50% 55%, transparent 40%, rgba(15, 23, 42, 0.06) 100%);
+}
+
+/* Hero copy - sit slightly above vertical center */
 .hero-cinematic-content {
   transform: translateY(clamp(-2.5rem, -6vh, -4.5rem));
 }
 
-/* Hero CTAs — directly under subtitle */
+/* Hero CTAs - directly under subtitle */
 .hero-cta-row {
   width: 100%;
   max-width: 36rem;
 }
 
-/* Hero primary CTAs — white pill, purple text */
+/* Hero primary CTAs - white pill, purple text */
 .hero-cta {
   display: inline-flex;
   align-items: center;
@@ -2412,7 +2463,83 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 .cinematic-enter-pill {
-  animation: cinematicFadeUp 0.5s var(--ease-premium) both;
+  animation: heroPillEnter 0.65s var(--ease-premium) both;
+}
+
+@keyframes heroPillEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.92);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Hero badge - gentle live pulse after entrance */
+.hero-cinematic-pill--animated {
+  animation: heroPillEnter 0.65s var(--ease-premium) both, heroPillGlow 3.2s ease-in-out 0.65s infinite;
+}
+
+.hero-cinematic-pill--animated .hero-cinematic-pill-dot {
+  animation: heroPillDotPulse 2s ease-in-out 0.85s infinite;
+}
+
+@keyframes heroPillGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(139, 92, 246, 0.22);
+  }
+}
+
+@keyframes heroPillDotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.85);
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+    box-shadow: 0 0 14px rgba(192, 132, 252, 1);
+  }
+}
+
+html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill--animated {
+  animation: heroPillEnter 0.65s var(--ease-premium) both, heroPillGlowLight 3.2s ease-in-out 0.65s infinite;
+}
+
+@keyframes heroPillGlowLight {
+  0%,
+  100% {
+    box-shadow: 0 2px 12px rgba(109, 40, 217, 0.12);
+  }
+  50% {
+    box-shadow: 0 4px 22px rgba(109, 40, 217, 0.22);
+  }
+}
+
+html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill--animated .hero-cinematic-pill-dot {
+  animation: heroPillDotPulseLight 2s ease-in-out 0.85s infinite;
+}
+
+@keyframes heroPillDotPulseLight {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 6px rgba(124, 58, 237, 0.5);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px rgba(124, 58, 237, 0.75);
+  }
 }
 
 .cinematic-delay-0 { animation-delay: 0ms; }
@@ -2440,12 +2567,23 @@ img[loading="lazy"]:not([src=""]) {
 
 .cinematic-hero .cinematic-blur-reveal,
 .cinematic-hero .cinematic-fade-up,
-.cinematic-hero .cinematic-enter-pill,
 .cinematic-hero .hero-cta {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
   filter: none !important;
+}
+
+/* Keep pill visible but stop motion for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cinematic-pill--animated,
+  .cinematic-enter-pill.hero-cinematic-pill--animated {
+    animation: heroPillEnter 0.4s var(--ease-premium) both !important;
+  }
+
+  .hero-cinematic-pill--animated .hero-cinematic-pill-dot {
+    animation: none !important;
+  }
 }
 
 .cinematic-hero .hero-cta:hover {
@@ -2467,7 +2605,7 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* ─── Expansion assistant — FAB & header glyph ──────────────────────────────── */
+/* --- Expansion assistant - FAB & header glyph -------------------------------- */
 .assistant-glyph-tile {
   display: flex;
   align-items: center;
@@ -2479,7 +2617,7 @@ img[loading="lazy"]:not([src=""]) {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ─── Expansion assistant — 3D Earth globe (legacy, unused) ───────────────── */
+/* --- Expansion assistant - 3D Earth globe (legacy, unused) ----------------- */
 .assistant-globe-frame {
   position: relative;
   display: inline-flex;
@@ -2698,7 +2836,7 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* ─── Site backdrop (AnimatedSiteBackdrop) ──────────────────────────────────── */
+/* --- Site backdrop (AnimatedSiteBackdrop) ------------------------------------ */
 .site-backdrop {
   contain: strict;
   isolation: isolate;
@@ -2794,7 +2932,7 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* ─── Premium interaction utilities ─────────────────────────────────────────── */
+/* --- Premium interaction utilities ------------------------------------------- */
 .gpu-transform {
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -2845,7 +2983,7 @@ img[loading="lazy"]:not([src=""]) {
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Violet checkboxes inside white navbar panels — keep tick marks white */
+/* Violet checkboxes inside white navbar panels - keep tick marks white */
 .bg-white [class*='bg-violet-600'] .navbar-filter-check-icon,
 .bg-white [class*='bg-violet-600'] .navbar-filter-check-icon path,
 .navbar-dropdown-panel [class*='bg-violet-600'] .navbar-filter-check-icon,
@@ -2867,7 +3005,7 @@ img[loading="lazy"]:not([src=""]) {
 .bg-white .text-slate-400,
 .light-surface .text-slate-400 { color: #94a3b8 !important; }
 
-/* Navbar white dropdowns — readable subtext (not forced to white) */
+/* Navbar white dropdowns - readable subtext (not forced to white) */
 .navbar-dropdown-panel .text-slate-600,
 .navbar-dropdown-panel .text-slate-700,
 .navbar-dropdown-panel .text-slate-800 {
@@ -2903,7 +3041,7 @@ html[data-theme='light'] .site-backdrop__gradient {
   background: #ffffff !important;
 }
 
-/* Default: white utility text → dark on light pages (not CTA buttons/links) */
+/* Default: white utility text -> dark on light pages (not CTA buttons/links) */
 html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white,
 html[data-theme='light'] #main-content .text-white:not(button):not(a) {
   color: #0b0f19 !important;
@@ -2946,7 +3084,7 @@ html[data-theme='light'] .card-premium-dark-inner:not(.theme-dark-surface *) .te
   color: #0b0f19 !important;
 }
 
-/* Premium white cards — black text (wins over default .text-white rule) */
+/* Premium white cards - black text (wins over default .text-white rule) */
 html[data-theme='light'] #main-content .theme-light-card,
 html[data-theme='light'] #main-content .theme-light-card .text-white,
 html[data-theme='light'] #main-content .theme-light-card :is(h1, h2, h3, h4, h5, h6, p, span, li),
@@ -2961,13 +3099,13 @@ html[data-theme='dark'] #main-content .theme-light-pill p {
   color: #ffffff !important;
 }
 
-/* Dashboard panels only — keep white text */
+/* Dashboard panels only - keep white text */
 html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) .text-white,
 html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, div):not(.dashboard-surface-light):not(.dashboard-surface-light *) {
   color: #ffffff !important;
 }
 
-/* Services dashboards — header/metrics white; inner panels dark text (wins over rules above) */
+/* Services dashboards - header/metrics white; inner panels dark text (wins over rules above) */
 html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar,
 html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar :is(div, span),
 html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card,
@@ -3017,7 +3155,7 @@ html[data-theme='light'] #main-content #market-intelligence-chart .text-white {
   color: #ffffff !important;
 }
 
-/* CTAs on colored buttons — always white label text */
+/* CTAs on colored buttons - always white label text */
 html[data-theme='light'] #main-content .site-cta,
 html[data-theme='light'] #main-content .site-cta *,
 html[data-theme='light'] #main-content .btn-wave,
@@ -3045,25 +3183,74 @@ html[data-theme='light'] #main-content [class*='bg-[#0B1220]'] * {
   color: #ffffff !important;
 }
 
-/* Home hero — keep dark-mode look in light theme (wins over #main-content .text-white) */
-html[data-theme='light'] #main-content .cinematic-hero,
-html[data-theme='light'] #main-content .cinematic-hero h1,
-html[data-theme='light'] #main-content .cinematic-hero h2,
-html[data-theme='light'] #main-content .cinematic-hero p,
-html[data-theme='light'] #main-content .cinematic-hero .text-white,
-html[data-theme='light'] #main-content .cinematic-hero .hero-cinematic-pill-text {
+/* Home hero light - black copy, purple accents (HomeHero2.png) */
+html[data-theme='light'] #main-content .cinematic-hero--light h1,
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-accent {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-pill-text {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-lead {
+  color: #334155 !important;
+}
+
+/* Light hero CTAs - purple buttons, white text (override base .hero-cta white pill) */
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta,
+html[data-theme='light'] .cinematic-hero--light .hero-cta {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 52%, #5b21b6 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 24px rgba(109, 40, 217, 0.38) !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta__label {
   color: #ffffff !important;
 }
 
-html[data-theme='light'] #main-content .cinematic-hero .hero-cinematic-accent {
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta__icon {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta__icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 52%, #6d28d9 100%) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta:hover .hero-cta__label,
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta:hover .hero-cta__icon,
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta:hover .hero-cta__icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Home hero dark - white copy on HomeHero.png */
+html[data-theme='dark'] #main-content .cinematic-hero--dark h1,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-title,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-pill-text {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-accent {
   color: #c084fc !important;
 }
 
-html[data-theme='light'] #main-content .cinematic-hero p {
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-lead {
   color: rgba(255, 255, 255, 0.92) !important;
 }
 
-/* Purple solid CTAs — white label in light & dark (wins over panel/card overrides) */
+/* Purple solid CTAs - white label in light & dark (wins over panel/card overrides) */
 html[data-theme='light'] #main-content .btn-purple-solid,
 html[data-theme='light'] #main-content .btn-purple-solid *,
 html[data-theme='light'] #main-content a.btn-purple-solid,

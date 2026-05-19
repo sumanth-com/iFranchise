@@ -1,18 +1,18 @@
 /**
  * rateLimiter.js
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  * Client-side rate limiting using sessionStorage.
  * This is a first line of defence to prevent accidental double-submits and
  * basic abuse from the same browser tab.
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  */
 
 /**
  * Check whether a form submission is allowed.
  * Tracks submission timestamps per form key in sessionStorage.
  *
- * @param {string} formKey   - Unique identifier for the form (e.g. 'contact', 'brand_application')
- * @param {number} limitMs   - Minimum milliseconds between submissions (default: 30 seconds)
+ * @param {string} formKey  - Unique identifier for the form (e.g. 'contact', 'brand_application')
+ * @param {number} limitMs  - Minimum milliseconds between submissions (default: 30 seconds)
  * @param {number} maxPerSession - Max submissions per browser session (default: 10)
  * @returns {{ allowed: boolean, waitMs: number, reason: string | null }}
  */
@@ -78,12 +78,12 @@ export function recordSubmission(formKey) {
   try {
     sessionStorage.setItem(storageKey, JSON.stringify(updated));
   } catch {
-    // sessionStorage unavailable — fail silently
+    // sessionStorage unavailable - fail silently
   }
 }
 
 /**
- * Rate limit keys — centralised constants so form keys never drift.
+ * Rate limit keys - centralised constants so form keys never drift.
  */
 export const RATE_LIMIT_KEYS = {
   CONTACT:           'contact',

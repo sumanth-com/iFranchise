@@ -36,7 +36,7 @@ function BlogCard({ post, priority = false }) {
             <span className="rounded-full border border-violet-400/35 bg-violet-500/15 px-2.5 py-1 font-medium text-white">
               {post.category}
             </span>
-            <span>·</span>
+            <span> - </span>
             <span>{post.readTime}</span>
           </div>
           <h3

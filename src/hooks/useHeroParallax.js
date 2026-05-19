@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Subtle cursor parallax for hero media — desktop only, rAF-throttled.
+ * Subtle cursor parallax for hero media - desktop only, rAF-throttled.
  */
 export function useHeroParallax(enabled, intensity = 10) {
   const ref = useRef(null);

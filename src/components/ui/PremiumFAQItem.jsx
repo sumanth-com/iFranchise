@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 /**
- * Home-style FAQ accordion card — white surface, dark text (both themes).
+ * Home-style FAQ accordion card - white surface, dark text (both themes).
  */
 export default function PremiumFAQItem({ faq, index = 0 }) {
   const [isOpen, setIsOpen] = useState(false);

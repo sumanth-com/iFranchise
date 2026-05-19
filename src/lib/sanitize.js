@@ -1,5 +1,5 @@
 /**
- * Frontend input sanitization — strips markup/control chars before validation/submit.
+ * Frontend input sanitization - strips markup/control chars before validation/submit.
  */
 
 const HTML_TAG = /<[^>]*>/g;

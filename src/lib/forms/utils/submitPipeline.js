@@ -1,6 +1,6 @@
 /**
  * Centralized form submission pipeline:
- * honeypot → rate limit → validate → transform → Google Sheets
+ * honeypot -> rate limit -> validate -> transform -> Google Sheets
  */
 
 import { FORM_TYPES } from '../constants/formTypes.js';

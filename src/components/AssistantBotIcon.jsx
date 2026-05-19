@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './assistant-bot-icon.css';
 
 /**
- * Premium SaaS chatbot glyph — pure CSS/SVG, no image assets.
+ * Premium SaaS chatbot glyph - pure CSS/SVG, no image assets.
  * `open` = panel open (FAB two-way state). Blink + glow when `animate`.
  */
 export default function AssistantBotIcon({

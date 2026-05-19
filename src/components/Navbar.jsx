@@ -556,18 +556,18 @@ const SERVICES_ITEMS = [
   { title: 'Lead Generation', description: 'Quality leads for your brand', Icon: LeadGenIcon, path: '/services' },
 ];
 
-// Blogs nav (Resources renamed) — active items only
+// Blogs nav (Resources renamed) - active items only
 const BLOGS_NAV_ITEMS = [
   { title: 'Blogs', description: 'Latest insights and updates', Icon: BlogIcon, path: '/blog' },
 ];
 
-/** @deprecated Hidden — restore when re-enabling Resources dropdown extras */
+/** @deprecated Hidden - restore when re-enabling Resources dropdown extras */
 const RESOURCES_ITEMS_HIDDEN = [
   { title: 'FAQs', description: 'Common questions answered', Icon: FAQIcon, path: '/services' },
   { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blog' },
 ];
 
-/** @deprecated Hidden — Company dropdown right column (legal pages + Book A Call) */
+/** @deprecated Hidden - Company dropdown right column (legal pages + Book A Call) */
 const SHOW_COMPANY_DROPDOWN_EXTRAS = false;
 
 function Navbar() {
@@ -704,7 +704,7 @@ function Navbar() {
         {/* Desktop Navigation */}
         <ul className="hidden flex-1 items-center justify-center gap-1 lg:flex">
           
-          {/* Company — hover shows menu; click goes to About Us */}
+          {/* Company - hover shows menu; click goes to About Us */}
           <li
             className="relative"
             ref={companyRef}
@@ -769,7 +769,7 @@ function Navbar() {
             </AnimatePresence>
           </li>
 
-          {/* Services — direct link */}
+          {/* Services - direct link */}
           <li>
             <a
               href="/services"
@@ -780,7 +780,7 @@ function Navbar() {
             </a>
           </li>
 
-          {/* Franchise Opportunities — hover shows filter panel; click goes to listings */}
+          {/* Franchise Opportunities - hover shows filter panel; click goes to listings */}
           <li
             className="relative"
             ref={franchiseRef}
@@ -827,7 +827,7 @@ function Navbar() {
             </AnimatePresence>
           </li>
 
-          {/* Blogs — direct link */}
+          {/* Blogs - direct link */}
           <li>
             <a
               href="/blog"
@@ -979,7 +979,7 @@ function Navbar() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Services — direct link */}
+                  {/* Services - direct link */}
                   <a
                     href="/services"
                     onClick={(e) => { e.preventDefault(); navigateTo('/services'); }}
@@ -988,7 +988,7 @@ function Navbar() {
                     Services
                   </a>
 
-                  {/* Franchise Opportunities — direct link (mobile) */}
+                  {/* Franchise Opportunities - direct link (mobile) */}
                   <a
                     href="/franchise-opportunities"
                     onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
@@ -997,7 +997,7 @@ function Navbar() {
                     Franchise Opportunities
                   </a>
 
-                  {/* Blogs — direct link */}
+                  {/* Blogs - direct link */}
                   <a
                     href="/blog"
                     onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}

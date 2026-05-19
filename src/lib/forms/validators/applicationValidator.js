@@ -62,7 +62,7 @@ export function validateApplicationForm(formData) {
     data.founded = '';
   }
 
-  // Current outlets validation (optional — free text or numeric)
+  // Current outlets validation (optional - free text or numeric)
   if (data.outlets && data.outlets.trim()) {
     if (data.outlets.trim().length > 100) {
       errors.outlets = 'Locations value is too long';

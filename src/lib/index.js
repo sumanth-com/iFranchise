@@ -1,13 +1,13 @@
 /**
  * lib/index.js
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  * Barrel export for the backend infrastructure layer.
  * Import from here instead of individual files to keep imports clean.
  *
  * Usage:
  *   import { submitContactForm } from '@/lib';
  *   import { FORM_TYPES, SHEET_TABS } from '@/lib/forms';
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  */
 
 // Centralized form architecture

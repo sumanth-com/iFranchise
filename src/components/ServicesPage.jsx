@@ -15,7 +15,7 @@ import BrandLogo from '../assets/BrandLogo.png';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import IndustryCard from './IndustryCard';
 
-// â”€â”€ Lightweight CSS-only reveal â€” no framer-motion per element â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// -- Lightweight CSS-only reveal - no framer-motion per element ----------------
 function Reveal({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -49,7 +49,7 @@ function Reveal({ children, delay = 0, className = '' }) {
   );
 }
 
-// â”€â”€ Lightweight counter â€” uses rAF, no setInterval â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// -- Lightweight counter - uses rAF, no setInterval ----------------------------
 function Counter({ target, suffix = '', duration = 800 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -81,7 +81,7 @@ function Counter({ target, suffix = '', duration = 800 }) {
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
-// â”€â”€ Lightweight step badge â€” 1 CSS animation instead of 8 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// -- Lightweight step badge - 1 CSS animation instead of 8 --------------------
 function StepBadge({ number, color }) {
   const colors = {
     blue:   { bg: 'from-blue-500 via-indigo-600 to-blue-700',   ring: 'rgba(59,130,246,0.3)',  glow: 'rgba(99,102,241,0.15)' },
@@ -115,9 +115,9 @@ const WHY_CARDS = [
   { icon: FiTrendingUp, title: 'Proven Track Record', desc: 'We have built a reputation as a trusted and reliable partner in achieving business success across 200+ brands.' },
   { icon: FiTarget, title: 'Tailored Solutions', desc: 'We offer personalized solutions tailored to your specific goals, audience, and industry for maximum impact.' },
   { icon: FiUsers, title: 'Client-Centric Focus', desc: 'Your success is our priority. We prioritize understanding your business goals before recommending any strategy.' },
-  { icon: FiMessageSquare, title: 'Transparent Communication', desc: 'We believe in open and honest communication every step of the way â€” no surprises, no hidden agendas.' },
+  { icon: FiMessageSquare, title: 'Transparent Communication', desc: 'We believe in open and honest communication every step of the way - no surprises, no hidden agendas.' },
   { icon: FiHeadphones, title: 'Dedicated Support', desc: "Your success is our priority, and we're here to support you every step of the way with a dedicated team." },
-  { icon: FiGlobe, title: 'Cross-Industry Expertise', desc: 'Our team has extensive experience working across various industries â€” from F&B to tech to wellness.' },
+  { icon: FiGlobe, title: 'Cross-Industry Expertise', desc: 'Our team has extensive experience working across various industries - from F&B to tech to wellness.' },
 ];
 
 const FEATURES = [
@@ -399,7 +399,7 @@ function InvestorDashboardContent({ navigateTo }) {
                 </div>
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <span className="text-[9px] text-slate-500">{opp.industry}</span>
-                  <span className="text-[9px] text-slate-400">·</span>
+                  <span className="text-[9px] text-slate-400"> - </span>
                   <span className="text-[9px] font-semibold text-emerald-600">{opp.roi}</span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -417,7 +417,7 @@ function InvestorDashboardContent({ navigateTo }) {
         {[
           { icon: FiBarChart2, label: 'Avg ROI', value: '31%', color: 'from-violet-500 to-purple-600' },
           { icon: FiTrendingUp, label: 'CAGR', value: '~30%', color: 'from-blue-500 to-cyan-600' },
-          { icon: FiDollarSign, label: 'Min Inv', value: 'â‚¹95K', color: 'from-emerald-500 to-teal-600' }
+          { icon: FiDollarSign, label: 'Min Inv', value: 'Rs.95K', color: 'from-emerald-500 to-teal-600' }
         ].map((metric, i) => (
           <div
             key={i}
@@ -500,7 +500,7 @@ function InvestorDashboardContent({ navigateTo }) {
   );
 }
 
-// ── Process Steps — franchise expansion flow ─────────────────────────────────
+// -- Process Steps - franchise expansion flow ---------------------------------
 const PROCESS_STEPS = [
   {
     title: 'Understand Your Brand',
@@ -511,7 +511,7 @@ const PROCESS_STEPS = [
   {
     title: 'Build the Foundation',
     color: 'indigo',
-    desc: 'Franchise structure, SOPs, legal docs, and brand systems — ready to launch and operate.',
+    desc: 'Franchise structure, SOPs, legal docs, and brand systems - ready to launch and operate.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>,
   },
   {
@@ -750,7 +750,7 @@ export default function ServicesPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mx-auto max-w-3xl text-base leading-relaxed text-white sm:text-lg">
-              We provide end-to-end franchise services designed to help businesses scale efficiently and connect with the right investors. Our process covers every stage of franchise growth â€” from strategy and documentation to investor onboarding and brand positioning.
+              We provide end-to-end franchise services designed to help businesses scale efficiently and connect with the right investors. Our process covers every stage of franchise growth - from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </Reveal>
         </div>
@@ -831,7 +831,7 @@ export default function ServicesPage() {
         {/* End Content Container */}
       </section>
 
-      {/* HOW IT WORKS — franchise expansion process flow */}
+      {/* HOW IT WORKS - franchise expansion process flow */}
       <section className="relative z-10 py-16 overflow-hidden">
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
 
@@ -848,7 +848,7 @@ export default function ServicesPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mx-auto max-w-2xl text-base leading-relaxed text-white sm:text-lg">
-                Five clear stages — from understanding your brand to scaling into new markets.
+                Five clear stages - from understanding your brand to scaling into new markets.
               </p>
             </Reveal>
           </div>
@@ -994,7 +994,7 @@ export default function ServicesPage() {
                       <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                         <FiDollarSign className="h-3.5 w-3.5 text-white mb-1" />
-                        <div className="text-lg font-bold text-white">â‚¹6.8M</div>
+                        <div className="text-lg font-bold text-white">Rs.6.8M</div>
                         <div className="text-[9px] text-white">Revenue</div>
                       </div>
                     </div>
@@ -1391,7 +1391,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      {/* BENEFITS â€“ More than just a franchise platform */}
+      {/* BENEFITS - More than just a franchise platform */}
       <section className="relative z-10 w-full py-12 overflow-hidden">
         <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8">
           <div className="theme-section-on-light mx-auto max-w-[680px] text-center mb-14">
@@ -1419,7 +1419,7 @@ export default function ServicesPage() {
             </motion.p>
           </div>
 
-          {/* Desktop â€” Premium Strategic Ecosystem Layout */}
+          {/* Desktop - Premium Strategic Ecosystem Layout */}
           <div className="relative mt-16 hidden lg:block" style={{ height: '480px' }}>
 
             {/* Animated gradient background */}
@@ -1431,7 +1431,7 @@ export default function ServicesPage() {
               }} />
             </div>
 
-            {/* Center orbit graphic â€” refined size for better balance */}
+            {/* Center orbit graphic - refined size for better balance */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" width="300" height="300">
                 <circle cx="150" cy="150" r="140" stroke="rgba(139,92,246,0.2)" strokeWidth="1.5" fill="none" />
@@ -1465,9 +1465,9 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* Premium Pills â€” Perfect Circular Arrangement (8 pills, 45Â° apart) */}
+            {/* Premium Pills - Perfect Circular Arrangement (8 pills, 45 deg apart) */}
             
-            {/* Position 1: TOP CENTER (0Â°) - Moved further left */}
+            {/* Position 1: TOP CENTER (0 deg) - Moved further left */}
             <motion.div className="absolute top-[6%] left-[40%]"
               initial={{ opacity: 0, y: -12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.2 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -1481,7 +1481,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 2: TOP RIGHT (45Â°) */}
+            {/* Position 2: TOP RIGHT (45 deg) */}
             <motion.div className="absolute top-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.25 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
@@ -1495,7 +1495,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 3: MIDDLE RIGHT (90Â°) */}
+            {/* Position 3: MIDDLE RIGHT (90 deg) */}
             <motion.div className="absolute top-[50%] -translate-y-1/2 right-[6%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.3 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
@@ -1509,7 +1509,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 4: BOTTOM RIGHT (135Â°) */}
+            {/* Position 4: BOTTOM RIGHT (135 deg) */}
             <motion.div className="absolute bottom-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.35 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
@@ -1523,7 +1523,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 5: BOTTOM CENTER (180Â°) - Moved further left */}
+            {/* Position 5: BOTTOM CENTER (180 deg) - Moved further left */}
             <motion.div className="absolute bottom-[6%] left-[37%]"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.4 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
@@ -1537,7 +1537,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 6: BOTTOM LEFT (225Â°) */}
+            {/* Position 6: BOTTOM LEFT (225 deg) */}
             <motion.div className="absolute bottom-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.45 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
@@ -1551,7 +1551,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 7: MIDDLE LEFT (270Â°) */}
+            {/* Position 7: MIDDLE LEFT (270 deg) */}
             <motion.div className="absolute top-[50%] -translate-y-1/2 left-[6%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.5 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
@@ -1565,7 +1565,7 @@ export default function ServicesPage() {
               </motion.div>
             </motion.div>
 
-            {/* Position 8: TOP LEFT (315Â°) */}
+            {/* Position 8: TOP LEFT (315 deg) */}
             <motion.div className="absolute top-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.55 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
@@ -1581,7 +1581,7 @@ export default function ServicesPage() {
 
           </div>
 
-          {/* Mobile â€” grid */}
+          {/* Mobile - grid */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:hidden">
             {[
               { title: 'Verified Franchise Listings', Icon: FiCheckCircle, color: 'emerald' },
@@ -1613,7 +1613,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* WHY iFRANCHISE — matches home page */}
+      {/* WHY iFRANCHISE - matches home page */}
       <WhyIFranchiseSection className="relative z-10" />
 
       {/* FAQ SECTION */}
@@ -1655,7 +1655,7 @@ export default function ServicesPage() {
   );
 }
 
-// ── Inlined section components ──
+// -- Inlined section components --
 
 /* WhyIFranchiseSection.jsx */
 const WHY_IFRANCHISE_CARDS = [

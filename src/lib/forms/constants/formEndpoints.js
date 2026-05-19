@@ -1,6 +1,6 @@
 /**
  * formEndpoints.js
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  * Centralized configuration for form endpoints and sheet mappings.
  * This allows easy scaling to multiple Google Sheets or different webhook URLs.
  * 
@@ -9,7 +9,7 @@
  * - Support for different webhook URLs per environment
  * - Support for CRM integration endpoints
  * - Support for analytics tracking endpoints
- * ─────────────────────────────────────────────────────────────────────────────
+ * -----------------------------------------------------------------------------
  */
 
 import { FORM_TYPES } from './formTypes.js';

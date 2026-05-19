@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 const EASE = [0.22, 1, 0.36, 1];
 
 /**
- * Premium inline success state — same form area, no redirect.
+ * Premium inline success state - same form area, no redirect.
  */
 export default function FormSuccessState({
   title = 'Thank you!',

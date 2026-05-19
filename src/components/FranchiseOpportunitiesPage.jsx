@@ -423,12 +423,12 @@ function FranchiseOpportunitiesPage() {
 
       {/* Main Layout Container */}
       <div className="relative">
-        {/* ── DESKTOP LAYOUT ── 2-column sticky marketplace grid */}
+        {/* -- DESKTOP LAYOUT -- 2-column sticky marketplace grid */}
         <div className="hidden lg:grid lg:grid-cols-[340px_minmax(0,1fr)] items-start max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 gap-8">
 
-          {/* ── LEFT COLUMN — Sticky filter sidebar ── */}
+          {/* -- LEFT COLUMN - Sticky filter sidebar -- */}
           {/* sticky + self-start: sidebar stays pinned while right column scrolls.
-              No overflow, no max-height — filter expands naturally with content. */}
+              No overflow, no max-height - filter expands naturally with content. */}
           <div className="sticky top-24 self-start">
             <div className="card-premium-dark rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
               {/* Header */}
@@ -554,16 +554,16 @@ function FranchiseOpportunitiesPage() {
                         <option key={city} value={city} />
                       ))}
                     </datalist>
-                    <p className="text-xs font-medium text-slate-900">Indian cities — type or pick from suggestions</p>
+                    <p className="text-xs font-medium text-slate-900">Indian cities - type or pick from suggestions</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ── RIGHT COLUMN — Sticky search/sort + scrollable grid ── */}
+          {/* -- RIGHT COLUMN - Sticky search/sort + scrollable grid -- */}
           {/* min-w-0 prevents grid blowout. The column itself is NOT a scroll
-              container — the page scrolls naturally, which is what makes
+              container - the page scrolls naturally, which is what makes
               position:sticky work correctly for the search bar inside it. */}
           <div className="min-w-0">
             {/* Search and Sort */}
@@ -693,11 +693,11 @@ function FranchiseOpportunitiesPage() {
             />
           </div>
         </div>
-        {/* ── END DESKTOP LAYOUT ── */}
+        {/* -- END DESKTOP LAYOUT -- */}
 
-        {/* ── MOBILE LAYOUT ── */}
+        {/* -- MOBILE LAYOUT -- */}
         <div className="lg:hidden max-w-7xl mx-auto px-4 sm:px-6 py-6">
-          {/* Mobile top bar — sticky: filter button + search + sort */}
+          {/* Mobile top bar - sticky: filter button + search + sort */}
           <div className="sticky top-16 z-20 bg-[#0a0618]/92 backdrop-blur-md border-b border-violet-500/20 pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6">
             <div className="flex gap-2 pt-4">
               {/* Filter toggle */}
@@ -750,7 +750,7 @@ function FranchiseOpportunitiesPage() {
             </div>
           </div>
 
-          {/* Active Filters Display — mobile */}
+          {/* Active Filters Display - mobile */}
           {(filters.industries.length > 0 || filters.investment || filters.models.length > 0 || filters.location) && (
             <div className="mt-3 mb-2 flex flex-wrap gap-2">
               {filters.industries.map(industry => (
@@ -806,7 +806,7 @@ function FranchiseOpportunitiesPage() {
             </div>
           )}
 
-          {/* Results Count — mobile */}
+          {/* Results Count - mobile */}
           <div className="mt-3 mb-4">
             <p className="text-sm text-white">
               Showing <span className="font-semibold">{paginatedOpportunities.length}</span> of{' '}
@@ -814,7 +814,7 @@ function FranchiseOpportunitiesPage() {
             </p>
           </div>
 
-          {/* Opportunities Grid — mobile */}
+          {/* Opportunities Grid - mobile */}
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
             {isLoading ? (
               // Show skeleton cards during loading
@@ -987,7 +987,7 @@ function FranchiseOpportunitiesPage() {
                       <option key={city} value={city} />
                     ))}
                   </datalist>
-                  <p className="text-xs font-medium text-slate-900">Indian cities — type or pick from suggestions</p>
+                  <p className="text-xs font-medium text-slate-900">Indian cities - type or pick from suggestions</p>
                 </div>
               </div>
             </div>

@@ -33,7 +33,7 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(initial.theme);
   const [hasManualPreference, setHasManualPreference] = useState(initial.hasManualPreference);
 
-  /** Synchronous guard — system listener checks this before React state commits */
+  /** Synchronous guard - system listener checks this before React state commits */
   const manualLockRef = useRef(initial.hasManualPreference);
   const themeRef = useRef(initial.theme);
 
@@ -59,7 +59,7 @@ export function ThemeProvider({ children }) {
     applyTheme(theme);
   }, [theme]);
 
-  /* Live system sync — only when user has not manually chosen a theme */
+  /* Live system sync - only when user has not manually chosen a theme */
   useEffect(() => {
     if (manualLockRef.current || hasManualPreference) return undefined;
 

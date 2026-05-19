@@ -8,7 +8,7 @@ function LeadershipSection() {
   const [founderModalOpen, setFounderModalOpen] = useState(false);
   const [cofounderModalOpen, setCofounderModalOpen] = useState(false);
 
-  // Prevent body scroll when modal is open — also stops Lenis smooth scroll
+  // Prevent body scroll when modal is open - also stops Lenis smooth scroll
   React.useEffect(() => {
     const isOpen = founderModalOpen || cofounderModalOpen;
     if (isOpen) {
@@ -130,7 +130,7 @@ function LeadershipSection() {
                     I started iFranchise with a simple belief: every entrepreneur deserves a fair shot at building something extraordinary. Too many brilliant business ideas die not from lack of potential, but from lack of the right guidance, capital, and strategic support.
                   </p>
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
-                    We're not just connecting brands with investors — we're building dreams into empires. Every franchise we validate, every partnership we forge, and every expansion we architect is driven by one mission: turning your vision into a legacy that outlasts us all.
+                    We're not just connecting brands with investors - we're building dreams into empires. Every franchise we validate, every partnership we forge, and every expansion we architect is driven by one mission: turning your vision into a legacy that outlasts us all.
                   </p>
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
                     Your success is our legacy. Let's build something India will remember.
@@ -240,7 +240,7 @@ function LeadershipSection() {
                     Scaling isn't just about opening more locations. It's about building systems so strong that your brand can thrive in 100 cities without losing its soul. It's about creating frameworks that turn chaos into clarity, and ambition into achievement.
                   </p>
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
-                    We don't just advise — we roll up our sleeves and build alongside you. From market validation to operational excellence, we're in the trenches with every partner, ensuring no detail is overlooked and no opportunity is wasted.
+                    We don't just advise - we roll up our sleeves and build alongside you. From market validation to operational excellence, we're in the trenches with every partner, ensuring no detail is overlooked and no opportunity is wasted.
                   </p>
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
                     Your growth is our obsession. Let's turn your brand into an unstoppable force.
@@ -374,7 +374,7 @@ function LeadershipSection() {
                 </p>
 
                 <p className="text-base leading-relaxed text-white">
-                  Over the past 15+ years, I've had the privilege of transforming franchise ecosystems across India and Southeast Asia. My journey began when I witnessed firsthand how fragmented and opaque the franchise industry was — brilliant brands struggling to find the right investors, and passionate entrepreneurs unable to access verified opportunities.
+                  Over the past 15+ years, I've had the privilege of transforming franchise ecosystems across India and Southeast Asia. My journey began when I witnessed firsthand how fragmented and opaque the franchise industry was - brilliant brands struggling to find the right investors, and passionate entrepreneurs unable to access verified opportunities.
                 </p>
 
                 <p className="text-base leading-relaxed text-white">
@@ -390,12 +390,12 @@ function LeadershipSection() {
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Career Highlights</h4>
                   <ul className="space-y-2 text-sm text-white">
-                    <li>• Scaled 350+ brands across India and Southeast Asia</li>
-                    <li>• Facilitated ₹500Cr+ in franchise capital deployment</li>
-                    <li>• Expanded operations to 100+ cities in 8 countries</li>
-                    <li>• Built network of 8,000+ verified investors</li>
-                    <li>• Advised government bodies on franchise policy frameworks</li>
-                    <li>• Keynote speaker at 50+ international franchise conferences</li>
+                    <li>- Scaled 350+ brands across India and Southeast Asia</li>
+                    <li>- Facilitated Rs.500Cr+ in franchise capital deployment</li>
+                    <li>- Expanded operations to 100+ cities in 8 countries</li>
+                    <li>- Built network of 8,000+ verified investors</li>
+                    <li>- Advised government bodies on franchise policy frameworks</li>
+                    <li>- Keynote speaker at 50+ international franchise conferences</li>
                   </ul>
                 </div>
 
@@ -408,17 +408,17 @@ function LeadershipSection() {
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Awards & Recognition</h4>
                   <ul className="space-y-2 text-sm text-white">
-                    <li>• Entrepreneur of the Year 2023 - Economic Times</li>
-                    <li>• Top 40 Under 40 Business Leaders - Fortune India</li>
-                    <li>• Excellence in Franchise Innovation Award</li>
-                    <li>• Best Franchise Consultant - Asia Pacific Region</li>
+                    <li>- Entrepreneur of the Year 2023 - Economic Times</li>
+                    <li>- Top 40 Under 40 Business Leaders - Fortune India</li>
+                    <li>- Excellence in Franchise Innovation Award</li>
+                    <li>- Best Franchise Consultant - Asia Pacific Region</li>
                   </ul>
                 </div>
 
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Philosophy</h4>
                   <p className="text-base leading-relaxed text-white">
-                    Success in franchising isn't about luck — it's about systems, data, and unwavering commitment to excellence. Every decision we make at iFranchise is guided by one principle: creating lasting value for our partners. Your success is our legacy.
+                    Success in franchising isn't about luck - it's about systems, data, and unwavering commitment to excellence. Every decision we make at iFranchise is guided by one principle: creating lasting value for our partners. Your success is our legacy.
                   </p>
                 </div>
               </div>
@@ -473,7 +473,7 @@ function LeadershipSection() {
                 </p>
 
                 <p className="text-base leading-relaxed text-white">
-                  My journey in franchise operations began in Singapore, where I helped build multi-country expansion frameworks for some of Asia's fastest-growing brands. I learned that scaling isn't just about replication — it's about creating systems so robust that your brand can thrive in 100 cities without losing its soul.
+                  My journey in franchise operations began in Singapore, where I helped build multi-country expansion frameworks for some of Asia's fastest-growing brands. I learned that scaling isn't just about replication - it's about creating systems so robust that your brand can thrive in 100 cities without losing its soul.
                 </p>
 
                 <p className="text-base leading-relaxed text-white">
@@ -489,12 +489,12 @@ function LeadershipSection() {
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Career Highlights</h4>
                   <ul className="space-y-2 text-sm text-white">
-                    <li>• Engineered operational blueprints for 200+ franchise brands</li>
-                    <li>• Expanded franchise networks across 25+ countries</li>
-                    <li>• Reduced operational costs by 40% through process optimization</li>
-                    <li>• Built 100+ strategic alliances with industry leaders</li>
-                    <li>• Developed proprietary franchise performance tracking systems</li>
-                    <li>• Trained 500+ franchise managers across Asia Pacific</li>
+                    <li>- Engineered operational blueprints for 200+ franchise brands</li>
+                    <li>- Expanded franchise networks across 25+ countries</li>
+                    <li>- Reduced operational costs by 40% through process optimization</li>
+                    <li>- Built 100+ strategic alliances with industry leaders</li>
+                    <li>- Developed proprietary franchise performance tracking systems</li>
+                    <li>- Trained 500+ franchise managers across Asia Pacific</li>
                   </ul>
                 </div>
 
@@ -507,17 +507,17 @@ function LeadershipSection() {
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Awards & Recognition</h4>
                   <ul className="space-y-2 text-sm text-white">
-                    <li>• Operations Excellence Award - Franchise Asia 2023</li>
-                    <li>• Top 50 Franchise Professionals - Global Franchise Magazine</li>
-                    <li>• Innovation in Process Management Award</li>
-                    <li>• Best COO - Emerging Markets Category</li>
+                    <li>- Operations Excellence Award - Franchise Asia 2023</li>
+                    <li>- Top 50 Franchise Professionals - Global Franchise Magazine</li>
+                    <li>- Innovation in Process Management Award</li>
+                    <li>- Best COO - Emerging Markets Category</li>
                   </ul>
                 </div>
 
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Philosophy</h4>
                   <p className="text-base leading-relaxed text-white">
-                    Great franchises are built on great systems. My approach combines data-driven decision making with hands-on operational expertise. We don't just advise — we roll up our sleeves and build alongside you, ensuring every detail is optimized for success.
+                    Great franchises are built on great systems. My approach combines data-driven decision making with hands-on operational expertise. We don't just advise - we roll up our sleeves and build alongside you, ensuring every detail is optimized for success.
                   </p>
                 </div>
               </div>

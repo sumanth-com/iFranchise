@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import CtaButton from './ui/CtaButton';
@@ -6,8 +6,9 @@ import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import contactImg from '../assets/contact.png';
-import { homeHeroBg } from '../lib/preloadHomeHero.js';
+import { homeHeroBgDark, homeHeroBgLight, preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
 import { submitContactForm } from '../lib/forms';
+import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
@@ -1371,7 +1372,7 @@ function ContactSection() {
               />
               <input
                 type="tel"
-                placeholder="Contact Number"
+                placeholder={PHONE_PLACEHOLDER}
                 value={formData.contactNumber}
                 onChange={(e) => handleInputChange('contactNumber', e.target.value)}
                 required
@@ -2732,8 +2733,18 @@ function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   );
 }
 
+function markImgReady(img, setter) {
+  if (img?.complete && img.naturalWidth > 0) {
+    setter(true);
+  }
+}
+
 function Hero() {
-  const { isLight } = useTheme();
+  const { isLight, theme } = useTheme();
+  const darkHeroRef = useRef(null);
+  const lightHeroRef = useRef(null);
+  const [darkHeroReady, setDarkHeroReady] = useState(false);
+  const [lightHeroReady, setLightHeroReady] = useState(false);
   const leftLoopItems = [...testimonials.left, ...testimonials.left];
   const rightLoopItems = [...testimonials.right, ...testimonials.right];
     const growthRef = useRef(null);
@@ -2753,6 +2764,15 @@ function Hero() {
   const leftColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
   const middleColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
   const rightColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
+
+  useLayoutEffect(() => {
+    markImgReady(darkHeroRef.current, setDarkHeroReady);
+    markImgReady(lightHeroRef.current, setLightHeroReady);
+  }, [isLight, theme]);
+
+  useEffect(() => {
+    preloadHomeHeroForTheme(theme);
+  }, [theme]);
 
   useEffect(() => {
     let frameId;
@@ -2938,21 +2958,51 @@ function Hero() {
   return (
     <main className="relative isolate overflow-x-hidden bg-transparent">
       {/* -- HERO SECTION ? cinematic entry -- */}
-      <section className="cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden bg-[#0a0618]">
+      <section
+        className={`cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden ${
+          isLight ? 'cinematic-hero--light bg-[#f0f4fa]' : 'cinematic-hero--dark bg-[#0a0618]'
+        }`}
+      >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
           <img
-            src={homeHeroBg}
+            ref={darkHeroRef}
+            src={homeHeroBgDark}
             alt=""
             fetchPriority="high"
             loading="eager"
             decoding="async"
-              className="hero-cinematic-media pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%]"
+            onLoad={() => setDarkHeroReady(true)}
+            className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%] transition-opacity duration-300 ease-out ${
+              !isLight && darkHeroReady ? 'opacity-100' : 'opacity-0'
+            }`}
+            aria-hidden
+          />
+          <img
+            ref={lightHeroRef}
+            src={homeHeroBgLight}
+            alt=""
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            onLoad={() => setLightHeroReady(true)}
+            className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_38%] transition-opacity duration-300 ease-out ${
+              isLight && lightHeroReady ? 'opacity-100' : 'opacity-0'
+            }`}
             aria-hidden
           />
         </div>
-        <div className="hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48" aria-hidden />
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-44 bg-gradient-to-t from-[#0a0618]/90 via-[#0a0618]/40 to-transparent sm:hidden"
+          className={`hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 ${
+            isLight ? 'hero-cinematic-media-shadow--light' : ''
+          }`}
+          aria-hidden
+        />
+        <div
+          className={`pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-44 bg-gradient-to-t sm:hidden ${
+            isLight
+              ? 'from-white/95 via-white/50 to-transparent'
+              : 'from-[#0a0618]/90 via-[#0a0618]/40 to-transparent'
+          }`}
           aria-hidden
         />
 
@@ -2960,45 +3010,57 @@ function Hero() {
           <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center text-center">
             <div className="flex w-full flex-col items-center justify-center">
             <div
-              className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
-              style={{
-                background: 'rgba(88,28,135,0.55)',
-                border: '1px solid rgba(192,132,252,0.5)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-              }}
+              className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-[10px] sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
+              style={
+                isLight
+                  ? undefined
+                  : {
+                      background: 'rgba(88,28,135,0.55)',
+                      borderColor: 'rgba(192,132,252,0.5)',
+                    }
+              }
             >
+              <span className="hero-cinematic-pill-dot h-2 w-2 flex-shrink-0 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(192,132,252,0.85)]" aria-hidden />
               <span
-                className="h-2 w-2 flex-shrink-0 rounded-full"
-                style={{
-                  backgroundColor: '#c084fc',
-                  boxShadow: '0 0 8px rgba(192,132,252,0.85)',
-                }}
-              />
-              <span className="hero-cinematic-pill-text" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                className={`hero-cinematic-pill-text text-[11px] font-bold uppercase tracking-[0.2em] ${
+                  isLight ? 'text-slate-900' : 'text-white'
+                }`}
+              >
                 Built for Ambitious Growth
               </span>
             </div>
 
             <h1
-              className="mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight text-white sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18]"
-              style={{
-                letterSpacing: '-0.01em',
-                textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
-              }}
+              className={`hero-cinematic-title mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18] ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+              style={
+                isLight
+                  ? { letterSpacing: '-0.01em' }
+                  : {
+                      letterSpacing: '-0.01em',
+                      textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
+                    }
+              }
             >
-              Where <span className="hero-cinematic-accent">Brands</span> Expand
+              Where <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : ''}`}>Brands</span> Expand
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
-              and <span className="hero-cinematic-accent">Investors</span> Discover What&apos;s Next
+              and <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : ''}`}>Investors</span> Discover What&apos;s Next
             </h1>
 
             <p
-              className="max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px]"
-              style={{
-                color: 'rgba(255,255,255,0.92)',
-                textShadow: '0 1px 8px rgba(0,0,0,0.65)',
-              }}
+              className={`hero-cinematic-lead max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px] ${
+                isLight ? 'text-slate-600' : ''
+              }`}
+              style={
+                isLight
+                  ? undefined
+                  : {
+                      color: 'rgba(255,255,255,0.92)',
+                      textShadow: '0 1px 8px rgba(0,0,0,0.65)',
+                    }
+              }
             >
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>

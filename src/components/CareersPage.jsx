@@ -2,8 +2,10 @@ import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import careerImage from '../assets/carrer.png';
 import { ROLES, DEPT_COLORS, MODE_COLORS } from './careersData.jsx';
+import { useTheme } from '../context/ThemeContext';
+import CultureScrollGallery from './careers/CultureScrollGallery';
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+// --- Data --------------------------------------------------------------------
 
 const BENEFITS = [
   {
@@ -65,7 +67,7 @@ const BENEFITS = [
 const FAQS = [
   {
     q: 'What kind of talent thrives at iFranchise?',
-    a: 'People who are self-driven, curious, and care deeply about outcomes. We value ownership over titles — if you see a problem, you fix it. We look for builders, not passengers. If you want to grow fast and work on things that matter, you\'ll fit right in.',
+    a: 'People who are self-driven, curious, and care deeply about outcomes. We value ownership over titles - if you see a problem, you fix it. We look for builders, not passengers. If you want to grow fast and work on things that matter, you\'ll fit right in.',
   },
   {
     q: 'Is remote or hybrid work available?',
@@ -73,7 +75,7 @@ const FAQS = [
   },
   {
     q: 'What does the hiring process look like?',
-    a: 'Our process is fast and transparent: (1) Application review within 5 business days, (2) Intro call with the hiring manager — 20 minutes, (3) A skills assessment or portfolio review, (4) Final leadership round. No ghosting, no endless rounds. You\'ll always know where you stand.',
+    a: 'Our process is fast and transparent: (1) Application review within 5 business days, (2) Intro call with the hiring manager - 20 minutes, (3) A skills assessment or portfolio review, (4) Final leadership round. No ghosting, no endless rounds. You\'ll always know where you stand.',
   },
   {
     q: 'Are internships available?',
@@ -81,7 +83,7 @@ const FAQS = [
   },
   {
     q: 'What growth opportunities exist inside iFranchise?',
-    a: 'We are a fast-scaling company — which means roles evolve quickly. Most of our team leads were individual contributors 12–18 months ago. We promote from within aggressively and invest in your career trajectory with learning budgets and mentorship.',
+    a: 'We are a fast-scaling company - which means roles evolve quickly. Most of our team leads were individual contributors 12-18 months ago. We promote from within aggressively and invest in your career trajectory with learning budgets and mentorship.',
   },
   {
     q: 'What tools does the team use?',
@@ -89,11 +91,11 @@ const FAQS = [
   },
   {
     q: 'How quickly will I hear back after applying?',
-    a: 'We review every application within 5 business days. If your profile is a strong match, you\'ll receive a calendar invite for an intro call. If it\'s not the right fit right now, we\'ll let you know — no black holes.',
+    a: 'We review every application within 5 business days. If your profile is a strong match, you\'ll receive a calendar invite for an intro call. If it\'s not the right fit right now, we\'ll let you know - no black holes.',
   },
 ];
 
-// ─── Reusable animated section wrapper ───────────────────────────────────────
+// --- Reusable animated section wrapper ---------------------------------------
 
 function RevealSection({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
@@ -111,7 +113,7 @@ function RevealSection({ children, className = '', delay = 0 }) {
   );
 }
 
-// ─── Section label pill ───────────────────────────────────────────────────────
+// --- Section label pill -------------------------------------------------------
 
 function SectionLabel({ text }) {
   return (
@@ -122,7 +124,7 @@ function SectionLabel({ text }) {
   );
 }
 
-// ─── Benefit Card — center aligned ───────────────────────────────────────────
+// --- Benefit Card - center aligned -------------------------------------------
 
 function BenefitCard({ icon, title, desc, delay }) {
   const ref = useRef(null);
@@ -146,7 +148,7 @@ function BenefitCard({ icon, title, desc, delay }) {
   );
 }
 
-// ─── Role Card — premium large card ──────────────────────────────────────────
+// --- Role Card - premium large card ------------------------------------------
 
 function RoleCard({ role, index, onApply }) {
   const ref = useRef(null);
@@ -219,7 +221,7 @@ function RoleCard({ role, index, onApply }) {
   );
 }
 
-// ─── FAQ Item — premium centered accordion ────────────────────────────────────
+// --- FAQ Item - premium centered accordion ------------------------------------
 
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
@@ -260,7 +262,7 @@ function FaqItem({ q, a }) {
   );
 }
 
-// ─── Page Entry Curtain Animation ─────────────────────────────────────────────
+// --- Page Entry Curtain Animation ---------------------------------------------
 
 function PageCurtain({ onDone }) {
   return (
@@ -274,9 +276,11 @@ function PageCurtain({ onDone }) {
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// --- Main Page ----------------------------------------------------------------
 
 function CareersPage() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [curtainDone, setCurtainDone] = useState(false);
   const heroRef = useRef(null);
 
@@ -286,11 +290,11 @@ function CareersPage() {
   };
 
   return (
-    <div className="careers-page relative z-10 bg-white text-slate-900 min-h-screen">
+    <div className="careers-page relative z-10 min-h-screen bg-transparent text-theme-primary">
       {/* Page-entry curtain */}
       <PageCurtain onDone={() => setCurtainDone(true)} />
 
-      {/* ── HERO ── */}
+      {/* -- HERO -- */}
       <section ref={heroRef} className="careers-hero-section careers-section relative overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 pt-12 pb-0 sm:pt-16 text-center">
           <motion.div
@@ -335,7 +339,7 @@ function CareersPage() {
         </div>
       </section>
 
-      {/* ── BENEFITS ── */}
+      {/* -- BENEFITS -- */}
       <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
         <RevealSection className="text-center mb-10">
           <div className="flex justify-center">
@@ -345,7 +349,7 @@ function CareersPage() {
             This is the vibe that drives us.
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto">
-            Performance, ownership, growth, creativity, and balance — not just words on a wall.
+            Performance, ownership, growth, creativity, and balance - not just words on a wall.
           </p>
         </RevealSection>
 
@@ -356,7 +360,7 @@ function CareersPage() {
         </div>
       </section>
 
-      {/* ── OPEN ROLES ── */}
+      {/* -- OPEN ROLES -- */}
       <section className="careers-open-roles careers-section border-y border-slate-200">
         <div className="max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
           <RevealSection className="text-center mb-10">
@@ -379,7 +383,13 @@ function CareersPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── */}
+      {/* -- OUR CULTURE -- */}
+      <CultureScrollGallery
+        isDark={isDark}
+        className="careers-culture-section careers-section border-t border-slate-200"
+      />
+
+      {/* -- FAQ -- */}
       <section className="careers-faq-section careers-section py-14 sm:py-20">
         <div className="max-w-2xl mx-auto px-6 sm:px-8">
           <RevealSection className="text-center mb-8">

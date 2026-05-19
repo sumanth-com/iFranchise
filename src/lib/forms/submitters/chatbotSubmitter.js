@@ -32,7 +32,7 @@ export async function submitChatbotLead(formData, variant = 'brand', sourcePage 
   });
 }
 
-/** Brand profile + consultation scheduling → Google Sheet */
+/** Brand profile + consultation scheduling -> Google Sheet */
 export async function submitBrandConsultation(formData, sourcePage = 'expansion_assistant_brand_consultation') {
   return runFormSubmission({
     formType: FORM_TYPES.CHATBOT_BRAND,
@@ -43,7 +43,7 @@ export async function submitBrandConsultation(formData, sourcePage = 'expansion_
   });
 }
 
-/** Strategy call request → Google Sheet */
+/** Strategy call request -> Google Sheet */
 export async function submitStrategyCall(formData, sourcePage = 'expansion_assistant_strategy') {
   return runFormSubmission({
     formType: FORM_TYPES.CHATBOT_STRATEGY,

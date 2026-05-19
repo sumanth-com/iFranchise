@@ -21,7 +21,7 @@ function NotFoundPage() {
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
         }`}
       >
-        {/* 404 Image — viewport-fitted hero */}
+        {/* 404 Image - viewport-fitted hero */}
         <div className="animate-float">
           <img
             src={notFoundImage}

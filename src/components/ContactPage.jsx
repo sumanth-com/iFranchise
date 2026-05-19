@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
+import { PHONE_PLACEHOLDER, PHONE_INPUT_PATTERN } from '@/lib/phoneInput';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -20,7 +21,7 @@ const CONTACT_FORM_INITIAL = withHoneypot({
 const FAQ_ITEMS = [
   {
     question: 'What is the typical investment range?',
-    answer: 'Most opportunities on our platform start around â‚¹20L and can go beyond â‚¹2.5Cr depending on brand category and market potential.',
+    answer: 'Most opportunities on our platform start around Rs.20L and can go beyond Rs.2.5Cr depending on brand category and market potential.',
   },
   {
     question: 'How long does it take to break even?',
@@ -160,7 +161,7 @@ function ContactField({ label, required, className = '', isLight, children }) {
   return (
     <div className={className}>
       <label
-        className={`mb-1 block text-xs font-medium ${isLight ? 'text-slate-700' : 'text-white/75'}`}
+        className={`mb-1 block text-xs font-medium ${isLight ? 'text-violet-800' : 'text-white/75'}`}
       >
         {label}
         {required && <span className={isLight ? 'text-violet-600' : 'text-violet-300'}> *</span>}
@@ -180,7 +181,7 @@ function ContactLeftPanel({ isLight }) {
     >
       <h1
         className={`contact-hero-left__title mb-1.5 text-[1.75rem] font-extrabold tracking-tight sm:text-3xl lg:text-[2.15rem] lg:leading-[1.12] ${
-          isLight ? 'text-slate-900' : 'text-white'
+          isLight ? 'text-violet-900' : 'text-white'
         }`}
       >
         Get in touch
@@ -222,7 +223,7 @@ function ContactLeftPanel({ isLight }) {
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <p className={`text-[13px] font-semibold ${isLight ? 'text-slate-900' : 'text-white'}`}>{item.title}</p>
+              <p className={`text-[13px] font-semibold ${isLight ? 'text-violet-900' : 'text-white'}`}>{item.title}</p>
               <p className={`truncate text-xs ${isLight ? 'text-slate-500' : 'text-white/55'}`}>{item.value}</p>
             </div>
             <span
@@ -276,7 +277,7 @@ function ContactHeroForm({
         <div className="mb-4 shrink-0">
           <h2
             className={`text-xl font-bold tracking-tight sm:text-[1.35rem] ${
-              isLight ? 'text-slate-900' : 'text-white'
+              isLight ? 'text-violet-900' : 'text-white'
             }`}
           >
             Send Message
@@ -318,7 +319,8 @@ function ContactHeroForm({
                   value={formData.contactNumber}
                   onChange={(e) => handleInputChange('contactNumber', e.target.value)}
                   className={inputClass}
-                  placeholder="Enter your phone number"
+                  placeholder={PHONE_PLACEHOLDER}
+                  pattern={PHONE_INPUT_PATTERN}
                 />
               </ContactField>
             </div>
@@ -373,7 +375,7 @@ function ContactHeroForm({
               whileTap={{ scale: 0.995 }}
               className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
                 isLight
-                  ? 'bg-slate-900 text-white shadow-slate-900/20 hover:bg-slate-800'
+                  ? 'bg-violet-600 text-white shadow-violet-600/25 hover:bg-violet-700'
                   : 'bg-white text-slate-900 shadow-black/20 hover:bg-white/90'
               }`}
             >
@@ -414,7 +416,7 @@ function ContactPage() {
 
   return (
     <main className="contact-page services-page relative z-10 bg-transparent text-theme-primary">
-      {/* Hero â€” left contact links, right form */}
+      {/* Hero - left contact links, right form */}
       <section
         id="contact-form"
         className={`page-hero-light relative flex w-full items-center bg-transparent py-8 sm:py-10 lg:h-[calc(100dvh-4rem)] lg:max-h-[calc(100dvh-4rem)] lg:min-h-0 lg:overflow-hidden lg:py-5 ${!isLight ? 'contact-hero-dark' : ''}`}
@@ -517,7 +519,7 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* FAQ â€” after location, Services style */}
+      {/* FAQ - after location, Services style */}
       <section className="services-faq-section relative w-full overflow-hidden py-12 md:py-16">
         <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">

@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, lazy, Suspense, Component } from 'react';
+import { useEffect, useState, lazy, Suspense, Component } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
@@ -9,7 +9,7 @@ import { logger } from './lib/logger';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
-// ── Lazy-load all pages — only load what's needed ─────────────────────────────
+// -- Lazy-load all pages - only load what's needed -----------------------------
 const Hero                    = lazy(() => import('./components/Hero'));
 const AboutPage               = lazy(() => import('./components/AboutPage'));
 const TeamPage                = lazy(() => import('./components/TeamPage'));
@@ -60,7 +60,7 @@ class PageErrorBoundary extends Component {
   }
 }
 
-// ── Minimal page-level skeleton ───────────────────────────────────────────────
+// -- Minimal page-level skeleton -----------------------------------------------
 function PageSkeleton() {
   return (
     <div
@@ -153,7 +153,7 @@ function App() {
         window.setTimeout(() => {
           const didScrollToHash = scrollToHashSection();
           if (!didScrollToHash) {
-            // Always use instant scroll on route change — Lenis handles smoothness within page
+            // Always use instant scroll on route change - Lenis handles smoothness within page
             if (nextPath === '/') {
               const saved = sessionStorage.getItem('homeScrollPosition');
               window.scrollTo({ top: saved ? parseInt(saved, 10) : 0, behavior: 'instant' });
@@ -182,7 +182,7 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [pathname]);
 
-  // data-reveal IntersectionObserver — deferred to avoid blocking route paint
+  // data-reveal IntersectionObserver - deferred to avoid blocking route paint
   useEffect(() => {
     let observer;
     let cancelled = false;
@@ -275,7 +275,7 @@ function App() {
         </PageErrorBoundary>
       </main>
 
-      <PreFooterCTA />
+      <PreFooterCTA variant={isCareerDetailPage ? 'careers-detail' : 'default'} />
       <Footer />
 
         {showExpansionAssistant && (

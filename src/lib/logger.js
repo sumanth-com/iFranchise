@@ -1,4 +1,4 @@
-/** Dev-only logging — no PII or debug noise in production builds. */
+/** Dev-only logging - no PII or debug noise in production builds. */
 const isDev = import.meta.env.DEV;
 
 export const logger = {

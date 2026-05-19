@@ -68,7 +68,7 @@ function PremiumTeamCard({ member }) {
               <h4 className="text-xs font-bold uppercase tracking-wider text-white">Expertise</h4>
               <ul className="mt-2 space-y-1 text-sm text-white">
                 {member.expertise.map((item, idx) => (
-                  <li key={idx}>• {item}</li>
+                  <li key={idx}>- {item}</li>
                 ))}
               </ul>
             </div>
@@ -82,7 +82,7 @@ function PremiumTeamCard({ member }) {
               <h4 className="text-xs font-bold uppercase tracking-wider text-white">Awards & Recognition</h4>
               <ul className="mt-2 space-y-1 text-sm text-white">
                 {member.awards.map((award, idx) => (
-                  <li key={idx}>• {award}</li>
+                  <li key={idx}>- {award}</li>
                 ))}
               </ul>
             </div>
@@ -162,7 +162,7 @@ const teamMembers = [
     role: 'Chief Technology Officer', 
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80',
     intro: "Hello, I'm Vikram Singh",
-    about: "Technology isn't just about code — it's about solving real problems and creating experiences that transform businesses. I'm passionate about building scalable systems that empower franchise growth through innovation and intelligence.",
+    about: "Technology isn't just about code - it's about solving real problems and creating experiences that transform businesses. I'm passionate about building scalable systems that empower franchise growth through innovation and intelligence.",
     expertise: ['Platform Architecture & Development', 'AI & Data Analytics', 'System Integration & Automation', 'Technology Strategy & Innovation'],
     education: 'M.Tech - Computer Science | B.Tech - Software Engineering',
     awards: ['Tech Innovator of the Year', 'Best Digital Transformation Leader', 'Excellence in Software Architecture']
@@ -182,7 +182,7 @@ const teamMembers = [
     role: 'Operations Director', 
     image: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=800&q=80',
     intro: "Hello, I'm Kiran Rao",
-    about: "Operations excellence isn't about perfection — it's about consistency, adaptability, and relentless focus on delivering value. I thrive on building systems that make complex processes feel effortless.",
+    about: "Operations excellence isn't about perfection - it's about consistency, adaptability, and relentless focus on delivering value. I thrive on building systems that make complex processes feel effortless.",
     expertise: ['Operational Process Optimization', 'Multi-Location Management', 'Quality Assurance & Compliance', 'Supply Chain & Logistics'],
     education: 'MBA - Operations Management | B.E. - Industrial Engineering',
     awards: ['Operations Excellence Award', 'Process Innovation Leader', 'Best Operations Director 2023']
@@ -192,7 +192,7 @@ const teamMembers = [
     role: 'Marketing & Brand Director', 
     image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=800&q=80',
     intro: "Hello, I'm Sneha Kapoor",
-    about: "Great brands don't just sell products — they create movements. I'm driven by the challenge of building brand identities that resonate deeply with audiences and stand the test of time.",
+    about: "Great brands don't just sell products - they create movements. I'm driven by the challenge of building brand identities that resonate deeply with audiences and stand the test of time.",
     expertise: ['Brand Strategy & Positioning', 'Digital Marketing & Growth', 'Content Strategy & Storytelling', 'Customer Experience Design'],
     education: 'MBA - Marketing | B.A. - Mass Communication',
     awards: ['Marketing Leader of the Year', 'Best Brand Campaign Award', 'Digital Marketing Excellence']
@@ -212,7 +212,7 @@ const teamMembers = [
     role: 'Legal & Compliance Head', 
     image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80',
     intro: "Hello, I'm Aisha Patel",
-    about: "In the complex world of franchising, legal clarity isn't just protection — it's empowerment. I ensure every partnership is built on solid legal foundations, giving our clients the confidence to scale fearlessly.",
+    about: "In the complex world of franchising, legal clarity isn't just protection - it's empowerment. I ensure every partnership is built on solid legal foundations, giving our clients the confidence to scale fearlessly.",
     expertise: ['Franchise Law & Agreements', 'Regulatory Compliance', 'Contract Negotiation', 'Intellectual Property Protection'],
     education: 'LLM - Corporate Law | LLB - National Law School',
     awards: ['Legal Excellence Award', 'Best Corporate Counsel 2023', 'Top Legal Advisor - Franchise Sector']
@@ -222,7 +222,7 @@ const teamMembers = [
     role: 'Customer Success Director', 
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80',
     intro: "Hello, I'm Rohan Desai",
-    about: "Success isn't measured by deals closed — it's measured by dreams realized. My team ensures every client receives personalized support, strategic guidance, and unwavering commitment throughout their franchise journey.",
+    about: "Success isn't measured by deals closed - it's measured by dreams realized. My team ensures every client receives personalized support, strategic guidance, and unwavering commitment throughout their franchise journey.",
     expertise: ['Client Relationship Management', 'Success Strategy Planning', 'Onboarding & Training', 'Performance Optimization'],
     education: 'MBA - Customer Experience | B.Tech - Management',
     awards: ['Customer Success Leader of the Year', 'Excellence in Client Relations', 'Best Support Team Award']
@@ -379,13 +379,13 @@ function AboutPage() {
 
               <div className="space-y-4 text-white leading-relaxed">
                 <p className="text-lg">
-                  Founded with a vision to revolutionize India's franchise ecosystem, iFranchise emerged from a critical gap in the market — the absence of a structured, transparent, and intelligence-driven platform connecting ambitious entrepreneurs with verified franchise opportunities.
+                  Founded with a vision to revolutionize India's franchise ecosystem, iFranchise emerged from a critical gap in the market - the absence of a structured, transparent, and intelligence-driven platform connecting ambitious entrepreneurs with verified franchise opportunities.
                 </p>
                 <p>
                   What started as a mission to bring clarity to franchise investments has evolved into India's most trusted franchise growth engine. We've built proprietary systems that analyze market trends, validate brand performance, and match investors with opportunities that align with their goals and capabilities.
                 </p>
                 <p>
-                  Today, iFranchise powers franchise expansion for leading brands while helping thousands of investors make informed, data-backed decisions. We don't just list franchises — we engineer growth infrastructure.
+                  Today, iFranchise powers franchise expansion for leading brands while helping thousands of investors make informed, data-backed decisions. We don't just list franchises - we engineer growth infrastructure.
                 </p>
               </div>
             </motion.div>
@@ -440,7 +440,7 @@ function AboutPage() {
             </h2>
 
             <p className="mt-6 mx-auto max-w-3xl text-lg leading-relaxed text-white">
-              With over a decade in business, we've empowered countless dreams and transformed them into tangible realities for hundreds of our clients. We're not just consultants — we're your partners in building something extraordinary. It's time for you to join the tribe of digitally empowered, strategically positioned, and unstoppable franchise businesses.
+              With over a decade in business, we've empowered countless dreams and transformed them into tangible realities for hundreds of our clients. We're not just consultants - we're your partners in building something extraordinary. It's time for you to join the tribe of digitally empowered, strategically positioned, and unstoppable franchise businesses.
             </p>
           </motion.div>
 
@@ -494,14 +494,14 @@ function AboutPage() {
               transition={{ duration: 0.3, delay: 0.1 }}
               className="mt-6 text-lg leading-relaxed text-white sm:text-xl"
             >
-              We don't just connect brands and investors — we deliver intelligence, systems, and strategic infrastructure that accelerate franchise expansion.
+              We don't just connect brands and investors - we deliver intelligence, systems, and strategic infrastructure that accelerate franchise expansion.
             </motion.p>
           </div>
 
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { title: 'Verified Franchise Intelligence', desc: 'Access thoroughly evaluated franchise opportunities backed by trust, transparency, and strategic validation.' },
-              { title: 'Founder–Investor Ecosystem', desc: 'Bridge ambitious founders with expansion-ready investors through a unified strategic growth network.' },
+              { title: 'Founder-Investor Ecosystem', desc: 'Bridge ambitious founders with expansion-ready investors through a unified strategic growth network.' },
               { title: 'Scalable Expansion Systems', desc: 'Leverage operational frameworks, business scaling tools, and market-entry systems built for long-term category growth.' },
               { title: 'Category Leadership Positioning', desc: 'Transform opportunities into dominant market presence through data-backed visibility and expansion intelligence.' },
             ].map((card, idx) => (

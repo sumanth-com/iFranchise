@@ -1,5 +1,5 @@
 /**
- * contactValidator.js — Validation logic for contact forms.
+ * contactValidator.js - Validation logic for contact forms.
  */
 
 import { sanitizeObjectStrings } from '../../sanitize.js';

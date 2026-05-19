@@ -11,7 +11,7 @@
 //
 // Franchise Opportunities page adds derived filter keys per row via
 // enrichFranchiseRow (src/lib/franchiseOpportunityFilters.js): brand, location,
-// franchiseModel, investmentRangeLabel, investmentRangeBuckets — without changing
+// franchiseModel, investmentRangeLabel, investmentRangeBuckets - without changing
 // the raw objects below for other routes.
 //
 // ═══════════════════════════════════════════════════════════════════════════════

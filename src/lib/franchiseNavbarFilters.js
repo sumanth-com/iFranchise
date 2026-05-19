@@ -3,9 +3,9 @@ import { franchiseOpportunities } from '../data/franchiseData';
 /** Multi-select investment buckets; overlap uses min/max on each opportunity. */
 export const NAVBAR_INVESTMENT_BUCKETS = [
   { key: 'under50', label: 'Under $50K', min: 0, max: 49_999 },
-  { key: '50-100', label: '$50K – $100K', min: 50_000, max: 100_000 },
-  { key: '100-200', label: '$100K – $200K', min: 100_000, max: 200_000 },
-  { key: '200-350', label: '$200K – $350K', min: 200_001, max: 350_000 },
+  { key: '50-100', label: '$50K - $100K', min: 50_000, max: 100_000 },
+  { key: '100-200', label: '$100K - $200K', min: 100_000, max: 200_000 },
+  { key: '200-350', label: '$200K - $350K', min: 200_001, max: 350_000 },
   { key: 'over350', label: 'Over $350K', min: 350_001, max: Number.POSITIVE_INFINITY },
 ];
 

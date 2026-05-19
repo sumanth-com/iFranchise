@@ -1,5 +1,5 @@
 /**
- * Google Sheets client — POSTs JSON payloads to Google Apps Script Web App.
+ * Google Sheets client - POSTs JSON payloads to Google Apps Script Web App.
  */
 
 import { GOOGLE_APPS_SCRIPT_URL } from '../constants/formEndpoints.js';

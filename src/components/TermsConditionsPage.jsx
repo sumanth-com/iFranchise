@@ -37,7 +37,7 @@
   },
   {
     title: 'Indemnification',
-    body: 'You agree to indemnify, defend, and hold harmless iFranchise and its affiliates from any claims, liabilities, damages, losses, and expenses — including reasonable legal fees — arising out of your use of the platform, violation of these Terms, infringement of any third-party rights, or submission of inaccurate information.',
+    body: 'You agree to indemnify, defend, and hold harmless iFranchise and its affiliates from any claims, liabilities, damages, losses, and expenses - including reasonable legal fees - arising out of your use of the platform, violation of these Terms, infringement of any third-party rights, or submission of inaccurate information.',
   },
   {
     title: 'Termination',
@@ -74,11 +74,11 @@ function TermsConditionsPage() {
 
 export default TermsConditionsPage;
 
-// ── Inlined LegalPageLayout ──
+// -- Inlined LegalPageLayout --
 /**
  * LegalPageLayout
  * Shared layout for Privacy Policy, Terms & Conditions, and Licenses pages.
- * Apple / Google documentation style — single-column, clean, enterprise-grade.
+ * Apple / Google documentation style - single-column, clean, enterprise-grade.
  */
 
 const LAST_UPDATED = 'April 30, 2026';

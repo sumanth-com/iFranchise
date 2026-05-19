@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
+import { PHONE_PLACEHOLDER, maskPhoneDisplay } from '@/lib/phoneInput';
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
 
@@ -39,9 +40,9 @@ function getAssistantPalette(siteIsLight) {
       btnDisabledText: '#f8fafc',
       btnEnabledBg: 'linear-gradient(135deg,#7c3aed,#6366f1)',
       btnEnabledText: '#fff',
-      liveLabel: '#e2e8f0',
-      livePillBg: 'rgba(34,197,94,0.14)',
-      livePillBorder: 'rgba(34,197,94,0.32)',
+      liveLabel: '#6d28d9',
+      livePillBg: '#ffffff',
+      livePillBorder: 'rgba(167,139,250,0.45)',
       dateColor: '#94a3b8',
       timeColor: '#e9d5ff',
       timePillBg: 'rgba(124,58,237,0.28)',
@@ -110,9 +111,9 @@ function getAssistantPalette(siteIsLight) {
     btnDisabledText: '#ffffff',
     btnEnabledBg: 'linear-gradient(135deg,#7c3aed,#6366f1)',
     btnEnabledText: '#fff',
-    liveLabel: '#334155',
-    livePillBg: 'rgba(34,197,94,0.1)',
-    livePillBorder: 'rgba(34,197,94,0.28)',
+      liveLabel: '#6d28d9',
+      livePillBg: '#ffffff',
+      livePillBorder: 'rgba(124,58,237,0.35)',
     dateColor: '#64748b',
     timeColor: '#5b21b6',
     timePillBg: 'rgba(124,58,237,0.1)',
@@ -161,7 +162,7 @@ function useAssistantPalette() {
   return useContext(AssistantPaletteContext) || getAssistantPalette(false);
 }
 
-// ── Navigation helper ─────────────────────────────────────────────────────────
+// -- Navigation helper ---------------------------------------------------------
 const navTo = (path, setIsOpen) => {
   window.history.pushState({}, '', path);
   window.dispatchEvent(new PopStateEvent('popstate'));
@@ -215,6 +216,30 @@ function AssistantDateTime() {
   );
 }
 
+/** Panel header - line 1 title */
+function AssistantDeskTitle() {
+  const p = useAssistantPalette();
+  return (
+    <motion.div
+      className="assistant-desk-title"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        fontSize: 9.5,
+        fontWeight: 700,
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        color: PURPLE_BRAND,
+        minWidth: 0,
+      }}
+    >
+      <span className="assistant-home-welcome-dot" aria-hidden />
+      <span style={{ color: p.text }}>Global franchise desk</span>
+    </motion.div>
+  );
+}
+
 function getAssistantFabTheme(isLight) {
   if (isLight) {
     return {
@@ -234,7 +259,7 @@ function getAssistantFabTheme(isLight) {
   };
 }
 
-/** Pulsing “live” cue for header status */
+/** Pulsing "live" cue for header status */
 function LiveStatusPulse({ label = 'Live' }) {
   const p = useAssistantPalette();
   return (
@@ -283,7 +308,7 @@ function LiveStatusPulse({ label = 'Live' }) {
   );
 }
 
-/** Header — rounded-square bot, tight fit */
+/** Header - rounded-square bot, tight fit */
 function AssistantGlyphTile({ dimension = 38, siteIsLight }) {
   const corner = Math.round(dimension * 0.24);
   return (
@@ -315,10 +340,10 @@ const ArrowLeft = () => (
   </svg>
 );
 
-// ── Home row icons — white on unified purple tiles ─────────────────────────────
+// -- Home row icons - white on unified purple tiles -----------------------------
 const HOME_ICON = 17;
 
-/** Franchise network — connected hubs */
+/** Franchise network - connected hubs */
 const BrandIcon = () => (
   <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="6" cy="9" r="2.25" />
@@ -330,7 +355,7 @@ const BrandIcon = () => (
   </svg>
 );
 
-/** Portfolio — briefcase + growth sparkline */
+/** Portfolio - briefcase + growth sparkline */
 const InvestorIcon = () => (
   <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 10h16v9H4z" />
@@ -341,7 +366,7 @@ const InvestorIcon = () => (
   </svg>
 );
 
-/** Strategy session — calendar + confirmed slot */
+/** Strategy session - calendar + confirmed slot */
 const CalendarIcon = () => (
   <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="6" width="13" height="13" rx="2.25" />
@@ -352,7 +377,7 @@ const CalendarIcon = () => (
   </svg>
 );
 
-/** Support — dual chat with check */
+/** Support - dual chat with check */
 const SupportIcon = () => (
   <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
     <path d="M5 17l-2 2v-4.5a5.5 5.5 0 019.2-4" />
@@ -456,7 +481,7 @@ const SparkleIcon = () => (
 
 const CONSULT_TIME_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
 
-// ── Chip Selector ─────────────────────────────────────────────────────────────
+// -- Chip Selector -------------------------------------------------------------
 function ChipSelect({
   options,
   value,
@@ -568,7 +593,7 @@ function ConsultationScheduleFields({ schedule, setSchedule }) {
 }
 
 
-// ── Text Input ────────────────────────────────────────────────────────────────
+// -- Text Input ----------------------------------------------------------------
 function TextInput({ placeholder, value, onChange, type = 'text' }) {
   const p = useAssistantPalette();
   return (
@@ -585,7 +610,7 @@ function TextInput({ placeholder, value, onChange, type = 'text' }) {
   );
 }
 
-// ── Progress Bar ──────────────────────────────────────────────────────────────
+// -- Progress Bar --------------------------------------------------------------
 function ProgressBar({ current, total }) {
   const p = useAssistantPalette();
   return (
@@ -602,7 +627,7 @@ function ProgressBar({ current, total }) {
   );
 }
 
-// ── Continue Button ───────────────────────────────────────────────────────────
+// -- Continue Button -----------------------------------------------------------
 function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
   const p = useAssistantPalette();
   return (
@@ -631,7 +656,7 @@ function ContinueBtn({ onClick, disabled, label = 'Continue' }) {
   );
 }
 
-// ── Flow Header ───────────────────────────────────────────────────────────────
+// -- Flow Header ---------------------------------------------------------------
 function FlowHeader({ title, onBack, step, total }) {
   const p = useAssistantPalette();
   return (
@@ -653,7 +678,7 @@ function FlowHeader({ title, onBack, step, total }) {
   );
 }
 
-// ── Summary Card ──────────────────────────────────────────────────────────────
+// -- Summary Card --------------------------------------------------------------
 function SummaryCard({ rows }) {
   const p = useAssistantPalette();
   return (
@@ -669,7 +694,7 @@ function SummaryCard({ rows }) {
   );
 }
 
-// ── Home View ─────────────────────────────────────────────────────────────────
+// -- Home View -----------------------------------------------------------------
 const PRIMARY_ROWS = [
   {
     id: 'brands',
@@ -704,7 +729,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
   return (
     <motion.button
       type="button"
-      className="assistant-action-row"
+      className={`assistant-action-row${secondary ? ' assistant-action-row--secondary' : ''}`}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
@@ -715,8 +740,8 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        gap: 14,
-        padding: secondary ? '10px 13px' : '11px 13px',
+        gap: 12,
+        padding: secondary ? '11px 14px' : '12px 14px',
         borderRadius: 14,
         background: hovered
           ? (secondary ? p.rowBgHover : p.rowBgHover)
@@ -783,62 +808,26 @@ function HomeView({ setView, setIsOpen }) {
       style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
     >
       {/* Welcome */}
-      <div style={{ padding: '12px 12px 6px', flexShrink: 0 }}>
+      <div className="assistant-home-shell">
         <div
           className="assistant-home-welcome"
-          style={{
-            padding: '14px 14px 12px',
-            borderRadius: 14,
-          }}
         >
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              marginBottom: 8,
-              fontSize: 9.5,
-              fontWeight: 700,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: PURPLE_BRAND,
-            }}
-          >
-            <span className="assistant-home-welcome-dot" />
-            Global franchise desk
-          </div>
-          <div
-            style={{
-              fontSize: 15.5,
-              fontWeight: 700,
-              color: p.welcomeTitle,
-              letterSpacing: '-0.03em',
-              lineHeight: 1.35,
-            }}
-          >
+          <h3 className="assistant-home-welcome-title" style={{ color: p.welcomeTitle }}>
             How can we help you expand today?
-          </div>
-          <p
-            style={{
-              marginTop: 6,
-              fontSize: 12,
-              lineHeight: 1.45,
-              color: p.welcomeBody,
-              letterSpacing: '-0.01em',
-            }}
-          >
+          </h3>
+          <p className="assistant-home-welcome-body" style={{ color: p.welcomeBody }}>
             Please select an option below to connect with our franchise advisory team.
           </p>
         </div>
       </div>
 
       {/* Action rows */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '6px 10px 14px', display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div className="assistant-home-list">
         {PRIMARY_ROWS.map((row, i) => (
           <ActionRow key={row.id} row={row} onClick={() => setView(row.id)} index={i} />
         ))}
 
-        <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${p.divider}, transparent)`, margin: '4px 2px' }} />
+        <motion.div className="assistant-home-divider" style={{ background: `linear-gradient(90deg, transparent, ${p.divider}, transparent)` }} />
 
         <ActionRow
           row={SUPPORT_ROW}
@@ -851,13 +840,13 @@ function HomeView({ setView, setIsOpen }) {
   );
 }
 
-// ── Brands Flow ───────────────────────────────────────────────────────────────
+// -- Brands Flow ---------------------------------------------------------------
 const BRAND_STEPS = [
   { q: "What's your brand name?", type: 'text', key: 'brandName', placeholder: 'e.g. Chai Point, FitZone...' },
   { q: 'Which industry?', type: 'chips', key: 'industry', otherKey: 'industryOther', otherPlaceholder: 'Type your industry...', options: ['Food & Beverage', 'Health & Wellness', 'Education', 'Retail', 'Technology', 'Home Services', 'Other'] },
-  { q: 'How many locations currently?', type: 'chips', key: 'locations', options: ['1', '2–5', '6–15', '15+'] },
-  { q: 'Target expansion cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Enter your target city', options: ['3–5', '5–10', '10–20', '20+ (National)', 'Other'] },
-  { q: 'Franchise investment range?', type: 'chips', key: 'investment', options: ['Under ₹25L', '₹25L–₹50L', '₹50L–₹1Cr', '₹1Cr+'] },
+  { q: 'How many locations currently?', type: 'chips', key: 'locations', options: ['1', '2-5', '6-15', '15+'] },
+  { q: 'Target expansion cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Enter your target city', options: ['3-5', '5-10', '10-20', '20+ (National)', 'Other'] },
+  { q: 'Franchise investment range?', type: 'chips', key: 'investment', options: ['Under Rs.25L', 'Rs.25L-Rs.50L', 'Rs.50L-Rs.1Cr', 'Rs.1Cr+'] },
   { q: 'Your name & contact?', type: 'contact', key: 'contact' },
 ];
 
@@ -942,7 +931,7 @@ function BrandsView({ setView }) {
             { label: 'Target Cities', value: data.cities === 'Other' ? data.citiesOther : data.cities },
             { label: 'Investment', value: data.investment },
             { label: 'Contact', value: data.contactName },
-            { label: 'Phone', value: data.contactPhone },
+            { label: 'Phone', value: maskPhoneDisplay(data.contactPhone) },
           ]} />
           <FormError message={submitError} />
         </div>
@@ -995,7 +984,7 @@ function BrandsView({ setView }) {
         {current.type === 'contact' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <TextInput placeholder="Your full name" value={data.contactName} onChange={v => setData(d => ({ ...d, contactName: v }))} />
-            <TextInput placeholder="Phone number" value={data.contactPhone} onChange={v => setData(d => ({ ...d, contactPhone: v }))} type="tel" />
+            <TextInput placeholder={PHONE_PLACEHOLDER} value={data.contactPhone} onChange={v => setData(d => ({ ...d, contactPhone: v }))} type="tel" />
           </div>
         )}
       </div>
@@ -1010,10 +999,10 @@ function BrandsView({ setView }) {
   );
 }
 
-// ── Investors Flow ────────────────────────────────────────────────────────────
+// -- Investors Flow ------------------------------------------------------------
 const INVESTOR_STEPS = [
   { q: 'Preferred industries?', type: 'chips', key: 'industries', multi: true, options: ['Food & Beverage', 'Health & Wellness', 'Education', 'Retail', 'Technology', 'Home Services', 'Other'] },
-  { q: 'Investment budget?', type: 'chips', key: 'budget', options: ['Under ₹25L', '₹25L–₹50L', '₹50L–₹1Cr', '₹1Cr–₹5Cr', '₹5Cr+'] },
+  { q: 'Investment budget?', type: 'chips', key: 'budget', options: ['Under Rs.25L', 'Rs.25L-Rs.50L', 'Rs.50L-Rs.1Cr', 'Rs.1Cr-Rs.5Cr', 'Rs.5Cr+'] },
   { q: 'Target cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Type your city...', options: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pan India', 'Other'] },
   { q: 'Investment timeline?', type: 'chips', key: 'timeline', options: ['Immediate', '3 months', '6 months', '12 months+'] },
 ];
@@ -1125,7 +1114,7 @@ function InvestorsView({ setView, setIsOpen }) {
   );
 }
 
-// ── Strategy Call View ────────────────────────────────────────────────────────
+// -- Strategy Call View --------------------------------------------------------
 function StrategyView({ setView }) {
   const p = useAssistantPalette();
   const [ctaHover, setCtaHover] = useState(false);
@@ -1317,7 +1306,7 @@ function StrategyView({ setView }) {
   );
 }
 
-// ── Services View ─────────────────────────────────────────────────────────────
+// -- Services View -------------------------------------------------------------
 const SERVICES_LIST = [
   {
     title: 'Franchise Onboarding',
@@ -1419,7 +1408,7 @@ function ServicesView({ setView, setIsOpen }) {
                 <div style={{ fontSize: 13, fontWeight: 500, color: 'rgba(15,23,42,0.88)', letterSpacing: '-0.01em' }}>{svc.title}</div>
                 <div style={{ fontSize: 11, color: 'rgba(100,116,139,0.78)', marginTop: 2 }}>{svc.desc}</div>
               </div>
-              <span style={{ color: 'rgba(148,163,184,0.82)', fontSize: 14, flexShrink: 0 }}>→</span>
+              <span style={{ color: 'rgba(148,163,184,0.82)', fontSize: 14, flexShrink: 0 }}>{'->'}</span>
             </motion.button>
           );
         })}
@@ -1428,7 +1417,7 @@ function ServicesView({ setView, setIsOpen }) {
   );
 }
 
-// ── Support View ──────────────────────────────────────────────────────────────
+// -- Support View --------------------------------------------------------------
 const SUPPORT_LINKS = [
   {
     title: 'How does iFranchise work?',
@@ -1571,12 +1560,24 @@ function SupportView({ setView, setIsOpen }) {
   );
 }
 
-// ── Main Component ────────────────────────────────────────────────────────────
+const EA_FAB_SIZE = 56;
+const EA_FAB_INSET = 24;
+const EA_FAB_PANEL_GAP = 12;
+/** Panel bottom offset: FAB inset + FAB height + gap above launcher */
+const EA_PANEL_BOTTOM = EA_FAB_INSET + EA_FAB_SIZE + EA_FAB_PANEL_GAP;
+
+// -- Main Component ------------------------------------------------------------
 function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
   const fab = useMemo(() => getAssistantFabTheme(isLight), [isLight]);
 
   return (
-    <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
+    <div
+      className="assistant-fab-wrap"
+      style={{
+        '--ea-fab-size': `${EA_FAB_SIZE}px`,
+        '--ea-fab-inset': `${EA_FAB_INSET}px`,
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.button
           key={isOpen ? 'fab-open' : 'fab-closed'}
@@ -1591,10 +1592,7 @@ function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
           aria-label={isOpen ? 'Close iFranchise assistant' : 'Open iFranchise assistant'}
           className="assistant-fab"
           style={{
-            width: 56,
-            height: 56,
             padding: 0,
-            borderRadius: 16,
             background: 'linear-gradient(165deg, #4f9cf9 0%, #3b82f6 42%, #2563eb 100%)',
             border: 'none',
             boxShadow: isOpen ? fab.hoverShadow : fab.boxShadow,
@@ -1612,7 +1610,7 @@ function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
           }}
         >
           <AssistantBotIcon
-            size={56}
+            size={EA_FAB_SIZE}
             variant={isLight ? 'light' : 'dark'}
             animate
             open={isOpen}
@@ -1671,11 +1669,11 @@ export default function ExpansionAssistant() {
     : {
         ...panelBase,
         position: 'fixed',
-        bottom: 80,
-        right: 24,
-        width: 360,
-        maxHeight: 520,
-        borderRadius: 16,
+        bottom: EA_PANEL_BOTTOM,
+        right: EA_FAB_INSET,
+        width: 372,
+        maxHeight: 540,
+        borderRadius: 18,
       };
 
   return (
@@ -1709,47 +1707,51 @@ export default function ExpansionAssistant() {
             style={panelStyle}
           >
             <AssistantPaletteContext.Provider value={palette}>
-            <div
+            <motion.div
+              className="assistant-panel-header"
               style={{
-                padding: '12px 14px 11px',
-                flexShrink: 0,
                 background: palette.header,
                 borderBottom: `1px solid ${palette.border}`,
               }}
             >
-              <div className="assistant-header-top">
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-                  <AssistantGlyphTile dimension={34} siteIsLight={isLight} />
-                  <AssistantDateTime />
+              <div className="assistant-header-layout">
+                <div className="assistant-header-icon">
+                  <AssistantGlyphTile dimension={32} siteIsLight={isLight} />
                 </div>
-                <div className="assistant-header-actions">
-                  <LiveStatusPulse />
-                  <button
-                    type="button"
-                    onClick={handleClose}
-                    aria-label="Close assistant"
-                    style={{
-                      width: 30,
-                      height: 30,
-                      borderRadius: 9,
-                      background: palette.closeBg,
-                      border: `1px solid ${palette.closeBorder}`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: palette.closeColor,
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                  </button>
+                <div className="assistant-header-stack">
+                  <div className="assistant-header-line1">
+                    <AssistantDeskTitle />
+                    <div className="assistant-header-line1-end">
+                      <LiveStatusPulse />
+                      <button
+                        type="button"
+                        onClick={handleClose}
+                        aria-label="Close assistant"
+                        className="assistant-header-close"
+                        style={{
+                          background: palette.closeBg,
+                          border: `1px solid ${palette.closeBorder}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: palette.closeColor,
+                          cursor: 'pointer',
+                          transition: 'all 0.15s ease',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="assistant-header-datetime">
+                    <AssistantDateTime />
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
               <AnimatePresence mode="wait">

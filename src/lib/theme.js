@@ -57,7 +57,7 @@ export function getThemeSource() {
 
 export function hasManualThemePreference() {
   if (getThemeSource() === THEME_SOURCE.MANUAL) return true;
-  /* Legacy: theme saved before source flag — treat as manual */
+  /* Legacy: theme saved before source flag - treat as manual */
   return getStoredTheme() !== null && getThemeSource() === null;
 }
 
@@ -78,7 +78,7 @@ export function readDomTheme() {
 }
 
 /**
- * Priority: manual saved preference → system preference → dark fallback
+ * Priority: manual saved preference -> system preference -> dark fallback
  */
 export function resolveTheme() {
   if (hasManualThemePreference()) {
@@ -140,5 +140,5 @@ export function persistTheme(theme) {
   persistManualTheme(theme);
 }
 
-/** Blocking bootstrap — keep in sync with getInitialThemeState / resolveTheme */
+/** Blocking bootstrap - keep in sync with getInitialThemeState / resolveTheme */
 export const THEME_INIT_SCRIPT = `(function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();`;

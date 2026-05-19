@@ -1,7 +1,7 @@
 import { HONEYPOT_FIELD } from '@/lib/forms';
 
 /**
- * Hidden honeypot — bots often fill this; humans never see it.
+ * Hidden honeypot - bots often fill this; humans never see it.
  */
 export default function HoneypotField({ value, onChange }) {
   return (

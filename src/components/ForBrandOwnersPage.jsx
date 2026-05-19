@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
+import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
@@ -28,14 +29,13 @@ import {
   getMarketTrends,
 } from '../data/franchiseData';
 import { FiArrowRight } from 'react-icons/fi';
-import SectionPill from './ui/SectionPill';
 import { BRAND_OWNERS_INDUSTRIES } from '../data/sectionImages';
 import IndustryCard from './IndustryCard';
+import LybExpansionVisualPanel from './LybExpansionVisualPanel';
 
-/** Shared layout — continuous dark page, minimal vertical gaps */
-const LYB_SECTION = 'relative overflow-hidden bg-transparent py-10 lg:py-14';
+/** Shared layout - continuous page, tight vertical rhythm */
+const LYB_SECTION = 'relative overflow-hidden bg-transparent py-7 lg:py-9';
 const LYB_CONTAINER = 'relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10';
-const VIEWPORT_SECTION = `${LYB_SECTION} lg:min-h-[min(100vh,900px)] flex items-center`;
 const LYB_REVEAL_HERO_FORM = 'lyb-reveal-hero-form';
 
 function scrollToHeroInquiry() {
@@ -191,7 +191,7 @@ function ListYourBrandHeroSection() {
                     transition={LYB_FAST}
                   >
                     <p className="lyb-hero-subtext max-w-md text-sm leading-relaxed">
-                      Investor-ready franchise listing — model design, verified capital, and multi-city rollout.
+                      Investor-ready franchise listing - model design, verified capital, and multi-city rollout.
                     </p>
                     <ul className="lyb-hero-subtext mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[0.78rem]">
                       <li className="flex items-center gap-1.5"><IcoUsers /><span>1,800+ investors</span></li>
@@ -265,19 +265,19 @@ export default function ForBrandOwnersPage() {
 
       <TrustStrip />
       
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          SECTION 3 â€" BRAND EXPANSION PROBLEMS
-          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      {/* â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-
+          SECTION 3 - BRAND EXPANSION PROBLEMS
+          â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â- */}
       <ProblemsSection />
 
       <GrowthInvestorSection />
       <BrandsSection />
 
-      {/* â"€â"€ separator â"€â"€ */}
+      {/* -- separator -- */}
       
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          SECTION 8 â€" INDUSTRIES WE SUPPORT
-          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      {/* â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-
+          SECTION 8 - INDUSTRIES WE SUPPORT
+          â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â- */}
       <ServicesStyleIndustriesSection />
 
       <RoadmapTimelineSection />
@@ -288,9 +288,9 @@ export default function ForBrandOwnersPage() {
   );
 }
 
-// â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
-// SECTION 2 â€" TRUST & SCALE STRIP
-// â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// -----------------------------------------------------------------------------
+// SECTION 2 - TRUST & SCALE STRIP
+// -----------------------------------------------------------------------------
 
 const TRUST_STATS = [
   { value: 200,  suffix: '+', label: 'Brands Scaled'           },
@@ -334,10 +334,17 @@ function TrustCounter({ target, suffix, duration = 1800 }) {
   return <span ref={ref} className="tabular-nums">{count}{suffix}</span>;
 }
 
+const TRUST_PILLS = [
+  'SEBI Compliant Framework',
+  'Verified Investor Network',
+  'Structured Due Diligence',
+  'Transparent ROI Reporting',
+];
+
 function TrustStrip() {
   return (
-    <section className={LYB_SECTION}>
-      <motion.div className={LYB_CONTAINER}>
+    <section className={`lyb-trust-section ${LYB_SECTION}`}>
+      <motion.div className={`${LYB_CONTAINER} lyb-trust-stack`}>
 
         {/* section label */}
         <motion.div
@@ -345,29 +352,28 @@ function TrustStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8"
+          className="text-center"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.7rem] font-bold uppercase tracking-widest text-white">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+          <span className="lyb-trust-badge inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.7rem] font-bold uppercase tracking-widest">
+            <span className="lyb-trust-badge-dot h-1.5 w-1.5 rounded-full" />
             Trusted by India&apos;s Fastest-Growing Brands
           </span>
         </motion.div>
 
-        {/* animated stat counters */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-px rounded-2xl overflow-hidden border border-violet-500/20 mb-8">
+        <div className="lyb-trust-stats grid grid-cols-2 gap-px overflow-hidden rounded-2xl border sm:grid-cols-3 lg:grid-cols-5">
           {TRUST_STATS.map((s, i) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
+              key={s.label}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="card-premium-dark-inner flex flex-col items-center justify-center py-7 px-4 transition-colors duration-300 hover:border-violet-400/35"
+              transition={{ duration: 0.45, delay: i * 0.06 }}
+              className="lyb-trust-stat-cell flex flex-col items-center justify-center px-3 py-5 sm:py-6"
             >
-              <p className="text-3xl font-extrabold text-white mb-1">
+              <p className="lyb-trust-stat-value mb-0.5 text-2xl font-extrabold sm:text-3xl">
                 <TrustCounter target={s.value} suffix={s.suffix} />
               </p>
-              <p className="text-[0.7rem] font-medium text-white text-center">{s.label}</p>
+              <p className="lyb-trust-stat-label text-center text-[0.68rem] font-medium sm:text-[0.7rem]">{s.label}</p>
             </motion.div>
           ))}
         </div>
@@ -377,49 +383,49 @@ function TrustStrip() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-8"
+          transition={{ duration: 0.45, delay: 0.1 }}
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
         >
-          {[
-            { icon: null, text: 'SEBI Compliant Framework'     },
-            { icon: null, text: 'Verified Investor Network'    },
-            { icon: null, text: 'Structured Due Diligence'     },
-            { icon: null, text: 'Transparent ROI Reporting'    },
-          ].map((t, i) => (
-            <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/25 bg-white/5">
-              <span className="text-emerald-600 text-xs font-bold">{t.icon}</span>
-              <span className="text-[0.75rem] font-semibold text-white">{t.text}</span>
-            </div>
+          {TRUST_PILLS.map((text) => (
+            <span key={text} className="lyb-trust-pill rounded-full px-3.5 py-1.5 text-[0.72rem] font-semibold sm:px-4 sm:py-2 sm:text-[0.75rem]">
+              {text}
+            </span>
           ))}
         </motion.div>
 
         {/* scrolling marquee of partner logos */}
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#0a0618] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#0a0618] to-transparent z-10 pointer-events-none" />
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.15 }}
+          className="lyb-trust-marquee relative overflow-hidden"
+        >
+          <div className="lyb-marquee-fade lyb-marquee-fade--left pointer-events-none" aria-hidden />
+          <div className="lyb-marquee-fade lyb-marquee-fade--right pointer-events-none" aria-hidden />
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
             transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-            className="flex gap-6 w-max"
+            className="flex w-max gap-4"
           >
             {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((name, i) => (
               <div
-                key={i}
-                className="card-premium-dark-inner flex items-center justify-center px-6 py-3 rounded-xl min-w-[140px]"
+                key={`${name}-${i}`}
+                className="lyb-trust-logo-card flex min-w-[132px] items-center justify-center rounded-xl px-5 py-2.5"
               >
-                <span className="text-[0.75rem] font-bold text-white whitespace-nowrap">{name}</span>
+                <span className="lyb-trust-logo-text whitespace-nowrap text-[0.75rem] font-bold">{name}</span>
               </div>
             ))}
           </motion.div>
-        </div>
+        </motion.div>
 
       </motion.div>
     </section>
   );
 }
 
-// SECTION 3 — PROBLEMS â€" PROBLEMS vs SOLUTIONS  (user-driven, continuous flow)
-// â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// SECTION 3 - PROBLEMS - PROBLEMS vs SOLUTIONS  (user-driven, continuous flow)
+// -----------------------------------------------------------------------------
 
 const TAG_STYLE = 'bg-amber-500/10 border-amber-400/35 text-amber-200';
 
@@ -430,8 +436,8 @@ const ITEMS = [
     solution: 'Structured SOP Frameworks',
     solutionDesc: 'We build franchise-ready onboarding so every new unit launches with the same standards as your best location.',
     solutionDetail: 'Includes role-based training paths, launch QA checklists, and handover templates your team can run without constant founder involvement.',
-    outcomes: ['Unit launch playbook (30–45 day rollout)', 'Trainer kits + franchisee certification flow', 'Quality gates before go-live'],
-    metric: 'Typical delivery: 2–3 weeks',
+    outcomes: ['Unit launch playbook (30-45 day rollout)', 'Trainer kits + franchisee certification flow', 'Quality gates before go-live'],
+    metric: 'Typical delivery: 2-3 weeks',
     tags: ['SOP Library', 'Training Modules', 'Launch Checklist'],
     tagColor: TAG_STYLE,
     icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>,
@@ -441,8 +447,8 @@ const ITEMS = [
     problemDesc: 'Expanding without a model causes unit failures and legal gaps.',
     solution: 'Scalable Franchise Model Design',
     solutionDesc: 'We design the right FOFO, FOCO, or FICO structure based on your operations, capital needs, and expansion goals.',
-    solutionDetail: 'Covers franchise agreement frameworks, fee architecture, territory rights, and investor-facing unit economics — ready for legal review.',
-    outcomes: ['Model comparison & recommendation memo', 'Franchise disclosure–ready documentation pack', 'Multi-unit expansion blueprint'],
+    solutionDetail: 'Covers franchise agreement frameworks, fee architecture, territory rights, and investor-facing unit economics - ready for legal review.',
+    outcomes: ['Model comparison & recommendation memo', 'Franchise disclosure-ready documentation pack', 'Multi-unit expansion blueprint'],
     metric: 'Investor-grade legal stack',
     tags: ['Legal Framework', 'Model Design', 'Multi-Unit Ready'],
     tagColor: TAG_STYLE,
@@ -452,7 +458,7 @@ const ITEMS = [
     problem: 'Low-Quality Investor Pipeline',
     problemDesc: 'Unqualified leads waste months and drain marketing budgets.',
     solution: 'Verified Investor Network',
-    solutionDesc: 'Access 1,800+ pre-screened investors filtered by ticket size, sector, geography, and operating appetite — not cold lists.',
+    solutionDesc: 'Access 1,800+ pre-screened investors filtered by ticket size, sector, geography, and operating appetite - not cold lists.',
     solutionDetail: 'We qualify intent before intro, align capital range to your model, and support you through discovery calls to term discussions.',
     outcomes: ['Investor shortlist matched to your profile', 'Capital-range & geography filtering', 'Warm introductions with context briefs'],
     metric: '1,800+ verified investors',
@@ -464,9 +470,9 @@ const ITEMS = [
     problem: 'No Expansion Strategy',
     problemDesc: 'Reactive growth with no territory planning leads to chaos.',
     solution: 'Data-Driven Territory Planning',
-    solutionDesc: 'Market analysis, phased rollout maps, and city-level targeting so you expand in the right sequence — not everywhere at once.',
+    solutionDesc: 'Market analysis, phased rollout maps, and city-level targeting so you expand in the right sequence - not everywhere at once.',
     solutionDetail: 'Uses saturation mapping, competitor density, and ticket-size fit to prioritize cities and protect franchisee ROI.',
-    outcomes: ['Tier-1 / Tier-2 city rollout map', 'Territory exclusivity recommendations', 'Phased launch calendar (6–18 months)'],
+    outcomes: ['Tier-1 / Tier-2 city rollout map', 'Territory exclusivity recommendations', 'Phased launch calendar (6-18 months)'],
     metric: '17+ cities mapped',
     tags: ['Territory Maps', 'Market Analysis', 'Phased Rollout'],
     tagColor: TAG_STYLE,
@@ -477,7 +483,7 @@ const ITEMS = [
     problemDesc: 'Every unit runs differently. Brand equity erodes fast.',
     solution: 'Centralized Operations Systems',
     solutionDesc: 'Unified quality controls, audits, and live dashboards so every franchisee runs to the same standard.',
-    solutionDetail: 'Track unit KPIs, flag underperformance early, and give franchise partners clear accountability — without micromanaging daily ops.',
+    solutionDetail: 'Track unit KPIs, flag underperformance early, and give franchise partners clear accountability - without micromanaging daily ops.',
     outcomes: ['Brand consistency audit scorecard', 'Unit-level KPI dashboard', 'Escalation & remediation playbooks'],
     metric: 'Real-time ops visibility',
     tags: ['Quality Audits', 'Live Dashboards', 'Standardized Ops'],
@@ -489,7 +495,7 @@ const ITEMS = [
     problemDesc: 'Failing to communicate value. Investors look elsewhere.',
     solution: 'Premium Brand Storytelling',
     solutionDesc: 'Investor-grade decks, data rooms, and positioning that communicate unit economics, moat, and growth narrative clearly.',
-    solutionDetail: 'We translate your brand story into materials capital understands — from one-pagers to full franchise opportunity presentations.',
+    solutionDetail: 'We translate your brand story into materials capital understands - from one-pagers to full franchise opportunity presentations.',
     outcomes: ['Investor deck + franchise opportunity PDF', 'Brand narrative & differentiation framework', 'Due-diligence data room structure'],
     metric: 'Pitch-ready in ~10 days',
     tags: ['Investor Decks', 'Pitch Materials', 'Brand Strategy'],
@@ -500,8 +506,8 @@ const ITEMS = [
     problem: 'Random Lead Generation',
     problemDesc: 'No funnel means wasted spend and zero qualified pipeline.',
     solution: 'Performance Investor Acquisition',
-    solutionDesc: 'Structured funnels that attract serious franchise investors — with tracking from first touch to signed agreement.',
-    solutionDetail: 'Combines listing optimization, outreach sequences, and conversion analytics so you know what’s working and what to scale.',
+    solutionDesc: 'Structured funnels that attract serious franchise investors - with tracking from first touch to signed agreement.',
+    solutionDetail: "Combines listing optimization, outreach sequences, and conversion analytics so you know what's working and what to scale.",
     outcomes: ['Qualified investor funnel setup', 'Listing + outreach conversion tracking', 'Monthly pipeline & ROI reporting'],
     metric: '94% intent-matched leads',
     tags: ['Lead Funnels', 'ROI Tracking', 'Conversion Systems'],
@@ -515,7 +521,7 @@ function ProblemsSection() {
   const item = active !== null ? ITEMS[active] : null;
 
   return (
-    <section className={`lyb-problems-section ${LYB_SECTION}`}>
+    <section className="lyb-problems-section relative overflow-hidden bg-transparent">
       <div className={LYB_CONTAINER}>
 
         <motion.div
@@ -523,9 +529,9 @@ function ProblemsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="lyb-problems-heading-wrap lyb-dark-heading mb-10 mx-auto max-w-4xl text-center"
+          className="lyb-problems-heading-wrap lyb-dark-heading mb-5 mx-auto max-w-4xl text-center"
         >
-          <div className="mb-4 flex justify-center">
+          <div className="mb-3 flex justify-center">
             <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
               The Hard Truth
@@ -533,26 +539,26 @@ function ProblemsSection() {
           </div>
           <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-xl sm:text-2xl lg:text-[2.1rem] font-extrabold tracking-tight leading-[1.15]">
             <span className="lyb-problems-heading bg-gradient-to-r from-white via-violet-100 to-indigo-200 bg-clip-text text-transparent">
-              Why Most Brands Fail to Scale — and How iFranchise Fixes It
+              Why Most Brands Fail to Scale - and How iFranchise Fixes It
             </span>
           </h2>
           <p className="lyb-page-subtext mt-3 text-sm sm:text-base leading-relaxed line-clamp-2 max-w-2xl mx-auto">
-            Select any failure point to see our franchise operating system — investor match, model design, and rollout intelligence.
+            Select any failure point to see our franchise operating system - investor match, model design, and rollout intelligence.
           </p>
         </motion.div>
 
-        {/* â"€â"€ two-column body â"€â"€ */}
-        <div className="grid items-stretch gap-6 lg:grid-cols-2 lg:gap-10">
+        {/* -- two-column body -- */}
+        <div className="grid items-stretch gap-5 lg:grid-cols-2 lg:gap-6">
 
-          {/* LEFT â€" 7 problem rows */}
+          {/* LEFT - 7 problem rows */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-[520px] flex-col"
+            className="flex min-h-[420px] flex-col lg:min-h-[440px]"
           >
-            <p className="mb-4 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest text-white/80">7 Common Failure Points</p>
+            <p className="lyb-problems-list-label mb-3 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest">7 Common Failure Points</p>
             <div className="flex flex-1 flex-col justify-between gap-2">
             {ITEMS.map((it, i) => (
               <motion.button
@@ -560,38 +566,36 @@ function ProblemsSection() {
                 onClick={() => setActive(active === i ? null : i)}
                 whileHover={{ x: active === i ? 0 : 4 }}
                 transition={{ duration: 0.15 }}
-                className={`w-full text-left flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-200 ${
-                  active === i
-                    ? 'border-red-400/50 bg-red-500/15 shadow-sm'
-                    : 'card-premium-dark-inner hover:border-red-400/40 hover:bg-red-500/10'
+                className={`lyb-problem-row w-full text-left flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-200 ${
+                  active === i ? 'lyb-problem-row--active' : ''
                 }`}
               >
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
-                  active === i ? 'bg-red-500 text-white' : 'bg-white/10 text-white'
+                <motion.div className={`lyb-problem-icon w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
+                  active === i ? 'lyb-problem-icon--active' : ''
                 }`}>
                   {it.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className={`text-sm font-semibold leading-snug transition-colors duration-200 ${
-                    active === i ? 'text-red-200' : 'text-white'
+                </motion.div>
+                <motion.div className="flex-1 min-w-0">
+                  <p className={`lyb-problem-title text-sm font-semibold leading-snug transition-colors duration-200 ${
+                    active === i ? 'lyb-problem-title--active' : ''
                   }`}>{it.problem}</p>
                   {active === i && (
                     <motion.p
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       transition={{ duration: 0.2 }}
-                      className="text-[0.72rem] text-red-500/80 mt-0.5 leading-snug overflow-hidden"
+                      className="lyb-problem-desc text-[0.72rem] mt-0.5 leading-snug overflow-hidden"
                     >
                       {it.problemDesc}
                     </motion.p>
                   )}
-                </div>
+                </motion.div>
                 <motion.div
                   animate={{ rotate: active === i ? 90 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="shrink-0"
                 >
-                  <svg className={`w-4 h-4 transition-colors duration-200 ${active === i ? 'text-red-400' : 'text-white'}`}
+                  <svg className={`lyb-problem-chevron w-4 h-4 transition-colors duration-200 ${active === i ? 'lyb-problem-chevron--active' : ''}`}
                     fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
                   </svg>
@@ -601,13 +605,13 @@ function ProblemsSection() {
             </div>
           </motion.div>
 
-          {/* RIGHT — solution panel */}
+          {/* RIGHT - solution panel */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-[520px] flex-col"
+            className="flex min-h-[420px] flex-col lg:min-h-[440px]"
           >
             <AnimatePresence mode="wait">
             {item === null ? (
@@ -619,7 +623,7 @@ function ProblemsSection() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.35 }}
               >
-                <ExpansionVisualPanel />
+                <LybExpansionVisualPanel />
               </motion.div>
             ) : (
               <motion.div
@@ -652,7 +656,7 @@ function ProblemsSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                     <span className="text-[0.72rem] font-semibold text-red-200">{item.problem}</span>
-                    <span className="text-white">→</span>
+                    <span className="text-white">{'->'}</span>
                     <span className="text-[0.72rem] font-semibold text-white">Fixed</span>
                   </div>
 
@@ -714,7 +718,7 @@ function ProblemsSection() {
   );
 }
 
-// ── Inlined section components ──
+// -- Inlined section components --
 
 /* HeroBrandInquiryForm.jsx */
 const HERO_FORM_INDUSTRIES = [
@@ -885,7 +889,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                       className={fieldClass}
                       value={form.phone}
                       onChange={(e) => set('phone', e.target.value)}
-                      placeholder="+91 98765 43210"
+                      placeholder={PHONE_PLACEHOLDER}
                       required
                     />
                   </Field>
@@ -974,260 +978,6 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
     </motion.div>
   );
 }
-
-/* ExpansionVisualPanel.jsx */
-const TAGS = ['Investors', 'Territory', 'SOPs', 'Scale', 'Legal', 'ROI'];
-
-const CAPABILITIES = [
-  'Investor-ready matchmaking',
-  'Franchise model & legal stack',
-  'Territory & rollout intelligence',
-  'Multi-city expansion playbooks',
-];
-
-const STEPS = ['Audit', 'Model', 'Match', 'Scale'];
-
-function CursorIcon() {
-  return (
-    <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M5 3l14 8.5L12 12l-1.5 7L5 3z"
-        fill="currentColor"
-        stroke="currentColor"
-        strokeWidth="0.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ExpansionVisualPanel() {
-  const [activeTag, setActiveTag] = useState(0);
-  const [activeStep, setActiveStep] = useState(0);
-  const [activeCap, setActiveCap] = useState(0);
-
-  useEffect(() => {
-    const tagId = setInterval(() => setActiveTag((t) => (t + 1) % TAGS.length), 2800);
-    const stepId = setInterval(() => setActiveStep((s) => (s + 1) % STEPS.length), 2200);
-    const capId = setInterval(() => setActiveCap((c) => (c + 1) % CAPABILITIES.length), 4000);
-    return () => {
-      clearInterval(tagId);
-      clearInterval(stepId);
-      clearInterval(capId);
-    };
-  }, []);
-
-  return (
-    <motion.div
-      className="relative flex h-full min-h-[520px] w-full flex-col overflow-hidden rounded-2xl border border-violet-200/70 bg-white shadow-[0_24px_60px_rgba(88,28,135,0.12)]"
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {/* soft top gradient wash */}
-      <motion.div
-        className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-violet-100/50 to-transparent"
-        animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
-      {/* left-edge flow — stays in margin, never overlaps copy */}
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-[38%] text-violet-400"
-        viewBox="0 0 160 520"
-        preserveAspectRatio="none"
-        aria-hidden
-      >
-        <defs>
-          <linearGradient id="expFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0" />
-            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.3" />
-          </linearGradient>
-        </defs>
-        <motion.path
-          d="M 4 120 Q 60 100, 90 180 T 70 320 Q 50 400, 100 450"
-          fill="none"
-          stroke="url(#expFlowGrad)"
-          strokeWidth="1.5"
-          strokeDasharray="6 10"
-          animate={{ strokeDashoffset: [0, -32] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-        />
-        {[0, 1, 2].map((i) => (
-          <motion.circle
-            key={i}
-            r="2.5"
-            fill="#8b5cf6"
-            animate={{
-              cx: [8, 55, 75, 45, 8],
-              cy: [140 + i * 70, 120 + i * 70, 200 + i * 50, 350, 140 + i * 70],
-              opacity: [0, 0.65, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              delay: i * 1.4,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </svg>
-
-      {/* corner rings — subtle, out of content zone */}
-      <motion.div
-        className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full border border-violet-200/35"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 55, repeat: Infinity, ease: 'linear' }}
-      />
-      <motion.div
-        className="pointer-events-none absolute -left-8 -bottom-8 h-28 w-28 rounded-full border border-violet-100/50"
-        animate={{ rotate: -360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-      />
-
-      {/* main content */}
-      <motion.div className="relative z-10 mx-auto flex h-full w-full max-w-[320px] flex-col items-center justify-center px-6 py-10 text-center">
-        {/* cursor + soft pulse */}
-        <motion.div
-          className="relative mb-5"
-          animate={{ x: [0, -8, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <motion.div
-            className="absolute -inset-2 rounded-2xl bg-violet-400/12 blur-lg"
-            animate={{ opacity: [0.25, 0.5, 0.25], scale: [1, 1.05, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-          <div className="relative flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-xl border border-slate-200 bg-white shadow-[0_4px_20px_rgba(109,40,217,0.1)]">
-            <CursorIcon />
-          </div>
-          <motion.span
-            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500"
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
-          />
-          {[0, 1].map((d) => (
-            <motion.span
-              key={d}
-              className="absolute top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-violet-400"
-              style={{ left: -10 - d * 12 }}
-              animate={{ opacity: [0, 0.55, 0], x: [0, -5, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: d * 0.35 }}
-            />
-          ))}
-        </motion.div>
-
-        <h3 className="text-lg font-bold tracking-tight text-slate-800 sm:text-xl">
-          Select a problem on the left
-        </h3>
-
-        <p className="mt-2 text-sm leading-relaxed text-white">
-          See how iFranchise solves each failure point with structured expansion support.
-        </p>
-
-        {/* rotating capability line */}
-        <div className="mt-4 h-5 w-full overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={activeCap}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.35 }}
-              className="text-xs font-semibold text-violet-600"
-            >
-              {CAPABILITIES[activeCap]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-
-        {/* cycling tags */}
-        <div className="mt-5 flex flex-wrap justify-center gap-1.5">
-          {TAGS.map((label, i) => (
-            <motion.span
-              key={label}
-              layout
-              animate={{
-                opacity: i === activeTag ? 1 : 0.5,
-                y: i === activeTag ? -2 : 0,
-                scale: i === activeTag ? 1.02 : 1,
-              }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              className={`rounded-full border px-2.5 py-1 text-[0.62rem] font-medium ${
-                i === activeTag
-                  ? 'border-violet-400 bg-violet-600 text-white shadow-[0_2px_12px_rgba(109,40,217,0.22)]'
-                  : 'border-violet-100 bg-violet-50/80 text-violet-700'
-              }`}
-            >
-              {label}
-            </motion.span>
-          ))}
-        </div>
-
-        {/* mini pipeline */}
-        <div className="mt-6 w-full max-w-[260px]">
-          <div className="relative flex items-start justify-between">
-            <div
-              className="absolute left-3 right-3 top-3 h-0.5 rounded-full bg-violet-100"
-              aria-hidden
-            />
-            <motion.div
-              className="absolute left-3 top-3 h-0.5 origin-left rounded-full bg-violet-500"
-              initial={false}
-              animate={{ scaleX: activeStep / (STEPS.length - 1) }}
-              style={{ width: 'calc(100% - 1.5rem)' }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            />
-            {STEPS.map((step, i) => (
-              <motion.div
-                key={step}
-                className="relative z-[1] flex flex-col items-center gap-1"
-                animate={{ opacity: i <= activeStep ? 1 : 0.4 }}
-                transition={{ duration: 0.35 }}
-              >
-                <motion.div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[0.55rem] font-bold ${
-                    i === activeStep
-                      ? 'bg-violet-600 text-white shadow-[0_0_12px_rgba(109,40,217,0.35)]'
-                      : i < activeStep
-                        ? 'bg-violet-200 text-violet-700'
-                        : 'bg-white text-violet-400 ring-1 ring-violet-200'
-                  }`}
-                  animate={i === activeStep ? { scale: [1, 1.08, 1] } : { scale: 1 }}
-                  transition={{ duration: 1.8, repeat: Infinity }}
-                >
-                  {i + 1}
-                </motion.div>
-                <span className="text-[0.58rem] font-medium text-white">{step}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* footer hint */}
-      <motion.div
-        className="relative z-10 flex items-center justify-center gap-2 border-t border-violet-100/80 bg-violet-50/30 py-3.5"
-        animate={{ opacity: [0.65, 1, 0.65] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <motion.span
-          className="flex gap-0.5 text-violet-400"
-          animate={{ x: [0, -3, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          {['‹', '‹', '‹'].map((c, i) => (
-            <span key={i} className="text-sm font-light">
-              {c}
-            </span>
-          ))}
-        </motion.span>
-        <span className="text-xs font-medium text-white">Pick a failure point to explore</span>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 /* BrandsSection.jsx */
 function MiniBar({ value, max, color = 'violet', delay = 0, live = false }) {
   const pct = Math.round((value / max) * 100);
@@ -1378,7 +1128,7 @@ function BrandsSection() {
             </span>
           </h2>
           <p className="lyb-section-subtext mx-auto mt-3 max-w-2xl text-[0.88rem] leading-relaxed sm:text-[0.92rem]">
-            From franchise model design to investor acquisition — we handle the full expansion infrastructure so you focus on building your brand.
+            From franchise model design to investor acquisition - we handle the full expansion infrastructure so you focus on building your brand.
           </p>
         </motion.div>
 
@@ -1424,7 +1174,7 @@ function BrandsSection() {
               <motion.div className="lyb-dash-header flex items-center justify-between border-b border-violet-500/25 px-4 py-2.5">
                 <motion.div>
                   <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
-                  <p className="text-[0.6rem] text-white">Operational intelligence · Live data</p>
+                  <p className="text-[0.6rem] text-white">Operational intelligence - Live data</p>
                 </motion.div>
                 <motion.div className="lyb-live-pill flex items-center justify-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
@@ -1555,10 +1305,15 @@ const navigateTo = (path) => {
 
 function ServicesStyleIndustriesSection() {
   return (
-    <section className="lyb-industries-section relative z-10 overflow-hidden py-10 lg:py-14">
+    <section className="lyb-industries-section relative z-10 overflow-hidden">
       <motion.div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <motion.div className="lyb-dark-heading mb-10 text-center">
-          <SectionPill className="mb-4">Industries</SectionPill>
+        <motion.div className="lyb-dark-heading mb-6 text-center lg:mb-7">
+          <div className="mb-4 flex justify-center">
+            <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-pulse" />
+              Industries
+            </span>
+          </div>
           <h2 className="lyb-section-heading-on-dark mb-3 text-3xl font-extrabold text-white sm:text-4xl">
             Industries We Help Scale Through Franchising
           </h2>
@@ -1582,7 +1337,7 @@ function ServicesStyleIndustriesSection() {
           ))}
         </motion.div>
 
-        <motion.div className="mt-14 text-center">
+        <motion.div className="mt-8 text-center lg:mt-9">
           <p className="lyb-section-subtext mb-5 text-sm">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
@@ -1605,11 +1360,11 @@ const CASES = [
     image: 'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=600&q=80',
     color: 'violet',
     before: {
-      cities: 2, investors: 0, revenue: '₹40L/mo', units: 2,
+      cities: 2, investors: 0, revenue: 'Rs.40L/mo', units: 2,
       problems: ['No franchise model', 'Zero investor pipeline', 'Manual operations'],
     },
     after: {
-      cities: 18, investors: 24, revenue: '₹4.2Cr/mo', units: 26,
+      cities: 18, investors: 24, revenue: 'Rs.4.2Cr/mo', units: 26,
       wins: ['Structured FOFO model', '24 verified investors onboarded', 'Centralized ops dashboard'],
     },
     timeline: '14 months',
@@ -1625,11 +1380,11 @@ const CASES = [
     image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80',
     color: 'violet',
     before: {
-      cities: 3, investors: 0, revenue: '₹80L/mo', units: 3,
+      cities: 3, investors: 0, revenue: 'Rs.80L/mo', units: 3,
       problems: ['No investor framework', 'Inconsistent unit quality', 'No expansion roadmap'],
     },
     after: {
-      cities: 12, investors: 18, revenue: '₹3.1Cr/mo', units: 19,
+      cities: 12, investors: 18, revenue: 'Rs.3.1Cr/mo', units: 19,
       wins: ['FICO model with passive investor returns', '18 investors across 12 cities', 'Standardized quality audits'],
     },
     timeline: '11 months',
@@ -1645,11 +1400,11 @@ const CASES = [
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
     color: 'violet',
     before: {
-      cities: 1, investors: 0, revenue: '₹12L/mo', units: 1,
+      cities: 1, investors: 0, revenue: 'Rs.12L/mo', units: 1,
       problems: ['Single city operation', 'No brand documentation', 'No investor awareness'],
     },
     after: {
-      cities: 9, investors: 14, revenue: '₹1.4Cr/mo', units: 16,
+      cities: 9, investors: 14, revenue: 'Rs.1.4Cr/mo', units: 16,
       wins: ['FOCO model for Tier 2 markets', '14 city-level investors', 'Full SOP & training system'],
     },
     timeline: '10 months',
@@ -1772,7 +1527,7 @@ function CaseStudiesSection() {
   const c = COLOR[cs.color];
 
   return (
-    <section className="lyb-proven-section relative overflow-hidden bg-transparent py-10 lg:py-14">
+    <section className="lyb-proven-section relative overflow-hidden bg-transparent">
 
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10">
@@ -1796,33 +1551,46 @@ function CaseStudiesSection() {
             </span>
           </h2>
           <p className="lyb-section-subtext text-base max-w-2xl mx-auto leading-relaxed">
-            Real brands. Real numbers. Real expansion — powered by iFranchise systems.
+            Real brands. Real numbers. Real expansion - powered by iFranchise systems.
           </p>
         </motion.div>
 
         {/* two-column layout */}
-        <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-start">
+        <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-stretch">
 
-          {/* LEFT — case selector */}
+          {/* LEFT - case selector + CTA */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-3"
+            className="flex flex-col"
           >
             <p className="lyb-proven-sidebar-label mb-4 text-[0.65rem] font-bold uppercase tracking-widest">Select a Case Study</p>
-            {CASES.map((c, i) => (
-              <CaseCard key={c.id} cs={c} isActive={active === i} onClick={() => setActive(i)} />
-            ))}
+            <div className="space-y-3">
+              {CASES.map((c, i) => (
+                <CaseCard key={c.id} cs={c} isActive={active === i} onClick={() => setActive(i)} />
+              ))}
+            </div>
 
-            {/* disclaimer */}
-            <p className="lyb-proven-sidebar-note pt-2 text-[0.62rem] leading-relaxed">
+            <p className="lyb-proven-sidebar-note mt-3 pt-2 text-[0.62rem] leading-relaxed">
               * Results are representative of brands that completed the full iFranchise expansion program.
             </p>
+
+            <div className="lyb-proven-sidebar-cta mt-5 border-t border-violet-500/15 pt-5 lg:mt-auto lg:pt-6">
+              <p className="lyb-proven-footer-cta mb-4 text-left text-sm leading-snug">
+                Ready to write your own success story?
+              </p>
+              <CtaButton
+                className="lyb-proven-sidebar-cta-btn w-full justify-center"
+                onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+              >
+                Start Your Franchise Journey
+              </CtaButton>
+            </div>
           </motion.div>
 
-          {/* RIGHT — case detail */}
+          {/* RIGHT - case detail */}
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -1934,7 +1702,7 @@ function CaseStudiesSection() {
                 <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
                     <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">Revenue Growth</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.revenue} → {cs.after.revenue}</span>
+                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.revenue} -> {cs.after.revenue}</span>
                   </div>
                   <Sparkline points={cs.revenuePoints} />
                   <div className="flex items-center justify-between mt-2">
@@ -1947,7 +1715,7 @@ function CaseStudiesSection() {
                 <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
                     <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">City Expansion</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.cities} → {cs.after.cities} cities</span>
+                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.cities} -> {cs.after.cities} cities</span>
                   </div>
                   <CityDots cities={cs.cityData} color={cs.color} />
                   <div className="lyb-proven-chart-footer mt-3 flex items-center gap-2 border-t border-slate-200 pt-2">
@@ -1963,22 +1731,6 @@ function CaseStudiesSection() {
           </AnimatePresence>
         </div>
 
-        {/* bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-14"
-        >
-          <p className="lyb-proven-footer-cta mb-5 text-sm">Ready to write your own success story?</p>
-          <CtaButton
-            onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-          >
-            Start Your Franchise Journey
-          </CtaButton>
-        </motion.div>
-
       </div>
     </section>
   );
@@ -1988,7 +1740,7 @@ function CaseStudiesSection() {
 const FAQ_ITEMS = [
   {
     question: 'What types of brands can list on iFranchise?',
-    answer: 'Brands with a proven model and at least one operational unit — across F&B, wellness, education, retail, tech, and more.',
+    answer: 'Brands with a proven model and at least one operational unit - across F&B, wellness, education, retail, tech, and more.',
   },
   {
     question: 'How long does it take to become franchise-ready?',
@@ -2000,26 +1752,31 @@ const FAQ_ITEMS = [
   },
   {
     question: 'What franchise models do you support?',
-    answer: 'FOFO, FOCO, and FICO — we help you choose based on operations complexity and investor profile.',
+    answer: 'FOFO, FOCO, and FICO - we help you choose based on operations complexity and investor profile.',
   },
   {
     question: 'Is there support after launch?',
-    answer: 'Yes — 90-day post-launch support plus ongoing advisory for multi-city expansion.',
+    answer: 'Yes - 90-day post-launch support plus ongoing advisory for multi-city expansion.',
   },
 ];
 
 function ListYourBrandFAQSection() {
   return (
-    <section className="lyb-faq-section w-full py-10 lg:py-14">
+    <section className="lyb-faq-section w-full">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-10 text-center"
+          className="lyb-faq-heading mb-6 text-center lg:mb-7"
         >
-          <h2 className="lyb-page-h2 lyb-section-heading-on-dark mb-3 text-3xl font-bold lg:text-4xl">Frequently Asked Questions</h2>
-          <p className="lyb-page-subtext lyb-section-subtext mx-auto max-w-2xl text-lg">
+          <div className="mb-3 flex justify-center">
+            <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-pulse" />
+              FAQ
+            </span>
+          </div>
+          <p className="lyb-page-subtext lyb-section-subtext mx-auto max-w-2xl text-sm sm:text-base leading-relaxed">
             Quick answers for brand founders exploring franchise expansion.
           </p>
         </motion.div>
@@ -2031,30 +1788,47 @@ function ListYourBrandFAQSection() {
             viewport={{ once: true }}
             className="h-full"
           >
-            <div className="card-premium-dark relative flex h-full flex-col justify-between rounded-2xl border border-violet-500/20 p-8 lg:p-9">
+            <div className="lyb-faq-cta-card card-premium-dark relative flex h-full flex-col justify-between rounded-2xl border border-violet-500/20 p-8 lg:p-9">
               <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/60 to-transparent opacity-70" />
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-widest text-white mb-2">Get started</p>
-                <h3 className="text-xl font-extrabold text-white mb-2">Ready to list your brand?</h3>
-                <p className="text-sm text-violet-100/80 leading-relaxed mb-6">
-                  Submit the hero form or speak with our expansion team for a confidential franchise readiness review.
+                <p className="lyb-faq-cta-kicker mb-2 text-[0.65rem] font-bold uppercase tracking-widest">After the FAQs</p>
+                <h3 className="lyb-faq-cta-title mb-2 text-xl font-extrabold">Get a franchise readiness review</h3>
+                <p className="lyb-faq-cta-body mb-5 text-sm leading-relaxed">
+                  Share your brand basics and we&apos;ll assess franchise fit, investor readiness, and your fastest path to scale.
                 </p>
+                <ul className="lyb-faq-cta-list mb-6 space-y-2.5">
+                  {[
+                    'Unit economics & documentation check',
+                    'FOFO / FOCO model recommendation',
+                    'Investor-match criteria for your ticket size',
+                  ].map((item) => (
+                    <li key={item} className="lyb-faq-cta-list-item flex items-start gap-2 text-[0.8rem] leading-snug">
+                      <svg className="lyb-faq-cta-check mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} aria-hidden>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div className="space-y-3">
                 <button
                   type="button"
                   onClick={scrollToHeroInquiry}
-                  className="lyb-faq-cta-primary w-full rounded-xl py-3 text-sm font-bold shadow-lg transition hover:bg-violet-700"
+                  className="lyb-faq-cta-primary w-full rounded-xl py-3 text-sm font-bold shadow-lg transition"
                 >
-                  Start Brand Inquiry
+                  Start brand inquiry
                 </button>
                 <button
                   type="button"
                   onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-                  className="w-full rounded-xl border border-violet-500/40 bg-white/5 py-3 text-sm font-semibold text-white transition hover:border-violet-400/60"
+                  className="lyb-faq-cta-secondary w-full rounded-xl py-3 text-sm font-semibold transition"
                 >
-                  Contact Expansion Team
+                  Book expansion call
                 </button>
+                <p className="lyb-faq-cta-note text-center text-[0.68rem] leading-snug">
+                  Confidential review - typically within 1 business day
+                </p>
               </div>
             </div>
           </motion.div>
@@ -2147,17 +1921,17 @@ const MATCH_FEATURES = [
   { label: 'Capital verified', value: '1,800+' },
   { label: 'Intent-matched', value: '94%' },
   { label: 'Close cycle', value: '21 days' },
-  { label: 'Ticket size', value: 'Rs.25L–5Cr+' },
+  { label: 'Ticket size', value: 'Rs.25L-5Cr+' },
 ];
 
 function GrowthInvestorSection() {
   return (
-    <section className={`lyb-why-section ${VIEWPORT_SECTION}`}>
+    <section className="lyb-why-section relative overflow-hidden bg-transparent">
       <motion.div className={`${LYB_CONTAINER} w-full`}>
         <SectionHeader
           badge="Why iFranchise"
           title="Growth Infrastructure + Investor Capital"
-          subtitle="Convert interest into signed agreements with verified investors — not cold leads."
+          subtitle="Convert interest into signed agreements with verified investors - not cold leads."
         />
         <div className="grid lg:grid-cols-2 gap-5 lg:gap-8 items-stretch">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2216,8 +1990,8 @@ const ROADMAP = [
 
 const TIMELINE = [
   { week: 'Week 1', title: 'Discovery & audit', desc: 'Feasibility review.' },
-  { week: 'Week 2–3', title: 'Model & materials', desc: 'Legal + investor deck.' },
-  { week: 'Week 4–6', title: 'Investor activation', desc: 'Qualified intros.' },
+  { week: 'Week 2-3', title: 'Model & materials', desc: 'Legal + investor deck.' },
+  { week: 'Week 4-6', title: 'Investor activation', desc: 'Qualified intros.' },
   { week: 'Week 8+', title: 'Launch support', desc: 'Rollout & reporting.' },
 ];
 
@@ -2245,12 +2019,12 @@ function ColumnShell({ label, children, delay = 0 }) {
 
 function RoadmapTimelineSection() {
   return (
-    <section className={`lyb-scale-section ${VIEWPORT_SECTION}`}>
+    <section className="lyb-scale-section relative overflow-hidden bg-transparent">
       <motion.div className={`${LYB_CONTAINER} w-full`}>
         <SectionHeader
           badge="Your path to scale"
           title="Roadmap & Timeline at a Glance"
-          subtitle="Franchise-ready to investor conversations — typically within 30 days."
+          subtitle="Franchise-ready to investor conversations - typically within 30 days."
         />
         <motion.div className="grid items-stretch gap-5 lg:grid-cols-2 lg:gap-8">
           <ColumnShell label="Scaling roadmap" delay={0}>
@@ -2272,7 +2046,7 @@ function RoadmapTimelineSection() {
                 />
                 <p className="text-[0.58rem] font-bold uppercase tracking-wider text-violet-400">{r.phase}</p>
                 <h3 className="lyb-scale-card-title mt-0.5 text-sm font-extrabold text-slate-900">{r.title}</h3>
-                <p className="lyb-scale-card-body mt-1 text-[0.72rem] leading-snug text-slate-600">{r.items.join(' · ')}</p>
+                <p className="lyb-scale-card-body mt-1 text-[0.72rem] leading-snug text-slate-600">{r.items.join(' - ')}</p>
               </motion.div>
             ))}
           </ColumnShell>
@@ -2288,7 +2062,7 @@ function RoadmapTimelineSection() {
                 className="lyb-scale-card relative flex flex-1 items-center gap-3 overflow-hidden rounded-xl border border-slate-200 px-3 py-3"
               >
                 <motion.span
-                  className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[0.65rem] font-bold text-white shadow-[0_0_16px_rgba(139,92,246,0.45)]"
+                  className="lyb-scale-step-num relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-[0.65rem] font-bold text-white shadow-[0_0_16px_rgba(139,92,246,0.45)]"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}

@@ -5,7 +5,7 @@
   },
   {
     title: 'Information We Collect',
-    body: 'We collect information you provide directly — including your name, email address, phone number, business details, and franchise preferences — as well as information generated through your use of the platform such as browsing activity, search queries, device identifiers, IP address, browser type, and interaction patterns. We may also receive information from third-party partners, franchise brands, and referral sources.',
+    body: 'We collect information you provide directly - including your name, email address, phone number, business details, and franchise preferences - as well as information generated through your use of the platform such as browsing activity, search queries, device identifiers, IP address, browser type, and interaction patterns. We may also receive information from third-party partners, franchise brands, and referral sources.',
   },
   {
     title: 'How We Use Your Information',
@@ -62,11 +62,11 @@ function PrivacyPolicyPage() {
 
 export default PrivacyPolicyPage;
 
-// ── Inlined LegalPageLayout ──
+// -- Inlined LegalPageLayout --
 /**
  * LegalPageLayout
  * Shared layout for Privacy Policy, Terms & Conditions, and Licenses pages.
- * Apple / Google documentation style — single-column, clean, enterprise-grade.
+ * Apple / Google documentation style - single-column, clean, enterprise-grade.
  */
 
 const LAST_UPDATED = 'April 30, 2026';

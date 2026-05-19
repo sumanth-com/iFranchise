@@ -1,4 +1,4 @@
-/* ── Premium SaaS chatbot icon (CSS-only, no image) ─────────────────────── */
+/* -- Premium SaaS chatbot icon (CSS-only, no image) ----------------------- */
 
 .assistant-bot-icon {
   --bot-radius: 24%;
@@ -220,7 +220,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0);
 }
 
-/* FAB / header — edge-to-edge blue, no white rim artifacts */
+/* FAB / header - edge-to-edge blue, no white rim artifacts */
 .assistant-bot-icon--fill {
   border-radius: inherit;
   overflow: hidden;
@@ -297,7 +297,7 @@
   border-color: rgba(186, 230, 253, 0.85);
 }
 
-/* ── Blink ─────────────────────────────────────────────────────────────────── */
+/* -- Blink ------------------------------------------------------------------- */
 .assistant-bot-icon--blink .assistant-bot-icon__eye {
   animation: assistantBotEyeBlink 0.28s ease-in-out forwards !important;
 }
@@ -335,7 +335,7 @@
   }
 }
 
-/* ── Alive motion ──────────────────────────────────────────────────────────── */
+/* -- Alive motion ------------------------------------------------------------ */
 .assistant-bot-icon--alive {
   animation: assistantBotFloat 4.2s ease-in-out infinite;
 }
@@ -404,7 +404,7 @@
   }
 }
 
-/* ── Open panel state (FAB two-way) ────────────────────────────────────────── */
+/* -- Open panel state (FAB two-way) ------------------------------------------ */
 .assistant-bot-icon--open .assistant-bot-icon__frame {
   box-shadow:
     0 0 0 2px rgba(56, 189, 248, 0.55),
@@ -425,7 +425,7 @@
   transform: scale(1.03);
 }
 
-/* ── Interactive hover (FAB / header tile parent) ──────────────────────────── */
+/* -- Interactive hover (FAB / header tile parent) ---------------------------- */
 .assistant-fab:hover .assistant-bot-icon__head,
 .assistant-glyph-tile:hover .assistant-bot-icon__head {
   transform: scale(1.05) translateY(-1px);

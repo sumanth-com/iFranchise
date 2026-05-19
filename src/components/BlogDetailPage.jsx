@@ -112,7 +112,7 @@ function KeyTakeaways({ items }) {
   );
 }
 
-/* ── Counting animation stat card ── */
+/* -- Counting animation stat card -- */
 function StatCard({ value, label }) {
   const ref = useRef(null);
   const numRef = useRef(null);
@@ -165,7 +165,7 @@ function StatCard({ value, label }) {
   );
 }
 
-/* ── Double image pair — side by side ── */
+/* -- Double image pair - side by side -- */
 function DoubleSectionImage({ src1, src2, alt }) {
   return (
     <div data-reveal className="blog-double-image my-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -238,7 +238,7 @@ function IntroSection({ section, highlight, image }) {
             <img src={image || section.sectionImage} alt={section.heading} loading="lazy" className="h-[280px] w-full object-cover md:h-[340px]" />
             <div className="blog-intro-visual-caption border-t border-violet-500/15 px-5 py-4">
               <p className="text-xs font-bold uppercase tracking-widest">Visual summary</p>
-              <p className="mt-1 text-sm leading-relaxed">A practical framework you can apply this week — not theory for its own sake.</p>
+              <p className="mt-1 text-sm leading-relaxed">A practical framework you can apply this week - not theory for its own sake.</p>
             </div>
           </div>
         </div>
@@ -510,9 +510,9 @@ function BlogDetailPage() {
             <span className="blog-meta-chip rounded-full border border-violet-500/25 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
               {article.category}
             </span>
-            <span className="blog-meta-dot hidden sm:inline">·</span>
+            <span className="blog-meta-dot hidden sm:inline"> - </span>
             <span className="blog-meta-value">{article.readTime}</span>
-            <span className="blog-meta-dot hidden sm:inline">·</span>
+            <span className="blog-meta-dot hidden sm:inline"> - </span>
             <span className="blog-meta-value">{formatDisplayDate(article.date)}</span>
           </div>
 
@@ -594,7 +594,7 @@ function BlogDetailPage() {
         </div>
       </div>
 
-      {/* ══ PREV / NEXT — animated attention cards ══ */}
+      {/* ══ PREV / NEXT - animated attention cards ══ */}
       <div className="border-t border-violet-500/20">
         <div className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

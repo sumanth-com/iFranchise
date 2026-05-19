@@ -5,7 +5,7 @@
   },
   {
     title: 'Open Source Software',
-    body: 'The iFranchise platform is built using open-source software components including React, Vite, Tailwind CSS, and various npm ecosystem packages. Each component is used in accordance with its respective license — including MIT, Apache 2.0, and BSD variants. A full dependency manifest is maintained in our technical documentation and is available upon request.',
+    body: 'The iFranchise platform is built using open-source software components including React, Vite, Tailwind CSS, and various npm ecosystem packages. Each component is used in accordance with its respective license - including MIT, Apache 2.0, and BSD variants. A full dependency manifest is maintained in our technical documentation and is available upon request.',
   },
   {
     title: 'Proprietary Platform Software',
@@ -17,7 +17,7 @@
   },
   {
     title: 'Platform Content and Design',
-    body: 'All original content created by iFranchise — including editorial copy, UI design elements, iconography, illustrations, and data compilations — is protected under Indian and international copyright law. Users are granted a limited, non-exclusive right to view and interact with this content solely for legitimate business evaluation purposes. Any reproduction, redistribution, or commercial use requires prior written consent.',
+    body: 'All original content created by iFranchise - including editorial copy, UI design elements, iconography, illustrations, and data compilations - is protected under Indian and international copyright law. Users are granted a limited, non-exclusive right to view and interact with this content solely for legitimate business evaluation purposes. Any reproduction, redistribution, or commercial use requires prior written consent.',
   },
   {
     title: 'Third-Party Service Integrations',
@@ -29,11 +29,11 @@
   },
   {
     title: 'User-Submitted Content',
-    body: 'Content submitted by users — including franchise enquiry forms, profile information, reviews, and communications — remains the intellectual property of the submitting party. By submitting content to iFranchise, users grant us a worldwide, royalty-free, non-exclusive license to store, process, display, and use that content solely for the purpose of delivering platform services.',
+    body: 'Content submitted by users - including franchise enquiry forms, profile information, reviews, and communications - remains the intellectual property of the submitting party. By submitting content to iFranchise, users grant us a worldwide, royalty-free, non-exclusive license to store, process, display, and use that content solely for the purpose of delivering platform services.',
   },
   {
     title: 'Trademarks',
-    body: 'The iFranchise name, wordmark, logo, and associated brand identifiers are registered or common-law trademarks of iFranchise. Unauthorized use of these marks in any commercial context — including in domain names, advertising, or product names — is prohibited without explicit written authorization from iFranchise.',
+    body: 'The iFranchise name, wordmark, logo, and associated brand identifiers are registered or common-law trademarks of iFranchise. Unauthorized use of these marks in any commercial context - including in domain names, advertising, or product names - is prohibited without explicit written authorization from iFranchise.',
   },
   {
     title: 'Data and Analytics',
@@ -62,11 +62,11 @@ function LicensesPage() {
 
 export default LicensesPage;
 
-// ── Inlined LegalPageLayout ──
+// -- Inlined LegalPageLayout --
 /**
  * LegalPageLayout
  * Shared layout for Privacy Policy, Terms & Conditions, and Licenses pages.
- * Apple / Google documentation style — single-column, clean, enterprise-grade.
+ * Apple / Google documentation style - single-column, clean, enterprise-grade.
  */
 
 const LAST_UPDATED = 'April 30, 2026';

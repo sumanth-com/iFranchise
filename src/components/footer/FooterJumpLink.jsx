@@ -1,4 +1,4 @@
-/** Footer nav link with per-letter jump on hover — stays white, no dimming */
+/** Footer nav link with per-letter jump on hover - stays white, no dimming */
 export default function FooterJumpLink({ href, onClick, children, className = '' }) {
   const text = typeof children === 'string' ? children : null;
 

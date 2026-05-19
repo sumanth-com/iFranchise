@@ -3,7 +3,7 @@ import brandLogo from '../assets/BrandNav.png';
 import FooterJumpLink from './footer/FooterJumpLink';
 import FooterSocialButtons from './footer/FooterSocialButtons';
 
-// ── Navigation helper ─────────────────────────────────────────────────────────
+// -- Navigation helper ---------------------------------------------------------
 function navigateTo(path) {
   // Save scroll position before navigating away from home
   if (window.location.pathname === '/') {
@@ -13,7 +13,7 @@ function navigateTo(path) {
   window.dispatchEvent(new PopStateEvent('popstate'));
 }
 
-// ── Inline SVG logos ──────────────────────────────────────────────────────────
+// -- Inline SVG logos ----------------------------------------------------------
 const LOGOS = [
   {
     name: 'Quantum',
@@ -76,7 +76,7 @@ const LOGOS = [
 
 const LOGO_TRACK = [...LOGOS, ...LOGOS, ...LOGOS];
 
-// ── Link dot indicator ────────────────────────────────────────────────────────
+// -- Link dot indicator --------------------------------------------------------
 function LinkDot({ type, color }) {
   if (!type || type === 'none') return null;
   return (
@@ -94,12 +94,12 @@ function LinkDot({ type, color }) {
   );
 }
 
-// ── Hiring badge ──────────────────────────────────────────────────────────────
+// -- Hiring badge --------------------------------------------------------------
 function HiringBadge() {
   return <span className="footer-hiring-badge">Hiring</span>;
 }
 
-// ── Footer link columns ───────────────────────────────────────────────────────
+// -- Footer link columns -------------------------------------------------------
 const FOOTER_COLS = [
   {
     heading: 'Company',
@@ -136,7 +136,7 @@ const FOOTER_COLS = [
   },
 ];
 
-// ── Quick Connect ─────────────────────────────────────────────────────────────
+// -- Quick Connect -------------------------------------------------------------
 const QUICK_CONNECT = [
   {
     icon: (
@@ -146,14 +146,43 @@ const QUICK_CONNECT = [
       </svg>
     ),
     label: 'Head Office',
-    value: '12th Floor, Prestige Tower, MG Road, Bengaluru – 560001',
+    value: '12th Floor, Prestige Tower, MG Road, Bengaluru - 560001',
   },
 ];
 
-// ── Main component ────────────────────────────────────────────────────────────
-export default function PreFooterCTA() {
+function scrollToCareerApply() {
+  const el = document.getElementById('career-apply');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const CTA_CONTENT = {
+  default: {
+    heading: 'Ready to Build, Invest, or Expand?',
+    description:
+      'Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.',
+    trust: 'Trusted by 1,200+ founders.',
+    primary: { label: 'Explore Opportunities', action: () => navigateTo('/franchise-opportunities') },
+    secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise/30min', '_blank') },
+  },
+  'careers-detail': {
+    heading: 'Ready to Join Our Team?',
+    description:
+      "Help us build India's franchise intelligence platform. Submit your application above, or explore other open roles across design, growth, engineering, and operations.",
+    trust: 'We read every application - Response within 5 business days.',
+    primary: { label: 'Apply for This Role', action: scrollToCareerApply },
+    secondary: { label: 'View All Open Roles', action: () => navigateTo('/careers') },
+  },
+};
+
+// -- Main component ------------------------------------------------------------
+export default function PreFooterCTA({ variant = 'default' }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+  const cta = CTA_CONTENT[variant] || CTA_CONTENT.default;
 
   useEffect(() => {
     const el = ref.current;
@@ -186,7 +215,7 @@ export default function PreFooterCTA() {
   return (
     <div style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
 
-      {/* ── Unified card ── */}
+      {/* -- Unified card -- */}
       <div
         ref={ref}
         className="prefooter-unified-card"
@@ -211,7 +240,7 @@ export default function PreFooterCTA() {
         />
 
         {/* ══════════════════════════════════════════
-            TOP — CTA
+            TOP - CTA
         ══════════════════════════════════════════ */}
         <div
           style={{
@@ -221,33 +250,34 @@ export default function PreFooterCTA() {
             zIndex: 1,
           }}
         >
-          {/* Heading — staggered transition reveal */}
+          {/* Heading - staggered transition reveal */}
           <div style={{ marginBottom: '20px' }}>
             <h2 style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.025em', color: '#ffffff', margin: '0 0 6px', ...reveal(0.05) }}>
-              Ready to Build, Invest, or Expand?
+              {cta.heading}
             </h2>
           </div>
 
           {/* Description */}
           <p style={{ maxWidth: '620px', margin: '0 auto 28px', fontSize: '16px', lineHeight: 1.65, color: '#ffffff', ...reveal(0.28) }}>
-            Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.
+            {cta.description}
           </p>
 
           {/* Status */}
           <div className="prefooter-trust-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, marginBottom: '28px', ...reveal(0.36) }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 0 3px rgba(34,197,94,0.2)', display: 'inline-block', flexShrink: 0 }} />
-            Trusted by 1,200+ founders.
+            {cta.trust}
           </div>
 
-          {/* Pre-footer CTAs — black buttons, white text */}
+          {/* Pre-footer CTAs - black buttons, white text */}
           <div className="prefooter-cta-row" style={reveal(0.44)}>
-            {/* Primary — Explore Opportunities */}
+            {/* Primary - Explore Opportunities */}
             <button
-              onClick={() => navigateTo('/franchise-opportunities')}
+              type="button"
+              onClick={cta.primary.action}
               className="prefooter-cta-btn"
             >
               <span className="prefooter-cta-btn__inner">
-                Explore Opportunities
+                {cta.primary.label}
                 <span className="prefooter-cta-btn__arrow" aria-hidden>
                   <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
@@ -256,13 +286,14 @@ export default function PreFooterCTA() {
               </span>
             </button>
 
-            {/* Secondary — Book Strategic Call (Changed from List Your Brand) */}
+            {/* Secondary - Book Strategic Call (Changed from List Your Brand) */}
             <button
-              onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
+              type="button"
+              onClick={cta.secondary.action}
               className="prefooter-cta-btn"
             >
               <span className="prefooter-cta-btn__inner">
-                Book Strategic Call
+                {cta.secondary.label}
                 <span className="prefooter-cta-btn__arrow" aria-hidden>
                   <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
@@ -290,7 +321,7 @@ export default function PreFooterCTA() {
         </div>
 
         {/* ══════════════════════════════════════════
-            BOTTOM — FOOTER CONTENT
+            BOTTOM - FOOTER CONTENT
         ══════════════════════════════════════════ */}
         <div
           style={{
@@ -302,7 +333,7 @@ export default function PreFooterCTA() {
         >
           <div className="footer-main-grid">
 
-            {/* ── Col 1: Brand + Address ── */}
+            {/* -- Col 1: Brand + Address -- */}
             <div>
               <div className="footer-brand-lockup">
                 <img src={brandLogo} alt="iFranchise" className="footer-brand-logo" width={34} height={34} />
@@ -320,7 +351,7 @@ export default function PreFooterCTA() {
               </div>
             </div>
 
-            {/* ── Cols 2 & 3: Link columns ── */}
+            {/* -- Cols 2 & 3: Link columns -- */}
             {FOOTER_COLS.map((col) => (
               <div key={col.heading}>
                 <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#ffffff', marginBottom: '16px' }}>{col.heading}</p>
@@ -344,7 +375,7 @@ export default function PreFooterCTA() {
           </div>
 
 
-          {/* ── Bottom bar ── */}
+          {/* -- Bottom bar -- */}
           <div className="footer-bottom-bar">
             <p className="footer-copyright">@ 2026 iFranchise. All rights reserved.</p>
             <div className="footer-bottom-right">

@@ -1,4 +1,4 @@
-// ─── Shared careers data ─────────────────────────────────────────────────────
+// --- Shared careers data -----------------------------------------------------
 // Single source of truth for all role data, used by CareersPage and CareerDetailPage.
 
 import React from 'react';
@@ -16,6 +16,20 @@ export const MODE_COLORS = {
   Onsite: 'bg-amber-50 text-amber-800 border border-amber-200',
 };
 
+/** Dark mode - readable pills on career detail hero */
+export const DEPT_COLORS_DARK = {
+  Design: 'bg-violet-500/30 text-violet-100 border border-violet-400/45',
+  Growth: 'bg-emerald-500/30 text-emerald-100 border border-emerald-400/45',
+  Marketing: 'bg-sky-500/30 text-sky-100 border border-sky-400/45',
+  Sales: 'bg-orange-500/30 text-orange-100 border border-orange-400/45',
+};
+
+export const MODE_COLORS_DARK = {
+  Remote: 'bg-emerald-500/30 text-emerald-100 border border-emerald-400/45',
+  Hybrid: 'bg-sky-500/30 text-sky-100 border border-sky-400/45',
+  Onsite: 'bg-amber-500/30 text-amber-100 border border-amber-400/45',
+};
+
 export const ROLE_TOOLS = {
   Design: ['Figma', 'Adobe CC', 'After Effects', 'Notion', 'Slack'],
   Growth: ['HubSpot', 'Notion', 'Google Analytics', 'Slack', 'Linear'],
@@ -26,7 +40,7 @@ export const ROLE_TOOLS = {
 export const HIRING_STEPS = [
   { step: '01', title: 'Application Review', desc: 'We review every application within 5 business days.' },
   { step: '02', title: 'Intro Call', desc: '20-minute call with the hiring manager to align on fit and expectations.' },
-  { step: '03', title: 'Skills / Strategy Round', desc: 'A focused assessment — portfolio review, case study, or live task depending on the role.' },
+  { step: '03', title: 'Skills / Strategy Round', desc: 'A focused assessment - portfolio review, case study, or live task depending on the role.' },
   { step: '04', title: 'Leadership Round', desc: 'Final conversation with a founder or department head.' },
   { step: '05', title: 'Offer', desc: 'Fast turnaround. We move quickly for the right people.' },
 ];
@@ -39,7 +53,7 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Hybrid',
     location: 'Bangalore',
-    salary: '₹9L – ₹12L / yr',
+    salary: 'Rs.9L - Rs.12L / yr',
     tagline: "Lead iFranchise's visual ecosystem and brand creative direction.",
     reportsTo: 'Head of Brand & Creative',
     experience: '5+ Years',
@@ -51,8 +65,8 @@ export const ROLES = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
       </svg>
     ),
-    whyJoin: "At iFranchise, the Creative Director role is not a support function — it's a founding-level creative seat. You will shape how an entire category of franchise brands is perceived across India. Your work will be seen by thousands of investors, entrepreneurs, and brand partners every month.",
-    about: 'We are looking for a Creative Director to own the visual identity of iFranchise across all touchpoints — digital, print, and motion. You will set the creative standard, mentor the design team, and collaborate directly with founders on brand strategy.',
+    whyJoin: "At iFranchise, the Creative Director role is not a support function - it's a founding-level creative seat. You will shape how an entire category of franchise brands is perceived across India. Your work will be seen by thousands of investors, entrepreneurs, and brand partners every month.",
+    about: 'We are looking for a Creative Director to own the visual identity of iFranchise across all touchpoints - digital, print, and motion. You will set the creative standard, mentor the design team, and collaborate directly with founders on brand strategy.',
     responsibilities: [
       'Define and evolve the iFranchise visual identity and design system',
       'Lead a team of designers and motion artists across projects',
@@ -77,10 +91,10 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Remote',
     location: 'India',
-    salary: '₹6L – ₹9L / yr',
+    salary: 'Rs.6L - Rs.9L / yr',
     tagline: 'Bring the iFranchise brand to life through world-class motion and animation.',
     reportsTo: 'Creative Director',
-    experience: '2–4 Years',
+    experience: '2-4 Years',
     openings: '1',
     joining: 'Immediate / 30 Days',
     rounds: '3 Rounds',
@@ -113,10 +127,10 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Onsite',
     location: 'Bangalore',
-    salary: '₹7L – ₹10L / yr',
+    salary: 'Rs.7L - Rs.10L / yr',
     tagline: 'Drive franchise expansion strategy and brand partner growth across India.',
     reportsTo: 'Head of Expansion',
-    experience: '2–4 Years',
+    experience: '2-4 Years',
     openings: '2',
     joining: 'Immediate',
     rounds: '3 Rounds',
@@ -150,10 +164,10 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Hybrid',
     location: 'Bangalore',
-    salary: '₹6L – ₹9L / yr',
+    salary: 'Rs.6L - Rs.9L / yr',
     tagline: 'Design intuitive, premium digital experiences for the iFranchise platform.',
     reportsTo: 'Head of Brand & Creative',
-    experience: '2–4 Years',
+    experience: '2-4 Years',
     openings: '1',
     joining: 'Immediate / 30 Days',
     rounds: '3 Rounds',
@@ -162,7 +176,7 @@ export const ROLES = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    whyJoin: "You'll be designing for a platform that thousands of entrepreneurs use to make life-changing investment decisions. The design quality here directly affects trust, conversion, and brand perception — your work will matter.",
+    whyJoin: "You'll be designing for a platform that thousands of entrepreneurs use to make life-changing investment decisions. The design quality here directly affects trust, conversion, and brand perception - your work will matter.",
     about: 'We are hiring a UI/UX Designer to craft beautiful, functional interfaces for the iFranchise web platform and marketing pages. You will work closely with the product and engineering teams to translate user needs into elegant design solutions.',
     responsibilities: [
       'Design user flows, wireframes, and high-fidelity prototypes in Figma',
@@ -186,10 +200,10 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Remote',
     location: 'India',
-    salary: '₹5L – ₹8L / yr',
+    salary: 'Rs.5L - Rs.8L / yr',
     tagline: 'Build the editorial voice and content engine that powers iFranchise growth.',
     reportsTo: 'Head of Marketing',
-    experience: '2–4 Years',
+    experience: '2-4 Years',
     openings: '1',
     joining: 'Immediate / 30 Days',
     rounds: '3 Rounds',
@@ -198,7 +212,7 @@ export const ROLES = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
       </svg>
     ),
-    whyJoin: "iFranchise is building the definitive content resource for franchise growth in India. As Content Strategist, you'll own that narrative — from SEO to thought leadership to brand storytelling.",
+    whyJoin: "iFranchise is building the definitive content resource for franchise growth in India. As Content Strategist, you'll own that narrative - from SEO to thought leadership to brand storytelling.",
     about: "The Content Strategist will own iFranchise's editorial calendar, blog, social content, and thought leadership output. You will develop content that educates prospective franchisees, builds brand authority, and drives organic growth.",
     responsibilities: [
       'Develop and execute a comprehensive content strategy across channels',
@@ -223,7 +237,7 @@ export const ROLES = [
     type: 'Full Time',
     mode: 'Hybrid',
     location: 'Mumbai / Bangalore',
-    salary: '₹8L – ₹12L / yr',
+    salary: 'Rs.8L - Rs.12L / yr',
     tagline: 'Own the revenue pipeline and build strategic partnerships for iFranchise.',
     reportsTo: 'Head of Revenue',
     experience: '4+ Years',

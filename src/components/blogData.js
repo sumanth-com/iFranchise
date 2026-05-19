@@ -111,7 +111,7 @@ const basePosts = [
     readTime: '4 min read',
     image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80',
     thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'This week’s strongest momentum came from logistics tech, healthcare infra, and AI tooling.',
+    excerpt: "This week's strongest momentum came from logistics tech, healthcare infra, and AI tooling.",
     quote: 'Consistent market awareness turns uncertainty into informed decision windows.',
   },
   {
@@ -207,7 +207,7 @@ const makeSections = (slug) => [
     body: [
       'Long-term growth comes from combining strategic clarity with consistent execution. The strongest teams avoid chasing noise and instead build conviction through measurable progress. In a world where information moves faster than decisions, the ability to filter signal from noise is the single most valuable skill any investor or operator can develop.',
       'This article breaks down how to evaluate opportunities with discipline, align teams quickly, and convert strategy into visible outcomes. We will walk through the core frameworks used by top-performing organizations to stay focused, move fast, and compound results over time.',
-      'Whether you are managing a portfolio, leading a product team, or building a business from scratch, the principles here apply universally. The difference between those who succeed and those who stall is rarely intelligence — it is the quality of their systems and the consistency of their execution.',
+      'Whether you are managing a portfolio, leading a product team, or building a business from scratch, the principles here apply universally. The difference between those who succeed and those who stall is rarely intelligence - it is the quality of their systems and the consistency of their execution.',
     ],
     sectionImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80',
   },
@@ -216,8 +216,8 @@ const makeSections = (slug) => [
     heading: 'The Core Problem',
     body: [
       'Most organizations fail in execution, not planning. They spread focus too thin, react late to market changes, and operate without a clear review cadence. The result is a culture of busyness that produces very little actual progress.',
-      'When decision ownership is vague, strategy degrades into activity. Teams stay busy while results stall. Meetings multiply, dashboards grow, and everyone feels productive — but the needle barely moves. This is the execution trap, and it catches even the most talented teams.',
-      'The root cause is almost always the same: too many priorities competing for the same limited resources. When everything is important, nothing is. The organizations that break out of this pattern are the ones that learn to say no — loudly, consistently, and without apology.',
+      'When decision ownership is vague, strategy degrades into activity. Teams stay busy while results stall. Meetings multiply, dashboards grow, and everyone feels productive - but the needle barely moves. This is the execution trap, and it catches even the most talented teams.',
+      'The root cause is almost always the same: too many priorities competing for the same limited resources. When everything is important, nothing is. The organizations that break out of this pattern are the ones that learn to say no - loudly, consistently, and without apology.',
     ],
     points: [
       'No clear prioritization framework across teams.',
@@ -235,7 +235,7 @@ const makeSections = (slug) => [
       'Define a 90-day strategy around one core objective, three supporting outcomes, and clear leading indicators. This constraint forces prioritization and creates a shared language for the entire team. When everyone knows the one thing that matters most, alignment happens naturally.',
       'Document assumptions and risk triggers in advance so teams can respond quickly when market conditions shift. Most strategies fail not because the plan was wrong, but because the team was not prepared for the moment when reality diverged from the plan.',
       'The best strategies are living documents. They are reviewed weekly, updated when assumptions change, and shared transparently across the organization. Secrecy in strategy creates silos. Transparency creates alignment.',
-      'Think of your strategy as a series of bets. Each bet has a thesis, a time horizon, and a clear signal that tells you whether the bet is working. When the signal turns negative, you adjust — not because you failed, but because you are paying attention.',
+      'Think of your strategy as a series of bets. Each bet has a thesis, a time horizon, and a clear signal that tells you whether the bet is working. When the signal turns negative, you adjust - not because you failed, but because you are paying attention.',
     ],
     points: [
       'Pick one primary outcome and defend focus relentlessly.',
@@ -250,9 +250,9 @@ const makeSections = (slug) => [
     heading: 'Execution That Compounds',
     body: [
       'Execution quality improves when plans are broken into weekly deliverables with named owners and measurable milestones. Vague goals produce vague results. Specific commitments produce specific outcomes.',
-      'Use compact dashboards to monitor momentum, quality, and conversion impact in one place. The goal is not to track everything — it is to track the three to five numbers that tell you whether you are winning or losing this week.',
-      'The compounding effect of consistent execution is dramatic. A team that ships 10% better every quarter does not just get 40% better in a year — it gets exponentially better because each improvement builds on the last. This is why execution discipline is the highest-leverage investment any organization can make.',
-      'Accountability is the engine of execution. Not blame — accountability. The difference is that accountability is forward-looking. It asks: what will you do differently next week? Blame is backward-looking and produces defensiveness, not improvement.',
+      'Use compact dashboards to monitor momentum, quality, and conversion impact in one place. The goal is not to track everything - it is to track the three to five numbers that tell you whether you are winning or losing this week.',
+      'The compounding effect of consistent execution is dramatic. A team that ships 10% better every quarter does not just get 40% better in a year - it gets exponentially better because each improvement builds on the last. This is why execution discipline is the highest-leverage investment any organization can make.',
+      'Accountability is the engine of execution. Not blame - accountability. The difference is that accountability is forward-looking. It asks: what will you do differently next week? Blame is backward-looking and produces defensiveness, not improvement.',
     ],
     points: [
       'Weekly owner-based delivery plan with clear acceptance criteria.',
@@ -268,14 +268,14 @@ const makeSections = (slug) => [
     body: [
       'One growth-stage team improved conversion by 28% in one quarter after narrowing roadmap scope and introducing a strict execution cadence. Before the change, they had 14 active initiatives. After, they had three. The reduction in context-switching alone accounted for a significant portion of the improvement.',
       'The biggest gains came from fewer priorities, faster feedback loops, and clearer accountability across product and marketing. The team went from monthly reviews to weekly standups with written outcomes. Every decision was logged. Every assumption was tested.',
-      'What surprised the leadership team most was not the performance improvement — it was the cultural shift. People stopped hedging. They started making clear commitments and following through. Trust increased. Morale improved. The best performers, who had been quietly frustrated by the lack of focus, became visibly energized.',
-      'This pattern repeats across industries and company sizes. The constraint of focus does not limit what teams can achieve — it amplifies it. When you remove the noise, the signal gets louder.',
+      'What surprised the leadership team most was not the performance improvement - it was the cultural shift. People stopped hedging. They started making clear commitments and following through. Trust increased. Morale improved. The best performers, who had been quietly frustrated by the lack of focus, became visibly energized.',
+      'This pattern repeats across industries and company sizes. The constraint of focus does not limit what teams can achieve - it amplifies it. When you remove the noise, the signal gets louder.',
     ],
-    quote: 'When teams align around one measurable objective and review progress weekly, performance compounds quickly. The math of focus is not additive — it is multiplicative.',
+    quote: 'When teams align around one measurable objective and review progress weekly, performance compounds quickly. The math of focus is not additive - it is multiplicative.',
     stats: [
       { value: '28%', label: 'Conversion lift in 90 days' },
       { value: '3×', label: 'Faster decision cycles' },
-      { value: '14→3', label: 'Active initiatives reduced' },
+      { value: '14->3', label: 'Active initiatives reduced' },
       { value: '92%', label: 'Team retention improvement' },
     ],
   },
@@ -283,7 +283,7 @@ const makeSections = (slug) => [
     id: `${slug}-market-dynamics`,
     heading: 'Understanding Market Dynamics',
     body: [
-      'No strategy exists in a vacuum. The market is always moving, and the teams that win are the ones that build systems for sensing and responding to change — not just executing against a static plan.',
+      'No strategy exists in a vacuum. The market is always moving, and the teams that win are the ones that build systems for sensing and responding to change - not just executing against a static plan.',
       'Market dynamics shift in three ways: gradually, then suddenly. The gradual shifts are visible to anyone paying attention. The sudden shifts catch everyone off guard. The difference between organizations that survive sudden shifts and those that do not is almost always the quality of their sensing systems.',
       'Build a regular cadence of market intelligence into your operating rhythm. This does not mean reading every report or attending every conference. It means identifying the three to five signals that matter most for your specific context and monitoring them consistently.',
     ],
@@ -299,7 +299,7 @@ const makeSections = (slug) => [
     heading: 'Conclusion',
     body: [
       'Great outcomes are produced by repeatable systems, not occasional bursts of effort. Build a rhythm that can survive changing market cycles, leadership transitions, and the inevitable moments of uncertainty that every organization faces.',
-      'If you want durable growth, keep decisions simple, execution visible, and learning cycles short. The organizations that compound over time are not the ones with the best ideas — they are the ones with the best systems for turning ideas into outcomes.',
+      'If you want durable growth, keep decisions simple, execution visible, and learning cycles short. The organizations that compound over time are not the ones with the best ideas - they are the ones with the best systems for turning ideas into outcomes.',
       'Start with one change. Pick the single most important initiative for the next 90 days. Assign a clear owner. Define what success looks like. Review progress every week. That is the entire system. Everything else is detail.',
       'The gap between knowing and doing is where most strategies die. Close that gap, and everything else becomes possible.',
     ],
@@ -307,10 +307,10 @@ const makeSections = (slug) => [
 ];
 
 const takeawayPool = [
-  ['Focus beats breadth — narrow to one 90-day objective', 'Weekly review rhythm prevents strategy drift', 'Leading indicators surface problems early', 'Named owners turn plans into outcomes'],
+  ['Focus beats breadth - narrow to one 90-day objective', 'Weekly review rhythm prevents strategy drift', 'Leading indicators surface problems early', 'Named owners turn plans into outcomes'],
   ['Document assumptions before you commit capital', 'Build downside triggers into every thesis', 'Liquidity planning is part of return planning', 'Diversification works when cycles differ'],
   ['Activation quality predicts long-term retention', 'Ship in small batches with clear acceptance criteria', 'Customer feedback loops should be weekly, not quarterly', 'Metrics must drive a decision or they are noise'],
-  ['Position size matters more than entry timing', 'Custody and compliance are non-negotiable foundations', 'Volatility is a feature — plan for it in advance', 'Conviction assets need explicit allocation caps'],
+  ['Position size matters more than entry timing', 'Custody and compliance are non-negotiable foundations', 'Volatility is a feature - plan for it in advance', 'Conviction assets need explicit allocation caps'],
 ];
 
 export const blogPosts = basePosts.map((post, index) => ({
@@ -320,7 +320,7 @@ export const blogPosts = basePosts.map((post, index) => ({
   author: authors[index % authors.length],
   subImage: secondaryImages[index % secondaryImages.length],
   takeaways: takeawayPool[index % takeawayPool.length],
-  introHighlight: 'The teams that compound results are not the busiest — they are the most deliberate about focus, ownership, and review cadence.',
+  introHighlight: 'The teams that compound results are not the busiest - they are the most deliberate about focus, ownership, and review cadence.',
   heroImages: [
     post.image,
     secondaryImages[index % secondaryImages.length],
