@@ -4,6 +4,7 @@ import brandLogo from '../assets/BrandNav.png';
 import ThemeToggle from './ThemeToggle';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
+import { navigateTo as spaNavigate } from '../lib/navigation';
 
 const FRANCHISE_NAVBAR_OPTIONS = buildNavbarFranchiseFilterOptions();
 
@@ -652,10 +653,7 @@ function Navbar() {
   }, [activeDropdown]);
 
   const navigateTo = (path) => {
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
-      window.dispatchEvent(new PopStateEvent('popstate'));
-    }
+    spaNavigate(path);
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
     setMobileAccordion(null);
@@ -676,18 +674,18 @@ function Navbar() {
         isScrolled ? 'site-navbar--scrolled' : ''
       }`}
     >
-      <nav className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between px-2 sm:px-4 lg:px-6">
+      <nav className="mx-auto flex h-full w-full max-w-[1400px] items-center justify-between gap-2 px-3 sm:px-4 xl:px-6">
         
         {/* Logo */}
-        <div className="flex flex-col mr-auto">
-          <a href="/" onClick={handleLogoClick} className="inline-flex items-center gap-2 sm:gap-3">
+        <div className="site-navbar-brand flex min-w-0 flex-1 flex-col xl:mr-auto xl:flex-none">
+          <a href="/" onClick={handleLogoClick} className="inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-3">
             <img 
               src={brandLogo} 
               alt="iFranchise" 
-              className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl"
+              className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10"
             />
-            <div className="flex flex-col">
-              <span className="site-navbar-logo-title text-lg sm:text-2xl font-extrabold tracking-tight leading-tight text-violet-900">
+            <div className="flex min-w-0 flex-col">
+              <span className="site-navbar-logo-title truncate text-lg font-extrabold tracking-tight leading-tight text-violet-900 sm:text-2xl">
                 iFranchise
               </span>
               <p
@@ -702,7 +700,7 @@ function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+        <ul className="hidden flex-1 items-center justify-center gap-1 xl:flex">
           
           {/* Company - hover shows menu; click goes to About Us */}
           <li
@@ -850,28 +848,26 @@ function Navbar() {
           </li>
         </ul>
 
-        <div className="site-navbar-actions ml-auto flex h-10 shrink-0 items-center gap-2 sm:gap-3">
-          <ThemeToggle compact className="lg:hidden" />
-          <ThemeToggle className="hidden lg:inline-flex" />
+        <div className="site-navbar-actions ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:gap-3">
+          <ThemeToggle compact className="!inline-flex shrink-0 xl:!hidden" />
+          <ThemeToggle className="!hidden shrink-0 xl:!inline-flex" />
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="site-navbar-menu-btn inline-flex min-h-[48px] min-w-[100px] items-center justify-center gap-2.5 rounded-full border border-violet-200 px-4 py-2.5 text-sm font-bold text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 lg:hidden"
-          aria-expanded={isMobileMenuOpen}
-          aria-label="Toggle navigation menu"
-        >
-          <MenuIcon isOpen={isMobileMenuOpen} />
-          <span className="font-bold">Menu</span>
-        </button>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="site-navbar-menu-btn inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-violet-200 text-violet-800 transition-all duration-200 hover:bg-violet-50 active:scale-95 min-[480px]:w-auto min-[480px]:min-w-[5.5rem] min-[480px]:gap-2 min-[480px]:px-3.5 xl:hidden"
+            aria-expanded={isMobileMenuOpen}
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            <MenuIcon isOpen={isMobileMenuOpen} />
+            <span className="site-navbar-menu-label hidden font-bold min-[480px]:inline">Menu</span>
+          </button>
 
-        {/* Desktop CTA Button */}
-        <button
-          type="button"
-          onClick={() => navigateTo('/list-your-brand')}
-          className="site-navbar-cta group hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] lg:inline-flex"
-        >
+          <button
+            type="button"
+            onClick={() => navigateTo('/list-your-brand')}
+            className="site-navbar-cta group !hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] xl:!inline-flex"
+          >
           List Your Brand
           <motion.div
             className="inline-flex"
@@ -892,7 +888,7 @@ function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm xl:hidden"
             style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -901,7 +897,7 @@ function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 h-full flex flex-col w-full max-w-sm bg-white shadow-2xl overflow-hidden"
+              className="navbar-mobile-panel fixed right-0 top-0 h-full flex flex-col w-full max-w-sm bg-white shadow-2xl overflow-hidden"
               style={{ position: 'fixed', height: '100vh', maxHeight: '100vh' }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -930,14 +926,15 @@ function Navbar() {
               </div>
 
               {/* Mobile Menu Items */}
-              <div className="flex-1 overflow-y-auto px-4 py-4">
-                <nav className="space-y-2">
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
+                <nav className="navbar-mobile-nav flex w-full flex-col gap-2.5">
                   
-                  {/* Company Accordion */}
-                  <div className="rounded-xl border border-slate-200">
+                  {/* Company Accordion — sub-items open downward */}
+                  <div className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border border-slate-200">
                     <button
+                      type="button"
                       onClick={() => setMobileAccordion(mobileAccordion === 'company' ? null : 'company')}
-                      className="flex w-full items-center justify-between px-4 py-3 text-left"
+                      className="flex w-full items-center justify-between px-4 py-3.5 text-left"
                     >
                       <span className="text-base font-bold text-slate-900">Company</span>
                       <ChevronIcon className={mobileAccordion === 'company' ? 'rotate-180' : ''} />
@@ -949,28 +946,27 @@ function Navbar() {
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
-                          className="overflow-hidden border-t border-slate-100"
+                          className="navbar-mobile-accordion-panel w-full overflow-hidden border-t border-slate-100"
                         >
-                          <div className="space-y-1 p-2">
+                          <div className="navbar-mobile-accordion-sub flex w-full flex-col gap-1 p-2">
                             {COMPANY_ITEMS.map((item) => (
                               <a
                                 key={item.title}
                                 href={item.path}
                                 onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                                className="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-bold text-slate-700 hover:bg-violet-50/80"
+                                className="mobile-nav-link group flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-violet-50/80"
                               >
                                 <CompanyNavIconWrap>
                                   <item.Icon />
                                 </CompanyNavIconWrap>
-                                <span className="flex flex-1 items-center gap-2 font-bold">
+                                <span className="flex min-w-0 flex-1 items-center gap-2 font-bold">
                                   {item.title}
                                   {item.badge && (
-                                    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-red-500 text-[9px] font-bold text-white">
+                                    <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
                                       {item.badge}
                                     </span>
                                   )}
                                 </span>
-                                <CompanyNavRowArrow />
                               </a>
                             ))}
                           </div>
@@ -979,50 +975,46 @@ function Navbar() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Services - direct link */}
                   <a
                     href="/services"
                     onClick={(e) => { e.preventDefault(); navigateTo('/services'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Services
                   </a>
 
-                  {/* Franchise Opportunities - direct link (mobile) */}
                   <a
                     href="/franchise-opportunities"
                     onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Franchise Opportunities
                   </a>
 
-                  {/* Blogs - direct link */}
                   <a
                     href="/blog"
                     onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Blogs
                   </a>
 
-                  {/* Contact Us */}
                   <a
                     href="/contact"
                     onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
-                    className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
                   >
                     Contact Us
                   </a>
                 </nav>
               </div>
 
-              {/* Mobile CTA */}
-              <div className="border-t border-slate-100 p-4">
+              {/* Mobile CTA — List Your Brand (not in top bar on mobile) */}
+              <div className="border-t border-slate-100 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
                 <button
                   type="button"
                   onClick={() => navigateTo('/list-your-brand')}
-                  className="group flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-base font-semibold text-slate-900 shadow-lg transition-all hover:bg-slate-50 active:scale-[0.98]"
+                  className="site-navbar-mobile-cta group flex w-full min-h-[52px] items-center justify-center gap-2.5 rounded-2xl bg-violet-600 px-6 py-4 text-base font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all hover:bg-violet-700 active:scale-[0.98]"
                 >
                   List Your Brand
                   <motion.div

@@ -22,4 +22,10 @@ export {
 
 // Utilities
 export { logger } from './logger';
+export {
+  navigateTo,
+  getLogicalPathname,
+  scrollToHashSection,
+  NAVIGATE_EVENT,
+} from './navigation';
 export { sanitizeText, sanitizeEmail, sanitizePhone, sanitizeObjectStrings } from './sanitize';

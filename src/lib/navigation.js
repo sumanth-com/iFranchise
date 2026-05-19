@@ -1,0 +1,160 @@
+/**
+ * SPA navigation + scroll restoration for the History API router.
+ * Programmatic navigation dispatches `ifr:navigate`; browser back/forward uses `popstate`.
+ */
+
+export const NAVIGATE_EVENT = 'ifr:navigate';
+
+const SCROLL_PREFIX = 'ifr:scroll:';
+
+export function scrollStorageKey(pathname = window.location.pathname, search = window.location.search) {
+  return `${SCROLL_PREFIX}${pathname}${search}`;
+}
+
+/** Logical route key used by App.jsx (pathname aliases, detail routes). */
+export function getLogicalPathname() {
+  const pathname = window.location.pathname;
+  if (pathname === '/about-us') return '/about';
+  if (pathname === '/meet-the-team') return '/team';
+  if (pathname === '/franchise') return '/franchise-details';
+  if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) {
+    return '/franchise-opportunities';
+  }
+  if (pathname === '/privacy-policy') return '/privacy-policy';
+  if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
+  if (pathname === '/licenses') return '/licenses';
+  if (pathname === '/contact-us') return '/contact';
+  if (pathname === '/blog') return '/blog';
+  if (pathname === '/services') return '/services';
+  if (pathname === '/careers') return '/careers';
+  if (['/list-your-brand', '/for-brand-owners', '/brand-owners'].includes(pathname)) {
+    return '/list-your-brand';
+  }
+  if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
+    return '/career-detail';
+  }
+  if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) {
+    return '/blog-detail';
+  }
+  if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
+  const knownPaths = [
+    '/',
+    '/about',
+    '/team',
+    '/franchise-details',
+    '/franchise-opportunities',
+    '/privacy-policy',
+    '/terms-and-conditions',
+    '/licenses',
+    '/contact',
+    '/blog',
+    '/services',
+    '/careers',
+    '/list-your-brand',
+  ];
+  if (!knownPaths.includes(pathname)) return '/404';
+  return pathname;
+}
+
+export function parseNavigationTarget(path) {
+  const url = new URL(path, window.location.origin);
+  return {
+    pathname: url.pathname,
+    search: url.search,
+    hash: url.hash,
+    href: `${url.pathname}${url.search}${url.hash}`,
+  };
+}
+
+export function isSameLocation(target) {
+  const current =
+    window.location.pathname + window.location.search + window.location.hash;
+  return current === target.href;
+}
+
+/** Persist scroll on the active history entry before leaving the page. */
+export function persistCurrentScrollInHistory() {
+  const scrollY = window.scrollY;
+  const state = { ...(history.state || {}), scrollY };
+  history.replaceState(state, '', window.location.href);
+  sessionStorage.setItem(scrollStorageKey(), String(scrollY));
+}
+
+export function readStoredScroll(pathname = window.location.pathname, search = window.location.search) {
+  if (history.state != null && typeof history.state.scrollY === 'number') {
+    return history.state.scrollY;
+  }
+  const saved = sessionStorage.getItem(scrollStorageKey(pathname, search));
+  if (saved == null || saved === '') return null;
+  const parsed = parseInt(saved, 10);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+export function applyScroll(y, { behavior = 'instant' } = {}) {
+  const top = Math.max(0, y);
+  window.scrollTo({ top, behavior });
+  if (window.__lenis) {
+    window.__lenis.scrollTo(top, { immediate: behavior === 'instant' });
+  }
+}
+
+export function scrollToHashSection() {
+  const hash = window.location.hash;
+  if (!hash) return false;
+  const target = document.querySelector(hash);
+  if (!target) return false;
+  const navbar = document.querySelector('header');
+  const navbarOffset = navbar ? navbar.offsetHeight : 80;
+  const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarOffset - 12;
+  const top = Math.max(targetTop, 0);
+  if (window.__lenis) {
+    window.__lenis.scrollTo(top, { duration: 1.2 });
+  } else {
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+  return true;
+}
+
+/**
+ * Navigate to a path (supports hash, e.g. `/#faq`). Does not reload the page.
+ */
+export function navigateTo(path, { replace = false } = {}) {
+  const target = parseNavigationTarget(path);
+
+  if (isSameLocation(target)) {
+    if (target.hash) scrollToHashSection();
+    window.dispatchEvent(
+      new CustomEvent(NAVIGATE_EVENT, { detail: { sameLocation: true, hash: target.hash } }),
+    );
+    return;
+  }
+
+  persistCurrentScrollInHistory();
+
+  const nextState = { scrollY: 0, ifrNav: true };
+  if (replace) {
+    history.replaceState(nextState, '', target.href);
+  } else {
+    history.pushState(nextState, '', target.href);
+  }
+
+  window.dispatchEvent(
+    new CustomEvent(NAVIGATE_EVENT, {
+      detail: { isPopstate: false, hash: target.hash, path: getLogicalPathname() },
+    }),
+  );
+}
+
+/** @deprecated Use navigateTo — kept for gradual migration of inline pushState callers. */
+export function dispatchRouteChange() {
+  window.dispatchEvent(new CustomEvent(NAVIGATE_EVENT, { detail: { isPopstate: false } }));
+}
+
+export function initScrollRestoration() {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  if (!history.state) {
+    history.replaceState({ scrollY: window.scrollY }, '', window.location.href);
+  }
+}

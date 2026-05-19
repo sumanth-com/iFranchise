@@ -3006,11 +3006,11 @@ function Hero() {
           aria-hidden
         />
 
-        <div className="relative z-10 flex min-h-0 flex-1 flex-col justify-center px-4 pb-14 pt-16 sm:px-8 sm:pb-20">
-          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center text-center">
-            <div className="flex w-full flex-col items-center justify-center">
+        <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-8 sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-1 flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] xl:flex-none xl:justify-center">
+            <div className="flex w-full flex-col items-center justify-start xl:justify-center">
             <div
-              className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-[10px] sm:mb-5 sm:gap-2.5 sm:px-5 sm:py-2"
+              className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 backdrop-blur-[10px] max-sm:mb-3.5 sm:mb-6 sm:gap-3 sm:px-6 sm:py-2.5"
               style={
                 isLight
                   ? undefined
@@ -3020,9 +3020,9 @@ function Hero() {
                     }
               }
             >
-              <span className="hero-cinematic-pill-dot h-2 w-2 flex-shrink-0 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(192,132,252,0.85)]" aria-hidden />
+              <span className="hero-cinematic-pill-dot h-2.5 w-2.5 flex-shrink-0 rounded-full bg-violet-400 shadow-[0_0_10px_rgba(192,132,252,0.9)]" aria-hidden />
               <span
-                className={`hero-cinematic-pill-text text-[11px] font-bold uppercase tracking-[0.2em] ${
+                className={`hero-cinematic-pill-text text-xs font-bold uppercase tracking-[0.16em] sm:text-[13px] sm:tracking-[0.18em] ${
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
@@ -3031,55 +3031,55 @@ function Hero() {
             </div>
 
             <h1
-              className={`hero-cinematic-title mb-3 max-w-full px-1 text-[1.45rem] font-extrabold leading-[1.28] tracking-tight sm:mb-4 sm:whitespace-nowrap sm:text-[2.2rem] sm:leading-[1.18] ${
+              className={`hero-cinematic-title mb-3.5 max-w-full px-0.5 font-extrabold tracking-tight max-sm:mb-3 sm:mb-5 xl:whitespace-nowrap ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
               style={
                 isLight
-                  ? { letterSpacing: '-0.01em' }
+                  ? { letterSpacing: '-0.025em' }
                   : {
-                      letterSpacing: '-0.01em',
-                      textShadow: '0 2px 20px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5)',
+                      letterSpacing: '-0.025em',
+                      textShadow:
+                        '0 2px 28px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.9)',
                     }
               }
             >
-              Where <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : ''}`}>Brands</span> Expand
-              <br className="hidden sm:block" />
-              <span className="sm:hidden"> </span>
-              and <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : ''}`}>Investors</span> Discover What&apos;s Next
+              Where <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : 'text-violet-300'}`}>Brands</span> Expand
+              <br className="hidden xl:block" />
+              <span className="xl:hidden"> </span>
+              and <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : 'text-violet-300'}`}>Investors</span> Discover What&apos;s Next
             </h1>
 
             <p
-              className={`hero-cinematic-lead max-w-[min(100%,22rem)] text-[13px] leading-relaxed sm:max-w-[420px] sm:text-[14px] ${
-                isLight ? 'text-slate-600' : ''
+              className={`hero-cinematic-lead mx-auto max-w-[min(100%,28rem)] font-medium sm:max-w-[34rem] ${
+                isLight ? 'text-slate-600' : 'text-white/95'
               }`}
               style={
                 isLight
                   ? undefined
                   : {
-                      color: 'rgba(255,255,255,0.92)',
-                      textShadow: '0 1px 8px rgba(0,0,0,0.65)',
+                      textShadow: '0 2px 14px rgba(0,0,0,0.75), 0 1px 4px rgba(0,0,0,0.55)',
                     }
               }
             >
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
+            </div>
+          </div>
 
-            <div className="hero-cta-row mt-6 flex w-full flex-col items-center gap-4 sm:mt-7 sm:flex-row sm:justify-center sm:gap-6 md:gap-8">
-              <HeroCtaButton
-                label="Explore Opportunities"
-                path="/franchise-opportunities"
-                className="w-full sm:w-auto"
-                animDelay="220ms"
-              />
-              <HeroCtaButton
-                label="List Your Brand"
-                path="/list-your-brand"
-                className="w-full sm:w-auto"
-                animDelay="300ms"
-              />
-            </div>
-            </div>
+          <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-col items-center gap-3.5 pt-2 max-sm:px-1 min-[640px]:max-xl:flex-row min-[640px]:max-xl:justify-center min-[640px]:max-xl:gap-5 xl:mt-7 xl:flex-row xl:justify-center xl:gap-6 xl:pt-0 2xl:gap-8">
+            <HeroCtaButton
+              label="Explore Opportunities"
+              path="/franchise-opportunities"
+              className="w-full max-xl:max-w-[18rem] xl:w-auto"
+              animDelay="220ms"
+            />
+            <HeroCtaButton
+              label="List Your Brand"
+              path="/list-your-brand"
+              className="w-full max-xl:max-w-[18rem] xl:w-auto"
+              animDelay="300ms"
+            />
           </div>
         </div>
 
@@ -3693,7 +3693,7 @@ function Hero() {
       <MarketIntelligenceSection />
 
       {/* -- FRANCHISE FAQ / DECISION INTELLIGENCE SECTION -- */}
-      <section className="relative w-full py-12 sm:py-16 lg:py-20 section-reveal">
+      <section id="faq" className="relative w-full py-12 sm:py-16 lg:py-20 section-reveal">
         <div className="section-container">
           {/* Subtle background pattern */}
           <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-12 flex flex-col justify-center">

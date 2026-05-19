@@ -1036,13 +1036,140 @@ img.loaded {
 @media (max-width: 768px) {
   .footer-main-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 14px;
+    margin-bottom: 36px;
+    text-align: left;
+  }
+
+  .footer-main-grid-brand {
+    grid-column: 1 / -1;
+    padding-bottom: 20px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-brand-address {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .footer-brand-address__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer-brand-address__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #ffffff;
+  }
+
+  .footer-brand-address__text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+    max-width: 20rem;
+  }
+
+  /* 2×2: Company | Investors — Brands | Resources */
+  .footer-main-grid-col:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .footer-main-grid-col:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .footer-main-grid-col:nth-child(4) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .footer-main-grid-col:nth-child(5) {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .footer-main-grid-col {
+    min-width: 0;
+    padding: 14px 12px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-col-heading {
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .footer-links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .footer-links-list__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    width: 100%;
+    line-height: 1.35;
+  }
+
+  .footer-links-list .footer-jump-link {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .footer-bottom-bar {
+    padding-top: 22px;
+    margin-top: 8px;
   }
 }
 
-@media (max-width: 480px) {
-  .footer-main-grid {
-    grid-template-columns: 1fr;
-  }
+/* Footer column typography (all breakpoints) */
+.footer-col-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin: 0 0 16px;
+}
+
+.footer-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.footer-links-list__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
 }
 
 .footer-bottom-bar {
@@ -2375,9 +2502,63 @@ img[loading="lazy"]:not([src=""]) {
     radial-gradient(ellipse 55% 35% at 50% 55%, transparent 40%, rgba(15, 23, 42, 0.06) 100%);
 }
 
-/* Hero copy - sit slightly above vertical center */
+/* Hero copy - sit slightly above vertical center (desktop only) */
 .hero-cinematic-content {
-  transform: translateY(clamp(-2.5rem, -6vh, -4.5rem));
+  transform: translateY(0);
+}
+
+@media (min-width: 1280px) {
+  .hero-cinematic-content {
+    transform: translateY(clamp(-2.5rem, -6vh, -4.5rem));
+  }
+}
+
+@media (max-width: 1279px) {
+  .hero-cinematic-content {
+    transform: none;
+  }
+}
+
+/* Hero typography — large, readable first impression */
+.hero-cinematic-title {
+  font-size: clamp(1.875rem, 7.25vw, 2.5rem);
+  line-height: 1.18;
+}
+
+.hero-cinematic-lead {
+  font-size: clamp(0.9375rem, 3.6vw, 1.0625rem);
+  line-height: 1.65;
+}
+
+@media (min-width: 640px) {
+  .hero-cinematic-title {
+    font-size: clamp(2.35rem, 4.5vw, 3.15rem);
+    line-height: 1.14;
+  }
+
+  .hero-cinematic-lead {
+    font-size: clamp(1rem, 1.75vw, 1.1875rem);
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-cinematic-title {
+    font-size: clamp(2.75rem, 3.8vw, 3.5rem);
+  }
+
+  .hero-cinematic-lead {
+    font-size: 1.1875rem;
+  }
+}
+
+.cinematic-hero--dark .hero-cinematic-accent {
+  color: #ddd6fe;
+  text-shadow: 0 0 24px rgba(167, 139, 250, 0.45);
+}
+
+.cinematic-hero--light .hero-cinematic-accent {
+  color: #6d28d9;
 }
 
 /* Hero CTAs - directly under subtitle */

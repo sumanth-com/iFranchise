@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { navigateTo } from '@/lib/navigation';
 import {
   FiActivity,
   FiAward,
@@ -2454,9 +2455,7 @@ function FranchiseDetailsPage() {
   }, []);
 
   const handleRelatedDetails = (id) => {
-    window.history.pushState({}, '', `/franchise-details?id=${id}`);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo(`/franchise-details?id=${id}`);
   };
 
   const renderTabContent = () => {

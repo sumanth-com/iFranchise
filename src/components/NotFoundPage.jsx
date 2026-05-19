@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import notFoundImage from '../assets/404.png';
+import { navigateTo } from '@/lib/navigation';
 
 function NotFoundPage() {
   const [visible, setVisible] = useState(false);
@@ -9,10 +10,7 @@ function NotFoundPage() {
     return () => clearTimeout(t);
   }, []);
 
-  const goHome = () => {
-    window.history.pushState({}, '', '/');
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
+  const goHome = () => navigateTo('/');
 
   return (
     <main className="relative z-10 h-[calc(100vh-5rem)] overflow-hidden bg-transparent flex flex-col items-center justify-center px-4 text-white">

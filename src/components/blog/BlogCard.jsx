@@ -1,9 +1,6 @@
 import { motion } from 'framer-motion';
 
-function navigateTo(path) {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new PopStateEvent('popstate'));
-}
+import { navigateTo } from '@/lib/navigation';
 
 function BlogCard({ post, priority = false }) {
   return (

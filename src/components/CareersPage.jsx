@@ -4,6 +4,7 @@ import careerImage from '../assets/carrer.png';
 import { ROLES, DEPT_COLORS, MODE_COLORS } from './careersData.jsx';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
+import { navigateTo } from '@/lib/navigation';
 
 // --- Data --------------------------------------------------------------------
 
@@ -285,8 +286,7 @@ function CareersPage() {
   const heroRef = useRef(null);
 
   const handleApply = (role) => {
-    window.history.pushState({}, '', `/careers/${role.id}`);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    navigateTo(`/careers/${role.id}`);
   };
 
   return (

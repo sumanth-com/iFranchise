@@ -4,6 +4,7 @@ import Button from './Button';
 import BlogCard from './blog/BlogCard';
 import BlogCardSkeleton from './blog/BlogCardSkeleton';
 import { blogCategories, blogPosts } from './blogData';
+import { navigateTo } from '@/lib/navigation';
 
 const INITIAL_VISIBLE_COUNT = 6;
 const LOAD_MORE_COUNT = 3;
@@ -70,9 +71,7 @@ function BlogPage() {
               variant="primary"
               icon
               className="h-14 px-7 text-sm font-semibold"
-              onClick={() => {
-                window.location.pathname = '/contact';
-              }}
+              onClick={() => navigateTo('/contact')}
             >
               Get Started Today
             </Button>

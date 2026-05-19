@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef, createContext, useContext, us
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
 import { PHONE_PLACEHOLDER, maskPhoneDisplay } from '@/lib/phoneInput';
+import { navigateTo as spaNavigate } from '@/lib/navigation';
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
 
@@ -164,8 +165,7 @@ function useAssistantPalette() {
 
 // -- Navigation helper ---------------------------------------------------------
 const navTo = (path, setIsOpen) => {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new PopStateEvent('popstate'));
+  spaNavigate(path);
   setIsOpen(false);
 };
 

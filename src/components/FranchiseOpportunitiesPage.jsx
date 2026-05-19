@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { franchiseOpportunities } from '../data/franchiseData';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { matchesNavbarFilters } from '../lib/franchiseNavbarFilters';
+import { navigateTo } from '@/lib/navigation';
 
 // Use centralized data source
 const opportunities = franchiseOpportunities;
@@ -95,8 +96,7 @@ function OpportunityCard({ opportunity }) {
   };
 
   const handleViewDetails = () => {
-    window.history.pushState({}, '', `/franchise-details?id=${opportunity.id}`);
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    navigateTo(`/franchise-details?id=${opportunity.id}`);
   };
 
   return (
@@ -408,7 +408,7 @@ function FranchiseOpportunitiesPage() {
   }, [currentPage, totalPages]);
 
   return (
-    <main className="relative z-10 min-h-screen bg-transparent text-white">
+    <main className="franchise-opportunities-page relative z-10 min-h-screen bg-transparent text-white">
       {/* Header */}
       <div className="border-b border-violet-500/25 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
@@ -580,7 +580,7 @@ function FranchiseOpportunitiesPage() {
                       placeholder="Search brands, industries..."
                       value={searchTerm}
                       onChange={handleSearch}
-                      className="w-full pl-9 pr-4 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
+                      className="fo-toolbar-field w-full pl-9 pr-4 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     />
                   </div>
                   {/* Sort Dropdown */}
@@ -588,7 +588,7 @@ function FranchiseOpportunitiesPage() {
                     <select
                       value={sortBy}
                       onChange={handleSort}
-                      className="w-full px-3 py-2.5 border border-violet-500/30 rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all bg-white text-slate-900"
+                      className="fo-toolbar-field w-full px-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all"
                     >
                       <option value="newest">Newest Added</option>
                       <option value="roi">High ROI</option>
@@ -698,12 +698,12 @@ function FranchiseOpportunitiesPage() {
         {/* -- MOBILE LAYOUT -- */}
         <div className="lg:hidden max-w-7xl mx-auto px-4 sm:px-6 py-6">
           {/* Mobile top bar - sticky: filter button + search + sort */}
-          <div className="sticky top-16 z-20 bg-[#0a0618]/92 backdrop-blur-md border-b border-violet-500/20 pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6">
+          <div className="fo-toolbar-sticky sticky top-16 z-20 backdrop-blur-md border-b border-violet-500/20 pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6">
             <div className="flex gap-2 pt-4">
               {/* Filter toggle */}
               <button
                 onClick={() => setIsFilterDrawerOpen(true)}
-                className="flex items-center gap-2 px-4 py-2.5 border border-violet-500/35 rounded-lg text-sm font-semibold text-white bg-violet-500/15 hover:bg-violet-500/25 transition-all shrink-0 min-h-[44px]"
+                className="fo-toolbar-filter-btn flex items-center gap-2 px-4 py-2.5 border rounded-lg text-sm font-semibold transition-all shrink-0 min-h-[44px]"
                 aria-label="Open filters"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -731,7 +731,7 @@ function FranchiseOpportunitiesPage() {
                   placeholder="Search brands..."
                   value={searchTerm}
                   onChange={handleSearch}
-                  className="w-full pl-9 pr-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 placeholder:text-white focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
+                  className="fo-toolbar-field w-full pl-9 pr-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
                 />
               </div>
 
@@ -740,7 +740,7 @@ function FranchiseOpportunitiesPage() {
                 <select
                   value={sortBy}
                   onChange={handleSort}
-                  className="h-full px-3 py-2.5 border border-violet-500/30 rounded-lg text-sm bg-white text-slate-900 focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
+                  className="fo-toolbar-field h-full px-3 py-2.5 border rounded-lg text-sm focus:ring-2 focus:ring-violet-500 focus:border-violet-400 transition-all min-h-[44px]"
                 >
                   <option value="newest">Newest</option>
                   <option value="roi">High ROI</option>

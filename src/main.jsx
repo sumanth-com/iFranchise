@@ -2,10 +2,14 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/themes.css'
 import './index.css'
+import './styles/mobile-responsive.css'
+import { initScrollRestoration } from './lib/navigation.js'
 import { preloadHomeHero } from './lib/preloadHomeHero.js'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import App from './App.jsx'
 import Lenis from '@studio-freight/lenis'
+
+initScrollRestoration()
 
 const path = window.location.pathname
 if (path === '/' || path === '') {

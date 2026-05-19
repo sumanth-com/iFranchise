@@ -5,6 +5,7 @@ import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import { navigateTo } from '@/lib/navigation';
 
 const BRAND_APP_INITIAL = withHoneypot({
   brandName: '',
@@ -697,7 +698,7 @@ function ProblemsSection() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                      onClick={() => { navigateTo('/contact'); }}
                       className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-[0.78rem] font-semibold text-white transition hover:bg-white/20"
                     >
                       Get This Solution
@@ -1298,11 +1299,6 @@ function BrandsSection() {
 }
 
 /* ServicesStyleIndustriesSection.jsx */
-const navigateTo = (path) => {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new PopStateEvent('popstate'));
-};
-
 function ServicesStyleIndustriesSection() {
   return (
     <section className="lyb-industries-section relative z-10 overflow-hidden">
@@ -1583,7 +1579,7 @@ function CaseStudiesSection() {
               </p>
               <CtaButton
                 className="lyb-proven-sidebar-cta-btn w-full justify-center"
-                onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                onClick={() => { navigateTo('/contact'); }}
               >
                 Start Your Franchise Journey
               </CtaButton>
@@ -1821,7 +1817,7 @@ function ListYourBrandFAQSection() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => { window.history.pushState({}, '', '/contact'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                  onClick={() => { navigateTo('/contact'); }}
                   className="lyb-faq-cta-secondary w-full rounded-xl py-3 text-sm font-semibold transition"
                 >
                   Book expansion call

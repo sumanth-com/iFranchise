@@ -5359,3 +5359,58 @@ html[data-theme='light'] #main-content .why-ifranchise-section .why-section-head
 html[data-theme='light'] #main-content .why-ifranchise-section .why-section-subtitle {
   color: #334155 !important;
 }
+
+/* --- Franchise opportunities: filter / search toolbar (light + dark) ------------ */
+.franchise-opportunities-page .fo-toolbar-field {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.45) !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.franchise-opportunities-page .fo-toolbar-field::placeholder {
+  color: #94a3b8 !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+}
+
+.franchise-opportunities-page .fo-toolbar-field option {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn {
+  color: #5b21b6 !important;
+  background-color: #f5f3ff !important;
+  border-color: #c4b5fd !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn svg {
+  color: #6d28d9 !important;
+  stroke: #6d28d9 !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-filter-btn {
+  color: #ffffff !important;
+  background-color: rgba(124, 58, 237, 0.22) !important;
+  border-color: rgba(167, 139, 250, 0.4) !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-filter-btn svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-sticky {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom-color: rgba(148, 163, 184, 0.28) !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-sticky {
+  background: rgba(10, 6, 24, 0.94) !important;
+}
+
+/* Filter count badge keeps white on violet */
+html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [class*='bg-violet-6'] {
+  color: #ffffff !important;
+}

@@ -7,6 +7,8 @@ import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import { navigateTo } from '@/lib/navigation';
+
 const JOB_APP_INITIAL = withHoneypot({
   name: '',
   portfolio: '',
@@ -18,11 +20,6 @@ const JOB_APP_INITIAL = withHoneypot({
 });
 
 const fmt = (d) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-
-function navigateTo(path) {
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new PopStateEvent('popstate'));
-}
 
 // --- Application Form ---------------------------------------------------------
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense, Component } from 'react';
+﻿import { useEffect, useState, lazy, Suspense, Component, useRef, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
@@ -6,6 +6,15 @@ import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
 import { logger } from './lib/logger';
+import {
+  NAVIGATE_EVENT,
+  getLogicalPathname,
+  scrollStorageKey,
+  persistCurrentScrollInHistory,
+  readStoredScroll,
+  applyScroll,
+  scrollToHashSection,
+} from './lib/navigation';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
@@ -78,107 +87,96 @@ function PageSkeleton() {
   );
 }
 
-const scrollToHashSection = () => {
-  const hash = window.location.hash;
-  if (!hash) return false;
-  const target = document.querySelector(hash);
-  if (!target) return false;
-  const navbar = document.querySelector('header');
-  const navbarOffset = navbar ? navbar.offsetHeight : 80;
-  const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarOffset - 12;
-  if (window.__lenis) {
-    window.__lenis.scrollTo(Math.max(targetTop, 0), { duration: 1.2 });
-  } else {
-    window.scrollTo({ top: Math.max(targetTop, 0), behavior: 'smooth' });
-  }
-  return true;
-};
-
-const getPathname = () => {
-  const pathname = window.location.pathname;
-  if (pathname === '/about-us') return '/about';
-  if (pathname === '/meet-the-team') return '/team';
-  if (pathname === '/franchise') return '/franchise-details';
-  if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) return '/franchise-opportunities';
-  if (pathname === '/privacy-policy') return '/privacy-policy';
-  if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
-  if (pathname === '/licenses') return '/licenses';
-  if (pathname === '/contact-us') return '/contact';
-  if (pathname === '/blog') return '/blog';
-  if (pathname === '/services') return '/services';
-  if (pathname === '/careers') return '/careers';
-  if (['/list-your-brand', '/for-brand-owners', '/brand-owners'].includes(pathname)) return '/list-your-brand';
-  if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) return '/career-detail';
-  if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) return '/blog-detail';
-  if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
-  const knownPaths = ['/', '/about', '/team', '/franchise-details', '/franchise-opportunities',
-    '/privacy-policy', '/terms-and-conditions', '/licenses', '/contact', '/blog',
-    '/services', '/careers', '/list-your-brand'];
-  if (!knownPaths.includes(pathname)) return '/404';
-  return pathname;
-};
-
 function App() {
-  const [pathname, setPathname] = useState(getPathname);
+  const [pathname, setPathname] = useState(getLogicalPathname);
   const [pagePhase, setPagePhase] = useState('idle');
+  const transitionTimerRef = useRef(null);
+
   const assistantEligible = pathname !== '/404';
   const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
   const showExpansionAssistant = assistantEligible && scrolledPastHero;
 
-  // Save scroll position
-  useEffect(() => {
-    const handleScroll = () => {
-      if (pathname === '/') sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
-      else if (pathname === '/careers') sessionStorage.setItem('careersScrollPosition', window.scrollY.toString());
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [pathname]);
+  const finishScrollForRoute = useCallback((isBackForward) => {
+    const didScrollToHash = scrollToHashSection();
+    if (didScrollToHash) return;
 
-  // Route change handler
-  useEffect(() => {
-    let timerId;
-    const onRouteChange = () => {
-      const nextPath = getPathname();
-      if (pathname === '/') sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
-      else if (pathname === '/careers') sessionStorage.setItem('careersScrollPosition', window.scrollY.toString());
+    if (isBackForward) {
+      const restored = readStoredScroll();
+      applyScroll(restored ?? 0);
+      return;
+    }
+
+    applyScroll(0);
+  }, []);
+
+  const runRouteTransition = useCallback(
+    (isBackForward) => {
+      if (transitionTimerRef.current) {
+        window.clearTimeout(transitionTimerRef.current);
+      }
+
+      persistCurrentScrollInHistory();
 
       setPagePhase('exit');
-      timerId = window.setTimeout(() => {
+      transitionTimerRef.current = window.setTimeout(() => {
+        const nextPath = getLogicalPathname();
         setPathname(nextPath);
         setPagePhase('enter');
         window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => setPagePhase('idle'));
         });
-        window.setTimeout(() => {
-          const didScrollToHash = scrollToHashSection();
-          if (!didScrollToHash) {
-            // Always use instant scroll on route change - Lenis handles smoothness within page
-            if (nextPath === '/') {
-              const saved = sessionStorage.getItem('homeScrollPosition');
-              window.scrollTo({ top: saved ? parseInt(saved, 10) : 0, behavior: 'instant' });
-            } else if (nextPath === '/careers') {
-              const saved = sessionStorage.getItem('careersScrollPosition');
-              window.scrollTo({ top: saved ? parseInt(saved, 10) : 0, behavior: 'instant' });
-            } else {
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }
-            // Tell Lenis to sync after instant scroll
-            if (window.__lenis) window.__lenis.scrollTo(window.scrollY, { immediate: true });
-          }
-        }, 0);
-      }, 30); // snappy page transitions
+        window.requestAnimationFrame(() => {
+          finishScrollForRoute(isBackForward);
+        });
+      }, 30);
+    },
+    [finishScrollForRoute],
+  );
+
+  // Persist scroll while reading (all routes)
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        sessionStorage.setItem(scrollStorageKey(), String(window.scrollY));
+        ticking = false;
+      });
     };
-    window.addEventListener('popstate', onRouteChange);
-    return () => {
-      window.removeEventListener('popstate', onRouteChange);
-      if (timerId) window.clearTimeout(timerId);
-    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [pathname]);
 
-  // Hash scroll on mount
+  // Browser back / forward
   useEffect(() => {
-    const timer = window.setTimeout(() => scrollToHashSection(), 0);
+    const onPopState = (event) => {
+      // Trusted = browser back/forward; synthetic PopStateEvent = in-app link (scroll to top)
+      runRouteTransition(event.isTrusted === true);
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [runRouteTransition]);
+
+  // Programmatic SPA navigation (navbar, footer, CTAs)
+  useEffect(() => {
+    const onNavigate = () => {
+      runRouteTransition(false);
+    };
+    window.addEventListener(NAVIGATE_EVENT, onNavigate);
+    return () => window.removeEventListener(NAVIGATE_EVENT, onNavigate);
+  }, [runRouteTransition]);
+
+  useEffect(
+    () => () => {
+      if (transitionTimerRef.current) window.clearTimeout(transitionTimerRef.current);
+    },
+    [],
+  );
+
+  // Hash scroll after page paint (e.g. /#faq on home)
+  useEffect(() => {
+    const timer = window.setTimeout(() => scrollToHashSection(), 80);
     return () => window.clearTimeout(timer);
   }, [pathname]);
 

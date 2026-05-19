@@ -2,16 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import brandLogo from '../assets/BrandNav.png';
 import FooterJumpLink from './footer/FooterJumpLink';
 import FooterSocialButtons from './footer/FooterSocialButtons';
-
-// -- Navigation helper ---------------------------------------------------------
-function navigateTo(path) {
-  // Save scroll position before navigating away from home
-  if (window.location.pathname === '/') {
-    sessionStorage.setItem('homeScrollPosition', window.scrollY.toString());
-  }
-  window.history.pushState({}, '', path);
-  window.dispatchEvent(new PopStateEvent('popstate'));
-}
+import { navigateTo } from '../lib/navigation';
 
 // -- Inline SVG logos ----------------------------------------------------------
 const LOGOS = [
@@ -334,18 +325,16 @@ export default function PreFooterCTA({ variant = 'default' }) {
           <div className="footer-main-grid">
 
             {/* -- Col 1: Brand + Address -- */}
-            <div>
+            <div className="footer-main-grid-brand">
               <div className="footer-brand-lockup">
                 <img src={brandLogo} alt="iFranchise" className="footer-brand-logo" width={34} height={34} />
                 <span className="footer-brand-name">iFranchise</span>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div className="footer-brand-address">
                 {QUICK_CONNECT.map((item) => (
-                  <div key={item.label} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px' }}>
-                    <span style={{ color: '#ffffff', flexShrink: 0, marginTop: '1px' }}>{item.icon}</span>
-                    <div>
-                      <p style={{ fontSize: '13px', color: '#ffffff', margin: 0, lineHeight: 1.5 }}>{item.value}</p>
-                    </div>
+                  <div key={item.label} className="footer-brand-address__row">
+                    <span className="footer-brand-address__icon" aria-hidden>{item.icon}</span>
+                    <p className="footer-brand-address__text">{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -353,11 +342,11 @@ export default function PreFooterCTA({ variant = 'default' }) {
 
             {/* -- Cols 2 & 3: Link columns -- */}
             {FOOTER_COLS.map((col) => (
-              <div key={col.heading}>
-                <p style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#ffffff', marginBottom: '16px' }}>{col.heading}</p>
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '11px' }}>
+              <div key={col.heading} className="footer-main-grid-col">
+                <p className="footer-col-heading">{col.heading}</p>
+                <ul className="footer-links-list">
                   {col.links.map((link) => (
-                    <li key={link.label} style={{ display: 'inline-flex', alignItems: 'center', gap: '7px' }}>
+                    <li key={link.label} className="footer-links-list__item">
                       <FooterJumpLink
                         href={link.path}
                         onClick={(e) => { e.preventDefault(); navigateTo(link.path); }}

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import BlogCard from './blog/BlogCard';
 import ShareIcons from './blog/ShareIcons';
 import { blogPosts, formatDisplayDate, getBlogBySlug, getNextBlogPost, getPrevBlogPost } from './blogData';
+import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
 
 function getCurrentSlug() {
   const pieces = window.location.pathname.split('/').filter(Boolean);
@@ -443,9 +444,13 @@ function BlogDetailPage() {
   useReveal(slug);
 
   useEffect(() => {
-    const onChange = () => { setSlug(getCurrentSlug()); window.scrollTo({ top: 0, behavior: 'auto' }); };
+    const onChange = () => setSlug(getCurrentSlug());
     window.addEventListener('popstate', onChange);
-    return () => window.removeEventListener('popstate', onChange);
+    window.addEventListener(NAVIGATE_EVENT, onChange);
+    return () => {
+      window.removeEventListener('popstate', onChange);
+      window.removeEventListener(NAVIGATE_EVENT, onChange);
+    };
   }, []);
 
   const article = useMemo(() => getBlogBySlug(slug) || blogPosts[0] || null, [slug]);
@@ -600,7 +605,7 @@ function BlogDetailPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {prevPost ? (
               <a href={`/blog/${prevPost.slug}`}
-                onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', `/blog/${prevPost.slug}`); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                onClick={(e) => { e.preventDefault(); navigateTo(`/blog/${prevPost.slug}`); }}
                 className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
               >
                 {/* Animated shimmer bar on hover */}
@@ -623,7 +628,7 @@ function BlogDetailPage() {
             ) : <div />}
             {nextPost ? (
               <a href={`/blog/${nextPost.slug}`}
-                onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', `/blog/${nextPost.slug}`); window.dispatchEvent(new PopStateEvent('popstate')); }}
+                onClick={(e) => { e.preventDefault(); navigateTo(`/blog/${nextPost.slug}`); }}
                 className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
               >
                 <div className="absolute inset-x-0 top-0 h-0.5 origin-right scale-x-0 bg-gradient-to-l from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />

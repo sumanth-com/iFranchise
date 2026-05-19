@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AboutHeroImage from '../assets/AboutHero.png';
 import LeadershipSection from './LeadershipSection';
 import CtaButton from './ui/CtaButton';
+import { navigateTo } from '@/lib/navigation';
 
 // Import actual images
 import aboutUsImage from '../assets/aboutus.png';
@@ -265,8 +266,7 @@ const customerTestimonials = [
 
 function AboutPage() {
   const openTeamPage = () => {
-    window.history.pushState({}, '', '/team');
-    window.dispatchEvent(new PopStateEvent('popstate'));
+    navigateTo('/team');
   };
 
   return (
