@@ -1,8 +1,8 @@
 /**
  * Build sitemap.xml into public/ before Vite production build.
- * Parses slugs/ids from source files (no JSX runtime required).
+ * Only primary marketing pages — no blog posts, careers, or franchise detail URLs.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,60 +13,27 @@ const siteUrl = (process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://w
   '',
 );
 
-function read(relPath) {
-  return readFileSync(join(root, relPath), 'utf8');
-}
-
-function matchAll(source, pattern) {
-  return [...source.matchAll(pattern)].map((m) => m[1]);
-}
-
-const blogSource = read('src/components/blogData.js');
-const careersSource = read('src/components/careersData.jsx');
-const franchiseSource = read('src/data/franchiseData.js');
-
-const blogSlugs = matchAll(blogSource, /slug:\s*'([^']+)'/g);
-const careerIds = matchAll(careersSource, /id:\s*'([^']+)'/g);
-const franchiseIds = matchAll(franchiseSource, /id:\s*(\d+)/g).filter((id, i, arr) => arr.indexOf(id) === i);
-
-const franchiseSlugs = [
-  'burgerblast',
-  'fitlife-gym',
-  'ecoclean-solutions',
-  'urban-coffee-co',
-  'fitlife-studios',
-  'bella-italia-ristorante',
-  'kidszone-play-center',
-  'quickclean-services',
-  'techrepair-pro',
+/** Canonical routes only (matches primary nav + legal pages). */
+const MAIN_PAGES = [
+  { path: '/', changefreq: 'daily', priority: '1.0' },
+  { path: '/about', changefreq: 'monthly', priority: '0.8' },
+  { path: '/team', changefreq: 'monthly', priority: '0.6' },
+  { path: '/services', changefreq: 'weekly', priority: '0.9' },
+  { path: '/franchise-opportunities', changefreq: 'daily', priority: '0.95' },
+  { path: '/list-your-brand', changefreq: 'weekly', priority: '0.9' },
+  { path: '/blog', changefreq: 'weekly', priority: '0.85' },
+  { path: '/careers', changefreq: 'weekly', priority: '0.75' },
+  { path: '/contact', changefreq: 'monthly', priority: '0.8' },
+  { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/terms-and-conditions', changefreq: 'yearly', priority: '0.3' },
+  { path: '/licenses', changefreq: 'yearly', priority: '0.3' },
 ];
 
-function push(entries, path, changefreq = 'weekly', priority = '0.7') {
-  entries.push({
-    loc: `${siteUrl}${path.startsWith('/') ? path : `/${path}`}`,
-    changefreq,
-    priority,
-  });
-}
-
-const entries = [];
-push(entries, '/', 'daily', '1.0');
-push(entries, '/about', 'monthly', '0.8');
-push(entries, '/team', 'monthly', '0.6');
-push(entries, '/services', 'weekly', '0.9');
-push(entries, '/franchise-opportunities', 'daily', '0.95');
-push(entries, '/list-your-brand', 'weekly', '0.9');
-push(entries, '/blog', 'daily', '0.85');
-push(entries, '/careers', 'weekly', '0.75');
-push(entries, '/contact', 'monthly', '0.8');
-push(entries, '/privacy-policy', 'yearly', '0.3');
-push(entries, '/terms-and-conditions', 'yearly', '0.3');
-push(entries, '/licenses', 'yearly', '0.3');
-
-blogSlugs.forEach((slug) => push(entries, `/blog/${slug}`, 'weekly', '0.7'));
-careerIds.forEach((id) => push(entries, `/careers/${id}`, 'weekly', '0.6'));
-franchiseSlugs.forEach((slug) => push(entries, `/franchise/${slug}`, 'weekly', '0.8'));
-franchiseIds.forEach((id) => push(entries, `/franchise-details?id=${id}`, 'weekly', '0.75'));
+const entries = MAIN_PAGES.map(({ path, changefreq, priority }) => ({
+  loc: `${siteUrl}${path}`,
+  changefreq,
+  priority,
+}));
 
 function escapeXml(value) {
   return String(value)
@@ -97,4 +64,4 @@ const outFile = join(root, 'public', 'sitemap.xml');
 mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
-console.log(`[seo] Wrote ${entries.length} URLs to public/sitemap.xml (${siteUrl})`);
+console.log(`[seo] Wrote ${entries.length} main-page URLs to public/sitemap.xml (${siteUrl})`);
