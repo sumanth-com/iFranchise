@@ -1,4 +1,6 @@
-﻿const sections = [
+﻿import { getLegalLastUpdatedLabel } from '../lib/legalLastUpdated';
+
+const sections = [
   {
     title: 'Overview',
     body: 'This Licenses page documents the software components, content rights, third-party integrations, and intellectual property frameworks that underpin the iFranchise platform. We are committed to transparency regarding the tools and technologies we use, and to honoring the licensing obligations associated with each.',
@@ -69,8 +71,6 @@ export default LicensesPage;
  * Apple / Google documentation style - single-column, clean, enterprise-grade.
  */
 
-const LAST_UPDATED = 'April 30, 2026';
-
 function LegalSection({ index, title, body }) {
   return (
     <section className="py-8 border-b border-violet-500/20 last:border-0">
@@ -107,7 +107,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
             {subtitle}
           </p>
           <p className="text-sm text-white">
-            Last Updated: <span className="text-white font-medium">{LAST_UPDATED}</span>
+            Last Updated: <span className="text-white font-medium">{getLegalLastUpdatedLabel()}</span>
           </p>
         </div>
       </div>

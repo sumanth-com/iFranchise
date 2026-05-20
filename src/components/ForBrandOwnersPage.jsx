@@ -1698,7 +1698,7 @@ function CaseStudiesSection() {
                 <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
                     <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">Revenue Growth</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.revenue} -> {cs.after.revenue}</span>
+                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{`${cs.before.revenue} → ${cs.after.revenue}`}</span>
                   </div>
                   <Sparkline points={cs.revenuePoints} />
                   <div className="flex items-center justify-between mt-2">
@@ -1711,7 +1711,7 @@ function CaseStudiesSection() {
                 <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
                     <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">City Expansion</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{cs.before.cities} -> {cs.after.cities} cities</span>
+                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{`${cs.before.cities} → ${cs.after.cities} cities`}</span>
                   </div>
                   <CityDots cities={cs.cityData} color={cs.color} />
                   <div className="lyb-proven-chart-footer mt-3 flex items-center gap-2 border-t border-slate-200 pt-2">

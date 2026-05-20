@@ -2956,7 +2956,7 @@ html[data-theme='dark'] .careers-page .career-culture-section p {
   color: #f8fafc !important;
 }
 
-html[data-theme='dark'] .careers-page .careers-culture-section p.text-white\\/75,
+html[data-theme='dark'] .careers-page .careers-culture-section p.text-white\/75,
 html[data-theme='dark'] .careers-page .career-culture-section p[class*='text-white'] {
   color: rgba(248, 250, 252, 0.78) !important;
 }
@@ -3104,7 +3104,7 @@ html[data-theme='dark'] .career-detail-page .text-slate-700,
 html[data-theme='dark'] .career-detail-page .text-slate-800,
 html[data-theme='dark'] .career-detail-page .career-detail-prose,
 html[data-theme='dark'] .career-detail-page .career-detail-section-title,
-html[data-theme='dark'] .career-detail-page .text-\\[15px\\],
+html[data-theme='dark'] .career-detail-page .text-\[15px\],
 html[data-theme='dark'] #main-content .career-detail-page p,
 html[data-theme='dark'] #main-content .career-detail-page li,
 html[data-theme='dark'] #main-content .career-detail-page .career-detail-prose,
@@ -3146,7 +3146,7 @@ html[data-theme='dark'] #main-content .career-detail-page [class*='text-white/8'
 }
 
 html[data-theme='dark'] .careers-page .careers-section-label,
-html[data-theme='dark'] .careers-page .inline-flex.items-center.gap-1\\.5.text-xs,
+html[data-theme='dark'] .careers-page .inline-flex.items-center.gap-1\.5.text-xs,
 html[data-theme='dark'] .careers-page span.text-xs.font-semibold.uppercase {
   color: #c4b5fd !important;
 }

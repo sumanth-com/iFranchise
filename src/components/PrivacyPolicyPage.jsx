@@ -1,4 +1,6 @@
-﻿const sections = [
+﻿import { getLegalLastUpdatedLabel } from '../lib/legalLastUpdated';
+
+const sections = [
   {
     title: 'Introduction',
     body: 'This Privacy Policy describes how iFranchise ("we", "our", or "us") collects, uses, discloses, and safeguards information when you access our franchise marketplace platform, submit enquiries, engage with advisory services, or interact with any feature of our digital ecosystem. By using iFranchise, you acknowledge the practices described in this document.',
@@ -69,8 +71,6 @@ export default PrivacyPolicyPage;
  * Apple / Google documentation style - single-column, clean, enterprise-grade.
  */
 
-const LAST_UPDATED = 'April 30, 2026';
-
 function LegalSection({ index, title, body }) {
   return (
     <section className="py-8 border-b border-violet-500/20 last:border-0">
@@ -107,7 +107,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
             {subtitle}
           </p>
           <p className="text-sm text-white">
-            Last Updated: <span className="text-white font-medium">{LAST_UPDATED}</span>
+            Last Updated: <span className="text-white font-medium">{getLegalLastUpdatedLabel()}</span>
           </p>
         </div>
       </div>
