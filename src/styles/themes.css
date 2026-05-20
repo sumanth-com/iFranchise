@@ -716,7 +716,7 @@ html[data-theme='light'] .prefooter-unified-card h2,
 html[data-theme='light'] .prefooter-unified-card h3,
 html[data-theme='light'] .prefooter-unified-card p,
 html[data-theme='light'] .prefooter-unified-card li,
-html[data-theme='light'] .prefooter-unified-card span:not(.prefooter-cta-btn *):not(.prefooter-cta-btn),
+html[data-theme='light'] .prefooter-unified-card span:not(.prefooter-cta-btn *):not(.prefooter-cta-btn):not(.footer-hiring-badge):not(.footer-hiring-badge *),
 html[data-theme='light'] .prefooter-unified-card [style*='color: #ffffff']:not(.prefooter-cta-btn):not(.prefooter-cta-btn *),
 html[data-theme='light'] .prefooter-unified-card [style*='color:#ffffff']:not(.prefooter-cta-btn):not(.prefooter-cta-btn *) {
   color: #0b0f19 !important;
@@ -861,6 +861,20 @@ html[data-theme='light'] .prefooter-unified-card .footer-jump-link {
 
 html[data-theme='light'] .prefooter-unified-card .footer-jump-link:hover {
   color: var(--theme-accent);
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-hiring-badge {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%) !important;
+  border: 1px solid #5b21b6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.38) !important;
+}
+
+html[data-theme='dark'] .prefooter-unified-card .footer-hiring-badge {
+  background: linear-gradient(135deg, #ffffff 0%, #ede9fe 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  color: #5b21b6 !important;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.22) !important;
 }
 
 /* --- Legal pages (Terms, Privacy, Licenses) --------------------------------- */

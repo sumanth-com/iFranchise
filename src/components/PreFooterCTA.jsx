@@ -103,7 +103,7 @@ const FOOTER_COLS = [
   {
     heading: 'For Investors',
     links: [
-      { label: 'Browse Opportunities', path: '/franchise-opportunities', dot: 'none' },
+      { label: 'Opportunities', path: '/franchise-opportunities', dot: 'none' },
       { label: 'Investment Guide',     path: '/blog',                    dot: 'none' },
       { label: 'Industries',           path: '/franchise-opportunities', dot: 'none' },
     ],
@@ -112,7 +112,7 @@ const FOOTER_COLS = [
     heading: 'For Brands',
     links: [
       { label: 'List Your Brand',      path: '/list-your-brand', dot: 'none' },
-      { label: 'Franchise Expansion',  path: '/contact', dot: 'none' },
+      { label: 'Expansion', path: '/contact', dot: 'none' },
       { label: 'Lead Generation',      path: '/services',         dot: 'none' },
     ],
   },
