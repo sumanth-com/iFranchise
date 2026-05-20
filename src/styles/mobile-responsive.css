@@ -356,7 +356,7 @@
 
 @media (max-width: 639px) {
   .navbar-mobile-panel {
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: 0;
   }
 
   .franchise-filter-scroll {
@@ -422,11 +422,23 @@
 @media (max-width: 1279px) and (pointer: coarse) {
   .site-navbar-menu-btn,
   .site-navbar-actions .theme-toggle--orbit-compact,
-  .footer-jump-link,
-  .mobile-nav-link {
+  .footer-jump-link {
     min-height: 44px;
     min-width: 44px;
     align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-mobile-panel .mobile-nav-link,
+  .navbar-mobile-panel .navbar-mobile-nav-item {
+    min-height: 48px;
+    min-width: 0;
+    justify-content: flex-start;
+  }
+
+  .navbar-mobile-panel .site-navbar-mobile-cta {
+    min-height: 48px;
+    min-width: 0;
     justify-content: center;
   }
 

@@ -2182,6 +2182,151 @@ html[data-theme='dark'] header.site-navbar .theme-toggle--orbit-pill {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* --- Mobile navigation drawer (theme-aware) ---------------------------------- */
+.navbar-mobile-panel {
+  background: var(--theme-bg-elevated);
+  color: var(--theme-text-primary);
+}
+
+.navbar-mobile-panel__header,
+.navbar-mobile-panel__footer {
+  border-color: var(--theme-border);
+  background: var(--theme-bg-elevated);
+}
+
+.navbar-mobile-panel__brand {
+  color: var(--theme-text-primary);
+}
+
+.navbar-mobile-panel__close {
+  background: var(--theme-bg-deep);
+  color: var(--theme-text-secondary);
+}
+
+.navbar-mobile-panel__close:hover {
+  background: var(--theme-accent-soft);
+  color: var(--theme-accent);
+}
+
+.navbar-mobile-panel .navbar-mobile-accordion,
+.navbar-mobile-panel .navbar-mobile-nav-item {
+  border-color: var(--theme-border);
+  background: var(--theme-bg-surface);
+  color: var(--theme-text-primary);
+}
+
+.navbar-mobile-panel .navbar-mobile-nav-label,
+.navbar-mobile-panel .navbar-mobile-nav-item {
+  color: var(--theme-text-primary);
+}
+
+.navbar-mobile-panel .navbar-mobile-accordion-panel {
+  border-color: var(--theme-border);
+}
+
+.navbar-mobile-panel .navbar-mobile-sub-link {
+  color: var(--theme-text-secondary);
+}
+
+.navbar-mobile-panel .navbar-mobile-sub-link:hover,
+.navbar-mobile-panel .navbar-mobile-nav-item:hover {
+  background: var(--theme-accent-soft);
+  color: var(--theme-accent);
+}
+
+.navbar-mobile-panel__footer {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+.site-navbar-mobile-cta {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+  color: #ffffff !important;
+  border: 1px solid rgba(109, 40, 217, 0.45);
+  box-shadow: 0 4px 18px rgba(109, 40, 217, 0.35);
+}
+
+.site-navbar-mobile-cta:hover {
+  background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
+  box-shadow: 0 6px 22px rgba(109, 40, 217, 0.42);
+}
+
+.site-navbar-mobile-cta svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-theme='light'] .navbar-mobile-panel {
+  background: #ffffff;
+  color: #0b0f19;
+}
+
+html[data-theme='light'] .navbar-mobile-panel .navbar-mobile-accordion,
+html[data-theme='light'] .navbar-mobile-panel .navbar-mobile-nav-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html[data-theme='light'] .navbar-mobile-panel .navbar-mobile-nav-item:hover,
+html[data-theme='light'] .navbar-mobile-panel .navbar-mobile-sub-link:hover {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+html[data-theme='dark'] .navbar-mobile-panel {
+  background: linear-gradient(180deg, #12082a 0%, #0e0620 100%);
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .navbar-mobile-panel__header,
+html[data-theme='dark'] .navbar-mobile-panel__footer {
+  border-color: rgba(139, 92, 246, 0.22);
+  background: linear-gradient(180deg, #12082a 0%, #0e0620 100%);
+}
+
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-accordion,
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-nav-item {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(139, 92, 246, 0.28);
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-nav-label,
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-nav-item {
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-sub-link {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-nav-item:hover,
+html[data-theme='dark'] .navbar-mobile-panel .navbar-mobile-sub-link:hover {
+  background: rgba(124, 58, 237, 0.2);
+  color: #e9d5ff;
+}
+
+html[data-theme='dark'] .navbar-mobile-panel__close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .site-navbar-mobile-cta {
+  background: linear-gradient(135deg, #ffffff 0%, #ede9fe 100%) !important;
+  color: #5b21b6 !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28) !important;
+}
+
+html[data-theme='dark'] .site-navbar-mobile-cta svg {
+  color: #5b21b6 !important;
+  stroke: #5b21b6 !important;
+}
+
+html[data-theme='light'] .site-navbar-mobile-cta {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
+}
+
 /* Footer utilities */
 html[data-theme='light'] .footer-link {
   color: var(--theme-text-muted);

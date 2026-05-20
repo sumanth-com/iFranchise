@@ -578,8 +578,8 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  
+  const savedScrollRef = useRef(0);
+
   const companyRef = useRef(null);
   const franchiseRef = useRef(null);
   useEffect(() => {
@@ -591,43 +591,38 @@ function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open and preserve scroll position
+  // Lock body scroll when mobile menu is open; preserve scroll via ref (never in effect deps)
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      // Save current scroll position
-      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-      setScrollPosition(currentScroll);
-      
-      // Lock body scroll
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${currentScroll}px`;
-      document.body.style.width = '100%';
+    if (!isMobileMenuOpen) return undefined;
 
-      if (window.__lenis) window.__lenis.stop();
-    } else {
-      // Restore scroll position
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      
-      // Restore scroll position without triggering navigation
-      if (scrollPosition > 0) {
-        window.scrollTo(0, scrollPosition);
-      }
+    const currentScroll = window.scrollY || document.documentElement.scrollTop;
+    savedScrollRef.current = currentScroll;
 
-      if (window.__lenis) window.__lenis.start();
-    }
-    
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScroll}px`;
+    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
+
+    if (window.__lenis) window.__lenis.stop();
+
     return () => {
+      const scrollY = savedScrollRef.current;
+
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      if (window.__lenis) window.__lenis.start();
+      document.documentElement.style.overflow = '';
+
+      window.scrollTo(0, scrollY);
+
+      if (window.__lenis) {
+        window.__lenis.start();
+        window.__lenis.scrollTo(scrollY, { immediate: true });
+      }
     };
-  }, [isMobileMenuOpen, scrollPosition]);
+  }, [isMobileMenuOpen]);
 
   const toggleNavDropdown = (key) => {
     setActiveDropdown((prev) => (prev === key ? null : key));
@@ -897,26 +892,26 @@ function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="navbar-mobile-panel fixed right-0 top-0 h-full flex flex-col w-full max-w-sm bg-white shadow-2xl overflow-hidden"
-              style={{ position: 'fixed', height: '100vh', maxHeight: '100vh' }}
+              className="navbar-mobile-panel fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
+              data-lenis-prevent
             >
               {/* Mobile Header */}
-              <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+              <div className="navbar-mobile-panel__header flex shrink-0 items-center justify-between border-b px-6 py-4">
                 <div className="flex items-center gap-3">
                   <img 
                     src={brandLogo} 
                     alt="iFranchise" 
                     className="h-9 w-9 rounded-xl"
                   />
-                  <span className="text-lg font-bold text-[#0b0f19]">iFranchise</span>
+                  <span className="navbar-mobile-panel__brand text-lg font-bold">iFranchise</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ThemeToggle compact />
                   <button
                     type="button"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition-all hover:bg-slate-200"
+                    className="navbar-mobile-panel__close flex h-10 w-10 items-center justify-center rounded-full transition-all"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -930,13 +925,13 @@ function Navbar() {
                 <nav className="navbar-mobile-nav flex w-full flex-col gap-2.5">
                   
                   {/* Company Accordion — sub-items open downward */}
-                  <div className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border border-slate-200">
+                  <div className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border">
                     <button
                       type="button"
                       onClick={() => setMobileAccordion(mobileAccordion === 'company' ? null : 'company')}
-                      className="flex w-full items-center justify-between px-4 py-3.5 text-left"
+                      className="navbar-mobile-nav-item flex w-full items-center justify-between px-4 py-3.5 text-left"
                     >
-                      <span className="text-base font-bold text-slate-900">Company</span>
+                      <span className="navbar-mobile-nav-label text-base font-bold">Company</span>
                       <ChevronIcon className={mobileAccordion === 'company' ? 'rotate-180' : ''} />
                     </button>
                     <AnimatePresence>
@@ -946,7 +941,7 @@ function Navbar() {
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
-                          className="navbar-mobile-accordion-panel w-full overflow-hidden border-t border-slate-100"
+                          className="navbar-mobile-accordion-panel w-full overflow-hidden border-t"
                         >
                           <div className="navbar-mobile-accordion-sub flex w-full flex-col gap-1 p-2">
                             {COMPANY_ITEMS.map((item) => (
@@ -954,7 +949,7 @@ function Navbar() {
                                 key={item.title}
                                 href={item.path}
                                 onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                                className="mobile-nav-link group flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold text-slate-700 hover:bg-violet-50/80"
+                                className="navbar-mobile-sub-link mobile-nav-link group flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold"
                               >
                                 <CompanyNavIconWrap>
                                   <item.Icon />
@@ -978,7 +973,7 @@ function Navbar() {
                   <a
                     href="/services"
                     onClick={(e) => { e.preventDefault(); navigateTo('/services'); }}
-                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Services
                   </a>
@@ -986,7 +981,7 @@ function Navbar() {
                   <a
                     href="/franchise-opportunities"
                     onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
-                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Franchise Opportunities
                   </a>
@@ -994,7 +989,7 @@ function Navbar() {
                   <a
                     href="/blog"
                     onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
-                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Blogs
                   </a>
@@ -1002,7 +997,7 @@ function Navbar() {
                   <a
                     href="/contact"
                     onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
-                    className="mobile-nav-link flex w-full items-center rounded-xl border border-slate-200 px-4 py-3.5 text-base font-bold text-slate-900 hover:bg-slate-50"
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Contact Us
                   </a>
@@ -1010,11 +1005,11 @@ function Navbar() {
               </div>
 
               {/* Mobile CTA — List Your Brand (not in top bar on mobile) */}
-              <div className="border-t border-slate-100 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <div className="navbar-mobile-panel__footer shrink-0 border-t p-4">
                 <button
                   type="button"
                   onClick={() => navigateTo('/list-your-brand')}
-                  className="site-navbar-mobile-cta group flex w-full min-h-[52px] items-center justify-center gap-2.5 rounded-2xl bg-violet-600 px-6 py-4 text-base font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all hover:bg-violet-700 active:scale-[0.98]"
+                  className="site-navbar-mobile-cta group flex w-full min-h-[48px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-bold transition-all active:scale-[0.98]"
                 >
                   List Your Brand
                   <motion.div
