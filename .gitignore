@@ -1,5 +1,7 @@
-# Environment variables — never commit secrets
+# Environment variables — never commit secrets (keep .env at project root only)
 .env
+.env.*
+!.env.example
 .env.local
 .env.production
 .env.staging

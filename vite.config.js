@@ -7,6 +7,8 @@ import { tmpdir } from 'os'
 const cacheDir = join(tmpdir(), 'ifranchise-website-vite-cache')
 
 export default defineConfig({
+  // Vite loads .env only from project root (same folder as package.json)
+  envDir: resolve(__dirname),
   cacheDir,
   plugins: [
     react({
@@ -56,7 +58,11 @@ export default defineConfig({
     include: ['react', 'react-dom', 'framer-motion', '@studio-freight/lenis'],
   },
   server: {
-    fs: { strict: true },
+    fs: {
+      strict: true,
+      // Block dev server from serving env files if requested by URL
+      deny: ['.env', '.env.*'],
+    },
   },
   publicDir: 'public',
   base: '/',

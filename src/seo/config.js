@@ -10,7 +10,7 @@ export const SITE_URL = (
 
 export const SITE_TAGLINE = "India's Trusted Franchise Growth Platform";
 
-export const DEFAULT_OG_IMAGE_PATH = '/images/slideshow/slide1.jpg';
+export const DEFAULT_OG_IMAGE_PATH = '/apple-touch-icon.png';
 
 export const TWITTER_HANDLE = '@ifranchise';
 
@@ -18,7 +18,7 @@ export const ORGANIZATION = {
   name: SITE_NAME,
   legalName: 'iFranchise',
   url: SITE_URL,
-  logo: `${SITE_URL}/images/slideshow/slide1.jpg`,
+  logo: `${SITE_URL}/apple-touch-icon.png`,
   description:
     "India's trusted franchise growth platform connecting brands, investors, and expansion leaders.",
   email: 'hello@ifranchise.in',
