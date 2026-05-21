@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { TYPE } from '../lib/typography.js';
 import { FiArrowRight, FiCheckCircle, FiEdit3, FiSearch, FiZap } from 'react-icons/fi';
 
 const STEPS = [
@@ -113,7 +114,7 @@ export default function FranchiseGetStartedSection({ onStartApply }) {
           transition={{ duration: 0.45, ease: EASE }}
           className="mb-8 text-center lg:mb-10"
         >
-          <h3 id="fd-get-started-heading" className="text-2xl font-bold tracking-tight text-black sm:text-3xl">
+          <h3 id="fd-get-started-heading" className={`${TYPE.subsection} text-black`}>
             How to Get Started
           </h3>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-black sm:text-base">

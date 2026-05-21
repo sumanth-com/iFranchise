@@ -1,14 +1,11 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { validateApplicationForm } from '../validators/applicationValidator.js';
 import { transformApplicationData } from '../transformers/applicationTransformer.js';
-import { runFormSubmission } from '../utils/submitPipeline.js';
+import { createFormSubmitter } from '../utils/createFormSubmitter.js';
 
-export async function submitBrandApplication(formData, sourcePage = 'brand_owners_page') {
-  return runFormSubmission({
-    formType: FORM_TYPES.BRAND_APPLICATION,
-    rawData: formData,
-    sourcePage,
-    validate: validateApplicationForm,
-    transform: transformApplicationData,
-  });
-}
+export const submitBrandApplication = createFormSubmitter({
+  formType: FORM_TYPES.BRAND_APPLICATION,
+  validate: validateApplicationForm,
+  transform: transformApplicationData,
+  defaultSourcePage: 'brand_owners_page',
+});

@@ -4,6 +4,8 @@ import AboutHeroImage from '../assets/AboutHero.png';
 import LeadershipSection from './LeadershipSection';
 import CtaButton from './ui/CtaButton';
 import { navigateTo } from '@/lib/navigation';
+import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 // Import actual images
 import aboutUsImage from '../assets/aboutus.png';
@@ -281,7 +283,7 @@ function AboutPage() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="theme-section-on-light flex flex-col gap-8 text-center lg:text-left"
             >
-              <h1 className="text-[clamp(36px,7vw,64px)] font-black leading-[1.08] tracking-tight text-white">
+              <h1 className={heroDisplayClass(false, { black: true })}>
                 Building Franchise
                 <br />
                 <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
@@ -373,7 +375,7 @@ function AboutPage() {
                 <span className="text-xs font-bold uppercase tracking-wider text-white">Our Story</span>
               </div>
 
-              <h2 className="text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+              <h2 className={sectionTitleClass(false)}>
                 iFranchise History
               </h2>
 
@@ -409,7 +411,7 @@ function AboutPage() {
                 <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${card.bgColor} text-lg font-bold ${card.textColor}`}>
                   {card.num}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
+                <h3 className={`${TYPE.h3} text-white mb-3`}>{card.title}</h3>
                 <p className="text-sm leading-relaxed text-white">{card.desc}</p>
               </motion.div>
             ))}
@@ -435,7 +437,7 @@ function AboutPage() {
               <span className="text-xs font-bold uppercase tracking-[0.15em] text-white">Our Team</span>
             </div>
 
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h2 className={`mt-4 ${sectionTitleClass(false)}`}>
               Meet Our Strategic Leadership Team
             </h2>
 
@@ -480,7 +482,7 @@ function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.05 }}
-              className="mt-6 text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl"
+              className={`mt-6 ${sectionTitleClass(false)}`}
             >
               Benefits That Define the
               <br />
@@ -520,7 +522,7 @@ function AboutPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <h3 className="mt-6 text-xl font-bold tracking-tight text-white sm:text-2xl">{card.title}</h3>
+                  <h3 className={`mt-6 ${TYPE.h3} text-white`}>{card.title}</h3>
                   <p className="mt-3 text-base leading-relaxed text-white">{card.desc}</p>
                 </div>
               </motion.article>
@@ -549,7 +551,7 @@ function AboutPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               Customers
             </p>
-            <h2 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Our customers love us</h2>
+            <h2 className={`mt-4 ${sectionTitleClass(false)}`}>Our customers love us</h2>
             <p className="mt-4 text-base leading-relaxed text-white">
               Real feedback from teams and individuals who rely on iFranchise to power growth with practical analytics.
             </p>

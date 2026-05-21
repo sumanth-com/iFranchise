@@ -8,6 +8,8 @@ import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import FooterSocialButtons from './footer/FooterSocialButtons';
+import { sectionTitleClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 const CONTACT_FORM_INITIAL = withHoneypot({
   fullName: '',
@@ -180,9 +182,7 @@ function ContactLeftPanel({ isLight }) {
       className="contact-hero-left lg:flex lg:max-h-full lg:flex-col lg:justify-center"
     >
       <h1
-        className={`contact-hero-left__title mb-1.5 text-[1.75rem] font-extrabold tracking-tight sm:text-3xl lg:text-[2.15rem] lg:leading-[1.12] ${
-          isLight ? 'text-violet-900' : 'text-white'
-        }`}
+        className={`contact-hero-left__title mb-1.5 ${TYPE.pageHero} ${isLight ? 'text-violet-900' : 'text-white'}`}
       >
         Get in touch
       </h1>
@@ -277,9 +277,7 @@ function ContactHeroForm({
       <div className="flex flex-col p-5 sm:p-6">
         <div className="mb-4 shrink-0">
           <h2
-            className={`text-xl font-bold tracking-tight sm:text-[1.35rem] ${
-              isLight ? 'text-violet-900' : 'text-white'
-            }`}
+            className={`${TYPE.formTitle} ${isLight ? 'text-violet-900' : 'text-white'}`}
           >
             Send Message
           </h2>
@@ -417,8 +415,9 @@ function ContactPage() {
     handleSubmit,
     resetForm,
   } = useFormSubmission({
+    formKey: 'contact_page',
     initialValues: CONTACT_FORM_INITIAL,
-    onSubmit: (data) => submitContactForm(data, 'contact_page'),
+    onSubmit: (data, { signal }) => submitContactForm(data, 'contact_page', { signal }),
     successTitle: 'Message sent',
     successDescription: "We'll be in touch within 24 hours.",
   });
@@ -497,7 +496,7 @@ function ContactPage() {
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
               Our Location
             </span>
-            <h2 className="mb-3 text-3xl font-bold text-white lg:text-4xl">Built in Bangalore. Scaling Across India.</h2>
+            <h2 className={`mb-3 ${sectionTitleClass(false)}`}>Built in Bangalore. Scaling Across India.</h2>
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/85">
               Strategically positioned in India&apos;s innovation capital to connect founders, investors, and franchise ecosystems.
             </p>
@@ -542,7 +541,7 @@ function ContactPage() {
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
                 FAQ
               </span>
-              <h2 className="services-faq-section__title mb-5 text-4xl font-extrabold leading-tight text-white md:text-5xl">
+              <h2 className={`services-faq-section__title mb-5 ${sectionTitleClass(false)}`}>
                 Frequently Asked Questions
               </h2>
               <p className="mx-auto max-w-xl text-base text-white/75 sm:text-lg">

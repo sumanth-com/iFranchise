@@ -6,6 +6,8 @@ import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { navigateTo } from '@/lib/navigation';
+import { sectionTitleClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 const BRAND_APP_INITIAL = withHoneypot({
   brandName: '',
@@ -176,8 +178,8 @@ function ListYourBrandHeroSection() {
               <motion.h1
                 layout
                 transition={LYB_FAST}
-                className={`lyb-hero-title max-w-lg font-extrabold leading-[1.08] tracking-tight ${
-                  formRevealed ? 'text-2xl sm:text-3xl lg:text-[2rem]' : 'text-3xl sm:text-4xl lg:text-[2.5rem]'
+                className={`lyb-hero-title max-w-lg ${TYPE.pageHero} text-white ${
+                  formRevealed ? '!text-2xl sm:!text-3xl lg:!text-[2rem]' : 'lg:!text-[2.5rem]'
                 }`}
               >
                 List your brand. Scale with capital.
@@ -538,7 +540,7 @@ function ProblemsSection() {
               The Hard Truth
             </span>
           </div>
-          <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-xl sm:text-2xl lg:text-[2.1rem] font-extrabold tracking-tight leading-[1.15]">
+          <h2 className={`lyb-page-h2 lyb-section-heading-on-dark ${TYPE.sectionCompact} text-white`}>
             <span className="lyb-problems-heading bg-gradient-to-r from-white via-violet-100 to-indigo-200 bg-clip-text text-transparent">
               Why Most Brands Fail to Scale - and How iFranchise Fixes It
             </span>
@@ -794,8 +796,9 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
     handleSubmit,
     resetForm,
   } = useFormSubmission({
+    formKey: 'list_your_brand_hero',
     initialValues: BRAND_APP_INITIAL,
-    onSubmit: (formValues) => {
+    onSubmit: (formValues, { signal }) => {
       const payload = {
         ...formValues,
         timeline: '3-6 months',
@@ -804,7 +807,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
         hasDocs: '',
         company: formValues.brandName,
       };
-      return submitBrandApplication(payload, 'list_your_brand_hero');
+      return submitBrandApplication(payload, 'list_your_brand_hero', { signal });
     },
   });
 
@@ -827,7 +830,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
 
         <div className={`shrink-0 border-b border-white/10 ${fitViewport ? 'mb-2.5 pb-2' : 'mb-4 pb-3'}`}>
           <p className="lyb-form-eyebrow text-[0.58rem] font-bold uppercase tracking-[0.2em] text-white sm:text-[0.62rem]">Brand inquiry</p>
-          <h2 className={`lyb-form-title font-extrabold text-white ${fitViewport ? 'text-base' : 'text-lg'}`}>Start Your Listing</h2>
+          <h2 className={`lyb-form-title ${TYPE.formTitle} text-white`}>Start Your Listing</h2>
         </div>
 
         <div className={fitViewport ? 'flex min-h-0 flex-1 flex-col' : ''}>
@@ -1122,7 +1125,7 @@ function BrandsSection() {
               For Brand Owners
             </span>
           </motion.div>
-          <h2 className="lyb-page-h2 lyb-section-heading-on-dark mx-auto max-w-3xl text-2xl font-extrabold leading-[1.1] tracking-tight sm:text-3xl lg:text-[2rem] xl:text-[2.3rem]">
+          <h2 className={`lyb-page-h2 lyb-section-heading-on-dark mx-auto max-w-3xl ${sectionTitleClass(false)}`}>
             Everything Your Brand Needs to{' '}
             <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
               Franchise at Scale
@@ -1310,7 +1313,7 @@ function ServicesStyleIndustriesSection() {
               Industries
             </span>
           </div>
-          <h2 className="lyb-section-heading-on-dark mb-3 text-3xl font-extrabold text-white sm:text-4xl">
+          <h2 className={`lyb-section-heading-on-dark mb-3 ${sectionTitleClass(false)}`}>
             Industries We Help Scale Through Franchising
           </h2>
           <p className="lyb-section-subtext mx-auto max-w-xl text-sm leading-relaxed sm:text-base">
@@ -1540,7 +1543,7 @@ function CaseStudiesSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
             Proven Results
           </span>
-          <h2 className="lyb-page-h2 lyb-section-heading-on-dark text-3xl sm:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight leading-[1.1] mb-4">
+          <h2 className={`lyb-page-h2 lyb-section-heading-on-dark ${sectionTitleClass(false)} mb-4`}>
             Franchise Transformations That{' '}
             <span className="lyb-gradient-heading bg-gradient-to-r from-violet-300 to-indigo-300 bg-clip-text text-transparent">
               Speak for Themselves
@@ -1863,7 +1866,7 @@ function SectionHeader({ badge, title, subtitle, center = true }) {
           </span>
         </div>
       )}
-      <h2 className="lyb-section-heading-on-dark text-2xl sm:text-3xl lg:text-[2.2rem] font-extrabold tracking-tight text-white leading-[1.12]">{title}</h2>
+      <h2 className={`lyb-section-heading-on-dark ${sectionTitleClass(false)}`}>{title}</h2>
       {subtitle && <p className="lyb-section-subtext mt-2 text-sm sm:text-base leading-relaxed text-violet-100/80">{subtitle}</p>}
     </motion.div>
   );

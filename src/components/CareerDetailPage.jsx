@@ -8,6 +8,7 @@ import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { navigateTo } from '@/lib/navigation';
+import { TYPE } from '../lib/typography.js';
 
 const JOB_APP_INITIAL = withHoneypot({
   name: '',
@@ -33,9 +34,10 @@ function ApplicationForm({ roleTitle, isDark }) {
     handleSubmit,
     resetForm,
   } = useFormSubmission({
+    formKey: `career_detail:${roleTitle}`,
     initialValues: JOB_APP_INITIAL,
-    onSubmit: (data) =>
-      submitJobApplication({ ...data, roleId: roleTitle, roleTitle }, 'career_detail'),
+    onSubmit: (data, { signal }) =>
+      submitJobApplication({ ...data, roleId: roleTitle, roleTitle }, 'career_detail', { signal }),
   });
 
   const set = (e) => setField(e.target.name, e.target.value);
@@ -202,7 +204,7 @@ function CareerDetailPage({ roleId }) {
                 {role.dept}
               </span>
             </div>
-            <h1 className={`text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{role.title}</h1>
+            <h1 className={`${TYPE.heroListing} mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{role.title}</h1>
             <p className={`text-base sm:text-lg max-w-2xl mx-auto mb-7 leading-relaxed ${mutedText}`}>{role.tagline}</p>
             <div className="flex flex-wrap items-center justify-center gap-2">
               {[

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
+import { useAsyncFormAction } from '../hooks/useAsyncFormAction';
 import { PHONE_PLACEHOLDER, maskPhoneDisplay } from '@/lib/phoneInput';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 
@@ -856,9 +857,10 @@ function BrandsView({ setView }) {
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
-  const [complete, setComplete] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState('');
+  const { submitting, error: submitError, complete, execute, reset: resetSubmit } = useAsyncFormAction({
+    formKey: 'expansion_assistant_brand',
+    onAction: (payload) => submitChatbotLead(payload, 'brand', 'expansion_assistant_brand'),
+  });
 
   const current = BRAND_STEPS[step];
   const val = data[current?.key];
@@ -877,18 +879,7 @@ function BrandsView({ setView }) {
     else setDone(true);
   };
 
-  const handleSubmit = async () => {
-    if (submitting) return;
-    setSubmitting(true);
-    setSubmitError('');
-    const result = await submitChatbotLead(data, 'brand', 'expansion_assistant_brand');
-    setSubmitting(false);
-    if (result.success) {
-      setComplete(true);
-    } else {
-      setSubmitError(result.error || 'Something went wrong. Please try again.');
-    }
-  };
+  const handleSubmit = () => execute(data);
 
   if (complete) {
     return (
@@ -934,7 +925,7 @@ function BrandsView({ setView }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Your Summary" onBack={() => { setDone(false); setStep(BRAND_STEPS.length - 1); }} />
+        <FlowHeader title="Your Summary" onBack={() => { resetSubmit(); setDone(false); setStep(BRAND_STEPS.length - 1); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Brand', value: data.brandName },
@@ -1025,20 +1016,18 @@ function InvestorsView({ setView, setIsOpen }) {
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
   const submittedRef = useRef(false);
-
-  const [submitError, setSubmitError] = useState('');
+  const { error: submitError, execute, reset: resetInvestorSubmit } = useAsyncFormAction({
+    formKey: 'expansion_assistant_investor',
+    onAction: (payload) => submitChatbotLead(payload, 'investor', 'expansion_assistant_investor'),
+  });
 
   useEffect(() => {
     if (!done || submittedRef.current) return;
     submittedRef.current = true;
-    (async () => {
-      const result = await submitChatbotLead(data, 'investor', 'expansion_assistant_investor');
-      if (!result?.success) {
-        submittedRef.current = false;
-        setSubmitError(result?.error || 'Could not save your preferences. Please try again.');
-      }
-    })();
-  }, [done, data]);
+    execute(data).then((result) => {
+      if (!result?.success) submittedRef.current = false;
+    });
+  }, [done, data, execute]);
 
   const current = INVESTOR_STEPS[step];
   const val = data[current?.key];
@@ -1064,7 +1053,7 @@ function InvestorsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Matching Opportunities" onBack={() => { setDone(false); setStep(INVESTOR_STEPS.length - 1); }} />
+        <FlowHeader title="Matching Opportunities" onBack={() => { resetInvestorSubmit(); submittedRef.current = false; setDone(false); setStep(INVESTOR_STEPS.length - 1); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Industries', value: Array.isArray(data.industries) ? data.industries.join(', ') : data.industries },

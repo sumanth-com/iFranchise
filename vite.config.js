@@ -34,6 +34,9 @@ export default defineConfig({
           if (id.includes('node_modules/@studio-freight/lenis')) {
             return 'lenis';
           }
+          if (id.includes('/src/lib/forms/')) {
+            return 'forms';
+          }
           if (id.includes('node_modules')) {
             return 'vendor';
           }

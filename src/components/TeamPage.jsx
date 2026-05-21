@@ -1,3 +1,5 @@
+import { TYPE } from '../lib/typography.js';
+
 const teamGridMembers = [
   {
     name: 'John Doe',
@@ -85,7 +87,7 @@ function TeamPage() {
           <div className="relative flex items-center justify-between gap-8">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
-              <h2 className="mt-4 text-5xl font-extrabold uppercase leading-tight tracking-tight text-white sm:text-6xl">
+              <h2 className={`mt-4 ${TYPE.heroBrand} type-hero-brand--lg text-white`}>
                 Small team with
                 <br />
                 millions of ideas
@@ -102,7 +104,7 @@ function TeamPage() {
         <div className="grid items-stretch gap-10 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Team of experts</p>
-            <h1 className="mt-4 text-4xl font-extrabold uppercase leading-tight tracking-tight text-white sm:text-5xl">
+            <h1 className={`mt-4 ${TYPE.heroBrand} text-white`}>
               We have a kick-ass
               <br />
               team for you
@@ -155,7 +157,7 @@ function TeamPage() {
       <section className="mx-auto w-full max-w-[1200px] px-4 pb-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
-          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">
+          <h2 className={`mt-3 ${TYPE.heroBrand} text-white`}>
             Let&apos;s meet our awesome team
           </h2>
         </div>
@@ -206,7 +208,7 @@ function TeamPage() {
       <section className="mx-auto w-full max-w-[1320px] px-0 pb-20 sm:px-0 lg:px-0">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Culture</p>
-          <h2 className="mt-3 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">
+          <h2 className={`mt-3 ${TYPE.heroBrand} text-white`}>
             Our culture, keeping us fresh
           </h2>
         </div>

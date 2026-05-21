@@ -5,6 +5,7 @@ import { ROLES, DEPT_COLORS, MODE_COLORS } from './careersData.jsx';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
 import { navigateTo } from '@/lib/navigation';
+import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
 
 // --- Data --------------------------------------------------------------------
 
@@ -307,7 +308,7 @@ function CareersPage() {
               We're Hiring
             </span>
 
-            <h1 className="careers-hero-title text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.05] mb-4">
+            <h1 className={`careers-hero-title ${heroDisplayClass(true)} mb-4`}>
               Be part of<br />
               <span className="careers-hero-gradient text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">
                 something bold.
@@ -345,7 +346,7 @@ function CareersPage() {
           <div className="flex justify-center">
             <SectionLabel text="Benefits" />
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+          <h2 className={`${sectionTitleClass(true)} mb-3`}>
             This is the vibe that drives us.
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto">
@@ -367,7 +368,7 @@ function CareersPage() {
             <div className="flex justify-center">
               <SectionLabel text="Open Roles" />
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+            <h2 className={`${sectionTitleClass(true)} mb-3`}>
               Join the Creative Force.
             </h2>
             <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto">
@@ -396,7 +397,7 @@ function CareersPage() {
             <div className="flex justify-center">
               <SectionLabel text="FAQ" />
             </div>
-            <h2 className="careers-faq-heading text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3">
+            <h2 className={`careers-faq-heading ${sectionTitleClass(true)} mb-3`}>
               Got a question?{' '}
               <span className="careers-faq-subtitle text-slate-600 font-semibold">We've got answers.</span>
             </h2>

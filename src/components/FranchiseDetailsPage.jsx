@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { navigateTo } from '@/lib/navigation';
+import { heroDisplayClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 import {
   FiActivity,
   FiAward,
@@ -2384,7 +2386,7 @@ function DualSectionPanel({ title, children }) {
   return (
     <article className="fd-dual-panel flex h-full min-h-0 flex-col rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_4px_24px_rgba(15,23,42,0.06)] sm:p-6 lg:p-7">
       <div className="fd-dual-panel-header shrink-0 border-b border-slate-100 pb-4">
-        <h3 className="fd-dual-panel-title text-xl font-bold tracking-tight text-black sm:text-2xl">{title}</h3>
+        <h3 className={`fd-dual-panel-title ${TYPE.h3} text-black`}>{title}</h3>
       </div>
       <div className="fd-dual-panel-body mt-5 flex min-h-0 flex-1 flex-col">{children}</div>
     </article>
@@ -2524,7 +2526,7 @@ function FranchiseDetailsPage() {
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               {/* Left: name + status badges */}
               <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-4xl font-extrabold tracking-tight text-[#0b0f19] sm:text-5xl lg:text-6xl">{selectedFranchise.name}</h1>
+                <h1 className={`${heroDisplayClass(true, { extra: 'text-[#0b0f19]' })}`}>{selectedFranchise.name}</h1>
                 <span className="rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-semibold text-emerald-700">{selectedFranchise.status}</span>
                 <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-semibold text-violet-700">{selectedFranchise.badge}</span>
               </div>
@@ -2587,7 +2589,7 @@ function FranchiseDetailsPage() {
           </div>
 
           <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="fd-about-heading text-center text-2xl font-bold tracking-tight text-black lg:text-3xl">About {selectedFranchise.name}</h3>
+            <h3 className={`fd-about-heading text-center ${TYPE.subsection} text-black`}>About {selectedFranchise.name}</h3>
             <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
               <div className="fd-about-copy flex flex-col justify-center gap-4 lg:pr-2">
                 <p className="text-base leading-relaxed text-black lg:text-lg">{selectedFranchise.overview}</p>
@@ -2621,7 +2623,7 @@ function FranchiseDetailsPage() {
           </section>
 
           <section className="fd-financial-section rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <h3 className="fd-section-heading text-center text-2xl font-bold tracking-tight text-black lg:text-3xl">Investment & Financials</h3>
+            <h3 className={`fd-section-heading text-center ${TYPE.subsection} text-black`}>Investment & Financials</h3>
             <div className="fd-financial-highlights mt-6 grid gap-4 sm:grid-cols-3">
               <article className="fd-financial-highlight rounded-xl bg-slate-50 p-5"><p className="fd-financial-highlight__label text-sm text-slate-500">Investment Range</p><p className="fd-financial-highlight__value mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.investmentRange}</p></article>
               <article className="fd-financial-highlight rounded-xl bg-slate-50 p-5"><p className="fd-financial-highlight__label text-sm text-slate-500">Area Required</p><p className="fd-financial-highlight__value mt-2 text-lg font-semibold text-[#0b0f19]">{selectedFranchise.financialHighlights.areaRequired}</p></article>
@@ -2762,7 +2764,7 @@ function FranchiseDetailsPage() {
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex items-center justify-between gap-3">
-              <h3 className="text-2xl font-bold tracking-tight text-[#0b0f19] lg:text-3xl">Explore Similar Opportunities</h3>
+              <h3 className={`${TYPE.subsection} text-[#0b0f19]`}>Explore Similar Opportunities</h3>
               <span className="text-xs font-semibold uppercase tracking-[0.12em] text-black/50">Featured</span>
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -2782,7 +2784,7 @@ function FranchiseDetailsPage() {
                     </span>
                   </div>
                   <div className="p-5">
-                    <h4 className="text-xl font-bold tracking-tight text-[#0b0f19]">{franchise.name}</h4>
+                    <h4 className={`${TYPE.cardTitle} text-[#0b0f19]`}>{franchise.name}</h4>
                     <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-black">{franchise.tagline}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">

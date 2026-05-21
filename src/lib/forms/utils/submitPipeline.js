@@ -1,11 +1,12 @@
 /**
  * Centralized form submission pipeline:
- * honeypot -> validate -> transform -> Google Sheets
+ * honeypot -> validate -> transform -> guarded network send
  */
 
 import { checkHoneypot, stripHoneypot } from './honeypot.js';
 import { createValidationErrorResponse } from './responseHandler.js';
 import { submitToGoogleSheets } from './googleSheetsClient.js';
+import { runGuardedSubmission } from './submissionGuard.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -33,20 +34,43 @@ function attachMetadata(payload, sourcePage) {
  * @param {string} options.sourcePage - Source page identifier
  * @param {(data: object) => { success: boolean, errors?: object, data?: object }} options.validate
  * @param {(data: object, sourcePage: string) => object} options.transform
+ * @param {AbortSignal} [options.signal]
+ * @param {string} [options.guardKey] - Concurrent duplicate guard key
  */
-export async function runFormSubmission({ formType, rawData, sourcePage, validate, transform }) {
-  const honeypotResult = checkHoneypot(rawData);
-  if (!honeypotResult.ok) {
-    return { success: false, error: 'Submission rejected.', code: 'SPAM' };
-  }
+export async function runFormSubmission({
+  formType,
+  rawData,
+  sourcePage,
+  validate,
+  transform,
+  signal,
+  guardKey,
+}) {
+  const pipeline = async () => {
+    if (signal?.aborted) {
+      return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
+    }
 
-  const cleaned = stripHoneypot(rawData);
-  const validation = validate(cleaned);
+    const honeypotResult = checkHoneypot(rawData);
+    if (!honeypotResult.ok) {
+      return { success: false, error: 'Submission rejected.', code: 'SPAM' };
+    }
 
-  if (!validation.success) {
-    return createValidationErrorResponse(validation.errors);
-  }
+    const cleaned = stripHoneypot(rawData);
+    const validation = validate(cleaned);
 
-  const payload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
-  return submitToGoogleSheets(payload);
+    if (!validation.success) {
+      return createValidationErrorResponse(validation.errors);
+    }
+
+    if (signal?.aborted) {
+      return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
+    }
+
+    const payload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
+    return submitToGoogleSheets(payload, { signal });
+  };
+
+  const key = guardKey || `${formType}:${sourcePage}`;
+  return runGuardedSubmission(key, pipeline);
 }

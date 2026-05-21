@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { createPortal } from 'react-dom';
 import React from 'react';
 import BrandLogo from '../assets/BrandLogo.png';
@@ -76,7 +77,7 @@ function LeadershipSection() {
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               <span className="text-xs font-bold uppercase tracking-[0.15em] text-white">From Our Founders</span>
             </div>
-            <h2 className="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h2 className={`mt-4 ${sectionTitleClass(false)}`}>
               What iFranchise Means to Us
             </h2>
           </motion.div>

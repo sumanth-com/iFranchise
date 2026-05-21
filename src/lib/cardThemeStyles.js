@@ -108,9 +108,18 @@ export function sectionHeadingClass(isLight) {
   return isLight ? 'text-slate-900' : 'text-white';
 }
 
+/** @deprecated Prefer sectionTitleClass from typography.js */
 export function sectionBodyClass(isLight) {
   return isLight ? 'text-slate-600' : 'text-white';
 }
+
+export {
+  sectionTitleClass,
+  sectionSubtitleClass,
+  pageHeroClass,
+  heroDisplayClass,
+  cardTitleTypoClass,
+} from './typography.js';
 
 export function sectionBadgeTextClass(isLight) {
   return isLight ? 'text-slate-900' : 'text-white';

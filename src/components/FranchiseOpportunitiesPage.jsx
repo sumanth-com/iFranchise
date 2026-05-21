@@ -3,6 +3,7 @@ import { franchiseOpportunities } from '../data/franchiseData';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { matchesNavbarFilters } from '../lib/franchiseNavbarFilters';
 import { navigateTo } from '@/lib/navigation';
+import { TYPE } from '../lib/typography.js';
 
 // Use centralized data source
 const opportunities = franchiseOpportunities;
@@ -413,7 +414,7 @@ function FranchiseOpportunitiesPage() {
       <div className="border-b border-violet-500/25 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
           <div className="max-w-3xl">
-            <h1 className="text-2xl font-bold tracking-tight text-white mb-2 sm:text-3xl md:text-4xl sm:mb-3">Explore Franchise Opportunities</h1>
+            <h1 className={`${TYPE.heroListing} text-white mb-2 sm:mb-3`}>Explore Franchise Opportunities</h1>
             <p className="text-base text-white sm:text-lg leading-relaxed">
               Browse our curated list of vetted franchise brands actively seeking expansion partners. Filter by your investment criteria to find the perfect match.
             </p>

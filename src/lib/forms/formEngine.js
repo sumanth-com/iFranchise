@@ -1,0 +1,24 @@
+/**
+ * Central form engine entry — import from '@/lib/forms' or '@/lib/forms/formEngine'.
+ */
+export {
+  FORM_TYPES,
+  GOOGLE_APPS_SCRIPT_URL,
+  SHEET_TABS,
+  SOURCE_PAGES,
+  HONEYPOT_FIELD,
+} from './index.js';
+
+export { runFormSubmission } from './utils/submitPipeline.js';
+export { runGuardedSubmission, clearSubmissionGuard } from './utils/submissionGuard.js';
+export { fetchWithRetry, mapRequestError } from './utils/requestClient.js';
+export { createFormSubmitter } from './utils/createFormSubmitter.js';
+
+export { submitContactForm } from './submitters/contactSubmitter.js';
+export { submitBrandApplication } from './submitters/applicationSubmitter.js';
+export { submitJobApplication } from './submitters/jobApplicationSubmitter.js';
+export {
+  submitChatbotLead,
+  submitBrandConsultation,
+  submitStrategyCall,
+} from './submitters/chatbotSubmitter.js';

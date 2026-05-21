@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { playFormSuccessSound } from '@/lib/playFormSuccessSound';
 import {
   EASE_SMOOTH,
   successRoot,
@@ -35,7 +34,16 @@ export default function FormSuccessState({
     variant === 'dark' || variant === 'emerald' ? `form-success-state--${variant}` : 'form-success-state--default';
 
   useEffect(() => {
-    if (playSound) playFormSuccessSound();
+    if (!playSound) return;
+    let cancelled = false;
+    import('@/lib/playFormSuccessSound')
+      .then(({ playFormSuccessSound }) => {
+        if (!cancelled) playFormSuccessSound();
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
   }, [playSound]);
 
   const motionProps = reduceMotion

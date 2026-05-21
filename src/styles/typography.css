@@ -1,0 +1,227 @@
+/**
+ * Site-wide typography scale — single source of truth.
+ * Desktop sizes match prior design; mobile/tablet tuned for readability.
+ */
+
+@layer components {
+  /* ── Section headings (H2) ─────────────────────────────────────────── */
+  .section-title,
+  .type-section-title {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.12] mb-4 text-balance;
+  }
+
+  .section-title--tight,
+  .type-section-title--tight {
+    @apply mb-3;
+  }
+
+  .type-section-compact {
+    @apply text-2xl sm:text-3xl font-extrabold tracking-tight leading-[1.15] mb-3 text-balance;
+  }
+
+  .section-subtitle,
+  .type-section-subtitle {
+    @apply text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-balance;
+  }
+
+  /* ── Page / marketing heroes (H1) ───────────────────────────────────── */
+  .type-page-hero {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.12] text-balance;
+  }
+
+  .type-page-hero--bold {
+    @apply font-bold;
+  }
+
+  /* Large display hero (About, Services marketing band) */
+  .type-hero-display {
+    font-size: clamp(2rem, 6.5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    @apply font-extrabold tracking-tight text-balance;
+  }
+
+  .type-hero-display--black {
+    @apply font-black;
+  }
+
+  /* Listing / utility heroes (franchise explore, careers detail) */
+  .type-hero-listing {
+    @apply text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-balance;
+  }
+
+  /* Brand uppercase hero (Team page) */
+  .type-hero-brand {
+    @apply text-4xl sm:text-5xl font-extrabold uppercase tracking-tight leading-tight text-balance;
+  }
+
+  .type-hero-brand--lg {
+    @apply text-5xl sm:text-6xl;
+  }
+
+  /* ── Subsections (H3) ───────────────────────────────────────────────── */
+  .type-subsection-title {
+    @apply text-2xl font-extrabold leading-tight tracking-tight md:text-3xl text-balance;
+  }
+
+  .type-h3 {
+    @apply text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance;
+  }
+
+  .type-h3--semibold {
+    @apply text-lg sm:text-xl font-semibold leading-snug;
+  }
+
+  /* ── Card / panel headings (H4) ─────────────────────────────────────── */
+  .type-card-title {
+    @apply text-lg sm:text-xl font-bold tracking-tight leading-snug;
+  }
+
+  .type-card-title--sm {
+    @apply text-base font-bold leading-snug tracking-tight;
+  }
+
+  .type-card-title--xs {
+    @apply text-[0.9375rem] font-bold leading-snug tracking-[-0.01em];
+  }
+
+  /* ── Modal / form / CTA headings ────────────────────────────────────── */
+  .type-modal-title {
+    @apply text-xl sm:text-2xl font-extrabold tracking-tight leading-tight;
+  }
+
+  .type-form-title {
+    @apply text-base sm:text-lg font-extrabold tracking-tight leading-tight;
+  }
+
+  .type-cta-title {
+    font-size: clamp(1.875rem, 5vw, 3.375rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    @apply font-bold text-balance;
+  }
+
+  /* ── Body & meta ────────────────────────────────────────────────────── */
+  .type-body {
+    @apply text-base leading-relaxed;
+  }
+
+  .type-body-sm {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+
+  .type-lead {
+    font-size: clamp(0.9375rem, 2.5vw, 1.25rem);
+    @apply leading-relaxed;
+  }
+
+  .type-muted {
+    @apply text-sm leading-relaxed opacity-80;
+  }
+
+  .type-label {
+    @apply text-xs font-bold uppercase tracking-wider leading-none;
+  }
+
+  .type-caption {
+    @apply text-[11px] font-medium leading-snug;
+  }
+
+  .type-eyebrow {
+    @apply text-[11px] font-bold uppercase tracking-[0.15em] leading-none;
+  }
+
+  /* Theme-aware section body (pairs with sectionHeadingClass) */
+  .type-section-body {
+    @apply text-sm sm:text-base leading-relaxed max-w-2xl mx-auto;
+  }
+
+  /* Mobile-centered vertical steps (process flows, timelines) */
+  .mobile-steps-centered {
+    @apply mx-auto w-full max-w-[17rem] px-2 sm:hidden;
+  }
+
+  .mobile-steps-centered__list {
+    @apply flex flex-col items-center;
+  }
+
+  .mobile-steps-centered__item {
+    @apply flex w-full flex-col items-center text-center;
+  }
+
+  .mobile-steps-centered__connector {
+    @apply my-3 h-7 w-px shrink-0 bg-gradient-to-b from-violet-400/55 via-violet-400/20 to-transparent;
+  }
+
+  /* Mobile-centered stat/milestone grid under step sections */
+  .mobile-stats-centered {
+    @apply mx-auto grid w-full max-w-[20rem] grid-cols-2 gap-3 sm:max-w-none;
+  }
+}
+
+/* ── Cinematic home hero (H1) ─────────────────────────────────────────── */
+.hero-cinematic-title,
+.type-hero-cinematic {
+  font-size: clamp(1.875rem, 7.25vw, 2.5rem);
+  line-height: 1.18;
+  max-width: min(100%, 52rem);
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+}
+
+.hero-cinematic-lead,
+.type-hero-cinematic-lead {
+  font-size: clamp(0.9375rem, 3.6vw, 1.0625rem);
+  line-height: 1.65;
+}
+
+@media (min-width: 640px) {
+  .hero-cinematic-title,
+  .type-hero-cinematic {
+    font-size: clamp(2.35rem, 4.5vw, 3.15rem);
+    line-height: 1.14;
+  }
+
+  .hero-cinematic-lead,
+  .type-hero-cinematic-lead {
+    font-size: clamp(1rem, 1.75vw, 1.1875rem);
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-cinematic-title,
+  .type-hero-cinematic {
+    font-size: clamp(2.125rem, 3.25vw, 2.75rem);
+    line-height: 1.14;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-cinematic-title,
+  .type-hero-cinematic {
+    font-size: clamp(2.05rem, 2.85vw, 2.65rem);
+    line-height: 1.14;
+  }
+
+  .hero-cinematic-lead,
+  .type-hero-cinematic-lead {
+    font-size: 1.0625rem;
+    line-height: 1.58;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hero-cinematic-title,
+  .type-hero-cinematic {
+    font-size: clamp(2.15rem, 2.4vw, 2.75rem);
+  }
+}
+
+/* Compact in-section band (Why iFranchise — same rhythm as before) */
+.type-section-band {
+  font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+  line-height: 1.15;
+  @apply font-extrabold tracking-tight text-balance max-w-3xl mx-auto;
+}

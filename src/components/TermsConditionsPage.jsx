@@ -1,4 +1,5 @@
 ﻿import { getLegalLastUpdatedLabel } from '../lib/legalLastUpdated';
+import { pageHeroClass } from '../lib/cardThemeStyles';
 
 const sections = [
   {
@@ -112,7 +113,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
               {badge}
             </span>
           )}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight mb-5">
+          <h1 className={`${pageHeroClass(false)} mb-5`}>
             {title}
           </h1>
           <p className="text-base sm:text-lg text-white leading-relaxed max-w-2xl mb-6">

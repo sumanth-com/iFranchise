@@ -15,6 +15,8 @@ import BrandLogo from '../assets/BrandLogo.png';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 import IndustryCard from './IndustryCard';
+import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 // -- Lightweight CSS-only reveal - no framer-motion per element ----------------
 function Reveal({ children, delay = 0, className = '' }) {
@@ -501,36 +503,31 @@ function InvestorDashboardContent({ navigateTo }) {
   );
 }
 
-// -- Process Steps - franchise expansion flow ---------------------------------
+// -- Process Steps - franchise expansion flow (titles only; clean mobile/desktop) ---
 const PROCESS_STEPS = [
   {
     title: 'Understand Your Brand',
     color: 'violet',
-    desc: 'We learn your model, economics, and growth goals so every next step is built on facts.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>,
   },
   {
     title: 'Build the Foundation',
     color: 'indigo',
-    desc: 'Franchise structure, SOPs, legal docs, and brand systems - ready to launch and operate.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>,
   },
   {
     title: 'Attract Investors',
     color: 'emerald',
-    desc: 'Targeted outreach and screening bring serious partners who fit your brand and territory plan.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>,
   },
   {
     title: 'Match & Onboard',
     color: 'amber',
-    desc: 'We pair the right investor with the right market and guide agreements through launch.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
   },
   {
     title: 'Scale Across Markets',
     color: 'teal',
-    desc: 'With units live, we help you open new cities and grow a repeatable franchise network.',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
   },
 ];
@@ -543,78 +540,117 @@ const STEP_COLORS = {
   teal:   { bg: 'bg-teal-600', ring: 'ring-teal-200', text: 'text-teal-600', bar: 'from-teal-400 to-cyan-400', glow: 'shadow-teal-500/30' },
 };
 
-function ProcessStepNode({ step, index, total }) {
+function useStepReveal() {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.2, rootMargin: '-40px' });
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: '-24px' }
+    );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+  return [ref, visible];
+}
 
+function ProcessIcon({ step, size = 'md' }) {
   const c = STEP_COLORS[step.color];
-  const isLast = index === total - 1;
+  const dim = size === 'sm' ? 'w-10 h-10' : 'w-11 h-11';
+  return (
+    <div
+      className={`${dim} rounded-full ${c.bg} flex shrink-0 items-center justify-center text-white shadow-md ${c.glow} ring-2 ring-white/90 [&_svg]:h-5 [&_svg]:w-5`}
+    >
+      {step.icon}
+    </div>
+  );
+}
+
+/** Mobile: centered vertical stepper — icon, label, title stacked in the middle */
+function ProcessStepsMobile() {
+  const [ref, visible] = useStepReveal();
 
   return (
-    <div ref={ref} className="flex flex-col items-center flex-1 min-w-0 relative">
-      {/* connector line */}
-      {!isLast && (
-        <div className="absolute top-[22px] left-[calc(50%+22px)] right-[calc(-50%+22px)] h-px z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-violet-500/30" />
-          <div
-            className={`absolute inset-0 bg-gradient-to-r ${c.bar} transition-all duration-300`}
-            style={{ width: visible ? '100%' : '0%', transitionDelay: `${index * 100 + 200}ms` }}
-          />
-          {/* travelling light */}
-          {visible && (
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: '200%' }}
-              transition={{ duration: 0.8, delay: index * 0.18 + 0.5, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
-              className="absolute top-1/2 -translate-y-1/2 w-6 h-1.5 rounded-full bg-white/80 blur-[2px]"
-            />
-          )}
-        </div>
-      )}
+    <div ref={ref} className={TYPE.mobileSteps}>
+      <ol className={TYPE.mobileStepsList}>
+        {PROCESS_STEPS.map((step, i) => {
+          const isLast = i === PROCESS_STEPS.length - 1;
+          return (
+            <li
+              key={step.title}
+              className={`${TYPE.mobileStepsItem} transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
+              style={{ transitionDelay: `${i * 60}ms` }}
+            >
+              <ProcessIcon step={step} size="sm" />
+              <span className="type-caption mt-3 mb-1 font-bold uppercase tracking-wider text-violet-300">
+                Step {i + 1}
+              </span>
+              <p className="max-w-[14rem] text-base font-bold leading-snug text-white text-balance">
+                {step.title}
+              </p>
+              {!isLast && <div className={TYPE.mobileStepsConnector} aria-hidden />}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
 
-      {/* node */}
-      <div
-        className={`relative z-10 mb-4 transition-all duration-300 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
-        style={{ transitionDelay: `${index * 80}ms` }}
-      >
-        {visible && (
-          <motion.div
-            animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-            className={`absolute inset-0 rounded-full ${c.bg} opacity-30`}
-          />
-        )}
-        <div className={`relative w-11 h-11 rounded-full ${c.bg} flex items-center justify-center text-white shadow-lg ${c.glow} ring-2 ring-white`}>
-          {step.icon}
-        </div>
-      </div>
+/** Tablet+: horizontal icons + short titles only */
+function ProcessStepsDesktop() {
+  const [ref, visible] = useStepReveal();
 
-      {/* content */}
-      <div
-        className={`text-center px-2 transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
-        style={{ transitionDelay: `${index * 80 + 100}ms` }}
-      >
-        <p className="text-sm font-bold text-white mb-1.5 leading-snug">{step.title}</p>
-        <p className="text-xs text-white/90 leading-relaxed max-w-[11rem] mx-auto">{step.desc}</p>
-      </div>
+  return (
+    <div ref={ref} className="hidden sm:flex items-start justify-between gap-1 md:gap-3">
+      {PROCESS_STEPS.map((step, i) => {
+        const c = STEP_COLORS[step.color];
+        const isLast = i === PROCESS_STEPS.length - 1;
+        return (
+          <div key={step.title} className="relative flex flex-1 min-w-0 flex-col items-center">
+            {!isLast && (
+              <div
+                className="absolute top-5 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] z-0 h-px bg-violet-500/25"
+                aria-hidden
+              >
+                <div
+                  className={`h-full bg-gradient-to-r ${c.bar} transition-all duration-500 ease-out`}
+                  style={{ width: visible ? '100%' : '0%', transitionDelay: `${i * 80 + 120}ms` }}
+                />
+              </div>
+            )}
+            <div
+              className={`relative z-10 mb-3 transition-all duration-300 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+              style={{ transitionDelay: `${i * 50}ms` }}
+            >
+              <ProcessIcon step={step} />
+            </div>
+            <p
+              className={`px-1 text-center text-sm font-bold leading-snug text-white transition-all duration-300 md:text-[0.9375rem] ${visible ? 'opacity-100' : 'opacity-0'}`}
+              style={{ transitionDelay: `${i * 50 + 80}ms` }}
+            >
+              {step.title}
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function ProcessSteps() {
   return (
-    <div className="flex items-start gap-0 lg:gap-2">
-      {PROCESS_STEPS.map((step, i) => (
-        <ProcessStepNode key={i} step={step} index={i} total={PROCESS_STEPS.length} />
-      ))}
-    </div>
+    <>
+      <ProcessStepsMobile />
+      <ProcessStepsDesktop />
+    </>
   );
 }
 
@@ -655,7 +691,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.3, ease: [0.22,1,0.36,1] }}
-            className={`text-[clamp(2.75rem,8vw,5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] mb-6 ${isLight ? 'text-slate-900' : 'text-white'}`}
+            className={`${heroDisplayClass(isLight)} mb-6`}
           >
             Franchise Growth Services
           </motion.h1>
@@ -744,7 +780,7 @@ export default function ServicesPage() {
         <div className="theme-section-on-light relative z-10 text-center mb-16">
           <Reveal>
             <SectionPill className="mb-5">Our Services</SectionPill>
-            <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
+            <h2 className={`${sectionTitleClass(false)} mb-5`}>
               Complete Franchise Growth & Expansion Services
             </h2>
           </Reveal>
@@ -794,7 +830,7 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-4">
+                  <h3 className={`${TYPE.cardTitle} text-white mb-4`}>
                     {service.title}
                   </h3>
 
@@ -832,50 +868,46 @@ export default function ServicesPage() {
       </section>
 
       {/* HOW IT WORKS - franchise expansion process flow */}
-      <section className="relative z-10 py-16 overflow-hidden">
+      <section className="services-process-section relative z-10 overflow-hidden py-12 sm:py-16">
         <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
 
-          {/* header */}
-          <div className="text-center mb-14">
+          <div className="section-header mb-8 sm:mb-10">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-white mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-                How It Works
-              </span>
-              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-4">
+              <SectionPill className="mb-4">How It Works</SectionPill>
+              <h2 className={`${sectionTitleClass(false)} section-title--tight`}>
                 Our Franchise Expansion Process
               </h2>
             </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base leading-relaxed text-white sm:text-lg">
-                Five clear stages - from understanding your brand to scaling into new markets.
+            <Reveal delay={0.08}>
+              <p className="section-subtitle mx-auto max-w-lg text-white/75">
+                Five stages from brand audit to national scale.
               </p>
             </Reveal>
           </div>
 
-          {/* horizontal process steps */}
-          <ProcessSteps navigateTo={navigateTo} />
+          <ProcessSteps />
 
-          {/* outcome strip */}
-          <Reveal delay={0.5}>
-            <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <Reveal delay={0.35}>
+            <div className={`${TYPE.mobileStatsGrid} mt-8 sm:mt-10 sm:grid-cols-4 sm:gap-4`}>
               {[
-                { value: '30 Days',   label: 'To Franchise-Ready'   },
-                { value: '90 Days',   label: 'First Investor Matched'},
-                { value: '6 Months',  label: 'First Unit Live'       },
-                { value: '12 Months', label: 'Multi-City Expansion'  },
-              ].map((m, i) => (
-                <motion.div key={i} className="group flex flex-col items-center py-4 px-3 rounded-xl border border-white/20 bg-white/10 text-center backdrop-blur-sm transition-colors duration-200 hover:bg-white/15 hover:border-white/30">
-                  <p className="text-lg font-extrabold text-white mb-0.5 group-hover:text-white">{m.value}</p>
-                  <p className="text-[0.68rem] text-white font-medium group-hover:text-white">{m.label}</p>
-                </motion.div>
+                { value: '30 Days', label: 'Franchise-ready' },
+                { value: '90 Days', label: 'Investor matched' },
+                { value: '6 Months', label: 'First unit live' },
+                { value: '12 Months', label: 'Multi-city growth' },
+              ].map((m) => (
+                <div
+                  key={m.label}
+                  className="rounded-xl border border-white/15 bg-white/10 px-3 py-3.5 text-center backdrop-blur-sm sm:py-4"
+                >
+                  <p className="text-base font-extrabold tracking-tight text-white sm:text-lg">{m.value}</p>
+                  <p className="mt-0.5 text-[11px] font-medium leading-snug text-white/70 sm:text-xs">{m.label}</p>
+                </div>
               ))}
             </div>
           </Reveal>
 
-          {/* CTA */}
-          <Reveal delay={0.6}>
-            <div className="text-center mt-10">
+          <Reveal delay={0.45}>
+            <div className="mt-8 text-center sm:mt-10">
               <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
                 Start Your Expansion Journey
               </CtaButton>
@@ -898,7 +930,7 @@ export default function ServicesPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
                   For Brands
                 </span>
-                <h2 className={`text-4xl font-extrabold md:text-5xl mb-6 leading-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
                   Franchise Services for Brands Looking to Expand
                 </h2>
               </Reveal>
@@ -1295,7 +1327,7 @@ export default function ServicesPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
                   For Investors
                 </span>
-                <h2 className={`text-4xl font-extrabold md:text-5xl mb-6 leading-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
                   Helping Investors<br />
                   Discover the Right<br />
                   Franchise Opportunities
@@ -1352,7 +1384,7 @@ export default function ServicesPage() {
           <div className="theme-section-on-light text-center mb-16">
             <Reveal>
               <SectionPill className="mb-5">Industries</SectionPill>
-              <h2 className="text-4xl font-extrabold text-white md:text-5xl mb-5">
+              <h2 className={`${sectionTitleClass(false)} mb-5`}>
                 Industries We Help Scale Through Franchising
               </h2>
             </Reveal>
@@ -1406,7 +1438,7 @@ export default function ServicesPage() {
             <motion.h2
               initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.3, delay: 0.05 }}
-              className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl mb-6"
+              className={`${sectionTitleClass(false)} mb-6`}
             >
               More than just a franchise platform
             </motion.h2>
@@ -1629,7 +1661,7 @@ export default function ServicesPage() {
                   FAQ
                 </span>
               </div>
-              <h2 className="services-faq-section__title text-4xl font-extrabold text-white md:text-5xl mb-5 leading-tight">
+              <h2 className={`services-faq-section__title ${sectionTitleClass(false)} mb-5`}>
                 Frequently Asked Questions
               </h2>
             </Reveal>
@@ -1786,7 +1818,7 @@ function WhyIFranchiseSection({ className = '' }) {
       <div className="section-container relative z-10">
         <div className="theme-section-on-light mb-8 text-center sm:mb-10">
           <SectionPill className="mb-4">Why iFranchise</SectionPill>
-          <h2 className="why-section-heading mx-auto mb-3 max-w-3xl px-4 text-[clamp(1.5rem,4.5vw,2.25rem)] font-extrabold leading-[1.15] tracking-tight">
+          <h2 className={`why-section-heading mx-auto mb-3 max-w-3xl px-4 ${TYPE.sectionBand} text-white`}>
             Why Investors and Brands Choose iFranchise
           </h2>
           <p className="why-section-subtitle mx-auto max-w-2xl px-4 text-sm leading-relaxed">

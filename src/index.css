@@ -1,5 +1,7 @@
 /* Font loaded via <link> in index.html - non-blocking */
 
+@import './styles/typography.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -231,12 +233,9 @@ img.loaded {
     @apply leading-none;
   }
 
-  .section-title {
-    @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0b0f19] leading-tight mb-5;
-  }
-
+  /* Section titles — see typography.css; color from themes.css + sectionHeadingClass */
   .section-subtitle {
-    @apply text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto;
+    @apply text-slate-600;
   }
 
   /* -- CTA row (text left, button right) -- */
@@ -2529,40 +2528,7 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* Hero typography — large, readable first impression */
-.hero-cinematic-title {
-  font-size: clamp(1.875rem, 7.25vw, 2.5rem);
-  line-height: 1.18;
-}
-
-.hero-cinematic-lead {
-  font-size: clamp(0.9375rem, 3.6vw, 1.0625rem);
-  line-height: 1.65;
-}
-
-@media (min-width: 640px) {
-  .hero-cinematic-title {
-    font-size: clamp(2.35rem, 4.5vw, 3.15rem);
-    line-height: 1.14;
-  }
-
-  .hero-cinematic-lead {
-    font-size: clamp(1rem, 1.75vw, 1.1875rem);
-    line-height: 1.6;
-  }
-}
-
-@media (min-width: 1280px) {
-  .hero-cinematic-title {
-    font-size: clamp(2.05rem, 2.85vw, 2.65rem);
-    line-height: 1.14;
-  }
-
-  .hero-cinematic-lead {
-    font-size: 1.0625rem;
-    line-height: 1.58;
-  }
-}
+/* Hero cinematic scale — typography.css */
 
 .cinematic-hero--dark .hero-cinematic-accent {
   color: #ddd6fe;

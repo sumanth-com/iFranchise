@@ -3,6 +3,7 @@ import brandLogo from '../assets/BrandNav.png';
 import FooterJumpLink from './footer/FooterJumpLink';
 import FooterSocialButtons from './footer/FooterSocialButtons';
 import { navigateTo } from '../lib/navigation';
+import { TYPE } from '../lib/typography.js';
 
 // -- Inline SVG logos ----------------------------------------------------------
 const LOGOS = [
@@ -243,7 +244,7 @@ export default function PreFooterCTA({ variant = 'default' }) {
         >
           {/* Heading - staggered transition reveal */}
           <div style={{ marginBottom: '20px' }}>
-            <h2 style={{ fontSize: 'clamp(30px, 5vw, 54px)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.025em', color: '#ffffff', margin: '0 0 6px', ...reveal(0.05) }}>
+            <h2 className={`${TYPE.ctaTitle} text-white`} style={{ margin: '0 0 6px', ...reveal(0.05) }}>
               {cta.heading}
             </h2>
           </div>

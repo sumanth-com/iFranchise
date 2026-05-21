@@ -5,6 +5,7 @@ import BlogCard from './blog/BlogCard';
 import BlogCardSkeleton from './blog/BlogCardSkeleton';
 import { blogCategories, blogPosts } from './blogData';
 import { navigateTo } from '@/lib/navigation';
+import { TYPE } from '../lib/typography.js';
 
 const INITIAL_VISIBLE_COUNT = 6;
 const LOAD_MORE_COUNT = 3;
@@ -59,7 +60,7 @@ function BlogPage() {
         </div>
         <div className="flex flex-col justify-center">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-white">Blog & Insights</p>
-          <h1 className="mt-4 max-w-[480px] text-4xl font-black uppercase leading-[1.02] text-white md:text-5xl">
+          <h1 className={`mt-4 max-w-[480px] ${TYPE.heroBrand} text-white`}>
             Stay Updated With Our Latest Blogs
           </h1>
           <p className="mt-8 max-w-[460px] text-base leading-relaxed text-white">

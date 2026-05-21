@@ -40,12 +40,13 @@ import {
   tagNeutralStyle,
   serviceIconStyle,
   imageCornerTagStyle,
-  sectionHeadingClass,
-  sectionBodyClass,
+  sectionTitleClass,
+  sectionSubtitleClass,
   cardTitleClass,
   cardBodyClass,
   cardListClass,
 } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 // -- Lightweight scroll-triggered visibility hook ------------------------------
 // Returns [ref, isVisible] ? isVisible toggles true/false on every enter/leave
@@ -1289,8 +1290,9 @@ function ContactSection() {
     handleSubmit,
     resetForm,
   } = useFormSubmission({
+    formKey: 'homepage_contact',
     initialValues: HOMEPAGE_CONTACT_INITIAL,
-    onSubmit: (data) => submitContactForm(data, 'homepage_contact'),
+    onSubmit: (data, { signal }) => submitContactForm(data, 'homepage_contact', { signal }),
   });
 
   const canSend = isContactFormReady(formData);
@@ -1311,7 +1313,7 @@ function ContactSection() {
             <span className="inline-flex w-fit items-center rounded-full border border-white/20 bg-white/10 px-2.5 sm:px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.12em] text-emerald-50 backdrop-blur-md">
               Contact
             </span>
-            <h2 className="text-[clamp(1.75rem,8vw,3rem)] font-extrabold tracking-tight text-white leading-tight">Get in touch</h2>
+            <h2 className={`${TYPE.modalTitle} text-white`}>Get in touch</h2>
             <p className="max-w-[440px] text-sm sm:text-base font-medium leading-relaxed text-emerald-50/75">
               Have questions or ready to transform your business with our franchise solutions?
             </p>
@@ -2016,7 +2018,7 @@ function MarketIntelligenceSection() {
             </span>
             <span className="text-xs font-semibold uppercase tracking-[0.12em] text-violet-700">India Franchise Market Intelligence</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight mb-2">
+          <h2 className={`${TYPE.sectionCompact} text-white`}>
             Inside India&apos;s Franchise Growth Engine
           </h2>
           <p className="text-sm text-white max-w-xl mx-auto leading-relaxed">
@@ -3040,7 +3042,7 @@ function Hero() {
             </div>
 
             <h1
-              className={`hero-cinematic-title mb-3.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-3 sm:mb-5 xl:mb-3 xl:whitespace-nowrap ${
+              className={`${TYPE.heroCinematic} mb-3.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-3 sm:mb-5 xl:mb-3 xl:whitespace-nowrap ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
               style={
@@ -3060,7 +3062,7 @@ function Hero() {
             </h1>
 
             <p
-              className={`hero-cinematic-lead mx-auto max-w-[min(100%,28rem)] font-normal sm:max-w-[34rem] ${
+              className={`${TYPE.heroCinematicLead} mx-auto max-w-[min(100%,28rem)] font-normal sm:max-w-[34rem] ${
                 isLight ? 'text-slate-600' : 'text-white/95'
               }`}
               style={
@@ -3100,8 +3102,8 @@ function Hero() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="reveal-child text-center mb-10">
             <SectionPill className="mb-4">Opportunities</SectionPill>
-            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Featured Franchises</h2>
-            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
+            <h2 className={sectionTitleClass(isLight, { tight: true })}>Featured Franchises</h2>
+            <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
               Curated, high-performing brands ready for expansion and investment.
             </p>
           </div>
@@ -3142,8 +3144,8 @@ function Hero() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
             <SectionPill className="mb-4">Who We Serve</SectionPill>
-            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Built for Investors and Growing Brands</h2>
-            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
+            <h2 className={sectionTitleClass(isLight, { tight: true })}>Built for Investors and Growing Brands</h2>
+            <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
               Whether investing in franchise businesses or expanding your brand ? iFranchise provides the infrastructure for long-term growth.
             </p>
           </div>
@@ -3244,10 +3246,10 @@ function Hero() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12">
           <div className="text-center mb-14">
             <SectionPill className="mb-5">Our Services</SectionPill>
-            <h2 className={`text-3xl font-extrabold sm:text-4xl lg:text-5xl mb-4 ${sectionHeadingClass(isLight)}`}>
+            <h2 className={sectionTitleClass(isLight)}>
               Complete Franchise Growth &amp; Expansion Services
             </h2>
-            <p className={`mx-auto max-w-2xl text-sm leading-relaxed sm:text-base ${sectionBodyClass(isLight)}`}>
+            <p className={sectionSubtitleClass(isLight)}>
               End-to-end franchise services ? from strategy and documentation to investor onboarding and brand positioning.
             </p>
           </div>
@@ -3377,8 +3379,8 @@ function Hero() {
         <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-14">
             <SectionPill className="mb-4">iFranchise Process</SectionPill>
-            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>Two Strategic Paths. One Growth Engine.</h2>
-            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
+            <h2 className={sectionTitleClass(isLight, { tight: true })}>Two Strategic Paths. One Growth Engine.</h2>
+            <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
               Whether scaling a franchise brand or investing in the right opportunity ? iFranchise simplifies every critical step.
             </p>
           </div>
@@ -3387,7 +3389,7 @@ function Hero() {
           <ProcessTimeline isLight={isLight} />
 
           {/* Outcome metrics */}
-          <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className={`${TYPE.mobileStatsGrid} mt-14 gap-4 sm:grid-cols-4`}>
             {[
               { value: '30 Days', label: 'To Franchise-Ready' },
               { value: '90 Days', label: 'First Investor Matched' },
@@ -3420,10 +3422,10 @@ function Hero() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
           <div className="theme-section-on-light text-center mb-10">
             <SectionPill className="mb-4">Industries</SectionPill>
-            <h2 className={`text-3xl font-extrabold sm:text-4xl mb-3 ${sectionHeadingClass(isLight)}`}>
+            <h2 className={sectionTitleClass(isLight, { tight: true })}>
               Opportunities Across High-Growth Industries
             </h2>
-            <p className={`mx-auto max-w-xl text-sm sm:text-base leading-relaxed ${sectionBodyClass(isLight)}`}>
+            <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
               Franchise opportunities across India's most dynamic sectors ? each with proven models and qualified investors.
             </p>
           </div>
@@ -3471,7 +3473,7 @@ function Hero() {
           {/* Section Header */}
           <div className="theme-section-on-light text-center mb-8 sm:mb-10">
             <SectionPill className="mb-4">Why iFranchise</SectionPill>
-            <h2 className="text-[clamp(1.5rem,4.5vw,2.25rem)] font-extrabold tracking-tight text-white leading-[1.15] mb-3 px-4 max-w-3xl mx-auto">
+            <h2 className={`${TYPE.sectionBand} text-white mb-3 px-4`}>
               Why Investors and Brands Choose iFranchise
             </h2>
             <p className="text-sm text-white leading-relaxed max-w-2xl mx-auto px-4">
@@ -3568,10 +3570,10 @@ function Hero() {
           {/* Section Header */}
           <div className="section-header">
             <SectionPill className="mb-5">Testimonials</SectionPill>
-            <h2 className="section-title" style={{ color: '#ffffff' }}>
+            <h2 className="section-title text-white">
               Trusted by brands. Backed by outcomes.
             </h2>
-            <p className="section-subtitle" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            <p className="section-subtitle text-white/55">
               From franchise structuring to investor conversion, iFranchise has helped brands scale smarter and franchisees choose with confidence.
             </p>
           </div>
@@ -3729,7 +3731,7 @@ function Hero() {
               animationDelay: '0.1s'
             }}
           >
-            <h2 className="home-faq-section__title text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+            <h2 className="home-faq-section__title section-title text-white mb-4">
               Helpful Franchise Questions & Answers
             </h2>
             <p className="home-faq-section__subtitle text-base text-white/70 leading-relaxed max-w-2xl mx-auto">

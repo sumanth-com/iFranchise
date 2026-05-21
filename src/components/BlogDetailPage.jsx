@@ -4,6 +4,8 @@ import BlogCard from './blog/BlogCard';
 import ShareIcons from './blog/ShareIcons';
 import { blogPosts, formatDisplayDate, getBlogBySlug, getNextBlogPost, getPrevBlogPost } from './blogData';
 import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
+import { sectionTitleClass } from '../lib/cardThemeStyles';
+import { TYPE } from '../lib/typography.js';
 
 function getCurrentSlug() {
   const pieces = window.location.pathname.split('/').filter(Boolean);
@@ -60,7 +62,7 @@ function HeroMediaBlock({ images, category, title, excerpt }) {
         <span className="blog-hero-category w-fit rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-900">
           {category}
         </span>
-        <h1 className="blog-hero-overlay-title mt-4 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight md:text-4xl lg:text-5xl">
+        <h1 className={`blog-hero-overlay-title mt-4 max-w-4xl ${TYPE.pageHero} text-white`}>
           {title}
         </h1>
         <p className="blog-hero-overlay-excerpt mt-3 max-w-2xl text-base leading-relaxed md:text-lg">
@@ -90,7 +92,7 @@ function KeyTakeaways({ items }) {
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <p className="blog-section-eyebrow text-xs font-bold uppercase tracking-[0.22em]">At a glance</p>
-          <h2 className="blog-section-title mt-1 text-2xl font-extrabold md:text-3xl">Key takeaways</h2>
+          <h2 className={`blog-section-title mt-1 ${TYPE.sectionCompact} text-white`}>Key takeaways</h2>
         </div>
         <span className="blog-takeaway-count hidden rounded-full border border-violet-500/25 px-3 py-1 text-xs font-semibold sm:inline-flex">
           {items.length} insights
@@ -222,7 +224,7 @@ function IntroSection({ section, highlight, image }) {
         <div className="lg:col-span-7">
           <div className="flex items-center gap-3">
             <span className="blog-section-index flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold text-white">01</span>
-            <h2 id={section.id} className="blog-article-heading scroll-mt-28 text-2xl font-bold leading-tight md:text-3xl">
+            <h2 id={section.id} className={`blog-article-heading scroll-mt-28 ${TYPE.subsection} text-white`}>
               {section.heading}
             </h2>
           </div>
@@ -261,7 +263,7 @@ function ArticleSection({ section, index, isLast }) {
         <span className="blog-section-index flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold text-white">
           {sectionNum}
         </span>
-        <h2 id={section.id} className="blog-article-heading scroll-mt-28 flex-1 text-2xl font-bold leading-tight md:text-3xl">
+        <h2 id={section.id} className={`blog-article-heading scroll-mt-28 flex-1 ${TYPE.subsection} text-white`}>
           {section.heading}
         </h2>
       </div>
@@ -657,7 +659,7 @@ function BlogDetailPage() {
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <div className="text-center">
             <p className="blog-insights-eyebrow text-xs font-bold uppercase tracking-[0.3em] text-violet-200">Keep Reading</p>
-            <p className="blog-insights-title mt-3 text-3xl font-extrabold text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] md:text-5xl">Explore More Insights</p>
+            <p className={`blog-insights-title mt-3 ${sectionTitleClass(false)} drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]`}>Explore More Insights</p>
           </div>
         </div>
       </div>
@@ -667,7 +669,7 @@ function BlogDetailPage() {
           <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8">
             <div data-reveal>
               <p className="blog-detail-related__eyebrow text-sm font-medium text-white/90">You may also like these</p>
-              <h2 className="blog-detail-related__title mt-1 text-4xl font-extrabold tracking-tight text-white">Related Post</h2>
+              <h2 className={`blog-detail-related__title mt-1 ${sectionTitleClass(false)}`}>Related Post</h2>
             </div>
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {relatedPosts.map((post, i) => (
