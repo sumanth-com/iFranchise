@@ -9,6 +9,7 @@ import { GOOGLE_APPS_SCRIPT_URL } from '../constants/formEndpoints.js';
 import { logger } from '../../logger.js';
 import { createConfigErrorResponse } from './responseHandler.js';
 import { fetchWithRetry, mapRequestError } from './requestClient.js';
+import { prepareOutboundPayload } from './sanitizePayload.js';
 
 function isValidScriptUrl(url) {
   if (!url || typeof url !== 'string') return false;
@@ -39,11 +40,18 @@ function successPayload(payload) {
  * POST payload to Apps Script. Resolves when the browser has sent the request.
  */
 async function postToAppsScript(payload, signal) {
+  let body;
+  try {
+    body = JSON.stringify(payload);
+  } catch {
+    throw new Error('SERIALIZE_ERROR');
+  }
+
   await fetchWithRetry(GOOGLE_APPS_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload),
+    body,
     signal,
     timeout: 12_000,
     retries: 1,
@@ -53,47 +61,55 @@ async function postToAppsScript(payload, signal) {
 
 /**
  * Submit a standardized payload to Google Apps Script.
+ * Never throws — always returns { success, error?, code? }.
  * @param {object} payload
  * @param {{ signal?: AbortSignal }} [options]
  */
 export async function submitToGoogleSheets(payload, options = {}) {
-  const { signal } = options;
-
-  if (import.meta.env.DEV) {
-    logger.log('[GoogleSheetsClient] Submission started', payload.form_type);
-  }
-
-  if (!GOOGLE_APPS_SCRIPT_URL) {
-    logger.error('[GoogleSheetsClient] VITE_GOOGLE_APPS_SCRIPT_URL not configured');
-    return createConfigErrorResponse(
-      'Form service is not configured yet. Please email us directly or try again later.',
-    );
-  }
-
-  if (!isValidScriptUrl(GOOGLE_APPS_SCRIPT_URL)) {
-    logger.error('[GoogleSheetsClient] Invalid Apps Script URL format');
-    return createConfigErrorResponse('Invalid form endpoint configuration.');
-  }
-
-  if (!payload?.form_type || !payload?.sheet_tab || !payload?.data) {
-    logger.error('[GoogleSheetsClient] Missing required payload fields');
-    return {
-      success: false,
-      error: 'Invalid submission data. Please try again.',
-      code: 'INVALID_PAYLOAD',
-    };
-  }
-
-  if (signal?.aborted) {
-    return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
-  }
-
   try {
-    const result = await postToAppsScript(payload, signal);
+    const { signal } = options;
+
+    if (import.meta.env.DEV) {
+      logger.log('[GoogleSheetsClient] Submission started', payload?.form_type);
+    }
+
+    if (!GOOGLE_APPS_SCRIPT_URL) {
+      logger.error('[GoogleSheetsClient] Form endpoint not configured');
+      return createConfigErrorResponse(
+        'Form service is not configured yet. Please email us directly or try again later.',
+      );
+    }
+
+    if (!isValidScriptUrl(GOOGLE_APPS_SCRIPT_URL)) {
+      logger.error('[GoogleSheetsClient] Invalid endpoint configuration');
+      return createConfigErrorResponse('Invalid form endpoint configuration.');
+    }
+
+    const prepared = prepareOutboundPayload(payload);
+    if (!prepared.ok) {
+      return {
+        success: false,
+        error: prepared.error,
+        code: prepared.code,
+      };
+    }
+
+    if (signal?.aborted) {
+      return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
+    }
+
+    const result = await postToAppsScript(prepared.payload, signal);
     if (import.meta.env.DEV) logger.log('[GoogleSheetsClient] Submission sent');
     return result;
   } catch (err) {
-    logger.error('[GoogleSheetsClient] Submission failed:', err?.message || err);
+    if (err?.message === 'SERIALIZE_ERROR') {
+      return {
+        success: false,
+        error: 'Invalid submission data. Please try again.',
+        code: 'SERIALIZE_ERROR',
+      };
+    }
+    logger.error('[GoogleSheetsClient] Submission failed');
     return mapRequestError(err);
   }
 }

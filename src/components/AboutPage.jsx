@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import AboutHeroImage from '../assets/AboutHero.png';
+import AboutHero from './about/AboutHero';
 import LeadershipSection from './LeadershipSection';
 import CtaButton from './ui/CtaButton';
-import { navigateTo } from '@/lib/navigation';
-import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
+import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 
 // Import actual images
@@ -267,82 +266,12 @@ const customerTestimonials = [
 ];
 
 function AboutPage() {
-  const openTeamPage = () => {
-    navigateTo('/team');
-  };
-
   return (
     <main className="relative z-10 w-full bg-transparent text-theme-primary">
-      {/* HERO SECTION */}
-      <section className="relative w-full py-20 sm:py-28 lg:py-32 overflow-hidden min-h-[85vh] flex items-center">
-        <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 lg:px-8">
-          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="theme-section-on-light flex flex-col gap-8 text-center lg:text-left"
-            >
-              <h1 className={heroDisplayClass(false, { black: true })}>
-                Building Franchise
-                <br />
-                <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                  Growth Systems
-                </span>
-              </h1>
-
-              <p className="text-[clamp(17px,4vw,20px)] leading-relaxed text-white max-w-[560px] mx-auto lg:mx-0">
-                We engineer scalable franchise growth systems powered by data intelligence, strategic execution, and investor alignment.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
-                <CtaButton
-                  onClick={() => {
-                    const nextSection = document.querySelector('section:nth-of-type(2)');
-                    if (nextSection) {
-                      nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                >
-                  About iFranchise
-                </CtaButton>
-
-                <CtaButton onClick={openTeamPage}>Meet Leadership</CtaButton>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, ease: 'easeOut', delay: 0.1 }}
-              className="relative flex items-center justify-center"
-            >
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ scale: [1, 1.15, 1], opacity: [0.18, 0.28, 0.18], rotate: [0, 90, 0] }}
-                  transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute h-[420px] w-[420px] rounded-full bg-gradient-to-br from-violet-400/30 via-purple-300/20 to-indigo-400/25 blur-[100px]"
-                />
-              </div>
-
-              <div className="relative z-10 w-full max-w-[580px]">
-                <motion.img
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeOut', delay: 0.15 }}
-                  src={AboutHeroImage}
-                  alt="iFranchise Intelligence Engine"
-                  className="w-full h-auto object-contain drop-shadow-2xl"
-                  loading="eager"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <AboutHero />
 
       {/* HISTORY + 4 GRID CARDS SECTION */}
-      <section className="w-full py-16">
+      <section id="about-our-story" className="w-full py-16 scroll-mt-24">
         <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 items-center mb-12">
             <motion.div

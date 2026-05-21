@@ -7,9 +7,18 @@ import { initScrollRestoration } from './lib/navigation.js'
 import { preloadHomeHero } from './lib/preloadHomeHero.js'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import App from './App.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
+import { logger } from './lib/logger.js'
 import Lenis from '@studio-freight/lenis'
 
 initScrollRestoration()
+
+if (!import.meta.env.DEV) {
+  window.addEventListener('unhandledrejection', (event) => {
+    event.preventDefault()
+    logger.error('Unhandled async error')
+  })
+}
 
 const path = window.location.pathname
 if (path === '/' || path === '') {
@@ -95,8 +104,10 @@ if (document.readyState === 'complete') {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <ErrorBoundary label="Application">
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

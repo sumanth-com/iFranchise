@@ -2,23 +2,7 @@
 User-agent: *
 Allow: /
 
-# Detail / dynamic pages (use main listing pages in search instead)
-Disallow: /blog/
-Disallow: /careers/
-Disallow: /franchise/
-Disallow: /franchise-details
-
-# Utility & error pages
+# Non-public utility page only
 Disallow: /404
-
-# Legacy URL aliases (canonical paths are in sitemap)
-Disallow: /about-us
-Disallow: /meet-the-team
-Disallow: /contact-us
-Disallow: /for-brand-owners
-Disallow: /brand-owners
-Disallow: /featured-opportunities
-Disallow: /opportunities
-Disallow: /terms
 
 Sitemap: https://www.ifranchise.in/sitemap.xml

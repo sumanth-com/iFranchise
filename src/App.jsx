@@ -1,12 +1,12 @@
-﻿import { useEffect, useState, lazy, Suspense, Component, useRef, useCallback } from 'react';
+import { useEffect, useState, lazy, Suspense, useRef, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
 import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
-import { logger } from './lib/logger';
 import PageSEO from './components/seo/PageSEO';
+import ErrorBoundary from './components/ErrorBoundary';
 import {
   NAVIGATE_EVENT,
   getLogicalPathname,
@@ -36,39 +36,6 @@ const LicensesPage            = lazy(() => import('./components/LicensesPage'));
 const CareersPage             = lazy(() => import('./components/CareersPage'));
 const CareerDetailPage        = lazy(() => import('./components/CareerDetailPage'));
 const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPage'));
-
-class PageErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error) {
-    logger.error('Page failed to load:', error);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="relative z-10 flex min-h-[50vh] flex-col items-center justify-center gap-4 px-6 text-center">
-          <p className="text-sm font-medium text-white">Something went wrong loading this page.</p>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="rounded-xl bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-violet-500"
-          >
-            Reload page
-          </button>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
 
 // -- Minimal page-level skeleton -----------------------------------------------
 function PageSkeleton() {
@@ -253,7 +220,7 @@ function App() {
             : 'opacity 0.08s ease',
         }}
       >
-        <PageErrorBoundary>
+        <ErrorBoundary resetKey={pathname} label="Page">
         <Suspense fallback={<PageSkeleton />}>
           {isNotFoundPage ? <NotFoundPage />
           : isTermsPage ? <TermsConditionsPage />
@@ -272,16 +239,18 @@ function App() {
           : isListYourBrandPage ? <ForBrandOwnersPage />
           : <Hero />}
         </Suspense>
-        </PageErrorBoundary>
+        </ErrorBoundary>
       </main>
 
       <PreFooterCTA variant={isCareerDetailPage ? 'careers-detail' : 'default'} />
       <Footer />
 
         {showExpansionAssistant && (
-          <Suspense fallback={null}>
-            <ExpansionAssistant />
-          </Suspense>
+          <ErrorBoundary resetKey={pathname} label="Expansion assistant">
+            <Suspense fallback={null}>
+              <ExpansionAssistant />
+            </Suspense>
+          </ErrorBoundary>
         )}
       </div>
     </FranchiseOpportunityNavbarFiltersProvider>

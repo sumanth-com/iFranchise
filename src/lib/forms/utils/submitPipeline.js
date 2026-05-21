@@ -7,6 +7,7 @@ import { checkHoneypot, stripHoneypot } from './honeypot.js';
 import { createValidationErrorResponse } from './responseHandler.js';
 import { submitToGoogleSheets } from './googleSheetsClient.js';
 import { runGuardedSubmission } from './submissionGuard.js';
+import { prepareOutboundPayload } from './sanitizePayload.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -67,8 +68,16 @@ export async function runFormSubmission({
       return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
     }
 
-    const payload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
-    return submitToGoogleSheets(payload, { signal });
+    const rawPayload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
+    const prepared = prepareOutboundPayload(rawPayload);
+    if (!prepared.ok) {
+      return {
+        success: false,
+        error: prepared.error,
+        code: prepared.code,
+      };
+    }
+    return submitToGoogleSheets(prepared.payload, { signal });
   };
 
   const key = guardKey || `${formType}:${sourcePage}`;

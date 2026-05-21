@@ -1137,7 +1137,7 @@ function StrategyView({ setView }) {
         message: 'User opened external strategy calendar',
       },
       'expansion_assistant_strategy_calendar',
-    );
+    ).catch(() => {});
     window.open(STRATEGY_CAL_URL, '_blank', 'noopener,noreferrer');
   };
 

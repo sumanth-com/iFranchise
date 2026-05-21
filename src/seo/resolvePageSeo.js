@@ -90,7 +90,7 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         ogTitle: post.title,
         ogDescription: description,
         ogType: 'article',
-        robots: 'noindex, nofollow',
+        robots: 'index, follow',
       };
       ogImage = post.image?.startsWith('http') ? post.image : absoluteUrl(post.image);
     } else {
@@ -117,7 +117,7 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         ogTitle: `${role.title} — iFranchise Careers`,
         ogDescription: truncateMeta(`Join iFranchise as ${role.title}. View responsibilities and apply.`),
         ogType: 'website',
-        robots: 'noindex, nofollow',
+        robots: 'index, follow',
       };
     } else {
       entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
@@ -145,9 +145,12 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         ogTitle: `${brand} — Franchise Opportunity`,
         ogDescription: truncateMeta(`Investment, model, and expansion details for ${brand} on iFranchise.`),
         ogType: 'website',
-        robots: 'noindex, nofollow',
+        robots: 'index, follow',
       };
       if (franchise.image?.startsWith('http')) ogImage = franchise.image;
+    } else {
+      entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
+      canonicalPath = pathname;
     }
   }
 

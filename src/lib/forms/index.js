@@ -8,6 +8,7 @@ export * from './utils/submitPipeline.js';
 export * from './utils/requestClient.js';
 export * from './utils/submissionGuard.js';
 export * from './utils/createFormSubmitter.js';
+export * from './utils/sanitizePayload.js';
 export * from './validators/contactValidator.js';
 export * from './validators/applicationValidator.js';
 export * from './validators/jobApplicationValidator.js';
