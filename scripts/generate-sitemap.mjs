@@ -1,12 +1,10 @@
 /**
  * Build sitemap.xml into public/ before Vite production build.
- * Includes main marketing pages + public blog, career, and franchise detail URLs.
+ * Main marketing pages only — no blog posts, career roles, or franchise detail URLs.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { franchiseOpportunities } from '../src/data/franchiseData.js';
-import { blogPosts } from '../src/components/blogData.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -15,7 +13,7 @@ const siteUrl = (process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://w
   '',
 );
 
-/** Canonical routes (primary nav + legal). */
+/** Canonical main routes only (primary nav + legal). */
 const MAIN_PAGES = [
   { path: '/', changefreq: 'daily', priority: '1.0' },
   { path: '/about', changefreq: 'monthly', priority: '0.8' },
@@ -31,33 +29,6 @@ const MAIN_PAGES = [
   { path: '/licenses', changefreq: 'yearly', priority: '0.3' },
 ];
 
-/** Matches src/seo/resolvePageSeo.js + FranchiseDetailsPage slug routing. */
-const SLUG_TO_FRANCHISE_ID = {
-  burgerblast: '1',
-  'fitlife-gym': '2',
-  'ecoclean-solutions': '3',
-  'urban-coffee-co': '1',
-  'fitlife-studios': '2',
-  'bella-italia-ristorante': '3',
-  'kidszone-play-center': '24',
-  'quickclean-services': '5',
-  'techrepair-pro': '6',
-};
-
-function franchiseDetailPath(id) {
-  const slug = Object.keys(SLUG_TO_FRANCHISE_ID).find(
-    (key) => String(SLUG_TO_FRANCHISE_ID[key]) === String(id),
-  );
-  return slug ? `/franchise/${slug}` : `/franchise-details?id=${id}`;
-}
-
-function extractCareerRoleIds() {
-  const file = join(root, 'src/components/careersData.jsx');
-  const text = readFileSync(file, 'utf8');
-  const rolesBlock = text.split('export const ROLES = [')[1]?.split('];')[0] ?? '';
-  return [...rolesBlock.matchAll(/\n\s+id: '([^']+)',/g)].map((match) => match[1]);
-}
-
 function escapeXml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -67,28 +38,11 @@ function escapeXml(value) {
     .replace(/'/g, '&apos;');
 }
 
-const entries = [
-  ...MAIN_PAGES.map(({ path, changefreq, priority }) => ({
-    loc: `${siteUrl}${path}`,
-    changefreq,
-    priority,
-  })),
-  ...blogPosts.map((post) => ({
-    loc: `${siteUrl}/blog/${post.slug}`,
-    changefreq: 'monthly',
-    priority: '0.7',
-  })),
-  ...extractCareerRoleIds().map((roleId) => ({
-    loc: `${siteUrl}/careers/${roleId}`,
-    changefreq: 'weekly',
-    priority: '0.65',
-  })),
-  ...franchiseOpportunities.map((opp) => ({
-    loc: `${siteUrl}${franchiseDetailPath(opp.id)}`,
-    changefreq: 'weekly',
-    priority: '0.8',
-  })),
-];
+const entries = MAIN_PAGES.map(({ path, changefreq, priority }) => ({
+  loc: `${siteUrl}${path}`,
+  changefreq,
+  priority,
+}));
 
 const urls = entries
   .map(
@@ -110,6 +64,4 @@ const outFile = join(root, 'public', 'sitemap.xml');
 mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
-console.log(
-  `[seo] Wrote ${entries.length} URLs to public/sitemap.xml (${siteUrl}) — ${MAIN_PAGES.length} main, ${blogPosts.length} blog, ${extractCareerRoleIds().length} careers, ${franchiseOpportunities.length} franchises`,
-);
+console.log(`[seo] Wrote ${entries.length} main-page URLs to public/sitemap.xml (${siteUrl})`);
