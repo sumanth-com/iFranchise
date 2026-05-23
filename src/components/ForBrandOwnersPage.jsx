@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
 import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
@@ -22,6 +22,8 @@ import CtaButton from './ui/CtaButton';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import {
   franchiseOpportunities,
+  getPartnerBrandNames,
+  getBrandCaseStudies,
   getTotalCities,
   getAverageROI,
   calculateGrowthMetrics,
@@ -296,14 +298,11 @@ const TRUST_STATS = [
   { value: 200,  suffix: '+', label: 'Brands Scaled'           },
   { value: 1800, suffix: '+', label: 'Investors Onboarded'     },
   { value: 17,   suffix: '+', label: 'Cities Covered'          },
-  { value: 24,   suffix: '+', label: 'Active Opportunities'    },
+  { value: franchiseOpportunities.length, suffix: '+', label: 'Active Opportunities'    },
   { value: 94,   suffix: '%', label: 'Investor Engagement Rate'},
 ];
 
-const PARTNER_LOGOS = [
-  'BurgerBlast', 'FitLife Gym', 'EcoClean', 'TechTutor',
-  'CoffeeHaven', 'YogaZen', 'CodeAcademy', 'FreshMart',
-];
+const PARTNER_LOGOS = getPartnerBrandNames(8);
 
 function TrustCounter({ target, suffix, duration = 1800 }) {
   const [count, setCount] = useState(0);
@@ -1312,69 +1311,8 @@ function ServicesStyleIndustriesSection() {
   );
 }
 
-/* CaseStudiesSection.jsx */
-const CASES = [
-  {
-    id: 1,
-    brand: 'BurgerBlast',
-    category: 'Food & Beverage',
-    tagline: 'From 2 outlets to 18 cities in 14 months.',
-    image: 'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=600&q=80',
-    color: 'violet',
-    before: {
-      cities: 2, investors: 0, revenue: 'Rs.40L/mo', units: 2,
-      problems: ['No franchise model', 'Zero investor pipeline', 'Manual operations'],
-    },
-    after: {
-      cities: 18, investors: 24, revenue: 'Rs.4.2Cr/mo', units: 26,
-      wins: ['Structured FOFO model', '24 verified investors onboarded', 'Centralized ops dashboard'],
-    },
-    timeline: '14 months',
-    roiGrowth: '+940%',
-    cityData: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pune', 'Ahmedabad', 'Jaipur'],
-    revenuePoints: [40, 65, 110, 180, 260, 340, 390, 420],
-  },
-  {
-    id: 2,
-    brand: 'FitLife Gym',
-    category: 'Health & Wellness',
-    tagline: 'Scaled from metro-only to 12 cities with FICO model.',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80',
-    color: 'violet',
-    before: {
-      cities: 3, investors: 0, revenue: 'Rs.80L/mo', units: 3,
-      problems: ['No investor framework', 'Inconsistent unit quality', 'No expansion roadmap'],
-    },
-    after: {
-      cities: 12, investors: 18, revenue: 'Rs.3.1Cr/mo', units: 19,
-      wins: ['FICO model with passive investor returns', '18 investors across 12 cities', 'Standardized quality audits'],
-    },
-    timeline: '11 months',
-    roiGrowth: '+287%',
-    cityData: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Pune', 'Chennai'],
-    revenuePoints: [80, 120, 160, 200, 240, 280, 300, 310],
-  },
-  {
-    id: 3,
-    brand: 'EcoClean Solutions',
-    category: 'Home Services',
-    tagline: 'Tier 2 & 3 city domination with asset-light FOCO.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
-    color: 'violet',
-    before: {
-      cities: 1, investors: 0, revenue: 'Rs.12L/mo', units: 1,
-      problems: ['Single city operation', 'No brand documentation', 'No investor awareness'],
-    },
-    after: {
-      cities: 9, investors: 14, revenue: 'Rs.1.4Cr/mo', units: 16,
-      wins: ['FOCO model for Tier 2 markets', '14 city-level investors', 'Full SOP & training system'],
-    },
-    timeline: '10 months',
-    roiGrowth: '+1066%',
-    cityData: ['Jaipur', 'Lucknow', 'Indore', 'Bhopal', 'Chandigarh'],
-    revenuePoints: [12, 28, 50, 75, 100, 120, 135, 140],
-  },
-];
+/* CaseStudiesSection.jsx — built from verified marketplace listings */
+const CASES = getBrandCaseStudies(3);
 
 const COLOR = {
   violet: { accent: 'text-violet-700', bg: 'bg-violet-100', border: 'border-violet-300', dot: 'bg-violet-500', tab: 'bg-violet-500' },

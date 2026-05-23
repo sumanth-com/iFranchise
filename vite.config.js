@@ -66,4 +66,5 @@ export default defineConfig({
   },
   publicDir: 'public',
   base: '/',
+  assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jfif'],
 })

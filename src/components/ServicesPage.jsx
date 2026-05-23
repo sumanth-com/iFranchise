@@ -13,6 +13,7 @@ import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
+import { getInvestorDashboardOpportunities } from '../data/franchiseData';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 import IndustryCard from './IndustryCard';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
@@ -307,55 +308,27 @@ function FAQItem({ question, answer, index }) {
 }
 
 // Investor Dashboard Content Component with Filtering
+const DASHBOARD_INDUSTRY_ICONS = {
+  'Food & Beverage': FiCoffee,
+  Retail: FiShoppingBag,
+  Entertainment: FiActivity,
+  'Health & Wellness': FiActivity,
+  Technology: FiTool,
+  Education: FiBookOpen,
+  'Home Services': FiTool,
+};
+
 function InvestorDashboardContent({ navigateTo }) {
   const [selectedFilter, setSelectedFilter] = useState('all');
-  
-  const allOpportunities = [
-    { 
-      name: 'Premium Coffee Chain',
-      category: 'Food & Beverage',
-      industry: 'F&B',
-      roi: '+32% ROI',
-      investment: 'Min: $250K',
-      color: 'from-emerald-500 to-teal-600',
-      icon: FiCoffee,
-      link: '/franchise-opportunities'
-    },
-    { 
-      name: 'Fitness Studio Network',
-      category: 'Health & Wellness',
-      industry: 'Wellness',
-      roi: '+28% ROI',
-      investment: 'Min: $180K',
-      color: 'from-blue-500 to-cyan-600',
-      icon: FiActivity,
-      link: '/franchise-opportunities'
-    },
-    { 
-      name: 'Tech Repair Franchise',
-      category: 'Technology',
-      industry: 'Technology',
-      roi: '+36% ROI',
-      investment: 'Min: $120K',
-      color: 'from-violet-500 to-purple-600',
-      icon: FiTool,
-      link: '/franchise-opportunities'
-    },
-    { 
-      name: 'Fashion Boutique',
-      category: 'Retail',
-      industry: 'Retail',
-      roi: '+29% ROI',
-      investment: 'Min: $150K',
-      color: 'from-pink-500 to-rose-600',
-      icon: FiShoppingBag,
-      link: '/franchise-opportunities'
-    }
-  ];
 
-  const filteredOpportunities = selectedFilter === 'all' 
-    ? allOpportunities.slice(0, 3) 
-    : allOpportunities.filter(opp => opp.category === selectedFilter).slice(0, 3);
+  const allOpportunities = getInvestorDashboardOpportunities().map((opp) => ({
+    ...opp,
+    icon: DASHBOARD_INDUSTRY_ICONS[opp.category] || FiCoffee,
+  }));
+
+  const filteredOpportunities = selectedFilter === 'all'
+    ? allOpportunities.slice(0, 3)
+    : allOpportunities.filter((opp) => opp.category === selectedFilter).slice(0, 3);
 
   return (
     <>

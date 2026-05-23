@@ -16,6 +16,7 @@ import {
   applyScroll,
   scrollToHashSection,
 } from './lib/navigation';
+import { FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
@@ -242,7 +243,10 @@ function App() {
         </ErrorBoundary>
       </main>
 
-      <PreFooterCTA variant={isCareerDetailPage ? 'careers-detail' : 'default'} />
+      <PreFooterCTA
+        variant={isCareerDetailPage ? 'careers-detail' : 'default'}
+        shellClassName={isFranchiseOpportunitiesPage ? FRANCHISE_OPPORTUNITIES_SHELL : ''}
+      />
       <Footer />
 
         {showExpansionAssistant && (

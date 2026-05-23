@@ -5,7 +5,7 @@ import { buildSchemasForRoute } from '../../seo/structuredData';
 import { THEME_COLORS } from '../../seo/config';
 import { getBlogBySlug } from '../blogData';
 import { ROLES } from '../careersData';
-import { franchiseOpportunities } from '../../data/franchiseData';
+import { franchiseOpportunities, franchiseSlugToId } from '../../data/franchiseData';
 
 function getThemeColor() {
   if (typeof document === 'undefined') return THEME_COLORS.dark;
@@ -32,8 +32,12 @@ function getSeoContext(logicalPathname) {
 
   if (logicalPathname === '/franchise-details') {
     const params = new URLSearchParams(search);
-    const id = params.get('id');
-    const franchise = franchiseOpportunities.find((f) => String(f.id) === String(id));
+    let id = params.get('id');
+    if (!id && pathname.startsWith('/franchise/')) {
+      const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
+      id = franchiseSlugToId[slug];
+    }
+    const franchise = id ? franchiseOpportunities.find((f) => String(f.id) === String(id)) : null;
     return { franchiseBrand: franchise?.brandName };
   }
 

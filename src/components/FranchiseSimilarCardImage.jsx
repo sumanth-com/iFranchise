@@ -37,7 +37,7 @@ export function getFranchiseCategoryFromName(name = '') {
 
 export function buildFranchiseImageFallbacks(franchise) {
   const category = getFranchiseCategoryFromName(franchise.name);
-  const primary = franchise.banner || franchise.gallery?.[0];
+  const primary = franchise.image || franchise.logo || franchise.banner || franchise.gallery?.[0];
   const categoryFallback = CATEGORY_FALLBACKS[category] || DEFAULT_FALLBACK;
   return [...new Set([primary, categoryFallback, DEFAULT_FALLBACK].filter(Boolean))];
 }
@@ -51,7 +51,7 @@ export default function FranchiseSimilarCardImage({ franchise, className }) {
     <img
       src={src}
       alt={franchise.name}
-      className={className}
+      className={`${className} object-cover object-center`}
       loading="lazy"
       decoding="async"
       onError={() => {

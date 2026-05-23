@@ -22,12 +22,9 @@ import {
 import { 
   franchiseOpportunities, 
   getTotalCities, 
-  getTotalMarkets, 
-  getTotalRevenuePotential, 
-  formatRevenue,
   getAverageROI,
-  getIndustryCount,
-  calculateGrowthMetrics
+  calculateGrowthMetrics,
+  getFeaturedFranchiseCards,
 } from '../data/franchiseData';
 import { useTheme } from '../context/ThemeContext';
 import ProcessGrowthEngineVisual from './ProcessGrowthEngineVisual';
@@ -267,144 +264,6 @@ const testimonialsFlowCards = [
     avatar: 'https://i.pravatar.cc/60?img=53',
     rating: 5,
   },
-];
-
-const featuredFranchises = [
-  {
-    id: 1,
-    slug: 'burgerblast',
-    title: 'BurgerBlast',
-    description: 'A premium burger franchise built for metro growth with proven demand and scalable operations support.',
-    image: 'https://images.unsplash.com/photo-1568901346376-56c5276b45b0?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'PREMIUM', color: 'green' },
-    tags: {
-      investment: '$100K-$250K',
-      model: 'FOFO',
-      expansion: 'PAN INDIA'
-    },
-    metrics: {
-      roi: '35%',
-      payback: '20 months'
-    },
-    details: {
-      industry: 'Food & Beverage',
-      segment: 'Premium Burgers',
-      investment: '$100K-$250K',
-      space: '1000-1500 sq ft'
-    }
-  },
-  {
-    id: 2,
-    slug: 'fitlife-gym',
-    title: 'FitLife Gym',
-    description: 'Premium fitness boutique offering personalized training, wellness programs, and state-of-the-art equipment in upscale locations.',
-    image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'PREMIUM', color: 'orange' },
-    tags: {
-      investment: '$150K-$300K',
-      model: 'FICO',
-      expansion: 'METRO'
-    },
-    metrics: {
-      roi: '40%',
-      payback: '24 months'
-    },
-    details: {
-      industry: 'Fitness & Wellness',
-      segment: 'Premium Fitness',
-      investment: '$150K-$300K',
-      space: '3000-5000 sq ft'
-    }
-  },
-  {
-    id: 3,
-    slug: 'ecoclean-solutions',
-    title: 'EcoClean Solutions',
-    description: 'Sustainable cleaning services franchise using eco-friendly processes for recurring commercial and residential contracts.',
-    image: 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'PREMIUM', color: 'blue' },
-    tags: {
-      investment: '$50K-$150K',
-      model: 'FOCO',
-      expansion: 'TIER 2 & 3'
-    },
-    metrics: {
-      roi: '28%',
-      payback: '15 months'
-    },
-    details: {
-      industry: 'Home Services',
-      segment: 'Eco Cleaning',
-      investment: '$50K-$150K',
-      space: '500-800 sq ft'
-    }
-  },
-  {
-    id: 4,
-    title: 'KidsZone Play Center',
-    description: 'Interactive entertainment and educational activities for children aged 3-12.',
-    image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'TRENDING', color: 'green' },
-    tags: {
-      investment: '$80K-$180K',
-      model: 'FOFO',
-      expansion: 'SUBURBAN'
-    },
-    metrics: {
-      roi: '42%',
-      payback: '20 months'
-    },
-    details: {
-      industry: 'Entertainment',
-      segment: 'Family Entertainment',
-      investment: '$80K-$180K',
-      space: '3000-5000 sq ft'
-    }
-  },
-  {
-    id: 5,
-    title: 'QuickClean Services',
-    description: 'Professional cleaning solutions for residential and commercial properties.',
-    image: 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'HIGH ROI', color: 'orange' },
-    tags: {
-      investment: '$30K-$80K',
-      model: 'FICO',
-      expansion: 'NATIONAL'
-    },
-    metrics: {
-      roi: '45%',
-      payback: '15 months'
-    },
-    details: {
-      industry: 'Services',
-      segment: 'Cleaning Services',
-      investment: '$30K-$80K',
-      space: '500-1000 sq ft'
-    }
-  },
-  {
-    id: 6,
-    title: 'TechRepair Pro',
-    description: 'Comprehensive device repair and tech support services with certified technicians.',
-    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
-    badge: { text: 'NEW', color: 'blue' },
-    tags: {
-      investment: '$40K-$120K',
-      model: 'FOFO',
-      expansion: 'METRO'
-    },
-    metrics: {
-      roi: '38%',
-      payback: '16 months'
-    },
-    details: {
-      industry: 'Technology',
-      segment: 'Repair Services',
-      investment: '$40K-$120K',
-      space: '800-1500 sq ft'
-    }
-  }
 ];
 
 const contactItems = [
@@ -1076,11 +935,6 @@ function TestimonialStatCard({ item }) {
 
 function FranchiseCard({ franchise }) {
   const { isLight } = useTheme();
-  const badgeColors = {
-    green: 'bg-emerald-500 text-white',
-    orange: 'bg-amber-500 text-white',
-    blue: 'bg-blue-500 text-white'
-  };
 
   const handleCardClick = () => {
     // Navigate to dedicated franchise page by slug
@@ -1098,12 +952,24 @@ function FranchiseCard({ franchise }) {
       {/* Top glow line on hover */}
       <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)' }} />
-      {/* Image with Badge */}
-      <div className="relative overflow-hidden rounded-t-2xl">
+      <div
+        className={`fo-opportunity-card__media relative w-full overflow-hidden rounded-t-2xl ${
+          franchise.cardFit === 'contain' ? 'h-56' : 'h-52'
+        }`}
+        style={{
+          backgroundColor: franchise.cardBackground || '#12082a',
+          '--fo-card-bg': franchise.cardBackground || '#12082a',
+          '--fo-card-accent': franchise.cardAccent || franchise.cardBackground || '#7c3aed',
+        }}
+      >
         <img
-          src={franchise.image}
+          src={franchise.logo || franchise.image}
           alt={franchise.title}
-          className="h-48 w-full object-cover transition-all duration-300 group-hover:scale-105"
+          className={
+            franchise.cardFit === 'contain'
+              ? 'fo-opportunity-card__img fo-opportunity-card__img--contain'
+              : 'fo-opportunity-card__img fo-opportunity-card__img--fill'
+          }
           loading="lazy"
           onLoad={(e) => {
             e.target.classList.add('loaded');
@@ -1141,9 +1007,7 @@ function FranchiseCard({ franchise }) {
             e.target.src = fallbackImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=600&q=80';
           }}
         />
-        <div className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold ${badgeColors[franchise.badge.color]}`}>
-          {franchise.badge.text}
-        </div>
+        <div className="fo-opportunity-card__sheen pointer-events-none" aria-hidden="true" />
       </div>
 
       {/* Content */}
@@ -1950,12 +1814,12 @@ function MarketIntelligenceSection() {
   const [tab, setTab] = useState('Quarterly');
 
   // Calculate REAL data from franchise opportunities
-  const totalFranchises = franchiseOpportunities.length; // 24
+  const totalFranchises = franchiseOpportunities.length;
   const totalCities = getTotalCities(); // 8
   const avgROI = getAverageROI(); // Average ROI
   const growthMetrics = calculateGrowthMetrics(); // Recent growth
 
-  const marketSize = useCountUp(totalFranchises, active, 1800); // Real: 24 franchises
+  const marketSize = useCountUp(totalFranchises, active, 1800);
   const cagr       = useCountUp(avgROI,  active, 1400); // Real: Average ROI
   const cities     = useCountUp(totalCities, active, 1600); // Real: 8 cities
   const investors  = useCountUp(growthMetrics.growthRate,  active, 1500); // Real: Growth rate
@@ -3109,7 +2973,7 @@ function Hero() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredFranchises.slice(0, 3).map((franchise, i) => (
+            {getFeaturedFranchiseCards(3).map((franchise, i) => (
               <div
                 key={franchise.id}
                 className="flex flex-col"

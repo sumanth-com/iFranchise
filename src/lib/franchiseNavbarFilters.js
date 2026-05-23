@@ -41,7 +41,10 @@ export function matchesNavbarFilters(opp, nav) {
 
   if (brands.length && !brands.includes(opp.brandName)) return false;
 
-  if (franchiseModels.length && !franchiseModels.includes(opp.model)) return false;
+  if (franchiseModels.length) {
+    const oppModels = opp.models?.length ? opp.models : [opp.model];
+    if (!franchiseModels.some((m) => oppModels.includes(m))) return false;
+  }
 
   if (locations.length) {
     const hay = `${opp.locations}\n${(opp.cities || []).join(' ')}`.toLowerCase();

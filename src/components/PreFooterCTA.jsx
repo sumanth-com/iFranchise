@@ -171,7 +171,7 @@ const CTA_CONTENT = {
 };
 
 // -- Main component ------------------------------------------------------------
-export default function PreFooterCTA({ variant = 'default' }) {
+export default function PreFooterCTA({ variant = 'default', shellClassName = '' }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   const cta = CTA_CONTENT[variant] || CTA_CONTENT.default;
@@ -204,17 +204,21 @@ export default function PreFooterCTA({ variant = 'default' }) {
     ...(visible && { opacity: 1, transform: 'translateY(0)' }),
   });
 
+  const usesContentShell = Boolean(shellClassName);
+
   return (
     <div style={{ position: 'relative', overflow: 'hidden', background: 'transparent' }}>
 
+      <div className={usesContentShell ? shellClassName : undefined}>
       {/* -- Unified card -- */}
       <div
         ref={ref}
         className="prefooter-unified-card"
         style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 16px',
+          maxWidth: usesContentShell ? '100%' : '1200px',
+          margin: usesContentShell ? undefined : '0 auto',
+          padding: usesContentShell ? 0 : '0 16px',
+          width: usesContentShell ? '100%' : undefined,
           borderRadius: '28px',
           border: '1px solid',
           backdropFilter: 'blur(20px)',
@@ -391,6 +395,7 @@ export default function PreFooterCTA({ variant = 'default' }) {
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div style={{ height: '32px' }} />

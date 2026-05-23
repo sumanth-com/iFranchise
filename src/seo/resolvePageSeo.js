@@ -1,4 +1,4 @@
-import { franchiseOpportunities } from '../data/franchiseData';
+import { franchiseOpportunities, franchiseSlugToId } from '../data/franchiseData';
 import { getBlogBySlug } from '../components/blogData';
 import { ROLES } from '../components/careersData';
 import { STATIC_PAGE_SEO } from './staticPages';
@@ -15,17 +15,7 @@ const PATHNAME_ALIASES = {
   '/terms': '/terms-and-conditions',
 };
 
-const SLUG_TO_FRANCHISE_ID = {
-  burgerblast: '1',
-  'fitlife-gym': '2',
-  'ecoclean-solutions': '3',
-  'urban-coffee-co': '1',
-  'fitlife-studios': '2',
-  'bella-italia-ristorante': '3',
-  'kidszone-play-center': '24',
-  'quickclean-services': '5',
-  'techrepair-pro': '6',
-};
+const SLUG_TO_FRANCHISE_ID = franchiseSlugToId;
 
 function getBlogSlugFromPath(pathname) {
   const parts = pathname.split('/').filter(Boolean);
@@ -135,7 +125,8 @@ export function resolvePageSeo(logicalPathname, location = {}) {
       const hasKnownSlug = slugPart && SLUG_TO_FRANCHISE_ID[slugPart];
       canonicalPath = hasKnownSlug ? `/franchise/${slugPart}` : `/franchise-details?id=${franchise.id}`;
       const description = truncateMeta(
-        `${brand} franchise opportunity: investment range, business model, locations, and ROI. Apply or inquire on iFranchise.`,
+        franchise.metaDescription ||
+          `${brand} franchise opportunity: investment range, business model, locations, and ROI. Apply or inquire on iFranchise.`,
       );
       entry = {
         title: `${brand} Franchise — Investment, ROI & Details | iFranchise`,
