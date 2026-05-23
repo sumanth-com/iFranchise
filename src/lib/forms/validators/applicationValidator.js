@@ -73,7 +73,7 @@ export function validateApplicationForm(formData) {
     data.outlets = '';
   }
 
-  // Franchise model validation (hero short codes + full labels)
+  // Franchise model validation (optional)
   const validModels = [
     'FOFO',
     'FOCO',
@@ -83,8 +83,14 @@ export function validateApplicationForm(formData) {
     'FOCO - Franchise Owned, Company Operated',
     'FICO - Franchise Invested, Company Operated',
   ];
-  if (!data.model || !validModels.includes(data.model)) {
-    errors.model = 'Please select a franchise model';
+  if (data.model && data.model.trim()) {
+    if (!validModels.includes(data.model)) {
+      errors.model = 'Please select a valid franchise model';
+    } else {
+      data.model = data.model.trim();
+    }
+  } else {
+    data.model = '';
   }
 
   // SOP status (optional)
@@ -101,7 +107,7 @@ export function validateApplicationForm(formData) {
     data.hasDocs = '';
   }
 
-  // City goal validation
+  // City goal validation (optional)
   const validCityGoals = [
     '1-3 cities',
     '4-10 cities',
@@ -109,8 +115,14 @@ export function validateApplicationForm(formData) {
     '25+ cities',
     '25+ cities (National)',
   ];
-  if (!data.cityGoal || !validCityGoals.includes(data.cityGoal)) {
-    errors.cityGoal = 'Please select a city expansion target';
+  if (data.cityGoal && data.cityGoal.trim()) {
+    if (!validCityGoals.includes(data.cityGoal)) {
+      errors.cityGoal = 'Please select a valid expansion goal';
+    } else {
+      data.cityGoal = data.cityGoal.trim();
+    }
+  } else {
+    data.cityGoal = '';
   }
 
   // Timeline validation
@@ -131,7 +143,7 @@ export function validateApplicationForm(formData) {
   // Vision validation (optional)
   if (data.vision && data.vision.trim()) {
     if (data.vision.trim().length > 1000) {
-      errors.vision = 'Vision must be under 1000 characters';
+      errors.vision = 'Message must be under 1000 characters';
     } else {
       data.vision = data.vision.trim();
     }

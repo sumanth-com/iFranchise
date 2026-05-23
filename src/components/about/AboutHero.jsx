@@ -1,158 +1,122 @@
-import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import CtaButton from '../ui/CtaButton';
+import { useTheme } from '../../context/ThemeContext';
 import '../../styles/about-hero.css';
 
-const TYPE_MS = 28;
-const TYPE_START_DELAY = 450;
-
-/** Edit company hero copy here */
-const COMPANY = {
-  eyebrow: 'About iFranchise',
-  title: 'A Franchise Growth Company',
-  titleAccent: 'Built on Trust',
-  lead:
-    'We partner with brands and investors who want disciplined expansion — with the people, process, and conviction to build businesses that last.',
-  mission:
-    'Our work is to bring structure and transparency to franchise growth across India — so every brand and investor can move forward with confidence.',
-  purposeLabel: 'Our purpose',
-  values: [
-    'Partnership over transactions',
-    'Clarity in every engagement',
-    'Growth built to last',
-  ],
-  storyCta: 'Read our story',
-};
-
-const fadeUp = (delay = 0) => ({
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { delay, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+const PATHWAYS = [
+  {
+    id: 'brands',
+    label: 'For brands',
+    title: 'Scale nationwide',
+    desc: 'List your franchise, reach serious investors, and grow with structured expansion support.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2m-16 0H3m2-16h10M9 7h1m-1 4h1m4-4h1m-1 4h1" />
+      </svg>
+    ),
   },
+  {
+    id: 'investors',
+    label: 'For investors',
+    title: 'Invest with clarity',
+    desc: 'Compare verified opportunities, see real numbers, and choose franchises that fit your goals.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      </svg>
+    ),
+  },
+  {
+    id: 'platform',
+    label: 'What we do',
+    title: 'Match & support',
+    desc: 'We bring transparency, data, and guidance so every franchise decision is confident — not guesswork.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+  },
+];
+
+const STATS = [
+  { value: '500+', label: 'Franchise brands' },
+  { value: '10K+', label: 'Investors guided' },
+  { value: 'Pan-India', label: 'Market coverage' },
+];
+
+const fade = (delay = 0, reduceMotion) => ({
+  initial: reduceMotion ? false : { opacity: 0, y: 16 },
+  animate: reduceMotion ? false : { opacity: 1, y: 0 },
+  transition: { delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] },
 });
-
-function useTypewriter(text, enabled) {
-  const [output, setOutput] = useState(enabled ? '' : text);
-  const [done, setDone] = useState(!enabled);
-
-  useEffect(() => {
-    if (!enabled) {
-      setOutput(text);
-      setDone(true);
-      return undefined;
-    }
-
-    setOutput('');
-    setDone(false);
-    let index = 0;
-    let intervalId;
-
-    const startId = window.setTimeout(() => {
-      intervalId = window.setInterval(() => {
-        index += 1;
-        setOutput(text.slice(0, index));
-        if (index >= text.length) {
-          window.clearInterval(intervalId);
-          setDone(true);
-        }
-      }, TYPE_MS);
-    }, TYPE_START_DELAY);
-
-    return () => {
-      window.clearTimeout(startId);
-      if (intervalId) window.clearInterval(intervalId);
-    };
-  }, [text, enabled]);
-
-  return { output, done };
-}
 
 export default function AboutHero() {
   const reduceMotion = useReducedMotion();
-  const { output: typedMission, done: missionTyped } = useTypewriter(
-    COMPANY.mission,
-    !reduceMotion,
-  );
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const scrollToStory = () => {
     document.getElementById('about-our-story')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <section className="about-hero about-hero--viewport" aria-labelledby="about-hero-heading">
-      <div className="about-hero__ambient" aria-hidden>
-        <div className="about-hero__orb about-hero__orb--1" />
-        <div className="about-hero__orb about-hero__orb--2" />
-        <div className="about-hero__orb about-hero__orb--3" />
+    <section
+      className={`about-hero ${isDark ? 'about-hero--dark' : 'about-hero--light'}`}
+      aria-labelledby="about-hero-heading"
+    >
+      <div className="about-hero__bg" aria-hidden>
+        <div className="about-hero__grid" />
+        <div className="about-hero__glow about-hero__glow--1" />
+        <div className="about-hero__glow about-hero__glow--2" />
       </div>
 
-      <div className="about-hero__shell">
-        <div className="about-hero__split">
-          <motion.div
-            className="about-hero__intro"
-            initial={reduceMotion ? false : 'hidden'}
-            animate={reduceMotion ? false : 'show'}
-            variants={{ show: { transition: { staggerChildren: 0.09 } } }}
-          >
-            <motion.p className="about-hero__eyebrow" variants={fadeUp(0)}>
-              <span className="about-hero__eyebrow-line" aria-hidden />
-              {COMPANY.eyebrow}
-            </motion.p>
+      <div className="about-hero__inner">
+        <motion.div className="about-hero__head" {...fade(0, reduceMotion)}>
+          <h1 id="about-hero-heading" className="about-hero__title">
+            We make franchise growth
+            <span className="about-hero__title-highlight"> simple to understand</span>
+          </h1>
 
-            <motion.h1 id="about-hero-heading" className="about-hero__title" variants={fadeUp(0)}>
-              {COMPANY.title}
-              <br />
-              <span className="about-hero__title-accent">{COMPANY.titleAccent}</span>
-            </motion.h1>
+          <p className="about-hero__subtitle">
+            iFranchise is the platform where brands find investors, investors find verified franchises,
+            and everyone grows with data — not confusion.
+          </p>
+        </motion.div>
 
-            <motion.p className="about-hero__lead" variants={fadeUp(0)}>
-              {COMPANY.lead}
-            </motion.p>
-
-            <motion.div variants={fadeUp(0)}>
-              <CtaButton size="md" className="about-hero__cta" onClick={scrollToStory}>
-                {COMPANY.storyCta}
-              </CtaButton>
-            </motion.div>
-          </motion.div>
-
-          <div className="about-hero__aside">
-            <span className="about-hero__divider" aria-hidden />
-
-            <blockquote className="about-hero__quote-frame">
-              <span className="about-hero__corner about-hero__corner--tl" aria-hidden />
-              <span className="about-hero__corner about-hero__corner--br" aria-hidden />
-              <p
-                className={`about-hero__quote-text ${missionTyped ? 'about-hero__quote-text--done' : ''}`}
-                aria-live="polite"
-              >
-                {typedMission}
-                {!missionTyped && (
-                  <span className="about-hero__type-cursor" aria-hidden>
-                    |
-                  </span>
-                )}
-              </p>
-              <span className="about-hero__sr-only">{COMPANY.mission}</span>
-              <footer
-                className={`about-hero__quote-foot ${missionTyped ? 'about-hero__quote-foot--visible' : ''}`}
-              >
-                <cite>{COMPANY.purposeLabel}</cite>
-              </footer>
-            </blockquote>
-
-            <ul
-              className={`about-hero__chips ${missionTyped ? 'about-hero__chips--visible' : ''}`}
-              aria-label="What we stand for"
+        <motion.ul
+          className="about-hero__pathways"
+          aria-label="Who we help"
+          {...fade(0.08, reduceMotion)}
+        >
+          {PATHWAYS.map((item, idx) => (
+            <motion.li
+              key={item.id}
+              className="about-hero__pathway"
+              {...fade(0.12 + idx * 0.06, reduceMotion)}
             >
-              {COMPANY.values.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+              <div className="about-hero__pathway-icon">{item.icon}</div>
+              <span className="about-hero__pathway-label">{item.label}</span>
+              <h2 className="about-hero__pathway-title">{item.title}</h2>
+              <p className="about-hero__pathway-desc">{item.desc}</p>
+            </motion.li>
+          ))}
+        </motion.ul>
+
+        <motion.div className="about-hero__footer" {...fade(0.28, reduceMotion)}>
+          <ul className="about-hero__stats" aria-label="Company highlights">
+            {STATS.map((stat) => (
+              <li key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </li>
+            ))}
+          </ul>
+
+          <CtaButton size="md" className="about-hero__cta" onClick={scrollToStory}>
+            See how we started
+          </CtaButton>
+        </motion.div>
       </div>
     </section>
   );

@@ -13,7 +13,6 @@ import { validateRequiredString } from '../utils/fieldValidators.js';
  * @param {string} formData.fullName - Contact's full name
  * @param {string} formData.contactNumber - Contact's phone number
  * @param {string} formData.email - Contact's email address
- * @param {string} formData.website - Contact's website (optional)
  * @param {string} formData.company - Contact's company name (optional)
  * @param {string} formData.message - Contact's message
  * 
@@ -37,19 +36,6 @@ export function validateContactForm(formData) {
     errors.email = 'Please enter a valid email address';
   } else {
     data.email = data.email.trim().toLowerCase();
-  }
-
-  // Website validation (optional)
-  if (data.website && data.website.trim()) {
-    if (!data.website.trim().startsWith('http://') && !data.website.trim().startsWith('https://')) {
-      errors.website = 'Please enter a valid URL (include https://)';
-    } else if (data.website.trim().length > 500) {
-      errors.website = 'URL is too long';
-    } else {
-      data.website = data.website.trim();
-    }
-  } else {
-    data.website = '';
   }
 
   // Company validation (optional)

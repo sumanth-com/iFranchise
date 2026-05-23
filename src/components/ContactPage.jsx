@@ -15,7 +15,6 @@ const CONTACT_FORM_INITIAL = withHoneypot({
   fullName: '',
   contactNumber: '',
   email: '',
-  website: '',
   company: '',
   message: '',
 });
@@ -328,27 +327,16 @@ function ContactHeroForm({
               </ContactField>
             </div>
 
-            <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
-              <ContactField label="Email Address" required isLight={isLight}>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className={inputClass}
-                  placeholder="Enter your email"
-                />
-              </ContactField>
-              <ContactField label="Website / Portfolio" isLight={isLight}>
-                <input
-                  type="url"
-                  value={formData.website}
-                  onChange={(e) => handleInputChange('website', e.target.value)}
-                  className={inputClass}
-                  placeholder="https://yourwebsite.com"
-                />
-              </ContactField>
-            </div>
+            <ContactField label="Email Address" required className="shrink-0" isLight={isLight}>
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className={inputClass}
+                placeholder="Enter your email"
+              />
+            </ContactField>
 
             <ContactField label="Company Name" className="shrink-0" isLight={isLight}>
               <input

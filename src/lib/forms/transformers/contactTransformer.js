@@ -3,7 +3,6 @@ import { SHEET_TABS } from '../constants/formEndpoints.js';
 
 function buildMessage(formData) {
   const parts = [];
-  if (formData.website) parts.push(`Website: ${formData.website}`);
   parts.push(formData.message);
   return parts.join('\n\n');
 }

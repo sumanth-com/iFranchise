@@ -3027,6 +3027,55 @@ html[data-theme='light'] #main-content [class*='bg-violet-500/10'] .culture-gall
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75);
 }
 
+/* About page — culture gallery (dark + light) */
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-heading,
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-value-title {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .about-page .about-culture-section .culture-gallery-heading {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] .about-page .about-culture-section .culture-gallery-intro {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-intro {
+  color: rgba(248, 250, 252, 0.82) !important;
+}
+
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-label {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='light'] .about-page .about-culture-section .culture-gallery-label {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-value-pill {
+  background: rgba(139, 92, 246, 0.14) !important;
+  border-color: rgba(167, 139, 250, 0.35) !important;
+}
+
+html[data-theme='light'] .about-page .about-culture-section .culture-gallery-value-title {
+  color: #4c1d95 !important;
+}
+
+html[data-theme='light'] .about-page .about-culture-section .culture-gallery-value-desc {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] .about-page .about-culture-section .culture-gallery-value-desc {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] .about-page .culture-gallery-caption,
+html[data-theme='light'] .about-page .culture-gallery-caption {
+  color: #ffffff !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.75);
+}
+
 html[data-theme='dark'] .careers-page .careers-hero-image-frame,
 html[data-theme='dark'] .careers-page .careers-role-card,
 html[data-theme='dark'] .careers-page .careers-benefit-card,

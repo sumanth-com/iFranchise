@@ -16,9 +16,6 @@ const BRAND_APP_INITIAL = withHoneypot({
   phone: '',
   industry: '',
   outlets: '',
-  budget: '',
-  cityGoal: '',
-  model: '',
   vision: '',
 });
 import CtaButton from './ui/CtaButton';
@@ -728,10 +725,6 @@ const HERO_FORM_INDUSTRIES = [
   'Food & Beverage', 'Health & Wellness', 'Education', 'Retail',
   'Technology', 'Home Services', 'Entertainment', 'Other',
 ];
-const MODELS = ['FOFO', 'FOCO', 'FICO', 'Not Sure Yet'];
-const BUDGETS = ['Under Rs.25L', 'Rs.25L - Rs.50L', 'Rs.50L - Rs.1Cr', 'Rs.1Cr - Rs.5Cr', 'Rs.5Cr+'];
-const EXPANSION_GOALS = ['1-3 cities', '4-10 cities', '10-25 cities', '25+ cities'];
-
 const inputClass =
   'lyb-form-field w-full min-h-[42px] rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px] text-black placeholder:text-slate-500 placeholder:opacity-100 shadow-sm transition focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/25';
 const inputClassCompact =
@@ -915,39 +908,9 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                       placeholder="e.g. 12 outlets"
                     />
                   </Field>
-                  <Field label="Investment" compact={fitViewport}>
-                    <SelectField className={selectFieldClass} value={form.budget} onChange={(e) => set('budget', e.target.value)}>
-                      <option value="">Select range</option>
-                      {BUDGETS.map((o) => (
-                        <option key={o} value={o}>
-                          {o}
-                        </option>
-                      ))}
-                    </SelectField>
-                  </Field>
-                  <Field label="Expansion Goal" required compact={fitViewport}>
-                    <SelectField className={selectFieldClass} value={form.cityGoal} onChange={(e) => set('cityGoal', e.target.value)} required>
-                      <option value="">Select goal</option>
-                      {EXPANSION_GOALS.map((o) => (
-                        <option key={o} value={o}>
-                          {o}
-                        </option>
-                      ))}
-                    </SelectField>
-                  </Field>
-                  <Field label="Franchise Model" required compact={fitViewport} className="col-span-2">
-                    <SelectField className={selectFieldClass} value={form.model} onChange={(e) => set('model', e.target.value)} required>
-                      <option value="">Choose franchise model</option>
-                      {MODELS.map((o) => (
-                        <option key={o} value={o}>
-                          {o}
-                        </option>
-                      ))}
-                    </SelectField>
-                  </Field>
                 </div>
                 <Field
-                  label="Expansion Vision"
+                  label="Message"
                   compact={fitViewport}
                   className={fitViewport ? 'mt-2.5 flex min-h-[88px] flex-1 flex-col' : 'mt-4'}
                 >
@@ -956,7 +919,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                     value={form.vision}
                     onChange={(e) => set('vision', e.target.value)}
                     rows={fitViewport ? 4 : 3}
-                    placeholder="Target cities, timeline, franchise goals, and how you want to scale…"
+                    placeholder="Tell us about your brand and how you want to scale…"
                   />
                 </Field>
               </div>

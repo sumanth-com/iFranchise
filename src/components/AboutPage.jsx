@@ -2,9 +2,14 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import AboutHero from './about/AboutHero';
 import LeadershipSection from './LeadershipSection';
+import CultureScrollGallery from './careers/CultureScrollGallery';
 import CtaButton from './ui/CtaButton';
+import { useTheme } from '../context/ThemeContext';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
+
+// Set to true when ready to show the team section on About Us
+const SHOW_TEAM_SECTION = false;
 
 // Import actual images
 import aboutUsImage from '../assets/aboutus.png';
@@ -266,8 +271,11 @@ const customerTestimonials = [
 ];
 
 function AboutPage() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   return (
-    <main className="relative z-10 w-full bg-transparent text-theme-primary">
+    <main className="about-page relative z-10 w-full bg-transparent text-theme-primary">
       <AboutHero />
 
       {/* HISTORY + 4 GRID CARDS SECTION */}
@@ -351,7 +359,8 @@ function AboutPage() {
       {/* LEADERSHIP & VISION SECTION */}
       <LeadershipSection />
 
-      {/* TEAM SECTION */}
+      {/* TEAM SECTION — hidden until SHOW_TEAM_SECTION is true */}
+      {SHOW_TEAM_SECTION && (
       <section className="relative w-full overflow-hidden bg-transparent py-24">
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
           <motion.div
@@ -390,6 +399,7 @@ function AboutPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* OUR ADVANTAGES SECTION */}
       <section className="relative w-full overflow-hidden bg-transparent py-24">
@@ -518,6 +528,17 @@ function AboutPage() {
             <p>Over 15,725+ people gave us review</p>
           </div>
         </section>
+      </div>
+
+      {/* OUR CULTURE SECTION */}
+      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
+        <CultureScrollGallery
+          isDark={isDark}
+          headingId="about-culture-heading"
+          title="Our culture, keeping us fresh"
+          intro="We move fast, celebrate wins, and back each other — from sprint rooms and strategy workshops to offsites and demo days that keep our franchise growth engine human."
+          className="about-culture-section border-t-0 pt-4 pb-16 lg:pb-20"
+        />
       </div>
     </main>
   );

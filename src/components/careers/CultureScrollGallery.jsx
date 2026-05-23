@@ -48,17 +48,35 @@ function MarqueeRow({ moments, direction = 'left', isDark, className = '' }) {
   );
 }
 
-export default function CultureScrollGallery({ isDark = false, className = '' }) {
+export default function CultureScrollGallery({
+  isDark = false,
+  className = '',
+  headingId = 'career-culture-heading',
+  label = 'Our culture',
+  title = 'Life at iFranchise',
+  intro = 'Async-friendly, outcome-driven, and built for people who want to grow fast — with offsites, demo days, and real ownership from day one.',
+}) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const row1 = CULTURE_MOMENTS;
   const row2 = [...CULTURE_MOMENTS].reverse();
 
+  const labelClass = isDark ? 'text-violet-300' : 'text-violet-700';
+  const dotClass = isDark ? 'bg-violet-400' : 'bg-violet-600';
+  const headingClass = isDark ? 'text-white' : 'text-slate-900';
+  const brandClass = isDark ? 'text-violet-300' : 'text-violet-600';
+  const introClass = isDark ? 'text-white/80' : 'text-slate-600';
+  const pillClass = isDark
+    ? 'border-violet-400/35 bg-violet-500/12 hover:bg-violet-500/20'
+    : 'border-violet-200 bg-violet-50 hover:bg-violet-100';
+  const pillTitleClass = isDark ? 'text-white' : 'text-violet-900';
+  const pillDescClass = isDark ? 'text-white/70' : 'text-violet-700';
+
   return (
     <section
       ref={ref}
-      className={`career-culture-section border-t py-12 sm:py-16 ${isDark ? 'border-violet-500/20' : 'border-slate-200'} ${className}`}
-      aria-labelledby="career-culture-heading"
+      className={`career-culture-section border-t py-12 sm:py-16 ${isDark ? 'border-violet-500/20' : 'border-slate-200/80'} ${className}`}
+      aria-labelledby={headingId}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -66,29 +84,40 @@ export default function CultureScrollGallery({ isDark = false, className = '' })
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="mx-auto max-w-4xl px-6 sm:px-8 text-center mb-8 sm:mb-10"
       >
-        <span className="culture-gallery-label inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mb-3 text-violet-600">
-          <span className="culture-gallery-label-dot w-1.5 h-1.5 rounded-full bg-violet-600" />
-          Our culture
+        <span
+          className={`culture-gallery-label inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mb-3 ${labelClass}`}
+        >
+          <span className={`culture-gallery-label-dot w-1.5 h-1.5 rounded-full ${dotClass}`} />
+          {label}
         </span>
         <h2
-          id="career-culture-heading"
-          className="culture-gallery-heading text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 text-slate-900"
+          id={headingId}
+          className={`culture-gallery-heading text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${headingClass}`}
         >
-          Life at <span className="culture-gallery-brand">iFranchise</span>
+          {title.includes('iFranchise') ? (
+            <>
+              {title.split('iFranchise')[0]}
+              <span className={`culture-gallery-brand ${brandClass}`}>iFranchise</span>
+              {title.split('iFranchise')[1] || ''}
+            </>
+          ) : (
+            title
+          )}
         </h2>
-        <p className="culture-gallery-intro text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-slate-600">
-          Async-friendly, outcome-driven, and built for people who want to grow fast - with offsites, demo days, and real
-          ownership from day one.
+        <p className={`culture-gallery-intro text-sm sm:text-base leading-relaxed max-w-2xl mx-auto ${introClass}`}>
+          {intro}
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {CULTURE_VALUES.map(({ title, desc }) => (
+          {CULTURE_VALUES.map(({ title: valueTitle, desc }) => (
             <span
-              key={title}
+              key={valueTitle}
               title={desc}
-              className="culture-gallery-value-pill inline-flex flex-col items-center rounded-2xl border px-4 py-2.5 text-center transition-colors min-w-[120px] sm:min-w-[140px] border-violet-200 bg-violet-50 hover:bg-violet-100"
+              className={`culture-gallery-value-pill inline-flex flex-col items-center rounded-2xl border px-4 py-2.5 text-center transition-colors min-w-[120px] sm:min-w-[140px] ${pillClass}`}
             >
-              <span className="culture-gallery-value-title text-xs font-bold leading-tight">{title}</span>
-              <span className="culture-gallery-value-desc text-[10px] mt-0.5 leading-tight">
+              <span className={`culture-gallery-value-title text-xs font-bold leading-tight ${pillTitleClass}`}>
+                {valueTitle}
+              </span>
+              <span className={`culture-gallery-value-desc text-[10px] mt-0.5 leading-tight ${pillDescClass}`}>
                 {desc}
               </span>
             </span>
