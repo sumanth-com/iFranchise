@@ -32,6 +32,7 @@ export const SHEET_TABS = {
   [FORM_TYPES.CHATBOT_BRAND]: 'Chatbot_Brands',
   [FORM_TYPES.CHATBOT_INVESTOR]: 'Chatbot_Investors',
   [FORM_TYPES.CHATBOT_STRATEGY]: 'Chatbot_Strategy',
+  [FORM_TYPES.BROCHURE_DOWNLOAD]: 'Brochure_Downloads',
 };
 
 /**
@@ -45,5 +46,6 @@ export const SOURCE_PAGES = {
   CAREER_DETAIL: 'career_detail',
   HOMEPAGE: 'homepage',
   CHATBOT: 'chatbot',
+  FRANCHISE_DETAILS: 'franchise_details_brochure',
 };
 

@@ -2,7 +2,8 @@
  * contactValidator.js - Validation logic for contact forms.
  */
 
-import { digitsOnlyPhone, isValidContactEmail, isValidContactPhone10 } from '../../contactForm.js';
+import { digitsOnlyPhone, isValidPhone10 } from '../../phoneInput.js';
+import { isValidContactEmail } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
 import { validateRequiredString } from '../utils/fieldValidators.js';
 
@@ -26,7 +27,7 @@ export function validateContactForm(formData) {
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  if (!isValidContactPhone10(data.contactNumber)) {
+  if (!isValidPhone10(data.contactNumber)) {
     errors.contactNumber = 'Please enter a valid 10-digit phone number';
   } else {
     data.contactNumber = digitsOnlyPhone(data.contactNumber);

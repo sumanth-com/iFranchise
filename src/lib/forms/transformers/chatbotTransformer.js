@@ -44,6 +44,8 @@ export function transformInvestorChatbotData(formData, sourcePage = 'chatbot') {
       budget: formData.budget || '',
       cities: formData.citiesResolved || resolveCities(formData),
       timeline: formData.timeline || '',
+      contact_name: formData.contactName,
+      contact_phone: formData.contactPhone,
     },
   };
 }

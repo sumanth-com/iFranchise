@@ -290,7 +290,7 @@ export function deriveLocationsLabel(targetAreas, locationType, cities) {
   const target = cleanText(targetAreas);
   if (/pan\s*india/i.test(target)) return 'Pan India';
   if (target) return target.length > 48 ? `${target.slice(0, 45)}…` : target;
-  if (cities.length) return cities.slice(0, 3).join(', ') + (cities.length > 3 ? ' +' : '');
+  if (cities.length) return cities.slice(0, 3).join(', ');
   const loc = cleanText(locationType);
   if (loc) return loc.length > 48 ? `${loc.slice(0, 45)}…` : loc;
   return 'India';

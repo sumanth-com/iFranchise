@@ -13,8 +13,7 @@ const SHOW_TEAM_SECTION = false;
 
 // Import actual images
 import aboutUsImage from '../assets/aboutus.png';
-import teamImage1 from '../assets/about.png';
-import teamImage2 from '../assets/contact.png';
+import { ABOUT_PAGE_TESTIMONIALS, TESTIMONIAL_AVATAR_STRIP } from '../data/testimonials.js';
 
 // Premium Team Card Component with In-Card Popup
 function PremiumTeamCard({ member }) {
@@ -246,30 +245,6 @@ const teamMembers = [
   },
 ];
 
-const customerTestimonials = [
-  {
-    name: 'Emily Johnson',
-    company: 'Johnson Marketing',
-    avatar: teamImage1,
-    quote: "We've seen measurable growth since using iFranchise solutions. It's intuitive, fast, and integrates seamlessly with our existing workflows.",
-    icon: '◎',
-  },
-  {
-    name: 'Sophia Martin',
-    company: 'Martin Agency',
-    avatar: teamImage2,
-    quote: 'Finally, franchise services designed with users in mind. Everything we need is here: smart automation, insights, and amazing support.',
-    icon: '✕',
-  },
-  {
-    name: 'Rohit Verma',
-    company: 'ScaleCraft Ventures',
-    avatar: teamImage1,
-    quote: 'Working with iFranchise gave our team the clarity and speed we needed for expansion. The process is transparent and data-driven.',
-    icon: '◌',
-  },
-];
-
 function AboutPage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -498,13 +473,19 @@ function AboutPage() {
 
           <div className="mt-10 overflow-hidden">
             <div className="animate-marquee-left flex w-max items-stretch gap-5 py-2" style={{ animationDuration: '30s' }}>
-              {[...customerTestimonials, ...customerTestimonials].map((testimonial, idx) => (
+              {[...ABOUT_PAGE_TESTIMONIALS, ...ABOUT_PAGE_TESTIMONIALS].map((testimonial, idx) => (
                 <article
                   key={`${testimonial.name}-${idx}`}
                   className="w-[420px] rounded-3xl card-premium-dark border border-violet-500/25 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
                 >
                   <div className="flex items-center gap-3">
-                    <img src={testimonial.avatar} alt={testimonial.name} className="h-14 w-14 rounded-xl object-cover" loading="lazy" />
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="h-14 w-14 shrink-0 rounded-xl object-cover object-center ring-2 ring-white/20"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <div className="flex-1">
                       <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
                       <p className="text-sm text-white">{testimonial.company}</p>
@@ -521,8 +502,8 @@ function AboutPage() {
 
           <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white">
             <div className="flex -space-x-2">
-              {['https://i.pravatar.cc/40?img=12', 'https://i.pravatar.cc/40?img=18', 'https://i.pravatar.cc/40?img=26', 'https://i.pravatar.cc/40?img=32'].map((avatar) => (
-                <img key={avatar} src={avatar} alt="Reviewer avatar" className="h-8 w-8 rounded-full border-2 border-violet-500/40 object-cover" loading="lazy" />
+              {TESTIMONIAL_AVATAR_STRIP.map((avatar, i) => (
+                <img key={avatar} src={avatar} alt="" className="h-8 w-8 rounded-full border-2 border-violet-500/40 object-cover object-center" loading="lazy" decoding="async" />
               ))}
             </div>
             <p>Over 15,725+ people gave us review</p>

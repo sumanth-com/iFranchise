@@ -1,5 +1,5 @@
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { isValidPhone, isNonEmptyString } from '../utils/fieldValidators.js';
+import { isNonEmptyString, validatePhoneField } from '../utils/fieldValidators.js';
 
 function resolveCities(data) {
   if (data.cities === 'Other') {
@@ -24,11 +24,9 @@ export function validateBrandChatbotForm(formData) {
     data.contactName = data.contactName.trim();
   }
 
-  if (!isValidPhone(data.contactPhone)) {
-    errors.contactPhone = 'Please enter a valid phone number';
-  } else {
-    data.contactPhone = data.contactPhone.trim();
-  }
+  const brandPhone = validatePhoneField(data.contactPhone);
+  if (!brandPhone.ok) errors.contactPhone = brandPhone.error;
+  else data.contactPhone = brandPhone.value;
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
@@ -90,6 +88,16 @@ export function validateInvestorChatbotForm(formData) {
     data.citiesResolved = cities;
   }
 
+  if (!isNonEmptyString(data.contactName, 2)) {
+    errors.contactName = 'Contact name is required';
+  } else {
+    data.contactName = data.contactName.trim();
+  }
+
+  const investorPhone = validatePhoneField(data.contactPhone);
+  if (!investorPhone.ok) errors.contactPhone = investorPhone.error;
+  else data.contactPhone = investorPhone.value;
+
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
   }
@@ -107,11 +115,9 @@ export function validateStrategyCallForm(formData) {
     data.name = data.name.trim();
   }
 
-  if (!isValidPhone(data.phone)) {
-    errors.phone = 'Please enter a valid phone number';
-  } else {
-    data.phone = data.phone.trim();
-  }
+  const strategyPhone = validatePhoneField(data.phone);
+  if (!strategyPhone.ok) errors.phone = strategyPhone.error;
+  else data.phone = strategyPhone.value;
 
   if (!data.preferredDate) {
     errors.preferredDate = 'Please select a preferred date';

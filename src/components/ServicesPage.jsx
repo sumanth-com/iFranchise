@@ -6,18 +6,23 @@ import {
   FiBarChart2, FiZap, FiShield, FiLayers,
   FiCheckCircle, FiRefreshCw, FiFileText, FiAward, FiActivity,
   FiDollarSign, FiUserCheck, FiBookOpen, FiUserPlus, FiCompass, FiMap,
-  FiChevronDown, FiPlus, FiMinus, FiCoffee, FiTool, FiShoppingBag
+  FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
 import BrandLogo from '../assets/BrandLogo.png';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
-import { getInvestorDashboardOpportunities } from '../data/franchiseData';
+import {
+  franchiseOpportunities,
+  getFeaturedOpportunities,
+  toInvestorDashboardOpportunity,
+} from '../data/franchiseData';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 import IndustryCard from './IndustryCard';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
+import { TESTIMONIAL_AVATAR_STRIP } from '../data/testimonials.js';
 
 // -- Lightweight CSS-only reveal - no framer-motion per element ----------------
 function Reveal({ children, delay = 0, className = '' }) {
@@ -206,104 +211,53 @@ const SERVICE_CARDS = [
   }
 ];
 
-const FAQ_ITEMS = [
-  {
-    question: 'What franchise services does iFranchise provide?',
-    answer: 'We provide franchise onboarding, documentation support, investor acquisition, branding, expansion strategy, and investor onboarding services.'
-  },
-  {
-    question: 'How does iFranchise help brands expand?',
-    answer: 'We help brands structure their franchise model, attract investors, and expand into new markets through a scalable growth process.'
-  },
-  {
-    question: 'Do you help find franchise investors?',
-    answer: 'Yes, we connect brands with qualified investors actively looking for franchise business opportunities.'
-  },
-  {
-    question: 'What industries do you work with?',
-    answer: 'We work with businesses across retail, food & beverage, healthcare, education, beauty, and infrastructure sectors.'
-  },
-  {
-    question: 'Can investors discover opportunities through iFranchise?',
-    answer: 'Yes, investors can explore verified franchise opportunities and connect directly with brands.'
-  }
+const EXPANSION_CITIES = [
+  { city: 'Mumbai', locations: 12, label: 'Active', progress: 85, bar: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  { city: 'Delhi NCR', locations: 10, label: 'Active', progress: 78, bar: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  { city: 'Bengaluru', locations: 9, label: 'Expanding', progress: 72, bar: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
+  { city: 'Hyderabad', locations: 8, label: 'Expanding', progress: 68, bar: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
+  { city: 'Pune', locations: 7, label: 'Pipeline', progress: 55, bar: 'bg-violet-500', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
+  { city: 'Chennai', locations: 6, label: 'Pipeline', progress: 48, bar: 'bg-violet-500', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
 ];
 
-function FAQItem({ question, answer, index }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+function ExpansionCitiesPanel() {
   return (
-    <Reveal delay={index * 0.08}>
-      <motion.div
-        className={`services-faq-item group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm transition-all duration-300 ${isOpen ? 'is-open' : ''}`}
-        animate={{
-          borderColor: isOpen ? 'rgba(167, 139, 250, 0.45)' : 'rgba(139, 92, 246, 0.22)',
-        }}
-      >
-        {/* Glowing active state */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-purple-600/5 to-indigo-600/10 pointer-events-none"
-          />
-        )}
-
-        {/* Question Button */}
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          className="relative w-full text-left px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between gap-4 transition-colors duration-300"
-        >
-          <span className="services-faq-question text-base sm:text-lg font-bold text-white transition-colors duration-300">
-            {question}
-          </span>
-
-          <span className={`services-faq-toggle flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 ${isOpen ? 'is-open' : ''}`}>
-            <FiChevronDown className={`services-faq-toggle-icon w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-          </span>
-        </button>
-
-        {/* Answer with smooth animation */}
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ 
-                height: 'auto', 
-                opacity: 1,
-                transition: {
-                  height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
-                  opacity: { duration: 0.25, delay: 0.1 }
-                }
-              }}
-              exit={{ 
-                height: 0, 
-                opacity: 0,
-                transition: {
-                  height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
-                  opacity: { duration: 0.2 }
-                }
-              }}
-              className="relative overflow-hidden"
-            >
-              <div className="px-6 pb-6 sm:px-8 sm:pb-8">
-                <div className="pt-2 border-t border-violet-500/20">
-                  <p className="services-faq-answer text-sm sm:text-base text-white leading-relaxed mt-4">
-                    {answer}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Hover shine effect */}
-        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-      </motion.div>
-    </Reveal>
+    <div className="dashboard-surface-light rounded-lg border border-slate-200/60 p-3 shadow-lg">
+      <div className="mb-2.5 flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-1.5">
+          <FiUsers className="h-3.5 w-3.5 shrink-0 text-indigo-500" />
+          <div className="min-w-0">
+            <span className="dashboard-txt-title block text-xs font-bold">Active Cities</span>
+            <span className="dashboard-txt-muted block text-[8px]">8 markets · 24 locations</span>
+          </div>
+        </div>
+        <span className="dashboard-txt-accent shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[8px] font-semibold">
+          Pan India
+        </span>
+      </div>
+      <ul className="max-h-[5.75rem] space-y-1.5 overflow-y-auto pr-0.5">
+        {EXPANSION_CITIES.map((row) => (
+          <li
+            key={row.city}
+            className="rounded-md border border-slate-100 bg-slate-50/95 px-2 py-1.5"
+          >
+            <div className="mb-1 flex items-center justify-between gap-2">
+              <span className="dashboard-txt-title truncate text-[10px] font-bold">{row.city}</span>
+              <span className={`shrink-0 rounded-full border px-1.5 py-0.5 text-[7px] font-semibold ${row.badge}`}>
+                {row.label}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="dashboard-txt-muted text-[8px]">{row.locations} locations</span>
+              <span className="dashboard-txt-muted text-[8px] font-medium">{row.progress}%</span>
+            </div>
+            <div className="mt-1 h-1 overflow-hidden rounded-full bg-slate-200">
+              <div className={`h-full rounded-full ${row.bar}`} style={{ width: `${row.progress}%` }} />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -321,14 +275,23 @@ const DASHBOARD_INDUSTRY_ICONS = {
 function InvestorDashboardContent({ navigateTo }) {
   const [selectedFilter, setSelectedFilter] = useState('all');
 
-  const allOpportunities = getInvestorDashboardOpportunities().map((opp) => ({
-    ...opp,
-    icon: DASHBOARD_INDUSTRY_ICONS[opp.category] || FiCoffee,
-  }));
+  const allOpportunities = franchiseOpportunities.map((opp) => {
+    const mapped = toInvestorDashboardOpportunity(opp);
+    return {
+      ...mapped,
+      icon: DASHBOARD_INDUSTRY_ICONS[mapped.category] || FiCoffee,
+    };
+  });
 
-  const filteredOpportunities = selectedFilter === 'all'
-    ? allOpportunities.slice(0, 3)
-    : allOpportunities.filter((opp) => opp.category === selectedFilter).slice(0, 3);
+  const featuredSet = getFeaturedOpportunities(3).map((opp) => {
+    const mapped = toInvestorDashboardOpportunity(opp);
+    return { ...mapped, icon: DASHBOARD_INDUSTRY_ICONS[mapped.category] || FiCoffee };
+  });
+
+  const filteredOpportunities =
+    selectedFilter === 'all'
+      ? featuredSet
+      : allOpportunities.filter((opp) => opp.category === selectedFilter).slice(0, 3);
 
   return (
     <>
@@ -343,10 +306,10 @@ function InvestorDashboardContent({ navigateTo }) {
           <button
             key={tag.value}
             onClick={() => setSelectedFilter(tag.value)}
-            className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all cursor-pointer hover:scale-105 ${
+            className={`rounded-lg px-2.5 py-1 text-[10px] font-semibold transition-all cursor-pointer hover:scale-105 ${
               selectedFilter === tag.value
-                ? 'bg-violet-600 text-white shadow-md' 
-                : 'bg-white/70 backdrop-blur-sm border border-slate-200/50 text-slate-600 hover:border-violet-300 hover:text-violet-600'
+                ? 'bg-violet-600 text-white shadow-md'
+                : 'dashboard-filter-btn border border-slate-200 bg-white text-slate-800 hover:border-violet-300 hover:text-violet-700'
             }`}
           >
             {tag.label}
@@ -367,19 +330,19 @@ function InvestorDashboardContent({ navigateTo }) {
                 <opp.icon className="h-4 w-4 text-white" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <h4 className="text-[11px] font-bold text-slate-800 truncate">{opp.name}</h4>
-                  <div className="flex-shrink-0 h-4 w-4 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center">
+                <div className="mb-0.5 flex items-center gap-1.5">
+                  <h4 className="dashboard-txt-title truncate text-[11px] font-bold">{opp.name}</h4>
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-emerald-300 bg-emerald-100">
                     <FiCheckCircle className="h-2.5 w-2.5 text-emerald-700" />
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-[9px] text-slate-500">{opp.industry}</span>
-                  <span className="text-[9px] text-slate-400"> - </span>
-                  <span className="text-[9px] font-semibold text-emerald-600">{opp.roi}</span>
+                <div className="mb-0.5 flex items-center gap-1.5">
+                  <span className="dashboard-txt-muted text-[9px]">{opp.industry}</span>
+                  <span className="dashboard-txt-muted text-[9px]">·</span>
+                  <span className="dashboard-txt-accent text-[9px] font-semibold">{opp.roi}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] text-slate-600">{opp.investment}</span>
+                  <span className="dashboard-txt-body text-[9px] font-medium">{opp.investment}</span>
                   <FiArrowRight className="h-3 w-3 text-indigo-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -414,12 +377,12 @@ function InvestorDashboardContent({ navigateTo }) {
             <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
               <FiActivity className="h-2.5 w-2.5 text-white" />
             </div>
-            <span className="text-[11px] font-bold text-slate-900">Market Trends</span>
+            <span className="dashboard-chart-title text-[11px] font-bold">Market Trends</span>
           </div>
           <div className="relative flex items-center gap-1">
             <div className="absolute h-1 w-1 rounded-full bg-emerald-500/200 animate-ping" />
             <div className="h-1 w-1 rounded-full bg-emerald-500/200" />
-            <span className="text-[8px] font-semibold text-emerald-600">Live</span>
+            <span className="dashboard-chart-live text-[8px] font-semibold">Live</span>
           </div>
         </div>
         
@@ -429,7 +392,7 @@ function InvestorDashboardContent({ navigateTo }) {
           <div className="absolute left-7 right-0 top-0 bottom-6 flex flex-col justify-between">
             {[100, 75, 50, 25, 0].map((val, i) => (
               <div key={i} className="relative h-px bg-slate-200">
-                <span className="absolute -left-7 -top-2 text-[8px] text-slate-500 font-medium w-6 text-right">{val}%</span>
+                <span className="dashboard-chart-label absolute -left-7 -top-2 w-6 text-right text-[8px] font-medium">{val}%</span>
               </div>
             ))}
           </div>
@@ -458,7 +421,7 @@ function InvestorDashboardContent({ navigateTo }) {
                   {/* Value inside bar for taller bars */}
                   {item.value >= 60 && (
                     <div className="relative mt-auto mb-0.5">
-                      <span className="text-[7px] font-bold text-white drop-shadow-sm">
+                      <span className="dashboard-chart-bar-label text-[7px] font-bold drop-shadow-sm">
                         {item.value}%
                       </span>
                     </div>
@@ -466,7 +429,7 @@ function InvestorDashboardContent({ navigateTo }) {
                 </div>
                 
                 {/* Month label below */}
-                <span className="text-[7px] text-slate-500 font-medium mt-1 absolute" style={{ bottom: 0 }}>{item.label}</span>
+                <span className="dashboard-chart-label absolute mt-1 text-[7px] font-medium" style={{ bottom: 0 }}>{item.label}</span>
               </div>
             ))}
           </div>
@@ -701,26 +664,16 @@ export default function ServicesPage() {
             <div className="flex items-center gap-4">
               {/* Overlapping Avatars */}
               <div className="flex -space-x-2">
-                <img 
-                  src="https://i.pravatar.cc/40?img=12" 
-                  alt="User" 
-                  className="h-10 w-10 rounded-full border-2 border-white object-cover"
-                />
-                <img 
-                  src="https://i.pravatar.cc/40?img=18" 
-                  alt="User" 
-                  className="h-10 w-10 rounded-full border-2 border-white object-cover"
-                />
-                <img 
-                  src="https://i.pravatar.cc/40?img=26" 
-                  alt="User" 
-                  className="h-10 w-10 rounded-full border-2 border-white object-cover"
-                />
-                <img 
-                  src="https://i.pravatar.cc/40?img=32" 
-                  alt="User" 
-                  className="h-10 w-10 rounded-full border-2 border-white object-cover"
-                />
+                {TESTIMONIAL_AVATAR_STRIP.map((src) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt=""
+                    className="h-10 w-10 rounded-full border-2 border-white object-cover object-center"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
               </div>
 
               {/* Stars and Review Count */}
@@ -899,10 +852,7 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div className="theme-section-on-light services-audience-copy">
               <Reveal>
-                <span className={`theme-section-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] mb-6 ${isLight ? 'text-violet-700' : 'text-white'}`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
-                  For Brands
-                </span>
+                <SectionPill className="mb-6">For Brands</SectionPill>
                 <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
                   Franchise Services for Brands Looking to Expand
                 </h2>
@@ -1004,125 +954,7 @@ export default function ServicesPage() {
                       </div>
                     </div>
 
-                    {/* Interactive City Expansion Map with Real Embedded Map */}
-                    <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm p-3 shadow-lg border border-slate-200/60">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-1.5">
-                          <FiMap className="h-3 w-3 text-indigo-500" />
-                          <div>
-                            <span className="text-xs font-bold text-slate-800 block">Franchise Locations</span>
-                            <span className="text-[8px] text-slate-500">Active expansion cities</span>
-                          </div>
-                        </div>
-                        
-                        {/* City Dropdown */}
-                        <select className="text-[10px] font-medium text-slate-800 bg-white border border-slate-200 rounded px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer">
-                          <option value="">View All (8)</option>
-                          <option value="mumbai">Mumbai - 12 locations</option>
-                          <option value="delhi">Delhi - 10 locations</option>
-                          <option value="bengaluru">Bengaluru - 9 locations</option>
-                          <option value="hyderabad">Hyderabad - 8 locations</option>
-                          <option value="pune">Pune - 7 locations</option>
-                          <option value="chennai">Chennai - 6 locations</option>
-                          <option value="kolkata">Kolkata - 5 locations</option>
-                          <option value="ahmedabad">Ahmedabad - 4 locations</option>
-                        </select>
-                      </div>
-                      
-                      {/* Real Google Maps Embed - Completely Clean (No Text, No Lines) */}
-                      <div className="relative h-24 rounded-lg overflow-hidden border border-slate-200/40">
-                        
-                        <div className="map-container w-full h-full relative">
-                          <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7500000!2d82.8!3d22.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin&disableDefaultUI=1&zoomControl=1&scrollwheel=1&gestureHandling=cooperative"
-                            width="100%"
-                            height="140%"
-                            style={{ border: 0, display: 'block', marginTop: '-4px', marginBottom: '-20px' }}
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            className="grayscale-[30%] opacity-90"
-                            title="India Expansion Map"
-                          />
-                          
-                          {/* Seamless overlay to hide all Google text - matches map colors */}
-                          <div className="absolute bottom-0 left-0 right-0 h-10 pointer-events-none z-10" 
-                               style={{
-                                 background: 'linear-gradient(to top, rgba(173, 216, 230, 0.9) 0%, rgba(173, 216, 230, 0.7) 40%, transparent 100%)'
-                               }} 
-                          />
-                        </div>
-                        
-                        {/* Global CSS to hide ALL Google Maps UI elements */}
-                        <style dangerouslySetInnerHTML={{__html: `
-                          .map-container iframe {
-                            pointer-events: auto !important;
-                          }
-                          .gm-style-cc,
-                          .gm-style a,
-                          .gm-style button,
-                          .gm-style div[style*="cursor: pointer"],
-                          .gmnoprint,
-                          .gm-bundled-control,
-                          .gm-svpc,
-                          .gm-control-active,
-                          .gm-style-mtc,
-                          .gm-fullscreen-control,
-                          a[href^="https://maps.google.com"],
-                          a[href^="https://www.google.com/maps"],
-                          a[title*="Google"],
-                          a[title*="Terms"],
-                          a[title*="Report"],
-                          div[style*="font-family: Roboto"],
-                          div[style*="color: rgb(0, 0, 0)"],
-                          button[draggable="false"],
-                          div[draggable="false"][style*="cursor"] {
-                            display: none !important;
-                            opacity: 0 !important;
-                            visibility: hidden !important;
-                            width: 0 !important;
-                            height: 0 !important;
-                            position: absolute !important;
-                            left: -9999px !important;
-                          }
-                        `}} />
-                        
-                        {/* Overlay with city markers - All within India */}
-                        <div className="absolute inset-0 pointer-events-none z-20">
-                          {[
-                            { city: 'Mumbai', top: '60%', left: '32%', count: 12 },
-                            { city: 'Delhi', top: '28%', left: '48%', count: 10 },
-                            { city: 'Bengaluru', top: '72%', left: '50%', count: 9 },
-                            { city: 'Hyderabad', top: '64%', left: '54%', count: 8 },
-                            { city: 'Pune', top: '64%', left: '40%', count: 7 },
-                            { city: 'Chennai', top: '76%', left: '56%', count: 6 },
-                            { city: 'Kolkata', top: '50%', left: '70%', count: 5 },
-                            { city: 'Ahmedabad', top: '50%', left: '36%', count: 4 },
-                          ].map((location, i) => (
-                            <div
-                              key={location.city}
-                              className="absolute group cursor-pointer pointer-events-auto"
-                              style={{ top: location.top, left: location.left }}
-                            >
-                              {/* Pin */}
-                              <div className="relative">
-                                <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 shadow-lg border-2 border-white transition-transform duration-300 group-hover:scale-150" />
-                                {/* Pulse ring */}
-                                <div className="absolute inset-0 rounded-full bg-indigo-400 animate-ping opacity-40" />
-                                
-                                {/* Tooltip on hover */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                                  <div className="bg-slate-900 text-white text-[8px] font-medium px-1.5 py-0.5 rounded shadow-lg">
-                                    <div className="font-bold">{location.city}</div>
-                                    <div className="text-[7px] text-emerald-300">{location.count} franchise locations</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                    <ExpansionCitiesPanel />
 
                     {/* Live Growth Chart - Properly Aligned Bars */}
                     <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
@@ -1131,12 +963,12 @@ export default function ServicesPage() {
                           <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                             <FiBarChart2 className="h-3 w-3 text-white" />
                           </div>
-                          <span className="text-xs font-bold text-slate-900">Growth Trajectory</span>
+                          <span className="dashboard-chart-title text-xs font-bold">Growth Trajectory</span>
                         </div>
                         <div className="flex items-center gap-1.5">
                           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/200 animate-ping absolute" />
                           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/200" />
-                          <span className="text-[10px] font-semibold text-emerald-400">+92% YoY</span>
+                          <span className="dashboard-chart-live text-[10px] font-semibold">+92% YoY</span>
                         </div>
                       </div>
                       
@@ -1146,7 +978,7 @@ export default function ServicesPage() {
                         <div className="absolute left-8 right-0 top-0 bottom-0 flex flex-col justify-between">
                           {[100, 75, 50, 25, 0].map((val, i) => (
                             <div key={i} className="relative h-px bg-slate-200">
-                              <span className="absolute -left-8 -top-2 text-[7px] text-slate-500 font-medium w-6 text-right">{val}%</span>
+                              <span className="dashboard-chart-label absolute -left-8 -top-2 w-6 text-right text-[7px] font-medium">{val}%</span>
                             </div>
                           ))}
                         </div>
@@ -1181,7 +1013,7 @@ export default function ServicesPage() {
                                 {/* Value inside bar for taller bars */}
                                 {item.value >= 55 && (
                                   <div className="relative mt-auto mb-1">
-                                    <span className="text-[7px] font-bold text-white drop-shadow-sm">
+                                    <span className="dashboard-chart-bar-label text-[7px] font-bold drop-shadow-sm">
                                       {item.value}%
                                     </span>
                                   </div>
@@ -1189,43 +1021,41 @@ export default function ServicesPage() {
                               </motion.div>
                               
                               {/* Month label below */}
-                              <span className="text-[8px] text-slate-500 font-medium mt-1.5">{item.label}</span>
+                              <span className="dashboard-chart-label mt-1.5 text-[8px] font-medium">{item.label}</span>
                             </div>
                           ))}
                         </div>
                       </div>
                     </div>
 
-                    {/* Top Franchise Location Cards - Real Cities */}
                     <div className="grid grid-cols-2 gap-2">
                       {[
-                        { city: 'Mumbai', status: '12 Locations', progress: 85, color: 'emerald', label: 'Active' },
-                        { city: 'Bengaluru', status: '9 Locations', progress: 72, color: 'blue', label: 'Expanding' }
+                        { city: 'Mumbai', status: '12 Locations', progress: 85, bar: 'bg-emerald-500', label: 'Active', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+                        { city: 'Bengaluru', status: '9 Locations', progress: 72, bar: 'bg-blue-500', label: 'Expanding', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
                       ].map((location, i) => (
                         <div
                           key={location.city}
-                          className="dashboard-surface-light rounded-lg bg-white/80 backdrop-blur-sm p-2 shadow-md border border-slate-200/60"
+                          className="dashboard-surface-light rounded-lg border border-slate-200/60 p-2 shadow-md"
                         >
-                          <div className="flex items-center justify-between mb-1">
+                          <div className="mb-1 flex items-center justify-between">
                             <div className="flex items-center gap-1.5">
-                              <FiMap className="h-2.5 w-2.5 text-indigo-500" />
-                              <span className="text-[10px] font-bold text-slate-800">{location.city}</span>
+                              <FiMap className="h-2.5 w-2.5 shrink-0 text-indigo-500" />
+                              <span className="dashboard-txt-title text-[10px] font-bold">{location.city}</span>
                             </div>
-                            <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-${location.color}-50 border border-${location.color}-200`}>
-                              <div className={`h-1 w-1 rounded-full bg-${location.color}-500 animate-pulse`} />
-                              <span className={`text-[7px] font-semibold text-${location.color}-700`}>{location.label}</span>
-                            </div>
+                            <span className={`rounded-full border px-1.5 py-0.5 text-[7px] font-semibold ${location.badge}`}>
+                              {location.label}
+                            </span>
                           </div>
-                          <div className="text-[9px] text-slate-600 font-medium mb-1.5">{location.status}</div>
-                          <div className="h-1 rounded-full bg-slate-200 overflow-hidden">
+                          <div className="dashboard-txt-body mb-1.5 text-[9px] font-medium">{location.status}</div>
+                          <div className="h-1 overflow-hidden rounded-full bg-slate-200">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${location.progress}%` }}
                               transition={{ duration: 0.8, delay: 0.3 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                              className={`h-full bg-${location.color}-500`}
+                              className={`h-full ${location.bar}`}
                             />
                           </div>
-                          <div className="text-[7px] text-slate-500 mt-0.5">{location.progress}% market coverage</div>
+                          <div className="dashboard-txt-muted mt-0.5 text-[7px]">{location.progress}% market coverage</div>
                         </div>
                       ))}
                     </div>
@@ -1266,7 +1096,7 @@ export default function ServicesPage() {
                         </div>
                         <div>
                           <div className="text-[11px] font-bold text-white">Opportunity Discovery</div>
-                          <div className="text-[9px] text-white">24 Verified Franchises</div>
+                          <div className="text-[9px] text-white">{franchiseOpportunities.length} Verified Franchises</div>
                         </div>
                       </div>
                       
@@ -1296,10 +1126,7 @@ export default function ServicesPage() {
             {/* RIGHT: Content */}
             <div className="order-1 lg:order-2 theme-section-on-light services-audience-copy">
               <div>
-                <span className={`theme-section-badge inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] mb-6 ${isLight ? 'text-violet-700' : 'text-white'}`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-600 shrink-0" />
-                  For Investors
-                </span>
+                <SectionPill className="mb-6">For Investors</SectionPill>
                 <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
                   Helping Investors<br />
                   Discover the Right<br />
@@ -1620,41 +1447,6 @@ export default function ServicesPage() {
 
       {/* WHY iFRANCHISE - matches home page */}
       <WhyIFranchiseSection className="relative z-10" />
-
-      {/* FAQ SECTION */}
-      <section className="services-faq-section relative z-10 w-full py-12 overflow-hidden">
-        <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Header */}
-          <div className="text-center mb-12">
-            <Reveal>
-              <div className="inline-flex items-center justify-center mb-6">
-                <span className="services-faq-section__badge inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />
-                  FAQ
-                </span>
-              </div>
-              <h2 className={`services-faq-section__title ${sectionTitleClass(false)} mb-5`}>
-                Frequently Asked Questions
-              </h2>
-            </Reveal>
-          </div>
-
-          {/* FAQ Accordion */}
-          <div className="services-faq-list space-y-4">
-            {FAQ_ITEMS.map((faq, index) => (
-              <FAQItem
-                key={index}
-                question={faq.question}
-                answer={faq.answer}
-                index={index}
-              />
-            ))}
-          </div>
-
-        </div>
-      </section>
-
 
     </main>
   );

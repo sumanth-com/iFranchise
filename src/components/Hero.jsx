@@ -5,10 +5,10 @@ import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
-import contactImg from '../assets/contact.png';
 import { homeHeroBgDark, homeHeroBgLight, preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
 import { submitContactForm } from '../lib/forms';
 import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
+import { phoneInputProps } from '@/lib/phoneInput';
 import { navigateTo } from '@/lib/navigation';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -24,8 +24,9 @@ import {
   getTotalCities, 
   getAverageROI,
   calculateGrowthMetrics,
-  getFeaturedFranchiseCards,
+  getFeaturedOpportunities,
 } from '../data/franchiseData';
+import OpportunityCard from './OpportunityCard';
 import { useTheme } from '../context/ThemeContext';
 import ProcessGrowthEngineVisual from './ProcessGrowthEngineVisual';
 import IndustryCard from './IndustryCard';
@@ -33,8 +34,6 @@ import {
   getCardBaseStyle,
   cardHoverHandlers,
   metricBoxStyle,
-  tagVioletStyle,
-  tagNeutralStyle,
   serviceIconStyle,
   imageCornerTagStyle,
   sectionTitleClass,
@@ -44,6 +43,11 @@ import {
   cardListClass,
 } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
+import TrustLogoMarquee from './ui/TrustLogoMarquee.jsx';
+import {
+  HOME_TESTIMONIALS_MOBILE,
+  TESTIMONIAL_COLUMNS,
+} from '../data/testimonials.js';
 
 // -- Lightweight scroll-triggered visibility hook ------------------------------
 // Returns [ref, isVisible] ? isVisible toggles true/false on every enter/leave
@@ -76,18 +80,6 @@ function Reveal({ children, delay = 0, direction = 'up', className = '' }) {
     </div>
   );
 }
-
-const testimonials = {
-  left: [
-    { quote: 'The updates and attention to detail are unmatched.', author: 'Nora S' },
-    { quote: 'Saved me weeks of work and the result looks premium.', author: 'Marcus T' },
-  ],
-  right: [
-    { quote: 'Beautiful template, easy to customize and worth every penny.', author: 'Amelia R' },
-    { quote: 'Exactly what I needed to kickstart my SaaS project fast.', author: 'Liam V' },
-  ],
-};
-
 
 const growthCards = [
   {
@@ -137,22 +129,22 @@ const statsCards = [
     description: 'Trusted by businesses across multiple industries and growth stages.',
   },
   {
-    value: 8000,
+    value: 10000,
     suffix: '+',
     title: 'Leads Generated',
     description: 'Qualified opportunities created through focused conversion systems.',
   },
   {
-    value: 25,
+    value: 17,
     suffix: '+',
-    title: 'Countries Reached',
-    description: 'Global campaigns and launches delivered with local market precision.',
+    title: 'Indian States Covered',
+    description: 'Pan-India expansion mapped across tier 1, tier 2, and growth markets.',
   },
   {
-    value: 150,
+    value: 37,
     suffix: '+',
-    title: 'Conversion Experiments',
-    description: 'Tested and refined website journeys to increase pipeline efficiency.',
+    title: 'Cities Active',
+    description: 'Metro and regional city rollouts built for scalable franchise growth in India.',
   },
 ];
 
@@ -216,53 +208,6 @@ const processSteps = [
     title: 'Optimization & Scale',
     description:
       'Continuously improve performance, conversion, and expansion strategies using real data.',
-  },
-];
-
-const testimonialsFlowCards = [
-  {
-    quote:
-      'iFranchise helped me scale from 2 outlets to 9 within months. The process is structured and reliable.',
-    name: 'Arjun Patel',
-    role: 'Franchise Investor',
-    avatar: 'https://i.pravatar.cc/60?img=15',
-    rating: 5,
-  },
-  {
-    quote:
-      'I avoided a wrong investment because of their insights. That alone saved me a huge amount.',
-    name: 'Neha Reddy',
-    role: 'First-time Investor',
-    avatar: 'https://i.pravatar.cc/60?img=47',
-    rating: 5,
-  },
-  {
-    quote: 'The platform makes opportunity comparison simple and data-driven.',
-    name: 'Kiran Sharma',
-    role: 'Investment Advisor',
-    avatar: 'https://i.pravatar.cc/60?img=68',
-    rating: 5,
-  },
-  {
-    quote: 'Our conversion rate improved significantly after working with iFranchise.',
-    name: 'Rajesh Kumar',
-    role: 'Business Owner',
-    avatar: 'https://i.pravatar.cc/60?img=29',
-    rating: 5,
-  },
-  {
-    quote: 'Transparent process, clear ROI expectations, and strong execution.',
-    name: "Amelia D'Souza",
-    role: 'CEO',
-    avatar: 'https://i.pravatar.cc/60?img=33',
-    rating: 5,
-  },
-  {
-    quote: "They understand both operators and investors. That's rare.",
-    name: 'Ishaan Rao',
-    role: 'Director',
-    avatar: 'https://i.pravatar.cc/60?img=53',
-    rating: 5,
   },
 ];
 
@@ -915,7 +860,13 @@ function TestimonialStatCard({ item }) {
   return (
     <article className="testimonial-stat-card rounded-[18px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
       <div className="flex items-center gap-3">
-        <img src={item.avatar} alt={item.name} className="h-10 w-10 rounded-full object-cover" loading="lazy" />
+        <img
+          src={item.avatar}
+          alt={item.name}
+          className="h-11 w-11 shrink-0 rounded-full object-cover object-center ring-2 ring-white/80"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="flex-1">
           <p className="testimonial-stat-card__name text-sm font-semibold text-slate-900">{item.name}</p>
           <p className="testimonial-stat-card__role text-xs text-slate-600">{item.role}</p>
@@ -929,158 +880,6 @@ function TestimonialStatCard({ item }) {
         </div>
       )}
       <p className="testimonial-stat-card__quote mt-4 text-sm leading-relaxed text-slate-700">{item.quote}</p>
-    </article>
-  );
-}
-
-function FranchiseCard({ franchise }) {
-  const { isLight } = useTheme();
-
-  const handleCardClick = () => {
-    // Navigate to dedicated franchise page by slug
-    window.history.pushState({}, '', `/franchise/${franchise.slug}`);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
-  return (
-    <article 
-      onClick={handleCardClick}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl cursor-pointer"
-      style={getCardBaseStyle(isLight)}
-      {...cardHoverHandlers(isLight, -6)}
-    >
-      {/* Top glow line on hover */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)' }} />
-      <div
-        className={`fo-opportunity-card__media relative w-full overflow-hidden rounded-t-2xl ${
-          franchise.cardFit === 'contain' ? 'h-56' : 'h-52'
-        }`}
-        style={{
-          backgroundColor: franchise.cardBackground || '#12082a',
-          '--fo-card-bg': franchise.cardBackground || '#12082a',
-          '--fo-card-accent': franchise.cardAccent || franchise.cardBackground || '#7c3aed',
-        }}
-      >
-        <img
-          src={franchise.logo || franchise.image}
-          alt={franchise.title}
-          className={
-            franchise.cardFit === 'contain'
-              ? 'fo-opportunity-card__img fo-opportunity-card__img--contain'
-              : 'fo-opportunity-card__img fo-opportunity-card__img--fill'
-          }
-          loading="lazy"
-          onLoad={(e) => {
-            e.target.classList.add('loaded');
-            e.target.classList.remove('loading');
-          }}
-          onError={(e) => {
-            e.target.onerror = null; // Prevent infinite loop
-            e.target.classList.add('loaded');
-            e.target.classList.remove('loading');
-            // Fallback to category-specific images based on franchise type
-            const fallbackImages = {
-              'Food & Beverage': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
-              'Health & Wellness': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80',
-              'Home Services': 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?auto=format&fit=crop&w=600&q=80',
-              'Education': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
-              'Technology': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
-              'Retail': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80',
-              'Entertainment': 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80'
-            };
-            // Determine category based on franchise title or use default
-            let category = 'Food & Beverage'; // default
-            if (franchise.title.toLowerCase().includes('gym') || franchise.title.toLowerCase().includes('fitness') || franchise.title.toLowerCase().includes('spa') || franchise.title.toLowerCase().includes('yoga')) {
-              category = 'Health & Wellness';
-            } else if (franchise.title.toLowerCase().includes('clean') || franchise.title.toLowerCase().includes('repair') || franchise.title.toLowerCase().includes('care')) {
-              category = 'Home Services';
-            } else if (franchise.title.toLowerCase().includes('education') || franchise.title.toLowerCase().includes('tutor') || franchise.title.toLowerCase().includes('academy') || franchise.title.toLowerCase().includes('learn')) {
-              category = 'Education';
-            } else if (franchise.title.toLowerCase().includes('tech') || franchise.title.toLowerCase().includes('code')) {
-              category = 'Technology';
-            } else if (franchise.title.toLowerCase().includes('game') || franchise.title.toLowerCase().includes('entertainment')) {
-              category = 'Entertainment';
-            } else if (franchise.title.toLowerCase().includes('salon') || franchise.title.toLowerCase().includes('store') || franchise.title.toLowerCase().includes('mart') || franchise.title.toLowerCase().includes('shop')) {
-              category = 'Retail';
-            }
-            e.target.src = fallbackImages[category] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=600&q=80';
-          }}
-        />
-        <div className="fo-opportunity-card__sheen pointer-events-none" aria-hidden="true" />
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col p-5">
-        {/* Title and Description */}
-        <h3 className={`text-xl font-bold tracking-tight ${cardTitleClass(isLight)}`}>{franchise.title}</h3>
-        <p className={`mt-2 text-sm leading-relaxed ${cardBodyClass(isLight)}`}>{franchise.description}</p>
-
-        {/* Tags Row */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagVioletStyle(isLight)}>
-            {franchise.tags.investment}
-          </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagNeutralStyle(isLight)}>
-            {franchise.tags.model}
-          </span>
-          <span className="rounded-full px-3 py-1 text-xs font-semibold" style={tagNeutralStyle(isLight)}>
-            {franchise.tags.expansion}
-          </span>
-        </div>
-
-        {/* Metrics Row */}
-        <div className="mt-4 grid grid-cols-2 gap-4">
-          <div className="rounded-lg p-3" style={metricBoxStyle(isLight)}>
-            <p className={`text-xs font-medium ${cardBodyClass(isLight)}`}>ROI</p>
-            <p className={`text-lg font-bold ${cardTitleClass(isLight)}`}>{franchise.metrics.roi}</p>
-          </div>
-          <div className="rounded-lg p-3" style={metricBoxStyle(isLight)}>
-            <p className={`text-xs font-medium ${cardBodyClass(isLight)}`}>Payback</p>
-            <p className={`text-lg font-bold ${cardTitleClass(isLight)}`}>{franchise.metrics.payback}</p>
-          </div>
-        </div>
-
-        {/* Details Grid */}
-        <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-          <div>
-            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Industry</p>
-            <p className={cardBodyClass(isLight)}>{franchise.details.industry}</p>
-          </div>
-          <div>
-            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Segment</p>
-            <p className={cardBodyClass(isLight)}>{franchise.details.segment}</p>
-          </div>
-          <div>
-            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Investment</p>
-            <p className={cardBodyClass(isLight)}>{franchise.details.investment}</p>
-          </div>
-          <div>
-            <p className={`font-semibold ${cardTitleClass(isLight)}`}>Space</p>
-            <p className={cardBodyClass(isLight)}>{franchise.details.space}</p>
-          </div>
-        </div>
-
-        {/* CTA Button */}
-        <div className="mt-auto pt-5">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.history.pushState({}, '', `/franchise/${franchise.slug}`);
-              window.dispatchEvent(new PopStateEvent('popstate'));
-            }}
-            className="group/btn relative w-full overflow-hidden rounded-xl py-3 text-sm font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 16px rgba(109,40,217,0.35)', transition: 'box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1)' }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(109,40,217,0.55)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(109,40,217,0.35)'; }}
-          >
-            <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)' }} />
-            <span className="relative z-10">View Details</span>
-          </button>
-        </div>
-      </div>
     </article>
   );
 }
@@ -1240,17 +1039,11 @@ function ContactSection() {
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
               <input
-                type="tel"
-                inputMode="numeric"
-                autoComplete="tel-national"
-                maxLength={10}
-                placeholder="10-digit mobile number"
                 value={formData.contactNumber}
                 onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
                 required
-                pattern="[0-9]{10}"
-                title="Enter a 10-digit mobile number"
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                {...phoneInputProps()}
               />
               <textarea
                 placeholder="Message"
@@ -1448,23 +1241,29 @@ function DonutChart({ active }) {
   }, [active]);
   const dash = (circ * filled) / 100;
   return (
-    <svg viewBox="0 0 128 128" className="w-full h-full">
+    <svg viewBox="0 0 128 128" className="market-donut-chart h-full w-full" aria-hidden>
       <defs>
         <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#7c3aed" />
           <stop offset="100%" stopColor="#6366f1" />
         </linearGradient>
       </defs>
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#f1f5f9" strokeWidth="16" />
-      <circle cx={cx} cy={cy} r={r} fill="none" stroke="url(#dg)" strokeWidth="16"
-        strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
-        transform={`rotate(-90 ${cx} ${cy})`} />
-      <text x={cx} y={cy - 5} textAnchor="middle"
-        style={{ fontSize: 20, fontWeight: 800, fill: '#0b0f19', fontFamily: 'inherit' }}>
+      <circle cx={cx} cy={cy} r={r} fill="none" className="market-donut-track" strokeWidth="16" />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r}
+        fill="none"
+        stroke="url(#dg)"
+        strokeWidth="16"
+        strokeDasharray={`${dash} ${circ}`}
+        strokeLinecap="round"
+        transform={`rotate(-90 ${cx} ${cy})`}
+      />
+      <text x={cx} y={cy - 5} textAnchor="middle" className="market-donut-pct">
         {filled}%
       </text>
-      <text x={cx} y={cy + 12} textAnchor="middle"
-        style={{ fontSize: 8, fill: '#94a3b8', fontWeight: 700, letterSpacing: 1, fontFamily: 'inherit' }}>
+      <text x={cx} y={cy + 12} textAnchor="middle" className="market-donut-label">
         FRANCHISE
       </text>
     </svg>
@@ -2250,7 +2049,7 @@ function MarketIntelligenceSection() {
                     <div key={cat.name}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-[10px] font-semibold text-white">{cat.name}</span>
-                        <span className="text-[10px] font-bold text-slate-700">{cat.pct}%</span>
+                        <span className="market-intel-sector-pct text-[10px] font-bold">{cat.pct}%</span>
                       </div>
                       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
                         <div
@@ -2620,9 +2419,7 @@ function Hero() {
   const lightHeroRef = useRef(null);
   const [darkHeroReady, setDarkHeroReady] = useState(false);
   const [lightHeroReady, setLightHeroReady] = useState(false);
-  const leftLoopItems = [...testimonials.left, ...testimonials.left];
-  const rightLoopItems = [...testimonials.right, ...testimonials.right];
-    const growthRef = useRef(null);
+  const growthRef = useRef(null);
   const statsRef = useRef(null);
   const modelsRef = useRef(null);
   const processRef = useRef(null);
@@ -2636,9 +2433,9 @@ function Hero() {
   const [visibleProcessSteps, setVisibleProcessSteps] = useState(() =>
     processSteps.map(() => false)
   );
-  const leftColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
-  const middleColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
-  const rightColumnLoop = [...testimonialsFlowCards, ...testimonialsFlowCards];
+  const leftColumnLoop = [...TESTIMONIAL_COLUMNS.left, ...TESTIMONIAL_COLUMNS.left];
+  const middleColumnLoop = [...TESTIMONIAL_COLUMNS.middle, ...TESTIMONIAL_COLUMNS.middle];
+  const rightColumnLoop = [...TESTIMONIAL_COLUMNS.right, ...TESTIMONIAL_COLUMNS.right];
 
   useLayoutEffect(() => {
     markImgReady(darkHeroRef.current, setDarkHeroReady);
@@ -2972,14 +2769,14 @@ function Hero() {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {getFeaturedFranchiseCards(3).map((franchise, i) => (
+          <div className="home-featured-opportunities grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {getFeaturedOpportunities(3).map((opportunity, i) => (
               <div
-                key={franchise.id}
-                className="flex flex-col"
+                key={opportunity.id}
+                className="flex h-full flex-col"
                 style={{ animation: `cardReveal 0.4s ease ${i * 0.08 + 0.1}s both` }}
               >
-                <FranchiseCard franchise={franchise} />
+                <OpportunityCard opportunity={opportunity} />
               </div>
             ))}
           </div>
@@ -3451,7 +3248,7 @@ function Hero() {
               >
                 <div className="testi-track-down space-y-6">
                   {leftColumnLoop.map((item, idx) => (
-                    <TestimonialStatCard key={`${item.name}-left-${idx}`} item={item} />
+                    <TestimonialStatCard key={`${item.id}-left-${idx}`} item={item} />
                   ))}
                 </div>
               </div>
@@ -3461,7 +3258,7 @@ function Hero() {
               >
                 <div className="testi-track-up space-y-6">
                   {middleColumnLoop.map((item, idx) => (
-                    <TestimonialStatCard key={`${item.name}-middle-${idx}`} item={item} />
+                    <TestimonialStatCard key={`${item.id}-middle-${idx}`} item={item} />
                   ))}
                 </div>
               </div>
@@ -3471,15 +3268,15 @@ function Hero() {
               >
                 <div className="testi-track-down space-y-6">
                   {rightColumnLoop.map((item, idx) => (
-                    <TestimonialStatCard key={`${item.name}-right-${idx}`} item={item} />
+                    <TestimonialStatCard key={`${item.id}-right-${idx}`} item={item} />
                   ))}
                 </div>
               </div>
             </div>
 
             <div className="mt-8 sm:mt-10 space-y-4 sm:space-y-5 md:hidden">
-              {testimonialsFlowCards.map((item) => (
-                <TestimonialStatCard key={item.name} item={item} />
+              {HOME_TESTIMONIALS_MOBILE.map((item) => (
+                <TestimonialStatCard key={item.id} item={item} />
               ))}
             </div>
           </div>
@@ -3490,8 +3287,8 @@ function Hero() {
               {[
                 { ...statsCards[0], accent: '#a78bfa', glow: 'rgba(167,139,250,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
                 { ...statsCards[1], accent: '#34d399', glow: 'rgba(52,211,153,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg> },
-                { ...statsCards[2], accent: '#60a5fa', glow: 'rgba(96,165,250,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> },
-                { ...statsCards[3], accent: '#fb923c', glow: 'rgba(251,146,60,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> },
+                { ...statsCards[2], accent: '#60a5fa', glow: 'rgba(96,165,250,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
+                { ...statsCards[3], accent: '#fb923c', glow: 'rgba(251,146,60,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0l-1.5-1.5M5 21l1.5-1.5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 8h6"/></svg> },
               ].map((stat, index) => (
                 <div key={stat.title} className="group relative overflow-hidden rounded-2xl p-6 flex flex-col"
                   style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
@@ -3528,7 +3325,7 @@ function Hero() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {[
                 { label: '500+ franchise launches', color: '#a78bfa' },
-                { label: '?800Cr+ ecosystem influenced', color: '#34d399' },
+                { label: '₹800Cr+ ecosystem influenced', color: '#34d399' },
                 { label: '72% investor preference', color: '#60a5fa' },
                 { label: '30% CAGR aligned', color: '#fb923c' },
               ].map((item) => (
@@ -3543,23 +3340,10 @@ function Hero() {
           {/* Brand Trust Rail */}
           <div className="text-center">
             <p className="text-sm font-medium text-white mb-6 sm:mb-8">
-              Trusted across franchise, strategy & enterprise ecosystems
+              Trusted by franchise brands on the iFranchise network
             </p>
-            
-            {/* Logo Marquee */}
-            <div className="overflow-hidden rounded-2xl py-4" style={{ background: "rgba(255,255,255,0.03)" }}>
-              <div className="animate-marquee-right flex w-max items-center gap-12 sm:gap-16 md:gap-20 will-change-transform">
-                {['Tata', 'Reliance', 'Infosys', 'Shopify', 'Stripe', 'Microsoft', 'Google', 'Amazon', 'Tata', 'Reliance', 'Infosys', 'Shopify', 'Stripe', 'Microsoft', 'Google', 'Amazon'].map((brand, idx) => (
-                  <div
-                    key={`${brand}-${idx}`}
-                    className="group inline-flex items-center gap-2 whitespace-nowrap text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white/25 hover:text-white transition-colors duration-300"
-                  >
-                    <span className="text-lg sm:text-xl md:text-2xl leading-none opacity-30 group-hover:opacity-60 transition-opacity duration-300">*</span>
-                    <span className="group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-emerald-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">{brand}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+            <TrustLogoMarquee variant="hero" />
           </div>
 
         </div>
@@ -3603,73 +3387,15 @@ function Hero() {
             </p>
           </div>
 
-          {/* MAIN CONTENT - PERFECT 50/50 SPLIT */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            
-            {/* LEFT SIDE - STRATEGIC ADVISOR IMAGE */}
-            <div 
-              className="flex flex-col items-center justify-center"
-              style={{
-                opacity: 0,
-                animation: 'fadeSlideUp 0.35s ease forwards',
-                animationDelay: '0.15s'
-              }}
-            >
-              {/* Strategic Advisor Image - Contact Page Style */}
-              <div className="relative">
-                <img
-                  src={contactImg}
-                  alt="Strategic Franchise Advisory"
-                  className="relative w-[75vw] max-w-[380px] object-contain drop-shadow-[0_24px_48px_rgba(15,23,42,0.14)] sm:w-full lg:max-w-[460px] xl:max-w-[500px]"
-                  loading="lazy"
-                  style={{ 
-                    animation: 'contactFloat 10s ease-in-out infinite',
-                    transformOrigin: 'center center'
-                  }}
-                  onError={(e) => {
-                    // Fallback to professional placeholder
-                    e.target.style.display = 'none';
-                    e.target.nextElementSibling.style.display = 'flex';
-                  }}
-                />
-                
-                {/* Fallback placeholder */}
-                <div className="hidden w-[75vw] max-w-[380px] sm:w-full lg:max-w-[460px] xl:max-w-[500px] h-80 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl items-center justify-center drop-shadow-[0_24px_48px_rgba(15,23,42,0.14)]">
-                  <div className="text-center">
-                    <div className="w-24 h-24 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-200 to-slate-100 flex items-center justify-center">
-                      <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                      </svg>
-                    </div>
-                    <p className="text-xl font-semibold text-white">Strategic Franchise Advisory</p>
-                    <p className="text-sm text-white mt-2">Professional consultation</p>
-                  </div>
-                </div>
-
-                {/* Ground shadow pulse - Contact Page Style */}
-                <div
-                  className="absolute -bottom-4 left-1/2 h-10 w-3/4 -translate-x-1/2 rounded-full bg-slate-400/20 blur-xl"
-                  style={{
-                    animation: 'shadowPulse 10s ease-in-out infinite'
-                  }}
-                />
-              </div>
-
-              {/* Advisory Text & CTA */}
-              <div className="text-center mt-8 w-full max-w-md">
-                {/* CTA Removed as per user request */}
-              </div>
-            </div>
-
-            {/* RIGHT SIDE - COMPACT FAQ ACCORDION */}
-            <div 
-              className="flex flex-col justify-start pr-0 sm:pr-2"
-              style={{
-                opacity: 0,
-                animation: 'fadeSlideUp 0.35s ease forwards',
-                animationDelay: '0.2s'
-              }}
-            >
+          {/* FAQ accordion — home page only */}
+          <div
+            className="mx-auto w-full max-w-3xl"
+            style={{
+              opacity: 0,
+              animation: 'fadeSlideUp 0.35s ease forwards',
+              animationDelay: '0.15s',
+            }}
+          >
               <div className="space-y-3">
                 {[
                   {
@@ -3705,7 +3431,6 @@ function Hero() {
                   />
                 ))}
               </div>
-            </div>
           </div>
           </div>
         </div>

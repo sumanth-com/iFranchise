@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ROLES, DEPT_COLORS, DEPT_COLORS_DARK, MODE_COLORS, MODE_COLORS_DARK, ROLE_TOOLS, HIRING_STEPS } from './careersData.jsx';
-import { PHONE_PLACEHOLDER, PHONE_INPUT_PATTERN } from '@/lib/phoneInput';
+import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
 import { submitJobApplication } from '@/lib/forms';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
@@ -40,7 +40,10 @@ function ApplicationForm({ roleTitle, isDark }) {
       submitJobApplication({ ...data, roleId: roleTitle, roleTitle }, 'career_detail', { signal }),
   });
 
-  const set = (e) => setField(e.target.name, e.target.value);
+  const set = (e) => {
+    const { name, value } = e.target;
+    setField(name, name === 'phone' ? digitsOnlyPhone(value) : value);
+  };
 
   if (isSuccess) {
     return (
@@ -74,7 +77,7 @@ function ApplicationForm({ roleTitle, isDark }) {
         </div>
         <div>
           <label className={lbl}>Phone</label>
-          <input name="phone" type="tel" value={form.phone} onChange={set} required placeholder={PHONE_PLACEHOLDER} pattern={PHONE_INPUT_PATTERN} inputMode="tel" className={inp} />
+          <input name="phone" value={form.phone} onChange={set} required className={inp} {...phoneInputProps()} />
         </div>
       </div>
       <div>

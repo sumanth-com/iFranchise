@@ -18,3 +18,4 @@ export {
   submitBrandConsultation,
   submitStrategyCall,
 } from './submitters/chatbotSubmitter.js';
+export { submitBrochureDownload } from './submitters/brochureDownloadSubmitter.js';

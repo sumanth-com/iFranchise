@@ -17,6 +17,7 @@ import {
   slugifyBrand,
 } from './opportunityUtils.js';
 import { getBrandImages } from './brandImages.js';
+import { getBrochureUrlByFranchiseId } from './brochurePdfs.js';
 
 const MODEL_DESCRIPTIONS = {
   FOFO: 'Franchise-owned, franchise-operated — ideal for hands-on operators who want full unit control.',
@@ -275,7 +276,7 @@ export function buildOpportunityRecord(raw, id) {
     category: industry,
     industry,
     logo: brandImages.logo || '',
-    image: brandImages.card,
+    image: brandImages.logo || brandImages.card,
     cardFit: brandImages.cardFit || 'cover',
     cardBackground: brandImages.cardBackground,
     cardAccent: brandImages.cardAccent,
@@ -294,6 +295,8 @@ export function buildOpportunityRecord(raw, id) {
     addedDate: '2025-01-01',
     minInvestment,
     maxInvestment,
+    minInr: minInr ?? null,
+    maxInr: maxInr ?? null,
     currency: raw.currency || 'INR',
     metaTitle: `${brandName} Franchise — Investment, Model & Expansion | iFranchise`,
     metaDescription: `${brandName}: ${summary.slice(0, 120)}… Investment ${investment}. ${model} model. Explore on iFranchise.`,
@@ -315,11 +318,11 @@ export function buildOpportunityRecord(raw, id) {
     badge: badge === 'FEATURED' ? 'Premium Listing' : badge,
     tagline,
     logo: brandImages.logo || '',
-    image: brandImages.card,
+    image: brandImages.logo || brandImages.card,
     banner: brandImages.banner,
     gallery: brandImages.gallery,
     slideshow: brandImages.slideshow ?? brandImages.gallery,
-    brochureUrl: cleanText(raw.websiteBrochureLink) || '',
+    brochureUrl: getBrochureUrlByFranchiseId(id) || cleanText(raw.websiteBrochureLink) || '',
     keyInfo: {
       investment,
       space: spaceLabel,

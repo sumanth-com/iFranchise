@@ -514,15 +514,6 @@ function ProcessIcon() {
   );
 }
 
-function ContactIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-      <polyline points="22,6 12,13 2,6" />
-    </svg>
-  );
-}
-
 function AboutIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -543,7 +534,6 @@ function CompanyNavIconWrap({ children }) {
 
 const COMPANY_ITEMS = [
   { title: 'About Us', description: 'Our story, mission, and leadership.', Icon: AboutIcon, path: '/about' },
-  { title: 'Contact Us', description: 'Speak with our franchise advisors.', Icon: ContactIcon, path: '/contact' },
   { title: 'Careers', description: 'Build your career with iFranchise.', Icon: TeamIcon, badge: '4', path: '/careers' },
 ];
 

@@ -95,22 +95,32 @@
 
 /* —— Head —— */
 .about-hero__head {
-  max-width: 40rem;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
 }
 
 .about-hero__title {
   margin: 0 0 1rem;
-  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-size: clamp(1.35rem, 3.2vw, 2.75rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.03em;
   color: var(--ah-title);
   text-wrap: balance;
 }
 
+@media (min-width: 768px) {
+  .about-hero__title {
+    white-space: nowrap;
+    font-size: clamp(1.65rem, 2.8vw, 2.75rem);
+  }
+}
+
 .about-hero__title-highlight {
-  display: block;
+  display: inline;
   background: linear-gradient(120deg, var(--ah-highlight) 0%, #c4b5fd 50%, #d4a574 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -124,8 +134,8 @@
 }
 
 .about-hero__subtitle {
-  margin: 0;
-  max-width: 36rem;
+  margin: 0 auto;
+  max-width: 42rem;
   font-size: clamp(1rem, 2.2vw, 1.125rem);
   line-height: 1.65;
   color: var(--ah-body);

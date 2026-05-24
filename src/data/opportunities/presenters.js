@@ -69,8 +69,8 @@ export function toFeaturedFranchiseCard(opp) {
   };
 }
 
-export function getFeaturedFranchiseCards(limit = 3) {
-  const ranked = [...franchiseOpportunities].sort((a, b) => {
+function rankFeaturedOpportunities() {
+  return [...franchiseOpportunities].sort((a, b) => {
     const score = (o) =>
       (o.badge === 'POPULAR' ? 3 : 0) +
       (o.badge === 'HIGH ROI' ? 2 : 0) +
@@ -78,7 +78,21 @@ export function getFeaturedFranchiseCards(limit = 3) {
       (o.roiValue ?? 0) / 100;
     return score(b) - score(a);
   });
-  return ranked.slice(0, limit).map(toFeaturedFranchiseCard);
+}
+
+/** Curated homepage featured row. */
+const HOME_PAGE_FEATURED_SLUGS = ['10-downing-street', 'biggies-burger', 'odette'];
+
+/** Raw opportunity rows for homepage featured section. */
+export function getFeaturedOpportunities(limit = 3) {
+  const bySlug = (slug) => franchiseOpportunities.find((o) => o.slug === slug);
+  const curated = HOME_PAGE_FEATURED_SLUGS.map(bySlug).filter(Boolean);
+  if (curated.length) return curated.slice(0, limit);
+  return rankFeaturedOpportunities().slice(0, limit);
+}
+
+export function getFeaturedFranchiseCards(limit = 3) {
+  return getFeaturedOpportunities(limit).map(toFeaturedFranchiseCard);
 }
 
 /**
@@ -114,6 +128,19 @@ export function getInvestorDashboardOpportunities() {
 
 export function getPartnerBrandNames(limit = 8) {
   return franchiseOpportunities.slice(0, limit).map((o) => o.brandName);
+}
+
+/** Logo assets for trust marquee on brand-owner pages */
+export function getPartnerBrandLogos(limit = 8) {
+  return franchiseOpportunities
+    .filter((o) => o.logo)
+    .slice(0, limit)
+    .map((o) => ({
+      id: String(o.id),
+      name: o.brandName,
+      label: o.brandName,
+      src: o.logo,
+    }));
 }
 
 /**

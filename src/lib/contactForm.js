@@ -1,13 +1,13 @@
-/** Contact form helpers — client-side readiness + 10-digit phone */
+/** Contact form helpers — re-export phone utilities + email readiness */
+
+import { digitsOnlyPhone, isValidPhone10 } from './phoneInput.js';
+
+export { digitsOnlyPhone };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function digitsOnlyPhone(value) {
-  return String(value ?? '').replace(/\D/g, '').slice(0, 10);
-}
-
 export function isValidContactPhone10(value) {
-  return /^\d{10}$/.test(digitsOnlyPhone(value));
+  return isValidPhone10(value);
 }
 
 export function isValidContactEmail(value) {

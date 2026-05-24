@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
-import { PHONE_PLACEHOLDER } from '@/lib/phoneInput';
+import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
@@ -22,17 +22,13 @@ import CtaButton from './ui/CtaButton';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import {
   franchiseOpportunities,
-  getPartnerBrandNames,
+  getPartnerBrandLogos,
   getBrandCaseStudies,
-  getTotalCities,
-  getAverageROI,
-  calculateGrowthMetrics,
-  getTopCities,
-  getMarketTrends,
 } from '../data/franchiseData';
 import { FiArrowRight } from 'react-icons/fi';
 import { BRAND_OWNERS_INDUSTRIES } from '../data/sectionImages';
 import IndustryCard from './IndustryCard';
+import TrustLogoMarquee from './ui/TrustLogoMarquee.jsx';
 import LybExpansionVisualPanel from './LybExpansionVisualPanel';
 
 /** Shared layout - continuous page, tight vertical rhythm */
@@ -273,7 +269,6 @@ export default function ForBrandOwnersPage() {
       <ProblemsSection />
 
       <GrowthInvestorSection />
-      <BrandsSection />
 
       {/* -- separator -- */}
       
@@ -302,7 +297,7 @@ const TRUST_STATS = [
   { value: 94,   suffix: '%', label: 'Investor Engagement Rate'},
 ];
 
-const PARTNER_LOGOS = getPartnerBrandNames(8);
+const PARTNER_LOGOS = getPartnerBrandLogos(10);
 
 function TrustCounter({ target, suffix, duration = 1800 }) {
   const [count, setCount] = useState(0);
@@ -392,30 +387,14 @@ function TrustStrip() {
           ))}
         </motion.div>
 
-        {/* scrolling marquee of partner logos */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.15 }}
-          className="lyb-trust-marquee relative overflow-hidden"
+          className="lyb-trust-marquee"
         >
-          <div className="lyb-marquee-fade lyb-marquee-fade--left pointer-events-none" aria-hidden />
-          <div className="lyb-marquee-fade lyb-marquee-fade--right pointer-events-none" aria-hidden />
-          <motion.div
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-            className="flex w-max gap-4"
-          >
-            {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((name, i) => (
-              <div
-                key={`${name}-${i}`}
-                className="lyb-trust-logo-card flex min-w-[132px] items-center justify-center rounded-xl px-5 py-2.5"
-              >
-                <span className="lyb-trust-logo-text whitespace-nowrap text-[0.75rem] font-bold">{name}</span>
-              </div>
-            ))}
-          </motion.div>
+          <TrustLogoMarquee partners={PARTNER_LOGOS} variant="franchise" animationClass="animate-marquee-right" />
         </motion.div>
 
       </motion.div>
@@ -881,12 +860,11 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                   </Field>
                   <Field label="Phone" required compact={fitViewport}>
                     <input
-                      type="tel"
                       className={fieldClass}
                       value={form.phone}
-                      onChange={(e) => set('phone', e.target.value)}
-                      placeholder={PHONE_PLACEHOLDER}
+                      onChange={(e) => set('phone', digitsOnlyPhone(e.target.value))}
                       required
+                      {...phoneInputProps()}
                     />
                   </Field>
                   <Field label="Category" required compact={fitViewport}>
@@ -942,324 +920,6 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
         </div>
       </motion.div>
     </motion.div>
-  );
-}
-/* BrandsSection.jsx */
-function MiniBar({ value, max, color = 'violet', delay = 0, live = false }) {
-  const pct = Math.round((value / max) * 100);
-  return (
-    <div className="flex items-center gap-1.5">
-      <div className="lyb-mini-bar-track h-1 flex-1 overflow-hidden rounded-full">
-        <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: `${pct}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-          className={`h-full rounded-full bg-gradient-to-r ${
-            color === 'violet'  ? 'from-violet-400 to-indigo-400' :
-            color === 'emerald' ? 'from-emerald-400 to-teal-400'  :
-            'from-amber-400 to-orange-400'
-          }`}
-        />
-      </div>
-      <span className="lyb-mini-bar-pct w-6 text-right text-[0.58rem] font-bold tabular-nums">{pct}%</span>
-    </div>
-  );
-}
-
-const BRANDS_SECTION_BENEFITS = [
-  { title: 'Franchise-Ready in 30 Days', stat: '30 days', desc: 'Complete model, docs & systems built fast.' },
-  { title: 'Qualified Investor Pipeline', stat: '1,800+', desc: 'Only serious, capital-ready investors reach you.' },
-  { title: 'Multi-City Expansion Roadmap', stat: '17+ cities', desc: 'Data-driven territory strategy for every market.' },
-  { title: 'Ongoing Operational Support', stat: 'Always on', desc: 'We stay with you through every unit launch.' },
-];
-
-function LiveCounter({ display, className = '' }) {
-  const match = String(display).match(/([\d.]+)(.*)/);
-  const target = match ? parseFloat(match[1]) : 0;
-  const suffix = match ? match[2] : display;
-  const [val, setVal] = useState(0);
-  const ref = useRef(null);
-  const done = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !target) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !done.current) {
-        done.current = true;
-        const start = performance.now();
-        const tick = (now) => {
-          const p = Math.min((now - start) / 1200, 1);
-          const eased = 1 - Math.pow(1 - p, 3);
-          setVal(eased * target);
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-        io.disconnect();
-      }
-    }, { threshold: 0.4 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [target]);
-
-  const shown = Number.isInteger(target) ? Math.round(val) : val.toFixed(1);
-  return (
-    <span ref={ref} className={`tabular-nums ${className}`}>
-      {target ? shown : display}{suffix}
-    </span>
-  );
-}
-
-function BenefitCard({ benefit, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
-      whileHover={{ y: -4, scale: 1.02 }}
-      className="lyb-benefit-card group relative flex h-full min-h-[140px] flex-col items-center justify-center gap-2.5 rounded-xl border border-violet-500/20 p-4 text-center shadow-sm transition-shadow hover:border-violet-400/35 hover:shadow-md"
-    >
-      <motion.div
-        className="lyb-benefit-icon flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-600 shadow-lg shadow-violet-600/25"
-        animate={{ scale: [1, 1.08, 1] }}
-        transition={{ duration: 2.8, repeat: Infinity, delay: index * 0.35, ease: 'easeInOut' }}
-      >
-        <span className="lyb-benefit-icon-num text-sm font-extrabold leading-none text-white">{index + 1}</span>
-      </motion.div>
-      <p className="lyb-benefit-title text-[0.84rem] font-bold leading-snug sm:text-[0.9rem]">{benefit.title}</p>
-      <p className="lyb-benefit-desc max-w-[200px] text-[0.72rem] leading-relaxed sm:text-[0.76rem]">{benefit.desc}</p>
-      <span className="lyb-benefit-stat rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-0.5 text-[0.62rem] font-bold uppercase tracking-wide">
-        {benefit.stat}
-      </span>
-    </motion.div>
-  );
-}
-
-const ONBOARDING = [
-  { label: 'Brand Discovery & Audit',   status: 'live'     },
-  { label: 'Franchise Model Design',    status: 'live'     },
-  { label: 'Legal Documentation',       status: 'live'     },
-  { label: 'Investor Deck Prep',        status: 'progress' },
-  { label: 'Territory Mapping',         status: 'progress' },
-  { label: 'Investor Outreach Launch',  status: 'pending'  },
-];
-
-const STATUS_COLOR = { live: 'bg-emerald-500', progress: 'bg-amber-400', pending: 'bg-slate-500' };
-const STATUS_TEXT  = { live: 'text-emerald-400', progress: 'text-amber-400', pending: 'text-white' };
-const STATUS_LABEL = { live: 'Live', progress: 'In Progress', pending: 'Pending' };
-
-function LiveStatusDot({ status }) {
-  const pulse = status === 'live' || status === 'progress';
-  return (
-    <span className="relative flex h-2 w-2 shrink-0">
-      {pulse && (
-        <span className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${STATUS_COLOR[status]}`} />
-      )}
-      <span className={`relative inline-flex h-2 w-2 rounded-full ${STATUS_COLOR[status]}`} />
-    </span>
-  );
-}
-
-function BrandsSection() {
-  const markets     = useMemo(() => getMarketTrends(), []);
-  const topCities   = useMemo(() => getTopCities(4), []);
-  const avgROI      = useMemo(() => getAverageROI(), []);
-  const cityCount   = useMemo(() => getTotalCities(), []);
-  const totalBrands = useMemo(() => franchiseOpportunities.length, []);
-  const growth      = useMemo(() => calculateGrowthMetrics(), []);
-  const maxCount    = useMemo(() => Math.max(...markets.map(m => m.count)), [markets]);
-
-  return (
-    <section className="lyb-brands-section relative overflow-hidden bg-transparent py-10 lg:py-14">
-      <motion.div className={`${LYB_CONTAINER} relative z-10`}>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="lyb-dark-heading lyb-brands-heading mb-8 text-center lg:mb-10"
-        >
-          <motion.div className="mb-4 flex justify-center">
-            <span className="lyb-section-badge lyb-brands-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
-              For Brand Owners
-            </span>
-          </motion.div>
-          <h2 className={`lyb-page-h2 lyb-section-heading-on-dark mx-auto max-w-3xl ${sectionTitleClass(false)}`}>
-            Everything Your Brand Needs to{' '}
-            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
-              Franchise at Scale
-            </span>
-          </h2>
-          <p className="lyb-section-subtext mx-auto mt-3 max-w-2xl text-[0.88rem] leading-relaxed sm:text-[0.92rem]">
-            From franchise model design to investor acquisition - we handle the full expansion infrastructure so you focus on building your brand.
-          </p>
-        </motion.div>
-
-        <motion.div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex h-full min-h-0 flex-col justify-between gap-6"
-          >
-            <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
-              {BRANDS_SECTION_BENEFITS.map((b, i) => (
-                <BenefitCard key={b.title} benefit={b} index={i} />
-              ))}
-            </div>
-
-            <motion.div className="flex justify-center pt-2">
-              <CtaButton
-                className="mx-auto"
-                size="sm"
-                type="button"
-                onClick={scrollToHeroInquiry}
-              >
-                Begin Your Listing Application
-              </CtaButton>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex h-full min-h-0 flex-col"
-          >
-            <motion.div
-              className="lyb-live-dashboard theme-dark-surface card-premium-dark relative flex h-full min-h-[420px] flex-col overflow-hidden rounded-2xl shadow-xl lg:min-h-0"
-              animate={{ boxShadow: ['0 20px 50px rgba(109,40,217,0.15)', '0 24px 56px rgba(109,40,217,0.28)', '0 20px 50px rgba(109,40,217,0.15)'] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <motion.div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.5, repeat: Infinity }} />
-              <motion.div className="lyb-dash-header flex items-center justify-between border-b border-violet-500/25 px-4 py-2.5">
-                <motion.div>
-                  <p className="text-[0.72rem] font-bold text-white">Brand Expansion Dashboard</p>
-                  <p className="text-[0.6rem] text-white">Operational intelligence - Live data</p>
-                </motion.div>
-                <motion.div className="lyb-live-pill flex items-center justify-center gap-1.5">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  </span>
-                  <span className="text-[0.58rem] font-bold uppercase tracking-wider text-emerald-400">Live</span>
-                </motion.div>
-              </motion.div>
-
-              <motion.div className="flex flex-1 flex-col space-y-3 p-3">
-                <motion.div className="grid grid-cols-3 gap-2">
-                  {[
-                    { label: 'Active Brands', value: `${totalBrands}+`, color: 'text-violet-400' },
-                    { label: 'Cities', value: `${cityCount}+`, color: 'text-indigo-400' },
-                    { label: 'Avg ROI', value: `${avgROI}%`, color: 'text-emerald-400' },
-                  ].map((k, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 6 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 }}
-                      whileHover={{ scale: 1.03 }}
-                      className="lyb-dash-panel lyb-kpi-tile flex flex-col items-center justify-center rounded-xl border border-violet-500/25 py-3"
-                    >
-                      <p className={`text-lg font-extrabold ${k.color}`}>
-                        <LiveCounter display={k.value} />
-                      </p>
-                      <p className="mt-0.5 text-center text-[0.58rem] text-white">{k.label}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                <motion.div className="grid grid-cols-2 gap-2">
-                  <motion.div className="lyb-dash-panel rounded-xl border border-violet-500/25 p-2.5">
-                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Market Tracker</p>
-                    <motion.div className="space-y-1.5">
-                      {markets.slice(0, 4).map((m, i) => (
-                        <motion.div key={i} className="space-y-0.5">
-                          <motion.div className="flex items-center justify-between">
-                            <span className="max-w-[80px] truncate text-[0.62rem] text-white">{m.industry}</span>
-                            <span className="text-[0.58rem] text-white">{m.count}</span>
-                          </motion.div>
-                          <MiniBar value={m.count} max={maxCount} color={i % 2 === 0 ? 'violet' : 'emerald'} delay={i * 0.08} live />
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </motion.div>
-
-                  <motion.div className="lyb-dash-panel rounded-xl border border-violet-500/25 p-2.5">
-                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Onboarding Pipeline</p>
-                    <motion.div className="space-y-1.5">
-                      {ONBOARDING.map((o, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: -6 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.3, delay: i * 0.05 }}
-                          className="flex flex-col items-center gap-1 text-center sm:flex-row sm:justify-between sm:text-left"
-                        >
-                          <span className="max-w-[90px] truncate text-[0.62rem] text-violet-100/80">{o.label}</span>
-                          <div className="lyb-status-pill flex items-center justify-center gap-1.5">
-                            <LiveStatusDot status={o.status} />
-                            <span className={`text-[0.58rem] font-bold ${STATUS_TEXT[o.status]}`}>{STATUS_LABEL[o.status]}</span>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-
-                <motion.div className="grid grid-cols-2 gap-2">
-                  <motion.div className="lyb-dash-panel lyb-top-cities-panel rounded-xl border border-violet-500/25 p-2.5">
-                    <p className="lyb-dash-panel-title mb-2 text-center text-[0.6rem] font-bold uppercase tracking-wider">Top Cities</p>
-                    <motion.div className="space-y-1">
-                      {topCities.map((c, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: -4 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: i * 0.08 }}
-                          className="lyb-top-cities-row flex items-center justify-between rounded-md px-2 py-1"
-                        >
-                          <span className="lyb-top-cities-city truncate text-[0.65rem] font-medium">{c.city}</span>
-                          <motion.span
-                            animate={{ opacity: [0.85, 1, 0.85] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                            className="lyb-top-cities-count text-[0.6rem] font-bold tabular-nums"
-                          >
-                            {c.count}
-                          </motion.span>
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  </motion.div>
-
-                  <motion.div className="lyb-dash-panel flex flex-col gap-2 rounded-xl border border-violet-500/25 p-2.5">
-                    <p className="lyb-dash-panel-title text-center text-[0.6rem] font-bold uppercase tracking-wider">Growth Analytics</p>
-                    <motion.div className="flex flex-1 flex-col justify-center gap-2">
-                      <motion.div className="lyb-dash-metric flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                        <LiveCounter display={`${growth.growthRate}%`} className="text-base font-extrabold text-emerald-400" />
-                        <span className="lyb-dash-metric-label text-[0.58rem]">Growth Rate</span>
-                      </motion.div>
-                      <motion.div className="lyb-dash-metric flex flex-col items-center justify-center rounded-lg p-2 text-center">
-                        <LiveCounter display={String(growth.recentCount)} className="text-base font-extrabold text-violet-400" />
-                        <span className="lyb-dash-metric-label text-[0.58rem]">New This Quarter</span>
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    </section>
   );
 }
 

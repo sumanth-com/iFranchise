@@ -16,7 +16,7 @@ import {
   applyScroll,
   scrollToHashSection,
 } from './lib/navigation';
-import { FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
+import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
@@ -245,7 +245,13 @@ function App() {
 
       <PreFooterCTA
         variant={isCareerDetailPage ? 'careers-detail' : 'default'}
-        shellClassName={isFranchiseOpportunitiesPage ? FRANCHISE_OPPORTUNITIES_SHELL : ''}
+        shellClassName={
+          isFranchiseOpportunitiesPage
+            ? FRANCHISE_OPPORTUNITIES_SHELL
+            : isFranchiseDetailsPage
+              ? FRANCHISE_DETAILS_SHELL
+              : ''
+        }
       />
       <Footer />
 

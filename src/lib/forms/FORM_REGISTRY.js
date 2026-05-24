@@ -52,4 +52,11 @@ export const FORM_REGISTRY = [
     sourcePage: 'expansion_assistant_strategy_calendar',
     hook: 'fire-and-forget',
   },
+  {
+    id: 'franchise_details_brochure',
+    label: 'Franchise brochure download',
+    submitter: 'submitBrochureDownload',
+    sourcePage: 'franchise_details_brochure',
+    hook: 'useFormSubmission',
+  },
 ];

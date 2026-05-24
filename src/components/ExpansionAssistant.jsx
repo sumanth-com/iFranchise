@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef, createContext, useContext, us
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
 import { useAsyncFormAction } from '../hooks/useAsyncFormAction';
-import { PHONE_PLACEHOLDER, maskPhoneDisplay } from '@/lib/phoneInput';
+import { PHONE_PLACEHOLDER, digitsOnlyPhone, formatPhoneDisplay, isValidPhone10 } from '@/lib/phoneInput';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
@@ -598,12 +598,18 @@ function ConsultationScheduleFields({ schedule, setSchedule }) {
 // -- Text Input ----------------------------------------------------------------
 function TextInput({ placeholder, value, onChange, type = 'text' }) {
   const p = useAssistantPalette();
+  const isPhone = type === 'tel';
   return (
     <input
       type={type}
       placeholder={placeholder}
       value={value || ''}
-      onChange={(e) => onChange(e.target.value)}
+      inputMode={isPhone ? 'numeric' : undefined}
+      autoComplete={isPhone ? 'tel-national' : undefined}
+      maxLength={isPhone ? 10 : undefined}
+      pattern={isPhone ? '[0-9]{10}' : undefined}
+      title={isPhone ? 'Enter a 10-digit mobile number' : undefined}
+      onChange={(e) => onChange(isPhone ? digitsOnlyPhone(e.target.value) : e.target.value)}
       className="ea-text-input mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none transition-all duration-150"
       style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
       onFocus={(e) => { e.target.style.border = `1px solid ${p.inputFocusBorder}`; e.target.style.background = p.inputFocusBg; }}
@@ -866,7 +872,7 @@ function BrandsView({ setView }) {
   const val = data[current?.key];
   const canContinue = (() => {
     if (current?.type === 'contact') {
-      return Boolean(data.contactName?.trim() && data.contactPhone?.trim());
+      return Boolean(data.contactName?.trim() && isValidPhone10(data.contactPhone));
     }
     if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
       return Boolean(data[current.otherKey]?.trim());
@@ -934,7 +940,7 @@ function BrandsView({ setView }) {
             { label: 'Target Cities', value: data.cities === 'Other' ? data.citiesOther : data.cities },
             { label: 'Investment', value: data.investment },
             { label: 'Contact', value: data.contactName },
-            { label: 'Phone', value: maskPhoneDisplay(data.contactPhone) },
+            { label: 'Phone', value: formatPhoneDisplay(data.contactPhone) },
           ]} />
           <FormError message={submitError} />
         </div>
@@ -1008,30 +1014,25 @@ const INVESTOR_STEPS = [
   { q: 'Investment budget?', type: 'chips', key: 'budget', options: ['Under Rs.25L', 'Rs.25L-Rs.50L', 'Rs.50L-Rs.1Cr', 'Rs.1Cr-Rs.5Cr', 'Rs.5Cr+'] },
   { q: 'Target cities?', type: 'chips', key: 'cities', otherKey: 'citiesOther', otherPlaceholder: 'Type your city...', options: ['Mumbai', 'Delhi', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pan India', 'Other'] },
   { q: 'Investment timeline?', type: 'chips', key: 'timeline', options: ['Immediate', '3 months', '6 months', '12 months+'] },
+  { q: 'Your name & contact?', type: 'contact', key: 'contact' },
 ];
 
-function InvestorsView({ setView, setIsOpen }) {
+function InvestorsView({ setView }) {
   const p = useAssistantPalette();
   const [step, setStep] = useState(0);
   const [data, setData] = useState({});
   const [done, setDone] = useState(false);
-  const submittedRef = useRef(false);
-  const { error: submitError, execute, reset: resetInvestorSubmit } = useAsyncFormAction({
+  const { submitting, error: submitError, complete, execute, reset: resetInvestorSubmit } = useAsyncFormAction({
     formKey: 'expansion_assistant_investor',
     onAction: (payload) => submitChatbotLead(payload, 'investor', 'expansion_assistant_investor'),
   });
 
-  useEffect(() => {
-    if (!done || submittedRef.current) return;
-    submittedRef.current = true;
-    execute(data).then((result) => {
-      if (!result?.success) submittedRef.current = false;
-    });
-  }, [done, data, execute]);
-
   const current = INVESTOR_STEPS[step];
   const val = data[current?.key];
   const canContinue = (() => {
+    if (current?.type === 'contact') {
+      return Boolean(data.contactName?.trim() && isValidPhone10(data.contactPhone));
+    }
     if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
       return Boolean(data[current.otherKey]?.trim());
     }
@@ -1043,6 +1044,42 @@ function InvestorsView({ setView, setIsOpen }) {
     else setDone(true);
   };
 
+  const handleSubmit = () => execute(data);
+
+  if (complete) {
+    return (
+      <motion.div
+        key="investors-complete"
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -12 }}
+        transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      >
+        <FlowHeader title="Thank you" onBack={() => setView('home')} />
+        <AssistantFlowSuccess
+          iconStyle={{
+            width: 48,
+            height: 48,
+            borderRadius: 14,
+            background: 'rgba(34,197,94,0.15)',
+            border: '1px solid rgba(34,197,94,0.35)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 22,
+          }}
+          titleStyle={{ fontSize: 15, fontWeight: 600, color: p.questionColor }}
+          bodyStyle={{ color: p.mutedText, fontSize: 12, margin: 0, lineHeight: 1.5 }}
+          title="Request received"
+          description="Our team will review your preferences and contact you with matching franchise opportunities."
+        >
+          <ContinueBtn onClick={() => setView('home')} label="Back to Home" />
+        </AssistantFlowSuccess>
+      </motion.div>
+    );
+  }
+
   if (done) {
     return (
       <motion.div
@@ -1053,21 +1090,24 @@ function InvestorsView({ setView, setIsOpen }) {
         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <FlowHeader title="Matching Opportunities" onBack={() => { resetInvestorSubmit(); submittedRef.current = false; setDone(false); setStep(INVESTOR_STEPS.length - 1); }} />
+        <FlowHeader title="Your Summary" onBack={() => { resetInvestorSubmit(); setDone(false); setStep(INVESTOR_STEPS.length - 1); }} />
         <div style={{ flex: 1, overflowY: 'auto', padding: '16px 16px', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <SummaryCard rows={[
             { label: 'Industries', value: Array.isArray(data.industries) ? data.industries.join(', ') : data.industries },
             { label: 'Budget', value: data.budget },
             { label: 'Cities', value: data.cities === 'Other' ? data.citiesOther : data.cities },
             { label: 'Timeline', value: data.timeline },
+            { label: 'Contact', value: data.contactName },
+            { label: 'Phone', value: formatPhoneDisplay(data.contactPhone) },
           ]} />
-          <p style={{ color: p.mutedText, fontSize: 12, textAlign: 'center', margin: 0 }}>
-            We have curated opportunities matching your profile.
-          </p>
-          {submitError ? (
-            <p style={{ color: '#f87171', fontSize: 12, textAlign: 'center', margin: 0 }}>{submitError}</p>
-          ) : null}
-          <ContinueBtn onClick={() => navTo('/franchise-opportunities', setIsOpen)} label="Browse Matching Opportunities" />
+          <FormError message={submitError} />
+        </div>
+        <div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
+          <ContinueBtn
+            onClick={handleSubmit}
+            disabled={submitting}
+            label={submitting ? 'Submitting…' : 'Submit'}
+          />
         </div>
       </motion.div>
     );
@@ -1093,22 +1133,30 @@ function InvestorsView({ setView, setIsOpen }) {
         <div style={{ fontSize: 14, fontWeight: 600, color: p.questionColor, letterSpacing: '-0.02em', marginBottom: 4 }}>
           {current.q}
         </div>
-        <ChipSelect
-          options={current.options}
-          value={data[current.key]}
-          onChange={v => setData(d => ({ ...d, [current.key]: v }))}
-          multi={current.multi}
-          otherKey={current.otherKey}
-          otherValue={current.otherKey ? data[current.otherKey] : undefined}
-          onOtherChange={current.otherKey ? v => setData(d => ({ ...d, [current.otherKey]: v })) : undefined}
-          otherPlaceholder={current.otherPlaceholder || 'Enter details...'}
-        />
+        {current.type === 'chips' && (
+          <ChipSelect
+            options={current.options}
+            value={data[current.key]}
+            onChange={v => setData(d => ({ ...d, [current.key]: v }))}
+            multi={current.multi}
+            otherKey={current.otherKey}
+            otherValue={current.otherKey ? data[current.otherKey] : undefined}
+            onOtherChange={current.otherKey ? v => setData(d => ({ ...d, [current.otherKey]: v })) : undefined}
+            otherPlaceholder={current.otherPlaceholder || 'Enter details...'}
+          />
+        )}
+        {current.type === 'contact' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <TextInput placeholder="Your full name" value={data.contactName} onChange={v => setData(d => ({ ...d, contactName: v }))} />
+            <TextInput placeholder={PHONE_PLACEHOLDER} value={data.contactPhone} onChange={v => setData(d => ({ ...d, contactPhone: v }))} type="tel" />
+          </div>
+        )}
       </div>
       <motion.div style={{ padding: '12px 16px 16px', flexShrink: 0 }}>
         <ContinueBtn
           onClick={handleContinue}
           disabled={!canContinue}
-          label={step === INVESTOR_STEPS.length - 1 ? 'View Matches' : 'Continue'}
+          label={step === INVESTOR_STEPS.length - 1 ? 'View Summary' : 'Continue'}
         />
       </motion.div>
     </motion.div>
@@ -1758,7 +1806,7 @@ export default function ExpansionAssistant() {
               <AnimatePresence mode="wait">
                 {view === 'home' && <HomeView key="home" setView={setView} setIsOpen={setIsOpen} />}
                 {view === 'brands' && <BrandsView key="brands" setView={setView} setIsOpen={setIsOpen} />}
-                {view === 'investors' && <InvestorsView key="investors" setView={setView} setIsOpen={setIsOpen} />}
+                {view === 'investors' && <InvestorsView key="investors" setView={setView} />}
                 {view === 'strategy' && <StrategyView key="strategy" setView={setView} />}
                 {view === 'support' && <SupportView key="support" setView={setView} setIsOpen={setIsOpen} />}
               </AnimatePresence>

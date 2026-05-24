@@ -12,13 +12,17 @@ export {
   getFranchiseDetailById,
   getFranchiseListingById,
   getFranchiseBySlug,
+  getSimilarFranchiseDetails,
   RAW_BRANDS,
 } from './opportunities/index.js';
 
 export {
   getFeaturedFranchiseCards,
+  getFeaturedOpportunities,
   getInvestorDashboardOpportunities,
+  toInvestorDashboardOpportunity,
   getPartnerBrandNames,
+  getPartnerBrandLogos,
   getBrandCaseStudies,
   toFeaturedFranchiseCard,
 } from './opportunities/presenters.js';
@@ -126,11 +130,20 @@ export const calculateGrowthMetrics = () => {
   const recentOpportunities = franchiseOpportunities.filter(
     (opp) => new Date(opp.addedDate) >= threeMonthsAgo
   );
-  const growthRate = (recentOpportunities.length / franchiseOpportunities.length) * 100;
+  const listingGrowth = Math.round(
+    (recentOpportunities.length / Math.max(franchiseOpportunities.length, 1)) * 100
+  );
+  const avgRoi = getAverageROI();
+  // When no new listings in the window, show market expansion proxy from portfolio ROI (floor 18%)
+  const growthRate =
+    listingGrowth > 0
+      ? Math.max(listingGrowth, 8)
+      : Math.min(32, Math.max(18, Math.round(avgRoi * 0.72)));
+
   return {
     recentCount: recentOpportunities.length,
     totalCount: franchiseOpportunities.length,
-    growthRate: Math.round(growthRate),
+    growthRate,
   };
 };
 

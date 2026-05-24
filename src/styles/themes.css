@@ -941,7 +941,7 @@ html[data-theme='dark'] #main-content :is(
   [class*='text-violet-200'],
   [class*='text-violet-300'],
   [class*='text-white/']
-):not(.careers-faq-toggle):not(.careers-faq-toggle-icon):not(.services-faq-toggle):not(.services-faq-toggle-icon),
+):not(.careers-faq-toggle):not(.careers-faq-toggle-icon):not(.services-faq-toggle):not(.services-faq-toggle-icon):not(.services-dashboard-panel):not(.services-dashboard-panel *),
 html[data-theme='dark'] .card-premium-dark :is(
   [class*='text-slate-100'],
   [class*='text-slate-200'],
@@ -1131,15 +1131,85 @@ html[data-theme='light'] #main-content .theme-section-on-light .theme-section-ba
 }
 
 html[data-theme='dark'] .site-section-pill,
-html[data-theme='dark'] #main-content .site-section-pill {
+html[data-theme='dark'] #main-content .site-section-pill,
+html[data-theme='dark'] #main-content .theme-section-badge:not(.process-live-badge):not(.who-serve-image-tag) {
   background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='dark'] .site-section-pill:hover,
+html[data-theme='dark'] #main-content .site-section-pill:hover {
+  border-color: rgba(196, 181, 253, 0.45) !important;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.22);
+}
+
+html[data-theme='light'] .site-section-pill:hover,
+html[data-theme='light'] #main-content .site-section-pill:hover {
+  border-color: #c4b5fd !important;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.12);
 }
 
 html[data-theme='dark'] .site-section-pill__text,
-html[data-theme='dark'] #main-content .site-section-pill__text {
+html[data-theme='dark'] #main-content .site-section-pill__text,
+html[data-theme='dark'] #main-content .theme-section-badge:not(.process-live-badge):not(.who-serve-image-tag) {
   color: #ffffff !important;
+}
+
+/* Market intelligence — donut center + sector % on dark panels */
+html[data-theme='dark'] .market-donut-chart .market-donut-pct,
+html[data-theme='dark'] #main-content .market-donut-chart .market-donut-pct {
+  fill: #ffffff !important;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: inherit;
+}
+
+html[data-theme='dark'] .market-donut-chart .market-donut-label,
+html[data-theme='dark'] #main-content .market-donut-chart .market-donut-label {
+  fill: #ffffff !important;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-family: inherit;
+}
+
+html[data-theme='light'] .market-donut-chart .market-donut-pct,
+html[data-theme='light'] #main-content .market-donut-chart .market-donut-pct {
+  fill: #0b0f19 !important;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: inherit;
+}
+
+html[data-theme='light'] .market-donut-chart .market-donut-label,
+html[data-theme='light'] #main-content .market-donut-chart .market-donut-label {
+  fill: #64748b !important;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-family: inherit;
+}
+
+html[data-theme='dark'] .market-donut-chart .market-donut-track,
+html[data-theme='dark'] #main-content .market-donut-chart .market-donut-track {
+  stroke: rgba(255, 255, 255, 0.18) !important;
+}
+
+html[data-theme='light'] .market-donut-chart .market-donut-track,
+html[data-theme='light'] #main-content .market-donut-chart .market-donut-track {
+  stroke: #f1f5f9 !important;
+}
+
+html[data-theme='dark'] .theme-dark-surface .market-intel-sector-pct,
+html[data-theme='dark'] #main-content .theme-dark-surface .market-intel-sector-pct {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .theme-dark-surface .market-intel-sector-pct,
+html[data-theme='light'] #main-content .theme-dark-surface .market-intel-sector-pct {
+  color: #cbd5e1 !important;
 }
 
 /* Who We Serve - image corner tag: white + purple text in light */
@@ -3727,24 +3797,16 @@ html[data-theme='dark'] .list-your-brand-page .lyb-trust-pill {
   border: 1px solid rgba(167, 139, 250, 0.28) !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-trust-logo-card {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+html[data-theme='light'] .list-your-brand-page .lyb-trust-logo-card.trust-logo-card,
+html[data-theme='dark'] .list-your-brand-page .lyb-trust-logo-card.trust-logo-card {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14) !important;
 }
 
-html[data-theme='light'] .list-your-brand-page .lyb-trust-logo-text {
-  color: #0b0f19 !important;
-}
-
-html[data-theme='dark'] .list-your-brand-page .lyb-trust-logo-card {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(139, 92, 246, 0.22) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18) !important;
-}
-
-html[data-theme='dark'] .list-your-brand-page .lyb-trust-logo-text {
-  color: #ffffff !important;
+html[data-theme='light'] .list-your-brand-page .lyb-trust-logo-card.trust-logo-card {
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
 }
 
 /* -- Light mode: hero & section headings - black -- */
@@ -5116,6 +5178,65 @@ html[data-theme='dark'] #main-content .services-dashboard-panel button.bg-violet
   color: #ffffff !important;
 }
 
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-txt-title,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-txt-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-txt-body,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-txt-body {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-txt-muted,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-txt-muted {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-txt-accent,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-txt-accent {
+  color: #047857 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-filter-btn,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-filter-btn {
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-filter-btn:hover,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-filter-btn:hover {
+  color: #6d28d9 !important;
+  border-color: #c4b5fd !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-chart-label,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-chart-label {
+  color: #475569 !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-chart-title,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-chart-title {
+  color: #0f172a !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-chart-live,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-chart-live {
+  color: #047857 !important;
+  background: transparent !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-bar-label,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-bar-label {
+  color: #ffffff !important;
+  background: transparent !important;
+}
+
 /* Services page - For Brands / For Investors copy (readable on light background) */
 html[data-theme='light'] #main-content .services-audience-copy h2,
 html[data-theme='light'] #main-content .services-audience-copy .text-white,
@@ -5796,6 +5917,33 @@ html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-filter-btn svg
   stroke: #ffffff !important;
 }
 
+/* Franchise opportunities — dark: one continuous site backdrop (no section bands) */
+html[data-theme='dark'] .franchise-opportunities-page {
+  background: transparent !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-filter-toolbar.card-premium-dark {
+  background: var(--theme-bg-glass) !important;
+  border: 1px solid var(--theme-border) !important;
+  box-shadow: var(--theme-shadow-sm) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-empty-state {
+  background: var(--theme-bg-glass) !important;
+  border-color: var(--theme-border) !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-work--dark {
+  background: transparent !important;
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 /* Franchise opportunities: wider marketplace layout */
 .franchise-opportunities-page .fo-filter-select {
   background-color: #ffffff !important;
@@ -5808,13 +5956,13 @@ html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-filter-btn svg
   background-color: #ffffff !important;
 }
 
-html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-sticky {
-  background: rgba(255, 255, 255, 0.96) !important;
-  border-bottom-color: rgba(148, 163, 184, 0.28) !important;
-}
-
-html[data-theme='dark'] .franchise-opportunities-page .fo-toolbar-sticky {
-  background: rgba(10, 6, 24, 0.94) !important;
+/* Sticky filter row — no full-width panel; page gradient shows through */
+.franchise-opportunities-page .fo-toolbar-sticky {
+  background: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* Filter count badge keeps white on violet */
@@ -5823,7 +5971,7 @@ html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [c
 }
 
 /* Franchise opportunity cards — brand-colored header, premium hover */
-.franchise-opportunities-page .fo-opportunity-card {
+.fo-opportunity-card {
   --fo-card-bg: #12082a;
   --fo-card-accent: #7c3aed;
   border: 1px solid rgba(139, 92, 246, 0.12);
@@ -5834,7 +5982,7 @@ html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [c
   will-change: transform;
 }
 
-.franchise-opportunities-page .fo-opportunity-card:hover {
+.fo-opportunity-card:hover {
   transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--fo-card-accent) 55%, rgba(139, 92, 246, 0.45));
   box-shadow:
@@ -5843,41 +5991,29 @@ html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [c
     0 12px 36px color-mix(in srgb, var(--fo-card-accent) 22%, transparent);
 }
 
-.franchise-opportunities-page .fo-opportunity-card__media {
+.fo-opportunity-card__media {
   background-color: var(--fo-card-bg);
   isolation: isolate;
 }
 
-.franchise-opportunities-page .fo-opportunity-card__img {
+.fo-opportunity-card__img {
+  position: absolute;
+  inset: 0;
   display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
-.franchise-opportunities-page .fo-opportunity-card__img--fill {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
+.fo-opportunity-card:hover .fo-opportunity-card__img {
+  transform: scale(1.03);
 }
 
-.franchise-opportunities-page .fo-opportunity-card__img--contain {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 0.625rem 0.875rem;
-  object-fit: contain;
-  object-position: center;
-}
-
-.franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__img--fill,
-.franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__img--contain {
-  transform: scale(1.035);
-}
-
-.franchise-opportunities-page .fo-opportunity-card__sheen {
+.fo-opportunity-card__sheen {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -5892,11 +6028,11 @@ html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [c
   z-index: 1;
 }
 
-.franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__sheen {
+.fo-opportunity-card:hover .fo-opportunity-card__sheen {
   transform: translateX(120%);
 }
 
-.franchise-opportunities-page .fo-opportunity-card__media::after {
+.fo-opportunity-card__media::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -5907,23 +6043,233 @@ html[data-theme='light'] .franchise-opportunities-page .fo-toolbar-filter-btn [c
   z-index: 1;
 }
 
-.franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__media::after {
+.fo-opportunity-card:hover .fo-opportunity-card__media::after {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .franchise-opportunities-page .fo-opportunity-card,
-  .franchise-opportunities-page .fo-opportunity-card__img,
-  .franchise-opportunities-page .fo-opportunity-card__sheen {
+  .fo-opportunity-card,
+  .fo-opportunity-card__img,
+  .fo-opportunity-card__sheen {
     transition: none !important;
   }
 
-  .franchise-opportunities-page .fo-opportunity-card:hover {
+  .fo-opportunity-card:hover {
     transform: none;
   }
 
-  .franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__img--fill,
-  .franchise-opportunities-page .fo-opportunity-card:hover .fo-opportunity-card__img--contain {
+  .fo-opportunity-card:hover .fo-opportunity-card__img {
     transform: none;
+  }
+}
+
+/* --- Franchise opportunities: page header + way we work --------------------- */
+.franchise-opportunities-page .fo-page-header__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.875rem;
+  padding: 1rem 0.75rem;
+  text-align: center;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header__stat {
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header__stat {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+}
+
+.franchise-opportunities-page .fo-page-header__stat-icon {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgba(124, 58, 237, 0.2);
+  color: #c4b5fd;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header__stat-icon {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.franchise-opportunities-page .fo-page-header__stat-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.franchise-opportunities-page .fo-page-header__stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.franchise-opportunities-page .fo-page-header__hint {
+  line-height: 1.5;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header h1,
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header .section-title {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header .fo-page-header__subtitle,
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header .fo-page-header__stat-label,
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header .fo-page-header__hint {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-page-header .fo-page-header__stat-value {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header h1,
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header .section-title,
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header .fo-page-header__stat-value {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header .fo-page-header__subtitle,
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header .fo-page-header__stat-label,
+html[data-theme='dark'] .franchise-opportunities-page .fo-page-header .fo-page-header__hint {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+@media (max-width: 640px) {
+  .franchise-opportunities-page .fo-page-header__title {
+    white-space: normal !important;
+  }
+}
+
+/* Way we work — clean 4-step grid */
+.franchise-opportunities-page .fo-way-work__header {
+  text-align: center;
+}
+
+.franchise-opportunities-page .fo-way-work__header .site-section-pill {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 640px) {
+  .franchise-opportunities-page .fo-way-work__title,
+  .franchise-opportunities-page .fo-way-work__subtitle {
+    white-space: normal !important;
+    max-width: 20rem;
+  }
+}
+
+.franchise-opportunities-page .fo-way-work--dark {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: transparent;
+}
+
+.franchise-opportunities-page .fo-way-work--light {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+}
+
+.franchise-opportunities-page .fo-way-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1rem;
+  padding: 1.25rem 1.25rem 1.35rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-card {
+  border: 1px solid rgba(167, 139, 250, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-way-card {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.franchise-opportunities-page .fo-way-card:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
+}
+
+.franchise-opportunities-page .fo-way-card__num {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: rgba(167, 139, 250, 0.65);
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-way-card__num {
+  color: #a78bfa;
+}
+
+.franchise-opportunities-page .fo-way-card__icon {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  margin-bottom: 0.85rem;
+  background: rgba(124, 58, 237, 0.2);
+  color: #c4b5fd;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-way-card__icon {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.franchise-opportunities-page .fo-way-card__title {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.franchise-opportunities-page .fo-way-card__desc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-card__title,
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-work h2 {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-card__desc,
+html[data-theme='dark'] .franchise-opportunities-page .fo-way-work p {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-way-card__title,
+html[data-theme='light'] .franchise-opportunities-page .fo-way-work h2 {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-way-card__desc,
+html[data-theme='light'] .franchise-opportunities-page .fo-way-work p {
+  color: #475569 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .franchise-opportunities-page .fo-way-card {
+    transition: none;
   }
 }

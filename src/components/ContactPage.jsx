@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
 import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
+import { phoneInputProps } from '@/lib/phoneInput';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -312,17 +313,11 @@ function ContactHeroForm({
               </ContactField>
               <ContactField label="Contact Number" required isLight={isLight}>
                 <input
-                  type="tel"
                   required
-                  inputMode="numeric"
-                  autoComplete="tel-national"
-                  maxLength={10}
                   value={formData.contactNumber}
                   onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
                   className={inputClass}
-                  placeholder="10-digit mobile number"
-                  pattern="[0-9]{10}"
-                  title="Enter a 10-digit mobile number"
+                  {...phoneInputProps()}
                 />
               </ContactField>
             </div>

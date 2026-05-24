@@ -1,6 +1,7 @@
 /** Validation logic for job application forms. */
 
 import { sanitizeObjectStrings } from '../../sanitize.js';
+import { validatePhoneField } from '../utils/fieldValidators.js';
 
 /**
  * Validate job application form data
@@ -41,16 +42,9 @@ export function validateJobApplicationForm(formData) {
     data.email = data.email.trim().toLowerCase();
   }
 
-  // Phone validation
-  if (!data.phone || data.phone.trim().length < 7) {
-    errors.phone = 'Phone number is too short';
-  } else if (data.phone.trim().length > 20) {
-    errors.phone = 'Phone number is too long';
-  } else if (!/^[\+]?[0-9\s\-\(\)]{7,20}$/.test(data.phone.trim())) {
-    errors.phone = 'Please enter a valid phone number';
-  } else {
-    data.phone = data.phone.trim();
-  }
+  const phoneResult = validatePhoneField(data.phone);
+  if (!phoneResult.ok) errors.phone = phoneResult.error;
+  else data.phone = phoneResult.value;
 
   // Portfolio validation (optional)
   if (data.portfolio && data.portfolio.trim()) {

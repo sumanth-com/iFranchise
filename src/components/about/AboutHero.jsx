@@ -74,8 +74,8 @@ export default function AboutHero() {
       <div className="about-hero__inner">
         <motion.div className="about-hero__head" {...fade(0, reduceMotion)}>
           <h1 id="about-hero-heading" className="about-hero__title">
-            We make franchise growth
-            <span className="about-hero__title-highlight"> simple to understand</span>
+            We make franchise growth{' '}
+            <span className="about-hero__title-highlight">simple to understand</span>
           </h1>
 
           <p className="about-hero__subtitle">

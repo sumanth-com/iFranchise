@@ -5,13 +5,15 @@ import { TYPE } from '../lib/typography.js';
 import { FiStar } from 'react-icons/fi';
 import ImageCarousel from './ImageCarousel';
 import FranchiseGetStartedSection from './FranchiseGetStartedSection';
+import BrochureDownloadButton from './BrochureDownloadButton';
 import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
 import {
-  franchiseDetailsById,
   franchiseSlugToId,
   getFranchiseDetailById,
+  getSimilarFranchiseDetails,
 } from '../data/franchiseData';
 import { getCarouselCategory } from '../data/opportunities/brandImages';
+import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 
 const tabs = ['Overview', 'Business Model', 'Investment Details', 'Locations', 'FAQ', 'Reviews'];
 
@@ -140,12 +142,10 @@ function FranchiseDetailsPage() {
     [selectedFranchise?.industry]
   );
 
-  const relatedFranchises = useMemo(() => {
-    const allEntries = Object.entries(franchiseDetailsById).map(([id, value]) => ({ id, ...value }));
-    const selected = allEntries.find((item) => item.id === selectedFranchiseId);
-    const others = allEntries.filter((item) => item.id !== selectedFranchiseId).slice(0, 2);
-    return selected ? [selected, ...others] : allEntries.slice(0, 3);
-  }, [selectedFranchiseId]);
+  const similarFranchises = useMemo(
+    () => getSimilarFranchiseDetails(selectedFranchiseId, 3),
+    [selectedFranchiseId],
+  );
 
   useEffect(() => {
     setActiveTab('Overview');
@@ -163,7 +163,13 @@ function FranchiseDetailsPage() {
   }, []);
 
   const handleRelatedDetails = (id) => {
+    const detail = getFranchiseDetailById(id);
+    if (detail?.slug) {
+      navigateTo(`/franchise/${detail.slug}`);
+      return;
+    }
     navigateTo(`/franchise-details?id=${id}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const renderTabContent = () => {
@@ -235,7 +241,7 @@ function FranchiseDetailsPage() {
   };
 
   return (
-    <main className="franchise-details-page mx-auto w-full max-w-[1600px] px-4 py-12 sm:px-6 lg:px-8 xl:px-12">
+    <main className={`franchise-details-page py-10 sm:py-12 lg:py-14 ${FRANCHISE_DETAILS_SHELL}`}>
       <div className="space-y-8">
         <section className="space-y-6">
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_22px_rgba(15,23,42,0.06)] lg:p-8">
@@ -255,27 +261,10 @@ function FranchiseDetailsPage() {
                 <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-semibold text-violet-700">{selectedFranchise.badge}</span>
               </div>
 
-              {/* Right: Download Brochure CTA */}
-              <a
-                href={selectedFranchise.brochureUrl || '#'}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-purple-solid group inline-flex w-fit items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] lg:w-auto"
-              >
-                {/* Download icon */}
-                <svg
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.2}
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
-                </svg>
-                Download Brochure
-              </a>
+              <BrochureDownloadButton
+                franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+                brochureUrl={selectedFranchise.brochureUrl}
+              />
             </div>
 
           </div>
@@ -486,16 +475,28 @@ function FranchiseDetailsPage() {
           <FranchiseGetStartedSection />
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
-            <div className="flex items-center justify-between gap-3">
-              <h3 className={`fd-copy fd-heading ${TYPE.subsection}`}>Explore Similar Opportunities</h3>
-              <span className="fd-copy text-xs font-semibold uppercase tracking-[0.12em]">Featured</span>
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h3 className={`fd-copy fd-heading ${TYPE.subsection}`}>Explore Similar Opportunities</h3>
+                <p className="fd-copy mt-1 text-sm text-slate-600">
+                  Other brands in a similar category and investment range — tap a card to view full details.
+                </p>
+              </div>
             </div>
             <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {relatedFranchises.map((franchise) => (
+              {similarFranchises.map((franchise) => (
                 <article
                   key={franchise.id}
+                  role="link"
+                  tabIndex={0}
                   onClick={() => handleRelatedDetails(franchise.id)}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)]"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleRelatedDetails(franchise.id);
+                    }
+                  }}
+                  className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
                 >
                   <div className="relative h-48 overflow-hidden">
                     <FranchiseSimilarCardImage

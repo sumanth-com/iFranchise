@@ -22,7 +22,7 @@ import biggies1 from '../../assets/BIGGIES BURGER/1.png';
 import biggies2 from '../../assets/BIGGIES BURGER/2.png';
 
 // — BIGGUYS
-import bigguysLogo from '../../assets/BIGGUYS/Logo.jfif';
+import bigguysLogo from '../../assets/BIGGUYS/Logo.png';
 
 // — Brand AVENUE
 import brandAvenueLogo from '../../assets/Brand AVENUE/Logo.jfif';
@@ -39,7 +39,7 @@ import fusion2 from '../../assets/Fusion pizza and Big burger/2.jpg';
 import kasturiLogo from '../../assets/kasturi/Logo.png';
 
 // — 10 Downing Street
-import downingLogo from '../../assets/10 Downing Street/Logo.jpg';
+import downingLogo from '../../assets/10 Downing Street/Logo.png';
 import downing1 from '../../assets/10 Downing Street/1.jpeg';
 import downing2 from '../../assets/10 Downing Street/2.jpeg';
 import downing3 from '../../assets/10 Downing Street/3.jpeg';
@@ -60,7 +60,7 @@ const IMG = (id, w = 1600) =>
  * @param {string} [cardAccent]
  * @param {'fill' | 'contain'} [cardFit]
  */
-function packLogoCard(logo, cardBackground, cardAccent = cardBackground, cardFit = 'contain') {
+function packLogoCard(logo, cardBackground, cardAccent = cardBackground, cardFit = 'fill') {
   const slideshow = [logo];
   return {
     logo,
@@ -90,7 +90,7 @@ function packBrandAssets(logo, photos = [], opts = {}) {
     banner,
     gallery: slideshow,
     slideshow,
-    cardFit: opts.cardFit ?? 'contain',
+    cardFit: opts.cardFit ?? 'fill',
     cardBackground,
     cardAccent: opts.cardAccent ?? cardBackground,
   };
@@ -112,17 +112,21 @@ export const BRAND_IMAGES_BY_SLUG = {
   }),
   bigguys: packLogoCard(bigguysLogo, '#e31837', '#ff4d6d'),
   'brand-avenue': packLogoCard(brandAvenueLogo, '#0b1638', '#f97316'),
-  'lassi-n-cafe': packLogoCard(lassiLogo, '#c41e2e', '#ef4444', 'contain'),
+  'lassi-n-cafe': packLogoCard(lassiLogo, '#c41e2e', '#ef4444'),
   kasturi: packLogoCard(kasturiLogo, '#1c1208', '#d97706'),
   'fusion-pizza-big-burger': packBrandAssets(fusionLogo, [fusion1, fusion2], {
     cardBackground: '#1a0a24',
     cardAccent: '#a855f7',
-    cardFit: 'contain',
   }),
   '10-downing-street': packBrandAssets(
     downingLogo,
     [downing1, downing2, downing3, downing4, downing5, downing6, downing7, downing8, downing9],
-    { cardBackground: '#0a0a0a', cardAccent: '#d4af37', cardFit: 'contain' }
+    {
+      card: downingLogo,
+      cardBackground: '#14532d',
+      cardAccent: '#ca8a04',
+      cardFit: 'fill',
+    }
   ),
 };
 

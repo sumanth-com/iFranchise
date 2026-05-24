@@ -217,11 +217,22 @@ img.loaded {
 
   .section-pill,
   .site-section-pill {
-    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.12em];
+    @apply inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em];
+    transition:
+      transform 0.35s var(--ease-premium),
+      box-shadow 0.35s var(--ease-premium),
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .site-section-pill:hover {
+    transform: translateY(-1px);
   }
 
   .site-section-pill__dot {
     @apply relative h-2 w-2 shrink-0 rounded-full bg-emerald-500;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
+    animation: site-section-pill-dot-pulse 2.4s ease-in-out infinite;
   }
 
   .site-section-pill__dot::before {
@@ -231,6 +242,16 @@ img.loaded {
 
   .site-section-pill__text {
     @apply leading-none;
+  }
+
+  @keyframes site-section-pill-dot-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35);
+    }
+    50% {
+      box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+    }
   }
 
   /* Section titles — see typography.css; color from themes.css + sectionHeadingClass */
@@ -374,6 +395,111 @@ img.loaded {
   .animate-marquee-right {
     animation: marquee-right 28s linear infinite;
     will-change: transform;
+  }
+
+  /* Trust partner logo rail — franchise brand logos, large & crisp */
+  .trust-marquee--hero {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.35rem 0;
+  }
+
+  .trust-marquee-track--hero,
+  .trust-marquee-track--franchise {
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .trust-marquee-track--hero,
+    .trust-marquee-track--franchise {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trust-marquee-track--hero,
+    .trust-marquee-track--franchise {
+      gap: 1.75rem;
+    }
+  }
+
+  .trust-logo-card {
+    box-sizing: border-box;
+    width: 10.75rem;
+    height: 4.5rem;
+    padding: 0.2rem 0.35rem;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .trust-logo-card--hero {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  }
+
+  .trust-logo-card--hero:hover {
+    background: #ffffff;
+    border-color: rgba(167, 139, 250, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(109, 40, 217, 0.22);
+  }
+
+  .trust-logo-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    min-width: 0;
+    object-fit: contain;
+    object-position: center;
+    opacity: 1;
+    image-rendering: -webkit-optimize-contrast;
+    transition: transform 0.3s ease;
+  }
+
+  @media (min-width: 640px) {
+    .trust-logo-card {
+      width: 12.25rem;
+      height: 5rem;
+      padding: 0.22rem 0.4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .trust-logo-card {
+      width: 13.5rem;
+      height: 5.5rem;
+      padding: 0.25rem 0.45rem;
+    }
+  }
+
+  .trust-logo-card:hover .trust-logo-img {
+    transform: scale(1.03);
+  }
+
+  .trust-marquee-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 3rem;
+    pointer-events: none;
+  }
+
+  .trust-marquee-fade--left {
+    left: 0;
+    background: linear-gradient(90deg, rgba(15, 10, 30, 0.95) 0%, transparent 100%);
+  }
+
+  .trust-marquee-fade--right {
+    right: 0;
+    background: linear-gradient(270deg, rgba(15, 10, 30, 0.95) 0%, transparent 100%);
+  }
+
+  .trust-marquee-track--franchise {
+    animation-duration: 32s;
   }
 
   .animate-mega-in {
@@ -3412,6 +3538,46 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600,
 html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .text-emerald-600 {
   color: #047857 !important;
+}
+
+/* Services dashboards — white inner panels: always dark readable copy (wins over global dark-mode slate→white) */
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-title,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-title,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-title,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-title {
+  color: #0f172a !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-body,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-body {
+  color: #334155 !important;
+  background: transparent !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-muted,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-muted,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-label,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-label {
+  color: #475569 !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-accent,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-txt-accent,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-live,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-live {
+  color: #047857 !important;
+  background: transparent !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-filter-btn,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-filter-btn {
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
 }
 
 html[data-theme='light'] #main-content .theme-dark-surface[class*='from-[#12082a'] .text-white,

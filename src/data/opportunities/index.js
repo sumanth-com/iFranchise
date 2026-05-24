@@ -35,3 +35,4 @@ export function getFranchiseBySlug(slug) {
 }
 
 export { RAW_BRANDS };
+export { getSimilarFranchiseDetails } from './similarFranchises.js';
