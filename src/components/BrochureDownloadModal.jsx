@@ -2,8 +2,11 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { FiDownload, FiX } from 'react-icons/fi';
 import { submitBrochureDownload } from '@/lib/forms/submitters/brochureDownloadSubmitter';
+import { validateBrochureDownloadForm } from '@/lib/forms/validators/brochureDownloadValidator';
+import { checkHoneypot, stripHoneypot } from '@/lib/forms/utils/honeypot';
 import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
 import { triggerBrochureDownload } from '@/data/opportunities/brochurePdfs';
+import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from './forms/HoneypotField';
 import FormSuccessState from './forms/FormSuccessState';
@@ -14,8 +17,25 @@ const INITIAL = withHoneypot({
   contactNumber: '',
 });
 
-const inputClass =
-  'w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-500/25';
+const inputBase =
+  'brochure-modal-input w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:ring-2';
+
+function fieldClass(hasError) {
+  return hasError
+    ? `${inputBase} border-red-400 focus:border-red-400 focus:ring-red-500/25`
+    : `${inputBase} border-slate-200 focus:border-violet-400 focus:ring-violet-500/25`;
+}
+
+function RequiredLabel({ children, htmlFor }) {
+  return (
+    <label htmlFor={htmlFor} className="brochure-modal-label mb-1 block text-xs font-semibold text-slate-700">
+      {children}
+      <span className="ml-0.5 text-red-500" aria-hidden>
+        *
+      </span>
+    </label>
+  );
+}
 
 export default function BrochureDownloadModal({ franchise, brochureUrl, onClose }) {
   const {
@@ -24,6 +44,7 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
     isSubmitting,
     isSuccess,
     submitError,
+    fieldErrors,
     handleSubmit,
     resetForm,
   } = useFormSubmission({
@@ -32,17 +53,37 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
     successTitle: 'Download starting',
     successDescription: 'Your brochure should open or save momentarily. Our team may follow up with tailored franchise guidance.',
     onSubmit: async (data, { signal }) => {
+      if (!checkHoneypot(data).ok) {
+        return { success: false, error: 'Submission rejected.', code: 'SPAM' };
+      }
+
       const payload = {
-        ...data,
+        ...stripHoneypot(data),
         franchiseId: String(franchise.id),
         franchiseName: franchise.name,
       };
-      const result = await submitBrochureDownload(payload, 'franchise_details_brochure', { signal });
-      if (result?.success) {
-        triggerBrochureDownload(brochureUrl, franchise.name);
-        window.setTimeout(() => onClose(), 1200);
+
+      const validation = validateBrochureDownloadForm(payload);
+      if (!validation.success) {
+        return { success: false, errors: validation.errors };
       }
-      return result;
+
+      const result = await submitBrochureDownload(validation.data, 'franchise_details_brochure', {
+        signal,
+      });
+
+      triggerBrochureDownload(brochureUrl, franchise.name);
+
+      if (result?.success) {
+        return result;
+      }
+
+      return {
+        success: true,
+        data: {
+          message: 'Brochure download started',
+        },
+      };
     },
   });
 
@@ -50,14 +91,17 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e) => {
-      if (e.key === 'Escape' && !isSubmitting) onClose();
+      if (e.key === 'Escape' && !isSubmitting) {
+        if (isSuccess) resetForm();
+        onClose();
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener('keydown', onKey);
     };
-  }, [onClose, isSubmitting]);
+  }, [onClose, isSubmitting, isSuccess, resetForm]);
 
   if (!franchise || !brochureUrl) return null;
 
@@ -68,25 +112,32 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
       aria-modal="true"
       aria-labelledby="brochure-modal-title"
       onClick={(e) => {
-        if (e.target === e.currentTarget && !isSubmitting) onClose();
+        if (e.target === e.currentTarget && !isSubmitting && !isSuccess) onClose();
       }}
     >
       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" aria-hidden />
 
-      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+      <div className="brochure-download-modal relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
         <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-5 py-4 sm:px-6">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wide text-violet-600">Download brochure</p>
-            <h2 id="brochure-modal-title" className="mt-1 text-lg font-bold text-slate-900">
+            <p className="brochure-modal-kicker text-xs font-semibold uppercase tracking-wide text-violet-600">
+              Download brochure
+            </p>
+            <h2 id="brochure-modal-title" className="brochure-modal-title mt-1 text-lg font-bold text-slate-900">
               {franchise.name}
             </h2>
-            <p className="mt-1 text-sm text-slate-600">
-              Share your details to download the official brand brochure.
+            <p className="brochure-modal-subtitle mt-1 text-sm text-slate-600">
+              {isSuccess
+                ? 'Your brochure is ready.'
+                : 'All fields are required to download the official brand brochure.'}
             </p>
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => {
+              if (isSuccess) resetForm();
+              onClose();
+            }}
             disabled={isSubmitting}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
             aria-label="Close"
@@ -98,8 +149,13 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
         <div className="px-5 py-5 sm:px-6">
           {isSuccess ? (
             <FormSuccessState
+              variant="download"
+              showTimeline={false}
+              showBadge={false}
               title="Thank you!"
-              description="Your brochure download is starting. Check your downloads folder if it does not open automatically."
+              description="Your brochure has been downloaded. If it did not open automatically, check your Downloads folder."
+              completionNote="Brochure PDF"
+              soundVariant="professional"
               onReset={() => {
                 resetForm();
                 onClose();
@@ -107,44 +163,69 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
               resetLabel="Close"
             />
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <HoneypotField value={values._hp} onChange={setField} />
+            <form onSubmit={handleSubmit} className="space-y-3" autoComplete="off" noValidate>
+              <HoneypotField value={values[HONEYPOT_FIELD]} onChange={setField} />
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-700">Full name</label>
+                <RequiredLabel htmlFor="brochure-full-name">Full name</RequiredLabel>
                 <input
+                  id="brochure-full-name"
                   type="text"
                   required
+                  minLength={2}
                   value={values.fullName}
                   onChange={(e) => setField('fullName', e.target.value)}
-                  className={inputClass}
+                  className={fieldClass(fieldErrors.fullName)}
                   placeholder="Your full name"
                   autoComplete="name"
+                  aria-invalid={Boolean(fieldErrors.fullName)}
+                  aria-describedby={fieldErrors.fullName ? 'brochure-name-error' : undefined}
                 />
+                {fieldErrors.fullName ? (
+                  <p id="brochure-name-error" className="mt-1 text-xs font-medium text-red-600" role="alert">
+                    {fieldErrors.fullName}
+                  </p>
+                ) : null}
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-700">Email</label>
+                <RequiredLabel htmlFor="brochure-email">Email</RequiredLabel>
                 <input
+                  id="brochure-email"
                   type="email"
                   required
                   value={values.email}
                   onChange={(e) => setField('email', e.target.value)}
-                  className={inputClass}
+                  className={fieldClass(fieldErrors.email)}
                   placeholder="you@email.com"
                   autoComplete="email"
+                  aria-invalid={Boolean(fieldErrors.email)}
+                  aria-describedby={fieldErrors.email ? 'brochure-email-error' : undefined}
                 />
+                {fieldErrors.email ? (
+                  <p id="brochure-email-error" className="mt-1 text-xs font-medium text-red-600" role="alert">
+                    {fieldErrors.email}
+                  </p>
+                ) : null}
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-700">Mobile number</label>
+                <RequiredLabel htmlFor="brochure-phone">Mobile number</RequiredLabel>
                 <input
+                  id="brochure-phone"
                   required
                   value={values.contactNumber}
                   onChange={(e) => setField('contactNumber', digitsOnlyPhone(e.target.value))}
-                  className={inputClass}
+                  className={fieldClass(fieldErrors.contactNumber)}
+                  aria-invalid={Boolean(fieldErrors.contactNumber)}
+                  aria-describedby={fieldErrors.contactNumber ? 'brochure-phone-error' : undefined}
                   {...phoneInputProps()}
                 />
+                {fieldErrors.contactNumber ? (
+                  <p id="brochure-phone-error" className="mt-1 text-xs font-medium text-red-600" role="alert">
+                    {fieldErrors.contactNumber}
+                  </p>
+                ) : null}
               </div>
 
               {submitError ? (

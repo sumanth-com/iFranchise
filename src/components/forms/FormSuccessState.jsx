@@ -28,23 +28,37 @@ export default function FormSuccessState({
   variant = 'default',
   className = '',
   playSound = true,
+  soundVariant = 'default',
+  showTimeline = true,
+  showBadge = true,
+  badgeLabel = 'Success',
+  completionNote = '',
 }) {
   const reduceMotion = useReducedMotion();
+  const isDownload = variant === 'download';
+  const confettiCount = isDownload ? 6 : CONFETTI_COUNT;
   const variantClass =
-    variant === 'dark' || variant === 'emerald' ? `form-success-state--${variant}` : 'form-success-state--default';
+    variant === 'dark' || variant === 'emerald' || isDownload
+      ? `form-success-state--${variant}`
+      : 'form-success-state--default';
 
   useEffect(() => {
-    if (!playSound) return;
+    if (!playSound || soundVariant === 'none') return;
     let cancelled = false;
     import('@/lib/playFormSuccessSound')
-      .then(({ playFormSuccessSound }) => {
-        if (!cancelled) playFormSuccessSound();
+      .then(({ playFormSuccessSound, playProfessionalSuccessSound, playClimbingSuccessSound }) => {
+        if (cancelled) return;
+        if (soundVariant === 'professional' || soundVariant === 'climbing') {
+          playProfessionalSuccessSound();
+        } else {
+          playFormSuccessSound();
+        }
       })
       .catch(() => {});
     return () => {
       cancelled = true;
     };
-  }, [playSound]);
+  }, [playSound, soundVariant]);
 
   const motionProps = reduceMotion
     ? { initial: false, animate: false }
@@ -70,7 +84,7 @@ export default function FormSuccessState({
         <span className="form-success-state__shimmer" aria-hidden />
         <span className="form-success-state__shimmer form-success-state__shimmer--second" aria-hidden />
         {!reduceMotion &&
-          Array.from({ length: CONFETTI_COUNT }, (_, i) => (
+          Array.from({ length: confettiCount }, (_, i) => (
             <span
               key={i}
               className={`form-success-state__confetti form-success-state__confetti--${(i % 12) + 1}`}
@@ -78,6 +92,7 @@ export default function FormSuccessState({
             />
           ))}
         {!reduceMotion &&
+          !isDownload &&
           Array.from({ length: BURST_LINES }, (_, i) => (
             <span
               key={`burst-${i}`}
@@ -94,10 +109,14 @@ export default function FormSuccessState({
           transition={{ duration: 0.7, ease: EASE_SMOOTH }}
           aria-hidden
         />
-        <span className="form-success-state__spark form-success-state__spark--1" aria-hidden />
-        <span className="form-success-state__spark form-success-state__spark--2" aria-hidden />
-        <span className="form-success-state__spark form-success-state__spark--3" aria-hidden />
-        <span className="form-success-state__spark form-success-state__spark--4" aria-hidden />
+        {!isDownload && (
+          <>
+            <span className="form-success-state__spark form-success-state__spark--1" aria-hidden />
+            <span className="form-success-state__spark form-success-state__spark--2" aria-hidden />
+            <span className="form-success-state__spark form-success-state__spark--3" aria-hidden />
+            <span className="form-success-state__spark form-success-state__spark--4" aria-hidden />
+          </>
+        )}
 
         <motion.div
           className="form-success-state__content"
@@ -109,8 +128,12 @@ export default function FormSuccessState({
             variants={reduceMotion ? undefined : successIconWrap}
           >
             <span className="form-success-state__ring" aria-hidden />
-            <span className="form-success-state__ring form-success-state__ring--delayed" aria-hidden />
-            <span className="form-success-state__ring form-success-state__ring--orbit" aria-hidden />
+            {!isDownload && (
+              <>
+                <span className="form-success-state__ring form-success-state__ring--delayed" aria-hidden />
+                <span className="form-success-state__ring form-success-state__ring--orbit" aria-hidden />
+              </>
+            )}
             <div className="form-success-state__icon">
               <svg className="form-success-state__check" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <motion.circle
@@ -138,13 +161,15 @@ export default function FormSuccessState({
             </div>
           </motion.div>
 
-          <motion.span
-            className="form-success-state__badge"
-            variants={reduceMotion ? undefined : successBadge}
-          >
-            <span className="form-success-state__badge-dot" aria-hidden />
-            Success
-          </motion.span>
+          {showBadge && (
+            <motion.span
+              className="form-success-state__badge"
+              variants={reduceMotion ? undefined : successBadge}
+            >
+              <span className="form-success-state__badge-dot" aria-hidden />
+              {badgeLabel}
+            </motion.span>
+          )}
 
           <motion.h3 className="form-success-state__title" variants={reduceMotion ? undefined : successFadeUp}>
             {title}
@@ -157,23 +182,48 @@ export default function FormSuccessState({
             {description}
           </motion.p>
 
-          <motion.div
-            className="form-success-state__timeline"
-            variants={reduceMotion ? undefined : successTimeline}
-            aria-hidden
-          >
-            <span className="form-success-state__timeline-step form-success-state__timeline-step--active">
-              Received
-            </span>
-            <span className="form-success-state__timeline-sep">→</span>
-            <span className="form-success-state__timeline-step form-success-state__timeline-step--reveal">
-              Review
-            </span>
-            <span className="form-success-state__timeline-sep">→</span>
-            <span className="form-success-state__timeline-step form-success-state__timeline-step--reveal form-success-state__timeline-step--reveal-late">
-              We&apos;ll reply
-            </span>
-          </motion.div>
+          {completionNote ? (
+            <motion.div
+              className="form-success-state__complete-note"
+              variants={reduceMotion ? undefined : successFadeUp}
+            >
+              <span className="form-success-state__complete-note-icon" aria-hidden>
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M14 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8l-6-6Z"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinejoin="round"
+                  />
+                  <path d="M14 2v6h6M9 13h6M9 17h4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+                </svg>
+              </span>
+              <span className="form-success-state__complete-note-text">
+                <span className="form-success-state__complete-note-title">{completionNote}</span>
+                <span className="form-success-state__complete-note-hint">Saved to your downloads folder</span>
+              </span>
+            </motion.div>
+          ) : null}
+
+          {showTimeline && (
+            <motion.div
+              className="form-success-state__timeline"
+              variants={reduceMotion ? undefined : successTimeline}
+              aria-hidden
+            >
+              <span className="form-success-state__timeline-step form-success-state__timeline-step--active">
+                Received
+              </span>
+              <span className="form-success-state__timeline-sep">→</span>
+              <span className="form-success-state__timeline-step form-success-state__timeline-step--reveal">
+                Review
+              </span>
+              <span className="form-success-state__timeline-sep">→</span>
+              <span className="form-success-state__timeline-step form-success-state__timeline-step--reveal form-success-state__timeline-step--reveal-late">
+                We&apos;ll reply
+              </span>
+            </motion.div>
+          )}
 
           {onReset && (
             <motion.button

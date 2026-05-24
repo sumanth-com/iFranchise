@@ -30,6 +30,7 @@ export function useFormSubmission({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const mountedRef = useRef(true);
   const generationRef = useRef(0);
@@ -51,6 +52,12 @@ export function useFormSubmission({
 
   const setField = useCallback((field, value) => {
     setValues((prev) => ({ ...prev, [field]: value }));
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
   }, []);
 
   const resetForm = useCallback(() => {
@@ -60,6 +67,7 @@ export function useFormSubmission({
     setValues(initialRef.current);
     setIsSuccess(false);
     setSubmitError('');
+    setFieldErrors({});
     setIsSubmitting(false);
   }, [formKey]);
 
@@ -80,6 +88,7 @@ export function useFormSubmission({
 
       setIsSubmitting(true);
       setSubmitError('');
+      setFieldErrors({});
 
       try {
         const result = await onSubmitRef.current(values, { signal: controller.signal });
@@ -91,12 +100,16 @@ export function useFormSubmission({
         setIsSubmitting(false);
 
         if (!result?.success) {
-          const fieldErrors = result?.errors;
-          if (fieldErrors && typeof fieldErrors === 'object') {
-            const first = Object.values(fieldErrors)[0];
+          if (result?.code === 'SPAM') {
             setSubmitError(
-              typeof first === 'string' ? first : result.error || 'Please check the form and try again.',
+              'We could not verify your submission. Refresh the page and try again, or turn off autofill for this form.',
             );
+            return;
+          }
+          const errors = result?.errors;
+          if (errors && typeof errors === 'object' && Object.keys(errors).length > 0) {
+            setFieldErrors(errors);
+            setSubmitError('Please complete all required fields.');
           } else {
             setSubmitError(result?.error || 'Something went wrong. Please try again.');
           }
@@ -121,6 +134,7 @@ export function useFormSubmission({
     isSubmitting,
     isSuccess,
     submitError,
+    fieldErrors,
     handleSubmit,
     resetForm,
     successTitle,

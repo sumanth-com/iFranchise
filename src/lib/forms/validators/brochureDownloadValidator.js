@@ -11,13 +11,18 @@ export function validateBrochureDownloadForm(formData) {
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  if (!isValidPhone10(data.contactNumber)) {
-    errors.contactNumber = 'Please enter a valid 10-digit phone number';
+  const phoneDigits = digitsOnlyPhone(data.contactNumber);
+  if (!phoneDigits) {
+    errors.contactNumber = 'Mobile number is required';
+  } else if (!isValidPhone10(phoneDigits)) {
+    errors.contactNumber = 'Please enter a valid 10-digit mobile number';
   } else {
-    data.contactNumber = digitsOnlyPhone(data.contactNumber);
+    data.contactNumber = phoneDigits;
   }
 
-  if (!isValidContactEmail(data.email)) {
+  if (!data.email?.trim()) {
+    errors.email = 'Email is required';
+  } else if (!isValidContactEmail(data.email)) {
     errors.email = 'Please enter a valid email address';
   } else {
     data.email = data.email.trim().toLowerCase();

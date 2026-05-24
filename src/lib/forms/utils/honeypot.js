@@ -1,6 +1,7 @@
 /** Honeypot spam prevention - bots often fill hidden fields. */
 
-export const HONEYPOT_FIELD = '_hp';
+/** Non-obvious name — avoids browser/password-manager autofill on `_hp` / `website` */
+export const HONEYPOT_FIELD = 'if_brand_confirm_url';
 
 export function checkHoneypot(formData = {}) {
   const value = formData[HONEYPOT_FIELD];

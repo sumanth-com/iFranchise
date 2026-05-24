@@ -57,8 +57,15 @@
   background: linear-gradient(180deg, #a78bfa, #34d399);
 }
 
-.form-success-state--default .form-success-state__confetti {
+.form-success-state--default .form-success-state__confetti,
+.form-success-state--download .form-success-state__confetti {
   background: linear-gradient(180deg, #8b5cf6, #10b981);
+}
+
+.form-success-state--download .form-success-state__confetti {
+  background: linear-gradient(180deg, #a78bfa, #7c3aed);
+  width: 6px;
+  height: 10px;
 }
 
 .form-success-state__confetti--1 {
@@ -198,12 +205,20 @@
   background: linear-gradient(to top, transparent, rgba(109, 40, 217, 0.35));
 }
 
-.form-success-state--default .form-success-state__card {
+.form-success-state--default .form-success-state__card,
+.form-success-state--download .form-success-state__card {
   background: linear-gradient(165deg, #ffffff 0%, #f8f5ff 48%, #f0fdf4 100%);
   border: 1px solid rgba(139, 92, 246, 0.18);
   box-shadow:
     0 4px 24px rgba(109, 40, 217, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.form-success-state--download .form-success-state__card {
+  background: linear-gradient(165deg, #ffffff 0%, #f5f3ff 42%, #ede9fe 100%);
+  box-shadow:
+    0 8px 32px rgba(109, 40, 217, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
 }
 
 .form-success-state--dark .form-success-state__card,
@@ -317,6 +332,115 @@
   background: linear-gradient(145deg, #ecfdf5, #d1fae5);
   border-color: rgba(16, 185, 129, 0.35);
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.18);
+}
+
+.form-success-state--download .form-success-state__icon {
+  background: linear-gradient(145deg, #ecfdf5, #d1fae5);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 6px 22px rgba(16, 185, 129, 0.2);
+  animation: formSuccessIconFloat 3.5s ease-in-out infinite;
+}
+
+.form-success-state--download .form-success-state__check {
+  color: #059669;
+}
+
+.form-success-state--download .form-success-state__ring {
+  border-color: rgba(16, 185, 129, 0.35);
+  animation: formSuccessRing 2s ease-out 1;
+}
+
+.form-success-state--download .form-success-state__title {
+  color: #0f172a;
+}
+
+.form-success-state--download .form-success-state__description {
+  color: #475569;
+}
+
+.form-success-state__complete-note {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.15rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.85rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.08);
+}
+
+.form-success-state--download .form-success-state__complete-note {
+  background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(245, 243, 255, 0.9));
+  border-color: rgba(124, 58, 237, 0.14);
+  box-shadow: 0 2px 14px rgba(109, 40, 217, 0.06);
+}
+
+.form-success-state__complete-note-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  background: rgba(124, 58, 237, 0.1);
+  color: #6d28d9;
+}
+
+.form-success-state__complete-note-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.form-success-state__complete-note-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.form-success-state__complete-note-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+}
+
+.form-success-state__complete-note-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.form-success-state--download .form-success-state__glow {
+  background: radial-gradient(ellipse 55% 50% at 50% 0%, rgba(16, 185, 129, 0.14), transparent 72%);
+}
+
+.form-success-state--download .form-success-state__aurora {
+  opacity: 0.35;
+  animation-duration: 5s;
+}
+
+.form-success-state--download .form-success-state__shimmer {
+  animation: formSuccessShimmer 1.6s ease-in-out 0.25s 1;
+}
+
+.form-success-state--download .form-success-state__reset {
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  background: #ffffff;
+  color: #6d28d9;
+  box-shadow: 0 2px 14px rgba(124, 58, 237, 0.12);
+}
+
+.form-success-state--download .form-success-state__reset:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  background: #f5f3ff;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.18);
 }
 
 .form-success-state__check {

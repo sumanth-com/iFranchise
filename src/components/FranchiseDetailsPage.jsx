@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { navigateTo } from '@/lib/navigation';
+import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
 import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import { FiStar } from 'react-icons/fi';
@@ -162,23 +162,29 @@ function FranchiseDetailsPage() {
   }, [activeTab]);
 
   useEffect(() => {
-    const handleRouteUpdate = () => {
+    const syncFromLocation = () => {
       setSelectedFranchiseId(getSelectedFranchiseId());
     };
 
-    window.addEventListener('popstate', handleRouteUpdate);
+    window.addEventListener('popstate', syncFromLocation);
+    window.addEventListener(NAVIGATE_EVENT, syncFromLocation);
     return () => {
-      window.removeEventListener('popstate', handleRouteUpdate);
+      window.removeEventListener('popstate', syncFromLocation);
+      window.removeEventListener(NAVIGATE_EVENT, syncFromLocation);
     };
   }, []);
 
   const handleRelatedDetails = (id) => {
-    const detail = getFranchiseDetailById(id);
+    const nextId = String(id);
+    setSelectedFranchiseId(nextId);
+
+    const detail = getFranchiseDetailById(nextId);
     if (detail?.slug) {
       navigateTo(`/franchise/${detail.slug}`);
-      return;
+    } else {
+      navigateTo(`/franchise-details?id=${nextId}`);
     }
-    navigateTo(`/franchise-details?id=${id}`);
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

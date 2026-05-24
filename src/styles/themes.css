@@ -6273,3 +6273,52 @@ html[data-theme='light'] .franchise-opportunities-page .fo-way-work p {
     transition: none;
   }
 }
+
+/* Brochure download modal (portaled) — readable inputs in light & dark site themes */
+.brochure-download-modal {
+  color-scheme: light;
+}
+
+html[data-theme='light'] .brochure-download-modal .brochure-modal-title,
+html[data-theme='dark'] .brochure-download-modal .brochure-modal-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] .brochure-download-modal .brochure-modal-subtitle,
+html[data-theme='dark'] .brochure-download-modal .brochure-modal-subtitle {
+  color: #475569 !important;
+}
+
+html[data-theme='light'] .brochure-download-modal .brochure-modal-label,
+html[data-theme='dark'] .brochure-download-modal .brochure-modal-label {
+  color: #334155 !important;
+}
+
+html[data-theme='light'] .brochure-download-modal .brochure-modal-kicker,
+html[data-theme='dark'] .brochure-download-modal .brochure-modal-kicker {
+  color: #7c3aed !important;
+}
+
+.brochure-download-modal .brochure-modal-input,
+html[data-theme='light'] .brochure-download-modal .brochure-modal-input,
+html[data-theme='dark'] .brochure-download-modal .brochure-modal-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
+}
+
+.brochure-download-modal .brochure-modal-input::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+.brochure-download-modal .brochure-modal-input:-webkit-autofill,
+.brochure-download-modal .brochure-modal-input:-webkit-autofill:hover,
+.brochure-download-modal .brochure-modal-input:-webkit-autofill:focus,
+.brochure-download-modal .brochure-modal-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #0f172a !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  caret-color: #0f172a !important;
+}
