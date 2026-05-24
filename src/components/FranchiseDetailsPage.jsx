@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { navigateTo } from '@/lib/navigation';
 import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
@@ -123,6 +123,7 @@ function DualSectionPanel({ title, children }) {
 
 function FranchiseDetailsPage() {
   const [activeTab, setActiveTab] = useState('Overview');
+  const tabsPanelRef = useRef(null);
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
   const selectedFranchise = useMemo(
     () => getFranchiseDetailById(selectedFranchiseId),
@@ -151,6 +152,15 @@ function FranchiseDetailsPage() {
     setActiveTab('Overview');
   }, [selectedFranchiseId]);
 
+  const skipInitialTabScroll = useRef(true);
+  useEffect(() => {
+    if (skipInitialTabScroll.current) {
+      skipInitialTabScroll.current = false;
+      return;
+    }
+    tabsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [activeTab]);
+
   useEffect(() => {
     const handleRouteUpdate = () => {
       setSelectedFranchiseId(getSelectedFranchiseId());
@@ -172,41 +182,133 @@ function FranchiseDetailsPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isOverviewTab = activeTab === 'Overview';
+
   const renderTabContent = () => {
-    if (activeTab === 'Overview') {
-      return <p className="fd-tab-body fd-copy text-base leading-relaxed">{selectedFranchise.overview}</p>;
-    }
     if (activeTab === 'Business Model') {
-      return <p className="fd-tab-body fd-copy text-base leading-relaxed">{selectedFranchise.businessModel}</p>;
-    }
-    if (activeTab === 'Investment Details') {
       return (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {(selectedFranchise.investorInvestment || selectedFranchise.investmentDetails).map((item) => (
-            <article key={item.label} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <p className="fd-copy text-sm">{item.label}</p>
-              <p className="fd-copy fd-body-text mt-1 whitespace-pre-line text-lg">{item.value}</p>
-            </article>
-          ))}
+        <div className="space-y-5">
+          {selectedFranchise.businessModel && (
+            <p className="fd-tab-body fd-copy text-base leading-relaxed">{selectedFranchise.businessModel}</p>
+          )}
+          <DualSectionRow>
+            <DualSectionPanel title="Franchise Models">
+              <div className="flex flex-1 flex-col gap-3">
+                {selectedFranchise.franchiseModels.map((model) => (
+                  <article key={model.name} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+                    <p className="fd-copy fd-heading text-base">{model.name}</p>
+                    <p className="fd-copy fd-body-text mt-1.5 text-sm leading-relaxed">{model.description}</p>
+                  </article>
+                ))}
+              </div>
+            </DualSectionPanel>
+            <DualSectionPanel title="Agreement Details">
+              <div className="flex flex-1 flex-col gap-2.5">
+                {selectedFranchise.agreementDetails.map((item) => (
+                  <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                    <p className="fd-copy fd-field-label text-xs tracking-wide">{item.label}</p>
+                    <p className="fd-copy fd-body-text mt-1 text-sm leading-relaxed">{item.value}</p>
+                  </article>
+                ))}
+              </div>
+            </DualSectionPanel>
+          </DualSectionRow>
+          <DualSectionPanel title="Franchise Structure">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {selectedFranchise.franchiseStructure.map((item) => (
+                <article
+                  key={item}
+                  className="fd-mini-card flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50/80 p-4 text-center"
+                >
+                  <p className="fd-copy fd-body-text text-sm">{item}</p>
+                </article>
+              ))}
+            </div>
+          </DualSectionPanel>
         </div>
       );
     }
+
+    if (activeTab === 'Investment Details') {
+      const investmentItems =
+        selectedFranchise.investorInvestment || selectedFranchise.investmentDetails || [];
+      return (
+        <div className="space-y-5">
+          <DualSectionPanel title="Investment & Financials">
+            <div className="flex min-h-0 flex-1 flex-col gap-3">
+              <p className="fd-about-intro fd-body-text text-xs leading-relaxed">
+                Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
+              </p>
+              <div className="fd-invest-grid grid grid-cols-2 gap-3">
+                {investmentItems.map((item) => (
+                  <article
+                    key={item.label}
+                    className="fd-stat-card fd-about-stat-card flex min-h-[88px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-2.5 py-3 text-center shadow-sm"
+                  >
+                    <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
+                    <p className="fd-copy fd-body-text mt-1.5 w-full whitespace-pre-line text-sm leading-snug">
+                      {item.value}
+                    </p>
+                  </article>
+                ))}
+              </div>
+              <p className="fd-copy fd-body-text mt-auto pt-1 text-[0.7rem] leading-relaxed">
+                {selectedFranchise.disclaimer}
+              </p>
+            </div>
+          </DualSectionPanel>
+          <DualSectionPanel title="Operations & Returns">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'ROI', value: selectedFranchise.operationsReturns.roi },
+                { label: 'Payback Period', value: selectedFranchise.operationsReturns.payback },
+                { label: 'Hours Required', value: selectedFranchise.operationsReturns.hours },
+                { label: 'Staff Requirement', value: selectedFranchise.operationsReturns.staff },
+              ].map((metric) => (
+                <article key={metric.label} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
+                  <p className="fd-copy fd-field-label text-xs tracking-wide">{metric.label}</p>
+                  <p className="fd-copy fd-body-text mt-1 text-sm">{metric.value}</p>
+                </article>
+              ))}
+            </div>
+          </DualSectionPanel>
+        </div>
+      );
+    }
+
     if (activeTab === 'Locations') {
       return (
-        <div className="flex flex-wrap gap-2">
-          {selectedFranchise.locations.map((location) => (
-            <span key={location} className="fd-copy rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium">
-              {location}
-            </span>
-          ))}
+        <div className="space-y-5">
+          <DualSectionPanel title="Active & Target Locations">
+            <div className="flex flex-wrap gap-2">
+              {selectedFranchise.locations.map((location) => (
+                <span
+                  key={location}
+                  className="fd-copy rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium"
+                >
+                  {location}
+                </span>
+              ))}
+            </div>
+          </DualSectionPanel>
+          <DualSectionPanel title="Expansion Plans">
+            <div className="flex flex-col gap-2.5">
+              {selectedFranchise.expansionPlans.map((plan) => (
+                <article key={plan} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
+                  <p className="fd-copy fd-body-text text-sm">{plan}</p>
+                </article>
+              ))}
+            </div>
+          </DualSectionPanel>
         </div>
       );
     }
+
     if (activeTab === 'FAQ') {
       return (
         <div className="space-y-3">
           {selectedFranchise.faqs.map((item) => (
-            <article key={item.q} className="rounded-xl border border-slate-200 bg-white p-4">
+            <article key={item.q} className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
               <h4 className="fd-copy text-base font-semibold">{item.q}</h4>
               <p className="fd-tab-body fd-copy mt-2 text-sm leading-relaxed">{item.a}</p>
             </article>
@@ -214,29 +316,31 @@ function FranchiseDetailsPage() {
         </div>
       );
     }
+
     if (activeTab === 'Reviews') {
-    const reviews = (selectedFranchise.reviews || []).slice(0, 4);
-    return (
-      <div className="space-y-4">
-        <div className="fd-reviews-summary flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3">
-          <StarRating rating={5} />
-          <p className="fd-tab-body fd-copy text-sm font-semibold">5.0 · 4 reviews</p>
-          <span className="fd-copy text-xs">Verified partner feedback</span>
+      const reviews = (selectedFranchise.reviews || []).slice(0, 4);
+      return (
+        <div className="space-y-4">
+          <div className="fd-reviews-summary flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3">
+            <StarRating rating={5} />
+            <p className="fd-tab-body fd-copy text-sm font-semibold">5.0 · {reviews.length} reviews</p>
+            <span className="fd-copy text-xs">Verified partner feedback</span>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {reviews.map((review) => (
+              <article key={review.name} className="rounded-xl border border-slate-200 bg-white p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="fd-copy text-sm font-semibold">{review.name}</p>
+                  <StarRating rating={review.rating} />
+                </div>
+                <p className="fd-tab-body fd-copy mt-2 text-sm leading-relaxed">{review.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {reviews.map((review) => (
-            <article key={review.name} className="rounded-xl border border-slate-200 bg-white p-4">
-              <div className="flex items-center justify-between gap-2">
-                <p className="fd-copy text-sm font-semibold">{review.name}</p>
-                <StarRating rating={review.rating} />
-              </div>
-              <p className="fd-tab-body fd-copy mt-2 text-sm leading-relaxed">{review.text}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    );
+      );
     }
+
     return null;
   };
 
@@ -314,7 +418,10 @@ function FranchiseDetailsPage() {
             </div>
           </div>
 
-          <div className="fd-tabs-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
+          <div
+            ref={tabsPanelRef}
+            className="fd-tabs-panel scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8"
+          >
             <div className="fd-tabs flex flex-wrap gap-2">
               {tabs.map((tab) => (
                 <button
@@ -329,9 +436,17 @@ function FranchiseDetailsPage() {
                 </button>
               ))}
             </div>
-            <div className="fd-tab-content mt-6">{renderTabContent()}</div>
+            <div className="fd-tab-content mt-6">
+              {isOverviewTab ? (
+                <p className="fd-tab-body fd-copy text-base leading-relaxed">{selectedFranchise.overview}</p>
+              ) : (
+                renderTabContent()
+              )}
+            </div>
           </div>
 
+          {isOverviewTab && (
+          <>
           <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
             <DualSectionRow>
               <DualSectionPanel title={`About ${selectedFranchise.name}`}>
@@ -470,7 +585,8 @@ function FranchiseDetailsPage() {
             </DualSectionRow>
 
           </div>
-
+          </>
+          )}
 
           <FranchiseGetStartedSection />
 
