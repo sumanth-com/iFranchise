@@ -27,7 +27,8 @@ if (path === '/' || path === '') {
 
 function initLenis() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (prefersReducedMotion) return null
+  const isMobileOrTablet = window.matchMedia('(max-width: 1279px)').matches
+  if (prefersReducedMotion || isMobileOrTablet) return null
 
   const lenis = new Lenis({
     duration: 1.05,

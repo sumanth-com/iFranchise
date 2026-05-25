@@ -479,25 +479,6 @@ img.loaded {
     transform: scale(1.03);
   }
 
-  .trust-marquee-fade {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    z-index: 2;
-    width: 3rem;
-    pointer-events: none;
-  }
-
-  .trust-marquee-fade--left {
-    left: 0;
-    background: linear-gradient(90deg, rgba(15, 10, 30, 0.95) 0%, transparent 100%);
-  }
-
-  .trust-marquee-fade--right {
-    right: 0;
-    background: linear-gradient(270deg, rgba(15, 10, 30, 0.95) 0%, transparent 100%);
-  }
-
   .trust-marquee-track--franchise {
     animation-duration: 32s;
   }
@@ -1169,22 +1150,36 @@ img.loaded {
 
   .footer-main-grid-brand {
     grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     padding-bottom: 20px;
     margin-bottom: 4px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  .footer-brand-lockup {
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
   .footer-brand-address {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 12px;
     margin-top: 4px;
+    width: 100%;
+    max-width: 18rem;
   }
 
   .footer-brand-address__row {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     gap: 10px;
+    text-align: left;
   }
 
   .footer-brand-address__icon {
@@ -1198,7 +1193,8 @@ img.loaded {
     font-size: 13px;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.88);
-    max-width: 20rem;
+    max-width: 16rem;
+    text-align: center;
   }
 
   /* 2×2: Company | Investors — Brands | Resources */
@@ -3474,8 +3470,8 @@ html[data-theme='dark'] #main-content .services-audience-copy .site-cta * {
 }
 
 /* White premium cards (not dark dashboards) */
-html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white:not(.btn-purple-solid):not(.btn-purple-solid *),
-html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li):not(.btn-purple-solid):not(.btn-purple-solid *) {
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) .text-white:not(.btn-purple-solid):not(.btn-purple-solid *):not(.fo-card-pill),
+html[data-theme='light'] .card-premium-dark:not(.theme-dark-surface) :is(h1, h2, h3, h4, p, span, li):not(.btn-purple-solid):not(.btn-purple-solid *):not(.fo-card-pill):not(.fo-card-category):not(.fo-card-title):not(.fo-card-meta__label):not(.fo-card-meta__value):not(.fo-filter-mobile-trigger):not(.fo-filter-mobile-trigger *):not(.fo-filter-mobile-badge) {
   color: #0b0f19 !important;
 }
 

@@ -404,22 +404,50 @@ function ArrowRightIcon() {
   );
 }
 
+/** Bento-style menu icon — 4 tiles morph to X when open */
 function MenuIcon({ isOpen }) {
+  const t = { duration: 0.32, ease: [0.22, 1, 0.36, 1] };
+  const tile = { width: 7, height: 7, borderRadius: 2.5, opacity: 1, scale: 1 };
+  const xBar = { top: 7.75, left: 0, width: 18, height: 2.5, borderRadius: 2, opacity: 1, scale: 1 };
+
   return (
-    <div className="relative h-5 w-5 flex flex-col justify-center gap-1">
-      <motion.span
-        animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-        className="block h-0.5 w-5 bg-current origin-center"
-      />
-      <motion.span
-        animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-        className="block h-0.5 w-5 bg-current"
-      />
-      <motion.span
-        animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-        className="block h-0.5 w-5 bg-current origin-center"
-      />
-    </div>
+    <span className="navbar-menu-icon" aria-hidden>
+      <span className="navbar-menu-icon__frame">
+        <motion.span
+          className="navbar-menu-icon__tile"
+          animate={isOpen ? { ...xBar, rotate: 45 } : { ...tile, top: 0, left: 0, rotate: 0 }}
+          transition={t}
+        />
+        <motion.span
+          className="navbar-menu-icon__tile"
+          animate={
+            isOpen
+              ? { top: 5, left: 5, width: 7, height: 7, opacity: 0, scale: 0.35, rotate: 0 }
+              : { ...tile, top: 0, left: 11, rotate: 0 }
+          }
+          transition={t}
+        />
+        <motion.span
+          className="navbar-menu-icon__tile"
+          animate={
+            isOpen
+              ? { top: 5, left: 5, width: 7, height: 7, opacity: 0, scale: 0.35, rotate: 0 }
+              : { ...tile, top: 11, left: 0, rotate: 0 }
+          }
+          transition={t}
+        />
+        <motion.span
+          className="navbar-menu-icon__tile"
+          animate={isOpen ? { ...xBar, rotate: -45 } : { ...tile, top: 11, left: 11, rotate: 0 }}
+          transition={t}
+        />
+        <motion.span
+          className="navbar-menu-icon__spark"
+          animate={isOpen ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }}
+          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </span>
+    </span>
   );
 }
 
@@ -612,6 +640,18 @@ function Navbar() {
         window.__lenis.scrollTo(scrollY, { immediate: true });
       }
     };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        setMobileAccordion(null);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [isMobileMenuOpen]);
 
   const toggleNavDropdown = (key) => {
@@ -873,7 +913,7 @@ function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm xl:hidden"
+            className="navbar-mobile-overlay fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm xl:hidden"
             style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -882,7 +922,7 @@ function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="navbar-mobile-panel fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden shadow-2xl"
+              className="navbar-mobile-panel fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden overscroll-contain shadow-2xl touch-pan-y"
               onClick={(e) => e.stopPropagation()}
               data-lenis-prevent
             >

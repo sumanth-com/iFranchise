@@ -98,6 +98,26 @@ export function applyScroll(y, { behavior = 'instant' } = {}) {
   }
 }
 
+/**
+ * Restore scroll after route paint (lazy chunks, layout). Retries until position sticks.
+ */
+export function restoreScrollWithRetry(targetY, { behavior = 'instant', maxAttempts = 10 } = {}) {
+  const top = Math.max(0, targetY ?? 0);
+  let attempts = 0;
+
+  const tryRestore = () => {
+    applyScroll(top, { behavior });
+    const delta = Math.abs(window.scrollY - top);
+    if (delta <= 3 || attempts >= maxAttempts) return;
+    attempts += 1;
+    requestAnimationFrame(tryRestore);
+  };
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(tryRestore);
+  });
+}
+
 export function scrollToHashSection() {
   const hash = window.location.hash;
   if (!hash) return false;

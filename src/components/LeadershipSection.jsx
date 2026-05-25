@@ -9,37 +9,36 @@ function LeadershipSection() {
   const [founderModalOpen, setFounderModalOpen] = useState(false);
   const [cofounderModalOpen, setCofounderModalOpen] = useState(false);
 
+  const savedScrollRef = React.useRef(0);
+
   // Prevent body scroll when modal is open - also stops Lenis smooth scroll
   React.useEffect(() => {
     const isOpen = founderModalOpen || cofounderModalOpen;
-    if (isOpen) {
-      // Lock native scroll
-      const scrollY = window.scrollY;
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      // Pause Lenis if available
-      if (window.__lenis) window.__lenis.stop();
-    } else {
-      // Restore native scroll position
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      if (scrollY) window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      // Resume Lenis
-      if (window.__lenis) window.__lenis.start();
-    }
+    if (!isOpen) return undefined;
+
+    const currentScroll = window.scrollY || document.documentElement.scrollTop;
+    savedScrollRef.current = currentScroll;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScroll}px`;
+    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
+
+    if (window.__lenis) window.__lenis.stop();
+
     return () => {
-      const scrollY = document.body.style.top;
+      const scrollY = savedScrollRef.current;
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
-      if (scrollY) window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      if (window.__lenis) window.__lenis.start();
+      document.documentElement.style.overflow = '';
+      window.scrollTo(0, scrollY);
+      if (window.__lenis) {
+        window.__lenis.start();
+        window.__lenis.scrollTo(scrollY, { immediate: true });
+      }
     };
   }, [founderModalOpen, cofounderModalOpen]);
 

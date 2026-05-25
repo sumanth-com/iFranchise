@@ -11,9 +11,9 @@ import {
   NAVIGATE_EVENT,
   getLogicalPathname,
   scrollStorageKey,
-  persistCurrentScrollInHistory,
   readStoredScroll,
   applyScroll,
+  restoreScrollWithRetry,
   scrollToHashSection,
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
@@ -71,7 +71,7 @@ function App() {
 
     if (isBackForward) {
       const restored = readStoredScroll();
-      applyScroll(restored ?? 0);
+      restoreScrollWithRetry(restored ?? 0);
       return;
     }
 
@@ -83,8 +83,6 @@ function App() {
       if (transitionTimerRef.current) {
         window.clearTimeout(transitionTimerRef.current);
       }
-
-      persistCurrentScrollInHistory();
 
       setPagePhase('exit');
       transitionTimerRef.current = window.setTimeout(() => {
@@ -166,7 +164,13 @@ function App() {
             observer.unobserve(entry.target);
           }
         }),
-        { threshold: 0.1, rootMargin: '0px 0px -3% 0px' },
+        {
+          threshold: 0.08,
+          rootMargin:
+            typeof window !== 'undefined' && window.matchMedia('(max-width: 1279px)').matches
+              ? '0px 0px -2% 0px'
+              : '0px 0px -3% 0px',
+        },
       );
       revealElements.forEach((el) => observer.observe(el));
     };

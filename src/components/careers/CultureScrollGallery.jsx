@@ -107,12 +107,12 @@ export default function CultureScrollGallery({
         <p className={`culture-gallery-intro text-sm sm:text-base leading-relaxed max-w-2xl mx-auto ${introClass}`}>
           {intro}
         </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <div className="culture-gallery-values mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {CULTURE_VALUES.map(({ title: valueTitle, desc }) => (
             <span
               key={valueTitle}
               title={desc}
-              className={`culture-gallery-value-pill inline-flex flex-col items-center rounded-2xl border px-4 py-2.5 text-center transition-colors min-w-[120px] sm:min-w-[140px] ${pillClass}`}
+              className={`culture-gallery-value-pill inline-flex flex-col items-center justify-center rounded-2xl border px-3 py-2.5 text-center transition-colors min-w-0 sm:min-w-[140px] sm:px-4 ${pillClass}`}
             >
               <span className={`culture-gallery-value-title text-xs font-bold leading-tight ${pillTitleClass}`}>
                 {valueTitle}

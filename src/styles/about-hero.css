@@ -112,7 +112,7 @@
   text-wrap: balance;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   .about-hero__title {
     white-space: nowrap;
     font-size: clamp(1.65rem, 2.8vw, 2.75rem);

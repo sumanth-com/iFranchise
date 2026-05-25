@@ -24,9 +24,6 @@ export function TrustLogoMarquee({
           : `trust-marquee trust-marquee--franchise relative overflow-hidden ${className}`
       }
     >
-      <div className="trust-marquee-fade trust-marquee-fade--left pointer-events-none" aria-hidden />
-      <div className="trust-marquee-fade trust-marquee-fade--right pointer-events-none" aria-hidden />
-
       <div
         className={`flex w-max items-center will-change-transform ${animationClass} ${
           isHero ? 'trust-marquee-track trust-marquee-track--hero' : 'trust-marquee-track trust-marquee-track--franchise gap-4'

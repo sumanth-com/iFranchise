@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { franchiseOpportunities } from '../data/franchiseData';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import {
@@ -34,8 +35,8 @@ function FilterSelect({ label, value, onChange, children, className = '', compac
       <label
         className={
           compact
-            ? 'mb-1 block text-xs font-semibold text-white'
-            : 'mb-2 block text-sm font-semibold text-white'
+            ? 'fo-filter-label fo-filter-label--compact mb-1 block text-xs font-semibold'
+            : 'fo-filter-label mb-2 block text-sm font-semibold'
         }
       >
         {label}
@@ -245,6 +246,194 @@ function FilterFields({ filters, setFilters, onChange, variant = 'stacked' }) {
   );
 }
 
+function countActiveFilters(filters, navbarSnapshot) {
+  let count = [filters.industry, filters.investment, filters.model, filters.location].filter(Boolean).length;
+  count += navbarSnapshot.brands?.length ?? 0;
+  count += navbarSnapshot.investmentBucketKeys?.length ?? 0;
+  count += navbarSnapshot.locations?.length ?? 0;
+  count += navbarSnapshot.franchiseModels?.length ?? 0;
+  return count;
+}
+
+function FilterIcon() {
+  return (
+    <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M7 12h10M10 18h4" />
+    </svg>
+  );
+}
+
+/** Compact bar + bottom sheet — mobile/tablet only (desktop toolbar unchanged below lg). */
+function MobileFilterBar({
+  filters,
+  setFilters,
+  sortBy,
+  onSort,
+  onClearAll,
+  onFilterChange,
+  activeFilterCount,
+  resultCount,
+}) {
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const savedScrollRef = useRef(0);
+
+  useEffect(() => {
+    if (!sheetOpen) return undefined;
+
+    const currentScroll = window.scrollY || document.documentElement.scrollTop;
+    savedScrollRef.current = currentScroll;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${currentScroll}px`;
+    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
+
+    if (window.__lenis) window.__lenis.stop();
+
+    return () => {
+      const scrollY = savedScrollRef.current;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.documentElement.style.overflow = '';
+      window.scrollTo(0, scrollY);
+      if (window.__lenis) {
+        window.__lenis.start();
+        window.__lenis.scrollTo(scrollY, { immediate: true });
+      }
+    };
+  }, [sheetOpen]);
+
+  useEffect(() => {
+    if (!sheetOpen) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setSheetOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [sheetOpen]);
+
+  const closeSheet = () => setSheetOpen(false);
+
+  const handleApply = () => {
+    onFilterChange?.();
+    closeSheet();
+  };
+
+  const handleClear = () => {
+    onClearAll();
+    onFilterChange?.();
+  };
+
+  return (
+    <>
+      <div className="fo-filter-mobile-bar card-premium-dark lg:hidden">
+        <button
+          type="button"
+          className="fo-filter-mobile-trigger"
+          onClick={() => setSheetOpen(true)}
+          aria-expanded={sheetOpen}
+          aria-haspopup="dialog"
+        >
+          <FilterIcon />
+          <span className="fo-filter-mobile-trigger__label">Filters</span>
+          {activeFilterCount > 0 && (
+            <span className="fo-filter-mobile-badge" aria-label={`${activeFilterCount} active filters`}>
+              {activeFilterCount}
+            </span>
+          )}
+        </button>
+
+        <div className="fo-filter-mobile-sort">
+          <label htmlFor="fo-mobile-sort" className="sr-only">
+            Sort by
+          </label>
+          <select
+            id="fo-mobile-sort"
+            value={sortBy}
+            onChange={onSort}
+            className="fo-filter-mobile-sort__select"
+          >
+            <option value="newest">Newest</option>
+            <option value="roi">High ROI</option>
+            <option value="investment">Low investment</option>
+          </select>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {sheetOpen && (
+          <div className="fo-filter-sheet-root lg:hidden" role="presentation">
+            <motion.button
+              type="button"
+              className="fo-filter-sheet-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              aria-label="Close filters"
+              onClick={closeSheet}
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="fo-filter-sheet-title"
+              className="fo-filter-sheet"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 32, stiffness: 340 }}
+              data-lenis-prevent
+            >
+              <div className="fo-filter-sheet__handle" aria-hidden />
+              <header className="fo-filter-sheet__header">
+                <div>
+                  <h2 id="fo-filter-sheet-title" className="fo-filter-sheet__title">
+                    Filters
+                  </h2>
+                  <p className="fo-filter-sheet__subtitle">
+                    {resultCount} {resultCount === 1 ? 'opportunity' : 'opportunities'} match
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="fo-filter-sheet__close"
+                  onClick={closeSheet}
+                  aria-label="Close filters"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </header>
+
+              <div className="fo-filter-sheet__body">
+                <FilterFields
+                  variant="stacked"
+                  filters={filters}
+                  setFilters={setFilters}
+                  onChange={onFilterChange}
+                />
+              </div>
+
+              <footer className="fo-filter-sheet__footer">
+                <button type="button" className="fo-filter-sheet__clear" onClick={handleClear}>
+                  Clear all
+                </button>
+                <button type="button" className="fo-filter-sheet__apply" onClick={handleApply}>
+                  Show results
+                </button>
+              </footer>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 function FilterToolbar({
   filters,
   setFilters,
@@ -252,40 +441,55 @@ function FilterToolbar({
   onSort,
   onClearAll,
   onFilterChange,
+  activeFilterCount,
+  resultCount,
 }) {
   return (
-    <div className="fo-filter-toolbar card-premium-dark rounded-xl p-4">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-3">
-        <FilterFields
-          variant="toolbar"
-          filters={filters}
-          setFilters={setFilters}
-          onChange={onFilterChange}
-        />
-        <div className="flex shrink-0 flex-wrap items-end gap-2 sm:gap-3 lg:pb-0.5">
-          <div className="min-w-[9.5rem] flex-1 sm:flex-none sm:w-40 lg:w-44">
-            <label className="mb-1 block text-xs font-semibold text-white lg:sr-only">Sort by</label>
-            <select
-              value={sortBy}
-              onChange={onSort}
-              aria-label="Sort by"
-              className="fo-toolbar-field w-full rounded-lg border px-3 py-2.5 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-500 transition-all"
+    <>
+      <MobileFilterBar
+        filters={filters}
+        setFilters={setFilters}
+        sortBy={sortBy}
+        onSort={onSort}
+        onClearAll={onClearAll}
+        onFilterChange={onFilterChange}
+        activeFilterCount={activeFilterCount}
+        resultCount={resultCount}
+      />
+
+      <div className="fo-filter-toolbar fo-filter-toolbar--desktop card-premium-dark hidden rounded-xl p-4 lg:block">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-3">
+          <FilterFields
+            variant="toolbar"
+            filters={filters}
+            setFilters={setFilters}
+            onChange={onFilterChange}
+          />
+          <div className="flex shrink-0 flex-wrap items-end gap-2 sm:gap-3 lg:pb-0.5">
+            <div className="min-w-[9.5rem] flex-1 sm:flex-none sm:w-40 lg:w-44">
+              <label className="mb-1 block text-xs font-semibold text-white lg:sr-only">Sort by</label>
+              <select
+                value={sortBy}
+                onChange={onSort}
+                aria-label="Sort by"
+                className="fo-toolbar-field w-full rounded-lg border px-3 py-2.5 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-500 transition-all"
+              >
+                <option value="newest">Newest Added</option>
+                <option value="roi">High ROI</option>
+                <option value="investment">Low Investment</option>
+              </select>
+            </div>
+            <button
+              type="button"
+              onClick={onClearAll}
+              className="rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:border-violet-300/60"
             >
-              <option value="newest">Newest Added</option>
-              <option value="roi">High ROI</option>
-              <option value="investment">Low Investment</option>
-            </select>
+              Clear All
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClearAll}
-            className="rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:border-violet-300/60"
-          >
-            Clear All
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -454,6 +658,8 @@ function FranchiseOpportunitiesPage() {
               setCurrentPage(1);
             }}
             onFilterChange={() => setCurrentPage(1)}
+            activeFilterCount={countActiveFilters(filters, navbarFilterSnapshot)}
+            resultCount={filteredAndSortedOpportunities.length}
           />
 
           <ActiveFilterChips filters={filters} setFilters={setFilters} />

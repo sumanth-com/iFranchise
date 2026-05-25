@@ -13,7 +13,7 @@ function NotFoundPage() {
   const goHome = () => navigateTo('/');
 
   return (
-    <main className="relative z-10 h-[calc(100vh-5rem)] overflow-hidden bg-transparent flex flex-col items-center justify-center px-4 text-white">
+    <main className="not-found-page relative z-10 flex h-[calc(100dvh-5rem)] min-h-[320px] flex-col items-center justify-center overflow-hidden bg-transparent px-4 text-white">
       <div
         className={`flex flex-col items-center transition-all duration-700 ease-out ${
           visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
