@@ -61,7 +61,7 @@ async function postToAppsScript(payload, signal) {
 
 /**
  * Submit a standardized payload to Google Apps Script.
- * Never throws — always returns { success, error?, code? }.
+ * Never throws. always returns { success, error?, code? }.
  * @param {object} payload
  * @param {{ signal?: AbortSignal }} [options]
  */

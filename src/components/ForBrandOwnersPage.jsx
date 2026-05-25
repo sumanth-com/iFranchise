@@ -971,7 +971,7 @@ function ServicesStyleIndustriesSection() {
   );
 }
 
-/* CaseStudiesSection.jsx — built from verified marketplace listings */
+/* CaseStudiesSection.jsx. built from verified marketplace listings */
 const CASES = getBrandCaseStudies(3);
 
 const COLOR = {

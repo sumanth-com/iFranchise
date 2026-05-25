@@ -1,5 +1,5 @@
 /**
- * Static page SEO — titles, descriptions, keywords, and OG copy per route.
+ * Static page SEO. titles, descriptions, keywords, and OG copy per route.
  * Canonical paths use preferred URLs (aliases redirect in navigation only).
  */
 
@@ -20,19 +20,19 @@
 /** @type {Record<string, PageSeoEntry>} */
 export const STATIC_PAGE_SEO = {
   '/': {
-    title: "iFranchise — India's Trusted Franchise Growth Platform",
+    title: "iFranchise | India's Trusted Franchise Growth Platform",
     description:
       "Discover verified franchise opportunities, connect with investors, and scale your brand across India with iFranchise's end-to-end franchise growth platform.",
     keywords:
       'franchise India, franchise opportunities, franchise investment, list your brand, franchise expansion',
     canonicalPath: '/',
-    ogTitle: 'iFranchise — Franchise Growth Platform for India',
+    ogTitle: 'iFranchise | Franchise Growth Platform for India',
     ogDescription:
       "Build, invest, or expand with India's trusted franchise marketplace and growth partner.",
     ogType: 'website',
   },
   '/about': {
-    title: 'About iFranchise — Mission, Vision & Franchise Expertise',
+    title: 'About iFranchise | Mission, Vision & Franchise Expertise',
     description:
       'Learn how iFranchise helps investors, entrepreneurs, and brand owners navigate franchise discovery, expansion, and growth across India.',
     keywords: 'about iFranchise, franchise company India, franchise platform',
@@ -42,7 +42,7 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/team': {
-    title: 'Meet the Team — iFranchise Leadership',
+    title: 'Meet the Team | iFranchise Leadership',
     description:
       'Meet the iFranchise team driving franchise innovation, partnerships, and growth across India.',
     keywords: 'iFranchise team, franchise leadership',
@@ -52,7 +52,7 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/services': {
-    title: 'Franchise Services — Discovery, Expansion & Lead Generation | iFranchise',
+    title: 'Franchise Services | Discovery, Expansion & Lead Generation | iFranchise',
     description:
       'Franchise discovery, expansion consulting, investor matching, market research, and lead generation services for brands and investors.',
     keywords: 'franchise services, franchise consulting, lead generation, investor matching',
@@ -67,12 +67,12 @@ export const STATIC_PAGE_SEO = {
       'Explore verified franchise opportunities across food, wellness, education, retail, and more. Compare investment, ROI, and expansion markets.',
     keywords: 'franchise opportunities India, buy franchise, franchise investment',
     canonicalPath: '/franchise-opportunities',
-    ogTitle: 'Franchise Opportunities — iFranchise',
+    ogTitle: 'Franchise Opportunities | iFranchise',
     ogDescription: 'Find your next franchise investment with curated, verified opportunities.',
     ogType: 'website',
   },
   '/list-your-brand': {
-    title: 'List Your Brand — Franchise Expansion & Lead Generation | iFranchise',
+    title: 'List Your Brand | Franchise Expansion & Lead Generation | iFranchise',
     description:
       'Scale your franchise brand across India. List on iFranchise for investor matching, lead generation, and nationwide expansion support.',
     keywords: 'list franchise brand, franchise expansion India, franchise lead generation',
@@ -82,7 +82,7 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/blog': {
-    title: 'Franchise & Investment Insights — iFranchise Blog',
+    title: 'Franchise & Investment Insights | iFranchise Blog',
     description:
       'Expert guides on franchise investment, product growth, market trends, and industry reports for entrepreneurs and investors.',
     keywords: 'franchise blog, investment guides, franchise news India, franchise resources',
@@ -92,17 +92,17 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/careers': {
-    title: 'Careers at iFranchise — Join Our Growth Team',
+    title: 'Careers at iFranchise | Join Our Growth Team',
     description:
-      "Open roles in design, growth, marketing, and sales. Build India's leading franchise platform with iFranchise.",
+      "We're building India's leading franchise platform. Connect for future roles in design, growth, marketing, and operations.",
     keywords: 'iFranchise careers, franchise jobs Bangalore, startup jobs India',
     canonicalPath: '/careers',
-    ogTitle: 'Careers — iFranchise',
-    ogDescription: "We're hiring. Explore open roles and join our team.",
+    ogTitle: 'Careers | iFranchise',
+    ogDescription: 'Future opportunities at iFranchise. Follow on LinkedIn for updates as we grow our team.',
     ogType: 'website',
   },
   '/contact': {
-    title: 'Contact iFranchise — Talk to Our Franchise Experts',
+    title: 'Contact iFranchise | Talk to Our Franchise Experts',
     description:
       'Get in touch with iFranchise for franchise investment, brand listing, partnerships, and support. We respond within 24 hours.',
     keywords: 'contact iFranchise, franchise inquiry, franchise consultation',
@@ -116,7 +116,7 @@ export const STATIC_PAGE_SEO = {
     description: 'How iFranchise collects, uses, and protects your personal information.',
     keywords: 'privacy policy, data protection',
     canonicalPath: '/privacy-policy',
-    ogTitle: 'Privacy Policy — iFranchise',
+    ogTitle: 'Privacy Policy | iFranchise',
     ogDescription: 'Your privacy matters. Read our policy.',
     ogType: 'website',
     robots: 'index, follow',
@@ -126,7 +126,7 @@ export const STATIC_PAGE_SEO = {
     description: 'Terms of service for using the iFranchise platform and services.',
     keywords: 'terms of service, terms and conditions',
     canonicalPath: '/terms-and-conditions',
-    ogTitle: 'Terms of Service — iFranchise',
+    ogTitle: 'Terms of Service | iFranchise',
     ogDescription: 'Platform terms and conditions.',
     ogType: 'website',
   },
@@ -136,7 +136,7 @@ export const STATIC_PAGE_SEO = {
       'Trademark, copyright, and third-party license information for the iFranchise marketplace.',
     keywords: 'licenses, intellectual property, trademarks, franchise resources',
     canonicalPath: '/licenses',
-    ogTitle: 'Licenses — iFranchise',
+    ogTitle: 'Licenses | iFranchise',
     ogDescription: 'IP and licensing information.',
     ogType: 'website',
   },
@@ -146,7 +146,7 @@ export const STATIC_PAGE_SEO = {
       "The page you're looking for doesn't exist. Return to iFranchise home or browse franchise opportunities.",
     keywords: 'page not found, iFranchise',
     canonicalPath: '/404',
-    ogTitle: 'Page Not Found — iFranchise',
+    ogTitle: 'Page Not Found | iFranchise',
     ogDescription: 'This page could not be found.',
     robots: 'noindex, nofollow',
   },

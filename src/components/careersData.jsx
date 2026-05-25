@@ -1,6 +1,9 @@
 // --- Shared careers data -----------------------------------------------------
 // Single source of truth for all role data, used by CareersPage and CareerDetailPage.
 
+/** Set true when live roles are published on CareersPage. */
+export const HIRING_ACTIVE = false;
+
 import React from 'react';
 
 export const DEPT_COLORS = {

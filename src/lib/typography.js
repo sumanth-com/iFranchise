@@ -1,5 +1,5 @@
 /**
- * Typography class helpers — use with theme color utilities from cardThemeStyles.
+ * Typography class helpers. use with theme color utilities from cardThemeStyles.
  */
 
 export const TYPE = {

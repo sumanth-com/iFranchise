@@ -1,5 +1,5 @@
 /**
- * Legacy rate-limit helpers — disabled.
+ * Legacy rate-limit helpers. disabled.
  * Submissions go straight to Google Sheets with no per-session cap.
  */
 

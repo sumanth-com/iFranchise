@@ -2388,7 +2388,7 @@ function FAQAccordionItem({ faq, index }) {
   );
 }
 
-// -- Hero CTA — white pill, purple text (excluded from site-wide violet CTAs) --
+// -- Hero CTA. white pill, purple text (excluded from site-wide violet CTAs) --
 function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
     <button
@@ -3387,7 +3387,7 @@ function Hero() {
             </p>
           </div>
 
-          {/* FAQ accordion — home page only */}
+          {/* FAQ accordion. home page only */}
           <div
             className="mx-auto w-full max-w-3xl"
             style={{

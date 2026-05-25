@@ -1,41 +1,20 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import careerImage from '../assets/carrer.png';
-import { ROLES, DEPT_COLORS, MODE_COLORS } from './careersData.jsx';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
-import { navigateTo } from '@/lib/navigation';
+import CareersGrowthSection from './careers/CareersGrowthSection';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
-
-// --- Data --------------------------------------------------------------------
 
 const BENEFITS = [
   {
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    title: 'Competitive Salary',
-    desc: 'Market-leading compensation with performance bonuses and equity participation for senior roles.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    ),
-    title: 'Creativity First',
-    desc: 'A culture that rewards bold ideas, original thinking, and the courage to challenge the status quo.',
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    title: 'Team Events',
-    desc: 'Quarterly offsites, team dinners, hackathons, and culture-building experiences that actually matter.',
+    title: 'Ownership',
+    desc: 'Clear outcomes, real responsibility, and room to lead projects that move the business forward.',
   },
   {
     icon: (
@@ -43,61 +22,51 @@ const BENEFITS = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
       </svg>
     ),
-    title: 'Learning & Growth',
-    desc: 'Annual learning budget, conference access, mentorship programs, and structured career progression.',
+    title: 'Learning',
+    desc: 'Mentorship, skill-building, and exposure across brand partnerships, product, and growth.',
   },
   {
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    title: 'Health & Wellness',
-    desc: 'Comprehensive health coverage, mental wellness support, and gym reimbursement for the whole team.',
+    title: 'Team culture',
+    desc: 'Collaborative, respectful, and built for people who care about doing great work together.',
   },
   {
     icon: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.6}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
-    title: 'Flexible Time Off',
-    desc: 'Unlimited PTO policy, flexible working hours, and a results-driven culture that respects your time.',
+    title: 'Flexible work',
+    desc: 'Remote and hybrid options where the role allows, with an async-friendly way of working.',
   },
 ];
 
 const FAQS = [
   {
-    q: 'What kind of talent thrives at iFranchise?',
-    a: 'People who are self-driven, curious, and care deeply about outcomes. We value ownership over titles - if you see a problem, you fix it. We look for builders, not passengers. If you want to grow fast and work on things that matter, you\'ll fit right in.',
+    q: 'What kind of people do well at iFranchise?',
+    a: 'Self-driven builders who care about outcomes. If you like ownership, clear communication, and work that connects brands with serious investors, you will fit our culture.',
   },
   {
     q: 'Is remote or hybrid work available?',
-    a: 'Yes. Several roles are fully remote, and most others are hybrid. We care about the quality of your work, not where your desk is. Our async-first culture means you can do your best work from anywhere in India.',
+    a: 'Yes, for many future roles. We focus on quality of work and clear collaboration, not where your desk sits.',
   },
   {
-    q: 'What does the hiring process look like?',
-    a: 'Our process is fast and transparent: (1) Application review within 5 business days, (2) Intro call with the hiring manager - 20 minutes, (3) A skills assessment or portfolio review, (4) Final leadership round. No ghosting, no endless rounds. You\'ll always know where you stand.',
+    q: 'When will roles open, and how do I hear about them?',
+    a: 'We are preparing our next hiring wave across strategy, product, growth, and operations. Follow us on LinkedIn for announcements, or email careers@ifranchise.in if you want to introduce yourself early.',
   },
   {
-    q: 'Are internships available?',
-    a: 'Absolutely. We run structured internship programs every quarter across design, growth, and content. Exceptional interns are regularly converted to full-time roles. Watch this page for openings or email careers@ifranchise.in.',
+    q: 'Can I reach out before a role is posted?',
+    a: 'Yes. Send a short note and your background to careers@ifranchise.in. We review thoughtful introductions as we plan upcoming hires.',
   },
   {
-    q: 'What growth opportunities exist inside iFranchise?',
-    a: 'We are a fast-scaling company - which means roles evolve quickly. Most of our team leads were individual contributors 12-18 months ago. We promote from within aggressively and invest in your career trajectory with learning budgets and mentorship.',
-  },
-  {
-    q: 'What tools does the team use?',
-    a: 'We run on Notion, Figma, Slack, Linear, HubSpot, and Google Workspace. Our tech stack is modern and we are always open to adopting better tools. We believe great tooling is part of great culture.',
-  },
-  {
-    q: 'How quickly will I hear back after applying?',
-    a: 'We review every application within 5 business days. If your profile is a strong match, you\'ll receive a calendar invite for an intro call. If it\'s not the right fit right now, we\'ll let you know - no black holes.',
+    q: 'What growth looks like here',
+    a: 'We are a growing company, so responsibilities evolve quickly. We promote from within where it makes sense and invest in people who want to build with us long term.',
   },
 ];
-
-// --- Reusable animated section wrapper ---------------------------------------
 
 function RevealSection({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
@@ -115,8 +84,6 @@ function RevealSection({ children, className = '', delay = 0 }) {
   );
 }
 
-// --- Section label pill -------------------------------------------------------
-
 function SectionLabel({ text }) {
   return (
     <span className="careers-section-label inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
@@ -125,8 +92,6 @@ function SectionLabel({ text }) {
     </span>
   );
 }
-
-// --- Benefit Card - center aligned -------------------------------------------
 
 function BenefitCard({ icon, title, desc, delay }) {
   const ref = useRef(null);
@@ -149,81 +114,6 @@ function BenefitCard({ icon, title, desc, delay }) {
     </motion.div>
   );
 }
-
-// --- Role Card - premium large card ------------------------------------------
-
-function RoleCard({ role, index, onApply }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 18 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.07 }}
-      className="careers-role-card group rounded-2xl border border-slate-200 bg-white p-6 flex flex-col gap-5 shadow-[0_8px_24px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_40px_rgba(109,40,217,0.14)] hover:-translate-y-1 hover:border-violet-200 transition-all duration-300 cursor-pointer"
-      onClick={() => onApply(role)}
-    >
-      {/* Top row: icon + dept badge */}
-      <div className="flex items-start justify-between">
-        <div className="w-14 h-14 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-700 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300 border border-violet-200">
-          {role.icon}
-        </div>
-        <span className={`text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full ${DEPT_COLORS[role.dept] || 'bg-violet-100 text-violet-800 border border-violet-200'}`}>
-          {role.dept}
-        </span>
-      </div>
-
-      {/* Title + tagline */}
-      <div>
-        <h3 className="text-xl font-extrabold text-slate-900 mb-2 group-hover:text-violet-700 transition-colors duration-200 leading-tight">
-          {role.title}
-        </h3>
-        <p className="text-sm text-slate-600 leading-relaxed">{role.tagline}</p>
-      </div>
-
-      {/* Meta chips */}
-      <div className="flex flex-wrap gap-2">
-        <span className="text-xs font-semibold text-slate-700 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full">
-          {role.type}
-        </span>
-        <span className={`text-xs font-semibold px-3 py-1.5 rounded-full ${MODE_COLORS[role.mode]}`}>
-          {role.mode}
-        </span>
-        <span className="text-xs font-medium text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full flex items-center gap-1">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          {role.location}
-        </span>
-      </div>
-
-      {/* Divider */}
-      <div className="border-t border-slate-200" />
-
-      {/* Salary + CTA */}
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 mb-0.5">Salary</p>
-          <p className="text-base font-bold text-slate-900">{role.salary}</p>
-        </div>
-        <button
-          onClick={(e) => { e.stopPropagation(); onApply(role); }}
-          className="btn-purple-solid group/btn flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
-        >
-          Apply Now
-          <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
-          </svg>
-        </button>
-      </div>
-    </motion.div>
-  );
-}
-
-// --- FAQ Item - premium centered accordion ------------------------------------
 
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
@@ -264,48 +154,23 @@ function FaqItem({ q, a }) {
   );
 }
 
-// --- Page Entry Curtain Animation ---------------------------------------------
-
-function PageCurtain({ onDone }) {
-  return (
-    <motion.div
-      className="fixed inset-0 z-[9999] bg-[#0a0618] origin-top"
-      initial={{ scaleY: 1 }}
-      animate={{ scaleY: 0 }}
-      transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
-      onAnimationComplete={onDone}
-    />
-  );
-}
-
-// --- Main Page ----------------------------------------------------------------
-
 function CareersPage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const [curtainDone, setCurtainDone] = useState(false);
   const heroRef = useRef(null);
-
-  const handleApply = (role) => {
-    navigateTo(`/careers/${role.id}`);
-  };
 
   return (
     <div className="careers-page relative z-10 min-h-screen bg-transparent text-theme-primary">
-      {/* Page-entry curtain */}
-      <PageCurtain onDone={() => setCurtainDone(true)} />
-
-      {/* -- HERO -- */}
       <section ref={heroRef} className="careers-hero-section careers-section relative overflow-hidden">
         <div className="relative max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 pt-12 pb-0 sm:pt-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={curtainDone ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="careers-hero-label careers-section-label inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600 mb-4">
               <span className="careers-section-label-dot w-1.5 h-1.5 rounded-full bg-violet-600 inline-block" />
-              We're Hiring
+              Building Forward
             </span>
 
             <h1 className={`careers-hero-title ${heroDisplayClass(true)} mb-4`}>
@@ -316,15 +181,15 @@ function CareersPage() {
             </h1>
 
             <p className="careers-hero-lead text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
-              At iFranchise, we build category-defining growth systems, creative ecosystems, and careers that matter.
+              At iFranchise we build franchise growth systems and meaningful careers. Our next team expansion
+              is on the way.
             </p>
           </motion.div>
 
-          {/* Hero image */}
           <motion.div
             initial={{ opacity: 0, y: 28, scale: 0.98 }}
-            animate={curtainDone ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className="relative mx-auto max-w-4xl"
           >
             <div className="careers-hero-image-frame rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.12)] border border-slate-200 bg-white">
@@ -340,7 +205,6 @@ function CareersPage() {
         </div>
       </section>
 
-      {/* -- BENEFITS -- */}
       <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
         <RevealSection className="text-center mb-10">
           <div className="flex justify-center">
@@ -350,47 +214,25 @@ function CareersPage() {
             This is the vibe that drives us.
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto">
-            Performance, ownership, growth, creativity, and balance - not just words on a wall.
+            How we work today, and what we aim to offer as the team grows.
           </p>
         </RevealSection>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {BENEFITS.map((b, i) => (
             <BenefitCard key={b.title} {...b} delay={i * 0.05} />
           ))}
         </div>
       </section>
 
-      {/* -- OPEN ROLES -- */}
-      <section className="careers-open-roles careers-section border-y border-slate-200">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
-          <RevealSection className="text-center mb-10">
-            <div className="flex justify-center">
-              <SectionLabel text="Open Roles" />
-            </div>
-            <h2 className={`${sectionTitleClass(true)} mb-3`}>
-              Join the Creative Force.
-            </h2>
-            <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto">
-              {ROLES.length} open positions across design, growth, and strategy.
-            </p>
-          </RevealSection>
+      <CareersGrowthSection isDark={isDark} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {ROLES.map((role, i) => (
-              <RoleCard key={role.id} role={role} index={i} onApply={handleApply} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* -- OUR CULTURE -- */}
       <CultureScrollGallery
         isDark={isDark}
         className="careers-culture-section careers-section border-t border-slate-200"
+        intro="A collaborative, outcome-driven culture. We value clear communication, ownership, and people who want to grow with the company."
       />
 
-      {/* -- FAQ -- */}
       <section className="careers-faq-section careers-section py-14 sm:py-20">
         <div className="max-w-2xl mx-auto px-6 sm:px-8">
           <RevealSection className="text-center mb-8">
@@ -398,14 +240,15 @@ function CareersPage() {
               <SectionLabel text="FAQ" />
             </div>
             <h2 className={`careers-faq-heading ${sectionTitleClass(true)} mb-3`}>
-              Got a question?{' '}
-              <span className="careers-faq-subtitle text-slate-600 font-semibold">We've got answers.</span>
+              Questions?{' '}
+              <span className="careers-faq-subtitle text-slate-600 font-semibold">Here are answers.</span>
             </h2>
             <p className="careers-faq-intro text-sm text-slate-600">
-              Still unsure? Email{' '}
+              Email{' '}
               <a href="mailto:careers@ifranchise.in" className="careers-faq-email text-violet-700 hover:text-violet-900 hover:underline font-medium">
                 careers@ifranchise.in
-              </a>
+              </a>{' '}
+              for anything else.
             </p>
           </RevealSection>
 
@@ -416,7 +259,6 @@ function CareersPage() {
           </RevealSection>
         </div>
       </section>
-
     </div>
   );
 }

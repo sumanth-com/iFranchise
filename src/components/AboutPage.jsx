@@ -334,7 +334,7 @@ function AboutPage() {
       {/* LEADERSHIP & VISION SECTION */}
       <LeadershipSection />
 
-      {/* TEAM SECTION — hidden until SHOW_TEAM_SECTION is true */}
+      {/* TEAM SECTION. hidden until SHOW_TEAM_SECTION is true */}
       {SHOW_TEAM_SECTION && (
       <section className="relative w-full overflow-hidden bg-transparent py-24">
         <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6">
@@ -517,7 +517,7 @@ function AboutPage() {
           isDark={isDark}
           headingId="about-culture-heading"
           title="Our culture, keeping us fresh"
-          intro="We move fast, celebrate wins, and back each other — from sprint rooms and strategy workshops to offsites and demo days that keep our franchise growth engine human."
+          intro="We move fast, celebrate wins, and back each other, from sprint rooms and strategy workshops to offsites and demo days that keep our franchise growth engine human."
           className="about-culture-section border-t-0 pt-4 pb-16 lg:pb-20"
         />
       </div>

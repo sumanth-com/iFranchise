@@ -1,5 +1,5 @@
 /**
- * Legacy duplicate guard — disabled (unlimited submissions to Google Sheets).
+ * Legacy duplicate guard. disabled (unlimited submissions to Google Sheets).
  */
 
 /** @deprecated No-op: always allow */

@@ -1,5 +1,5 @@
 /**
- * Global SEO configuration — single source for site URL, branding, and defaults.
+ * Global SEO configuration. single source for site URL, branding, and defaults.
  */
 
 export const SITE_NAME = 'iFranchise';

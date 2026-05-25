@@ -14,7 +14,7 @@ export default function FranchiseOpportunitiesHeader() {
           isLight ? 'text-slate-600' : 'text-white'
         }`}
       >
-        Compare verified brands by investment in INR, business model, and location — then open any listing
+        Compare verified brands by investment in INR, business model, and location, then open any listing
         for full details.
       </p>
     </header>

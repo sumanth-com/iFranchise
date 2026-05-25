@@ -4,12 +4,12 @@ import { INR_PER_USD } from '../data/opportunities/opportunityUtils.js';
 const LAKH = 100_000;
 const CRORE = 10_000_000;
 
-/** Page filter dropdown — INR tiers aligned with opportunity card amounts. */
+/** Page filter dropdown. INR tiers aligned with opportunity card amounts. */
 export const PAGE_INVESTMENT_FILTER_OPTIONS = [
   { label: 'Under ₹25 Lakhs', minInr: 0, maxInr: 25 * LAKH },
-  { label: '₹25 Lakhs – ₹50 Lakhs', minInr: 25 * LAKH, maxInr: 50 * LAKH },
-  { label: '₹50 Lakhs – ₹1 Crore', minInr: 50 * LAKH, maxInr: CRORE },
-  { label: '₹1 Crore – ₹2 Crores', minInr: CRORE, maxInr: 2 * CRORE },
+  { label: '₹25 Lakhs to ₹50 Lakhs', minInr: 25 * LAKH, maxInr: 50 * LAKH },
+  { label: '₹50 Lakhs to ₹1 Crore', minInr: 50 * LAKH, maxInr: CRORE },
+  { label: '₹1 Crore to ₹2 Crores', minInr: CRORE, maxInr: 2 * CRORE },
   { label: 'Over ₹2 Crores', minInr: 2 * CRORE, maxInr: Number.POSITIVE_INFINITY },
 ];
 
@@ -37,12 +37,12 @@ export function investmentInrRangeMatchesOpportunity(range, opp) {
   return oppMin <= rangeMax && oppMax >= range.minInr;
 }
 
-/** Multi-select investment buckets (navbar) — same INR tiers as the page filter. */
+/** Multi-select investment buckets (navbar). same INR tiers as the page filter. */
 export const NAVBAR_INVESTMENT_BUCKETS = [
   { key: 'under25L', label: 'Under ₹25 Lakhs', minInr: 0, maxInr: 25 * LAKH },
-  { key: '25-50L', label: '₹25L – ₹50L', minInr: 25 * LAKH, maxInr: 50 * LAKH },
-  { key: '50L-1Cr', label: '₹50L – ₹1 Cr', minInr: 50 * LAKH, maxInr: CRORE },
-  { key: '1-2Cr', label: '₹1 Cr – ₹2 Cr', minInr: CRORE, maxInr: 2 * CRORE },
+  { key: '25-50L', label: '₹25L to ₹50L', minInr: 25 * LAKH, maxInr: 50 * LAKH },
+  { key: '50L-1Cr', label: '₹50L to ₹1 Cr', minInr: 50 * LAKH, maxInr: CRORE },
+  { key: '1-2Cr', label: '₹1 Cr to ₹2 Cr', minInr: CRORE, maxInr: 2 * CRORE },
   { key: 'over2Cr', label: 'Over ₹2 Cr', minInr: 2 * CRORE, maxInr: Number.POSITIVE_INFINITY },
 ];
 

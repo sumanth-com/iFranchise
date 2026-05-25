@@ -45,7 +45,7 @@ function getSeoContext(logicalPathname) {
 }
 
 /**
- * Centralized per-route SEO — updates document head on navigation (no UI changes).
+ * Centralized per-route SEO. updates document head on navigation (no UI changes).
  */
 export default function PageSEO({ pathname: logicalPathname }) {
   const locationKey =

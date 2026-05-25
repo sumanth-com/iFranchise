@@ -17,7 +17,7 @@ const CONFETTI_COUNT = 12;
 const BURST_LINES = 8;
 
 /**
- * Premium inline success state — same form area, no redirect.
+ * Premium inline success state. same form area, no redirect.
  * Animation-only upgrades; layout & visual styles unchanged.
  */
 export default function FormSuccessState({

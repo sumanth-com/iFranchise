@@ -1,5 +1,5 @@
 /**
- * Production fetch utilities — timeout, retry, abort, offline-safe errors.
+ * Production fetch utilities. timeout, retry, abort, offline-safe errors.
  */
 
 const DEFAULT_TIMEOUT_MS = 12_000;

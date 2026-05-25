@@ -509,7 +509,7 @@ function ProcessIcon({ step, size = 'md' }) {
   );
 }
 
-/** Mobile: centered vertical stepper — icon, label, title stacked in the middle */
+/** Mobile: centered vertical stepper. icon, label, title stacked in the middle */
 function ProcessStepsMobile() {
   const [ref, visible] = useStepReveal();
 

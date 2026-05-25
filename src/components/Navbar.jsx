@@ -952,7 +952,7 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Navigation Drawer — paper unfold from top-right */}
+      {/* Mobile Navigation Drawer. paper unfold from top-right */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -1015,7 +1015,7 @@ function Navbar() {
                   initial={reduceMotion ? false : 'hidden'}
                   animate={reduceMotion ? undefined : 'visible'}
                 >
-                  {/* Company Accordion — sub-items open downward */}
+                  {/* Company Accordion. sub-items open downward */}
                   <motion.div
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
                     className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border"
@@ -1102,7 +1102,7 @@ function Navbar() {
                 </motion.nav>
               </div>
 
-              {/* Mobile CTA — List Your Brand (not in top bar on mobile) */}
+              {/* Mobile CTA. List Your Brand (not in top bar on mobile) */}
               <motion.div
                 variants={reduceMotion ? undefined : mobileMenuFooter}
                 initial={reduceMotion ? false : 'hidden'}

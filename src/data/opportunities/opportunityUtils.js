@@ -173,7 +173,7 @@ export function formatInrRange(minInr, maxInr) {
   };
   if (minInr == null && maxInr == null) return 'On request';
   if (minInr != null && maxInr != null && Math.abs(minInr - maxInr) > LAKH) {
-    return `${fmt(minInr)} – ${fmt(maxInr)}`;
+    return `${fmt(minInr)} to ${fmt(maxInr)}`;
   }
   const base = minInr ?? maxInr;
   return `${fmt(base)}+`;
@@ -237,14 +237,14 @@ export function parsePaybackMonths(raw) {
   const text = cleanText(raw).toLowerCase();
   if (!text) return null;
   if (text.includes('year')) {
-    const years = text.match(/(\d+(?:\.\d+)?)\s*(?:–|-|to)?\s*(\d+(?:\.\d+)?)?\s*year/);
+    const years = text.match(/(\d+(?:\.\d+)?)\s*(?: to |-|to)?\s*(\d+(?:\.\d+)?)?\s*year/);
     if (years) {
       const low = parseFloat(years[1]) * 12;
       const high = years[2] ? parseFloat(years[2]) * 12 : low;
       return Math.round((low + high) / 2);
     }
   }
-  const months = text.match(/(\d+)\s*(?:–|-|to)\s*(\d+)?\s*month/);
+  const months = text.match(/(\d+)\s*(?: to |-|to)\s*(\d+)?\s*month/);
   if (months) {
     const low = parseInt(months[1], 10);
     const high = months[2] ? parseInt(months[2], 10) : low;

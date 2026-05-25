@@ -1,4 +1,4 @@
-/** Shared entrance motion — layout/styles unchanged; animation only */
+/** Shared entrance motion. layout/styles unchanged; animation only */
 
 export const EASE_SMOOTH = [0.22, 1, 0.36, 1];
 export const EASE_SNAP = [0.34, 1.45, 0.64, 1];
@@ -77,7 +77,7 @@ export const successResetBtn = {
   },
 };
 
-/** Compact assistant panel — same stagger feel, tighter timing */
+/** Compact assistant panel. same stagger feel, tighter timing */
 export const assistantSuccessRoot = {
   hidden: { opacity: 0 },
   show: {

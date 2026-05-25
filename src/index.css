@@ -3437,9 +3437,15 @@ html[data-theme='light'] .site-backdrop__gradient {
 }
 
 /* Default: white utility text -> dark on light pages (not CTA buttons/links) */
-html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white,
-html[data-theme='light'] #main-content .text-white:not(button):not(a) {
+html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white:not(.ic-gallery-counter):not(.ic-gallery-dots),
+html[data-theme='light'] #main-content .text-white:not(button):not(a):not(.ic-gallery-counter):not(.ic-gallery-dots) {
   color: #0b0f19 !important;
+}
+
+/* Image carousel overlay — keep white text on dark pill in light mode */
+html[data-theme='light'] #main-content .ic-gallery-counter,
+html[data-theme='light'] #main-content .ic-gallery-dots {
+  color: #ffffff !important;
 }
 
 html[data-theme='light'] #main-content [class*='text-white/9'],

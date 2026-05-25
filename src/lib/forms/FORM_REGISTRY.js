@@ -1,5 +1,5 @@
 /**
- * Production form registry — all user-facing submission entry points.
+ * Production form registry. all user-facing submission entry points.
  * Used for audits and deployment verification (no runtime dependency).
  */
 export const FORM_REGISTRY = [
@@ -33,14 +33,14 @@ export const FORM_REGISTRY = [
   },
   {
     id: 'expansion_assistant_brand',
-    label: 'Chatbot — Brand lead',
+    label: 'Chatbot. Brand lead',
     submitter: 'submitChatbotLead',
     sourcePage: 'expansion_assistant_brand',
     hook: 'useAsyncFormAction',
   },
   {
     id: 'expansion_assistant_investor',
-    label: 'Chatbot — Investor lead',
+    label: 'Chatbot. Investor lead',
     submitter: 'submitChatbotLead',
     sourcePage: 'expansion_assistant_investor',
     hook: 'useAsyncFormAction',

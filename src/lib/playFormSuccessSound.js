@@ -65,7 +65,7 @@ function playMagicBell(ctx, { freq, start, duration, volume, destination }) {
 }
 
 /**
- * Layered chime + soft sparkle — professional “done” feel.
+ * Layered chime + soft sparkle. professional “done” feel.
  */
 export function playFormSuccessSound() {
   if (typeof window === 'undefined') return;
@@ -124,7 +124,7 @@ export function playFormSuccessSound() {
 }
 
 /**
- * Clean corporate success — confident, professional, not game-like (brochure download).
+ * Clean corporate success. confident, professional, not game-like (brochure download).
  */
 export function playProfessionalSuccessSound() {
   if (typeof window === 'undefined') return;

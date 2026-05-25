@@ -1,5 +1,5 @@
 /**
- * Local brochure PDFs under src/assets — keyed by franchise listing id (rawBrands order).
+ * Local brochure PDFs under src/assets. keyed by franchise listing id (rawBrands order).
  */
 import odettePdf from '../../assets/ODETTE/ODETTE.pdf';
 import originalBurgerPdf from '../../assets/Original Burger co/Original Burger Co. Brand Presentation.pdf';
@@ -21,7 +21,7 @@ export const BROCHURE_PDF_BY_FRANCHISE_ID = {
   '6': brandAvenuePdf,
   '7': lassiPdf,
   '8': fusionPdf,
-  // '9' kasturi — no PDF in assets yet
+  // '9' kasturi. no PDF in assets yet
   '10': tenDowningPdf,
 };
 

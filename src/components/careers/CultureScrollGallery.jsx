@@ -54,7 +54,7 @@ export default function CultureScrollGallery({
   headingId = 'career-culture-heading',
   label = 'Our culture',
   title = 'Life at iFranchise',
-  intro = 'Async-friendly, outcome-driven, and built for people who want to grow fast — with offsites, demo days, and real ownership from day one.',
+  intro = 'Async-friendly, outcome-driven, and built for people who want to grow fast, with offsites, demo days, and real ownership from day one.',
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });

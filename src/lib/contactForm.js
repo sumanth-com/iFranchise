@@ -1,4 +1,4 @@
-/** Contact form helpers — re-export phone utilities + email readiness */
+/** Contact form helpers. re-export phone utilities + email readiness */
 
 import { digitsOnlyPhone, isValidPhone10 } from './phoneInput.js';
 
@@ -15,7 +15,7 @@ export function isValidContactEmail(value) {
   return trimmed.length > 0 && trimmed.length <= 254 && EMAIL_REGEX.test(trimmed);
 }
 
-/** Required * fields filled — enables Send button */
+/** Required * fields filled. enables Send button */
 export function isContactFormReady(form) {
   return (
     String(form?.fullName ?? '').trim().length >= 2 &&

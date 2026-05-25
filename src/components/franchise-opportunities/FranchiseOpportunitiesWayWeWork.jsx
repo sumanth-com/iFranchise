@@ -53,12 +53,12 @@ export default function FranchiseOpportunitiesWayWeWork() {
               extra: 'mb-2 whitespace-nowrap text-lg sm:text-xl lg:text-2xl',
             })}`}
           >
-            Search to franchise decision — made simple
+            Search to franchise decision, made simple
           </h2>
           <p
             className={`fo-way-work__subtitle ${sectionSubtitleClass(isLight, 'whitespace-nowrap text-sm sm:text-base')}`}
           >
-            Four clear steps with iFranchise — no clutter.
+            Four clear steps with iFranchise, no clutter.
           </p>
         </div>
 

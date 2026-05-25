@@ -20,12 +20,12 @@ import { getBrandImages } from './brandImages.js';
 import { getBrochureUrlByFranchiseId } from './brochurePdfs.js';
 
 const MODEL_DESCRIPTIONS = {
-  FOFO: 'Franchise-owned, franchise-operated — ideal for hands-on operators who want full unit control.',
-  FICO: 'Franchise-investor, company-operated — suited for investors seeking professional operations management.',
-  FOCO: 'Franchise-owned, company-operated — structured for semi-passive investors with brand-led operations.',
-  COFO: 'Company-owned, franchise-operated — leverages local operators under central brand standards.',
-  COCO: 'Company-owned, company-operated — corporate-led expansion with centralized control.',
-  FIFO: 'Franchise-investor, franchise-operated — shared governance between investor and operating partner.',
+  FOFO: 'Franchise-owned, franchise-operated: ideal for hands-on operators who want full unit control.',
+  FICO: 'Franchise-investor, company-operated: suited for investors seeking professional operations management.',
+  FOCO: 'Franchise-owned, company-operated: structured for semi-passive investors with brand-led operations.',
+  COFO: 'Company-owned, franchise-operated: leverages local operators under central brand standards.',
+  COCO: 'Company-owned, company-operated: corporate-led expansion with centralized control.',
+  FIFO: 'Franchise-investor, franchise-operated: shared governance between investor and operating partner.',
 };
 
 function formatMultiLineField(text) {
@@ -105,22 +105,10 @@ function buildWhyChoose(raw, industry, roi, outlets, models) {
       description: cleanText(raw.shortDescription).slice(0, 160) + (raw.shortDescription.length > 160 ? '…' : ''),
     });
   }
-  if (!isPlaceholder(outlets)) {
-    items.push({
-      title: 'Network Strength',
-      description: `${cleanText(outlets)} — demonstrating market validation and operational scale.`,
-    });
-  }
   if (roi != null) {
     items.push({
       title: 'Returns Profile',
       description: `Indicative returns around ${roi}% per annum (subject to location and operating performance).`,
-    });
-  }
-  if (!isPlaceholder(raw.returns)) {
-    items.push({
-      title: 'Commercial Structure',
-      description: cleanText(raw.returns),
     });
   }
   if (!isPlaceholder(raw.targetAreas) || !isPlaceholder(raw.mcp)) {
@@ -173,7 +161,7 @@ function buildDefaultReviews(brandName) {
     },
     {
       name: 'Vikram D.',
-      text: `Confident after due diligence — ${brandName} shared unit economics and expansion plans without overpromising returns.`,
+      text: `Confident after due diligence, ${brandName} shared unit economics and expansion plans without overpromising returns.`,
     },
   ];
   return templates.map((r) => ({ ...r, rating: 5 }));
@@ -232,7 +220,7 @@ function buildExpansionPlans(raw, cities) {
   if (!plans.length && !isPlaceholder(raw.locationType)) {
     plans.push(cleanText(raw.locationType));
   }
-  return plans.length ? plans : ['India — select markets'];
+  return plans.length ? plans : ['India, select markets'];
 }
 
 /**
@@ -298,7 +286,7 @@ export function buildOpportunityRecord(raw, id) {
     minInr: minInr ?? null,
     maxInr: maxInr ?? null,
     currency: raw.currency || 'INR',
-    metaTitle: `${brandName} Franchise — Investment, Model & Expansion | iFranchise`,
+    metaTitle: `${brandName} Franchise | Investment, Model & Expansion | iFranchise`,
     metaDescription: `${brandName}: ${summary.slice(0, 120)}… Investment ${investment}. ${model} model. Explore on iFranchise.`,
     searchText: [brandName, industry, tagline, summary, locations, models.join(' '), raw.targetAreas, raw.mcp]
       .filter(Boolean)
@@ -322,6 +310,8 @@ export function buildOpportunityRecord(raw, id) {
     banner: brandImages.banner,
     gallery: brandImages.gallery,
     slideshow: brandImages.slideshow ?? brandImages.gallery,
+    cardBackground: brandImages.cardBackground,
+    cardFit: brandImages.cardFit || 'fill',
     brochureUrl: getBrochureUrlByFranchiseId(id) || cleanText(raw.websiteBrochureLink) || '',
     keyInfo: {
       investment,
@@ -393,8 +383,8 @@ export function buildOpportunityRecord(raw, id) {
         label: 'Target Markets',
         value: cleanText(raw.targetAreas) || locations,
       },
-    ].filter((r) => r.value && r.value !== 'India — select markets'),
-    trainingSupport: [],
+    ].filter((r) => r.value && r.value !== 'India, select markets'),
+    trainingSupport: buildTrainingSupport(raw, models),
     agreementDetails: [
       !isPlaceholder(raw.agreementTerm) && { label: 'Agreement Term', value: cleanText(raw.agreementTerm) },
       !isPlaceholder(raw.lockInPeriod) && { label: 'Lock-in Period', value: cleanText(raw.lockInPeriod) },

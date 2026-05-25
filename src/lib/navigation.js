@@ -165,7 +165,7 @@ export function navigateTo(path, { replace = false } = {}) {
   );
 }
 
-/** @deprecated Use navigateTo — kept for gradual migration of inline pushState callers. */
+/** @deprecated Use navigateTo. kept for gradual migration of inline pushState callers. */
 export function dispatchRouteChange() {
   window.dispatchEvent(new CustomEvent(NAVIGATE_EVENT, { detail: { isPopstate: false } }));
 }

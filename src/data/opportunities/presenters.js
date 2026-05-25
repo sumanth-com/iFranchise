@@ -116,7 +116,7 @@ export function toInvestorDashboardOpportunity(opp) {
     category: opp.industry,
     industry: opp.category,
     roi: opp.roiValue != null ? `+${opp.roiValue}% ROI` : opp.roi,
-    investment: `From ${opp.investment.split('–')[0].trim()}`,
+    investment: `From ${opp.investment.split(' to ')[0].trim()}`,
     color: industryGradients[opp.industry] || 'from-violet-500 to-purple-600',
     link: `/franchise/${opp.slug}`,
   };
@@ -144,7 +144,7 @@ export function getPartnerBrandLogos(limit = 8) {
 }
 
 /**
- * Brand owners page case study cards — factual fields from listings only.
+ * Brand owners page case study cards. factual fields from listings only.
  */
 export function toBrandCaseStudy(opp) {
   const detail = getFranchiseDetailById(opp.id);
@@ -163,7 +163,7 @@ export function toBrandCaseStudy(opp) {
     color: 'violet',
     before: {
       cities: 1,
-      investors: '—',
+      investors: 'N/A',
       revenue: 'Pre-scale',
       units: units ? Math.max(1, Math.round(units * 0.15)) : 1,
       problems: [

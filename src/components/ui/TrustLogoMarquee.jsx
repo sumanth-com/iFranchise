@@ -3,7 +3,7 @@ import { getPartnerBrandLogos } from '../../data/franchiseData';
 const DEFAULT_PARTNERS = getPartnerBrandLogos(10);
 
 /**
- * Infinite logo rail — uniform slots using real franchise brand assets.
+ * Infinite logo rail. uniform slots using real franchise brand assets.
  */
 export function TrustLogoMarquee({
   partners = DEFAULT_PARTNERS,

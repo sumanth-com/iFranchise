@@ -1,5 +1,5 @@
 /**
- * Central form engine entry — import from '@/lib/forms' or '@/lib/forms/formEngine'.
+ * Central form engine entry. import from '@/lib/forms' or '@/lib/forms/formEngine'.
  */
 export { FORM_TYPES } from './constants/formTypes.js';
 export { GOOGLE_APPS_SCRIPT_URL, SHEET_TABS, SOURCE_PAGES } from './constants/formEndpoints.js';

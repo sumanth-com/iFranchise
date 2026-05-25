@@ -1,5 +1,5 @@
 /**
- * Outbound form payload sanitization — strips control chars, limits size, prevents crashes.
+ * Outbound form payload sanitization. strips control chars, limits size, prevents crashes.
  */
 
 const MAX_STRING = 8_000;

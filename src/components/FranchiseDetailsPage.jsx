@@ -12,7 +12,7 @@ import {
   getFranchiseDetailById,
   getSimilarFranchiseDetails,
 } from '../data/franchiseData';
-import { getCarouselCategory } from '../data/opportunities/brandImages';
+import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportunities/brandImages';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 
 const tabs = ['Overview', 'Business Model', 'Investment Details', 'Locations', 'FAQ', 'Reviews'];
@@ -121,6 +121,121 @@ function DualSectionPanel({ title, children }) {
   );
 }
 
+function BrandSupportList({ items, fallback }) {
+  if (!items?.length) {
+    return fallback ? (
+      <p className="fd-copy fd-body-text text-sm leading-relaxed sm:leading-7">{fallback}</p>
+    ) : null;
+  }
+
+  return (
+    <ul className="fd-support-list flex min-h-0 flex-1 flex-col justify-center gap-3">
+      {items.map((item) => (
+        <li
+          key={item}
+          className="fd-support-item fd-mini-card flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 sm:py-4"
+        >
+          <span
+            className="fd-support-check flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-bold text-violet-700"
+            aria-hidden
+          >
+            ✓
+          </span>
+          <p className="fd-copy min-w-0 flex-1 text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-6">
+            {item}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function BrandInsightsList({ insights, limit = 3, fallback }) {
+  const displayInsights = (insights || []).slice(0, limit);
+  if (!displayInsights.length) {
+    return fallback ? (
+      <p className="fd-copy fd-body-text text-sm leading-relaxed sm:leading-7">{fallback}</p>
+    ) : null;
+  }
+
+  return (
+    <div className="fd-insights-list flex min-h-0 flex-1 flex-col gap-3">
+      {displayInsights.map((insight) => (
+        <article
+          key={insight.title}
+          className="fd-insight-card fd-mini-card flex flex-col justify-center rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-4 text-center sm:px-5 sm:py-5"
+        >
+          <p className="fd-copy fd-field-label text-[0.65rem] tracking-[0.12em]">{insight.title}</p>
+          <p className="fd-copy fd-body-text mt-2 text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-7">
+            {insight.body}
+          </p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function InvestmentFinancialsGrid({ items, limit = 4 }) {
+  const displayItems = (items || []).slice(0, limit);
+
+  return (
+    <div className="fd-invest-financials flex min-h-0 flex-1 flex-col">
+      <p className="fd-invest-intro fd-copy text-xs leading-relaxed sm:text-sm">
+        Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
+      </p>
+      <div className="fd-invest-grid mt-4 grid flex-1 grid-cols-2 gap-3 sm:gap-3.5">
+        {displayItems.map((item) => (
+          <article
+            key={item.label}
+            className="fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.75rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm sm:min-h-[7.25rem] sm:px-3.5"
+          >
+            <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
+            <p className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug">
+              {item.value}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AgreementDetailCard({ label, value, className = '' }) {
+  return (
+    <article
+      className={`fd-mini-card fd-agreement-detail-card flex flex-col items-center justify-center px-4 py-4 text-center sm:py-5 ${className}`.trim()}
+    >
+      <p className="fd-copy fd-field-label text-[0.65rem] font-semibold uppercase tracking-[0.12em]">{label}</p>
+      <p className="fd-copy fd-body-text mt-2 text-base font-semibold leading-snug sm:text-lg">{value}</p>
+    </article>
+  );
+}
+
+/** Left: Agreement Term + Lock-in; right: Currency (equal column width, currency full height). */
+function AgreementDetailsContent({ items }) {
+  const agreementTerm = items.find((item) => item.label === 'Agreement Term');
+  const lockInPeriod = items.find((item) => item.label === 'Lock-in Period');
+  const currency = items.find((item) => item.label === 'Currency');
+  const leftItems = [agreementTerm, lockInPeriod].filter(Boolean);
+
+  return (
+    <div className="fd-agreement-details-layout grid min-h-[11rem] flex-1 grid-cols-2 gap-2.5 sm:gap-3">
+      <div className="fd-agreement-details-layout__left flex min-h-0 flex-col gap-2.5">
+        {leftItems.map((item) => (
+          <AgreementDetailCard key={item.label} label={item.label} value={item.value} className="flex-1" />
+        ))}
+      </div>
+      {currency && (
+        <AgreementDetailCard
+          label={currency.label}
+          value={currency.value}
+          className="fd-agreement-details-layout__currency h-full min-h-0"
+        />
+      )}
+    </div>
+  );
+}
+
 function FranchiseDetailsPage() {
   const [activeTab, setActiveTab] = useState('Overview');
   const tabsPanelRef = useRef(null);
@@ -130,13 +245,12 @@ function FranchiseDetailsPage() {
     [selectedFranchiseId]
   );
 
-  const galleryImages = useMemo(() => {
-    const raw = selectedFranchise?.slideshow ?? selectedFranchise?.gallery ?? [];
-    const list = Array.isArray(raw) ? raw.filter(Boolean) : [];
-    const brandPhotos = list.filter((src) => src && src !== selectedFranchise?.logo);
-    const slides = brandPhotos.length > 0 ? brandPhotos : list;
-    return slides.slice(0, 10);
-  }, [selectedFranchise]);
+  const galleryImages = useMemo(
+    () => resolveDetailGalleryImages(selectedFranchise),
+    [selectedFranchise]
+  );
+
+  const galleryImageFit = 'cover';
 
   const carouselCategory = useMemo(
     () => getCarouselCategory(selectedFranchise?.industry),
@@ -209,14 +323,7 @@ function FranchiseDetailsPage() {
               </div>
             </DualSectionPanel>
             <DualSectionPanel title="Agreement Details">
-              <div className="flex flex-1 flex-col gap-2.5">
-                {selectedFranchise.agreementDetails.map((item) => (
-                  <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
-                    <p className="fd-copy fd-field-label text-xs tracking-wide">{item.label}</p>
-                    <p className="fd-copy fd-body-text mt-1 text-sm leading-relaxed">{item.value}</p>
-                  </article>
-                ))}
-              </div>
+              <AgreementDetailsContent items={selectedFranchise.agreementDetails} />
             </DualSectionPanel>
           </DualSectionRow>
           <DualSectionPanel title="Franchise Structure">
@@ -241,27 +348,7 @@ function FranchiseDetailsPage() {
       return (
         <div className="space-y-5">
           <DualSectionPanel title="Investment & Financials">
-            <div className="flex min-h-0 flex-1 flex-col gap-3">
-              <p className="fd-about-intro fd-body-text text-xs leading-relaxed">
-                Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
-              </p>
-              <div className="fd-invest-grid grid grid-cols-2 gap-3">
-                {investmentItems.map((item) => (
-                  <article
-                    key={item.label}
-                    className="fd-stat-card fd-about-stat-card flex min-h-[88px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-2.5 py-3 text-center shadow-sm"
-                  >
-                    <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
-                    <p className="fd-copy fd-body-text mt-1.5 w-full whitespace-pre-line text-sm leading-snug">
-                      {item.value}
-                    </p>
-                  </article>
-                ))}
-              </div>
-              <p className="fd-copy fd-body-text mt-auto pt-1 text-[0.7rem] leading-relaxed">
-                {selectedFranchise.disclaimer}
-              </p>
-            </div>
+            <InvestmentFinancialsGrid items={investmentItems} />
           </DualSectionPanel>
           <DualSectionPanel title="Operations & Returns">
             <div className="grid grid-cols-2 gap-3">
@@ -297,14 +384,11 @@ function FranchiseDetailsPage() {
               ))}
             </div>
           </DualSectionPanel>
-          <DualSectionPanel title="Expansion Plans">
-            <div className="flex flex-col gap-2.5">
-              {selectedFranchise.expansionPlans.map((plan) => (
-                <article key={plan} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
-                  <p className="fd-copy fd-body-text text-sm">{plan}</p>
-                </article>
-              ))}
-            </div>
+          <DualSectionPanel title="Market & Site Intelligence">
+            <BrandInsightsList
+              insights={selectedFranchise.aboutInsights}
+              fallback={selectedFranchise.marketOpportunity || selectedFranchise.expansionVision}
+            />
           </DualSectionPanel>
         </div>
       );
@@ -363,7 +447,12 @@ function FranchiseDetailsPage() {
                   <img
                     src={selectedFranchise.logo}
                     alt=""
+                    decoding="async"
+                    loading="eager"
                     className="h-11 w-auto max-w-[140px] shrink-0 object-contain sm:h-12"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 ) : null}
                 <h1 className={`fd-copy fd-heading ${heroDisplayClass(true)}`}>{selectedFranchise.name}</h1>
@@ -411,14 +500,26 @@ function FranchiseDetailsPage() {
                 </div>
               </div>
 
-              <div className="fd-hero-gallery relative min-h-[280px] bg-slate-100 sm:min-h-[320px] lg:min-h-[420px]">
+              <div
+                className="fd-hero-gallery relative min-h-[280px] bg-slate-100 sm:min-h-[320px] lg:min-h-[420px]"
+                style={
+                  selectedFranchise.cardBackground
+                    ? { backgroundColor: selectedFranchise.cardBackground }
+                    : undefined
+                }
+              >
                 <ImageCarousel
+                  key={selectedFranchiseId}
                   images={galleryImages}
                   alt={selectedFranchise.name}
                   category={carouselCategory}
                   showThumbnails={false}
                   fillParent
-                  heightClassName="h-full min-h-[280px] sm:min-h-[320px] lg:min-h-[420px]"
+                  preloadAll
+                  imageFit={galleryImageFit}
+                  galleryBackground={selectedFranchise.cardBackground}
+                  className="absolute inset-0 z-0 h-full w-full"
+                  heightClassName="h-full min-h-[280px] w-full sm:min-h-[320px] lg:min-h-[420px]"
                 />
               </div>
             </div>
@@ -456,28 +557,32 @@ function FranchiseDetailsPage() {
           <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
             <DualSectionRow>
               <DualSectionPanel title={`About ${selectedFranchise.name}`}>
-                <div className="flex min-h-0 flex-1 flex-col gap-4">
+                <div className="fd-about-panel-body flex min-h-0 flex-1 flex-col gap-5">
                   {selectedFranchise.tagline && (
-                    <p className="fd-about-intro fd-body-text text-sm leading-snug">{selectedFranchise.tagline}</p>
+                    <p className="fd-about-tagline fd-copy text-sm font-semibold leading-snug sm:text-base">
+                      {selectedFranchise.tagline}
+                    </p>
                   )}
                   {selectedFranchise.overview && (
-                    <p className="fd-copy fd-body-text text-sm leading-relaxed sm:text-base">{selectedFranchise.overview}</p>
+                    <p className="fd-about-description fd-copy text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-7">
+                      {selectedFranchise.overview}
+                    </p>
                   )}
-                  <div>
-                    <p className="fd-about-block-title fd-field-label text-xs tracking-wide">
+                  <div className="fd-about-benefits">
+                    <p className="fd-about-block-title fd-field-label text-[0.65rem] tracking-[0.12em]">
                       What this means for you
                     </p>
                     {selectedFranchise.whyChoose?.length > 0 ? (
-                      <ul className="mt-2.5 space-y-2">
+                      <ul className="fd-about-benefits-list mt-3 space-y-3">
                         {selectedFranchise.whyChoose.slice(0, 3).map((item) => (
-                          <li key={item.title} className="fd-copy fd-body-text text-sm leading-relaxed">
-                            <span className="font-medium">{item.title}</span>
-                            <span> — {item.description}</span>
+                          <li key={item.title} className="fd-copy text-sm leading-relaxed sm:leading-7">
+                            <span className="font-semibold">{item.title}</span>
+                            <span className="fd-about-benefit-desc">: {item.description}</span>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="fd-about-block-body mt-2 text-sm leading-relaxed">
+                      <p className="fd-about-block-body fd-copy mt-3 text-sm leading-relaxed sm:leading-7">
                         {selectedFranchise.idealInvestorProfile ||
                           'Review investment figures on the right to see if this brand fits your goals and budget.'}
                       </p>
@@ -487,31 +592,9 @@ function FranchiseDetailsPage() {
               </DualSectionPanel>
 
               <DualSectionPanel title="Investment & Financials">
-                <div className="flex min-h-0 flex-1 flex-col gap-3">
-                  <p className="fd-about-intro fd-body-text text-xs leading-relaxed">
-                    Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
-                  </p>
-                  <div className="fd-invest-grid grid grid-cols-2 gap-3">
-                    {(selectedFranchise.investorInvestment || selectedFranchise.investmentDetails || [])
-                      .slice(0, 4)
-                      .map((item) => (
-                        <article
-                          key={item.label}
-                          className="fd-stat-card fd-about-stat-card flex min-h-[88px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-2.5 py-3 text-center shadow-sm"
-                        >
-                          <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">
-                            {item.label}
-                          </p>
-                          <p className="fd-copy fd-body-text mt-1.5 w-full whitespace-pre-line text-sm leading-snug">
-                            {item.value}
-                          </p>
-                        </article>
-                      ))}
-                  </div>
-                  <p className="fd-copy fd-body-text mt-auto pt-1 text-[0.7rem] leading-relaxed">
-                    {selectedFranchise.disclaimer}
-                  </p>
-                </div>
+                <InvestmentFinancialsGrid
+                  items={selectedFranchise.investorInvestment || selectedFranchise.investmentDetails}
+                />
               </DualSectionPanel>
             </DualSectionRow>
           </section>
@@ -529,15 +612,7 @@ function FranchiseDetailsPage() {
                 </div>
               </DualSectionPanel>
               <DualSectionPanel title="Agreement Details">
-                <div className="flex flex-1 flex-col gap-2.5">
-                  {selectedFranchise.agreementDetails.map((item) => (
-                    <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
-                      <p className="fd-copy fd-field-label text-xs tracking-wide">{item.label}</p>
-                      <p className="fd-copy fd-body-text mt-1 text-sm leading-relaxed">{item.value}</p>
-                    </article>
-                  ))}
-                  <p className="fd-copy mt-auto pt-1 text-xs leading-relaxed">{selectedFranchise.disclaimer}</p>
-                </div>
+                <AgreementDetailsContent items={selectedFranchise.agreementDetails} />
               </DualSectionPanel>
             </DualSectionRow>
 
@@ -569,14 +644,11 @@ function FranchiseDetailsPage() {
             </DualSectionRow>
 
             <DualSectionRow>
-              <DualSectionPanel title="Expansion Plans">
-                <div className="flex flex-1 flex-col gap-2.5">
-                  {selectedFranchise.expansionPlans.map((plan) => (
-                    <article key={plan} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
-                      <p className="fd-copy fd-body-text text-sm">{plan}</p>
-                    </article>
-                  ))}
-                </div>
+              <DualSectionPanel title="Brand & Partner Support">
+                <BrandSupportList
+                  items={selectedFranchise.trainingSupport}
+                  fallback={selectedFranchise.idealInvestorProfile}
+                />
               </DualSectionPanel>
               <DualSectionPanel title="Requirements">
                 <div className="flex flex-1 flex-col gap-2.5">
@@ -601,7 +673,7 @@ function FranchiseDetailsPage() {
               <div>
                 <h3 className={`fd-copy fd-heading ${TYPE.subsection}`}>Explore Similar Opportunities</h3>
                 <p className="fd-copy mt-1 text-sm text-slate-600">
-                  Other brands in a similar category and investment range — tap a card to view full details.
+                  Other brands in a similar category and investment range. Tap a card to view full details.
                 </p>
               </div>
             </div>

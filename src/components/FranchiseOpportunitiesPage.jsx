@@ -113,38 +113,38 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   }
 
   return (
-    <div className="flex items-center justify-center space-x-1 mt-8">
-      {/* Previous */}
+    <nav className="fo-pagination mt-8 flex items-center justify-center gap-1" aria-label="Franchise listings pagination">
       <button
+        type="button"
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className="px-3 py-2 text-sm text-white hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
+        className="fo-pagination-btn fo-pagination-btn--nav min-h-10 px-3 py-2 text-sm font-medium disabled:cursor-not-allowed"
       >
         Previous
       </button>
 
-      {/* Page Numbers */}
       {startPage > 1 && (
         <>
           <button
+            type="button"
             onClick={() => onPageChange(1)}
-            className="px-3 py-2 text-sm text-white hover:text-white"
+            className="fo-pagination-btn min-h-10 min-w-10 rounded-md px-3 py-2 text-sm font-semibold"
           >
             1
           </button>
-          {startPage > 2 && <span className="px-2 text-white">...</span>}
+          {startPage > 2 && <span className="fo-pagination-ellipsis px-2 text-sm font-medium">…</span>}
         </>
       )}
 
-      {pages.map(page => (
+      {pages.map((page) => (
         <button
           key={page}
+          type="button"
           onClick={() => onPageChange(page)}
-          className={`px-3 py-2 text-sm rounded-md transition-colors ${
-            page === currentPage
-              ? 'bg-violet-600 text-white'
-              : 'text-white hover:text-white'
+          className={`fo-pagination-btn min-h-10 min-w-10 rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
+            page === currentPage ? 'fo-pagination-btn--active' : ''
           }`}
+          aria-current={page === currentPage ? 'page' : undefined}
         >
           {page}
         </button>
@@ -152,25 +152,28 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
       {endPage < totalPages && (
         <>
-          {endPage < totalPages - 1 && <span className="px-2 text-white">...</span>}
+          {endPage < totalPages - 1 && (
+            <span className="fo-pagination-ellipsis px-2 text-sm font-medium">…</span>
+          )}
           <button
+            type="button"
             onClick={() => onPageChange(totalPages)}
-            className="px-3 py-2 text-sm text-white hover:text-white"
+            className="fo-pagination-btn min-h-10 min-w-10 rounded-md px-3 py-2 text-sm font-semibold"
           >
             {totalPages}
           </button>
         </>
       )}
 
-      {/* Next */}
       <button
+        type="button"
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className="px-3 py-2 text-sm text-white hover:text-white disabled:text-white/35 disabled:cursor-not-allowed"
+        className="fo-pagination-btn fo-pagination-btn--nav min-h-10 px-3 py-2 text-sm font-medium disabled:cursor-not-allowed"
       >
         Next
       </button>
-    </div>
+    </nav>
   );
 }
 
@@ -263,7 +266,7 @@ function FilterIcon() {
   );
 }
 
-/** Compact bar + bottom sheet — mobile/tablet only (desktop toolbar unchanged below lg). */
+/** Compact bar + bottom sheet. mobile/tablet only (desktop toolbar unchanged below lg). */
 function MobileFilterBar({
   filters,
   setFilters,

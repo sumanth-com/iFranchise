@@ -1,4 +1,4 @@
-/** Production-safe logging — verbose output only in development. */
+/** Production-safe logging. verbose output only in development. */
 
 const isDev = import.meta.env.DEV;
 
@@ -14,7 +14,7 @@ export const logger = {
   warn: (...args) => {
     if (isDev) console.warn(...args);
   },
-  /** Critical errors — minimal message in production (no PII dumps). */
+  /** Critical errors. minimal message in production (no PII dumps). */
   error: (...args) => {
     if (isDev) {
       console.error(...args);

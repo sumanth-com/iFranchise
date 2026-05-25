@@ -52,7 +52,7 @@ function getFranchiseById(id) {
 
 /**
  * Resolve full SEO payload for the current logical route and browser location.
- * @param {string} logicalPathname — from getLogicalPathname()
+ * @param {string} logicalPathname. from getLogicalPathname()
  * @param {{ pathname?: string, search?: string }} [location]
  */
 export function resolvePageSeo(logicalPathname, location = {}) {
@@ -98,13 +98,13 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     if (role) {
       canonicalPath = `/careers/${role.id}`;
       entry = {
-        title: `${role.title} — Careers | iFranchise`,
+        title: `${role.title} | Careers | iFranchise`,
         description: truncateMeta(
           `Apply for ${role.title} at iFranchise. ${role.location} · ${role.type} · ${role.salary}.`,
         ),
         keywords: `${role.title} job, iFranchise hiring, ${role.dept} jobs`,
         canonicalPath,
-        ogTitle: `${role.title} — iFranchise Careers`,
+        ogTitle: `${role.title} | iFranchise Careers`,
         ogDescription: truncateMeta(`Join iFranchise as ${role.title}. View responsibilities and apply.`),
         ogType: 'website',
         robots: 'index, follow',
@@ -129,11 +129,11 @@ export function resolvePageSeo(logicalPathname, location = {}) {
           `${brand} franchise opportunity: investment range, business model, locations, and ROI. Apply or inquire on iFranchise.`,
       );
       entry = {
-        title: `${brand} Franchise — Investment, ROI & Details | iFranchise`,
+        title: `${brand} Franchise | Investment, ROI & Details | iFranchise`,
         description,
         keywords: `${brand} franchise, franchise investment, ${franchise.industry || franchise.category} franchise India`,
         canonicalPath,
-        ogTitle: `${brand} — Franchise Opportunity`,
+        ogTitle: `${brand} | Franchise Opportunity`,
         ogDescription: truncateMeta(`Investment, model, and expansion details for ${brand} on iFranchise.`),
         ogType: 'website',
         robots: 'index, follow',

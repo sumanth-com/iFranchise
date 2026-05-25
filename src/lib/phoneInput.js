@@ -1,4 +1,4 @@
-/** Shared phone field UX — Indian mobile numbers: exactly 10 digits */
+/** Shared phone field UX. Indian mobile numbers: exactly 10 digits */
 
 export const PHONE_MAX_LENGTH = 10;
 export const PHONE_PLACEHOLDER = '10-digit mobile number';
@@ -22,7 +22,7 @@ export function normalizePhone10(value) {
 /** Show the number the user entered (e.g. on review/summary before submit). */
 export function formatPhoneDisplay(phone) {
   const digits = digitsOnlyPhone(phone);
-  if (!digits) return '—';
+  if (!digits) return 'N/A';
   return digits.length === 10 ? `+91 ${digits}` : digits;
 }
 

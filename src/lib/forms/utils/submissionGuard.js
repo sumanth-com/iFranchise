@@ -1,6 +1,6 @@
 /**
  * Prevents duplicate concurrent submissions (double-click / rapid tap).
- * Does NOT limit total submissions over time — unlimited repeat usage is allowed.
+ * Does NOT limit total submissions over time. unlimited repeat usage is allowed.
  */
 
 const inFlight = new Map();

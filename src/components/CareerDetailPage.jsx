@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ROLES, DEPT_COLORS, DEPT_COLORS_DARK, MODE_COLORS, MODE_COLORS_DARK, ROLE_TOOLS, HIRING_STEPS } from './careersData.jsx';
+import { ROLES, HIRING_ACTIVE, DEPT_COLORS, DEPT_COLORS_DARK, MODE_COLORS, MODE_COLORS_DARK, ROLE_TOOLS, HIRING_STEPS } from './careersData.jsx';
 import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
 import { submitJobApplication } from '@/lib/forms';
 import { useTheme } from '../context/ThemeContext';
@@ -156,6 +156,16 @@ function CareerDetailPage({ roleId }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [roleId]);
+
+  useEffect(() => {
+    if (!HIRING_ACTIVE) {
+      navigateTo('/careers');
+    }
+  }, []);
+
+  if (!HIRING_ACTIVE) {
+    return null;
+  }
 
   if (!role) {
     return (

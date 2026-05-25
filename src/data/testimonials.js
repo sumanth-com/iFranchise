@@ -1,9 +1,9 @@
-/** Professional portrait URLs — face-cropped, consistent sizing */
+/** Professional portrait URLs. face-cropped, consistent sizing */
 const avatar = (photoId) =>
   `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&crop=faces&w=128&h=128&q=85`;
 
 /**
- * Home page testimonial columns — each column has unique people (no duplicates across columns).
+ * Home page testimonial columns. each column has unique people (no duplicates across columns).
  */
 export const TESTIMONIAL_COLUMNS = {
   left: [
@@ -120,7 +120,7 @@ export const ABOUT_PAGE_TESTIMONIALS = [
     company: 'Urban Bites Collective',
     avatar: TESTIMONIAL_COLUMNS.middle[2].avatar,
     quote:
-      'Finally, franchise services designed with operators in mind — smart matching, clear economics, and reliable support.',
+      'Finally, franchise services designed with operators in mind: smart matching, clear economics, and reliable support.',
     icon: '✕',
   },
   {
