@@ -1,6 +1,9 @@
 /* Font loaded via <link> in index.html - non-blocking */
 
 @import './styles/typography.css';
+@import './styles/blog-share-3d.css';
+@import './styles/footer-social-3d.css';
+@import './styles/leadership-linkedin-3d.css';
 
 @tailwind base;
 @tailwind components;
@@ -1437,24 +1440,6 @@ img.loaded {
   display: flex;
   align-items: center;
   gap: 12px;
-}
-
-.footer-social-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  text-decoration: none;
-  flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.footer-social-btn:hover {
-  transform: translateY(-4px) scale(1.08);
-  background-color: rgba(139, 92, 246, 0.8);
-  box-shadow: 0 8px 20px rgba(11, 15, 25, 0.15);
 }
 
 .contact-social-btn {
@@ -3437,8 +3422,8 @@ html[data-theme='light'] .site-backdrop__gradient {
 }
 
 /* Default: white utility text -> dark on light pages (not CTA buttons/links) */
-html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white:not(.ic-gallery-counter):not(.ic-gallery-dots),
-html[data-theme='light'] #main-content .text-white:not(button):not(a):not(.ic-gallery-counter):not(.ic-gallery-dots) {
+html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white:not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d),
+html[data-theme='light'] #main-content .text-white:not(button):not(a):not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d) {
   color: #0b0f19 !important;
 }
 
@@ -3716,4 +3701,14 @@ html[data-theme='light'] #main-content .btn-purple-solid svg,
 html[data-theme='dark'] #main-content .btn-purple-solid svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
+}
+
+/* Violet step badges (blog sections, checklists, nav arrows) */
+.blog-pill,
+.blog-section-index,
+.blog-checklist-num,
+.blog-overview-num,
+span.bg-violet-600.blog-pill {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }

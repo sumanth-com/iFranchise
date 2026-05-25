@@ -14,6 +14,7 @@ import {
 } from '../data/franchiseData';
 import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportunities/brandImages';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
+import FranchiseLocationsPanel from './franchise/FranchiseLocationsPanel';
 
 const tabs = ['Overview', 'Business Model', 'Investment Details', 'Locations', 'FAQ', 'Reviews'];
 
@@ -370,19 +371,24 @@ function FranchiseDetailsPage() {
     }
 
     if (activeTab === 'Locations') {
+      const hasGroupedLocations = selectedFranchise.locationGroups?.length > 0;
       return (
         <div className="space-y-5">
           <DualSectionPanel title="Active & Target Locations">
-            <div className="flex flex-wrap gap-2">
-              {selectedFranchise.locations.map((location) => (
-                <span
-                  key={location}
-                  className="fd-copy rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium"
-                >
-                  {location}
-                </span>
-              ))}
-            </div>
+            {hasGroupedLocations ? (
+              <FranchiseLocationsPanel groups={selectedFranchise.locationGroups} />
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {selectedFranchise.locations.map((location) => (
+                  <span
+                    key={location}
+                    className="fd-copy rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium"
+                  >
+                    {location}
+                  </span>
+                ))}
+              </div>
+            )}
           </DualSectionPanel>
           <DualSectionPanel title="Market & Site Intelligence">
             <BrandInsightsList
@@ -490,11 +496,14 @@ function FranchiseDetailsPage() {
                       {selectedFranchise.franchiseModels.map((m) => m.name).join(' · ')}
                     </p>
                   )}
-                  {selectedFranchise.locations?.length > 0 && (
+                  {(selectedFranchise.locationsSummary ||
+                    selectedFranchise.locations?.length > 0) && (
                     <p className="fd-hero-story-muted fd-body-text text-xs leading-relaxed sm:text-sm">
                       <span className="font-medium">Expansion:</span>{' '}
-                      {selectedFranchise.locations.slice(0, 4).join(' · ')}
-                      {selectedFranchise.locations.length > 4 ? ' +' : ''}
+                      {selectedFranchise.locationsSummary ||
+                        `${selectedFranchise.locations.slice(0, 4).join(' · ')}${
+                          selectedFranchise.locations.length > 4 ? ' +' : ''
+                        }`}
                     </p>
                   )}
                 </div>

@@ -1,47 +1,29 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
-import { createPortal } from 'react-dom';
-import React from 'react';
 import BrandLogo from '../assets/BrandLogo.png';
+import abdulPhoto from '../assets/abdul.png';
+import abrarPhoto from '../assets/abrar.png';
+
+const FOUNDER_LINKEDIN = 'https://www.linkedin.com/in/syed-abdul-khader/';
+
+function LeadershipLinkedIn3D({ href, label }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="leadership-linkedin-3d"
+      aria-label={label}
+    >
+      <span className="leadership-linkedin-3d__glare" aria-hidden />
+      <svg className="leadership-linkedin-3d__icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    </a>
+  );
+}
 
 function LeadershipSection() {
-  const [founderModalOpen, setFounderModalOpen] = useState(false);
-  const [cofounderModalOpen, setCofounderModalOpen] = useState(false);
-
-  const savedScrollRef = React.useRef(0);
-
-  // Prevent body scroll when modal is open - also stops Lenis smooth scroll
-  React.useEffect(() => {
-    const isOpen = founderModalOpen || cofounderModalOpen;
-    if (!isOpen) return undefined;
-
-    const currentScroll = window.scrollY || document.documentElement.scrollTop;
-    savedScrollRef.current = currentScroll;
-
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${currentScroll}px`;
-    document.body.style.width = '100%';
-    document.documentElement.style.overflow = 'hidden';
-
-    if (window.__lenis) window.__lenis.stop();
-
-    return () => {
-      const scrollY = savedScrollRef.current;
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.documentElement.style.overflow = '';
-      window.scrollTo(0, scrollY);
-      if (window.__lenis) {
-        window.__lenis.start();
-        window.__lenis.scrollTo(scrollY, { immediate: true });
-      }
-    };
-  }, [founderModalOpen, cofounderModalOpen]);
-
   return (
     <>
       {/* LEADERSHIP & VISION SECTION - REFINED & OPTIMIZED */}
@@ -101,8 +83,8 @@ function LeadershipSection() {
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <img
-                      src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
-                      alt="Arjun Malhotra"
+                      src={abdulPhoto}
+                      alt="Syed Abdul Khader"
                       className="h-full w-full object-cover object-center brightness-105"
                       loading="eager"
                     />
@@ -123,7 +105,7 @@ function LeadershipSection() {
                 >
                   {/* PERSONAL GREETING */}
                   <p className="text-lg font-bold text-white lg:text-xl">
-                    Hello, I'm Arjun Malhotra
+                    Hello, I'm Syed Abdul Khader
                   </p>
 
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
@@ -168,7 +150,7 @@ function LeadershipSection() {
                     </div>
                     <div>
                       <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-                        Arjun Malhotra
+                        Syed Abdul Khader
                       </p>
                       <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
                         Founder & Director
@@ -176,27 +158,10 @@ function LeadershipSection() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <a
-                      href="#"
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white transition-all duration-300 hover:bg-violet-500 hover:scale-110"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    </a>
-                    
-                    <button
-                      onClick={() => setFounderModalOpen(true)}
-                      className="btn-purple-solid group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer"
-                    >
-                      Explore His Journey
-                      <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
-                      </svg>
-                    </button>
-                  </div>
+                  <LeadershipLinkedIn3D
+                    href={FOUNDER_LINKEDIN}
+                    label="Syed Abdul Khader on LinkedIn"
+                  />
                 </motion.div>
               </div>
             </div>
@@ -230,7 +195,7 @@ function LeadershipSection() {
                 >
                   {/* PERSONAL GREETING */}
                   <p className="text-lg font-bold text-white lg:text-xl">
-                    Hello, I'm Daniel Reeves
+                    Hello, I'm Mohammad Abrar
                   </p>
 
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
@@ -278,7 +243,7 @@ function LeadershipSection() {
                     </div>
                     <div>
                       <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-                        Daniel Reeves
+                        Mohammad Abrar
                       </p>
                       <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
                         Co-Founder
@@ -286,27 +251,6 @@ function LeadershipSection() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <a
-                      href="#"
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-600 text-white transition-all duration-300 hover:bg-violet-500 hover:scale-110"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                      </svg>
-                    </a>
-                    
-                    <button
-                      onClick={() => setCofounderModalOpen(true)}
-                      className="btn-purple-solid group flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer"
-                    >
-                      Explore His Journey
-                      <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
-                      </svg>
-                    </button>
-                  </div>
                 </motion.div>
               </div>
 
@@ -317,8 +261,8 @@ function LeadershipSection() {
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <img
-                      src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=80"
-                      alt="Daniel Reeves"
+                      src={abrarPhoto}
+                      alt="Mohammad Abrar"
                       className="h-full w-full object-cover object-center brightness-105"
                       loading="eager"
                     />
@@ -335,204 +279,6 @@ function LeadershipSection() {
           </motion.div>
         </div>
       </section>
-
-      {/* FOUNDER MODAL */}
-      {founderModalOpen && createPortal(
-        <div 
-          style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}
-          onClick={(e) => { if (e.target === e.currentTarget) setFounderModalOpen(false); }}
-        >
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)' }} onClick={() => setFounderModalOpen(false)} />
-          
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
-            onWheel={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-          >
-            <div style={{ background: 'linear-gradient(135deg,#7c3aed 0%,#6366f1 50%,#4f46e5 100%)', padding: '24px 24px 32px', position: 'relative', flexShrink: 0 }}>
-              <button
-                onClick={() => setFounderModalOpen(false)}
-                style={{ position: 'absolute', right: 16, top: 16, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                ✕
-              </button>
-              <div style={{ paddingTop: 8 }}>
-                <p style={{ margin: 0, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>About The Founder</p>
-                <h3 style={{ margin: 0, fontSize: 24, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Hello, I'm Arjun Malhotra</h3>
-                <p style={{ margin: '6px 0 0', fontSize: 13, fontWeight: 600, color: '#e0e7ff' }}>Founder & Director</p>
-              </div>
-            </div>
-            
-            <div style={{ padding: 24, flex: 1, overflowY: 'auto', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
-              <div className="space-y-6">
-                <p className="text-base leading-relaxed text-white">
-                  I started iFranchise with a simple belief: every entrepreneur deserves a fair shot at building something extraordinary. Too many brilliant business ideas die not from lack of potential, but from lack of the right guidance, capital, and strategic support.
-                </p>
-
-                <p className="text-base leading-relaxed text-white">
-                  Over the past 15+ years, I've had the privilege of transforming franchise ecosystems across India and Southeast Asia. My journey began when I witnessed firsthand how fragmented and opaque the franchise industry was - brilliant brands struggling to find the right investors, and passionate entrepreneurs unable to access verified opportunities.
-                </p>
-
-                <p className="text-base leading-relaxed text-white">
-                  That's when I decided to build something different. Not just another listing platform, but a comprehensive intelligence system that brings transparency, data-driven insights, and strategic support to every stakeholder in the franchise ecosystem.
-                </p>
-
-                <div className="bg-violet-500/15 border-l-4 border-violet-400 p-4 rounded">
-                  <p className="text-base italic text-white">
-                    "We're not building a marketplace. We're building the operating system for India's next generation of business empires."
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Career Highlights</h4>
-                  <ul className="space-y-2 text-sm text-white">
-                    <li>- Scaled 350+ brands across India and Southeast Asia</li>
-                    <li>- Facilitated Rs.500Cr+ in franchise capital deployment</li>
-                    <li>- Expanded operations to 100+ cities in 8 countries</li>
-                    <li>- Built network of 8,000+ verified investors</li>
-                    <li>- Advised government bodies on franchise policy frameworks</li>
-                    <li>- Keynote speaker at 50+ international franchise conferences</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Education & Certifications</h4>
-                  <p className="text-sm text-white">MBA - IIM Ahmedabad | B.Tech - IIT Delhi</p>
-                  <p className="text-sm text-white mt-2">Certified Franchise Executive (CFE) | Harvard Business School - Strategic Leadership Program</p>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Awards & Recognition</h4>
-                  <ul className="space-y-2 text-sm text-white">
-                    <li>- Entrepreneur of the Year 2023 - Economic Times</li>
-                    <li>- Top 40 Under 40 Business Leaders - Fortune India</li>
-                    <li>- Excellence in Franchise Innovation Award</li>
-                    <li>- Best Franchise Consultant - Asia Pacific Region</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Philosophy</h4>
-                  <p className="text-base leading-relaxed text-white">
-                    Success in franchising isn't about luck - it's about systems, data, and unwavering commitment to excellence. Every decision we make at iFranchise is guided by one principle: creating lasting value for our partners. Your success is our legacy.
-                  </p>
-                </div>
-              </div>
-              
-              <button
-                onClick={() => setFounderModalOpen(false)}
-                className="w-full mt-6 px-6 py-3 rounded-xl bg-violet-600 text-white text-sm font-bold transition-all duration-300 hover:bg-violet-500"
-              >
-                Close
-              </button>
-            </div>
-          </motion.div>
-        </div>,
-        document.body
-      )}
-
-      {/* CO-FOUNDER MODAL */}
-      {cofounderModalOpen && createPortal(
-        <div 
-          style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}
-          onClick={(e) => { if (e.target === e.currentTarget) setCofounderModalOpen(false); }}
-        >
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)' }} onClick={() => setCofounderModalOpen(false)} />
-          
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '560px', maxHeight: 'calc(100vh - 32px)', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', margin: 'auto', display: 'flex', flexDirection: 'column' }}
-            onWheel={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-          >
-            <div style={{ background: 'linear-gradient(135deg,#4f46e5 0%,#6366f1 50%,#7c3aed 100%)', padding: '24px 24px 32px', position: 'relative', flexShrink: 0 }}>
-              <button
-                onClick={() => setCofounderModalOpen(false)}
-                style={{ position: 'absolute', right: 16, top: 16, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                ✕
-              </button>
-              <div style={{ paddingTop: 8 }}>
-                <p style={{ margin: 0, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>About The Co-Founder</p>
-                <h3 style={{ margin: 0, fontSize: 24, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Hello, I'm Daniel Reeves</h3>
-                <p style={{ margin: '6px 0 0', fontSize: 13, fontWeight: 600, color: '#e0e7ff' }}>Co-Founder & Strategy Director</p>
-              </div>
-            </div>
-            
-            <div style={{ padding: 24, flex: 1, overflowY: 'auto', minHeight: 0, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
-              <div className="space-y-6">
-                <p className="text-base leading-relaxed text-white">
-                  I've spent over a decade watching businesses fail not because their ideas weren't good enough, but because they lacked the operational backbone to scale. That's what drives me every single day at iFranchise.
-                </p>
-
-                <p className="text-base leading-relaxed text-white">
-                  My journey in franchise operations began in Singapore, where I helped build multi-country expansion frameworks for some of Asia's fastest-growing brands. I learned that scaling isn't just about replication - it's about creating systems so robust that your brand can thrive in 100 cities without losing its soul.
-                </p>
-
-                <p className="text-base leading-relaxed text-white">
-                  When Arjun and I founded iFranchise, we shared a vision: to build the infrastructure that turns franchise opportunities into category-defining businesses. My role is to ensure that every operational detail, every process, and every system we create is designed for sustainable, profitable growth.
-                </p>
-
-                <div className="bg-violet-500/15 border-l-4 border-violet-400 p-4 rounded">
-                  <p className="text-base italic text-white">
-                    "Excellence isn't an accident. It's a system. And we're here to build that system with you."
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Career Highlights</h4>
-                  <ul className="space-y-2 text-sm text-white">
-                    <li>- Engineered operational blueprints for 200+ franchise brands</li>
-                    <li>- Expanded franchise networks across 25+ countries</li>
-                    <li>- Reduced operational costs by 40% through process optimization</li>
-                    <li>- Built 100+ strategic alliances with industry leaders</li>
-                    <li>- Developed proprietary franchise performance tracking systems</li>
-                    <li>- Trained 500+ franchise managers across Asia Pacific</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Education & Certifications</h4>
-                  <p className="text-sm text-white">MBA - INSEAD, France | B.Eng - NUS Singapore</p>
-                  <p className="text-sm text-white mt-2">Certified Franchise Operations Executive | MIT Sloan - Operations Management Program</p>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Awards & Recognition</h4>
-                  <ul className="space-y-2 text-sm text-white">
-                    <li>- Operations Excellence Award - Franchise Asia 2023</li>
-                    <li>- Top 50 Franchise Professionals - Global Franchise Magazine</li>
-                    <li>- Innovation in Process Management Award</li>
-                    <li>- Best COO - Emerging Markets Category</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-white mb-3">Philosophy</h4>
-                  <p className="text-base leading-relaxed text-white">
-                    Great franchises are built on great systems. My approach combines data-driven decision making with hands-on operational expertise. We don't just advise - we roll up our sleeves and build alongside you, ensuring every detail is optimized for success.
-                  </p>
-                </div>
-              </div>
-              
-              <button
-                onClick={() => setCofounderModalOpen(false)}
-                className="w-full mt-6 px-6 py-3 rounded-xl bg-violet-600 text-white text-sm font-bold transition-all duration-300 hover:bg-violet-500"
-              >
-                Close
-              </button>
-            </div>
-          </motion.div>
-        </div>,
-        document.body
-      )}
     </>
   );
 }

@@ -1,6 +1,19 @@
-/** Professional portrait URLs. face-cropped, consistent sizing */
-const avatar = (photoId) =>
-  `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&crop=faces&w=128&h=128&q=85`;
+/** Professional portrait URLs — face-cropped, consistent sizing */
+const avatar = (photoId, size = 128) =>
+  `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&crop=faces&w=${size}&h=${size}&q=85`;
+
+/** Home testimonial photo IDs (do not reuse on About page) */
+const HOME_AVATAR_IDS = new Set([
+  '1507003211169-0a1dd7228f2d',
+  '1573496359142-b8d87734a5a2',
+  '1472099645785-5658abf4ff4e',
+  '1580489944761-15a19d654956',
+  '1519085360753-af0119f7cbe7',
+  '1594744803329-e58b31de8bf5',
+  '1560250097-0b93528c311a',
+  '1500648767791-00dcc994a43e',
+  '1573497019940-1c28c88b4f3e',
+]);
 
 /**
  * Home page testimonial columns. each column has unique people (no duplicates across columns).
@@ -105,30 +118,52 @@ export const TESTIMONIAL_AVATAR_STRIP = [
   TESTIMONIAL_COLUMNS.middle[1].avatar,
 ];
 
+/**
+ * About page-only portraits (verified URLs, not in HOME_AVATAR_IDS).
+ * Larger size for sharp display in marquee cards.
+ */
+const ABOUT_AVATAR_SIZE = 280;
+const ABOUT_PAGE_AVATARS = {
+  rohitVerma: avatar('1506794778202-cad84cf45f1d', ABOUT_AVATAR_SIZE),
+  divyaKrishnan: avatar('1438761681033-6461ffad8d80', ABOUT_AVATAR_SIZE),
+  adityaMalhotra: avatar('1556157382-97eda2d62296', ABOUT_AVATAR_SIZE),
+};
+
+if (import.meta.env.DEV) {
+  Object.values(ABOUT_PAGE_AVATARS).forEach((url) => {
+    const id = url.match(/photo-([^?]+)/)?.[1];
+    if (id && HOME_AVATAR_IDS.has(id)) {
+      console.warn('[testimonials] About avatar overlaps home:', id);
+    }
+  });
+}
+
 /** About page marquee cards */
 export const ABOUT_PAGE_TESTIMONIALS = [
   {
+    id: 'rohit-verma',
     name: 'Rohit Verma',
     company: 'ScaleCraft Ventures',
-    avatar: TESTIMONIAL_COLUMNS.left[1].avatar,
+    avatar: ABOUT_PAGE_AVATARS.rohitVerma,
     quote:
       'Working with iFranchise gave our team the clarity and speed we needed for expansion. The process is transparent and data-driven.',
-    icon: '◎',
   },
   {
+    id: 'divya-krishnan',
     name: 'Divya Krishnan',
     company: 'Urban Bites Collective',
-    avatar: TESTIMONIAL_COLUMNS.middle[2].avatar,
+    avatar: ABOUT_PAGE_AVATARS.divyaKrishnan,
     quote:
       'Finally, franchise services designed with operators in mind: smart matching, clear economics, and reliable support.',
-    icon: '✕',
   },
   {
+    id: 'aditya-malhotra',
     name: 'Aditya Malhotra',
     company: 'Northline Franchise Group',
-    avatar: TESTIMONIAL_COLUMNS.right[2].avatar,
+    avatar: ABOUT_PAGE_AVATARS.adityaMalhotra,
     quote:
       'We scaled across tier 1 and tier 2 cities with a playbook that investors actually understood and trusted.',
-    icon: '◌',
   },
 ];
+
+export const ABOUT_PAGE_TESTIMONIAL_AVATARS = ABOUT_PAGE_TESTIMONIALS.map((t) => t.avatar);

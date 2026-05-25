@@ -44,7 +44,7 @@ export const RAW_BRANDS = [
       'FICO (8% on Net Sales or 15% as minimum guarantee on total investment, whichever is higher)',
     targetAreas: '',
     mcp:
-      'Bangalore(15 places), chennai(15), Hyd(12), Ko(10)l, Mub(10), pune(10), Delhi(15)(NCR)- FICO, Guj(8)(surat, ahmedabad, vadodara), ke(8)(kochi, kozhikode, trivandrum, thrissur), raj- 6(jaipur, jodhpur, kota, udaipur), coim + ooty(3), indore + bop(3), NorthEast(6)(Guwahati, shillong, siliguri, gangtok, imphal), Goa(6), punj(4)(amritsar, chandigarh, jalandhar, ludhiana) - FOFO',
+      'Bengaluru (15), Chennai (15), Hyderabad (12), Kolkata (10), Mumbai (10), Pune (10), Delhi NCR (15) — FICO. Gujarat (8), Kerala (8), Rajasthan (6), Coimbatore & Ooty (3), Indore & Bhopal (3), North East (6), Goa (6), Punjab (4) — FOFO',
     agreementTerm: 'UF - 8 years\nMF - 6 Years',
     lockInPeriod: '6 Years',
   },
@@ -176,7 +176,7 @@ export const RAW_BRANDS = [
     lockInPeriod: '--',
   },
   {
-    franchiseName: 'kasturi',
+    franchiseName: 'Kasturi Creations',
     category: 'Food & Beverage / Restaurant',
     tagline: 'Authentic Taste. Timeless Tradition.',
     shortDescription:

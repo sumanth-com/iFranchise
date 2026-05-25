@@ -1,4 +1,4 @@
-import { FiArrowRight } from 'react-icons/fi';
+import { FiArrowDown, FiArrowRight } from 'react-icons/fi';
 
 const SIZE_CLASSES = {
   sm: 'site-cta--sm',
@@ -18,18 +18,24 @@ export default function CtaButton({
   className = '',
   size = 'md',
   showArrow = true,
+  arrowDirection = 'right',
   disabled = false,
   ...rest
 }) {
   const sizeClass = SIZE_CLASSES[size] || SIZE_CLASSES.md;
   const classes = ['site-cta', 'group', sizeClass, className].filter(Boolean).join(' ');
+  const ArrowIcon = arrowDirection === 'down' ? FiArrowDown : FiArrowRight;
+  const iconClass =
+    arrowDirection === 'down'
+      ? 'site-cta__icon site-cta__icon--down relative z-[1]'
+      : 'site-cta__icon relative z-[1]';
 
   const content = (
     <>
       <span className="site-cta__label relative z-[1]">{children}</span>
       {showArrow && (
-        <span className="site-cta__icon relative z-[1]" aria-hidden>
-          <FiArrowRight />
+        <span className={iconClass} aria-hidden>
+          <ArrowIcon />
         </span>
       )}
     </>

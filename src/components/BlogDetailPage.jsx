@@ -1,15 +1,24 @@
 import { createPortal } from 'react-dom';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import BlogCard from './blog/BlogCard';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './blog/BlogImage';
 import ShareIcons from './blog/ShareIcons';
-import { blogPosts, formatDisplayDate, getBlogBySlug, getNextBlogPost, getPrevBlogPost } from './blogData';
+import BlogCard from './blog/BlogCard';
+import { blogPosts, formatDisplayDate, getBlogBySlug } from './blogData';
 import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
-import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 
 function getCurrentSlug() {
   const pieces = window.location.pathname.split('/').filter(Boolean);
   return pieces[1] || '';
+}
+
+/** Article section h2 ids only — exclude explore-more and other non-article headings. */
+const OVERVIEW_EXCLUDED_IDS = new Set(['blog-explore-heading']);
+
+function isOverviewNavHeading(id, label = '') {
+  if (!id || OVERVIEW_EXCLUDED_IDS.has(id)) return false;
+  if (/explore more insights/i.test(label.trim())) return false;
+  return true;
 }
 
 function useReveal(dep) {
@@ -27,347 +36,339 @@ function useReveal(dep) {
   }, [dep]);
 }
 
-function HeroMediaBlock({ images, category, title, excerpt }) {
-  const [current, setCurrent] = useState(0);
-  const [out, setOut] = useState(false);
-  useEffect(() => {
-    const id = setInterval(() => {
-      setOut(true);
-      setTimeout(() => { setCurrent((c) => (c + 1) % images.length); setOut(false); }, 500);
-    }, 4200);
-    return () => clearInterval(id);
-  }, [images.length]);
-
+function BlogDetailHero({
+  category,
+  title,
+  excerpt,
+  readTime,
+  dateLabel,
+  image,
+  imageAlt,
+  overviewItems,
+  onHeadingClick,
+  articleUrl,
+  shareTitle,
+}) {
   return (
     <div
       data-reveal
-      className="blog-hero-media relative h-[340px] w-full overflow-hidden rounded-3xl border border-violet-500/20 shadow-[0_24px_60px_rgba(15,23,42,0.18)] md:h-[480px] lg:h-[540px]"
+      className="blog-detail-hero-split flex w-full flex-col overflow-hidden rounded-3xl border border-violet-500/20 shadow-[0_24px_60px_rgba(15,23,42,0.12)] lg:flex-row lg:items-stretch"
     >
-      {images.map((src, i) => (
-        <img
-          key={src + i}
-          src={src}
-          alt=""
-          loading={i === 0 ? 'eager' : 'lazy'}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{
-            opacity: i === current ? (out ? 0 : 1) : 0,
-            transform: i === current ? (out ? 'scale(1.04)' : 'scale(1)') : 'scale(1.04)',
-            transition: 'opacity 0.55s ease, transform 0.55s ease',
-          }}
-        />
-      ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0618]/95 via-[#0a0618]/45 to-[#0a0618]/15" />
-      <div className="blog-on-media absolute inset-0 flex flex-col justify-end p-6 sm:p-8 md:p-10">
-        <span className="blog-hero-category w-fit rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-900">
+      <div className="blog-detail-hero-split__content relative z-10 flex w-full flex-col justify-center gap-3.5 rounded-t-3xl border-b border-violet-500/20 bg-white p-6 sm:gap-4 sm:p-7 lg:w-1/2 lg:min-h-0 lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-none lg:border-b-0 lg:border-r lg:p-8 xl:gap-4 xl:p-9">
+        <span className="blog-hero-category inline-flex w-fit rounded-full border border-violet-400/35 bg-violet-500/15 px-3 py-1 text-xs font-bold uppercase tracking-wide">
           {category}
         </span>
-        <h1 className={`blog-hero-overlay-title mt-4 max-w-4xl ${TYPE.pageHero} text-white`}>
+        <h1 className={`blog-detail-hero-split__title ${TYPE.pageHero} lg:text-[1.65rem] lg:leading-[1.2] xl:text-[1.85rem]`}>
           {title}
         </h1>
-        <p className="blog-hero-overlay-excerpt mt-3 max-w-2xl text-base leading-relaxed md:text-lg">
+        <p className="blog-detail-hero-split__excerpt text-[15px] leading-relaxed sm:text-base">
           {excerpt}
         </p>
-      </div>
-      <div className="blog-on-media absolute bottom-5 right-5 flex gap-2 sm:bottom-8 sm:right-8">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => setCurrent(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-7 bg-white' : 'w-1.5 bg-white/45'}`}
-            aria-label={`Slide ${i + 1}`}
+        <div className="blog-detail-hero-split__meta flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+          <span>{readTime}</span>
+          <span className="blog-detail-hero-split__meta-dot opacity-40" aria-hidden>
+            ·
+          </span>
+          <span>{dateLabel}</span>
+        </div>
+
+        {overviewItems.length > 0 ? (
+          <OverviewDropdown
+            headings={overviewItems}
+            onHeadingClick={onHeadingClick}
+            embedded
           />
-        ))}
+        ) : null}
+
+        <div className="blog-detail-hero-split__share flex flex-wrap items-center gap-2 border-t border-violet-500/15 pt-3.5">
+          <span className="blog-detail-hero-split__share-label text-sm font-semibold">Share</span>
+          <ShareIcons url={articleUrl} title={shareTitle} variant="brand" className="blog-hero-share" />
+        </div>
+      </div>
+
+      <div className="blog-detail-hero-split__media w-full shrink-0 overflow-hidden rounded-b-3xl lg:w-1/2 lg:rounded-bl-none lg:rounded-r-3xl lg:rounded-tl-none">
+        <BlogImage
+          src={image}
+          alt={imageAlt || title}
+          variant="hero"
+          priority
+          className="h-full w-full"
+          wrapperClassName={`blog-detail-hero-image ${BLOG_IMAGE_FRAME_CLASS}`}
+          imgClassName={BLOG_IMAGE_FIT_CLASS}
+        />
       </div>
     </div>
   );
 }
 
-function KeyTakeaways({ items }) {
-  if (!items?.length) return null;
-  const icons = ['◎', '◈', '◇', '◆'];
+function IntroCallout({ text }) {
   return (
-    <section data-reveal className="blog-key-takeaways">
-      <div className="mb-5 flex items-end justify-between gap-4">
-        <div>
-          <p className="blog-section-eyebrow text-xs font-bold uppercase tracking-[0.22em]">At a glance</p>
-          <h2 className={`blog-section-title mt-1 ${TYPE.sectionCompact} text-white`}>Key takeaways</h2>
-        </div>
-        <span className="blog-takeaway-count hidden rounded-full border border-violet-500/25 px-3 py-1 text-xs font-semibold sm:inline-flex">
-          {items.length} insights
-        </span>
+    <div
+      data-reveal
+      className="blog-intro-callout rounded-2xl border border-violet-500/20 bg-violet-500/10 px-5 py-5 sm:px-6 sm:py-6"
+    >
+      <p className="blog-intro-highlight-label text-xs font-bold uppercase tracking-[0.2em]">Why this matters</p>
+      <p className="blog-intro-highlight-text mt-2 text-base font-semibold leading-relaxed sm:text-lg">{text}</p>
+    </div>
+  );
+}
+
+function QuoteCard({ quote }) {
+  if (!quote) return null;
+  return (
+    <blockquote
+      data-reveal
+      className="blog-quote-card rounded-2xl border border-violet-500/25 px-5 py-5 sm:px-7 sm:py-6"
+    >
+      <p className="blog-quote-card__text text-center text-[17px] italic leading-relaxed sm:text-lg md:text-[18px]">
+        &ldquo;{quote}&rdquo;
+      </p>
+    </blockquote>
+  );
+}
+
+function SectionHeader({ sectionNum, section }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span className="blog-pill blog-section-index flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold !text-white shadow-md shadow-violet-600/25">
+        {sectionNum}
+      </span>
+      <h2 id={section.id} className={`blog-article-heading scroll-mt-28 min-w-0 flex-1 pt-1 ${TYPE.subsection}`}>
+        {section.heading}
+      </h2>
+    </div>
+  );
+}
+
+function SectionBodyContent({ section }) {
+  return (
+    <>
+      <div className="mt-5 space-y-4">
+        {section.body.map((p, pi) => (
+          <p key={pi} className="blog-article-body text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
+            {p}
+          </p>
+        ))}
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {items.map((item, i) => (
-          <div
-            key={item}
-            className="blog-takeaway-card group flex gap-4 rounded-2xl border border-violet-500/20 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-300/40 hover:shadow-md"
-          >
-            <span className="blog-takeaway-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-lg font-bold text-white shadow-lg shadow-violet-600/30">
-              {icons[i % icons.length]}
-            </span>
-            <p className="blog-takeaway-text text-[15px] font-medium leading-relaxed">{item}</p>
-          </div>
+
+      {section.quote ? (
+        <blockquote className="blog-pull-quote mt-6 border-l-[3px] border-violet-400/60 py-1 pl-5 text-[17px] italic leading-relaxed md:text-lg">
+          &ldquo;{section.quote}&rdquo;
+        </blockquote>
+      ) : null}
+    </>
+  );
+}
+
+function ArticleSection({ section, index }) {
+  const sectionNum = String(index + 1).padStart(2, '0');
+
+  return (
+    <article
+      data-reveal
+      style={{ '--reveal-delay': `${index * 40}ms` }}
+      className={`blog-flow-section ${index > 0 ? 'border-t border-violet-500/15 pt-10 md:pt-12' : 'mt-8 md:mt-10'}`}
+    >
+      <SectionHeader sectionNum={sectionNum} section={section} />
+      <SectionBodyContent section={section} />
+    </article>
+  );
+}
+
+function ExploreMoreSection({ currentSlug }) {
+  const related = useMemo(
+    () => blogPosts.filter((post) => post.slug !== currentSlug),
+    [currentSlug]
+  );
+
+  if (!related.length) return null;
+
+  return (
+    <section data-reveal className="blog-explore-more mt-12 pt-4 md:mt-14 md:pt-6" aria-labelledby="blog-explore-heading">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="blog-explore-eyebrow text-xs font-bold uppercase tracking-[0.2em] text-violet-400">Keep reading</p>
+          <h2 id="blog-explore-heading" className={`blog-explore-title mt-2 ${TYPE.subsection}`}>
+            Explore more insights
+          </h2>
+        </div>
+        <a
+          href="/blog"
+          onClick={(e) => {
+            e.preventDefault();
+            navigateTo('/blog');
+          }}
+          className="blog-explore-link inline-flex items-center gap-1 text-sm font-semibold text-violet-400 transition hover:text-violet-300"
+        >
+          View all articles
+          <span aria-hidden>→</span>
+        </a>
+      </div>
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {related.map((post, i) => (
+          <BlogCard key={post.slug} post={post} priority={i === 0} />
         ))}
       </div>
     </section>
   );
 }
+function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
+  const [open, setOpen] = useState(false);
+  const [menuRect, setMenuRect] = useState(null);
+  const triggerRef = useRef(null);
+  const menuRef = useRef(null);
 
-/* -- Counting animation stat card -- */
-function StatCard({ value, label }) {
-  const ref = useRef(null);
-  const numRef = useRef(null);
-  const hasAnimated = useRef(false);
+  const updateMenuRect = useCallback(() => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const gap = 8;
+    const maxMenuHeight = 280;
+    const spaceBelow = window.innerHeight - rect.bottom - gap - 12;
+    const spaceAbove = rect.top - gap - 12;
+    const openUpward = spaceBelow < 160 && spaceAbove > spaceBelow;
+    const maxHeight = Math.min(maxMenuHeight, openUpward ? spaceAbove : spaceBelow);
 
-  // Extract numeric part for counting animation
-  const numMatch = value.match(/[\d.]+/);
-  const numericVal = numMatch ? parseFloat(numMatch[0]) : null;
-  const prefix = numMatch ? value.slice(0, numMatch.index) : '';
-  const suffix = numMatch ? value.slice(numMatch.index + numMatch[0].length) : value;
+    setMenuRect({
+      left: rect.left,
+      width: rect.width,
+      top: openUpward ? undefined : rect.bottom + gap,
+      bottom: openUpward ? window.innerHeight - rect.top + gap : undefined,
+      maxHeight: Math.max(120, maxHeight),
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (open) updateMenuRect();
+    else setMenuRect(null);
+  }, [open, updateMenuRect]);
 
   useEffect(() => {
-    if (!numRef.current || numericVal === null) return;
-    const el = numRef.current;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !hasAnimated.current) {
-        hasAnimated.current = true;
-        const duration = 1400;
-        const start = performance.now();
-        const isInt = Number.isInteger(numericVal);
-        const animate = (now) => {
-          const progress = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = eased * numericVal;
-          el.textContent = prefix + (isInt ? Math.round(current) : current.toFixed(1)) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-        io.disconnect();
-      }
-    }, { threshold: 0.5 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [numericVal, prefix, suffix]);
+    if (!open) return undefined;
 
-  const onMove = (e) => {
-    const el = ref.current; if (!el) return;
-    const { left, top, width, height } = el.getBoundingClientRect();
-    el.style.transform = `perspective(500px) rotateX(${((e.clientY - top) / height - 0.5) * -14}deg) rotateY(${((e.clientX - left) / width - 0.5) * 14}deg) scale(1.05)`;
-  };
-  const onLeave = () => { if (ref.current) ref.current.style.transform = ''; };
+    const onPointerDown = (e) => {
+      const inTrigger = triggerRef.current?.contains(e.target);
+      const inMenu = menuRef.current?.contains(e.target);
+      if (!inTrigger && !inMenu) setOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
 
-  return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
-      className="blog-stat-card rounded-2xl border border-violet-500/25 card-premium-dark-inner p-6 text-center shadow-inner"
-      style={{ transition: 'transform 0.18s ease', willChange: 'transform' }}>
-      <p ref={numRef} className="blog-stat-value text-3xl font-extrabold">{value}</p>
-      <p className="blog-stat-label mt-1 text-sm">{label}</p>
-    </div>
-  );
-}
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    window.addEventListener('resize', updateMenuRect);
+    window.addEventListener('scroll', updateMenuRect, true);
 
-/* -- Double image pair - side by side -- */
-function DoubleSectionImage({ src1, src2, alt }) {
-  return (
-    <div data-reveal className="blog-double-image my-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <div className="overflow-hidden rounded-2xl shadow-[0_12px_40px_rgba(15,23,42,0.10)]">
-        <img src={src1} alt={alt} loading="lazy"
-          className="h-[220px] w-full object-cover transition-transform duration-700 hover:scale-[1.04] md:h-[300px]" />
-      </div>
-      <div className="overflow-hidden rounded-2xl shadow-[0_12px_40px_rgba(15,23,42,0.10)]">
-        <img src={src2} alt={alt} loading="lazy"
-          className="h-[220px] w-full object-cover transition-transform duration-700 hover:scale-[1.04] md:h-[300px]" />
-      </div>
-    </div>
-  );
-}
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('resize', updateMenuRect);
+      window.removeEventListener('scroll', updateMenuRect, true);
+    };
+  }, [open, updateMenuRect]);
 
-function SectionImageBanner({ src, caption, alt }) {
-  return (
-    <figure data-reveal className="blog-visual-banner my-10 overflow-hidden rounded-3xl border border-violet-500/20 shadow-lg">
-      <img src={src} alt={alt} loading="lazy" className="h-[240px] w-full object-cover md:h-[360px]" />
-      {caption && (
-        <figcaption className="blog-visual-caption border-t border-violet-500/15 px-5 py-3 text-sm font-medium">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
-  );
-}
+  const triggerClass = embedded
+    ? `blog-overview-trigger blog-overview-trigger--embedded group flex w-full items-center justify-between rounded-xl border px-4 py-3 transition ${
+        open
+          ? 'border-violet-400/50 bg-violet-500/20 ring-2 ring-violet-400/25'
+          : 'border-violet-500/25 bg-violet-500/10 hover:border-violet-400/40 hover:bg-violet-500/15'
+      }`
+    : `blog-overview-trigger group flex w-full items-center justify-between rounded-2xl border bg-white px-6 py-4 shadow-sm transition hover:border-violet-200 hover:shadow-md ${
+        open ? 'border-violet-300 ring-2 ring-violet-200/60' : 'border-slate-200'
+      }`;
 
-function ChecklistPanel({ points }) {
-  return (
-    <ul className="blog-checklist mt-6 grid gap-3 sm:grid-cols-1">
-      {points.map((pt, i) => (
-        <li key={pt} className="blog-checklist-item flex items-start gap-3 rounded-xl border border-violet-500/15 bg-violet-50/80 px-4 py-3.5">
-          <span className="blog-checklist-num mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-violet-600 text-xs font-bold text-white">
-            {i + 1}
-          </span>
-          <span className="blog-checklist-text text-[15px] leading-relaxed">{pt}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+  const menuClass = embedded
+    ? 'blog-overview-menu blog-overview-menu--embedded overflow-y-auto rounded-xl border border-violet-200 bg-white py-1.5 shadow-[0_20px_48px_rgba(15,23,42,0.22)]'
+    : 'blog-overview-menu overflow-y-auto rounded-2xl border border-slate-200 bg-white py-1.5 shadow-[0_20px_50px_rgba(15,23,42,0.15)]';
 
-function IntroSection({ section, highlight, image }) {
-  return (
-    <article data-reveal className="blog-intro-section">
-      <div className="blog-intro-highlight mb-8 rounded-2xl border border-violet-400/30 bg-gradient-to-br from-violet-600/15 via-violet-500/10 to-transparent px-6 py-5 md:px-8 md:py-6">
-        <p className="blog-intro-highlight-label text-xs font-bold uppercase tracking-[0.2em]">Why this matters</p>
-        <p className="blog-intro-highlight-text mt-2 text-lg font-semibold leading-relaxed md:text-xl">{highlight}</p>
-      </div>
+  const itemClass =
+    'blog-overview-item flex w-full items-start gap-3 px-4 py-2.5 text-left text-sm font-medium leading-snug text-slate-800 transition hover:bg-violet-50';
 
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="lg:col-span-7">
-          <div className="flex items-center gap-3">
-            <span className="blog-section-index flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold text-white">01</span>
-            <h2 id={section.id} className={`blog-article-heading scroll-mt-28 ${TYPE.subsection} text-white`}>
-              {section.heading}
-            </h2>
-          </div>
-          <div className="mt-6 space-y-5">
-            {section.body.map((p, pi) => (
-              <p key={pi} className={`blog-article-body text-[16.5px] leading-[1.9] ${pi === 0 ? 'text-lg font-medium md:text-xl' : ''}`}>
-                {p}
-              </p>
-            ))}
-          </div>
-        </div>
-        <div className="lg:col-span-5">
-          <div className="blog-intro-visual sticky top-28 overflow-hidden rounded-3xl border border-violet-500/20 shadow-xl">
-            <img src={image || section.sectionImage} alt={section.heading} loading="lazy" className="h-[280px] w-full object-cover md:h-[340px]" />
-            <div className="blog-intro-visual-caption border-t border-violet-500/15 px-5 py-4">
-              <p className="text-xs font-bold uppercase tracking-widest">Visual summary</p>
-              <p className="mt-1 text-sm leading-relaxed">A practical framework you can apply this week - not theory for its own sake.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function ArticleSection({ section, index, isLast }) {
-  const sectionNum = String(index + 1).padStart(2, '0');
-  const isStrategy = section.id.includes('strategy');
-  const isConclusion = section.id.includes('conclusion');
-
-  return (
-    <article data-reveal style={{ '--reveal-delay': `${index * 50}ms` }} className="blog-article-section">
-      {!isLast && <div className="blog-section-divider mb-12 h-px w-full bg-gradient-to-r from-transparent via-violet-500/25 to-transparent" />}
-
-      <div className="flex flex-wrap items-start gap-3 sm:gap-4">
-        <span className="blog-section-index flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold text-white">
-          {sectionNum}
-        </span>
-        <h2 id={section.id} className={`blog-article-heading scroll-mt-28 flex-1 ${TYPE.subsection} text-white`}>
-          {section.heading}
-        </h2>
-      </div>
-
-      <div className="mt-6 space-y-5">
-        {section.body.map((p, pi) => (
-          <p key={pi} className="blog-article-body text-[16.5px] leading-[1.9]">{p}</p>
-        ))}
-      </div>
-
-      {section.points && <ChecklistPanel points={section.points} />}
-
-      {section.insight && (
-        <div className="blog-insight-box my-8 rounded-2xl border-l-4 border-violet-500 bg-violet-50 p-6">
-          <p className="blog-insight-label text-xs font-bold uppercase tracking-widest">Key insight</p>
-          <p className="blog-insight-text mt-2 text-[15.5px] font-medium leading-relaxed">{section.insight}</p>
-        </div>
-      )}
-
-      {section.quote && (
-        <blockquote className="blog-pull-quote my-8 rounded-2xl border border-violet-400/35 bg-violet-500/10 px-6 py-6 text-[18px] italic leading-relaxed">
-          &ldquo;{section.quote}&rdquo;
-        </blockquote>
-      )}
-
-      {section.stats && (
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {section.stats.map((s) => <StatCard key={s.label} value={s.value} label={s.label} />)}
-        </div>
-      )}
-
-      {isStrategy && section.sectionImage && (
-        <SectionImageBanner src={section.sectionImage} alt={section.heading} caption="Strategy only works when it is visible to the whole team every week." />
-      )}
-
-      {section.sectionImage && !isStrategy && (
-        <DoubleSectionImage
-          src1={section.sectionImage}
-          src2={section.sectionImage2 || 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80'}
-          alt={section.heading}
-        />
-      )}
-
-      {isConclusion && (
-        <div className="blog-action-box mt-8 rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-600/20 to-violet-900/10 p-6 md:p-8">
-          <p className="blog-action-box-title text-lg font-bold md:text-xl">Your next step</p>
-          <p className="blog-action-box-text mt-2 text-[15px] leading-relaxed">
-            Pick one priority for the next 90 days, assign a named owner, and review progress every week. That single habit compounds faster than any new tool or framework.
-          </p>
-        </div>
-      )}
-    </article>
-  );
-}
-function OverviewDropdown({ headings, onHeadingClick }) {
-  const [open, setOpen] = useState(true);
-  const rows = Math.ceil(headings.length / 3);
-  const panelHeight = rows * 56 + 40;
-
-  return (
-    <div className="blog-overview mb-10 w-full">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="blog-overview-trigger group flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm transition hover:border-violet-200 hover:shadow-md"
-        aria-expanded={open}
-      >
-        <div className="flex items-center gap-3">
-          <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-400 opacity-60" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-violet-500" />
-          </span>
-          <span className="blog-overview-title text-base font-bold text-slate-900">Overview</span>
-          <span className="blog-overview-badge rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-semibold text-violet-700">{headings.length} sections</span>
-        </div>
-        <svg className={`blog-overview-chevron h-5 w-5 text-slate-700 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div className="blog-overview-panel-wrap overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: open ? `${panelHeight}px` : '0px', opacity: open ? 1 : 0 }}
-      >
-        <div className="blog-overview-panel mt-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+  const menu =
+    open && menuRect
+      ? createPortal(
+          <div
+            ref={menuRef}
+            role="listbox"
+            aria-label="Article sections"
+            className={menuClass}
+            style={{
+              position: 'fixed',
+              left: menuRect.left,
+              width: menuRect.width,
+              top: menuRect.top,
+              bottom: menuRect.bottom,
+              maxHeight: menuRect.maxHeight,
+              zIndex: 10050,
+            }}
+          >
             {headings.map((h, i) => (
               <button
                 key={h.id}
                 type="button"
+                role="option"
                 onClick={() => {
                   onHeadingClick(h.id);
                   setOpen(false);
                 }}
-                className="blog-overview-item flex items-center gap-2.5 rounded-xl bg-violet-50 px-3 py-2.5 text-left text-sm font-medium text-slate-900 transition hover:bg-violet-100"
+                className={itemClass}
               >
-                <span className="blog-overview-num flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600 text-[11px] font-bold text-white">
+                <span className="blog-pill blog-overview-num mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold !text-white">
                   {i + 1}
                 </span>
-                <span className="blog-overview-label leading-snug">{h.label}</span>
+                <span className="blog-overview-label min-w-0 flex-1 text-[15px] leading-snug">{h.label}</span>
               </button>
             ))}
-          </div>
+          </div>,
+          document.body
+        )
+      : null;
+
+  return (
+    <div className={`blog-overview w-full ${embedded ? '' : 'mb-10'}`}>
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={triggerClass}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      >
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            {open ? (
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-violet-600" />
+            ) : (
+              <>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-400 opacity-50" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-violet-500" />
+              </>
+            )}
+          </span>
+          <span className="blog-overview-title truncate text-sm font-bold sm:text-base">Overview</span>
+          <span
+            className={`blog-overview-badge shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+              embedded ? 'bg-violet-100 text-violet-800' : 'bg-violet-100 text-violet-700'
+            }`}
+          >
+            {headings.length} sections
+          </span>
         </div>
-      </div>
+        <svg
+          className={`blog-overview-chevron h-5 w-5 shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''} ${
+            embedded ? 'text-violet-200' : 'text-violet-700'
+          }`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {menu}
     </div>
   );
 }
@@ -381,11 +382,10 @@ function AuthorModal({ author, onClose }) {
   }, [onClose]);
 
   const highlights = [
-    '10+ years in investment strategy and portfolio management',
-    'Advised 200+ founders on wealth-building frameworks',
-    'Published in Forbes, Bloomberg, and Financial Times',
-    'Speaker at Global Investment Summit 2024 & 2025',
-    'Built and exited two fintech startups',
+    'Advises investors and operators on franchise unit economics',
+    'Works across QSR, retail, and service franchise formats in India',
+    'Focus on FOFO, FICO, and multi-city expansion planning',
+    'Contributes research to the iFranchise opportunity platform',
   ];
 
   return createPortal(
@@ -418,7 +418,7 @@ function AuthorModal({ author, onClose }) {
             ))}
           </ul>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 24 }}>
-            {[{ v: '200+', l: 'Clients advised' }, { v: '10yr', l: 'Experience' }, { v: '3M+', l: 'Readers reached' }].map((s) => (
+            {[{ v: '50+', l: 'Brand partners' }, { v: '12+', l: 'Categories' }, { v: 'Pan', l: 'India focus' }].map((s) => (
               <div key={s.l} style={{ background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(167,139,250,0.35)', borderRadius: 14, padding: '14px 8px', textAlign: 'center' }}>
                 <p style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#fff' }}>{s.v}</p>
                 <p style={{ margin: '3px 0 0', fontSize: 11, color: '#c4b5fd' }}>{s.l}</p>
@@ -446,6 +446,18 @@ function BlogDetailPage() {
   useReveal(slug);
 
   useEffect(() => {
+    const article = getBlogBySlug(slug);
+    const heroSrc = article?.thumbnail || article?.image;
+    if (!heroSrc) return undefined;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = heroSrc;
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, [slug]);
+
+  useEffect(() => {
     const onChange = () => setSlug(getCurrentSlug());
     window.addEventListener('popstate', onChange);
     window.addEventListener(NAVIGATE_EVENT, onChange);
@@ -458,28 +470,25 @@ function BlogDetailPage() {
   const article = useMemo(() => getBlogBySlug(slug) || blogPosts[0] || null, [slug]);
   const sections = article?.sections ?? [];
   const author = article?.author ?? null;
-  const nextPost = useMemo(() => getNextBlogPost(article?.slug), [article?.slug]);
-  const prevPost = useMemo(() => getPrevBlogPost(article?.slug), [article?.slug]);
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      const allH2 = Array.from(document.querySelectorAll('h2[id]')).map((h) => ({
-        id: h.id, label: h.textContent || '',
-      }));
+      const allH2 = Array.from(document.querySelectorAll('h2[id]'))
+        .filter((h) => isOverviewNavHeading(h.id, h.textContent || ''))
+        .map((h) => ({
+          id: h.id,
+          label: h.textContent || '',
+        }));
       setHeadings(allH2);
     }, 150);
     return () => clearTimeout(timer);
   }, [article?.slug]);
 
   const overviewItems = useMemo(() => {
-    if (headings.length > 0) return headings;
+    if (headings.length > 0) {
+      return headings.filter((h) => isOverviewNavHeading(h.id, h.label));
+    }
     return sections.map((s) => ({ id: s.id, label: s.heading }));
   }, [headings, sections]);
-
-  const relatedPosts = useMemo(
-    () => blogPosts.filter((p) => p?.slug && p.slug !== article?.slug).slice(0, 3),
-    [article?.slug]
-  );
 
   const handleHeadingClick = (id) => {
     const el = document.getElementById(id);
@@ -499,89 +508,35 @@ function BlogDetailPage() {
   }
 
   const articleUrl = `${window.location.origin}/blog/${article.slug}`;
-  const heroImages = article.heroImages || [article.image];
 
   return (
-    <main className="blog-detail-page relative z-10 w-full pb-24">
-
-      <div className="mx-auto max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
-        <HeroMediaBlock
-          images={heroImages}
+    <main className="blog-detail-page relative z-10 w-full min-h-0 bg-transparent pb-24">
+      <div className="blog-detail-shell mx-auto w-full max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
+        <BlogDetailHero
           category={article.category}
           title={article.title}
           excerpt={article.excerpt}
+          readTime={article.readTime}
+          dateLabel={formatDisplayDate(article.date)}
+          image={article.thumbnail || article.image}
+          imageAlt={article.imageAlt || article.title}
+          overviewItems={overviewItems}
+          onHeadingClick={handleHeadingClick}
+          articleUrl={articleUrl}
+          shareTitle={article.title}
         />
 
-        <div data-reveal className="blog-detail-hero blog-hero-meta mt-8 border-b border-violet-500/25 pb-8">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-            <span className="blog-meta-chip rounded-full border border-violet-500/25 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
-              {article.category}
-            </span>
-            <span className="blog-meta-dot hidden sm:inline"> - </span>
-            <span className="blog-meta-value">{article.readTime}</span>
-            <span className="blog-meta-dot hidden sm:inline"> - </span>
-            <span className="blog-meta-value">{formatDisplayDate(article.date)}</span>
-          </div>
+        <div className="blog-detail-content blog-article-flow mt-10 space-y-8 md:mt-12 md:space-y-10">
+          <IntroCallout text={article.introHighlight} />
+          <QuoteCard quote={article.quote} />
 
-          <div className="mt-8 grid grid-cols-1 gap-6 border-t border-violet-500/20 pt-6 sm:grid-cols-3">
-            <div className="flex items-center gap-3">
-              <img src={author?.avatar} alt={author?.name} className="h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2 ring-violet-400/40" />
-              <div>
-                <p className="blog-meta-label text-[11px]">Written by</p>
-                <p className="blog-meta-value text-sm font-semibold">{author?.name}</p>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center sm:border-l sm:border-violet-500/15 sm:pl-6">
-              <p className="blog-meta-label text-[11px]">Read time</p>
-              <p className="blog-meta-value text-sm font-semibold">{article.readTime}</p>
-            </div>
-            <div className="flex flex-col justify-center sm:border-l sm:border-violet-500/15 sm:pl-6">
-              <p className="blog-meta-label text-[11px]">Posted on</p>
-              <p className="blog-meta-value text-sm font-semibold">{formatDisplayDate(article.date)}</p>
-            </div>
-          </div>
-
-          <div className="mt-6 flex flex-col items-center justify-center gap-4 border-t border-violet-500/20 pt-6 sm:flex-row">
-            <span className="blog-meta-value text-sm font-semibold">Share this post</span>
-            <ShareIcons url={articleUrl} title={article.title} variant="light" className="blog-hero-share" />
-          </div>
+          {sections.map((section, i) => (
+            <ArticleSection key={section.id} section={section} index={i} />
+          ))}
         </div>
-      </div>
 
-      <div className="blog-detail-content mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-        <div className="mt-12 space-y-16">
-          <KeyTakeaways items={article.takeaways} />
-          {overviewItems.length > 0 && (
-            <OverviewDropdown headings={overviewItems} onHeadingClick={handleHeadingClick} />
-          )}
-          {sections.map((section, i) => {
-            const isIntro = section.id.endsWith('-introduction');
-            if (isIntro) {
-              return (
-                <IntroSection
-                  key={section.id}
-                  section={section}
-                  highlight={article.introHighlight}
-                  image={section.sectionImage}
-                />
-              );
-            }
-            return (
-              <ArticleSection
-                key={section.id}
-                section={section}
-                index={i}
-                isLast={i === sections.length - 1}
-              />
-            );
-          })}
-          <blockquote data-reveal className="blog-closing-quote rounded-2xl border border-violet-400/35 bg-violet-500/10 px-8 py-7 text-[19px] italic leading-relaxed shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
-            &ldquo;{article.quote}&rdquo;
-          </blockquote>
-        </div>
-      </div>
-      <div className="mt-16 border-t border-violet-500/25 bg-transparent">
-        <div className="mx-auto max-w-[1240px] px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mt-12 md:mt-14">
+        <div className="py-2 md:py-4">
           {author && (
             <div data-reveal className="flex flex-col gap-6 rounded-3xl border border-violet-500/25 card-premium-dark p-6 sm:flex-row sm:items-center sm:p-8">
               <img src={author.avatar} alt={author.name}
@@ -601,86 +556,8 @@ function BlogDetailPage() {
         </div>
       </div>
 
-      {/* ══ PREV / NEXT - animated attention cards ══ */}
-      <div className="border-t border-violet-500/20">
-        <div className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {prevPost ? (
-              <a href={`/blog/${prevPost.slug}`}
-                onClick={(e) => { e.preventDefault(); navigateTo(`/blog/${prevPost.slug}`); }}
-                className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
-              >
-                {/* Animated shimmer bar on hover */}
-                <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />
-                <div className="flex items-center gap-4">
-                  <div className="relative flex-shrink-0">
-                    <img src={prevPost.thumbnail} alt={prevPost.title}
-                      className="h-16 w-16 rounded-xl object-cover transition-transform duration-300 group-hover:scale-105" />
-                    {/* Pulse ring on hover */}
-                    <div className="absolute inset-0 rounded-xl ring-2 ring-indigo-400 ring-offset-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="flex items-center gap-1 text-xs font-semibold text-white transition-colors group-hover:text-white">
-                      <span className="transition-transform duration-200 group-hover:-translate-x-1">&#8592;</span> Previous Post
-                    </p>
-                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{prevPost.title}</p>
-                  </div>
-                </div>
-              </a>
-            ) : <div />}
-            {nextPost ? (
-              <a href={`/blog/${nextPost.slug}`}
-                onClick={(e) => { e.preventDefault(); navigateTo(`/blog/${nextPost.slug}`); }}
-                className="group relative overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark p-5 text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
-              >
-                <div className="absolute inset-x-0 top-0 h-0.5 origin-right scale-x-0 bg-gradient-to-l from-indigo-500 to-violet-500 transition-transform duration-500 group-hover:scale-x-100" />
-                <div className="flex items-center justify-end gap-4">
-                  <div className="min-w-0">
-                    <p className="flex items-center justify-end gap-1 text-xs font-semibold text-white transition-colors group-hover:text-white">
-                      Next Post <span className="transition-transform duration-200 group-hover:translate-x-1">&#8594;</span>
-                    </p>
-                    <p className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-white transition-colors group-hover:text-violet-100">{nextPost.title}</p>
-                  </div>
-                  <div className="relative flex-shrink-0">
-                    <img src={nextPost.thumbnail} alt={nextPost.title}
-                      className="h-16 w-16 rounded-xl object-cover transition-transform duration-300 group-hover:scale-105" />
-                    <div className="absolute inset-0 rounded-xl ring-2 ring-indigo-400 ring-offset-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                </div>
-              </a>
-            ) : <div />}
-          </div>
-        </div>
+      <ExploreMoreSection currentSlug={article.slug} />
       </div>
-
-      <div className="blog-insights-banner relative h-[280px] w-full overflow-hidden md:h-[400px]">
-        <img src={article.subImage || article.image} alt="" loading="lazy" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black/65" />
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="text-center">
-            <p className="blog-insights-eyebrow text-xs font-bold uppercase tracking-[0.3em] text-violet-200">Keep Reading</p>
-            <p className={`blog-insights-title mt-3 ${sectionTitleClass(false)} drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]`}>Explore More Insights</p>
-          </div>
-        </div>
-      </div>
-
-      {relatedPosts.length > 0 && (
-        <div className="blog-detail-related bg-transparent border-t border-violet-500/20">
-          <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8">
-            <div data-reveal>
-              <p className="blog-detail-related__eyebrow text-sm font-medium text-white/90">You may also like these</p>
-              <h2 className={`blog-detail-related__title mt-1 ${sectionTitleClass(false)}`}>Related Post</h2>
-            </div>
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedPosts.map((post, i) => (
-                <div key={post.slug} data-reveal style={{ '--reveal-delay': `${i * 80}ms` }}>
-                  <BlogCard post={post} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {showAuthorModal && author && (
         <AuthorModal author={author} onClose={() => setShowAuthorModal(false)} />

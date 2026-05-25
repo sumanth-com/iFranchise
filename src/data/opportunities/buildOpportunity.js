@@ -18,6 +18,12 @@ import {
 } from './opportunityUtils.js';
 import { getBrandImages } from './brandImages.js';
 import { getBrochureUrlByFranchiseId } from './brochurePdfs.js';
+import {
+  flattenLocationLabels,
+  flattenLocationTags,
+  getBrandLocationGroups,
+  getLocationGroupsSummary,
+} from './brandLocations.js';
 
 const MODEL_DESCRIPTIONS = {
   FOFO: 'Franchise-owned, franchise-operated: ideal for hands-on operators who want full unit control.',
@@ -229,6 +235,7 @@ function buildExpansionPlans(raw, cities) {
  */
 export function buildOpportunityRecord(raw, id) {
   const brandName = cleanText(raw.franchiseName).replace(/\(2\)/i, '').trim();
+  const slug = slugifyBrand(brandName);
   const industry = normalizeCategory(raw.category);
   const models = parseModels(raw.businessModel);
   const model = primaryModel(models);
@@ -243,7 +250,11 @@ export function buildOpportunityRecord(raw, id) {
   const paybackMonths = parsePaybackMonths(raw.paybackPeriod);
 
   const cities = extractCities(raw.targetAreas, raw.mcp, raw.locationType);
-  const locations = deriveLocationsLabel(raw.targetAreas, raw.locationType, cities);
+  const locationGroups = getBrandLocationGroups(slug);
+  const groupedCities = locationGroups ? flattenLocationLabels(locationGroups) : cities;
+  const locations = locationGroups
+    ? getLocationGroupsSummary(locationGroups)
+    : deriveLocationsLabel(raw.targetAreas, raw.locationType, cities);
   const badge = deriveBadge({
     roi: roiValue,
     paybackMonths,
@@ -251,7 +262,6 @@ export function buildOpportunityRecord(raw, id) {
     targetAreas: raw.targetAreas,
   });
 
-  const slug = slugifyBrand(brandName);
   const tagline = cleanText(raw.tagline);
   const summary = cleanText(raw.shortDescription);
   const spaceLabel = raw.sqFt && !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : 'As per brand format';
@@ -273,7 +283,7 @@ export function buildOpportunityRecord(raw, id) {
     model,
     models,
     locations,
-    cities,
+    cities: groupedCities.length ? groupedCities : cities,
     roi,
     roiValue,
     summary,
@@ -345,7 +355,9 @@ export function buildOpportunityRecord(raw, id) {
       models,
       paybackLabel
     ),
-    locations: buildExpansionPlans(raw, cities),
+    locations: locationGroups ? flattenLocationTags(locationGroups) : buildExpansionPlans(raw, cities),
+    locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : null,
+    locationGroups: locationGroups ?? null,
     faqs: buildFaqs(raw, investment, models),
     reviews: buildDefaultReviews(brandName),
     aboutBrand: [],

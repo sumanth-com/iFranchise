@@ -65,7 +65,7 @@ import fusion3 from '../../assets/Fusion pizza and Big burger/3.jfif';
 import fusion4 from '../../assets/Fusion pizza and Big burger/4.jfif';
 import fusion5 from '../../assets/Fusion pizza and Big burger/5.jfif';
 
-// kasturi
+// Kasturi Creations
 import kasturiLogo from '../../assets/kasturi/Logo.png';
 
 // 10 Downing Street
@@ -80,29 +80,7 @@ import downing7 from '../../assets/10 Downing Street/7.jpeg';
 import downing8 from '../../assets/10 Downing Street/8.jpeg';
 import downing9 from '../../assets/10 Downing Street/9.jpeg';
 
-const IMG = (id, w = 1600) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
-
-const INDUSTRY_FALLBACK_GALLERY = {
-  Retail: [
-    IMG('1441986300917-64644bd600e8'),
-    IMG('1483985988357-763728e52755'),
-    IMG('1555529669-e69e7aa0ba9a'),
-    IMG('1521334884684-d80222895322'),
-  ],
-  'Food & Beverage': [
-    IMG('1517248135467-4c7edcad34c4'),
-    IMG('1565299624946-b28f40a0ae38'),
-    IMG('1552566626-52f8b828add9'),
-    IMG('1521017432531-fbd92d768814'),
-  ],
-  Entertainment: [
-    IMG('1514933651103-005eec06c04b'),
-    IMG('1572116469695-9758479bcbcc'),
-    IMG('1470337458533-7ad329df6b54'),
-    IMG('1511632765486-a01980e01a18'),
-  ],
-};
+import { getIndustryGalleryFallback } from '../sectionImages.js';
 
 /** Bundled Vite asset URLs (not remote fallbacks). */
 export function isBundledGallerySrc(src) {
@@ -110,7 +88,7 @@ export function isBundledGallerySrc(src) {
 }
 
 function industryGallery(industry = 'Food & Beverage') {
-  return [...(INDUSTRY_FALLBACK_GALLERY[industry] || INDUSTRY_FALLBACK_GALLERY['Food & Beverage'])];
+  return getIndustryGalleryFallback(industry);
 }
 
 /**
@@ -190,6 +168,7 @@ export const BRAND_IMAGES_BY_SLUG = {
     cardAccent: '#ef4444',
     cardFit: 'fill',
   }),
+  'kasturi-creations': packLogoCard(kasturiLogo, '#1c1208', '#d97706', 'fill', 'Food & Beverage'),
   kasturi: packLogoCard(kasturiLogo, '#1c1208', '#d97706', 'fill', 'Food & Beverage'),
   'fusion-pizza-big-burger': packBrandAssets(fusionLogo, [fusion1, fusion2, fusion3, fusion4, fusion5], {
     cardBackground: '#1a0a24',

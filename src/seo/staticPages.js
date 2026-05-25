@@ -84,7 +84,7 @@ export const STATIC_PAGE_SEO = {
   '/blog': {
     title: 'Franchise & Investment Insights | iFranchise Blog',
     description:
-      'Expert guides on franchise investment, product growth, market trends, and industry reports for entrepreneurs and investors.',
+      'Practical franchise guides for investors and brand owners: evaluating opportunities, FOFO vs FICO, unit economics, and market trends in India.',
     keywords: 'franchise blog, investment guides, franchise news India, franchise resources',
     canonicalPath: '/blog',
     ogTitle: 'iFranchise Blog',

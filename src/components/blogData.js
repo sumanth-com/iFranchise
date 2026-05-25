@@ -1,349 +1,290 @@
+/**
+ * Curated franchise insights (4 articles) for investors and brand owners.
+ */
+
+import { BLOG_POST_IMAGES, blogPhoto } from './blog/blogImages';
+
 const authors = [
   {
-    name: 'Luke Roberts',
-    role: 'Investment Strategy Lead',
-    bio: 'Luke helps founders and operators build long-term wealth plans backed by data and risk control.',
-    avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=120&q=80',
+    name: 'Priya Mehta',
+    role: 'Franchise Investment Advisor',
+    bio: 'Priya helps investors compare franchise models, unit economics, and payback before they commit capital.',
+    avatar: blogPhoto('1573496359142-b8d87734a5a2', 'avatar'),
   },
   {
-    name: 'Linda Grey',
-    role: 'Product Growth Consultant',
-    bio: 'Linda advises teams on shipping products faster while preserving quality and retention.',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=80',
+    name: 'Arjun Kapoor',
+    role: 'Brand Expansion Consultant',
+    bio: 'Arjun works with QSR and retail brands on FOFO, FICO, and multi-city rollout planning across India.',
+    avatar: blogPhoto('1472099645785-5658abf4ff4e', 'avatar'),
   },
   {
-    name: 'Samuel Green',
-    role: 'Market Analyst',
-    bio: 'Samuel tracks macro trends and translates complex market moves into practical action plans.',
-    avatar: 'https://images.unsplash.com/photo-1542206395-9feb3edaa68d?auto=format&fit=crop&w=120&q=80',
+    name: 'Neha Sharma',
+    role: 'Franchise Operations Lead',
+    bio: 'Neha focuses on outlet performance, breakeven tracking, and operator onboarding for growing franchise networks.',
+    avatar: blogPhoto('1580489944761-15a19d654956', 'avatar'),
   },
   {
-    name: 'Mia Varon',
-    role: 'Crypto Research Editor',
-    bio: 'Mia writes about digital assets, blockchain adoption, and responsible portfolio allocation.',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80',
+    name: 'Rahul Menon',
+    role: 'Market Research, iFranchise',
+    bio: 'Rahul tracks category demand, city-level expansion, and investor interest across India’s franchise ecosystem.',
+    avatar: blogPhoto('1507003211169-0a1dd7228f2d', 'avatar'),
   },
 ];
 
-const basePosts = [
+/** @typedef {{ id: string, heading: string, body: string[], quote?: string }} BlogSection */
+
+/** @param {string} slug @param {BlogSection[]} sections */
+function withSectionIds(slug, sections) {
+  return sections.map((s, i) => ({
+    ...s,
+    id: `${slug}-s${i + 1}`,
+  }));
+}
+
+/** @param {string} src @param {string} alt */
+function packImages(src, alt) {
+  return {
+    thumbnail: src,
+    image: src,
+    imageAlt: alt,
+  };
+}
+
+const posts = [
   {
-    slug: 'real-estate-the-timeless-investment-opportunity',
-    title: 'Real Estate: The Timeless Investment Opportunity',
-    category: 'Invest',
-    date: '2026-04-21',
-    readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Why real estate continues to outperform for patient investors in uncertain market cycles.',
-    quote: 'Asset classes evolve, but disciplined ownership of productive property remains a durable edge.',
-  },
-  {
-    slug: 'the-power-of-alternative-investments',
-    title: 'The Power of Alternative Investments',
-    category: 'Invest',
+    slug: 'how-to-evaluate-franchise-opportunity-india',
+    title: 'How to Evaluate a Franchise Opportunity in India',
+    category: 'Investor Guide',
     date: '2026-04-18',
+    readTime: '9 min read',
+    ...packImages(BLOG_POST_IMAGES[0], 'Investors reviewing franchise documents in a meeting'),
+    excerpt:
+      'A practical framework to compare brands, investment bands, payback, and support before you sign a franchise agreement.',
+    quote:
+      'The best franchise decisions are boring on paper: clear costs, clear support, and clear unit economics.',
+    introHighlight:
+      'Most costly franchise mistakes happen before signing, when excitement replaces structured comparison.',
+    author: authors[0],
+    sections: withSectionIds('evaluate', [
+      {
+        heading: 'Start with fit, not fame',
+        body: [
+          'A famous logo does not guarantee a franchise that fits your city, capital, or time. Begin with category demand in your catchment, the business model you can actually run (FOFO, FICO, or hybrid), and the total cash you can deploy without draining personal reserves.',
+          'Write three filters before you meet any brand: maximum all-in investment, target payback window, and how many hours per week you will spend on the business. Use these filters in the first call so you do not waste weeks on formats that were never right for you.',
+          'When two brands pass the filter, compare them on the same spreadsheet columns: setup cost, royalty, marketing fund, expected AUV band, and support during the first twelve months. Consistency beats charisma in franchise selection.',
+        ],
+      },
+      {
+        heading: 'What to verify in the disclosure pack',
+        body: [
+          'Request the full disclosure pack early: sample agreements, itemised setup costs, and a list of what is excluded from the quoted investment (civil work, GST, deposits, initial inventory). Many disputes start because “total investment” meant different things to the brand and the investor.',
+          'Clarify every recurring fee in writing: royalty, marketing contribution, technology charges, and mandatory purchases from approved vendors. Ask whether fees apply on gross or net sales and whether discounts are shared.',
+          'Payback claims should come with assumptions you can challenge—rent per sq.ft., staffing norms, and sales ramp month by month. If the brand cannot explain unit economics in plain numbers, treat that as a serious signal, not a paperwork delay.',
+        ],
+      },
+      {
+        heading: 'Site, competition, and local demand',
+        body: [
+          'Franchise performance is local. Walk the catchment at peak and lean hours. Count direct and indirect competitors, note delivery density for food formats, and sanity-check whether the proposed store size matches how people actually shop in that micro-market.',
+          'For food brands, understand delivery mix and kitchen capacity. For retail, understand inventory turns and shrinkage norms for your store size. A strong national brand can still fail on a weak local site.',
+          'Match rent to a realistic sales band. If rent crosses your category’s healthy rent-to-sales ratio, fix the site or fix the model before you sign.',
+        ],
+      },
+      {
+        heading: 'Decision checklist before you sign',
+        body: [
+          'Speak with at least two franchisees in cities and catchments similar to yours. Ask about real payback timing, surprise costs after opening, and how quickly the franchisor responds when operations slip.',
+          'Model two scenarios on the same template: a conservative case with slower ramp and higher rent, and a base case using brand assumptions. Proceed only if the conservative case still meets your return hurdle.',
+          'Before execution, confirm territory scope on a map, supplier and working-capital norms, local compliance support, and how disputes escalate. Signed clarity on fees and renewal terms protects both sides.',
+        ],
+      },
+      {
+        heading: 'Use iFranchise to shortlist faster',
+        body: [
+          'Start on iFranchise by filtering opportunities on investment band, category, and city so your first conversations are with brands that already match your budget and location.',
+          'Download brochures where available and note FOFO, FICO, or hybrid model options before you book a call. Arrive with a comparison sheet so meetings focus on validation, not basic discovery.',
+          'When a brand passes your filters, schedule a site visit in a comparable catchment and speak with an existing franchisee in the same format. That combination saves months compared to evaluating brands at random.',
+        ],
+      },
+    ]),
+  },
+  {
+    slug: 'fofo-vs-fico-franchise-model-guide',
+    title: 'FOFO vs FICO: Choosing the Right Franchise Model',
+    category: 'Investor Guide',
+    date: '2026-04-10',
     readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'How to diversify beyond stocks and bonds without losing control of risk and liquidity.',
-    quote: 'Smart diversification is not collecting assets, it is combining return streams with different cycles.',
+    ...packImages(BLOG_POST_IMAGES[1], 'Quick-service restaurant counter and dining area'),
+    excerpt:
+      'Understand owner-operated vs investor-operated models so your role, risk, and returns match how you want to build wealth.',
+    quote: 'Pick the model that fits how you want to spend your time—not just the headline ROI.',
+    introHighlight:
+      'FOFO and FICO solve different problems: hands-on entrepreneurship versus capital deployment with professional operations.',
+    author: authors[1],
+    sections: withSectionIds('fofo-fico', [
+      {
+        heading: 'FOFO: franchise-owned, franchise-operated',
+        body: [
+          'In FOFO you invest and operate. You own the P&L, hiring decisions, and daily customer experience. When execution is strong, upside is meaningful; when execution slips, the risk sits with you—not with a distant operator.',
+          'FOFO suits people who want a proven brand system but are ready to be present in the business. It is rarely passive, even when the brand is well known.',
+          'Success in FOFO usually comes from operator skill plus brand pull. If you have category experience, FOFO can compound what you already know.',
+        ],
+      },
+      {
+        heading: 'FICO: franchise-investor, company-operated',
+        body: [
+          'In FICO you typically provide capital while the franchisor or an approved operator runs the outlet. Your role shifts to governance: reviewing monthly reports, visiting sites, and holding the operator accountable to agreed targets.',
+          'Returns are often framed as revenue share, minimum guarantee, or a fixed return on deployed capital. Each structure carries different risk if sales underperform or costs run high.',
+          'FICO is not “hands-off” by default. You still need disciplined monitoring. The difference is where you spend time—in oversight rather than shift management.',
+        ],
+      },
+      {
+        heading: 'How to choose for your situation',
+        body: [
+          'If you have operating experience in the category and want direct control, FOFO can be the better fit. If you are building a portfolio of units and prefer professional operations per site, FICO can scale with less daily involvement.',
+          'Many investors learn with one FOFO unit, then move to FICO for additional cities once they trust the operator, reporting rhythm, and true unit economics.',
+          'Choose based on weekly time, risk appetite, and whether your edge is operations or capital allocation—not based on which brochure promises a faster payback.',
+        ],
+      },
+      {
+        heading: 'Questions to ask the franchisor',
+        body: [
+          'Ask for a side-by-side comparison of FOFO and FICO for the same format: investment, fee stack, expected payback, and your obligations under each agreement.',
+          'Clarify who holds the lease, who employs staff, who approves capex, and how marketing money is split between national campaigns and local store needs.',
+          'Understand exit rules early: whether you can sell, how transfer approval works, and what happens if performance misses agreed thresholds.',
+        ],
+      },
+      {
+        heading: 'A simple timeline that works',
+        body: [
+          'Week one: define your weekly time budget, capital band, and target cities. Week two: compare three to five brands on the same spreadsheet columns before any site visit.',
+          'Week three: speak with franchisees under each model you are considering. Week four: run FOFO and FICO scenarios with conservative rent and sales assumptions.',
+          'Only after those steps schedule legal review and signing. Rushing to a deposit before model clarity is where most first-time investors lose leverage.',
+        ],
+      },
+    ]),
   },
   {
-    slug: 'smart-investing-in-a-changing-world',
-    title: 'Smart Investing in a Changing World',
-    category: 'News',
-    date: '2026-04-17',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'A practical response plan for interest rate shifts, inflation cycles, and evolving demand.',
-    quote: 'Markets reward investors who adapt early, not those who react late.',
-  },
-  {
-    slug: 'why-product-led-growth-drives-retention',
-    title: 'Why Product-Led Growth Drives Retention',
-    category: 'Product',
-    date: '2026-04-15',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Activation-focused product journeys are now the strongest predictor of long-term customer value.',
-    quote: 'Retention starts before conversion, in the first minute of product experience.',
-  },
-  {
-    slug: 'how-to-launch-features-without-breaking-trust',
-    title: 'How to Launch Features Without Breaking Trust',
-    category: 'Product',
-    date: '2026-04-14',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'A rollout framework for feature flags, communication timing, and support-readiness.',
-    quote: 'Shipping fast matters, but shipping predictably builds confidence.',
-  },
-  {
-    slug: 'crypto-risk-management-for-new-investors',
-    title: 'Crypto Risk Management for New Investors',
-    category: 'Crypto',
-    date: '2026-04-12',
-    readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1621501103258-3e135c8c1fda?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1621501103258-3e135c8c1fda?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Position sizing, custody hygiene, and volatility planning for sustainable digital-asset investing.',
-    quote: 'In crypto, survival through volatility is the foundation of long-term upside.',
-  },
-  {
-    slug: 'bitcoin-halving-what-business-investors-should-know',
-    title: 'Bitcoin Halving: What Business Investors Should Know',
-    category: 'Crypto',
-    date: '2026-04-11',
-    readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1639322537231-2f206e06af84?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1639322537231-2f206e06af84?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'A plain-language breakdown of supply mechanics and how they can influence long-cycle valuation.',
-    quote: 'Narratives move price today, but scarcity mechanics shape price over time.',
-  },
-  {
-    slug: 'weekly-market-roundup-growth-sectors',
-    title: 'Weekly Market Roundup: Growth Sectors to Watch',
-    category: 'News',
-    date: '2026-04-09',
-    readTime: '4 min read',
-    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80',
-    excerpt: "This week's strongest momentum came from logistics tech, healthcare infra, and AI tooling.",
-    quote: 'Consistent market awareness turns uncertainty into informed decision windows.',
-  },
-  {
-    slug: 'how-to-build-an-investment-thesis-you-can-defend',
-    title: 'How to Build an Investment Thesis You Can Defend',
-    category: 'Invest',
-    date: '2026-04-08',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Turn vague conviction into clear assumptions, downside planning, and measurable milestones.',
-    quote: 'If you cannot explain your thesis clearly, you cannot manage it confidently.',
-  },
-  {
-    slug: 'product-roadmap-prioritization-that-scales',
-    title: 'Product Roadmap Prioritization That Scales',
-    category: 'Product',
-    date: '2026-04-06',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'A simple scoring method that balances customer impact, execution effort, and strategic fit.',
-    quote: 'Good roadmaps reduce arguments by making trade-offs visible.',
-  },
-  {
-    slug: 'crypto-regulation-signals-to-follow-in-2026',
-    title: 'Crypto Regulation Signals to Follow in 2026',
-    category: 'Crypto',
-    date: '2026-04-05',
-    readTime: '7 min read',
-    image: 'https://images.unsplash.com/photo-1644361566696-3d6f7a095e94?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1644361566696-3d6f7a095e94?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'The compliance indicators that will matter most for institutions and retail participants this year.',
-    quote: 'Regulation does not remove innovation; it changes where trustworthy innovation concentrates.',
-  },
-  {
-    slug: 'breaking-news-india-franchise-demand-rises',
-    title: 'Breaking News: Franchise Demand in India Continues to Rise',
-    category: 'News',
-    date: '2026-04-03',
-    readTime: '4 min read',
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Franchise inquiries rose again this quarter as investors seek asset-backed expansion opportunities.',
-    quote: 'Demand acceleration is strongest where operators offer repeatable systems and clear economics.',
-  },
-  {
-    slug: 'investing-checklist-before-signing-any-deal',
-    title: 'Investing Checklist Before Signing Any Deal',
-    category: 'Invest',
-    date: '2026-04-02',
-    readTime: '5 min read',
-    image: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Use this pre-commit checklist to avoid avoidable risk before committing capital.',
-    quote: 'Most costly mistakes are visible before you sign, if you know where to look.',
-  },
-  {
-    slug: 'product-analytics-metrics-that-actually-matter',
-    title: 'Product Analytics: Metrics That Actually Matter',
-    category: 'Product',
-    date: '2026-03-30',
-    readTime: '6 min read',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'Replace vanity dashboards with decision metrics that improve retention and conversion.',
-    quote: 'Metrics should trigger action, not decoration.',
-  },
-  {
-    slug: 'crypto-portfolio-allocation-for-long-term-builders',
-    title: 'Crypto Portfolio Allocation for Long-Term Builders',
-    category: 'Crypto',
+    slug: 'franchise-unit-economics-checklist',
+    title: 'Unit Economics Checklist Before You Sign',
+    category: 'For Operators',
     date: '2026-03-28',
-    readTime: '8 min read',
-    image: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1600&q=80',
-    thumbnail: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=900&q=80',
-    excerpt: 'An allocation model for balancing conviction assets, stable reserves, and tactical exposure.',
-    quote: 'Allocation is your strategy made visible.',
+    readTime: '7 min read',
+    ...packImages(BLOG_POST_IMAGES[2], 'Business analytics dashboard on a laptop'),
+    excerpt:
+      'Breakeven, contribution margin, and working capital—what to model line by line before you commit to a franchise unit.',
+    quote: 'If the spreadsheet only works on best-case rent and best-case sales, it is not ready for a signature.',
+    introHighlight:
+      'Unit economics turn marketing brochures into decisions you can defend to partners, lenders, and your future self.',
+    author: authors[2],
+    sections: withSectionIds('unit-economics', [
+      {
+        heading: 'Revenue assumptions that survive reality',
+        body: [
+          'Anchor revenue to comparable outlets, not network averages alone. Match rent band, store size, and catchment type. If the brand only shares a national AUV, ask for a tier that looks like your planned location.',
+          'Build a twelve to eighteen month ramp. Mature sales in month one are rare in food and retail. Account for reviews, delivery visibility, and repeat visits building over time.',
+          'Where channels differ, model them separately. Dine-in, delivery, and catering can carry different commissions, packaging cost, and refund rates. Blended assumptions hide margin leaks.',
+        ],
+      },
+      {
+        heading: 'Cost stack every franchisee should model',
+        body: [
+          'Place every recurring cost on one sheet: COGS, labour, rent, utilities, royalty, marketing fund, payment fees, insurance, and local compliance. A single missing line can erase an otherwise attractive margin.',
+          'Include franchisor-mandated spends from day one: POS, apps, uniforms, audits, and periodic refreshes. Treat them as operating cost, not as surprises in year two.',
+          'Rebuild payback using cash you actually invest, including debt EMI and opening working capital. Brochure payback often ignores both.',
+        ],
+      },
+      {
+        heading: 'Working capital and surprises',
+        body: [
+          'Hold three to six months of operating cash beyond opening day. Inventory timing, vendor credit, and payroll cycles can leave the P&L healthy while the bank account is tight.',
+          'Ask who funds launch marketing, equipment replacement, and compliance upgrades after year one. If the cost is yours, it belongs in the model now.',
+          'Stress-test seasonality. Local festivals, holidays, and school calendars can move sales sharply in many formats.',
+        ],
+      },
+      {
+        heading: 'Sign-off checklist',
+    body: [
+          'Sign only when a conservative case still clears your minimum return. If only the optimistic case works, pause and renegotiate assumptions or walk away.',
+          'Save the model with dated inputs and sources. Revisit at ninety days post-open with real rent, labour, and sales. Early reality checks prevent expensive denial later.',
+          'A useful final test is combined stress: lower sales and higher rent together. Resilient units survive that pair; fragile units do not.',
+        ],
+      },
+      {
+        heading: 'Share the model with people who matter',
+    body: [
+          'If you have a co-investor or spouse involved in the decision, walk them through the same spreadsheet line by line. Hidden disagreement on payback assumptions causes conflict after opening.',
+          'For bank or family funding, attach a one-page summary: investment, monthly costs, breakeven sales, and payback under conservative and base cases. Lenders respond better to clarity than to brand slides alone.',
+          'Keep a version dated before signing and update it at thirty, ninety, and one hundred eighty days post-open. That habit turns your first unit into a repeatable playbook for the next city.',
+        ],
+      },
+    ]),
+  },
+  {
+    slug: 'franchise-demand-india-2026',
+    title: 'Where Franchise Demand Is Heading in India',
+    category: 'Market Insight',
+    date: '2026-03-15',
+    readTime: '6 min read',
+    ...packImages(BLOG_POST_IMAGES[3], 'Indian food service and dining spread'),
+    excerpt:
+      'Food, retail, and service formats continue to attract investors—here is how to read category momentum and city-level opportunity.',
+    quote:
+      'Growth is uneven by city and format; winners align brand strength with local demand and operator quality.',
+    introHighlight:
+      'National headlines hide local reality: tier-2 food and compact QSR formats remain active while oversized formats face rent pressure.',
+    author: authors[3],
+    sections: withSectionIds('demand-2026', [
+      {
+        heading: 'Categories investors are watching',
+    body: [
+          'Food and beverage still lead franchise interest in India, especially QSR, café formats, and delivery-ready kitchens. Investors like defined tickets, repeatable menus, and visible footfall proxies.',
+          'Apparel and lifestyle retail attract capital where mall and high-street rents align with brand positioning. Success depends on inventory discipline as much as footfall.',
+          'Service formats—wellness, education, home services—grow where repeat revenue and moderate capex appeal to first-time franchisees expanding beyond a single city.',
+        ],
+      },
+      {
+        heading: 'City and format fit',
+    body: [
+          'Metro markets reward experience and differentiation. Tier-2 markets often reward efficient box sizes, strong delivery, and rent discipline.',
+          'Oversized units remain a common payback mistake. Match square footage and staffing to local spending power, not to a hero store photo from another city.',
+          'Before you commit, sanity-check rent-to-sales guardrails for your category, delivery commission impact, and labour availability for training and retention.',
+        ],
+      },
+      {
+        heading: 'What serious investors expect now',
+    body: [
+          'Transparent investment bands and model options (FOFO/FICO) are baseline. Investors increasingly arrive with comparison spreadsheets and specific questions on unit economics.',
+          'Brands that share comparable outlet data and post-opening support convert serious leads faster than brands that sell territory on narrative alone.',
+          'Trust is built when numbers, responsibilities, and escalation paths are clear before the agreement is signed.',
+    ],
+  },
+  {
+        heading: 'Using data in your decision',
+    body: [
+          'Compare brands on the same fields: investment range, space requirement, model type, payback band, and cities open for expansion. Then validate locally with site visits and franchisee conversations.',
+          'On iFranchise you can shortlist by category and investment band, open detail pages, and download brochures where available—so your first meeting is about verification, not discovery.',
+          'Whether you invest or list a brand, clarity on economics and support is what turns interest into sustainable network growth.',
+    ],
+  },
+  {
+        heading: 'Where to look in the next ninety days',
+    body: [
+          'If you are expanding in tier-2, prioritise formats with smaller boxes, strong delivery, and transparent unit economics over hero stores built for metro rents.',
+          'Track two to three categories only—food, retail, or services—and compare at least four brands per category on the same fields before you commit time to site visits.',
+          'Revisit demand quarterly: rent, labour, and delivery commissions move faster than brochure payback charts. A brand that looked ideal six months ago may need a fresh model before you sign.',
+        ],
+      },
+    ]),
   },
 ];
 
-const secondaryImages = [
-  'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1400&q=80',
-];
+export const blogPosts = posts;
 
-const makeSections = (slug) => [
-  {
-    id: `${slug}-introduction`,
-    heading: 'Introduction',
-    body: [
-      'Long-term growth comes from combining strategic clarity with consistent execution. The strongest teams avoid chasing noise and instead build conviction through measurable progress. In a world where information moves faster than decisions, the ability to filter signal from noise is the single most valuable skill any investor or operator can develop.',
-      'This article breaks down how to evaluate opportunities with discipline, align teams quickly, and convert strategy into visible outcomes. We will walk through the core frameworks used by top-performing organizations to stay focused, move fast, and compound results over time.',
-      'Whether you are managing a portfolio, leading a product team, or building a business from scratch, the principles here apply universally. The difference between those who succeed and those who stall is rarely intelligence - it is the quality of their systems and the consistency of their execution.',
-    ],
-    sectionImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80',
-  },
-  {
-    id: `${slug}-problem`,
-    heading: 'The Core Problem',
-    body: [
-      'Most organizations fail in execution, not planning. They spread focus too thin, react late to market changes, and operate without a clear review cadence. The result is a culture of busyness that produces very little actual progress.',
-      'When decision ownership is vague, strategy degrades into activity. Teams stay busy while results stall. Meetings multiply, dashboards grow, and everyone feels productive - but the needle barely moves. This is the execution trap, and it catches even the most talented teams.',
-      'The root cause is almost always the same: too many priorities competing for the same limited resources. When everything is important, nothing is. The organizations that break out of this pattern are the ones that learn to say no - loudly, consistently, and without apology.',
-    ],
-    points: [
-      'No clear prioritization framework across teams.',
-      'Inconsistent review rhythm leads to drift.',
-      'Too much focus on lagging metrics that cannot be influenced.',
-      'Decision ownership is shared, which means it belongs to no one.',
-      'Strategy documents exist but are not connected to daily work.',
-    ],
-    insight: 'Key Insight: Clarity in ownership and review rhythm removes most execution bottlenecks before they become crises.',
-  },
-  {
-    id: `${slug}-strategy`,
-    heading: 'Building the Right Strategy',
-    body: [
-      'Define a 90-day strategy around one core objective, three supporting outcomes, and clear leading indicators. This constraint forces prioritization and creates a shared language for the entire team. When everyone knows the one thing that matters most, alignment happens naturally.',
-      'Document assumptions and risk triggers in advance so teams can respond quickly when market conditions shift. Most strategies fail not because the plan was wrong, but because the team was not prepared for the moment when reality diverged from the plan.',
-      'The best strategies are living documents. They are reviewed weekly, updated when assumptions change, and shared transparently across the organization. Secrecy in strategy creates silos. Transparency creates alignment.',
-      'Think of your strategy as a series of bets. Each bet has a thesis, a time horizon, and a clear signal that tells you whether the bet is working. When the signal turns negative, you adjust - not because you failed, but because you are paying attention.',
-    ],
-    points: [
-      'Pick one primary outcome and defend focus relentlessly.',
-      'Use weekly checkpoints with written decision logs.',
-      'Align capital and team bandwidth to highest-return initiatives.',
-      'Build in explicit review triggers for when to pivot.',
-    ],
-    sectionImage: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1400&q=80',
-  },
-  {
-    id: `${slug}-execution`,
-    heading: 'Execution That Compounds',
-    body: [
-      'Execution quality improves when plans are broken into weekly deliverables with named owners and measurable milestones. Vague goals produce vague results. Specific commitments produce specific outcomes.',
-      'Use compact dashboards to monitor momentum, quality, and conversion impact in one place. The goal is not to track everything - it is to track the three to five numbers that tell you whether you are winning or losing this week.',
-      'The compounding effect of consistent execution is dramatic. A team that ships 10% better every quarter does not just get 40% better in a year - it gets exponentially better because each improvement builds on the last. This is why execution discipline is the highest-leverage investment any organization can make.',
-      'Accountability is the engine of execution. Not blame - accountability. The difference is that accountability is forward-looking. It asks: what will you do differently next week? Blame is backward-looking and produces defensiveness, not improvement.',
-    ],
-    points: [
-      'Weekly owner-based delivery plan with clear acceptance criteria.',
-      'Bi-weekly risk review and documented corrective actions.',
-      'Monthly calibration with leadership on resource allocation.',
-      'Quarterly retrospective to update the strategy based on learnings.',
-    ],
-    insight: 'Key Insight: Strong execution beats perfect planning every time. A good plan executed brilliantly outperforms a brilliant plan executed poorly.',
-  },
-  {
-    id: `${slug}-case-insight`,
-    heading: 'Real-World Case Insight',
-    body: [
-      'One growth-stage team improved conversion by 28% in one quarter after narrowing roadmap scope and introducing a strict execution cadence. Before the change, they had 14 active initiatives. After, they had three. The reduction in context-switching alone accounted for a significant portion of the improvement.',
-      'The biggest gains came from fewer priorities, faster feedback loops, and clearer accountability across product and marketing. The team went from monthly reviews to weekly standups with written outcomes. Every decision was logged. Every assumption was tested.',
-      'What surprised the leadership team most was not the performance improvement - it was the cultural shift. People stopped hedging. They started making clear commitments and following through. Trust increased. Morale improved. The best performers, who had been quietly frustrated by the lack of focus, became visibly energized.',
-      'This pattern repeats across industries and company sizes. The constraint of focus does not limit what teams can achieve - it amplifies it. When you remove the noise, the signal gets louder.',
-    ],
-    quote: 'When teams align around one measurable objective and review progress weekly, performance compounds quickly. The math of focus is not additive - it is multiplicative.',
-    stats: [
-      { value: '28%', label: 'Conversion lift in 90 days' },
-      { value: '3×', label: 'Faster decision cycles' },
-      { value: '14->3', label: 'Active initiatives reduced' },
-      { value: '92%', label: 'Team retention improvement' },
-    ],
-  },
-  {
-    id: `${slug}-market-dynamics`,
-    heading: 'Understanding Market Dynamics',
-    body: [
-      'No strategy exists in a vacuum. The market is always moving, and the teams that win are the ones that build systems for sensing and responding to change - not just executing against a static plan.',
-      'Market dynamics shift in three ways: gradually, then suddenly. The gradual shifts are visible to anyone paying attention. The sudden shifts catch everyone off guard. The difference between organizations that survive sudden shifts and those that do not is almost always the quality of their sensing systems.',
-      'Build a regular cadence of market intelligence into your operating rhythm. This does not mean reading every report or attending every conference. It means identifying the three to five signals that matter most for your specific context and monitoring them consistently.',
-    ],
-    sectionImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1400&q=80',
-    points: [
-      'Identify your leading indicators before you need them.',
-      'Build competitor monitoring into your weekly rhythm.',
-      'Create a signal library that the whole team can contribute to.',
-    ],
-  },
-  {
-    id: `${slug}-conclusion`,
-    heading: 'Conclusion',
-    body: [
-      'Great outcomes are produced by repeatable systems, not occasional bursts of effort. Build a rhythm that can survive changing market cycles, leadership transitions, and the inevitable moments of uncertainty that every organization faces.',
-      'If you want durable growth, keep decisions simple, execution visible, and learning cycles short. The organizations that compound over time are not the ones with the best ideas - they are the ones with the best systems for turning ideas into outcomes.',
-      'Start with one change. Pick the single most important initiative for the next 90 days. Assign a clear owner. Define what success looks like. Review progress every week. That is the entire system. Everything else is detail.',
-      'The gap between knowing and doing is where most strategies die. Close that gap, and everything else becomes possible.',
-    ],
-  },
-];
-
-const takeawayPool = [
-  ['Focus beats breadth - narrow to one 90-day objective', 'Weekly review rhythm prevents strategy drift', 'Leading indicators surface problems early', 'Named owners turn plans into outcomes'],
-  ['Document assumptions before you commit capital', 'Build downside triggers into every thesis', 'Liquidity planning is part of return planning', 'Diversification works when cycles differ'],
-  ['Activation quality predicts long-term retention', 'Ship in small batches with clear acceptance criteria', 'Customer feedback loops should be weekly, not quarterly', 'Metrics must drive a decision or they are noise'],
-  ['Position size matters more than entry timing', 'Custody and compliance are non-negotiable foundations', 'Volatility is a feature - plan for it in advance', 'Conviction assets need explicit allocation caps'],
-];
-
-export const blogPosts = basePosts.map((post, index) => ({
-  ...post,
-  readTime: ['12 min read', '14 min read', '11 min read', '13 min read'][index % 4],
-  sections: makeSections(post.slug),
-  author: authors[index % authors.length],
-  subImage: secondaryImages[index % secondaryImages.length],
-  takeaways: takeawayPool[index % takeawayPool.length],
-  introHighlight: 'The teams that compound results are not the busiest - they are the most deliberate about focus, ownership, and review cadence.',
-  heroImages: [
-    post.image,
-    secondaryImages[index % secondaryImages.length],
-    secondaryImages[(index + 1) % secondaryImages.length],
-    secondaryImages[(index + 2) % secondaryImages.length],
-  ],
-}));
-
-export const blogCategories = ['All', 'News', 'Product', 'Invest', 'Crypto'];
+/** @deprecated Listing page no longer uses filters; kept for compatibility. */
+export const blogCategories = ['All'];
 
 export const getBlogBySlug = (slug) => blogPosts.find((post) => post.slug === slug);
-
-export const getNextBlogPost = (slug) => {
-  const currentIndex = blogPosts.findIndex((post) => post.slug === slug);
-  if (currentIndex < 0) return blogPosts[0] ?? null;
-  return blogPosts[(currentIndex + 1) % blogPosts.length] ?? null;
-};
-
-export const getPrevBlogPost = (slug) => {
-  const currentIndex = blogPosts.findIndex((post) => post.slug === slug);
-  if (currentIndex <= 0) return blogPosts[blogPosts.length - 1] ?? null;
-  return blogPosts[currentIndex - 1] ?? null;
-};
 
 export const formatDisplayDate = (isoDate) =>
   new Date(isoDate).toLocaleDateString('en-US', {

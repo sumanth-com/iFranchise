@@ -105,25 +105,18 @@ const FOOTER_COLS = [
     heading: 'For Investors',
     links: [
       { label: 'Opportunities', path: '/franchise-opportunities', dot: 'none' },
-      { label: 'Investment Guide',     path: '/blog',                    dot: 'none' },
-      { label: 'Industries',           path: '/franchise-opportunities', dot: 'none' },
+      { label: 'Industries', path: '/franchise-opportunities', dot: 'none' },
     ],
   },
   {
     heading: 'For Brands',
-    links: [
-      { label: 'List Your Brand',      path: '/list-your-brand', dot: 'none' },
-      { label: 'Expansion', path: '/contact', dot: 'none' },
-      { label: 'Lead Generation',      path: '/services',         dot: 'none' },
-    ],
+    links: [{ label: 'List Your Brand', path: '/list-your-brand', dot: 'none' }],
   },
   {
     heading: 'Resources',
     links: [
-      { label: 'Blog',             path: '/blog',                dot: 'none' },
-      { label: 'FAQs',             path: '/#faq',                dot: 'none' },
-      { label: 'Franchise Guides', path: '/blog',                dot: 'none' },
-      { label: 'Industry Reports', path: '/blog',                dot: 'none' },
+      { label: 'Blog', path: '/blog', dot: 'none' },
+      { label: 'FAQs', path: '/#faq', dot: 'none' },
     ],
   },
 ];

@@ -1,16 +1,7 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
+import { CAROUSEL_CATEGORY_IMAGES } from '../data/sectionImages';
 
-// Category-based fallback images from Unsplash
-const CATEGORY_FALLBACKS = {
-  food: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80',
-  fitness: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80',
-  retail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80',
-  entertainment: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80',
-  kids: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1600&q=80',
-  education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80',
-  service: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1600&q=80',
-  default: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=1600&q=80',
-};
+const CATEGORY_FALLBACKS = CAROUSEL_CATEGORY_IMAGES;
 
 const CATEGORY_FALLBACK_ROTATION = [
   CATEGORY_FALLBACKS.food,

@@ -20,9 +20,28 @@ const SOCIAL_SVGS = {
 
 /** @param {{ size?: 'sm' | 'md', variant?: 'footer' | 'contact', className?: string }} props */
 export default function FooterSocialButtons({ size = 'md', variant = 'footer', className = '' }) {
-  const dim = size === 'sm' && variant === 'footer' ? 36 : variant === 'contact' ? 48 : 40;
-  const btnClass = variant === 'contact' ? 'contact-social-btn' : 'footer-social-btn';
+  if (variant === 'footer') {
+    return (
+      <div className={`footer-social-3d-row ${className}`.trim()} role="list">
+        {SOCIAL_LINKS.map((social) => (
+          <a
+            key={social.id}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={social.label}
+            role="listitem"
+            className="footer-social-3d"
+          >
+            <span className="footer-social-3d__glare" aria-hidden />
+            <span className="footer-social-3d__icon">{SOCIAL_SVGS[social.id]}</span>
+          </a>
+        ))}
+      </div>
+    );
+  }
 
+  const dim = 48;
   return (
     <div className={`footer-social-row ${className}`.trim()} role="list">
       {SOCIAL_LINKS.map((social) => (
@@ -33,7 +52,7 @@ export default function FooterSocialButtons({ size = 'md', variant = 'footer', c
           rel="noreferrer"
           aria-label={social.label}
           role="listitem"
-          className={btnClass}
+          className="contact-social-btn"
           style={{ width: dim, height: dim }}
         >
           {SOCIAL_SVGS[social.id]}

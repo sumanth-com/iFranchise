@@ -26,7 +26,7 @@ export default function PremiumFAQItem({ faq, index = 0 }) {
         className="flex w-full items-center justify-between p-4 text-left transition-colors duration-200 hover:bg-slate-50/50"
       >
         <div className="flex flex-1 items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#0b0f19] to-slate-700 text-sm font-bold text-white shadow-sm">
+          <div className="home-faq-item__badge flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#0b0f19] to-slate-700 text-sm font-bold text-white shadow-sm">
             {number}
           </div>
           <h3 className="pr-2 text-sm font-semibold leading-tight text-[#0b0f19]">{question}</h3>

@@ -21,7 +21,7 @@ export const BROCHURE_PDF_BY_FRANCHISE_ID = {
   '6': brandAvenuePdf,
   '7': lassiPdf,
   '8': fusionPdf,
-  // '9' kasturi. no PDF in assets yet
+  // '9' Kasturi Creations — no PDF in assets yet
   '10': tenDowningPdf,
 };
 

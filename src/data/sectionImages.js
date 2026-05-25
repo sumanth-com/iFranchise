@@ -1,99 +1,107 @@
-/** Curated Unsplash photos for marketing sections (Who We Serve, Industries). */
+/**
+ * Industry & section imagery — local assets (src/assets/*.jpeg).
+ * Single source of truth for home industries, services, brand owners, and franchise fallbacks.
+ */
+import foodBeverageImg from '../assets/Food & Beverage.jpeg';
+import healthcareWellnessImg from '../assets/Healthcare & Wellness.jpeg';
+import educationTrainingImg from '../assets/Education & Training.jpeg';
+import retailJewelryImg from '../assets/Retail & Jewelry.jpeg';
+import logisticsInfrastructureImg from '../assets/Logistics & Infrastructure.jpeg';
+import beautyLifestyleImg from '../assets/Beauty & Lifestyle.png';
+
 const u = (photoId, w = 1200) =>
   `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${w}&q=85`;
 
-export const IMAGE_FALLBACK = u('1560472354-b33ff0c44a43', 800);
+/** Generic remote fallback when no local asset applies */
+export const IMAGE_FALLBACK = foodBeverageImg;
+
+/** Industry card labels (home / services / brand owners sections) */
+export const INDUSTRY_CARD_IMAGES = {
+  'Retail & Jewelry': retailJewelryImg,
+  'Food & Beverage': foodBeverageImg,
+  'Healthcare & Wellness': healthcareWellnessImg,
+  'Education & Training': educationTrainingImg,
+  'Logistics & Infrastructure': logisticsInfrastructureImg,
+  'Beauty & Lifestyle': beautyLifestyleImg,
+};
+
+/** Normalized franchise listing categories (opportunityUtils.normalizeCategory) */
+export const FRANCHISE_CATEGORY_IMAGES = {
+  'Food & Beverage': foodBeverageImg,
+  Retail: retailJewelryImg,
+  'Health & Wellness': healthcareWellnessImg,
+  Entertainment: foodBeverageImg,
+  Education: educationTrainingImg,
+  Technology: logisticsInfrastructureImg,
+  'Home Services': logisticsInfrastructureImg,
+};
+
+/** ImageCarousel category keys */
+export const CAROUSEL_CATEGORY_IMAGES = {
+  food: foodBeverageImg,
+  fitness: healthcareWellnessImg,
+  retail: retailJewelryImg,
+  entertainment: foodBeverageImg,
+  education: educationTrainingImg,
+  service: logisticsInfrastructureImg,
+  kids: educationTrainingImg,
+  default: foodBeverageImg,
+};
+
+/**
+ * @param {string} industry - franchise industry from normalizeCategory
+ * @returns {string}
+ */
+export function getFranchiseCategoryImage(industry = 'Food & Beverage') {
+  return FRANCHISE_CATEGORY_IMAGES[industry] || FRANCHISE_CATEGORY_IMAGES['Food & Beverage'];
+}
+
+/**
+ * @param {string} category - ImageCarousel category prop
+ * @returns {string}
+ */
+export function getCarouselCategoryImage(category = 'food') {
+  return CAROUSEL_CATEGORY_IMAGES[category] || CAROUSEL_CATEGORY_IMAGES.default;
+}
+
+/**
+ * Gallery fallbacks for brands without local photos (detail carousel).
+ * @param {string} industry
+ * @returns {string[]}
+ */
+export function getIndustryGalleryFallback(industry = 'Food & Beverage') {
+  const img = getFranchiseCategoryImage(industry);
+  return [img, img, img];
+}
 
 export const WHO_WE_SERVE_IMAGES = {
   investors: u('1556761175-b413da4baf72'),
   brands: u('1600880292203-757bb62b4baf'),
 };
 
-export const INDUSTRY_UNSPLASH = {
-  'Retail & Jewelry': u('1441986300917-64674bd600d8'),
-  'Food & Beverage': u('1517248135467-4c7edcad34c4'),
-  'Healthcare & Wellness': u('1571019613454-1cb2f99b2d8b'),
-  'Education & Training': u('1522202176988-66273c2fd55f'),
-  'Logistics & Infrastructure': u('1586528116311-ad8dd3c8310d'),
-  'Beauty & Lifestyle': u('1560066988-a4f3a1b1b4b8'),
-};
+const industryCard = (label, accent, desc) => ({
+  label,
+  accent,
+  desc,
+  img: INDUSTRY_CARD_IMAGES[label] || foodBeverageImg,
+});
 
 export const HOME_INDUSTRIES = [
-  {
-    label: 'Retail & Jewelry',
-    accent: '#f59e0b',
-    desc: 'Growing consumer demand and scalable business models.',
-    img: INDUSTRY_UNSPLASH['Retail & Jewelry'],
-  },
-  {
-    label: 'Food & Beverage',
-    accent: '#f97316',
-    desc: 'Proven concepts with strong customer loyalty and repeat business.',
-    img: INDUSTRY_UNSPLASH['Food & Beverage'],
-  },
-  {
-    label: 'Healthcare & Wellness',
-    accent: '#10b981',
-    desc: 'Rising health consciousness driving sustainable growth.',
-    img: INDUSTRY_UNSPLASH['Healthcare & Wellness'],
-  },
-  {
-    label: 'Education & Training',
-    accent: '#3b82f6',
-    desc: 'Lifelong learning trends creating consistent demand.',
-    img: INDUSTRY_UNSPLASH['Education & Training'],
-  },
-  {
-    label: 'Logistics & Infrastructure',
-    accent: '#94a3b8',
-    desc: 'E-commerce boom fueling supply chain opportunities.',
-    img: INDUSTRY_UNSPLASH['Logistics & Infrastructure'],
-  },
-  {
-    label: 'Beauty & Lifestyle',
-    accent: '#ec4899',
-    desc: 'Premium services with high customer retention rates.',
-    img: INDUSTRY_UNSPLASH['Beauty & Lifestyle'],
-  },
+  industryCard('Retail & Jewelry', '#f59e0b', 'Growing consumer demand and scalable business models.'),
+  industryCard('Food & Beverage', '#f97316', 'Proven concepts with strong customer loyalty and repeat business.'),
+  industryCard('Healthcare & Wellness', '#10b981', 'Rising health consciousness driving sustainable growth.'),
+  industryCard('Education & Training', '#3b82f6', 'Lifelong learning trends creating consistent demand.'),
+  industryCard('Logistics & Infrastructure', '#94a3b8', 'E-commerce boom fueling supply chain opportunities.'),
+  industryCard('Beauty & Lifestyle', '#ec4899', 'Premium services with high customer retention rates.'),
 ];
 
 export const SERVICES_INDUSTRIES = [
-  {
-    label: 'Retail & Jewelry',
-    accent: '#f59e0b',
-    desc: 'Scale your retail brand with proven franchise models',
-    img: INDUSTRY_UNSPLASH['Retail & Jewelry'],
-  },
-  {
-    label: 'Food & Beverage',
-    accent: '#f97316',
-    desc: 'Expand your F&B concept across multiple locations',
-    img: INDUSTRY_UNSPLASH['Food & Beverage'],
-  },
-  {
-    label: 'Healthcare & Wellness',
-    accent: '#10b981',
-    desc: 'Grow your wellness business with franchise support',
-    img: INDUSTRY_UNSPLASH['Healthcare & Wellness'],
-  },
-  {
-    label: 'Education & Training',
-    accent: '#3b82f6',
-    desc: 'Build an education empire through franchising',
-    img: INDUSTRY_UNSPLASH['Education & Training'],
-  },
-  {
-    label: 'Beauty & Lifestyle',
-    accent: '#ec4899',
-    desc: 'Transform beauty concepts into franchise networks',
-    img: INDUSTRY_UNSPLASH['Beauty & Lifestyle'],
-  },
-  {
-    label: 'Logistics & Infrastructure',
-    accent: '#94a3b8',
-    desc: 'Scale logistics operations with franchise models',
-    img: INDUSTRY_UNSPLASH['Logistics & Infrastructure'],
-  },
+  industryCard('Retail & Jewelry', '#f59e0b', 'Scale your retail brand with proven franchise models'),
+  industryCard('Food & Beverage', '#f97316', 'Expand your F&B concept across multiple locations'),
+  industryCard('Healthcare & Wellness', '#10b981', 'Grow your wellness business with franchise support'),
+  industryCard('Education & Training', '#3b82f6', 'Build an education empire through franchising'),
+  industryCard('Beauty & Lifestyle', '#ec4899', 'Transform beauty concepts into franchise networks'),
+  industryCard('Logistics & Infrastructure', '#94a3b8', 'Scale logistics operations with franchise models'),
 ];
 
 export const BRAND_OWNERS_INDUSTRIES = SERVICES_INDUSTRIES;

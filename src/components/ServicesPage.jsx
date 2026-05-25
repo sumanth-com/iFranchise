@@ -18,8 +18,9 @@ import {
   getFeaturedOpportunities,
   toInvestorDashboardOpportunity,
 } from '../data/franchiseData';
-import { navigateTo as spaNavigate } from '@/lib/navigation';
+import { navigateTo as spaNavigate, scrollToHashSection } from '@/lib/navigation';
 import IndustryCard from './IndustryCard';
+import OurServicesSection from './OurServicesSection';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import { TESTIMONIAL_AVATAR_STRIP } from '../data/testimonials.js';
@@ -134,81 +135,6 @@ const FEATURES = [
   { icon: FiBarChart2, title: 'Investor-Ready Positioning', desc: 'Transform your business into an investment-grade opportunity that attracts serious capital.', points: ['Financial modelling & projections', 'Pitch deck creation', 'Due diligence preparation'], iconBg: 'bg-emerald-600', accent: 'rgba(5,150,105,0.07)' },
   { icon: FiZap, title: 'Lead Generation Systems', desc: 'High-conversion digital funnels that bring qualified franchise inquiries directly to your pipeline.', points: ['Multi-channel campaign setup', 'CRM integration & automation', 'Lead scoring & nurturing'], iconBg: 'bg-orange-500', accent: 'rgba(249,115,22,0.07)' },
   { icon: FiShield, title: 'Operational Scaling', desc: 'Build the systems, SOPs, and training infrastructure needed to replicate success at scale.', points: ['SOP development & documentation', 'Training program design', 'Quality control frameworks'], iconBg: 'bg-rose-500', accent: 'rgba(244,63,94,0.07)' },
-];
-
-const SERVICE_CARDS = [
-  {
-    icon: FiUserCheck,
-    title: 'Franchise Onboarding',
-    points: [
-      'Franchise business evaluation',
-      'Franchise model setup',
-      'Operational guidance',
-      'Franchise readiness support'
-    ],
-    gradient: 'from-blue-500 to-indigo-600',
-    glowColor: 'rgba(99, 102, 241, 0.15)'
-  },
-  {
-    icon: FiBookOpen,
-    title: 'Franchise Documentation',
-    points: [
-      'Franchise agreements',
-      'Business documentation',
-      'Investor presentations',
-      'Brand process documentation'
-    ],
-    gradient: 'from-emerald-500 to-teal-600',
-    glowColor: 'rgba(16, 185, 129, 0.15)'
-  },
-  {
-    icon: FiUserPlus,
-    title: 'Investor Acquisition',
-    points: [
-      'Investor lead generation',
-      'Franchise investor outreach',
-      'Qualified investor matching',
-      'Investor onboarding support'
-    ],
-    gradient: 'from-violet-500 to-purple-600',
-    glowColor: 'rgba(139, 92, 246, 0.15)'
-  },
-  {
-    icon: FiTarget,
-    title: 'Franchise Branding & Positioning',
-    points: [
-      'Brand positioning',
-      'Franchise marketing strategy',
-      'Investor-focused branding',
-      'Expansion communication strategy'
-    ],
-    gradient: 'from-orange-500 to-red-600',
-    glowColor: 'rgba(249, 115, 22, 0.15)'
-  },
-  {
-    icon: FiMap,
-    title: 'Franchise Expansion Strategy',
-    points: [
-      'Market expansion planning',
-      'Territory analysis',
-      'Location targeting',
-      'Expansion roadmap'
-    ],
-    gradient: 'from-cyan-500 to-blue-600',
-    glowColor: 'rgba(6, 182, 212, 0.15)'
-  },
-  {
-    icon: FiCompass,
-    title: 'Investor Onboarding Support',
-    points: [
-      'Investor qualification',
-      'Opportunity presentations',
-      'Initial consultation support',
-      'Investor journey management'
-    ],
-    gradient: 'from-pink-500 to-rose-600',
-    glowColor: 'rgba(236, 72, 153, 0.15)'
-  }
 ];
 
 const EXPANSION_CITIES = [
@@ -598,6 +524,17 @@ export default function ServicesPage() {
     spaNavigate(path);
   };
 
+  useEffect(() => {
+    if (!window.location.hash) return undefined;
+    const run = () => scrollToHashSection();
+    const t1 = window.setTimeout(run, 120);
+    const t2 = window.setTimeout(run, 400);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
+  }, []);
+
   return (
     <main ref={pageRef} className="services-page relative z-10 w-full bg-transparent text-theme-primary">
 
@@ -697,100 +634,13 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* SERVICES OVERVIEW */}
-      <section className="relative z-10 py-16">
-        {/* Content Container */}
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-
-        {/* Section Header */}
-        <div className="theme-section-on-light relative z-10 text-center mb-16">
-          <Reveal>
-            <SectionPill className="mb-5">Our Services</SectionPill>
-            <h2 className={`${sectionTitleClass(false)} mb-5`}>
-              Complete Franchise Growth & Expansion Services
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mx-auto max-w-3xl text-base leading-relaxed text-white sm:text-lg">
-              We provide end-to-end franchise services designed to help businesses scale efficiently and connect with the right investors. Our process covers every stage of franchise growth - from strategy and documentation to investor onboarding and brand positioning.
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Service Cards Grid - 3x2 on desktop, 2 cols on tablet, 1 col on mobile */}
-        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SERVICE_CARDS.map((service, index) => (
-            <Reveal key={service.title} delay={index * 0.08}>
-              <div className="group relative overflow-hidden rounded-2xl border border-violet-500/20 theme-light-card bg-gradient-to-br from-[#12082a] via-[#0e0620] to-[#0a0618] backdrop-blur-sm p-8 transition-all duration-200 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15)] hover:border-violet-200/70 h-full flex flex-col" style={{ boxShadow: '0 4px 24px rgba(99,102,241,0.08), 0 1px 4px rgba(0,0,0,0.04)' }}>
-                
-                {/* Animated line background - flows on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                  {/* Horizontal lines */}
-                  <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent animate-lineFlow" />
-                  <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent animate-lineFlow" style={{ animationDelay: '0.3s' }} />
-                  <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent animate-lineFlow" style={{ animationDelay: '0.6s' }} />
-                  <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent animate-lineFlow" style={{ animationDelay: '0.9s' }} />
-                  
-                  {/* Vertical lines */}
-                  <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-slate-300 to-transparent animate-lineFlowVertical" />
-                  <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-slate-300 to-transparent animate-lineFlowVertical" style={{ animationDelay: '0.3s' }} />
-                  <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-slate-300 to-transparent animate-lineFlowVertical" style={{ animationDelay: '0.6s' }} />
-                  <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-slate-300 to-transparent animate-lineFlowVertical" style={{ animationDelay: '0.9s' }} />
-                </div>
-                
-                {/* Subtle gradient overlay on hover */}
-                <div 
-                  className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at top left, ${service.glowColor}, transparent 70%)`
-                  }}
-                />
-
-                {/* Content */}
-                <div className="relative z-10 flex flex-col h-full">
-                  {/* Icon Area with gradient background */}
-                  <div className="mb-6">
-                    <div className={`inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${service.gradient} shadow-lg transition-transform duration-200 group-hover:scale-110 group-hover:rotate-3`}>
-                      <service.icon className="h-7 w-7 text-white" />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className={`${TYPE.cardTitle} text-white mb-4`}>
-                    {service.title}
-                  </h3>
-
-                  {/* Service Points - flex-1 to push content to fill space */}
-                  <ul className="space-y-3 flex-1">
-                    {service.points.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-sm text-white leading-relaxed">
-                        <span className="flex-shrink-0 mt-0.5">
-                          <FiCheck className="h-4 w-4 text-emerald-400" />
-                        </span>
-                        <span className="text-white">
-                          {point}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Hover shine effect */}
-                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-200 group-hover:translate-x-full pointer-events-none" />
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <Reveal delay={0.5} className="text-center mt-12">
-          <CtaButton type="button" onClick={() => navigateTo('/contact')}>
-            Get Started with Our Services
-          </CtaButton>
-        </Reveal>
-        
-        </div>
-        {/* End Content Container */}
+      {/* SERVICES OVERVIEW — same layout as home Our Services */}
+      <section className="relative z-10">
+        <OurServicesSection
+          isLight={isLight}
+          cta="contact"
+          onContact={() => navigateTo('/contact')}
+        />
       </section>
 
       {/* HOW IT WORKS - franchise expansion process flow */}
@@ -1195,15 +1045,15 @@ export default function ServicesPage() {
             </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES_INDUSTRIES.map((ind, i) => (
-              <Reveal key={ind.label} delay={i * 0.05}>
+              <Reveal key={ind.label} delay={i * 0.05} className="h-full">
                 <IndustryCard
                   label={ind.label}
                   desc={ind.desc}
                   img={ind.img}
                   accent={ind.accent}
-                  mediaHeight="h-56"
+                  priority={i < 3}
                   onExplore={() => navigateTo('/franchise-opportunities')}
                 />
               </Reveal>

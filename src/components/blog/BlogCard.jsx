@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 
 import { navigateTo } from '@/lib/navigation';
+import { formatDisplayDate } from '../blogData';
+import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './BlogImage';
 
 function BlogCard({ post, priority = false }) {
   return (
@@ -20,34 +22,37 @@ function BlogCard({ post, priority = false }) {
         }}
         className="block"
       >
-        <div className="overflow-hidden">
-          <img
-            src={post.thumbnail}
-            alt={post.title}
-            loading={priority ? 'eager' : 'lazy'}
-            className="h-56 w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-          />
-        </div>
+        <BlogImage
+          src={post.thumbnail}
+          alt={post.imageAlt || post.title}
+          variant="card"
+          priority={priority}
+          wrapperClassName={BLOG_IMAGE_FRAME_CLASS}
+          className="h-full w-full"
+          imgClassName={`${BLOG_IMAGE_FIT_CLASS} transition duration-500 group-hover:scale-[1.02]`}
+        />
         <div className="space-y-3 px-5 pb-6 pt-4">
-          <div className="flex items-center gap-3 text-xs text-white">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-white/85">
             <span className="rounded-full border border-violet-400/35 bg-violet-500/15 px-2.5 py-1 font-medium text-white">
               {post.category}
             </span>
-            <span> - </span>
+            <span className="text-white/50">·</span>
             <span>{post.readTime}</span>
+            <span className="text-white/50">·</span>
+            <span>{formatDisplayDate(post.date)}</span>
           </div>
           <h3
-            className="text-2xl font-bold leading-tight text-white"
+            className="text-xl font-bold leading-tight text-white sm:text-2xl"
             style={{
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              minHeight: '3.6rem',
             }}
           >
             {post.title}
           </h3>
+          <p className="text-sm leading-relaxed text-white/75 line-clamp-2">{post.excerpt}</p>
         </div>
       </a>
     </motion.article>

@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import AboutHero from './about/AboutHero';
+import AboutTestimonialPhoto from './about/AboutTestimonialPhoto';
 import LeadershipSection from './LeadershipSection';
-import CultureScrollGallery from './careers/CultureScrollGallery';
 import CtaButton from './ui/CtaButton';
-import { useTheme } from '../context/ThemeContext';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 
@@ -13,7 +12,7 @@ const SHOW_TEAM_SECTION = false;
 
 // Import actual images
 import aboutUsImage from '../assets/aboutus.png';
-import { ABOUT_PAGE_TESTIMONIALS, TESTIMONIAL_AVATAR_STRIP } from '../data/testimonials.js';
+import { ABOUT_PAGE_TESTIMONIALS } from '../data/testimonials.js';
 
 // Premium Team Card Component with In-Card Popup
 function PremiumTeamCard({ member }) {
@@ -246,9 +245,6 @@ const teamMembers = [
 ];
 
 function AboutPage() {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   return (
     <main className="about-page relative z-10 w-full bg-transparent text-theme-primary">
       <AboutHero />
@@ -475,22 +471,19 @@ function AboutPage() {
             <div className="animate-marquee-left flex w-max items-stretch gap-5 py-2" style={{ animationDuration: '30s' }}>
               {[...ABOUT_PAGE_TESTIMONIALS, ...ABOUT_PAGE_TESTIMONIALS].map((testimonial, idx) => (
                 <article
-                  key={`${testimonial.name}-${idx}`}
+                  key={`${testimonial.id}-${idx}`}
                   className="w-[420px] rounded-3xl card-premium-dark border border-violet-500/25 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
                 >
                   <div className="flex items-center gap-3">
-                    <img
+                    <AboutTestimonialPhoto
                       src={testimonial.avatar}
-                      alt={testimonial.name}
-                      className="h-14 w-14 shrink-0 rounded-xl object-cover object-center ring-2 ring-white/20"
-                      loading="lazy"
-                      decoding="async"
+                      name={testimonial.name}
+                      variant="card"
                     />
                     <div className="flex-1">
                       <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
                       <p className="text-sm text-white">{testimonial.company}</p>
                     </div>
-                    <span className="text-3xl text-white">{testimonial.icon}</span>
                   </div>
                   <div className="mt-4 border-t border-violet-500/25 pt-4">
                     <p className="text-base leading-relaxed text-white">{testimonial.quote}</p>
@@ -502,8 +495,13 @@ function AboutPage() {
 
           <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white">
             <div className="flex -space-x-2">
-              {TESTIMONIAL_AVATAR_STRIP.map((avatar, i) => (
-                <img key={avatar} src={avatar} alt="" className="h-8 w-8 rounded-full border-2 border-violet-500/40 object-cover object-center" loading="lazy" decoding="async" />
+              {ABOUT_PAGE_TESTIMONIALS.map((testimonial, i) => (
+                <AboutTestimonialPhoto
+                  key={`${testimonial.id}-strip-${i}`}
+                  src={testimonial.avatar}
+                  name={testimonial.name}
+                  variant="strip"
+                />
               ))}
             </div>
             <p>Over 15,725+ people gave us review</p>
@@ -511,16 +509,6 @@ function AboutPage() {
         </section>
       </div>
 
-      {/* OUR CULTURE SECTION */}
-      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
-        <CultureScrollGallery
-          isDark={isDark}
-          headingId="about-culture-heading"
-          title="Our culture, keeping us fresh"
-          intro="We move fast, celebrate wins, and back each other, from sprint rooms and strategy workshops to offsites and demo days that keep our franchise growth engine human."
-          className="about-culture-section border-t-0 pt-4 pb-16 lg:pb-20"
-        />
-      </div>
     </main>
   );
 }

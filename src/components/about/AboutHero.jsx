@@ -113,7 +113,12 @@ export default function AboutHero() {
             ))}
           </ul>
 
-          <CtaButton size="md" className="about-hero__cta" onClick={scrollToStory}>
+          <CtaButton
+            size="md"
+            className="about-hero__cta"
+            arrowDirection="down"
+            onClick={scrollToStory}
+          >
             See how we started
           </CtaButton>
         </motion.div>

@@ -943,18 +943,19 @@ function ServicesStyleIndustriesSection() {
           </p>
         </motion.div>
 
-        <motion.div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {BRAND_OWNERS_INDUSTRIES.map((ind) => (
-            <IndustryCard
-              key={ind.label}
-              className="lyb-industry-card"
-              label={ind.label}
-              desc={ind.desc}
-              img={ind.img}
-              accent={ind.accent}
-              mediaHeight="h-56"
-              onExplore={() => navigateTo('/franchise-opportunities')}
-            />
+        <motion.div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {BRAND_OWNERS_INDUSTRIES.map((ind, i) => (
+            <div key={ind.label} className="h-full">
+              <IndustryCard
+                className="lyb-industry-card h-full"
+                label={ind.label}
+                desc={ind.desc}
+                img={ind.img}
+                accent={ind.accent}
+                priority={i < 3}
+                onExplore={() => navigateTo('/franchise-opportunities')}
+              />
+            </div>
           ))}
         </motion.div>
 

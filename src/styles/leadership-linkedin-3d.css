@@ -1,0 +1,68 @@
+/* 3D LinkedIn button (leadership section) */
+
+.leadership-linkedin-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  color: #ffffff !important;
+  text-decoration: none;
+  overflow: hidden;
+  background: linear-gradient(165deg, #3b8fd9 0%, #0a66c2 45%, #084a8f 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.38) inset,
+    0 -1px 0 rgba(8, 74, 143, 0.35) inset,
+    0 3px 0 rgba(10, 102, 194, 0.45),
+    0 4px 12px rgba(8, 74, 143, 0.35);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.2, 0.64, 1),
+    box-shadow 0.22s ease;
+}
+
+.leadership-linkedin-3d__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.1) 42%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.leadership-linkedin-3d__icon {
+  position: relative;
+  z-index: 1;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: #ffffff !important;
+  fill: currentColor;
+}
+
+.leadership-linkedin-3d:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.48) inset,
+    0 -1px 0 rgba(8, 74, 143, 0.28) inset,
+    0 2px 0 rgba(10, 102, 194, 0.35),
+    0 8px 18px rgba(10, 102, 194, 0.42);
+}
+
+.leadership-linkedin-3d:active {
+  transform: translateY(0) scale(1.03);
+  transition-duration: 0.1s;
+}
+
+html[data-theme='light'] #main-content .leadership-linkedin-3d,
+html[data-theme='light'] #main-content .leadership-linkedin-3d__icon,
+html[data-theme='dark'] #main-content .leadership-linkedin-3d,
+html[data-theme='dark'] #main-content .leadership-linkedin-3d__icon {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
