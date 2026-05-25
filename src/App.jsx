@@ -217,6 +217,7 @@ function App() {
       {/* Page transition wrapper */}
       <main
         id="main-content"
+        data-phase={pagePhase === 'idle' ? undefined : pagePhase}
         className={`relative z-10 ${isCareerDetailPage || isHomePage ? '' : 'pt-16'}`}
         style={{
           opacity: pagePhase === 'idle' ? 1 : 0,

@@ -75,9 +75,19 @@
 /* --- Image performance ------------------------------------------------------- */
 img {
   transition: opacity 0.3s ease;
-  /* Prevent layout shift - images reserve space */
   max-width: 100%;
   height: auto;
+  /* Crisp scaling without layout change */
+  image-rendering: auto;
+}
+
+/* Fill containers (object-cover cards) — avoid global height:auto override */
+img.h-full,
+img[class*='h-full'],
+.fo-opportunity-card__img,
+.industry-card-img,
+.trust-logo-img {
+  height: 100%;
 }
 
 img.loading {
@@ -86,6 +96,36 @@ img.loading {
 
 img.loaded {
   opacity: 1;
+}
+
+/* --- Production touch + scroll stability ------------------------------------- */
+@layer base {
+  html {
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  button,
+  a,
+  [role='button'],
+  input[type='submit'],
+  input[type='button'],
+  label[for] {
+    touch-action: manipulation;
+  }
+
+  /* Below-fold sections: faster initial paint (desktop + mobile) */
+  main > * > section:not(:first-of-type) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
+  }
+}
+
+/* Page transition — GPU hint only while fading */
+#main-content[data-phase='exit'],
+#main-content[data-phase='enter'] {
+  will-change: opacity;
 }
 
 /* --- Reduced motion ---------------------------------------------------------- */

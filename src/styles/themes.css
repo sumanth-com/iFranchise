@@ -1180,19 +1180,38 @@ html[data-theme='dark'] #main-content .market-donut-chart .market-donut-label {
   font-family: inherit;
 }
 
-html[data-theme='light'] .market-donut-chart .market-donut-pct,
-html[data-theme='light'] #main-content .market-donut-chart .market-donut-pct {
+/* Light page + white chart panel (if used outside dark dashboard) */
+html[data-theme='light'] .market-chart-panel .market-donut-chart .market-donut-pct,
+html[data-theme='light'] #main-content .market-chart-panel .market-donut-chart .market-donut-pct {
   fill: #0b0f19 !important;
   font-size: 20px;
   font-weight: 800;
   font-family: inherit;
 }
 
-html[data-theme='light'] .market-donut-chart .market-donut-label,
-html[data-theme='light'] #main-content .market-donut-chart .market-donut-label {
+html[data-theme='light'] .market-chart-panel .market-donut-chart .market-donut-label,
+html[data-theme='light'] #main-content .market-chart-panel .market-donut-chart .market-donut-label {
   fill: #64748b !important;
   font-size: 8px;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  font-family: inherit;
+}
+
+/* Market intelligence dashboard stays dark in light mode — center copy must stay white */
+html[data-theme='light'] .theme-dark-surface .market-donut-chart .market-donut-pct,
+html[data-theme='light'] #main-content .theme-dark-surface .market-donut-chart .market-donut-pct {
+  fill: #ffffff !important;
+  font-size: 20px;
+  font-weight: 800;
+  font-family: inherit;
+}
+
+html[data-theme='light'] .theme-dark-surface .market-donut-chart .market-donut-label,
+html[data-theme='light'] #main-content .theme-dark-surface .market-donut-chart .market-donut-label {
+  fill: rgba(255, 255, 255, 0.9) !important;
+  font-size: 8px;
+  font-weight: 800;
   letter-spacing: 0.08em;
   font-family: inherit;
 }
@@ -6736,6 +6755,49 @@ html[data-theme='dark'] .franchise-opportunities-page .fo-filter-label {
 html[data-theme='light'] .franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-label,
 html[data-theme='light'] .franchise-opportunities-page .fo-filter-sheet .fo-filter-label {
   color: #475569 !important;
+}
+
+/* Desktop filter toolbar — vertically centered in card; aligned label + select columns */
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-toolbar__inner {
+  align-items: center;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-fields {
+  align-items: center;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-label--compact {
+  line-height: 1.25;
+  min-height: 1.25rem;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-label--spacer {
+  visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-select,
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-toolbar-field {
+  min-height: 2.625rem;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-clear-btn {
+  min-height: 2.625rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-toolbar__actions {
+  align-items: center;
 }
 
 /* Franchise opportunity cards — brand-colored header, premium hover */

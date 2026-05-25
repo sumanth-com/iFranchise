@@ -31,7 +31,7 @@ const parseInvestmentValue = (investmentLabel) => {
 
 function FilterSelect({ label, value, onChange, children, className = '', compact = false }) {
   return (
-    <div className={className}>
+    <div className={`${compact ? 'fo-filter-field' : ''} ${className}`.trim()}>
       <label
         className={
           compact
@@ -185,7 +185,7 @@ function FilterFields({ filters, setFilters, onChange, variant = 'stacked' }) {
 
   const isToolbar = variant === 'toolbar';
   const wrapClass = isToolbar
-    ? 'grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4'
+    ? 'fo-filter-fields grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4'
     : 'space-y-4';
 
   return (
@@ -461,34 +461,47 @@ function FilterToolbar({
       />
 
       <div className="fo-filter-toolbar fo-filter-toolbar--desktop card-premium-dark hidden rounded-xl p-4 lg:block">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-3">
+        <div className="fo-filter-toolbar__inner flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-3">
           <FilterFields
             variant="toolbar"
             filters={filters}
             setFilters={setFilters}
             onChange={onFilterChange}
           />
-          <div className="flex shrink-0 flex-wrap items-end gap-2 sm:gap-3 lg:pb-0.5">
-            <div className="min-w-[9.5rem] flex-1 sm:flex-none sm:w-40 lg:w-44">
-              <label className="mb-1 block text-xs font-semibold text-white lg:sr-only">Sort by</label>
+          <div className="fo-filter-toolbar__actions flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
+            <div className="fo-filter-field min-w-[9.5rem] flex-1 sm:flex-none sm:w-40 lg:w-44">
+              <label
+                className="fo-filter-label fo-filter-label--compact fo-filter-label--spacer mb-1 block text-xs font-semibold"
+                aria-hidden="true"
+              >
+                Sort by
+              </label>
               <select
                 value={sortBy}
                 onChange={onSort}
                 aria-label="Sort by"
-                className="fo-toolbar-field w-full rounded-lg border px-3 py-2.5 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-500 transition-all"
+                className="fo-toolbar-field fo-filter-select w-full rounded-lg border px-3 py-2.5 text-sm focus:border-violet-400 focus:ring-2 focus:ring-violet-500 transition-all"
               >
                 <option value="newest">Newest Added</option>
                 <option value="roi">High ROI</option>
                 <option value="investment">Low Investment</option>
               </select>
             </div>
-            <button
-              type="button"
-              onClick={onClearAll}
-              className="rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:border-violet-300/60"
-            >
-              Clear All
-            </button>
+            <div className="fo-filter-field fo-filter-field--action">
+              <label
+                className="fo-filter-label fo-filter-label--compact fo-filter-label--spacer mb-1 block text-xs font-semibold"
+                aria-hidden="true"
+              >
+                Actions
+              </label>
+              <button
+                type="button"
+                onClick={onClearAll}
+                className="fo-filter-clear-btn w-full rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:border-violet-300/60 sm:w-auto"
+              >
+                Clear All
+              </button>
+            </div>
           </div>
         </div>
       </div>

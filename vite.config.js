@@ -21,6 +21,9 @@ export default defineConfig({
     },
   },
   build: {
+    modulePreload: {
+      polyfill: true,
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -38,6 +41,15 @@ export default defineConfig({
           }
           if (id.includes('/src/lib/forms/')) {
             return 'forms';
+          }
+          if (id.includes('/src/components/Hero')) {
+            return 'page-home';
+          }
+          if (
+            id.includes('/src/components/FranchiseOpportunitiesPage') ||
+            id.includes('/src/components/FranchiseDetailsPage')
+          ) {
+            return 'page-franchise';
           }
           if (id.includes('node_modules')) {
             return 'vendor';

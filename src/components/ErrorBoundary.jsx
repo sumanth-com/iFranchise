@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component {
           className="relative z-10 flex min-h-[40vh] flex-col items-center justify-center gap-4 px-6 text-center"
           role="alert"
         >
-          <p className="text-sm font-medium text-white">Something went wrong loading this section.</p>
+          <p className="text-sm font-medium text-theme-primary">Something went wrong loading this section.</p>
           <button
             type="button"
             onClick={() => {

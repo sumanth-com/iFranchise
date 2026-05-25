@@ -46,6 +46,9 @@ export default function FranchiseSimilarCardImage({ franchise, className }) {
       className={`${className} object-cover object-center`}
       loading="lazy"
       decoding="async"
+      width={280}
+      height={187}
+      sizes="(max-width: 640px) 100vw, 280px"
       onError={() => {
         if (index < fallbacks.length - 1) {
           setIndex((i) => i + 1);

@@ -40,6 +40,9 @@ export default function OpportunityCard({ opportunity }) {
           className="fo-opportunity-card__img"
           loading="lazy"
           decoding="async"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
+          width={280}
+          height={187}
           onError={(e) => {
             const img = e.target;
             if (img.dataset.fallbackTried === '1') return;

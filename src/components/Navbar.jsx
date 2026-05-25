@@ -751,10 +751,15 @@ function Navbar() {
         {/* Logo */}
         <div className="site-navbar-brand flex min-w-0 flex-1 flex-col xl:mr-auto xl:flex-none">
           <a href="/" onClick={handleLogoClick} className="inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-3">
-            <img 
-              src={brandLogo} 
-              alt="iFranchise" 
+            <img
+              src={brandLogo}
+              alt="iFranchise"
               className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10"
+              width={40}
+              height={40}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
             <div className="flex min-w-0 flex-col">
               <span className="site-navbar-logo-title truncate text-lg font-extrabold tracking-tight leading-tight text-violet-900 sm:text-2xl">
@@ -986,10 +991,14 @@ function Navbar() {
                 className="navbar-mobile-panel__header flex shrink-0 items-center justify-between border-b px-6 py-4"
               >
                 <div className="flex items-center gap-3">
-                  <img 
-                    src={brandLogo} 
-                    alt="iFranchise" 
+                  <img
+                    src={brandLogo}
+                    alt="iFranchise"
                     className="h-9 w-9 rounded-xl"
+                    width={36}
+                    height={36}
+                    loading="eager"
+                    decoding="async"
                   />
                   <span className="navbar-mobile-panel__brand text-lg font-bold">iFranchise</span>
                 </div>

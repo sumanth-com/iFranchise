@@ -3,6 +3,8 @@
  * Programmatic navigation dispatches `ifr:navigate`; browser back/forward uses `popstate`.
  */
 
+import { prefetchRoute } from './routePrefetch';
+
 export const NAVIGATE_EVENT = 'ifr:navigate';
 
 const SCROLL_PREFIX = 'ifr:scroll:';
@@ -150,6 +152,7 @@ export function navigateTo(path, { replace = false } = {}) {
   }
 
   persistCurrentScrollInHistory();
+  prefetchRoute(target.pathname);
 
   const nextState = { scrollY: 0, ifrNav: true };
   if (replace) {

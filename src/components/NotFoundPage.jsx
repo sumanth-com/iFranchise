@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import notFoundImage from '../assets/404.png';
 import { navigateTo } from '@/lib/navigation';
+import OptimizedImage from './ui/OptimizedImage';
 
 function NotFoundPage() {
   const [visible, setVisible] = useState(false);
@@ -21,11 +22,13 @@ function NotFoundPage() {
       >
         {/* 404 Image - viewport-fitted hero */}
         <div className="animate-float">
-          <img
+          <OptimizedImage
             src={notFoundImage}
             alt="404"
             className="w-auto object-contain max-h-[78vh] max-w-[95vw] drop-shadow-2xl"
-            draggable={false}
+            width={800}
+            height={600}
+            priority
           />
         </div>
 

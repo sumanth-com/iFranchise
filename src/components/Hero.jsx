@@ -1251,10 +1251,22 @@ function DonutChart({ active }) {
         strokeLinecap="round"
         transform={`rotate(-90 ${cx} ${cy})`}
       />
-      <text x={cx} y={cy - 5} textAnchor="middle" className="market-donut-pct">
+      <text
+        x={cx}
+        y={cy - 5}
+        textAnchor="middle"
+        className="market-donut-pct"
+        fill="#ffffff"
+      >
         {filled}%
       </text>
-      <text x={cx} y={cy + 12} textAnchor="middle" className="market-donut-label">
+      <text
+        x={cx}
+        y={cy + 12}
+        textAnchor="middle"
+        className="market-donut-label"
+        fill="rgba(255, 255, 255, 0.9)"
+      >
         FRANCHISE
       </text>
     </svg>
@@ -3066,7 +3078,27 @@ function Hero() {
                       style={isLight
                         ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff', boxShadow: '0 8px 24px rgba(109,40,217,0.25)', animation: `iconPulse 3s ease-in-out infinite ${i * 0.5}s` }
                         : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', boxShadow: '0 0 0 0 rgba(139,92,246,0.4)', animation: `iconPulse 3s ease-in-out infinite ${i * 0.5}s` }}
-                      ref={el => { if (!el) return; const c = el.closest('.group'); const base = isLight ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff' } : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd' }; c.addEventListener('mouseenter', () => { el.style.background = isLight ? 'linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%)' : 'rgba(139,92,246,0.3)'; el.style.boxShadow = '0 0 24px rgba(109,40,217,0.45)'; }); c.addEventListener('mouseleave', () => { el.style.background = base.background; el.style.border = base.border; el.style.color = base.color; el.style.boxShadow = isLight ? '0 8px 24px rgba(109,40,217,0.25)' : 'none'; }); }}
+                      ref={(el) => {
+                        if (!el || el.dataset.hoverBound === '1') return;
+                        el.dataset.hoverBound = '1';
+                        const c = el.closest('.group');
+                        if (!c) return;
+                        const base = isLight
+                          ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff' }
+                          : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd' };
+                        const onEnter = () => {
+                          el.style.background = isLight ? 'linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%)' : 'rgba(139,92,246,0.3)';
+                          el.style.boxShadow = '0 0 24px rgba(109,40,217,0.45)';
+                        };
+                        const onLeave = () => {
+                          el.style.background = base.background;
+                          el.style.border = base.border;
+                          el.style.color = base.color;
+                          el.style.boxShadow = isLight ? '0 8px 24px rgba(109,40,217,0.25)' : 'none';
+                        };
+                        c.addEventListener('mouseenter', onEnter);
+                        c.addEventListener('mouseleave', onLeave);
+                      }}
                     >
                       {card.icon}
                     </div>

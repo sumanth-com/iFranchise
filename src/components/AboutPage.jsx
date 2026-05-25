@@ -43,6 +43,10 @@ function PremiumTeamCard({ member }) {
             src={member.image}
             alt={member.name}
             className="h-full w-full object-cover"
+            width={320}
+            height={320}
+            decoding="async"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0618] via-[#0a0618]/85 to-transparent" />
           <div className="absolute bottom-2 left-4">
@@ -118,7 +122,10 @@ function PremiumTeamCard({ member }) {
           src={member.image}
           alt={member.name}
           className="h-full w-full object-cover transition-all duration-200 group-hover:scale-105"
+          width={320}
+          height={320}
           loading="lazy"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
       </div>

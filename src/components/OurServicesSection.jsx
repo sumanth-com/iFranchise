@@ -46,7 +46,8 @@ const SERVICE_ICONS = {
 };
 
 function bindServiceIconHover(el, isLight) {
-  if (!el) return;
+  if (!el || el.dataset.hoverBound === '1') return;
+  el.dataset.hoverBound = '1';
   const card = el.closest('.group');
   if (!card) return;
   const base = serviceIconStyle(isLight);

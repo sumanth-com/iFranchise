@@ -1,9 +1,13 @@
 import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import OptimizedImage from './ui/OptimizedImage';
 import abdulPhoto from '../assets/abdul.png';
 import abrarPhoto from '../assets/abrar.png';
 
 function LeadershipSection() {
+  const reducedMotion = usePrefersReducedMotion();
+
   return (
     <>
       {/* LEADERSHIP & VISION SECTION - REFINED & OPTIMIZED */}
@@ -14,14 +18,14 @@ function LeadershipSection() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-100/20 via-transparent to-transparent" />
           
           <motion.div
-            animate={{ y: [0, -20, 0], opacity: [0.03, 0.08, 0.03] }}
+            animate={reducedMotion ? false : { y: [0, -20, 0], opacity: [0.03, 0.08, 0.03] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute left-[20%] top-[30%] h-32 w-32 rounded-full bg-violet-400/10 blur-3xl"
+            className="leadership-atmospheric-orb absolute left-[20%] top-[30%] h-32 w-32 rounded-full bg-violet-400/10 blur-3xl"
           />
           <motion.div
-            animate={{ y: [0, 25, 0], opacity: [0.04, 0.09, 0.04] }}
+            animate={reducedMotion ? false : { y: [0, 25, 0], opacity: [0.04, 0.09, 0.04] }}
             transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-            className="absolute right-[15%] bottom-[40%] h-40 w-40 rounded-full bg-indigo-400/10 blur-3xl"
+            className="leadership-atmospheric-orb absolute right-[15%] bottom-[40%] h-40 w-40 rounded-full bg-indigo-400/10 blur-3xl"
           />
         </div>
 
@@ -62,11 +66,13 @@ function LeadershipSection() {
                   <div className="absolute -inset-4 bg-gradient-to-br from-violet-300/30 via-purple-200/20 to-indigo-300/30 blur-3xl opacity-60" />
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
-                    <img
+                    <OptimizedImage
                       src={abdulPhoto}
                       alt="Syed Abdul Khader"
                       className="h-full w-full object-cover object-center brightness-105"
-                      loading="eager"
+                      width={400}
+                      height={480}
+                      priority
                     />
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
@@ -228,11 +234,13 @@ function LeadershipSection() {
                   <div className="absolute -inset-4 bg-gradient-to-br from-indigo-300/30 via-blue-200/20 to-violet-300/30 blur-3xl opacity-60" />
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
-                    <img
+                    <OptimizedImage
                       src={abrarPhoto}
                       alt="Mohammad Abrar"
                       className="h-full w-full object-cover object-center brightness-105"
-                      loading="eager"
+                      width={400}
+                      height={480}
+                      loading="lazy"
                     />
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />

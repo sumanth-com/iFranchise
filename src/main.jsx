@@ -4,6 +4,7 @@ import './styles/themes.css'
 import './index.css'
 import './styles/mobile-responsive.css'
 import { initScrollRestoration } from './lib/navigation.js'
+import { initRoutePrefetch } from './lib/routePrefetch.js'
 import { preloadHomeHero } from './lib/preloadHomeHero.js'
 import { ThemeProvider } from './context/ThemeContext.jsx'
 import App from './App.jsx'
@@ -12,6 +13,7 @@ import { logger } from './lib/logger.js'
 import Lenis from '@studio-freight/lenis'
 
 initScrollRestoration()
+initRoutePrefetch()
 
 if (!import.meta.env.DEV) {
   window.addEventListener('unhandledrejection', (event) => {
