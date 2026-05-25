@@ -14,6 +14,7 @@ import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
+import { SITE_CONTACT_ITEMS } from '../data/siteContact';
 import brandLogo from '../assets/BrandLogo.png';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
@@ -212,23 +213,7 @@ const processSteps = [
   },
 ];
 
-const contactItems = [
-  {
-    title: 'Email us',
-    value: 'partnerships@ifranchise.com',
-    icon: 'email',
-  },
-  {
-    title: 'Call us',
-    value: '+1 (501) 123-4567',
-    icon: 'phone',
-  },
-  {
-    title: 'Our location',
-    value: 'Crosby Street, New York, US',
-    icon: 'location',
-  },
-];
+const contactItems = SITE_CONTACT_ITEMS;
 
 function Avatar({ src, alt }) {
   return (
@@ -974,25 +959,39 @@ function ContactSection() {
             </p>
 
             <div className="space-y-3 sm:space-y-4 pt-2">
-              {contactItems.map((item) => (
-                <article
-                  key={item.title}
-                  className="group flex items-center justify-between rounded-xl sm:rounded-2xl border border-white/15 bg-white/10 p-3 sm:p-4 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-200/35 hover:bg-white/15 hover:shadow-[0_10px_28px_rgba(16,185,129,0.14)]"
-                >
-                  <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-                    <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                      <ContactIcon type={item.icon} />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs sm:text-sm font-medium text-emerald-100/70">{item.title}</p>
-                      <p className="mt-0.5 text-sm sm:text-base font-semibold text-white truncate">{item.value}</p>
+              {contactItems.map((item) => {
+                const Tag = item.href ? 'a' : 'article';
+                const linkProps = item.href
+                  ? {
+                      href: item.href,
+                      ...(item.external
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {}),
+                    }
+                  : {};
+                return (
+                  <Tag
+                    key={item.title}
+                    {...linkProps}
+                    className="group flex items-center justify-between rounded-xl sm:rounded-2xl border border-white/15 bg-white/10 p-3 sm:p-4 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-200/35 hover:bg-white/15 hover:shadow-[0_10px_28px_rgba(16,185,129,0.14)]"
+                  >
+                    <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 sm:h-12 sm:w-12">
+                        <ContactIcon type={item.icon} />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-medium text-emerald-100/70 sm:text-sm">{item.title}</p>
+                        <p className="mt-0.5 truncate text-sm font-semibold text-white sm:text-base">{item.value}</p>
+                      </div>
                     </div>
-                  </div>
-                  <span className="ml-2 text-emerald-200/60 opacity-0 transition duration-200 group-hover:opacity-100 shrink-0">
-                    ?
-                  </span>
-                </article>
-              ))}
+                    {item.href && (
+                      <span className="ml-2 shrink-0 text-emerald-200/60 opacity-0 transition duration-200 group-hover:opacity-100" aria-hidden>
+                        →
+                      </span>
+                    )}
+                  </Tag>
+                );
+              })}
             </div>
           </div>
 

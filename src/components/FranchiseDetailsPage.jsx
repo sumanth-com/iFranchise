@@ -476,20 +476,20 @@ function FranchiseDetailsPage() {
 
           {/* Key details (left) + gallery (right) */}
           <div className="fd-hero-split overflow-hidden rounded-2xl border border-slate-200 shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-stretch">
-              <div className="fd-hero-story flex flex-col justify-center gap-4 border-b border-slate-200 p-6 sm:p-8 lg:border-b-0 lg:border-r lg:py-8">
+            <div className="fd-hero-split-grid grid grid-cols-1 lg:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)] xl:grid-cols-[minmax(280px,38%)_minmax(0,1fr)] lg:items-stretch">
+              <div className="fd-hero-story flex flex-col justify-center gap-3 border-b border-slate-200 p-5 sm:p-6 lg:gap-3.5 lg:border-b-0 lg:border-r lg:py-6 lg:pl-6 lg:pr-5 xl:py-7">
                 <div className="text-center lg:text-left">
                   <p className="fd-hero-story-kicker fd-field-label text-[0.65rem] tracking-[0.14em]">
                     Opportunity highlights
                   </p>
-                  <p className="fd-hero-story-title fd-heading mt-1.5 text-lg leading-snug sm:text-xl">
+                  <p className="fd-hero-story-title fd-heading mt-1 text-base leading-snug sm:text-lg lg:text-[1.05rem] xl:text-lg">
                     {selectedFranchise.name}
                   </p>
                 </div>
 
                 <FranchiseStatGrid franchise={selectedFranchise} className="fd-hero-metrics w-full" />
 
-                <div className="flex flex-col gap-2 text-center lg:text-left">
+                <div className="flex flex-col gap-1.5 text-center lg:text-left">
                   {selectedFranchise.franchiseModels?.[0]?.name && (
                     <p className="fd-hero-story-muted fd-body-text text-xs sm:text-sm">
                       <span className="font-medium">Model:</span>{' '}
@@ -510,7 +510,7 @@ function FranchiseDetailsPage() {
               </div>
 
               <div
-                className="fd-hero-gallery relative min-h-[280px] bg-slate-100 sm:min-h-[320px] lg:min-h-[420px]"
+                className="fd-hero-gallery relative min-h-[min(56vw,360px)] bg-slate-100 sm:min-h-[380px] lg:min-h-[460px] lg:h-full xl:min-h-[500px]"
                 style={
                   selectedFranchise.cardBackground
                     ? { backgroundColor: selectedFranchise.cardBackground }
@@ -526,9 +526,10 @@ function FranchiseDetailsPage() {
                   fillParent
                   preloadAll
                   imageFit={galleryImageFit}
+                  imageSizes="(max-width: 1023px) 100vw, 62vw"
                   galleryBackground={selectedFranchise.cardBackground}
                   className="absolute inset-0 z-0 h-full w-full"
-                  heightClassName="h-full min-h-[280px] w-full sm:min-h-[320px] lg:min-h-[420px]"
+                  heightClassName="h-full min-h-[min(56vw,360px)] w-full sm:min-h-[380px] lg:min-h-[460px] xl:min-h-[500px]"
                 />
               </div>
             </div>

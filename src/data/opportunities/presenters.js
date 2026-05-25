@@ -118,6 +118,11 @@ export function toInvestorDashboardOpportunity(opp) {
     roi: opp.roiValue != null ? `+${opp.roiValue}% ROI` : opp.roi,
     investment: `From ${opp.investment.split(' to ')[0].trim()}`,
     color: industryGradients[opp.industry] || 'from-violet-500 to-purple-600',
+    logo: opp.logo || '',
+    image: opp.image || opp.logo || '',
+    cardBackground: opp.cardBackground,
+    cardAccent: opp.cardAccent,
+    cardFit: opp.cardFit || 'cover',
     link: `/franchise/${opp.slug}`,
   };
 }

@@ -5,7 +5,7 @@ import {
   FiHeadphones, FiGlobe, FiArrowRight, FiCheck,
   FiBarChart2, FiZap, FiShield, FiLayers,
   FiCheckCircle, FiRefreshCw, FiFileText, FiAward, FiActivity,
-  FiDollarSign, FiUserCheck, FiBookOpen, FiUserPlus, FiCompass, FiMap,
+  FiUserCheck, FiBookOpen, FiUserPlus, FiCompass, FiMap,
   FiCoffee, FiTool, FiShoppingBag
 } from 'react-icons/fi';
 import CtaButton from './ui/CtaButton';
@@ -21,9 +21,58 @@ import {
 import { navigateTo as spaNavigate, scrollToHashSection } from '@/lib/navigation';
 import IndustryCard from './IndustryCard';
 import OurServicesSection from './OurServicesSection';
-import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
+import { heroDisplayClass, sectionTitleClass, sectionSubtitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
-import { TESTIMONIAL_AVATAR_STRIP } from '../data/testimonials.js';
+import reviewR1 from '../assets/R1.png';
+import reviewR2 from '../assets/R2.png';
+import reviewR3 from '../assets/R3.png';
+import reviewR4 from '../assets/R4.png';
+
+const SERVICES_HERO_REVIEW_AVATARS = [reviewR1, reviewR2, reviewR3, reviewR4];
+
+function ServicesHeroStars({ isLight }) {
+  return (
+    <div
+      className={`services-hero-stars flex items-center justify-center gap-1 ${isLight ? 'services-hero-stars--light' : 'services-hero-stars--dark'}`}
+      aria-hidden
+    >
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} className="services-hero-star h-4 w-4" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+function ServicesHeroAvatars({ isLight }) {
+  return (
+    <div className="services-hero-avatars flex items-center justify-center" aria-hidden>
+      {SERVICES_HERO_REVIEW_AVATARS.map((src, i) => (
+        <motion.img
+          key={src}
+          src={src}
+          alt=""
+          initial={{ opacity: 0, x: 56, rotate: 18, scale: 0.85 }}
+          animate={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
+          transition={{
+            duration: 0.55,
+            delay: 0.22 + (SERVICES_HERO_REVIEW_AVATARS.length - 1 - i) * 0.11,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className={`services-hero-avatars__img h-10 w-10 rounded-full border-2 object-cover object-center ${isLight ? 'border-white' : 'border-slate-900'} ${i > 0 ? '-ml-2' : ''}`}
+          style={{ zIndex: i + 1 }}
+          loading="eager"
+          decoding="async"
+        />
+      ))}
+    </div>
+  );
+}
+
+function scrollToServicesOverview() {
+  document.getElementById('services-overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 // -- Lightweight CSS-only reveal - no framer-motion per element ----------------
 function Reveal({ children, delay = 0, className = '' }) {
@@ -138,44 +187,126 @@ const FEATURES = [
 ];
 
 const EXPANSION_CITIES = [
-  { city: 'Mumbai', locations: 12, label: 'Active', progress: 85, bar: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-  { city: 'Delhi NCR', locations: 10, label: 'Active', progress: 78, bar: 'bg-emerald-500', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-  { city: 'Bengaluru', locations: 9, label: 'Expanding', progress: 72, bar: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
-  { city: 'Hyderabad', locations: 8, label: 'Expanding', progress: 68, bar: 'bg-blue-500', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
-  { city: 'Pune', locations: 7, label: 'Pipeline', progress: 55, bar: 'bg-violet-500', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
-  { city: 'Chennai', locations: 6, label: 'Pipeline', progress: 48, bar: 'bg-violet-500', badge: 'bg-violet-50 text-violet-700 border-violet-200' },
+  { city: 'Mumbai', locations: 12, label: 'Active', progress: 85, bar: 'bg-emerald-500' },
+  { city: 'Delhi NCR', locations: 10, label: 'Active', progress: 78, bar: 'bg-emerald-500' },
+  { city: 'Bengaluru', locations: 9, label: 'Expanding', progress: 72, bar: 'bg-blue-500' },
+  { city: 'Hyderabad', locations: 8, label: 'Expanding', progress: 68, bar: 'bg-blue-500' },
+  { city: 'Pune', locations: 7, label: 'Pipeline', progress: 55, bar: 'bg-violet-500' },
+  { city: 'Chennai', locations: 6, label: 'Pipeline', progress: 48, bar: 'bg-violet-500' },
 ];
 
-function ExpansionCitiesPanel() {
+const DASHBOARD_PILL_CLASS = {
+  Active: 'dashboard-pill dashboard-pill--active',
+  Expanding: 'dashboard-pill dashboard-pill--expanding',
+  Pipeline: 'dashboard-pill dashboard-pill--pipeline',
+};
+
+function DashboardRupeeIcon({ className = '' }) {
   return (
-    <div className="dashboard-surface-light rounded-lg border border-slate-200/60 p-3 shadow-lg">
+    <span className={`inline-flex items-center justify-center font-bold leading-none ${className}`} aria-hidden>
+      ₹
+    </span>
+  );
+}
+
+function dashboardPillClass(label) {
+  return DASHBOARD_PILL_CLASS[label] || DASHBOARD_PILL_CLASS.Active;
+}
+
+function ExpansionCitiesPanel({ onHighlightChange }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const listRef = useRef(null);
+  const rowRefs = useRef([]);
+
+  const updateActiveFromScroll = useCallback(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const viewportMid = list.scrollTop + list.clientHeight * 0.45;
+    let next = 0;
+    let best = Infinity;
+    rowRefs.current.forEach((row, i) => {
+      if (!row) return;
+      const rowMid = row.offsetTop + row.offsetHeight * 0.5;
+      const dist = Math.abs(rowMid - viewportMid);
+      if (dist < best) {
+        best = dist;
+        next = i;
+      }
+    });
+    setActiveIdx((prev) => (prev === next ? prev : next));
+  }, []);
+
+  const onHighlightRef = useRef(onHighlightChange);
+  onHighlightRef.current = onHighlightChange;
+
+  useEffect(() => {
+    onHighlightRef.current?.(EXPANSION_CITIES[activeIdx], activeIdx);
+  }, [activeIdx]);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list) return undefined;
+    updateActiveFromScroll();
+    list.addEventListener('scroll', updateActiveFromScroll, { passive: true });
+    return () => list.removeEventListener('scroll', updateActiveFromScroll);
+  }, [updateActiveFromScroll]);
+
+  const scrollToCity = (index) => {
+    const row = rowRefs.current[index];
+    const list = listRef.current;
+    if (!row || !list) return;
+    const top = row.offsetTop - list.clientHeight * 0.25;
+    list.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    setActiveIdx(index);
+  };
+
+  return (
+    <div className="dashboard-surface-light rounded-lg border border-slate-200/80 bg-white p-3 shadow-lg">
       <div className="mb-2.5 flex items-center justify-between gap-2">
         <div className="flex min-w-0 items-center gap-1.5">
           <FiUsers className="h-3.5 w-3.5 shrink-0 text-indigo-500" />
           <div className="min-w-0">
             <span className="dashboard-txt-title block text-xs font-bold">Active Cities</span>
-            <span className="dashboard-txt-muted block text-[8px]">8 markets · 24 locations</span>
+            <span className="dashboard-txt-muted block text-[8px]">8 markets · 24 locations · swipe to browse</span>
           </div>
         </div>
-        <span className="dashboard-txt-accent shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[8px] font-semibold">
-          Pan India
-        </span>
+        <span className="dashboard-pill dashboard-pill--pan shrink-0">Pan India</span>
       </div>
-      <ul className="max-h-[5.75rem] space-y-1.5 overflow-y-auto pr-0.5">
-        {EXPANSION_CITIES.map((row) => (
+      <ul
+        ref={listRef}
+        className="expansion-cities-scroll max-h-[6.5rem] space-y-1.5 overflow-y-auto overscroll-y-contain pr-1"
+        role="listbox"
+        aria-label="Active cities"
+      >
+        {EXPANSION_CITIES.map((row, i) => (
           <li
             key={row.city}
-            className="rounded-md border border-slate-100 bg-slate-50/95 px-2 py-1.5"
+            ref={(el) => {
+              rowRefs.current[i] = el;
+            }}
+            role="option"
+            aria-selected={i === activeIdx}
+            tabIndex={0}
+            onClick={() => scrollToCity(i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                scrollToCity(i);
+              }
+            }}
+            className={`expansion-cities-row cursor-pointer rounded-md border px-2 py-1.5 transition-all duration-200 ${
+              i === activeIdx
+                ? 'expansion-cities-row--active border-violet-300 bg-white shadow-md ring-2 ring-violet-400/50'
+                : 'border-slate-100 bg-slate-50/95 hover:border-slate-200 hover:bg-white'
+            }`}
           >
             <div className="mb-1 flex items-center justify-between gap-2">
               <span className="dashboard-txt-title truncate text-[10px] font-bold">{row.city}</span>
-              <span className={`shrink-0 rounded-full border px-1.5 py-0.5 text-[7px] font-semibold ${row.badge}`}>
-                {row.label}
-              </span>
+              <span className={dashboardPillClass(row.label)}>{row.label}</span>
             </div>
             <div className="flex items-center justify-between gap-2">
               <span className="dashboard-txt-muted text-[8px]">{row.locations} locations</span>
-              <span className="dashboard-txt-muted text-[8px] font-medium">{row.progress}%</span>
+              <span className="dashboard-txt-muted text-[8px] font-semibold">{row.progress}%</span>
             </div>
             <div className="mt-1 h-1 overflow-hidden rounded-full bg-slate-200">
               <div className={`h-full rounded-full ${row.bar}`} style={{ width: `${row.progress}%` }} />
@@ -197,6 +328,47 @@ const DASHBOARD_INDUSTRY_ICONS = {
   Education: FiBookOpen,
   'Home Services': FiTool,
 };
+
+function InvestorDashboardBrandLogo({ opp }) {
+  const [failed, setFailed] = useState(false);
+  const src = opp.logo || opp.image;
+  const FallbackIcon = opp.icon || DASHBOARD_INDUSTRY_ICONS[opp.category] || FiCoffee;
+  const brandBg = opp.cardBackground || '#ffffff';
+  const imgFit = opp.cardFit === 'fill' ? 'object-contain p-1' : 'object-cover';
+
+  if (!src || failed) {
+    return (
+      <div
+        className={`investor-dashboard-brand-logo investor-dashboard-brand-logo--fallback flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br shadow-lg ${opp.color}`}
+      >
+        <FallbackIcon className="h-4 w-4 text-white" aria-hidden />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="investor-dashboard-brand-logo flex h-9 w-9 shrink-0 overflow-hidden rounded-lg border border-slate-200/90 shadow-md"
+      style={{ backgroundColor: brandBg }}
+    >
+      <img
+        src={src}
+        alt={`${opp.name} logo`}
+        className={`h-full w-full ${imgFit}`}
+        loading="lazy"
+        decoding="async"
+        onError={(e) => {
+          const img = e.currentTarget;
+          if (opp.image && img.src !== opp.image) {
+            img.src = opp.image;
+            return;
+          }
+          setFailed(true);
+        }}
+      />
+    </div>
+  );
+}
 
 function InvestorDashboardContent({ navigateTo }) {
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -245,16 +417,14 @@ function InvestorDashboardContent({ navigateTo }) {
 
       {/* Verified Opportunity Cards - Filtered */}
       <div className="space-y-1.5">
-        {filteredOpportunities.map((opp, i) => (
+        {filteredOpportunities.map((opp) => (
           <button
-            key={i}
+            key={opp.id || opp.slug}
             onClick={() => navigateTo(opp.link)}
-            className="dashboard-surface-light w-full rounded-lg bg-white/90 backdrop-blur-sm p-2 shadow-md border border-slate-200/60 hover:shadow-lg hover:border-violet-300 transition-all duration-300 cursor-pointer group"
+            className="dashboard-surface-light w-full rounded-lg border border-slate-200/80 bg-white p-2 shadow-md transition-all duration-300 cursor-pointer group hover:border-violet-300 hover:shadow-lg"
           >
             <div className="flex items-start gap-2">
-              <div className={`h-9 w-9 flex-shrink-0 rounded-lg bg-gradient-to-br ${opp.color} shadow-lg flex items-center justify-center`}>
-                <opp.icon className="h-4 w-4 text-white" />
-              </div>
+              <InvestorDashboardBrandLogo opp={opp} />
               <div className="flex-1 min-w-0 text-left">
                 <div className="mb-0.5 flex items-center gap-1.5">
                   <h4 className="dashboard-txt-title truncate text-[11px] font-bold">{opp.name}</h4>
@@ -282,14 +452,18 @@ function InvestorDashboardContent({ navigateTo }) {
         {[
           { icon: FiBarChart2, label: 'Avg ROI', value: '31%', color: 'from-violet-500 to-purple-600' },
           { icon: FiTrendingUp, label: 'CAGR', value: '~30%', color: 'from-blue-500 to-cyan-600' },
-          { icon: FiDollarSign, label: 'Min Inv', value: 'Rs.95K', color: 'from-emerald-500 to-teal-600' }
+          { rupee: true, label: 'Min Inv', value: '₹95K', color: 'from-emerald-500 to-teal-600' }
         ].map((metric, i) => (
           <div
             key={i}
             className={`dashboard-metric-card rounded-lg bg-gradient-to-br ${metric.color} p-2 shadow-lg relative overflow-hidden`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-            <metric.icon className="h-3 w-3 text-white mb-0.5" />
+            {metric.rupee ? (
+              <DashboardRupeeIcon className="mb-0.5 text-xs text-white" />
+            ) : (
+              <metric.icon className="h-3 w-3 text-white mb-0.5" />
+            )}
             <div className="text-sm font-bold text-white">{metric.value}</div>
             <div className="text-[8px] text-white">{metric.label}</div>
           </div>
@@ -297,7 +471,7 @@ function InvestorDashboardContent({ navigateTo }) {
       </div>
 
       {/* Market Trends Chart - Larger & Better Visible */}
-      <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
+      <div className="dashboard-surface-light rounded-lg border border-slate-200/80 bg-white p-3 shadow-lg">
         <div className="flex items-center justify-between mb-2.5">
           <div className="flex items-center gap-1.5">
             <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
@@ -369,38 +543,25 @@ function InvestorDashboardContent({ navigateTo }) {
 const PROCESS_STEPS = [
   {
     title: 'Understand Your Brand',
-    color: 'violet',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>,
   },
   {
     title: 'Build the Foundation',
-    color: 'indigo',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>,
   },
   {
     title: 'Attract Investors',
-    color: 'emerald',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>,
   },
   {
     title: 'Match & Onboard',
-    color: 'amber',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
   },
   {
     title: 'Scale Across Markets',
-    color: 'teal',
     icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>,
   },
 ];
-
-const STEP_COLORS = {
-  violet: { bg: 'bg-violet-600', ring: 'ring-violet-200', text: 'text-violet-400', bar: 'from-violet-400 to-indigo-400', glow: 'shadow-violet-500/30' },
-  indigo: { bg: 'bg-indigo-600', ring: 'ring-indigo-200', text: 'text-indigo-400', bar: 'from-indigo-400 to-violet-400', glow: 'shadow-indigo-500/30' },
-  emerald:{ bg: 'bg-emerald-600', ring: 'ring-emerald-200', text: 'text-emerald-400', bar: 'from-emerald-400 to-teal-400', glow: 'shadow-emerald-500/30' },
-  amber:  { bg: 'bg-amber-500', ring: 'ring-amber-200', text: 'text-amber-400', bar: 'from-amber-400 to-orange-400', glow: 'shadow-amber-500/30' },
-  teal:   { bg: 'bg-teal-600', ring: 'ring-teal-200', text: 'text-teal-600', bar: 'from-teal-400 to-cyan-400', glow: 'shadow-teal-500/30' },
-};
 
 function useStepReveal() {
   const ref = useRef(null);
@@ -423,20 +584,20 @@ function useStepReveal() {
   return [ref, visible];
 }
 
-function ProcessIcon({ step, size = 'md' }) {
-  const c = STEP_COLORS[step.color];
+function ProcessIcon({ step, size = 'md', isLight }) {
   const dim = size === 'sm' ? 'w-10 h-10' : 'w-11 h-11';
+  const shell = isLight
+    ? `${dim} services-process-icon services-process-icon--light flex shrink-0 items-center justify-center rounded-full bg-violet-600 text-white shadow-md shadow-violet-500/30 ring-2 ring-violet-100`
+    : `${dim} services-process-icon services-process-icon--dark flex shrink-0 items-center justify-center rounded-full bg-white text-violet-700 shadow-md shadow-black/25 ring-2 ring-white/50`;
   return (
-    <div
-      className={`${dim} rounded-full ${c.bg} flex shrink-0 items-center justify-center text-white shadow-md ${c.glow} ring-2 ring-white/90 [&_svg]:h-5 [&_svg]:w-5`}
-    >
+    <div className={`${shell} [&_svg]:h-5 [&_svg]:w-5`}>
       {step.icon}
     </div>
   );
 }
 
 /** Mobile: centered vertical stepper. icon, label, title stacked in the middle */
-function ProcessStepsMobile() {
+function ProcessStepsMobile({ isLight }) {
   const [ref, visible] = useStepReveal();
 
   return (
@@ -450,11 +611,19 @@ function ProcessStepsMobile() {
               className={`${TYPE.mobileStepsItem} transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
               style={{ transitionDelay: `${i * 60}ms` }}
             >
-              <ProcessIcon step={step} size="sm" />
-              <span className="type-caption mt-3 mb-1 font-bold uppercase tracking-wider text-violet-300">
+              <ProcessIcon step={step} size="sm" isLight={isLight} />
+              <span
+                className={`type-caption mt-3 mb-1 font-bold uppercase tracking-wider ${
+                  isLight ? 'text-violet-600' : 'text-violet-200'
+                }`}
+              >
                 Step {i + 1}
               </span>
-              <p className="max-w-[14rem] text-base font-bold leading-snug text-white text-balance">
+              <p
+                className={`max-w-[14rem] text-base font-bold leading-snug text-balance ${
+                  isLight ? 'text-slate-900' : 'text-white'
+                }`}
+              >
                 {step.title}
               </p>
               {!isLast && <div className={TYPE.mobileStepsConnector} aria-hidden />}
@@ -467,23 +636,26 @@ function ProcessStepsMobile() {
 }
 
 /** Tablet+: horizontal icons + short titles only */
-function ProcessStepsDesktop() {
+function ProcessStepsDesktop({ isLight }) {
   const [ref, visible] = useStepReveal();
 
   return (
     <div ref={ref} className="hidden sm:flex items-start justify-between gap-1 md:gap-3">
       {PROCESS_STEPS.map((step, i) => {
-        const c = STEP_COLORS[step.color];
         const isLast = i === PROCESS_STEPS.length - 1;
         return (
           <div key={step.title} className="relative flex flex-1 min-w-0 flex-col items-center">
             {!isLast && (
               <div
-                className="absolute top-5 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] z-0 h-px bg-violet-500/25"
+                className={`absolute top-5 left-[calc(50%+1.25rem)] right-[calc(-50%+1.25rem)] z-0 h-px ${
+                  isLight ? 'bg-violet-200' : 'bg-violet-500/30'
+                }`}
                 aria-hidden
               >
                 <div
-                  className={`h-full bg-gradient-to-r ${c.bar} transition-all duration-500 ease-out`}
+                  className={`h-full transition-all duration-500 ease-out ${
+                    isLight ? 'bg-violet-500' : 'bg-violet-300'
+                  }`}
                   style={{ width: visible ? '100%' : '0%', transitionDelay: `${i * 80 + 120}ms` }}
                 />
               </div>
@@ -492,10 +664,12 @@ function ProcessStepsDesktop() {
               className={`relative z-10 mb-3 transition-all duration-300 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
               style={{ transitionDelay: `${i * 50}ms` }}
             >
-              <ProcessIcon step={step} />
+              <ProcessIcon step={step} isLight={isLight} />
             </div>
             <p
-              className={`px-1 text-center text-sm font-bold leading-snug text-white transition-all duration-300 md:text-[0.9375rem] ${visible ? 'opacity-100' : 'opacity-0'}`}
+              className={`px-1 text-center text-sm font-bold leading-snug transition-all duration-300 md:text-[0.9375rem] ${
+                isLight ? 'text-slate-900' : 'text-white'
+              } ${visible ? 'opacity-100' : 'opacity-0'}`}
               style={{ transitionDelay: `${i * 50 + 80}ms` }}
             >
               {step.title}
@@ -508,10 +682,11 @@ function ProcessStepsDesktop() {
 }
 
 function ProcessSteps() {
+  const { isLight } = useTheme();
   return (
     <>
-      <ProcessStepsMobile />
-      <ProcessStepsDesktop />
+      <ProcessStepsMobile isLight={isLight} />
+      <ProcessStepsDesktop isLight={isLight} />
     </>
   );
 }
@@ -519,10 +694,18 @@ function ProcessSteps() {
 export default function ServicesPage() {
   const { isLight } = useTheme();
   const pageRef = useRef(null);
+  const [brandHighlightCity, setBrandHighlightCity] = useState(EXPANSION_CITIES[0]);
 
   const navigateTo = (path) => {
     spaNavigate(path);
   };
+
+  const brandCityCards = useCallback(() => {
+    const idx = EXPANSION_CITIES.findIndex((c) => c.city === brandHighlightCity.city);
+    const primary = EXPANSION_CITIES[idx >= 0 ? idx : 0];
+    const secondary = EXPANSION_CITIES[(idx + 1) % EXPANSION_CITIES.length];
+    return [primary, secondary];
+  }, [brandHighlightCity]);
 
   useEffect(() => {
     if (!window.location.hash) return undefined;
@@ -539,7 +722,10 @@ export default function ServicesPage() {
     <main ref={pageRef} className="services-page relative z-10 w-full bg-transparent text-theme-primary">
 
       {/* HERO */}
-      <section className="page-hero-light relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+      <section
+        id="services-hero"
+        className="page-hero-light services-hero relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-10 pt-8 sm:px-6 lg:px-8"
+      >
         <div className="page-hero-light__bg pointer-events-none absolute inset-0" aria-hidden>
           <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
           <svg className="absolute inset-0 h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
@@ -558,89 +744,71 @@ export default function ServicesPage() {
         </div>
 
         <div className="relative z-10 mx-auto max-w-[900px] text-center">
-
-          {/* Headline - shorter and clearer like home hero */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.3, ease: [0.22,1,0.36,1] }}
-            className={`${heroDisplayClass(isLight)} mb-6`}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className={`services-hero-title ${heroDisplayClass(isLight)} mb-5`}
           >
-            Franchise Growth Services
+            <span className="services-hero-title__line">Everything you need to</span>
+            <span className="services-hero-title__line">launch, fund & scale franchises</span>
           </motion.h1>
 
-          {/* Subtext - matching home style */}
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.3, delay: 0.05, ease: [0.22,1,0.36,1] }}
-            className={`mx-auto max-w-[720px] text-lg sm:text-xl leading-relaxed mb-8 ${isLight ? 'text-slate-600' : 'text-white'}`}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className={`services-hero-lead mx-auto mb-8 max-w-[720px] text-lg leading-snug sm:text-xl ${isLight ? 'text-slate-600' : 'text-white/90'}`}
           >
-            End-to-end franchise expansion services for growing brands. From onboarding and documentation to investor acquisition and strategic scaling.
+            <span className="services-hero-lead__line">
+              iFranchise helps brands document their model, attract investors,
+            </span>
+            <span className="services-hero-lead__line">
+              and expand with clarity—from first outlet to multi-city rollout.
+            </span>
           </motion.p>
 
-          {/* CTA Button - matching home style */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.3, delay: 0.1, ease: [0.22,1,0.36,1] }}
-            className="mb-5"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6"
           >
-            <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
-              Schedule a Consultation
+            <CtaButton
+              type="button"
+              arrowDirection="down"
+              onClick={scrollToServicesOverview}
+              aria-label="Scroll to our services section"
+            >
+              Explore our services
             </CtaButton>
           </motion.div>
 
-          {/* Trust Badge with Avatars and Reviews */}
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="flex flex-col items-center gap-2.5"
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+            className="services-hero-social flex flex-col items-center gap-3"
           >
-            <div className="flex items-center gap-4">
-              {/* Overlapping Avatars */}
-              <div className="flex -space-x-2">
-                {TESTIMONIAL_AVATAR_STRIP.map((src) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt=""
-                    className="h-10 w-10 rounded-full border-2 border-white object-cover object-center"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ))}
-              </div>
-
-              {/* Stars and Review Count */}
-              <div className="flex flex-col items-start">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="h-4 w-4 fill-amber-400" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className={`text-sm font-medium ${isLight ? 'text-slate-700' : 'text-white'}`}>From 150+ reviews</p>
+            <div className="services-hero-social__row flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+              <ServicesHeroAvatars isLight={isLight} />
+              <div className="services-hero-social__rating flex flex-col items-center justify-center text-center">
+                <ServicesHeroStars isLight={isLight} />
+                <p className={`mt-1.5 text-sm font-medium leading-snug ${isLight ? 'text-slate-700' : 'text-white'}`}>
+                  Over 15,725+ people gave us review
+                </p>
               </div>
             </div>
-
-            {/* Trust Text */}
-            <p className={`text-sm font-medium ${isLight ? 'text-slate-600' : 'text-white'}`}>
-              Helping brands expand and investors connect through a smarter franchise ecosystem
+            <p className={`max-w-md text-center text-sm ${isLight ? 'text-slate-500' : 'text-white/75'}`}>
+              Trusted by founders, operators, and investors building franchise businesses across India.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* SERVICES OVERVIEW — same layout as home Our Services */}
-      <section className="relative z-10">
-        <OurServicesSection
-          isLight={isLight}
-          cta="contact"
-          onContact={() => navigateTo('/contact')}
-        />
+      <section id="services-overview" className="relative z-10 scroll-mt-24">
+        <OurServicesSection isLight={isLight} />
       </section>
 
       {/* HOW IT WORKS - franchise expansion process flow */}
@@ -650,12 +818,12 @@ export default function ServicesPage() {
           <div className="section-header mb-8 sm:mb-10">
             <Reveal>
               <SectionPill className="mb-4">How It Works</SectionPill>
-              <h2 className={`${sectionTitleClass(false)} section-title--tight`}>
+              <h2 className={sectionTitleClass(isLight, { tight: true })}>
                 Our Franchise Expansion Process
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="section-subtitle mx-auto max-w-lg text-white/75">
+              <p className={sectionSubtitleClass(isLight, 'mx-auto max-w-lg')}>
                 Five stages from brand audit to national scale.
               </p>
             </Reveal>
@@ -673,10 +841,18 @@ export default function ServicesPage() {
               ].map((m) => (
                 <div
                   key={m.label}
-                  className="rounded-xl border border-white/15 bg-white/10 px-3 py-3.5 text-center backdrop-blur-sm sm:py-4"
+                  className={
+                    isLight
+                      ? 'rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:py-4'
+                      : 'rounded-xl border border-white/15 bg-white/10 px-3 py-3.5 text-center backdrop-blur-sm sm:py-4'
+                  }
                 >
-                  <p className="text-base font-extrabold tracking-tight text-white sm:text-lg">{m.value}</p>
-                  <p className="mt-0.5 text-[11px] font-medium leading-snug text-white/70 sm:text-xs">{m.label}</p>
+                  <p className={`text-base font-extrabold tracking-tight sm:text-lg ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                    {m.value}
+                  </p>
+                  <p className={`mt-0.5 text-[11px] font-medium leading-snug sm:text-xs ${isLight ? 'text-slate-600' : 'text-white/70'}`}>
+                    {m.label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -725,8 +901,8 @@ export default function ServicesPage() {
                 ].map((benefit, index) => (
                   <Reveal key={benefit} delay={0.15 + index * 0.05}>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
-                        <FiCheck className="h-4 w-4 text-white" />
+                      <div className="services-benefit-check flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
+                        <FiCheck className="services-benefit-check__icon h-4 w-4 text-white" strokeWidth={3} />
                       </div>
                       <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                         {benefit}
@@ -759,14 +935,21 @@ export default function ServicesPage() {
                   <div className="relative space-y-3">
                     
                     {/* Header - Brand Expansion Control Center */}
-                    <div className="dashboard-header-bar flex items-center justify-between rounded-xl bg-gradient-to-r from-slate-800 to-slate-900 p-3 shadow-lg">
+                    <div
+                      className="dashboard-header-bar dashboard-header-bar--brand flex items-center justify-between rounded-xl bg-gradient-to-r from-slate-800 to-slate-900 p-3 shadow-lg"
+                      style={{ color: '#ffffff' }}
+                    >
                       <div className="flex items-center gap-2.5">
                         <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
-                          <FiTrendingUp className="h-4 w-4 text-white" />
+                          <FiTrendingUp className="dashboard-on-dark h-4 w-4" strokeWidth={2.5} />
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-white">Brand Expansion Hub</div>
-                          <div className="text-[10px] text-white">Real-time Analytics</div>
+                        <div className="min-w-0">
+                          <div className="dashboard-header-bar__title text-xs font-bold leading-tight">
+                            Brand Expansion Hub
+                          </div>
+                          <div className="dashboard-header-bar__subtitle text-[10px] leading-snug opacity-90">
+                            Real-time Analytics
+                          </div>
                         </div>
                       </div>
                       
@@ -784,30 +967,30 @@ export default function ServicesPage() {
                     <div className="grid grid-cols-3 gap-2">
                       <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiUsers className="h-3.5 w-3.5 text-white mb-1" />
-                        <div className="text-lg font-bold text-white">24</div>
-                        <div className="text-[9px] text-white">Locations</div>
+                        <FiUsers className="dashboard-on-dark h-3.5 w-3.5 mb-1" />
+                        <div className="dashboard-on-dark text-lg font-bold">24</div>
+                        <div className="dashboard-on-dark text-[9px]">Locations</div>
                       </div>
 
                       <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-blue-500 to-cyan-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiTarget className="h-3.5 w-3.5 text-white mb-1" />
-                        <div className="text-lg font-bold text-white">8</div>
-                        <div className="text-[9px] text-white">Markets</div>
+                        <FiTarget className="dashboard-on-dark h-3.5 w-3.5 mb-1" />
+                        <div className="dashboard-on-dark text-lg font-bold">8</div>
+                        <div className="dashboard-on-dark text-[9px]">Markets</div>
                       </div>
 
                       <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                        <FiDollarSign className="h-3.5 w-3.5 text-white mb-1" />
-                        <div className="text-lg font-bold text-white">Rs.6.8M</div>
-                        <div className="text-[9px] text-white">Revenue</div>
+                        <DashboardRupeeIcon className="dashboard-on-dark mb-1 text-base" />
+                        <div className="dashboard-on-dark text-lg font-bold">₹6.8M</div>
+                        <div className="dashboard-on-dark text-[9px]">Revenue</div>
                       </div>
                     </div>
 
-                    <ExpansionCitiesPanel />
+                    <ExpansionCitiesPanel onHighlightChange={(city) => setBrandHighlightCity(city)} />
 
                     {/* Live Growth Chart - Properly Aligned Bars */}
-                    <div className="dashboard-surface-light rounded-lg bg-white/70 backdrop-blur-sm border border-slate-200/50/60 p-3 shadow-lg">
+                    <div className="dashboard-surface-light rounded-lg border border-slate-200/80 bg-white p-3 shadow-lg">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-1.5">
                           <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
@@ -879,24 +1062,21 @@ export default function ServicesPage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      {[
-                        { city: 'Mumbai', status: '12 Locations', progress: 85, bar: 'bg-emerald-500', label: 'Active', badge: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-                        { city: 'Bengaluru', status: '9 Locations', progress: 72, bar: 'bg-blue-500', label: 'Expanding', badge: 'bg-blue-50 text-blue-700 border-blue-200' },
-                      ].map((location, i) => (
+                      {brandCityCards().map((location, i) => (
                         <div
-                          key={location.city}
-                          className="dashboard-surface-light rounded-lg border border-slate-200/60 p-2 shadow-md"
+                          key={`${location.city}-${i}`}
+                          className="dashboard-surface-light rounded-lg border border-slate-200/80 bg-white p-2 shadow-md"
                         >
-                          <div className="mb-1 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
+                          <div className="mb-1 flex items-center justify-between gap-1">
+                            <div className="flex min-w-0 items-center gap-1.5">
                               <FiMap className="h-2.5 w-2.5 shrink-0 text-indigo-500" />
-                              <span className="dashboard-txt-title text-[10px] font-bold">{location.city}</span>
+                              <span className="dashboard-txt-title truncate text-[10px] font-bold">{location.city}</span>
                             </div>
-                            <span className={`rounded-full border px-1.5 py-0.5 text-[7px] font-semibold ${location.badge}`}>
-                              {location.label}
-                            </span>
+                            <span className={dashboardPillClass(location.label)}>{location.label}</span>
                           </div>
-                          <div className="dashboard-txt-body mb-1.5 text-[9px] font-medium">{location.status}</div>
+                          <div className="dashboard-txt-body mb-1.5 text-[9px] font-medium">
+                            {location.locations} locations
+                          </div>
                           <div className="h-1 overflow-hidden rounded-full bg-slate-200">
                             <motion.div
                               initial={{ width: 0 }}
@@ -939,14 +1119,21 @@ export default function ServicesPage() {
                   <div className="relative space-y-2.5">
                     
                     {/* Header - Opportunity Discovery with Live Pill */}
-                    <div className="dashboard-header-bar flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-800 to-purple-900 p-2.5 shadow-lg">
+                    <div
+                      className="dashboard-header-bar dashboard-header-bar--investor flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-800 to-purple-900 p-2.5 shadow-lg"
+                      style={{ color: '#ffffff' }}
+                    >
                       <div className="flex items-center gap-2">
                         <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg">
-                          <FiTarget className="h-3.5 w-3.5 text-white" />
+                          <FiTarget className="dashboard-on-dark h-3.5 w-3.5" strokeWidth={2.5} />
                         </div>
-                        <div>
-                          <div className="text-[11px] font-bold text-white">Opportunity Discovery</div>
-                          <div className="text-[9px] text-white">{franchiseOpportunities.length} Verified Franchises</div>
+                        <div className="min-w-0">
+                          <div className="dashboard-header-bar__title text-[11px] font-bold leading-tight">
+                            Opportunity Discovery
+                          </div>
+                          <div className="dashboard-header-bar__subtitle text-[9px] leading-snug opacity-90">
+                            {franchiseOpportunities.length} Verified Franchises
+                          </div>
                         </div>
                       </div>
                       
@@ -1001,8 +1188,8 @@ export default function ServicesPage() {
                 ].map((benefit) => (
                   <div key={benefit}>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
-                        <FiCheck className="h-4 w-4 text-white" />
+                      <div className="services-benefit-check flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
+                        <FiCheck className="services-benefit-check__icon h-4 w-4 text-white" strokeWidth={3} />
                       </div>
                       <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
                         {benefit}

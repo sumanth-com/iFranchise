@@ -1,0 +1,262 @@
+/* IFRANCHISE acronym — static letter grid (About Us) */
+
+.ifranchise-acronym {
+  --ifa-box-deep: #4c1d95;
+  --ifa-box-bright: #7c3aed;
+  --ifa-shadow-deep: #2e1065;
+  --ifa-shadow-bright: #5b21b6;
+  --ifa-connector: #7c3aed;
+}
+
+html[data-theme='dark'] .ifranchise-acronym {
+  --ifa-box-deep: #5b21b6;
+  --ifa-box-bright: #8b5cf6;
+  --ifa-shadow-deep: #3b0764;
+  --ifa-shadow-bright: #6d28d9;
+  --ifa-connector: #a78bfa;
+}
+
+.ifranchise-acronym__inner {
+  margin-inline: auto;
+  max-width: 1280px;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.ifranchise-acronym__header {
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+.ifranchise-acronym__title {
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+html[data-theme='light'] .about-page .ifranchise-acronym__title-accent,
+html[data-theme='light'] #main-content .about-page .ifranchise-acronym__title-accent {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+html[data-theme='dark'] .about-page .ifranchise-acronym__title-accent,
+html[data-theme='dark'] #main-content .about-page .ifranchise-acronym__title-accent {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+.ifranchise-acronym__lead {
+  margin-inline: auto;
+  max-width: 36rem;
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  line-height: 1.6;
+}
+
+.ifranchise-acronym__track {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(0.35rem, 1vw, 0.85rem);
+  padding: 0.5rem 0 1rem;
+  margin-inline: auto;
+  max-width: 100%;
+}
+
+.ifranchise-acronym__item {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(4.25rem, 8.2vw, 6.5rem);
+  min-width: 4.25rem;
+  text-align: center;
+}
+
+.ifranchise-acronym__box-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 6.5rem;
+}
+
+.ifranchise-acronym__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--ifa-box-tone, var(--ifa-box-deep));
+  box-shadow: 0 4px 14px rgba(76, 29, 149, 0.22);
+}
+
+html[data-theme='dark'] .ifranchise-acronym__box {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.ifranchise-acronym__box--deep {
+  --ifa-box-tone: var(--ifa-box-deep);
+  --ifa-letter-shadow: var(--ifa-shadow-deep);
+}
+
+.ifranchise-acronym__box--bright {
+  --ifa-box-tone: var(--ifa-box-bright);
+  --ifa-letter-shadow: var(--ifa-shadow-bright);
+}
+
+.ifranchise-acronym__letter {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.65rem, 3.5vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow:
+    1px 1px 0 var(--ifa-letter-shadow),
+    2px 2px 0 var(--ifa-letter-shadow),
+    3px 3px 0 var(--ifa-letter-shadow),
+    4px 4px 0 var(--ifa-letter-shadow),
+    5px 5px 0 var(--ifa-letter-shadow),
+    6px 6px 0 var(--ifa-letter-shadow);
+  user-select: none;
+}
+
+.ifranchise-acronym__pointer {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid var(--ifa-box-tone, var(--ifa-box-deep));
+}
+
+.ifranchise-acronym__connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 1.35rem;
+  margin-top: 0.15rem;
+}
+
+.ifranchise-acronym__line {
+  flex: 1;
+  width: 2px;
+  min-height: 0.65rem;
+  background: var(--ifa-connector);
+  border-radius: 1px;
+  opacity: 0.85;
+}
+
+.ifranchise-acronym__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ifa-connector);
+  flex-shrink: 0;
+}
+
+.ifranchise-acronym__label {
+  margin: 0.35rem 0 0;
+  padding: 0 0.15rem;
+  font-size: clamp(0.58rem, 1.05vw, 0.72rem);
+  font-weight: 500;
+  line-height: 1.35;
+  hyphens: auto;
+}
+
+.ifranchise-acronym__item--stagger-low .ifranchise-acronym__label {
+  margin-top: 0;
+}
+
+.ifranchise-acronym__item--stagger-high .ifranchise-acronym__label {
+  margin-top: 0.4rem;
+}
+
+.ifranchise-acronym__scroll-hint {
+  display: none;
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .ifranchise-acronym__track {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 58, 237, 0.35) transparent;
+  }
+
+  .ifranchise-acronym__item {
+    scroll-snap-align: center;
+  }
+
+  .ifranchise-acronym__scroll-hint {
+    display: block;
+  }
+}
+
+@media (max-width: 639px) {
+  .ifranchise-acronym__track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 0.75rem;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+
+  .ifranchise-acronym__item {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .ifranchise-acronym__box-wrap {
+    max-width: 5rem;
+    margin-inline: auto;
+  }
+
+  .ifranchise-acronym__connector {
+    display: none;
+  }
+
+  .ifranchise-acronym__item--stagger-high .ifranchise-acronym__label,
+  .ifranchise-acronym__item--stagger-low .ifranchise-acronym__label {
+    margin-top: 0.5rem;
+  }
+
+  .ifranchise-acronym__scroll-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .ifranchise-acronym__track {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .ifranchise-acronym__box-wrap {
+    max-width: 4.5rem;
+  }
+}

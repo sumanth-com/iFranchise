@@ -608,7 +608,7 @@ function CompanyNavIconWrap({ children }) {
 
 const COMPANY_ITEMS = [
   { title: 'About Us', description: 'Our story, mission, and leadership.', Icon: AboutIcon, path: '/about' },
-  { title: 'Careers', description: 'Build your career with iFranchise.', Icon: TeamIcon, badge: '4', path: '/careers' },
+  { title: 'Careers', description: 'Build your career with iFranchise.', Icon: TeamIcon, path: '/careers' },
 ];
 
 // Services Dropdown Items

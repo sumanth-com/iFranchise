@@ -1,27 +1,7 @@
 import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
-import BrandLogo from '../assets/BrandLogo.png';
 import abdulPhoto from '../assets/abdul.png';
 import abrarPhoto from '../assets/abrar.png';
-
-const FOUNDER_LINKEDIN = 'https://www.linkedin.com/in/syed-abdul-khader/';
-
-function LeadershipLinkedIn3D({ href, label }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="leadership-linkedin-3d"
-      aria-label={label}
-    >
-      <span className="leadership-linkedin-3d__glare" aria-hidden />
-      <svg className="leadership-linkedin-3d__icon" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    </a>
-  );
-}
 
 function LeadershipSection() {
   return (
@@ -105,7 +85,7 @@ function LeadershipSection() {
                 >
                   {/* PERSONAL GREETING */}
                   <p className="text-lg font-bold text-white lg:text-xl">
-                    Hello, I'm Syed Abdul Khader
+                    Hello, I'm Abdul
                   </p>
 
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
@@ -135,33 +115,25 @@ function LeadershipSection() {
                   </motion.div>
                 </motion.div>
 
-                {/* SIGNATURE + CTA ROW */}
+                {/* SIGNATURE ROW */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-between border-t border-violet-500/25 pt-4 mt-4"
+                  className="flex items-center justify-end border-t border-violet-500/25 pt-4 mt-4"
                 >
-                  <div className="flex items-center gap-3">
-                    {/* iFranchise logo box */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 shadow-inner overflow-hidden">
-                      <img src={BrandLogo} alt="iFranchise" className="h-9 w-9 object-contain" />
-                    </div>
-                    <div>
-                      <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-                        Syed Abdul Khader
-                      </p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
-                        Founder & Director
-                      </p>
-                    </div>
+                  <div className="inline-flex flex-col items-center">
+                    <p
+                      className="whitespace-nowrap text-2xl text-white lg:text-[28px]"
+                      style={{ fontFamily: 'Brush Script MT, cursive' }}
+                    >
+                      Syed Abdul Khader
+                    </p>
+                    <p className="mt-1 text-center text-xs font-semibold uppercase tracking-wider text-white">
+                      Founder & Director
+                    </p>
                   </div>
-                  
-                  <LeadershipLinkedIn3D
-                    href={FOUNDER_LINKEDIN}
-                    label="Syed Abdul Khader on LinkedIn"
-                  />
                 </motion.div>
               </div>
             </div>
@@ -195,7 +167,7 @@ function LeadershipSection() {
                 >
                   {/* PERSONAL GREETING */}
                   <p className="text-lg font-bold text-white lg:text-xl">
-                    Hello, I'm Mohammad Abrar
+                    Hello, I'm Abrar
                   </p>
 
                   <p className="text-[14px] leading-[1.65] text-white lg:text-[15px] lg:leading-[1.7]">
@@ -228,29 +200,25 @@ function LeadershipSection() {
                   </motion.div>
                 </motion.div>
 
-                {/* SIGNATURE + CTA ROW */}
+                {/* SIGNATURE ROW */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-between border-t border-violet-500/25 pt-4 mt-4"
+                  className="flex items-center justify-start border-t border-violet-500/25 pt-4 mt-4"
                 >
-                  <div className="flex items-center gap-3">
-                    {/* iFranchise logo box */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border border-violet-400/25 bg-violet-500/10 shadow-inner overflow-hidden">
-                      <img src={BrandLogo} alt="iFranchise" className="h-9 w-9 object-contain" />
-                    </div>
-                    <div>
-                      <p className="text-2xl text-white lg:text-[28px]" style={{ fontFamily: 'Brush Script MT, cursive' }}>
-                        Mohammad Abrar
-                      </p>
-                      <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
-                        Co-Founder
-                      </p>
-                    </div>
+                  <div className="inline-flex flex-col items-center">
+                    <p
+                      className="whitespace-nowrap text-2xl text-white lg:text-[28px]"
+                      style={{ fontFamily: 'Brush Script MT, cursive' }}
+                    >
+                      Mohammad Abrar
+                    </p>
+                    <p className="mt-1 text-center text-xs font-semibold uppercase tracking-wider text-white">
+                      Co-Founder
+                    </p>
                   </div>
-                  
                 </motion.div>
               </div>
 

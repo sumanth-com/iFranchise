@@ -233,28 +233,19 @@ img.loaded {
   }
 
   .site-section-pill__dot {
-    @apply relative h-2 w-2 shrink-0 rounded-full bg-emerald-500;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
-    animation: site-section-pill-dot-pulse 2.4s ease-in-out infinite;
-  }
-
-  .site-section-pill__dot::before {
-    content: '';
-    @apply absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75;
+    @apply relative h-2 w-2 shrink-0 rounded-full bg-violet-600;
   }
 
   .site-section-pill__text {
     @apply leading-none;
   }
 
-  @keyframes site-section-pill-dot-pulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35);
-    }
-    50% {
-      box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
-    }
+  /* Custom section heading badges (About, List Your Brand, Contact FAQ, etc.) */
+  .lyb-section-badge > .rounded-full,
+  .lyb-hero-badge > .rounded-full,
+  .services-faq-section__badge > .rounded-full {
+    @apply bg-violet-600;
+    animation: none !important;
   }
 
   /* Section titles — see typography.css; color from themes.css + sectionHeadingClass */
@@ -1191,13 +1182,24 @@ img.loaded {
     color: #ffffff;
   }
 
-  .footer-brand-address__text {
+  .footer-brand-address__text,
+  .footer-brand-address__link {
     margin: 0;
     font-size: 13px;
     line-height: 1.55;
     color: rgba(255, 255, 255, 0.88);
     max-width: 16rem;
     text-align: center;
+  }
+
+  .footer-brand-address__link {
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-brand-address__link:hover {
+    color: #ffffff;
+    text-decoration: underline;
   }
 
   /* 2×2: Company | Investors — Brands | Resources */
@@ -1386,26 +1388,28 @@ img.loaded {
   align-items: center;
   padding: 14px 28px;
   border-radius: 9999px;
-  background-color: #ffffff;
-  color: #6d28d9;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%);
+  color: #ffffff;
   font-size: 14px;
   font-weight: 700;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, background-color 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 22px rgba(109, 40, 217, 0.35);
 }
 
 .prefooter-cta-btn:hover {
   transform: translateY(-2px);
-  background-color: #faf5ff;
-  box-shadow: 0 8px 28px rgba(109, 40, 217, 0.22);
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+  box-shadow: 0 10px 32px rgba(109, 40, 217, 0.45);
+  color: #ffffff;
 }
 
 .prefooter-cta-btn__inner {
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #ffffff;
 }
 
 .prefooter-cta-btn__arrow {
@@ -1415,12 +1419,13 @@ img.loaded {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(109, 40, 217, 0.12);
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease;
 }
 
 .prefooter-cta-btn:hover .prefooter-cta-btn__arrow {
-  background-color: rgba(109, 40, 217, 0.2);
+  background-color: rgba(255, 255, 255, 0.28);
   transform: translateX(3px);
 }
 
@@ -3422,9 +3427,22 @@ html[data-theme='light'] .site-backdrop__gradient {
 }
 
 /* Default: white utility text -> dark on light pages (not CTA buttons/links) */
-html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white:not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d),
-html[data-theme='light'] #main-content .text-white:not(button):not(a):not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d) {
+html[data-theme='light'] #main-content :is(p, span, h1, h2, h3, h4, h5, h6, li, div, label).text-white:not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d):not(.dashboard-on-dark):not(.dashboard-header-bar__title):not(.dashboard-header-bar__subtitle),
+html[data-theme='light'] #main-content .text-white:not(button):not(a):not(.ic-gallery-counter):not(.ic-gallery-dots):not(.home-faq-item__badge):not(.fd-locations-model):not(.leadership-linkedin-3d):not(.dashboard-on-dark):not(.dashboard-header-bar__title):not(.dashboard-header-bar__subtitle) {
   color: #0b0f19 !important;
+}
+
+/* Services dashboards — white copy on dark header + metric strips (light theme override) */
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-on-dark,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-on-dark {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar .text-emerald-300,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar .text-emerald-300 {
+  color: #6ee7b7 !important;
+  -webkit-text-fill-color: #6ee7b7 !important;
 }
 
 /* Image carousel overlay — keep white text on dark pill in light mode */
@@ -3558,6 +3576,127 @@ html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surf
 html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-chart-live {
   color: #047857 !important;
   background: transparent !important;
+}
+
+/* Dashboard status pills — solid contrast on white cards */
+.services-dashboard-panel .dashboard-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: 0.2rem 0.45rem;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-pill,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-pill {
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.services-dashboard-panel .dashboard-pill--active {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+.services-dashboard-panel .dashboard-pill--expanding {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border-color: #1d4ed8 !important;
+}
+
+.services-dashboard-panel .dashboard-pill--pipeline {
+  background-color: #7c3aed !important;
+  color: #ffffff !important;
+  border-color: #6d28d9 !important;
+}
+
+.services-dashboard-panel .dashboard-pill--pan {
+  background-color: #ffffff !important;
+  color: #047857 !important;
+  border-color: #10b981 !important;
+  -webkit-text-fill-color: #047857 !important;
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35);
+}
+
+/* Active Cities — touch / finger scroll */
+.services-dashboard-panel .expansion-cities-scroll {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  scroll-snap-type: y proximity;
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #e2e8f0;
+}
+
+.services-dashboard-panel .expansion-cities-scroll .expansion-cities-row {
+  scroll-snap-align: start;
+}
+
+.services-dashboard-panel .expansion-cities-row--active .dashboard-txt-title {
+  color: #5b21b6 !important;
+}
+
+/* Opportunity Discovery — real brand logos on mini cards */
+.services-dashboard-panel .investor-dashboard-brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Services page hero — review stars follow theme */
+.services-page .services-hero-stars--light .services-hero-star {
+  fill: #0f172a;
+}
+
+.services-page .services-hero-stars--dark .services-hero-star {
+  fill: #ffffff;
+}
+
+.services-page .services-hero-title__line,
+.services-page .services-hero-lead__line {
+  display: block;
+}
+
+.services-page .services-hero-title {
+  line-height: 1.12;
+  text-wrap: normal;
+}
+
+.services-page .services-hero-title .services-hero-title__line {
+  white-space: nowrap;
+}
+
+@media (max-width: 380px) {
+  .services-page .services-hero-title .services-hero-title__line {
+    white-space: normal;
+  }
+}
+
+.services-page .services-hero-lead {
+  line-height: 1.45;
+}
+
+.services-page .services-hero-social__row {
+  align-items: center;
+}
+
+.services-page .services-hero-social__rating {
+  min-width: 11.5rem;
+}
+
+.services-page .services-hero-avatars {
+  min-height: 2.5rem;
+  padding-right: 0.25rem;
+}
+
+.services-page .services-hero-avatars__img {
+  will-change: transform, opacity;
 }
 
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-filter-btn,
@@ -3711,4 +3850,35 @@ html[data-theme='dark'] #main-content .btn-purple-solid svg {
 span.bg-violet-600.blog-pill {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Services page dashboards — header + metric strip text (wins over light-theme overrides) */
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-header-bar,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-header-bar,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-header-bar__title,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-header-bar__subtitle,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-header-bar__title,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-header-bar__subtitle,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-on-dark,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-on-dark,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-metric-card,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-metric-card .dashboard-on-dark,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-metric-card,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-metric-card .dashboard-on-dark {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-header-bar svg,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-header-bar svg,
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-metric-card svg,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-metric-card svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-theme='light'] .services-page .services-dashboard-panel .dashboard-header-bar .text-emerald-300,
+html[data-theme='dark'] .services-page .services-dashboard-panel .dashboard-header-bar .text-emerald-300 {
+  color: #6ee7b7 !important;
+  -webkit-text-fill-color: #6ee7b7 !important;
 }

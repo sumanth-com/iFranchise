@@ -11,6 +11,15 @@ import HoneypotField from './forms/HoneypotField';
 import FooterSocialButtons from './footer/FooterSocialButtons';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
+import {
+  SITE_CONTACT_EMAIL,
+  SITE_CONTACT_MAPS_URL,
+  SITE_CONTACT_PHONE_DISPLAY,
+  SITE_CONTACT_PHONE_TEL,
+  SITE_CONTACT_ADDRESS,
+  SITE_CONTACT_MAILTO,
+  SITE_CONTACT_MAPS_EMBED_URL,
+} from '../data/siteContact';
 
 const CONTACT_FORM_INITIAL = withHoneypot({
   fullName: '',
@@ -46,24 +55,24 @@ const FAQ_ITEMS = [
 const CONTACT_LINKS = [
   {
     title: 'Email us',
-    value: 'hello@ifranchise.in',
-    href: 'mailto:hello@ifranchise.in',
+    value: SITE_CONTACT_EMAIL,
+    href: SITE_CONTACT_MAILTO,
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
     ),
   },
   {
     title: 'Call us',
-    value: '+91 98765 43210',
-    href: 'tel:+919876543210',
+    value: SITE_CONTACT_PHONE_DISPLAY,
+    href: `tel:${SITE_CONTACT_PHONE_TEL}`,
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
     ),
   },
   {
     title: 'Our location',
-    value: 'Bangalore, Karnataka, India',
-    href: 'https://maps.google.com/?q=Bangalore,Karnataka,India',
+    value: SITE_CONTACT_ADDRESS,
+    href: SITE_CONTACT_MAPS_URL,
     external: true,
     icon: (
       <>
@@ -476,7 +485,7 @@ function ContactPage() {
             className="mb-8 text-center"
           >
             <span className="services-faq-section__badge mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-600" />
               Our Location
             </span>
             <h2 className={`mb-3 ${sectionTitleClass(false)}`}>Built in Bangalore. Scaling Across India.</h2>
@@ -494,7 +503,7 @@ function ContactPage() {
           >
             <div className="relative overflow-hidden rounded-2xl border border-[rgba(139,92,246,0.25)] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-500 hover:shadow-[0_24px_60px_rgba(109,40,217,0.2)]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d248849.84916296526!2d77.49085452148437!3d12.953945614117967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4aa0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
+                src={SITE_CONTACT_MAPS_EMBED_URL}
                 width="100%"
                 height="500"
                 style={{ border: 0 }}
@@ -502,7 +511,7 @@ function ContactPage() {
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="h-[500px] w-full"
-                title="Bangalore Location Map"
+                title="iFranchise office location"
               />
               <div className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent transition-all duration-300 group-hover:border-violet-500/30" />
             </div>
@@ -521,7 +530,7 @@ function ContactPage() {
               transition={{ duration: 0.5 }}
             >
               <span className="services-faq-section__badge mb-6 inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-white">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-400" />
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-600" />
                 FAQ
               </span>
               <h2 className={`services-faq-section__title mb-5 ${sectionTitleClass(false)}`}>

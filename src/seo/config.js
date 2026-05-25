@@ -2,6 +2,12 @@
  * Global SEO configuration. single source for site URL, branding, and defaults.
  */
 
+import {
+  SITE_CONTACT_ADDRESS,
+  SITE_CONTACT_EMAIL,
+  SITE_CONTACT_PHONE_TEL,
+} from '../data/siteContact.js';
+
 export const SITE_NAME = 'iFranchise';
 
 export const SITE_URL = (
@@ -21,7 +27,15 @@ export const ORGANIZATION = {
   logo: `${SITE_URL}/apple-touch-icon.png`,
   description:
     "India's trusted franchise growth platform connecting brands, investors, and expansion leaders.",
-  email: 'hello@ifranchise.in',
+  email: SITE_CONTACT_EMAIL,
+  telephone: SITE_CONTACT_PHONE_TEL,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE_CONTACT_ADDRESS,
+    addressLocality: 'Bengaluru',
+    addressRegion: 'Karnataka',
+    addressCountry: 'IN',
+  },
   sameAs: [],
 };
 

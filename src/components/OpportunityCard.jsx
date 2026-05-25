@@ -18,6 +18,8 @@ export default function OpportunityCard({ opportunity }) {
   const modelPill = getModelPill(opportunity.model);
   const brandBg = opportunity.cardBackground || '#12082a';
   const brandAccent = opportunity.cardAccent || brandBg;
+  const cardFit = opportunity.cardFit || 'fill';
+  const cardImage = opportunity.logo || opportunity.image;
   return (
     <article
       onClick={handleViewDetails}
@@ -28,11 +30,12 @@ export default function OpportunityCard({ opportunity }) {
       }}
     >
       <div
-        className="fo-opportunity-card__media relative h-52 w-full shrink-0 overflow-hidden"
+        className="fo-opportunity-card__media relative aspect-[3/2] w-full shrink-0 overflow-hidden sm:aspect-[5/3] lg:aspect-auto lg:h-52"
+        data-card-fit={cardFit}
         style={{ backgroundColor: brandBg }}
       >
         <img
-          src={opportunity.logo || opportunity.image}
+          src={cardImage}
           alt={opportunity.brandName}
           className="fo-opportunity-card__img"
           loading="lazy"
@@ -49,7 +52,7 @@ export default function OpportunityCard({ opportunity }) {
         <div className="fo-opportunity-card__sheen pointer-events-none" aria-hidden="true" />
       </div>
 
-      <div className="fo-opportunity-card__body flex flex-1 flex-col p-5">
+      <div className="fo-opportunity-card__body flex flex-1 flex-col p-4 sm:p-5">
         <div className="fo-card-category text-xs font-medium mb-1">{opportunity.category}</div>
 
         <h3 className="fo-card-title mb-3 text-lg font-bold leading-snug line-clamp-2">

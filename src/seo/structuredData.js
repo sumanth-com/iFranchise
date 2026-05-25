@@ -10,6 +10,8 @@ export function buildOrganizationSchema() {
     logo: ORGANIZATION.logo,
     description: ORGANIZATION.description,
     email: ORGANIZATION.email,
+    telephone: ORGANIZATION.telephone,
+    address: ORGANIZATION.address,
     sameAs: ORGANIZATION.sameAs,
   };
 }

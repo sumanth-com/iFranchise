@@ -167,7 +167,7 @@ function ListYourBrandHeroSection() {
               className={`lyb-hero-copy flex min-h-0 flex-col justify-center ${formRevealed ? 'gap-2' : 'gap-3 sm:gap-4'}`}
             >
               <span className="lyb-hero-badge inline-flex w-fit items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-100">
-                <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
                 For brand founders
               </span>
               <motion.h1
@@ -227,7 +227,7 @@ function ListYourBrandHeroSection() {
                     </motion.span>
                   </motion.button>
                   <p className="lyb-hero-cta-hint hidden items-center gap-2 text-[0.7rem] font-medium text-violet-200/80 lg:flex">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
                     Opens your live listing form on the right
                   </p>
                 </motion.div>
@@ -511,7 +511,7 @@ function ProblemsSection() {
         >
           <div className="mb-3 flex justify-center">
             <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
               The Hard Truth
             </span>
           </div>
@@ -931,7 +931,7 @@ function ServicesStyleIndustriesSection() {
         <motion.div className="lyb-dark-heading mb-6 text-center lg:mb-7">
           <div className="mb-4 flex justify-center">
             <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
               Industries
             </span>
           </div>
@@ -1102,7 +1102,7 @@ function CaseStudiesSection() {
           className="text-center mb-8"
         >
           <span className="lyb-section-badge inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-500/30 bg-violet-500/10 text-[0.68rem] font-bold uppercase tracking-widest mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
             Proven Results
           </span>
           <h2 className={`lyb-page-h2 lyb-section-heading-on-dark ${sectionTitleClass(false)} mb-4`}>
@@ -1333,7 +1333,7 @@ function ListYourBrandFAQSection() {
         >
           <div className="mb-3 flex justify-center">
             <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-500 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
               FAQ
             </span>
           </div>
@@ -1423,7 +1423,7 @@ function SectionHeader({ badge, title, subtitle, center = true }) {
       {badge && (
         <div className={center ? 'mb-3 flex justify-center' : 'mb-3'}>
           <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
-            <span className="h-1.5 w-1.5 rounded-full bg-violet-400 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
             {badge}
           </span>
         </div>

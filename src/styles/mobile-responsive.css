@@ -1022,12 +1022,35 @@
     border-color: #86efac !important;
   }
 
-  .fo-opportunity-card__media {
-    height: clamp(10rem, 38vw, 13rem);
+  .franchise-opportunities-page .fo-page-shell {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .franchise-opportunities-page .fo-cards-grid {
+    gap: 0.875rem;
   }
 
   .fo-opportunity-card {
     min-height: 0;
+    width: 100%;
+  }
+
+  .fo-opportunity-card__media {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    min-height: 0;
+  }
+
+  /* Match desktop: full-width image band */
+  .fo-opportunity-card__img {
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+  }
+
+  .fo-opportunity-card:hover .fo-opportunity-card__img {
+    transform: scale(1.02);
   }
 
   .fo-empty-state {
@@ -1044,15 +1067,16 @@
   }
 
   .fd-hero-gallery {
-    min-height: clamp(220px, 45vw, 320px) !important;
+    min-height: clamp(240px, 52vw, 380px) !important;
   }
 
   .fd-hero-gallery .group {
-    min-height: clamp(220px, 45vw, 320px) !important;
+    min-height: clamp(240px, 52vw, 380px) !important;
   }
 
   .fd-hero-gallery .group img {
-    object-position: center center;
+    object-fit: cover;
+    object-position: center 38%;
   }
 
   .fd-about-stats {

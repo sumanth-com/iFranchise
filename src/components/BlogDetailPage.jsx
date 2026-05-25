@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './blog/BlogImage';
 import ShareIcons from './blog/ShareIcons';
@@ -373,76 +372,9 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
   );
 }
 
-function AuthorModal({ author, onClose }) {
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
-  }, [onClose]);
-
-  const highlights = [
-    'Advises investors and operators on franchise unit economics',
-    'Works across QSR, retail, and service franchise formats in India',
-    'Focus on FOFO, FICO, and multi-city expansion planning',
-    'Contributes research to the iFranchise opportunity platform',
-  ];
-
-  return createPortal(
-    <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', overflowY: 'auto' }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)' }} onClick={onClose} />
-      <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '480px', borderRadius: '24px', background: '#12082a', overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.35)', animation: 'modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both', margin: 'auto' }}>
-        <div style={{ background: 'linear-gradient(135deg,#1e293b 0%,#312e81 50%,#0f172a 100%)', padding: '24px 24px 32px', position: 'relative' }}>
-          <button type="button" onClick={onClose}
-            style={{ position: 'absolute', right: 16, top: 16, width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            aria-label="Close">&#x2715;</button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, paddingTop: 8 }}>
-            <img src={author.avatar} alt={author.name}
-              style={{ width: 80, height: 80, borderRadius: 16, objectFit: 'cover', border: '3px solid rgba(255,255,255,0.3)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', flexShrink: 0 }} />
-            <div>
-              <p style={{ margin: 0, fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>About The Author</p>
-              <h3 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{author.name}</h3>
-              <p style={{ margin: '4px 0 0', fontSize: 13, fontWeight: 600, color: '#a5b4fc' }}>{author.role}</p>
-            </div>
-          </div>
-        </div>
-        <div style={{ padding: 24 }}>
-          <p style={{ fontSize: 14.5, lineHeight: 1.75, color: 'rgba(255,255,255,0.92)', margin: '0 0 20px' }}>{author.bio}</p>
-          <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a78bfa', marginBottom: 12 }}>Highlights</p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {highlights.map((item) => (
-              <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>
-                <span style={{ marginTop: 5, width: 7, height: 7, borderRadius: '50%', background: '#8b5cf6', flexShrink: 0 }} />{item}
-              </li>
-            ))}
-          </ul>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10, marginBottom: 24 }}>
-            {[{ v: '50+', l: 'Brand partners' }, { v: '12+', l: 'Categories' }, { v: 'Pan', l: 'India focus' }].map((s) => (
-              <div key={s.l} style={{ background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(167,139,250,0.35)', borderRadius: 14, padding: '14px 8px', textAlign: 'center' }}>
-                <p style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#fff' }}>{s.v}</p>
-                <p style={{ margin: '3px 0 0', fontSize: 11, color: '#c4b5fd' }}>{s.l}</p>
-              </div>
-            ))}
-          </div>
-          <button type="button" onClick={onClose}
-            style={{ width: '100%', padding: 14, borderRadius: 14, background: '#7c3aed', border: 'none', color: '#fff', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = '#8b5cf6'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = '#7c3aed'; }}>
-            Close
-          </button>
-        </div>
-      </div>
-    </div>,
-    document.body
-  );
-}
-
 function BlogDetailPage() {
   const [slug, setSlug] = useState(getCurrentSlug);
   const [headings, setHeadings] = useState([]);
-  const [showAuthorModal, setShowAuthorModal] = useState(false);
-
   useReveal(slug);
 
   useEffect(() => {
@@ -469,7 +401,6 @@ function BlogDetailPage() {
 
   const article = useMemo(() => getBlogBySlug(slug) || blogPosts[0] || null, [slug]);
   const sections = article?.sections ?? [];
-  const author = article?.author ?? null;
   useEffect(() => {
     const timer = setTimeout(() => {
       const allH2 = Array.from(document.querySelectorAll('h2[id]'))
@@ -535,34 +466,8 @@ function BlogDetailPage() {
           ))}
         </div>
 
-      <div className="mt-12 md:mt-14">
-        <div className="py-2 md:py-4">
-          {author && (
-            <div data-reveal className="flex flex-col gap-6 rounded-3xl border border-violet-500/25 card-premium-dark p-6 sm:flex-row sm:items-center sm:p-8">
-              <img src={author.avatar} alt={author.name}
-                className="h-20 w-20 flex-shrink-0 rounded-2xl object-cover shadow-lg ring-4 ring-violet-500/25" />
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-white/90">About The Author</p>
-                <h3 className="mt-1 text-2xl font-extrabold text-white">{author.name}</h3>
-                <p className="text-sm font-medium text-white">{author.role}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-white">{author.bio}</p>
-              </div>
-              <button type="button" onClick={() => setShowAuthorModal(true)}
-                className="btn-purple-solid flex-shrink-0 self-start rounded-xl px-5 py-2.5 text-sm font-semibold transition hover:-translate-y-0.5 sm:self-center">
-                More about {author.name.split(' ')[0]}
-              </button>
-            </div>
-          )}
-        </div>
+        <ExploreMoreSection currentSlug={article.slug} />
       </div>
-
-      <ExploreMoreSection currentSlug={article.slug} />
-      </div>
-
-      {showAuthorModal && author && (
-        <AuthorModal author={author} onClose={() => setShowAuthorModal(false)} />
-      )}
-
     </main>
   );
 }

@@ -647,7 +647,7 @@ function FranchiseOpportunitiesPage() {
 
   return (
     <main className="franchise-opportunities-page relative z-10 min-h-screen bg-transparent text-white">
-      <div className={`relative ${FRANCHISE_OPPORTUNITIES_SHELL} pb-10 pt-8 lg:pb-12 lg:pt-10`}>
+      <div className={`fo-page-shell relative ${FRANCHISE_OPPORTUNITIES_SHELL} pb-10 pt-8 lg:pb-12 lg:pt-10`}>
         <FranchiseOpportunitiesHeader />
 
         <div className="fo-toolbar-sticky sticky top-16 z-40 mb-4 pb-2 pt-1">
@@ -668,7 +668,7 @@ function FranchiseOpportunitiesPage() {
           <ActiveFilterChips filters={filters} setFilters={setFilters} />
         </div>
 
-        <div className="mb-8 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:gap-7 xl:grid-cols-3 xl:gap-8">
+        <div className="fo-cards-grid mb-8 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:gap-7 xl:grid-cols-3 xl:gap-8">
           {isLoading ? (
             Array.from({ length: itemsPerPage }).map((_, index) => (
               <OpportunityCardSkeleton key={`skeleton-${index}`} />

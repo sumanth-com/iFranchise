@@ -737,15 +737,15 @@ html[data-theme='light'] .prefooter-trust-pill span:not([style*='background']) {
 }
 
 html[data-theme='light'] .prefooter-cta-btn {
-  background: #0b0f19 !important;
-  border: none !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 9999px !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.18) !important;
+  box-shadow: 0 4px 22px rgba(109, 40, 217, 0.35) !important;
 }
 
 html[data-theme='light'] .prefooter-cta-btn:hover {
-  background: #1e293b !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
   color: #ffffff !important;
 }
 
@@ -2505,8 +2505,12 @@ html[data-theme='light'] #main-content .theme-dark-surface[class*='bg-slate-900'
 html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) :is(h1, h2, h3, h4, h5, h6, p, span, li, label, a):not([class*='text-emerald']):not([class*='text-amber']):not([class*='text-indigo']):not([class*='text-blue']):not([class*='text-rose']):not([class*='text-purple']):not([class*='text-sky']):not([class*='text-violet-4']):not([class*='text-violet-5']):not([class*='text-violet-6']),
 html[data-theme='light'] #main-content .theme-dark-surface:not(.theme-light-card):not(.theme-light-pill):not(.services-dashboard-panel) .text-white,
 html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar :is(div, span),
-html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card :is(div, span) {
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar__title,
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-header-bar__subtitle,
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-metric-card :is(div, span),
+html[data-theme='light'] #main-content .services-dashboard-panel.theme-dark-surface .dashboard-on-dark {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* CTAs - white label on violet / gradient buttons */
@@ -5577,8 +5581,8 @@ html[data-theme='dark'] .list-your-brand-page .lyb-faq-cta-secondary:hover {
 /* Services - For Brands / For Investors dashboards (light + dark theme) */
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light,
 html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light {
-  background-color: rgba(255, 255, 255, 0.94) !important;
-  border-color: rgba(226, 232, 240, 0.85) !important;
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
 }
 
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option),
@@ -5634,9 +5638,14 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
 
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar,
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar :is(div, span),
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar__title,
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar__subtitle,
 html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar,
-html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar :is(div, span) {
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar :is(div, span),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar__title,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-header-bar__subtitle {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-header-bar .text-emerald-300,
@@ -5717,10 +5726,46 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
   background: transparent !important;
 }
 
+/* Services - How It Works: unified purple (light) / white (dark) step icons */
+html[data-theme='light'] .services-process-section .services-process-icon--light {
+  background-color: #7c3aed !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .services-process-section .services-process-icon--light svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+html[data-theme='dark'] .services-process-section .services-process-icon--dark {
+  background-color: #ffffff !important;
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] .services-process-section .services-process-icon--dark svg {
+  color: #6d28d9 !important;
+  stroke: #6d28d9 !important;
+}
+
+/* Services - benefit list: purple circle, white check */
+html[data-theme='light'] #main-content .services-benefit-check,
+html[data-theme='dark'] #main-content .services-benefit-check {
+  background-color: #7c3aed !important;
+}
+
+html[data-theme='light'] #main-content .services-benefit-check__icon,
+html[data-theme='dark'] #main-content .services-benefit-check__icon,
+html[data-theme='light'] #main-content .services-benefit-check svg,
+html[data-theme='dark'] #main-content .services-benefit-check svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
 /* Services page - For Brands / For Investors copy (readable on light background) */
 html[data-theme='light'] #main-content .services-audience-copy h2,
 html[data-theme='light'] #main-content .services-audience-copy .text-white,
-html[data-theme='light'] #main-content .services-audience-copy span:not(.site-cta):not(.site-cta *):not(.btn-purple-solid *):not([class*='rounded-full'] svg *) {
+html[data-theme='light'] #main-content .services-audience-copy span:not(.site-cta):not(.site-cta *):not(.btn-purple-solid *):not(.services-benefit-check):not(.services-benefit-check *) {
   color: #0b0f19 !important;
 }
 
@@ -5831,10 +5876,35 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-gallery {
 .franchise-details-page .fd-hero-gallery .group img {
   -webkit-user-drag: none;
   user-select: none;
+  object-fit: cover;
+  object-position: center 40%;
 }
 
 .franchise-details-page .fd-hero-gallery .group {
   min-height: inherit;
+}
+
+/* Hero split: compact stats, larger gallery */
+@media (min-width: 1024px) {
+  .franchise-details-page .fd-hero-metrics.fd-about-stats {
+    gap: 0.5rem;
+  }
+
+  .franchise-details-page .fd-hero-metrics .fd-stat-card {
+    min-height: 72px;
+    padding: 0.5rem 0.625rem;
+  }
+
+  .franchise-details-page .fd-hero-metrics .fd-stat-card .fd-body-text {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  @media (min-width: 1280px) {
+    .franchise-details-page .fd-hero-metrics .fd-stat-card .fd-body-text {
+      font-size: 0.875rem;
+    }
+  }
 }
 
 .franchise-details-page .fd-hero-gallery .group button {
@@ -6743,6 +6813,38 @@ html[data-theme='light'] .franchise-opportunities-page .fo-filter-sheet .fo-filt
 
 .fo-opportunity-card:hover .fo-opportunity-card__media::after {
   opacity: 1;
+}
+
+/* Desktop: full-width image band (cover) — unchanged from original */
+@media (min-width: 1024px) {
+  .fo-opportunity-card__media {
+    aspect-ratio: auto;
+    height: 13rem;
+  }
+
+  .fo-opportunity-card__img {
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+  }
+
+  .fo-opportunity-card:hover .fo-opportunity-card__img {
+    transform: scale(1.03);
+  }
+}
+
+/* Tablet: 2-column cards — same full-bleed band as desktop */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .fo-opportunity-card__media {
+    aspect-ratio: 5 / 3;
+    height: auto;
+  }
+
+  .fo-opportunity-card__img {
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+  }
 }
 
 /* Opportunity card body — text & pills (light + dark) */

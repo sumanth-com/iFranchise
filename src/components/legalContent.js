@@ -143,7 +143,7 @@ const privacySectionsEn = [
   },
   {
     title: 'Contact Information',
-    body: 'For privacy-related requests, users can contact our support and compliance team at legal@ifranchise.example. We may request verification details before processing sensitive account requests.',
+    body: 'For privacy-related requests, users can contact our support and compliance team at contact@ifranchise.in. We may request verification details before processing sensitive account requests.',
   },
   {
     title: 'Updates to Policy',
@@ -194,7 +194,7 @@ const termsSectionsEn = [
   },
   {
     title: 'Contact Information',
-    body: 'For legal notices and terms-related questions, contact legal@ifranchise.example. Please include your account details and issue summary for faster resolution.',
+    body: 'For legal notices and terms-related questions, contact contact@ifranchise.in. Please include your account details and issue summary for faster resolution.',
   },
 ];
 

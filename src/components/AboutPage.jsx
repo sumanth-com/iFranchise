@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import AboutHero from './about/AboutHero';
+import IfranchiseAcronymSection from './about/IfranchiseAcronymSection';
 import AboutTestimonialPhoto from './about/AboutTestimonialPhoto';
 import LeadershipSection from './LeadershipSection';
 import CtaButton from './ui/CtaButton';
@@ -249,6 +250,8 @@ function AboutPage() {
     <main className="about-page relative z-10 w-full bg-transparent text-theme-primary">
       <AboutHero />
 
+      <IfranchiseAcronymSection />
+
       {/* HISTORY + 4 GRID CARDS SECTION */}
       <section id="about-our-story" className="w-full py-16 scroll-mt-24">
         <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-8">
@@ -383,7 +386,7 @@ function AboutPage() {
               transition={{ duration: 0.3 }}
               className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm"
             >
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-violet-600" />
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-white">Our Advantages</span>
             </motion.div>
 

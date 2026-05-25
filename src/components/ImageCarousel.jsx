@@ -59,6 +59,7 @@ export default function ImageCarousel({
   galleryBackground,
   /** Preload every slide (brand detail galleries) so prev/next always show real photos */
   preloadAll = false,
+  imageSizes = '(max-width: 1023px) 100vw, 42vw',
 }) {
   const safeImages = useMemo(() => {
     const list = (images || []).filter(Boolean);
@@ -184,7 +185,7 @@ export default function ImageCarousel({
             loading={preloadAll ? 'eager' : idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
             fetchPriority={idx === activeIdx ? 'high' : 'low'}
-            sizes="(max-width: 1023px) 100vw, 42vw"
+            sizes={imageSizes}
             draggable={false}
             className={`absolute inset-0 h-full w-full ${objectFitClass} transition-opacity duration-300 ${
               idx === activeIdx

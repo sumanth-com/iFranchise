@@ -56,8 +56,8 @@ export default function AboutHero() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const scrollToStory = () => {
-    document.getElementById('about-our-story')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollToIfranchise = () => {
+    document.getElementById('about-ifranchise')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -117,9 +117,9 @@ export default function AboutHero() {
             size="md"
             className="about-hero__cta"
             arrowDirection="down"
-            onClick={scrollToStory}
+            onClick={scrollToIfranchise}
           >
-            See how we started
+            Discover IFRANCHISE
           </CtaButton>
         </motion.div>
       </div>

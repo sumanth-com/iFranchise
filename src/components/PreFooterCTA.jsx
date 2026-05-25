@@ -4,6 +4,7 @@ import FooterJumpLink from './footer/FooterJumpLink';
 import FooterSocialButtons from './footer/FooterSocialButtons';
 import { navigateTo } from '../lib/navigation';
 import { TYPE } from '../lib/typography.js';
+import { SITE_CONTACT_ADDRESS, SITE_CONTACT_MAPS_URL } from '../data/siteContact';
 
 // -- Inline SVG logos ----------------------------------------------------------
 const LOGOS = [
@@ -86,11 +87,6 @@ function LinkDot({ type, color }) {
   );
 }
 
-// -- Hiring badge --------------------------------------------------------------
-function HiringBadge() {
-  return <span className="footer-hiring-badge">Hiring</span>;
-}
-
 // -- Footer link columns -------------------------------------------------------
 const FOOTER_COLS = [
   {
@@ -98,7 +94,7 @@ const FOOTER_COLS = [
     links: [
       { label: 'About Us',  path: '/about',   dot: 'none' },
       { label: 'Contact',   path: '/contact', dot: 'none' },
-      { label: 'Careers',   path: '/careers', dot: 'none', badge: true },
+      { label: 'Careers',   path: '/careers', dot: 'none' },
     ],
   },
   {
@@ -121,19 +117,12 @@ const FOOTER_COLS = [
   },
 ];
 
-// -- Quick Connect -------------------------------------------------------------
-const QUICK_CONNECT = [
-  {
-    icon: (
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    label: 'Head Office',
-    value: '12th Floor, Prestige Tower, MG Road, Bengaluru - 560001',
-  },
-];
+const FOOTER_LOCATION_ICON = (
+  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
 
 function scrollToCareerApply() {
   const el = document.getElementById('career-apply');
@@ -322,23 +311,30 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
         >
           <div className="footer-main-grid">
 
-            {/* -- Col 1: Brand + Address -- */}
+            {/* -- Col 1: Brand + office address (footer only) -- */}
             <div className="footer-main-grid-brand">
               <div className="footer-brand-lockup">
                 <img src={brandLogo} alt="iFranchise" className="footer-brand-logo" width={34} height={34} />
                 <span className="footer-brand-name">iFranchise</span>
               </div>
               <div className="footer-brand-address">
-                {QUICK_CONNECT.map((item) => (
-                  <div key={item.label} className="footer-brand-address__row">
-                    <span className="footer-brand-address__icon" aria-hidden>{item.icon}</span>
-                    <p className="footer-brand-address__text">{item.value}</p>
-                  </div>
-                ))}
+                <div className="footer-brand-address__row">
+                  <span className="footer-brand-address__icon" aria-hidden>
+                    {FOOTER_LOCATION_ICON}
+                  </span>
+                  <a
+                    href={SITE_CONTACT_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-brand-address__text footer-brand-address__link"
+                  >
+                    {SITE_CONTACT_ADDRESS}
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* -- Cols 2 & 3: Link columns -- */}
+            {/* -- Link columns -- */}
             {FOOTER_COLS.map((col) => (
               <div key={col.heading} className="footer-main-grid-col">
                 <p className="footer-col-heading">{col.heading}</p>
@@ -352,7 +348,6 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
                         {link.label}
                       </FooterJumpLink>
                       {link.dot !== 'none' && <LinkDot type={link.dot} color={link.dotColor} />}
-                      {link.badge && <HiringBadge />}
                     </li>
                   ))}
                 </ul>
