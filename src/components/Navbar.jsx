@@ -5,6 +5,80 @@ import ThemeToggle from './ThemeToggle';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
 import { navigateTo as spaNavigate } from '../lib/navigation';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+
+const MENU_EASE = [0.22, 1, 0.36, 1];
+
+/** Paper-style unfold from top-right hinge (mobile drawer). */
+const mobileMenuBackdrop = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3, ease: MENU_EASE } },
+  exit: { opacity: 0, transition: { duration: 0.22, ease: MENU_EASE } },
+};
+
+const mobileMenuPaperPanel = {
+  hidden: {
+    opacity: 0,
+    x: 36,
+    rotateY: -26,
+    scale: 0.88,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotateY: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: MENU_EASE },
+  },
+  exit: {
+    opacity: 0,
+    x: 28,
+    rotateY: -18,
+    scale: 0.92,
+    transition: { duration: 0.36, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+const mobileMenuSlidePanel = {
+  hidden: { x: '100%' },
+  visible: { x: 0, transition: { type: 'spring', damping: 32, stiffness: 320 } },
+  exit: { x: '100%', transition: { duration: 0.28, ease: MENU_EASE } },
+};
+
+const mobileMenuNavStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.05, delayChildren: 0.16 },
+  },
+};
+
+const mobileMenuNavItem = {
+  hidden: { opacity: 0, x: 16, filter: 'blur(4px)' },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.34, ease: MENU_EASE },
+  },
+};
+
+const mobileMenuHeader = {
+  hidden: { opacity: 0, y: -8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: MENU_EASE, delay: 0.08 },
+  },
+};
+
+const mobileMenuFooter = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.38, ease: MENU_EASE, delay: 0.28 },
+  },
+};
 
 const FRANCHISE_NAVBAR_OPTIONS = buildNavbarFranchiseFilterOptions();
 
@@ -404,50 +478,22 @@ function ArrowRightIcon() {
   );
 }
 
-/** Bento-style menu icon — 4 tiles morph to X when open */
 function MenuIcon({ isOpen }) {
-  const t = { duration: 0.32, ease: [0.22, 1, 0.36, 1] };
-  const tile = { width: 7, height: 7, borderRadius: 2.5, opacity: 1, scale: 1 };
-  const xBar = { top: 7.75, left: 0, width: 18, height: 2.5, borderRadius: 2, opacity: 1, scale: 1 };
-
   return (
-    <span className="navbar-menu-icon" aria-hidden>
-      <span className="navbar-menu-icon__frame">
-        <motion.span
-          className="navbar-menu-icon__tile"
-          animate={isOpen ? { ...xBar, rotate: 45 } : { ...tile, top: 0, left: 0, rotate: 0 }}
-          transition={t}
-        />
-        <motion.span
-          className="navbar-menu-icon__tile"
-          animate={
-            isOpen
-              ? { top: 5, left: 5, width: 7, height: 7, opacity: 0, scale: 0.35, rotate: 0 }
-              : { ...tile, top: 0, left: 11, rotate: 0 }
-          }
-          transition={t}
-        />
-        <motion.span
-          className="navbar-menu-icon__tile"
-          animate={
-            isOpen
-              ? { top: 5, left: 5, width: 7, height: 7, opacity: 0, scale: 0.35, rotate: 0 }
-              : { ...tile, top: 11, left: 0, rotate: 0 }
-          }
-          transition={t}
-        />
-        <motion.span
-          className="navbar-menu-icon__tile"
-          animate={isOpen ? { ...xBar, rotate: -45 } : { ...tile, top: 11, left: 11, rotate: 0 }}
-          transition={t}
-        />
-        <motion.span
-          className="navbar-menu-icon__spark"
-          animate={isOpen ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }}
-          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </span>
-    </span>
+    <div className="relative h-5 w-5 flex flex-col justify-center gap-1">
+      <motion.span
+        animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+        className="block h-0.5 w-5 bg-current origin-center"
+      />
+      <motion.span
+        animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+        className="block h-0.5 w-5 bg-current"
+      />
+      <motion.span
+        animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+        className="block h-0.5 w-5 bg-current origin-center"
+      />
+    </div>
   );
 }
 
@@ -591,6 +637,7 @@ const SHOW_COMPANY_DROPDOWN_EXTRAS = false;
 
 function Navbar() {
   const navFranchiseFilters = useFranchiseOpportunityNavbarFilters();
+  const reduceMotion = usePrefersReducedMotion();
 
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -905,29 +952,39 @@ function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile Navigation Drawer — paper unfold from top-right */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            role="presentation"
+            variants={mobileMenuBackdrop}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             className="navbar-mobile-overlay fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm xl:hidden"
-            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, perspective: 1400 }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="navbar-mobile-panel fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden overscroll-contain shadow-2xl touch-pan-y"
+              variants={reduceMotion ? mobileMenuSlidePanel : mobileMenuPaperPanel}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="navbar-mobile-panel navbar-mobile-panel--paper fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden overscroll-contain shadow-2xl touch-pan-y"
+              style={{
+                transformOrigin: '100% 0%',
+                transformPerspective: 1200,
+              }}
               onClick={(e) => e.stopPropagation()}
               data-lenis-prevent
             >
               {/* Mobile Header */}
-              <div className="navbar-mobile-panel__header flex shrink-0 items-center justify-between border-b px-6 py-4">
+              <motion.div
+                variants={reduceMotion ? undefined : mobileMenuHeader}
+                initial={reduceMotion ? false : 'hidden'}
+                animate={reduceMotion ? undefined : 'visible'}
+                className="navbar-mobile-panel__header flex shrink-0 items-center justify-between border-b px-6 py-4"
+              >
                 <div className="flex items-center gap-3">
                   <img 
                     src={brandLogo} 
@@ -948,14 +1005,21 @@ function Navbar() {
                     </svg>
                   </button>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Mobile Menu Items */}
               <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4">
-                <nav className="navbar-mobile-nav flex w-full flex-col gap-2.5">
-                  
+                <motion.nav
+                  className="navbar-mobile-nav flex w-full flex-col gap-2.5"
+                  variants={reduceMotion ? undefined : mobileMenuNavStagger}
+                  initial={reduceMotion ? false : 'hidden'}
+                  animate={reduceMotion ? undefined : 'visible'}
+                >
                   {/* Company Accordion — sub-items open downward */}
-                  <div className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border">
+                  <motion.div
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
+                    className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border"
+                  >
                     <button
                       type="button"
                       onClick={() => setMobileAccordion(mobileAccordion === 'company' ? null : 'company')}
@@ -998,44 +1062,53 @@ function Navbar() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
 
-                  <a
+                  <motion.a
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
                     href="/services"
                     onClick={(e) => { e.preventDefault(); navigateTo('/services'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Services
-                  </a>
+                  </motion.a>
 
-                  <a
+                  <motion.a
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
                     href="/franchise-opportunities"
                     onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Franchise Opportunities
-                  </a>
+                  </motion.a>
 
-                  <a
+                  <motion.a
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
                     href="/blog"
                     onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Blogs
-                  </a>
+                  </motion.a>
 
-                  <a
+                  <motion.a
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
                     href="/contact"
                     onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Contact Us
-                  </a>
-                </nav>
+                  </motion.a>
+                </motion.nav>
               </div>
 
               {/* Mobile CTA — List Your Brand (not in top bar on mobile) */}
-              <div className="navbar-mobile-panel__footer shrink-0 border-t p-4">
+              <motion.div
+                variants={reduceMotion ? undefined : mobileMenuFooter}
+                initial={reduceMotion ? false : 'hidden'}
+                animate={reduceMotion ? undefined : 'visible'}
+                className="navbar-mobile-panel__footer shrink-0 border-t p-4"
+              >
                 <button
                   type="button"
                   onClick={() => navigateTo('/list-your-brand')}
@@ -1050,7 +1123,7 @@ function Navbar() {
                     <ArrowRightIcon />
                   </motion.div>
                 </button>
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}

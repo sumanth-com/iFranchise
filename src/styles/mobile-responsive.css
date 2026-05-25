@@ -1376,9 +1376,14 @@
 
 @media (max-width: 1279px) and (prefers-reduced-motion: reduce) {
   .navbar-mobile-panel,
+  .navbar-mobile-panel--paper,
   .assistant-panel,
   #main-content {
     transition: none !important;
     animation: none !important;
+  }
+
+  .navbar-mobile-panel--paper::before {
+    display: none;
   }
 }
