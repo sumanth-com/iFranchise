@@ -1,0 +1,66 @@
+/* Performance & scroll — SaaS-style feel without layout jank */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .site-backdrop__orb,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis):not(.lenis-smooth) {
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+/* Fixed backdrop — isolate paint, fewer repaints while scrolling */
+.site-backdrop {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Below-fold sections: skip layout work until near viewport */
+@media (min-width: 768px) {
+  #main-content section:not(:first-of-type) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
+  }
+}
+
+/* Route paint — promote main only during transition */
+#main-content[data-phase='exit'],
+#main-content[data-phase='enter'] {
+  will-change: opacity;
+}
+
+#main-content:not([data-phase]) {
+  will-change: auto;
+}
+
+/* Images: async decode by default (explicit eager on LCP stays) */
+#main-content img:not([loading='eager']) {
+  decoding: async;
+}
+
+/* Respect user GPU on low-end / mobile — fewer orb animations */
+@media (max-width: 767px), (pointer: coarse) {
+  .site-backdrop__orb--d,
+  .site-backdrop__orb--e {
+    opacity: 0.35;
+    animation-duration: 28s;
+  }
+}

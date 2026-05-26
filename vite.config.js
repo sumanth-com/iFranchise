@@ -51,6 +51,12 @@ export default defineConfig({
           ) {
             return 'page-franchise';
           }
+          if (id.includes('/src/components/ForBrandOwnersPage')) {
+            return 'page-brand-owners';
+          }
+          if (id.includes('/src/components/ExpansionAssistant')) {
+            return 'expansion-assistant';
+          }
           if (id.includes('node_modules')) {
             return 'vendor';
           }

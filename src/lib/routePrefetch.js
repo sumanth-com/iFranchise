@@ -91,7 +91,13 @@ export function prefetchRoute(pathnameOrHref) {
   });
 }
 
-const COMMON_IDLE_ROUTES = ['/franchise-opportunities', '/about', '/contact', '/services'];
+const COMMON_IDLE_ROUTES = [
+  '/franchise-opportunities',
+  '/list-your-brand',
+  '/about',
+  '/contact',
+  '/services',
+];
 
 function scheduleIdlePrefetch() {
   const run = () => {

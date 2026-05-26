@@ -2,6 +2,8 @@
 
 @import './styles/typography.css';
 @import './styles/services-process-mobile.css';
+@import './styles/blog-share-3d.css';
+@import './styles/leadership-linkedin-3d.css';
 
 /* Services benefits pills — white icon disc, colored glyph */
 .services-benefit-pill-icon {
@@ -13,8 +15,6 @@ html[data-theme='light'] #main-content .services-benefit-pill-icon svg {
   color: inherit;
   stroke: currentColor;
 }
-@import './styles/blog-share-3d.css';
-@import './styles/leadership-linkedin-3d.css';
 
 @tailwind base;
 @tailwind components;
@@ -36,7 +36,6 @@ html[data-theme='light'] #main-content .services-benefit-pill-icon svg {
   }
 
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 80px;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     /* Removed scroll-snap-type - it causes section-to-section jank with Lenis */

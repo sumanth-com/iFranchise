@@ -22,19 +22,19 @@ function BlogPage() {
 
   return (
     <main className="blog-page relative z-10 mx-auto w-full max-w-[1240px] px-5 pb-20 pt-12 sm:px-6 lg:px-8 text-white">
-      <section className="blog-page-hero grid grid-cols-1 gap-10 rounded-[28px] card-premium-dark p-6 md:grid-cols-[1.02fr_0.98fr] md:p-10">
-        <div className="blog-page-hero__media min-h-[280px] overflow-hidden rounded-3xl sm:min-h-[320px]">
+      <section className="blog-page-hero grid grid-cols-1 gap-0 overflow-hidden rounded-[28px] card-premium-dark md:grid-cols-[1.02fr_0.98fr] md:gap-10 md:p-10">
+        <div className="blog-page-hero__media min-h-[280px] w-full overflow-hidden sm:min-h-[300px] md:min-h-[320px] md:rounded-3xl">
           <BlogImage
             src={BLOG_PAGE_HERO_IMAGE}
             alt="Franchise insights and investment guides"
             variant="card"
             priority
-            wrapperClassName="blog-page-hero__image-wrap h-full min-h-[280px] sm:min-h-[320px]"
+            wrapperClassName="blog-page-hero__image-wrap h-full min-h-[inherit] w-full"
             className="blog-page-hero__image h-full w-full"
-            imgClassName="object-cover object-center"
+            imgClassName="object-cover object-[center_15%] md:object-center"
           />
         </div>
-        <div className="flex flex-col justify-center">
+        <div className="blog-page-hero__copy flex flex-col justify-center px-5 py-6 sm:px-6 md:px-0 md:py-0">
           <p className="text-xs font-semibold uppercase tracking-[0.15em] text-violet-200">Franchise Insights</p>
           <h1 className={`mt-4 max-w-[480px] ${TYPE.heroBrand} text-white`}>
             Practical guides for investors and brand owners

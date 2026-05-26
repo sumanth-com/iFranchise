@@ -2346,30 +2346,38 @@
   }
 
   .blog-page-hero {
-    gap: clamp(1rem, 3vw, 1.5rem) !important;
-    padding: clamp(1rem, 3vw, 1.5rem) !important;
+    gap: 0 !important;
+    padding: 0 !important;
   }
 
   .blog-page-hero__media {
-    min-height: 0 !important;
-    max-height: min(42vw, 220px);
-    aspect-ratio: 16 / 10;
+    min-height: min(62vw, 300px) !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 3;
     width: 100%;
-    border-radius: 1.25rem;
-    background: rgba(15, 23, 42, 0.35);
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background: #0f172a;
   }
 
   .blog-page-hero__image-wrap {
-    min-height: 0 !important;
+    min-height: inherit !important;
     height: 100% !important;
-    max-height: min(42vw, 220px);
-    aspect-ratio: 16 / 10;
+    max-height: none !important;
+    width: 100% !important;
+    aspect-ratio: 4 / 3;
+    border-radius: 0 !important;
   }
 
   .blog-page-hero__image img,
   .blog-page-hero__media img {
-    object-fit: contain !important;
-    object-position: center !important;
+    object-fit: cover !important;
+    object-position: center 12% !important;
+    width: 100% !important;
+  }
+
+  .blog-page-hero__copy {
+    padding: clamp(1rem, 3vw, 1.5rem) !important;
   }
 
   .blog-page-hero h1 {
@@ -2378,7 +2386,7 @@
     margin-top: 0.75rem !important;
   }
 
-  .blog-page-hero > div:last-child > p {
+  .blog-page-hero__copy > p {
     margin-top: 0.75rem !important;
     font-size: 0.9375rem;
     line-height: 1.55;
@@ -2401,7 +2409,7 @@
     justify-content: center;
   }
 
-  .blog-page-hero > div:last-child {
+  .blog-page-hero__copy {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2409,7 +2417,7 @@
     width: 100%;
   }
 
-  .blog-page-hero > div:last-child > p:first-child {
+  .blog-page-hero__copy > p:first-child {
     margin-left: auto;
     margin-right: auto;
   }
@@ -2417,11 +2425,7 @@
 
 @media (max-width: 767px) {
   .blog-page-hero__media {
-    max-height: min(40vw, 180px) !important;
-  }
-
-  .blog-page-hero__image-wrap {
-    max-height: min(40vw, 180px) !important;
+    min-height: min(65vw, 320px) !important;
   }
 
   .blog-page-hero h1 {
@@ -2453,9 +2457,8 @@
     flex-basis: min(84vw, 16.5rem);
   }
 
-  .blog-page-hero__media,
-  .blog-page-hero__image-wrap {
-    max-height: min(48vw, 200px);
+  .blog-page-hero__media {
+    min-height: min(58vw, 280px);
   }
 }
 
@@ -2513,7 +2516,8 @@
 
   .blog-page-hero__media,
   .blog-page-hero__image-wrap {
-    max-height: 36vh;
+    min-height: min(42vh, 240px);
+    max-height: 42vh;
   }
 
   .hero-cinematic-layout .hero-cinematic-content {

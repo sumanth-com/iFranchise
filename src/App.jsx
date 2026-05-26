@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense, useRef, useCallback } from 'react';
+import { useEffect, useState, lazy, Suspense, useRef, useCallback, startTransition } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
@@ -17,6 +17,7 @@ import {
   scrollToHashSection,
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
+import { prefetchRoute } from './lib/routePrefetch.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
@@ -87,21 +88,24 @@ function App() {
       setPagePhase('exit');
       transitionTimerRef.current = window.setTimeout(() => {
         const nextPath = getLogicalPathname();
-        setPathname(nextPath);
-        setPagePhase('enter');
+        startTransition(() => {
+          setPathname(nextPath);
+          setPagePhase('enter');
+        });
         window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => setPagePhase('idle'));
         });
         window.requestAnimationFrame(() => {
           finishScrollForRoute(isBackForward);
         });
-      }, 30);
+      }, 20);
     },
     [finishScrollForRoute],
   );
 
-  // Persist scroll while reading (all routes)
+  // Persist scroll while reading (native scroll; Lenis syncs via lenisScroll.js)
   useEffect(() => {
+    if (window.__lenis) return undefined;
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -113,6 +117,34 @@ function App() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, [pathname]);
+
+  // Warm likely next routes after navigation (idle, non-blocking)
+  useEffect(() => {
+    const RELATED_PREFETCH = {
+      '/': ['/franchise-opportunities', '/list-your-brand', '/contact'],
+      '/list-your-brand': ['/contact', '/franchise-opportunities', '/services'],
+      '/franchise-opportunities': ['/franchise-details', '/contact', '/list-your-brand'],
+      '/about': ['/team', '/contact', '/services'],
+      '/services': ['/contact', '/list-your-brand', '/franchise-opportunities'],
+      '/contact': ['/list-your-brand', '/franchise-opportunities'],
+      '/blog': ['/blog-detail', '/contact'],
+    };
+    const targets = RELATED_PREFETCH[pathname];
+    if (!targets?.length) return undefined;
+
+    const run = () => targets.forEach((route) => prefetchRoute(route));
+    let idleId;
+    let timeoutId;
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(run, { timeout: 2200 });
+    } else {
+      timeoutId = window.setTimeout(run, 500);
+    }
+    return () => {
+      if (idleId != null) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, [pathname]);
 
   // Browser back / forward
@@ -209,7 +241,7 @@ function App() {
 
   return (
     <FranchiseOpportunityNavbarFiltersProvider>
-      <div className="relative min-h-screen scroll-smooth bg-transparent text-theme-primary">
+      <div className="relative min-h-screen bg-transparent text-theme-primary">
         <PageSEO pathname={pathname} />
         <AnimatedSiteBackdrop />
         <Navbar />
