@@ -366,10 +366,10 @@ function ContactHeroForm({
               className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-all duration-300 disabled:cursor-not-allowed ${
                 canSend && !isSubmitting
                   ? isLight
-                    ? 'bg-violet-600 text-white shadow-violet-600/30 hover:bg-violet-700 hover:shadow-violet-600/40'
+                    ? 'bg-violet-600 !text-white shadow-violet-600/30 hover:bg-violet-700 hover:shadow-violet-600/40'
                     : 'bg-white text-slate-900 shadow-[0_8px_28px_rgba(255,255,255,0.15)] hover:bg-white/95'
                   : isLight
-                    ? 'bg-violet-400/40 text-white/70 shadow-none'
+                    ? 'bg-violet-400/40 !text-white/70 shadow-none'
                     : 'bg-white/20 text-white/45 shadow-none'
               }`}
             >

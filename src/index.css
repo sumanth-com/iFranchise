@@ -4121,6 +4121,8 @@ html[data-theme='light'] #main-content button[style*='#6d28d9'],
 html[data-theme='light'] #main-content button[style*='#6d28d9'] *,
 html[data-theme='light'] #main-content button[style*='#4f46e5'],
 html[data-theme='light'] #main-content button[style*='#4f46e5'] *,
+html[data-theme='light'] #main-content .contact-send-btn,
+html[data-theme='light'] #main-content .contact-send-btn *,
 html[data-theme='light'] #main-content .theme-light-card button.text-white,
 html[data-theme='light'] #main-content .theme-light-card button.text-white *,
 html[data-theme='light'] #main-content .theme-light-card .site-cta,
@@ -4128,6 +4130,7 @@ html[data-theme='light'] #main-content .theme-light-card .site-cta *,
 html[data-theme='light'] #main-content [class*='bg-[#0B1220]'],
 html[data-theme='light'] #main-content [class*='bg-[#0B1220]'] * {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Home hero light - black copy, purple accents (HomeHero2.png) */
@@ -4204,10 +4207,14 @@ html[data-theme='light'] #main-content a.btn-purple-solid,
 html[data-theme='light'] #main-content a.btn-purple-solid *,
 html[data-theme='light'] #main-content button.btn-purple-solid,
 html[data-theme='light'] #main-content button.btn-purple-solid *,
+html[data-theme='light'] #main-content button.contact-send-btn,
+html[data-theme='light'] #main-content button.contact-send-btn *,
 html[data-theme='light'] .card-premium-dark .btn-purple-solid,
 html[data-theme='light'] .card-premium-dark .btn-purple-solid *,
 html[data-theme='light'] .bg-white .btn-purple-solid,
-html[data-theme='light'] .bg-white .btn-purple-solid * {
+html[data-theme='light'] .bg-white .btn-purple-solid *,
+html[data-theme='light'] .bg-white .contact-send-btn,
+html[data-theme='light'] .bg-white .contact-send-btn * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }

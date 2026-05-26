@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
 import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
@@ -313,7 +313,7 @@ export default function ForBrandOwnersPage() {
 // -----------------------------------------------------------------------------
 
 const TRUST_STATS = [
-  { value: 200,  suffix: '+', label: 'Brands Scaled'           },
+  { value: 100,  suffix: '+', label: 'Brands Scaled'           },
   { value: 1800, suffix: '+', label: 'Investors Onboarded'     },
   { value: 17,   suffix: '+', label: 'Cities Covered'          },
   { value: franchiseOpportunities.length, suffix: '+', label: 'Active Opportunities'    },
@@ -385,7 +385,9 @@ function TrustStrip() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: i * 0.06 }}
-              className="lyb-trust-stat-cell flex flex-col items-center justify-center px-3 py-5 sm:py-6"
+              className={`lyb-trust-stat-cell flex flex-col items-center justify-center px-3 py-5 sm:py-6 ${
+                i === TRUST_STATS.length - 1 ? 'col-span-2 sm:col-span-3 lg:col-span-1' : ''
+              }`}
             >
               <p className="lyb-trust-stat-value mb-0.5 text-2xl font-extrabold sm:text-3xl">
                 <TrustCounter target={s.value} suffix={s.suffix} />
@@ -401,10 +403,10 @@ function TrustStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.1 }}
-          className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+          className="lyb-trust-pills-grid mx-auto grid w-full max-w-xl grid-cols-2 gap-2 sm:gap-2.5"
         >
           {TRUST_PILLS.map((text) => (
-            <span key={text} className="lyb-trust-pill rounded-full px-3.5 py-1.5 text-[0.72rem] font-semibold sm:px-4 sm:py-2 sm:text-[0.75rem]">
+            <span key={text} className="lyb-trust-pill flex items-center justify-center rounded-full px-3 py-1.5 text-center text-[0.7rem] font-semibold leading-snug sm:px-4 sm:py-2 sm:text-[0.75rem]">
               {text}
             </span>
           ))}
@@ -517,9 +519,152 @@ const ITEMS = [
   },
 ];
 
+function ProblemRowButton({ it, index, active, onToggle }) {
+  const isActive = active === index;
+  return (
+    <motion.button
+      type="button"
+      onClick={onToggle}
+      whileHover={{ x: isActive ? 0 : 4 }}
+      transition={{ duration: 0.15 }}
+      className={`lyb-problem-row flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left transition-all duration-200 ${
+        isActive ? 'lyb-problem-row--active' : ''
+      }`}
+    >
+      <motion.div
+        className={`lyb-problem-icon flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors duration-200 ${
+          isActive ? 'lyb-problem-icon--active' : ''
+        }`}
+      >
+        {it.icon}
+      </motion.div>
+      <motion.div className="min-w-0 flex-1">
+        <p
+          className={`lyb-problem-title text-sm font-semibold leading-snug transition-colors duration-200 ${
+            isActive ? 'lyb-problem-title--active' : ''
+          }`}
+        >
+          {it.problem}
+        </p>
+        {isActive && (
+          <motion.p
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            transition={{ duration: 0.2 }}
+            className="lyb-problem-desc mt-0.5 overflow-hidden text-[0.72rem] leading-snug"
+          >
+            {it.problemDesc}
+          </motion.p>
+        )}
+      </motion.div>
+      <motion.div animate={{ rotate: isActive ? 90 : 0 }} transition={{ duration: 0.2 }} className="shrink-0">
+        <svg
+          className={`lyb-problem-chevron h-4 w-4 transition-colors duration-200 ${isActive ? 'lyb-problem-chevron--active' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </motion.div>
+    </motion.button>
+  );
+}
+
+function ProblemSolutionPanel({ item, active, setActive, className = '' }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      className={`theme-dark-surface card-premium-dark flex flex-col overflow-hidden rounded-2xl shadow-xl ${className}`}
+    >
+      <div className="flex items-center gap-3 bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-4">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20 text-white">
+          {item.icon}
+        </div>
+        <div>
+          <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white">iFranchise Solution</p>
+          <p className="text-base font-extrabold leading-tight text-white">{item.solution}</p>
+        </div>
+        <div className="ml-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
+          <svg className="h-3.5 w-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="flex flex-col space-y-4 p-5">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2">
+          <svg className="h-3.5 w-3.5 shrink-0 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span className="text-[0.72rem] font-semibold text-red-200">{item.problem}</span>
+          <span className="text-white">{'->'}</span>
+          <span className="text-[0.72rem] font-semibold text-white">Fixed</span>
+        </div>
+
+        <p className="text-[0.9rem] font-medium leading-relaxed text-white">{item.solutionDesc}</p>
+        <p className="text-[0.8rem] leading-relaxed text-violet-100/75">{item.solutionDetail}</p>
+
+        <ul className="space-y-2 rounded-xl border border-violet-500/20 bg-violet-500/5 p-3.5">
+          {item.outcomes.map((outcome) => (
+            <li key={outcome} className="flex items-start gap-2 text-[0.78rem] text-violet-100/90">
+              <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {outcome}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex flex-wrap gap-2">
+          {item.tags.map((tag) => (
+            <span key={tag} className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-semibold ${item.tagColor}`}>
+              <span className="h-1 w-1 rounded-full bg-current" />
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <p className="lyb-problem-metric text-center text-[0.7rem] font-bold uppercase tracking-wider text-white/90">{item.metric}</p>
+
+        <div className="lyb-problem-solution-footer flex flex-col items-center justify-center gap-3 border-t border-white/10 pt-4">
+          <div className="flex items-center justify-center gap-1.5">
+            {ITEMS.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`View solution ${i + 1}`}
+                className={`rounded-full transition-all duration-200 ${
+                  i === active ? 'h-1.5 w-4 bg-violet-500' : 'h-1.5 w-1.5 bg-white/20 hover:bg-white/35'
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => { navigateTo('/contact'); }}
+            className="lyb-problem-solution-cta group inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-5 py-2.5 text-[0.78rem] font-semibold shadow-md transition hover:bg-violet-500"
+          >
+            Get This Solution
+            <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function ProblemsSection() {
   const [active, setActive] = useState(null);
   const item = active !== null ? ITEMS[active] : null;
+  const toggleActive = (index) => setActive(active === index ? null : index);
 
   return (
     <section className="lyb-problems-section relative overflow-hidden bg-transparent">
@@ -548,171 +693,102 @@ function ProblemsSection() {
           </p>
         </motion.div>
 
-        {/* -- two-column body -- */}
-        <div className="grid items-stretch gap-5 lg:grid-cols-2 lg:gap-6">
+        {/* Mobile: accordion — solution opens directly under the tapped card */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="lg:hidden"
+        >
+          <p className="lyb-problems-list-label mb-3 text-[0.65rem] font-bold uppercase tracking-widest">
+            7 Common Failure Points
+          </p>
+          {active === null && (
+            <div className="mb-4">
+              <LybExpansionVisualPanel className="min-h-[320px] lg:min-h-[440px]" />
+            </div>
+          )}
+          <div className="flex flex-col gap-2">
+            {ITEMS.map((it, i) => (
+              <div key={i}>
+                <ProblemRowButton
+                  it={it}
+                  index={i}
+                  active={active}
+                  onToggle={() => toggleActive(i)}
+                />
+                <AnimatePresence>
+                  {active === i && (
+                    <ProblemSolutionPanel
+                      key={i}
+                      item={it}
+                      active={i}
+                      setActive={setActive}
+                      className="mt-2"
+                    />
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
-          {/* LEFT - 7 problem rows */}
+        {/* Desktop: two-column list + side panel */}
+        <div className="hidden items-stretch gap-5 lg:grid lg:grid-cols-2 lg:gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-[420px] flex-col lg:min-h-[440px]"
+            className="flex min-h-[440px] flex-col"
           >
-            <p className="lyb-problems-list-label mb-3 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest">7 Common Failure Points</p>
+            <p className="lyb-problems-list-label mb-3 shrink-0 text-[0.65rem] font-bold uppercase tracking-widest">
+              7 Common Failure Points
+            </p>
             <div className="flex flex-1 flex-col justify-between gap-2">
-            {ITEMS.map((it, i) => (
-              <motion.button
-                key={i}
-                onClick={() => setActive(active === i ? null : i)}
-                whileHover={{ x: active === i ? 0 : 4 }}
-                transition={{ duration: 0.15 }}
-                className={`lyb-problem-row w-full text-left flex items-center gap-3 px-4 py-3.5 rounded-xl border transition-all duration-200 ${
-                  active === i ? 'lyb-problem-row--active' : ''
-                }`}
-              >
-                <motion.div className={`lyb-problem-icon w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors duration-200 ${
-                  active === i ? 'lyb-problem-icon--active' : ''
-                }`}>
-                  {it.icon}
-                </motion.div>
-                <motion.div className="flex-1 min-w-0">
-                  <p className={`lyb-problem-title text-sm font-semibold leading-snug transition-colors duration-200 ${
-                    active === i ? 'lyb-problem-title--active' : ''
-                  }`}>{it.problem}</p>
-                  {active === i && (
-                    <motion.p
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      transition={{ duration: 0.2 }}
-                      className="lyb-problem-desc text-[0.72rem] mt-0.5 leading-snug overflow-hidden"
-                    >
-                      {it.problemDesc}
-                    </motion.p>
-                  )}
-                </motion.div>
-                <motion.div
-                  animate={{ rotate: active === i ? 90 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="shrink-0"
-                >
-                  <svg className={`lyb-problem-chevron w-4 h-4 transition-colors duration-200 ${active === i ? 'lyb-problem-chevron--active' : ''}`}
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </motion.div>
-              </motion.button>
-            ))}
+              {ITEMS.map((it, i) => (
+                <ProblemRowButton
+                  key={i}
+                  it={it}
+                  index={i}
+                  active={active}
+                  onToggle={() => toggleActive(i)}
+                />
+              ))}
             </div>
           </motion.div>
 
-          {/* RIGHT - solution panel */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-[420px] flex-col lg:min-h-[440px]"
+            className="flex min-h-[440px] flex-col"
           >
             <AnimatePresence mode="wait">
-            {item === null ? (
-              <motion.div
-                key="visual"
-                className="h-full flex-1"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.35 }}
-              >
-                <LybExpansionVisualPanel />
-              </motion.div>
-            ) : (
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, y: 14, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="theme-dark-surface card-premium-dark flex h-full flex-1 flex-col overflow-hidden rounded-2xl shadow-xl"
-              >
-                {/* card header */}
-                <div className="flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-violet-600 to-indigo-600">
-                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-[0.6rem] font-bold uppercase tracking-wider text-white">iFranchise Solution</p>
-                    <p className="text-base font-extrabold text-white leading-tight">{item.solution}</p>
-                  </div>
-                  <div className="ml-auto w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                    </svg>
-                  </div>
-                </div>
-
-                <motion.div className="flex flex-1 flex-col space-y-4 p-5">
-                  <div className="flex flex-wrap items-center gap-2 rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2">
-                    <svg className="h-3.5 w-3.5 shrink-0 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                    <span className="text-[0.72rem] font-semibold text-red-200">{item.problem}</span>
-                    <span className="text-white">{'->'}</span>
-                    <span className="text-[0.72rem] font-semibold text-white">Fixed</span>
-                  </div>
-
-                  <p className="text-[0.9rem] font-medium leading-relaxed text-white">{item.solutionDesc}</p>
-                  <p className="text-[0.8rem] leading-relaxed text-violet-100/75">{item.solutionDetail}</p>
-
-                  <ul className="space-y-2 rounded-xl border border-violet-500/20 bg-violet-500/5 p-3.5">
-                    {item.outcomes.map((outcome) => (
-                      <li key={outcome} className="flex items-start gap-2 text-[0.78rem] text-violet-100/90">
-                        <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        {outcome}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map((tag) => (
-                      <span key={tag} className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-semibold ${item.tagColor}`}>
-                        <span className="h-1 w-1 rounded-full bg-current" />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="text-[0.7rem] font-bold uppercase tracking-wider text-white/90">{item.metric}</p>
-
-                  <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-4">
-                    <div className="flex items-center gap-1.5">
-                      {ITEMS.map((_, i) => (
-                        <button key={i} onClick={() => setActive(i)}
-                          className={`rounded-full transition-all duration-200 ${
-                            i === active ? 'w-4 h-1.5 bg-violet-500' : 'w-1.5 h-1.5 bg-white/20 hover:bg-white/35'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => { navigateTo('/contact'); }}
-                      className="group inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-[0.78rem] font-semibold text-white transition hover:bg-white/20"
-                    >
-                      Get This Solution
-                      <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-                      </svg>
-                    </button>
-                  </div>
+              {item === null ? (
+                <motion.div
+                  key="visual"
+                  className="h-full flex-1"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <LybExpansionVisualPanel />
                 </motion.div>
-              </motion.div>
-            )}
+              ) : (
+                <ProblemSolutionPanel
+                  key={active}
+                  item={item}
+                  active={active}
+                  setActive={setActive}
+                  className="h-full flex-1"
+                />
+              )}
             </AnimatePresence>
           </motion.div>
-
         </div>
       </div>
     </section>
@@ -1078,8 +1154,10 @@ function CaseCard({ cs, isActive, onClick }) {
   const c = COLOR[cs.color];
   return (
     <button
+      type="button"
       onClick={onClick}
-      className={`lyb-proven-card w-full text-left p-4 rounded-xl border transition-all duration-200 ${
+      aria-expanded={isActive}
+      className={`lyb-proven-card w-full rounded-xl border p-4 text-left transition-all duration-200 ${
         isActive
           ? `lyb-proven-card-active ${c.border} ${c.bg}`
           : 'border-slate-200 bg-white hover:border-violet-200'
@@ -1089,26 +1167,169 @@ function CaseCard({ cs, isActive, onClick }) {
         <img
           src={cs.image}
           alt={cs.brand}
-          className="w-10 h-10 rounded-lg object-cover border border-white/10 shrink-0"
-          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=80&q=80'; }}
+          className="h-10 w-10 shrink-0 rounded-lg border border-white/10 object-cover"
+          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=80&q=80'; }}
         />
-        <div className="flex-1 min-w-0">
-          <p className="lyb-proven-card-title text-sm font-bold truncate">{cs.brand}</p>
+        <div className="min-w-0 flex-1">
+          <p className="lyb-proven-card-title truncate text-sm font-bold">{cs.brand}</p>
           <p className="lyb-proven-card-meta text-[0.65rem]">{cs.category}</p>
         </div>
-        <div className="text-right shrink-0">
-          <p className={`lyb-proven-card-stat text-sm font-extrabold ${isActive ? 'text-violet-700' : 'text-violet-600'}`}>{cs.roiGrowth}</p>
-          <p className="lyb-proven-card-meta text-[0.6rem]">{cs.timeline}</p>
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="text-right">
+            <p className={`lyb-proven-card-stat text-sm font-extrabold ${isActive ? 'text-violet-700' : 'text-violet-600'}`}>{cs.roiGrowth}</p>
+            <p className="lyb-proven-card-meta text-[0.6rem]">{cs.timeline}</p>
+          </div>
+          <svg
+            className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isActive ? 'rotate-90 text-violet-600' : 'text-slate-400'}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            aria-hidden
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
         </div>
       </div>
     </button>
   );
 }
 
+function CaseStudyDetail({ cs }) {
+  const c = COLOR[cs.color];
+
+  return (
+    <div className="lyb-proven-detail-panel space-y-4">
+      <div className="lyb-proven-detail flex items-start gap-3 rounded-2xl border border-slate-200 p-4 shadow-sm sm:items-center sm:gap-4 sm:p-5">
+        <img
+          src={cs.image}
+          alt={cs.brand}
+          className="h-12 w-12 shrink-0 rounded-xl border border-white/10 object-cover sm:h-14 sm:w-14"
+          onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=80&q=80'; }}
+        />
+        <div className="min-w-0 flex-1">
+          <p className={`mb-0.5 text-[0.65rem] font-bold uppercase tracking-wider ${c.accent}`}>{cs.category}</p>
+          <h3 className="lyb-proven-detail-title text-lg font-extrabold leading-tight sm:text-xl">{cs.brand}</h3>
+          <p className="lyb-proven-detail-body mt-0.5 text-[0.78rem] leading-snug">{cs.tagline}</p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className={`text-xl font-extrabold leading-none sm:text-2xl ${c.accent}`}>{cs.roiGrowth}</p>
+          <p className="lyb-proven-detail-body text-[0.62rem] leading-snug">Revenue Growth</p>
+          <p className="lyb-proven-detail-body text-[0.62rem] leading-snug">in {cs.timeline}</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="lyb-proven-before-panel rounded-2xl border border-violet-200 bg-violet-50 p-4">
+          <div className="mb-3 flex items-center gap-2">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-600/60">
+              <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider">Before iFranchise</p>
+          </div>
+          <div className="mb-3 grid grid-cols-2 gap-2">
+            {[
+              { label: 'Cities', value: cs.before.cities },
+              { label: 'Investors', value: cs.before.investors },
+              { label: 'Revenue', value: cs.before.revenue },
+              { label: 'Units', value: cs.before.units },
+            ].map((m) => (
+              <div key={m.label} className="lyb-proven-metric-tile flex min-h-[3.5rem] flex-col items-center justify-center rounded-lg border border-slate-200 bg-white p-2 text-center">
+                <span className="lyb-proven-metric-label text-[0.58rem] font-medium uppercase tracking-wide">{m.label}</span>
+                <span className="lyb-proven-metric-value mt-1 line-clamp-2 text-xs font-extrabold leading-tight">{m.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-1.5">
+            {cs.before.problems.map((p) => (
+              <div key={p} className="flex items-start gap-1.5">
+                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-violet-400" />
+                <span className="lyb-proven-list-item text-[0.68rem] leading-snug">{p}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className={`lyb-proven-after-panel rounded-2xl border p-4 ${c.border} ${c.bg}`}>
+          <div className="mb-3 flex items-center gap-2">
+            <div className={`flex h-5 w-5 items-center justify-center rounded-full ${c.dot}`}>
+              <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider text-violet-700">After iFranchise</p>
+          </div>
+          <div className="mb-3 grid grid-cols-2 gap-2">
+            {[
+              { label: 'Cities', value: cs.after.cities },
+              { label: 'Investors', value: cs.after.investors },
+              { label: 'Revenue', value: cs.after.revenue },
+              { label: 'Units', value: cs.after.units },
+            ].map((m) => (
+              <div key={m.label} className="lyb-proven-metric-tile flex min-h-[3.5rem] flex-col items-center justify-center rounded-lg border border-violet-200 bg-white p-2 text-center">
+                <span className="lyb-proven-metric-label text-[0.58rem] font-medium uppercase tracking-wide">{m.label}</span>
+                <span className="lyb-proven-metric-value mt-1 line-clamp-2 text-xs font-extrabold leading-tight text-violet-800">{m.value}</span>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-1.5">
+            {cs.after.wins.map((w) => (
+              <div key={w} className="flex items-start gap-1.5">
+                <span className={`mt-1.5 h-1 w-1 shrink-0 rounded-full ${c.dot}`} />
+                <span className="lyb-proven-list-item text-[0.68rem] leading-snug">{w}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
+          <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">Revenue Growth</p>
+          <p className="lyb-proven-chart-meta mt-1 text-[0.62rem] leading-snug">
+            <span className="font-semibold text-violet-700">{cs.before.revenue}</span>
+            <span className="mx-1 text-slate-400">→</span>
+            <span className="font-semibold text-violet-700">{cs.after.revenue}</span>
+          </p>
+          <div className="mt-3">
+            <Sparkline points={cs.revenuePoints} />
+          </div>
+          <div className="mt-2 flex items-center justify-between">
+            <span className="lyb-proven-chart-meta text-[0.6rem]">Month 1</span>
+            <span className="lyb-proven-chart-meta text-[0.6rem]">Month {cs.revenuePoints.length}</span>
+          </div>
+        </div>
+
+        <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
+          <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">City Expansion</p>
+          <p className="lyb-proven-chart-meta mt-1 text-[0.62rem] leading-snug">
+            <span className="font-semibold text-violet-700">{cs.before.cities}</span>
+            <span className="mx-1 text-slate-400">→</span>
+            <span className="font-semibold text-violet-700">{cs.after.cities} cities</span>
+          </p>
+          <div className="mt-3">
+            <CityDots cities={cs.cityData} color={cs.color} />
+          </div>
+          <div className="lyb-proven-chart-footer mt-3 flex items-start gap-2 border-t border-slate-200 pt-2">
+            <svg className="mt-0.5 h-3 w-3 shrink-0 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            <span className="lyb-proven-chart-meta text-[0.62rem] leading-snug">
+              {cs.after.investors} investors across {cs.after.cities} cities
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CaseStudiesSection() {
   const [active, setActive] = useState(0);
   const cs = CASES[active];
-  const c = COLOR[cs.color];
+  const toggleCase = (index) => setActive(active === index ? null : index);
 
   return (
     <section className="lyb-proven-section relative overflow-hidden bg-transparent">
@@ -1139,10 +1360,64 @@ function CaseStudiesSection() {
           </p>
         </motion.div>
 
-        {/* two-column layout */}
-        <div className="grid lg:grid-cols-[320px_1fr] gap-8 items-stretch">
+        {/* Mobile: accordion — detail opens under the selected card */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="lg:hidden"
+        >
+          <p className="lyb-proven-sidebar-label mb-4 text-[0.65rem] font-bold uppercase tracking-widest">
+            Select a Case Study
+          </p>
+          <div className="space-y-3">
+            {CASES.map((caseItem, i) => (
+              <div key={caseItem.id}>
+                <CaseCard
+                  cs={caseItem}
+                  isActive={active === i}
+                  onClick={() => toggleCase(i)}
+                />
+                <AnimatePresence>
+                  {active === i && (
+                    <motion.div
+                      key={caseItem.id}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-3">
+                        <CaseStudyDetail cs={caseItem} />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
 
-          {/* LEFT - case selector + CTA */}
+          <p className="lyb-proven-sidebar-note mt-4 text-center text-[0.62rem] leading-relaxed">
+            * Results are representative of brands that completed the full iFranchise expansion program.
+          </p>
+
+          <div className="lyb-proven-sidebar-cta mt-5 border-t border-violet-500/15 pt-5 text-center">
+            <p className="lyb-proven-footer-cta mx-auto mb-4 max-w-xs text-sm leading-snug">
+              Ready to write your own success story?
+            </p>
+            <CtaButton
+              className="lyb-proven-sidebar-cta-btn mx-auto w-full max-w-xs justify-center"
+              onClick={() => { navigateTo('/contact'); }}
+            >
+              Start Your Franchise Journey
+            </CtaButton>
+          </div>
+        </motion.div>
+
+        {/* Desktop: sidebar + detail panel */}
+        <div className="hidden items-stretch gap-8 lg:grid lg:grid-cols-[320px_1fr]">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -1150,10 +1425,17 @@ function CaseStudiesSection() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col"
           >
-            <p className="lyb-proven-sidebar-label mb-4 text-[0.65rem] font-bold uppercase tracking-widest">Select a Case Study</p>
+            <p className="lyb-proven-sidebar-label mb-4 text-[0.65rem] font-bold uppercase tracking-widest">
+              Select a Case Study
+            </p>
             <div className="space-y-3">
-              {CASES.map((c, i) => (
-                <CaseCard key={c.id} cs={c} isActive={active === i} onClick={() => setActive(i)} />
+              {CASES.map((caseItem, i) => (
+                <CaseCard
+                  key={caseItem.id}
+                  cs={caseItem}
+                  isActive={active === i}
+                  onClick={() => setActive(i)}
+                />
               ))}
             </div>
 
@@ -1161,12 +1443,12 @@ function CaseStudiesSection() {
               * Results are representative of brands that completed the full iFranchise expansion program.
             </p>
 
-            <div className="lyb-proven-sidebar-cta mt-5 border-t border-violet-500/15 pt-5 lg:mt-auto lg:pt-6">
-              <p className="lyb-proven-footer-cta mb-4 text-left text-sm leading-snug">
+            <div className="lyb-proven-sidebar-cta mt-5 border-t border-violet-500/15 pt-5 text-center lg:mt-auto lg:pt-6">
+              <p className="lyb-proven-footer-cta mx-auto mb-4 max-w-xs text-sm leading-snug">
                 Ready to write your own success story?
               </p>
               <CtaButton
-                className="lyb-proven-sidebar-cta-btn w-full justify-center"
+                className="lyb-proven-sidebar-cta-btn mx-auto w-full max-w-xs justify-center"
                 onClick={() => { navigateTo('/contact'); }}
               >
                 Start Your Franchise Journey
@@ -1174,144 +1456,18 @@ function CaseStudiesSection() {
             </div>
           </motion.div>
 
-          {/* RIGHT - case detail */}
           <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4"
-            >
-              {/* case header */}
-              <div className="lyb-proven-detail flex items-center gap-4 rounded-2xl border border-slate-200 p-5 shadow-sm">
-                <img
-                  src={cs.image}
-                  alt={cs.brand}
-                  className="w-14 h-14 rounded-xl object-cover border border-white/10 shrink-0"
-                  onError={e => { e.target.src = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=80&q=80'; }}
-                />
-                <div className="flex-1">
-                  <p className={`text-[0.65rem] font-bold uppercase tracking-wider ${c.accent} mb-0.5`}>{cs.category}</p>
-                  <h3 className="lyb-proven-detail-title text-xl font-extrabold">{cs.brand}</h3>
-                  <p className="lyb-proven-detail-body text-[0.78rem]">{cs.tagline}</p>
-                </div>
-                <div className="text-right shrink-0">
-                  <p className={`text-2xl font-extrabold ${c.accent}`}>{cs.roiGrowth}</p>
-                  <p className="lyb-proven-detail-body text-[0.65rem]">Revenue Growth</p>
-                  <p className="lyb-proven-detail-body text-[0.65rem]">in {cs.timeline}</p>
-                </div>
-              </div>
-
-              {/* before vs after */}
-              <div className="grid grid-cols-2 gap-3">
-                {/* before */}
-                <div className="lyb-proven-before-panel rounded-2xl border border-violet-200 bg-violet-50 p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-5 h-5 rounded-full bg-violet-600/60 flex items-center justify-center">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                      </svg>
-                    </div>
-                    <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider">Before iFranchise</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {[
-                      { label: 'Cities',    value: cs.before.cities    },
-                      { label: 'Investors', value: cs.before.investors },
-                      { label: 'Revenue',   value: cs.before.revenue   },
-                      { label: 'Units',     value: cs.before.units     },
-                    ].map((m, i) => (
-                      <div key={i} className="lyb-proven-metric-tile flex flex-col rounded-lg border border-slate-200 bg-white p-2">
-                        <span className="lyb-proven-metric-value text-sm font-extrabold">{m.value}</span>
-                        <span className="lyb-proven-metric-label text-[0.6rem]">{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-1">
-                    {cs.before.problems.map((p, i) => (
-                      <div key={i} className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-violet-400 shrink-0" />
-                        <span className="lyb-proven-list-item text-[0.68rem]">{p}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* after */}
-                <div className={`lyb-proven-after-panel rounded-2xl border p-4 ${c.border} ${c.bg}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className={`w-5 h-5 rounded-full ${c.dot} flex items-center justify-center`}>
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                      </svg>
-                    </div>
-                    <p className="lyb-proven-panel-label text-[0.68rem] font-bold uppercase tracking-wider text-violet-700">After iFranchise</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {[
-                      { label: 'Cities',    value: cs.after.cities    },
-                      { label: 'Investors', value: cs.after.investors },
-                      { label: 'Revenue',   value: cs.after.revenue   },
-                      { label: 'Units',     value: cs.after.units     },
-                    ].map((m, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.3, delay: i * 0.07 }}
-                        className="lyb-proven-metric-tile flex flex-col rounded-lg border border-violet-200 bg-white p-2"
-                      >
-                        <span className="lyb-proven-metric-value text-sm font-extrabold text-violet-800">{m.value}</span>
-                        <span className="lyb-proven-metric-label text-[0.6rem]">{m.label}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                  <div className="space-y-1">
-                    {cs.after.wins.map((w, i) => (
-                      <div key={i} className="flex items-center gap-1.5">
-                        <span className={`w-1 h-1 rounded-full ${c.dot} shrink-0`} />
-                        <span className="lyb-proven-list-item text-[0.68rem]">{w}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* revenue chart + city expansion */}
-              <div className="grid grid-cols-2 gap-3">
-
-                {/* revenue growth chart */}
-                <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">Revenue Growth</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{`${cs.before.revenue} → ${cs.after.revenue}`}</span>
-                  </div>
-                  <Sparkline points={cs.revenuePoints} />
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="lyb-proven-chart-meta text-[0.6rem]">Month 1</span>
-                    <span className="lyb-proven-chart-meta text-[0.6rem]">Month {cs.revenuePoints.length}</span>
-                  </div>
-                </div>
-
-                {/* city expansion */}
-                <div className="lyb-proven-chart-panel rounded-2xl border border-slate-200 p-4 shadow-sm">
-                  <div className="flex items-center justify-between mb-3">
-                    <p className="lyb-proven-chart-label text-[0.65rem] font-bold uppercase tracking-wider">City Expansion</p>
-                    <span className={`text-[0.65rem] font-bold ${c.accent}`}>{`${cs.before.cities} → ${cs.after.cities} cities`}</span>
-                  </div>
-                  <CityDots cities={cs.cityData} color={cs.color} />
-                  <div className="lyb-proven-chart-footer mt-3 flex items-center gap-2 border-t border-slate-200 pt-2">
-                    <svg className="h-3 w-3 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    </svg>
-                    <span className="lyb-proven-chart-meta text-[0.62rem]">{cs.after.investors} investors across {cs.after.cities} cities</span>
-                  </div>
-                </div>
-              </div>
-
-            </motion.div>
+            {active !== null && cs && (
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <CaseStudyDetail cs={cs} />
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 

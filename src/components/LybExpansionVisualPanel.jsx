@@ -12,7 +12,7 @@ const CAPABILITIES = [
 
 const STEPS = ['Audit', 'Model', 'Match', 'Scale'];
 
-export default function LybExpansionVisualPanel() {
+export default function LybExpansionVisualPanel({ className = '' }) {
   const [activeStep, setActiveStep] = useState(0);
   const [activeCap, setActiveCap] = useState(0);
 
@@ -27,7 +27,7 @@ export default function LybExpansionVisualPanel() {
 
   return (
     <motion.div
-      className="lyb-exp-visual-panel relative flex h-full min-h-[420px] w-full flex-col overflow-hidden rounded-2xl border lg:min-h-[440px]"
+      className={`lyb-exp-visual-panel relative flex h-full min-h-[420px] w-full flex-col overflow-hidden rounded-2xl border lg:min-h-[440px] ${className}`.trim()}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
