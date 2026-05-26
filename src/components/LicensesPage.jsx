@@ -76,16 +76,16 @@ export default LicensesPage;
 
 function LegalSection({ index, title, body }) {
   return (
-    <section className="py-8 border-b border-violet-500/20 last:border-0">
-      <div className="flex gap-5 items-baseline mb-3">
-        <span className="text-xs font-semibold text-white/60 tabular-nums w-6 shrink-0 pt-0.5">
+    <section className="border-b border-violet-500/20 py-6 last:border-0 sm:py-8">
+      <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-baseline sm:gap-5">
+        <span className="w-6 shrink-0 pt-0.5 text-xs font-semibold tabular-nums text-white/60">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <h2 className="text-lg sm:text-xl font-semibold text-white leading-snug">
+        <h2 className="text-lg font-semibold leading-snug text-white sm:text-xl">
           {title}
         </h2>
       </div>
-      <p className="text-[15px] sm:text-base text-white leading-relaxed pl-11">
+      <p className="text-[15px] leading-relaxed text-white sm:pl-11 sm:text-base">
         {body}
       </p>
     </section>
@@ -94,7 +94,7 @@ function LegalSection({ index, title, body }) {
 
 function LegalPageLayout({ title, subtitle, sections, badge }) {
   return (
-    <div className="legal-page min-h-screen relative z-10 text-white">
+    <div className="legal-page relative z-10 min-h-screen overflow-x-hidden text-white">
       {/* Page Header */}
       <div className="border-b border-violet-500/20 card-premium-dark-inner rounded-none border-x-0 border-t-0">
         <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
@@ -117,7 +117,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
 
       {/* Document Body */}
       <div className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-        <div className="card-premium-dark rounded-3xl p-6 sm:p-10 shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+        <div className="card-premium-dark overflow-hidden rounded-3xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:p-8 md:p-10">
           {sections.map((section, i) => (
             <LegalSection
               key={i}

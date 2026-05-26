@@ -287,10 +287,7 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
                 <ul className="footer-links-list">
                   {col.links.map((link) => (
                     <li key={link.label} className="footer-links-list__item">
-                      <FooterJumpLink
-                        href={link.path}
-                        onClick={(e) => { e.preventDefault(); navigateTo(link.path); }}
-                      >
+                      <FooterJumpLink href={link.path}>
                         {link.label}
                       </FooterJumpLink>
                       {link.dot !== 'none' && <LinkDot type={link.dot} color={link.dotColor} />}
@@ -317,7 +314,6 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
                     key={item.label}
                     href={item.path}
                     className="footer-jump-link--legal"
-                    onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
                   >
                     {item.label}
                   </FooterJumpLink>

@@ -1597,15 +1597,59 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
 }
 
 .footer-jump-link {
+  position: relative;
   display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 0;
   font-size: 14px;
   font-weight: 400;
   color: #ffffff !important;
   text-decoration: none;
   line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.footer-jump-link__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.footer-jump-link__chars {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+
+@media (max-width: 1023px), (pointer: coarse) {
+  .footer-jump-link__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: nowrap;
+  }
+
+  .footer-jump-link__chars {
+    display: none !important;
+  }
+
+  .footer-jump-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.25rem 0;
+  }
 }
 
 .footer-jump-link__word {

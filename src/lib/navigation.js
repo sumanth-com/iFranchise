@@ -120,20 +120,34 @@ export function restoreScrollWithRetry(targetY, { behavior = 'instant', maxAttem
   });
 }
 
-export function scrollToHashSection() {
+export function scrollToHashSection({ maxAttempts = 16 } = {}) {
   const hash = window.location.hash;
   if (!hash) return false;
-  const target = document.querySelector(hash);
-  if (!target) return false;
-  const navbar = document.querySelector('header');
-  const navbarOffset = navbar ? navbar.offsetHeight : 80;
-  const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarOffset - 12;
-  const top = Math.max(targetTop, 0);
-  if (window.__lenis) {
-    window.__lenis.scrollTo(top, { duration: 1.2 });
-  } else {
-    window.scrollTo({ top, behavior: 'smooth' });
-  }
+
+  let attempts = 0;
+
+  const tryScroll = () => {
+    const target = document.querySelector(hash);
+    if (!target) {
+      if (attempts < maxAttempts) {
+        attempts += 1;
+        requestAnimationFrame(tryScroll);
+      }
+      return;
+    }
+
+    const navbar = document.querySelector('header');
+    const navbarOffset = navbar ? navbar.offsetHeight : 80;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarOffset - 12;
+    const top = Math.max(targetTop, 0);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(top, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
+  tryScroll();
   return true;
 }
 

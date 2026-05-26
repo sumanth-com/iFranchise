@@ -11,6 +11,10 @@ export const SITE_CONTACT_PHONE = '9129130303';
 export const SITE_CONTACT_ADDRESS =
   'Innov8 Coworking Space Mantri Bellandur Outer Ring Road';
 
+/** Shorter single-line label for compact legal / footer rows */
+export const SITE_CONTACT_ADDRESS_COMPACT =
+  'Innov8, Mantri Bellandur ORR';
+
 export const SITE_CONTACT_PHONE_TEL = `+91${SITE_CONTACT_PHONE}`;
 
 export const SITE_CONTACT_PHONE_DISPLAY = `+91 ${SITE_CONTACT_PHONE.slice(0, 5)} ${SITE_CONTACT_PHONE.slice(5)}`;
