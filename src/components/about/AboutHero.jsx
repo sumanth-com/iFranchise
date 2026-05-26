@@ -40,7 +40,7 @@ const PATHWAYS = [
 ];
 
 const STATS = [
-  { value: '500+', label: 'Franchise brands' },
+  { value: '100+', label: 'Franchise brands' },
   { value: '10K+', label: 'Investors guided' },
   { value: 'Pan-India', label: 'Market coverage' },
 ];

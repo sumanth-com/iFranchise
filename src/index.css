@@ -1513,6 +1513,52 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
   transform: translateX(3px);
 }
 
+.prefooter-brand-names {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.prefooter-brand-names__label {
+  margin: 0 auto 1.25rem;
+  max-width: 22rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.prefooter-brand-names__mask {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.prefooter-brand-names__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 2.75rem;
+}
+
+.prefooter-brand-names__item {
+  flex-shrink: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  user-select: none;
+  transition: color 0.22s ease, opacity 0.22s ease;
+}
+
+.prefooter-brand-names__item:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
 .footer-copyright {
   font-size: 13px;
   color: #ffffff;
@@ -3733,8 +3779,98 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-pill 
 
 /* Desktop only: keep each headline line on one row */
 @media (min-width: 1280px) {
+  #main-content .services-page > #services-hero.services-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .services-page .services-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.25rem;
+    width: 100%;
+    max-width: 52rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .services-page .services-hero-title {
+    margin: 0;
+    font-size: clamp(2.5rem, 3.8vw, 3.35rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
   .services-page .services-hero-title .services-hero-title__line {
     white-space: nowrap;
+  }
+
+  .services-page .services-hero-lead {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .services-page .services-hero-lead__line {
+    display: block;
+  }
+
+  .services-page .services-hero-lead__line:not(:last-child)::after {
+    content: none;
+  }
+
+  .services-page .services-hero__cta-wrap {
+    margin: 0;
+    padding-top: 0.25rem;
+  }
+
+  .services-page .services-hero__cta-wrap .site-cta {
+    min-height: 3.25rem;
+    padding-inline: 2rem;
+    font-size: 1rem;
+  }
+
+  .services-page .services-hero-social {
+    gap: 1rem;
+    width: 100%;
+    max-width: 36rem;
+    margin: 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(139, 92, 246, 0.18);
+  }
+
+  html[data-theme='light'] .services-page .services-hero-social {
+    border-top-color: rgba(124, 58, 237, 0.12);
+  }
+
+  .services-page .services-hero-social__row {
+    gap: 1.25rem 2rem;
+  }
+
+  .services-page .services-hero-social__review {
+    margin-top: 0.625rem;
+    font-size: 0.9375rem;
+  }
+
+  .services-page .services-hero-social__trust {
+    max-width: 32rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .services-page .services-hero-avatars__img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .services-page .services-hero-star {
+    width: 1.125rem;
+    height: 1.125rem;
   }
 }
 

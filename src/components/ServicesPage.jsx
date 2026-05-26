@@ -724,7 +724,7 @@ export default function ServicesPage() {
       {/* HERO */}
       <section
         id="services-hero"
-        className="page-hero-light services-hero relative z-10 flex flex-col items-center justify-center overflow-hidden bg-transparent px-5 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 lg:px-8 xl:min-h-[calc(100vh-80px)]"
+        className="page-hero-light services-hero relative z-10 flex flex-col items-center justify-center overflow-hidden bg-transparent px-5 pb-8 pt-8 sm:px-6 sm:pb-10 sm:pt-9 lg:px-8 xl:min-h-[calc(100vh-80px)] xl:px-10 xl:py-16"
       >
         <div className="page-hero-light__bg pointer-events-none absolute inset-0" aria-hidden>
           <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
@@ -758,7 +758,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className={`services-hero-lead mx-auto max-w-[720px] text-base leading-relaxed sm:mb-8 sm:text-lg sm:leading-snug md:text-xl ${isLight ? 'text-slate-600' : 'text-white/90'}`}
+            className={`services-hero-lead mx-auto max-w-[720px] text-base leading-relaxed sm:text-lg sm:leading-snug md:text-xl ${isLight ? 'text-slate-600' : 'text-white/90'}`}
           >
             <span className="services-hero-lead__line">
               iFranchise helps brands document their model, attract investors,
@@ -788,9 +788,9 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-            className="services-hero-social flex flex-col items-center gap-3"
+            className="services-hero-social flex w-full max-w-full flex-col items-center gap-3"
           >
-            <div className="services-hero-social__row flex w-full max-w-full flex-wrap items-center justify-center gap-3 sm:gap-5">
+            <div className="services-hero-social__row flex w-full max-w-full flex-wrap items-center justify-center gap-3 sm:gap-4">
               <ServicesHeroAvatars isLight={isLight} />
               <div className="services-hero-social__rating flex flex-col items-center justify-center text-center">
                 <ServicesHeroStars isLight={isLight} />

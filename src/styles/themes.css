@@ -721,7 +721,7 @@ html[data-theme='light'] .prefooter-unified-card h2,
 html[data-theme='light'] .prefooter-unified-card h3,
 html[data-theme='light'] .prefooter-unified-card p,
 html[data-theme='light'] .prefooter-unified-card li,
-html[data-theme='light'] .prefooter-unified-card span:not(.prefooter-cta-btn *):not(.prefooter-cta-btn):not(.footer-hiring-badge):not(.footer-hiring-badge *):not(.footer-social-3d *):not(.footer-social-3d),
+html[data-theme='light'] .prefooter-unified-card span:not(.prefooter-cta-btn *):not(.prefooter-cta-btn):not(.footer-hiring-badge):not(.footer-hiring-badge *):not(.footer-social-3d *):not(.footer-social-3d):not(.prefooter-brand-names *):not(.prefooter-brand-names),
 html[data-theme='light'] .prefooter-unified-card [style*='color: #ffffff']:not(.prefooter-cta-btn):not(.prefooter-cta-btn *),
 html[data-theme='light'] .prefooter-unified-card [style*='color:#ffffff']:not(.prefooter-cta-btn):not(.prefooter-cta-btn *) {
   color: #0b0f19 !important;

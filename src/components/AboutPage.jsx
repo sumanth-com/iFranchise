@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import AboutHero from './about/AboutHero';
 import IfranchiseAcronymSection from './about/IfranchiseAcronymSection';
-import AboutTestimonialPhoto from './about/AboutTestimonialPhoto';
 import LeadershipSection from './LeadershipSection';
 import CtaButton from './ui/CtaButton';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
@@ -484,16 +483,9 @@ function AboutPage() {
                   key={`${testimonial.id}-${idx}`}
                   className="w-[420px] rounded-3xl card-premium-dark border border-violet-500/25 p-5 shadow-[0_12px_40px_rgba(0,0,0,0.45)]"
                 >
-                  <div className="flex items-center gap-3">
-                    <AboutTestimonialPhoto
-                      src={testimonial.avatar}
-                      name={testimonial.name}
-                      variant="card"
-                    />
-                    <div className="flex-1">
-                      <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
-                      <p className="text-sm text-white">{testimonial.company}</p>
-                    </div>
+                  <div className="testimonial-card__header">
+                    <p className="text-2xl font-semibold tracking-tight text-white">{testimonial.name}</p>
+                    <p className="text-sm text-white/80">{testimonial.company}</p>
                   </div>
                   <div className="mt-4 border-t border-violet-500/25 pt-4">
                     <p className="text-base leading-relaxed text-white">{testimonial.quote}</p>
@@ -503,19 +495,9 @@ function AboutPage() {
             </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-white">
-            <div className="flex -space-x-2">
-              {ABOUT_PAGE_TESTIMONIALS.map((testimonial, i) => (
-                <AboutTestimonialPhoto
-                  key={`${testimonial.id}-strip-${i}`}
-                  src={testimonial.avatar}
-                  name={testimonial.name}
-                  variant="strip"
-                />
-              ))}
-            </div>
-            <p>Over 15,725+ people gave us review</p>
-          </div>
+          <p className="mt-8 text-center text-sm text-white/90">
+            Over 15,725+ people gave us review
+          </p>
         </section>
       </div>
 

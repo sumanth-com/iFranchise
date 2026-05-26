@@ -35,6 +35,23 @@ import LybExpansionVisualPanel from './LybExpansionVisualPanel';
 const LYB_SECTION = 'relative overflow-hidden bg-transparent py-7 lg:py-9';
 const LYB_CONTAINER = 'relative z-10 max-w-[1280px] mx-auto px-6 lg:px-10';
 const LYB_REVEAL_HERO_FORM = 'lyb-reveal-hero-form';
+const LYB_MOBILE_TABLET_MQ = '(max-width: 1279px)';
+
+function useIsMobileTablet() {
+  const [isMobileTablet, setIsMobileTablet] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia(LYB_MOBILE_TABLET_MQ).matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(LYB_MOBILE_TABLET_MQ);
+    const onChange = () => setIsMobileTablet(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return isMobileTablet;
+}
 
 function scrollToHeroInquiry() {
   window.dispatchEvent(new CustomEvent(LYB_REVEAL_HERO_FORM));
@@ -67,7 +84,7 @@ function HeroFormTeaser() {
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: 18, scale: 0.98 }}
       transition={LYB_REVEAL}
-      className="lyb-hero-form-teaser absolute inset-0 hidden h-full max-h-full min-h-0 w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-violet-400/40 bg-violet-500/[0.08] px-8 py-8 text-center backdrop-blur-sm lg:flex"
+      className="lyb-hero-form-teaser absolute inset-0 hidden h-full max-h-full min-h-0 w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-violet-400/40 bg-violet-500/[0.08] px-8 py-8 text-center backdrop-blur-sm xl:flex"
       style={{ willChange: 'transform, opacity' }}
     >
       <motion.div
@@ -129,7 +146,12 @@ function HeroFormTeaser() {
 }
 
 function ListYourBrandHeroSection() {
+  const isMobileTablet = useIsMobileTablet();
   const [formRevealed, setFormRevealed] = useState(false);
+  const showForm = isMobileTablet || formRevealed;
+  const showDesktopCta = !isMobileTablet && !formRevealed;
+  const showHeroExtra = isMobileTablet || !formRevealed;
+  const compactHeroTitle = formRevealed && !isMobileTablet;
 
   useEffect(() => {
     const onReveal = () => setFormRevealed(true);
@@ -153,7 +175,7 @@ function ListYourBrandHeroSection() {
           <motion.div
             layout
             className={`grid h-full min-h-0 gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(520px,620px)] lg:items-center lg:gap-8 xl:gap-12 ${
-              formRevealed ? 'grid-rows-[auto_minmax(0,1fr)] lg:grid-rows-1' : ''
+              showForm ? 'grid-rows-[auto_minmax(0,1fr)] xl:grid-rows-1' : ''
             }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -164,7 +186,7 @@ function ListYourBrandHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={LYB_ENTER}
-              className={`lyb-hero-copy flex min-h-0 flex-col justify-center ${formRevealed ? 'gap-2' : 'gap-3 sm:gap-4'}`}
+              className={`lyb-hero-copy flex min-h-0 flex-col justify-center ${compactHeroTitle ? 'gap-2' : 'gap-3 sm:gap-4'}`}
             >
               <span className="lyb-hero-badge inline-flex w-fit items-center gap-2 rounded-full border border-violet-400/40 bg-violet-500/15 px-3 py-1 text-[0.62rem] font-bold uppercase tracking-widest text-violet-100">
                 <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
@@ -174,15 +196,16 @@ function ListYourBrandHeroSection() {
                 layout
                 transition={LYB_FAST}
                 className={`lyb-hero-title max-w-lg ${TYPE.pageHero} text-white ${
-                  formRevealed ? '!text-2xl sm:!text-3xl lg:!text-[2rem]' : 'lg:!text-[2.5rem]'
+                  compactHeroTitle ? '!text-2xl sm:!text-3xl lg:!text-[2rem]' : 'lg:!text-[2.5rem]'
                 }`}
               >
                 List your brand. Scale with capital.
               </motion.h1>
               <AnimatePresence initial={false}>
-                {!formRevealed && (
+                {showHeroExtra && (
                   <motion.div
                     key="hero-extra"
+                    className="lyb-hero-extra w-full"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
@@ -199,12 +222,12 @@ function ListYourBrandHeroSection() {
                   </motion.div>
                 )}
               </AnimatePresence>
-              {!formRevealed && (
+              {showDesktopCta && (
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, ...LYB_ENTER }}
-                  className="mt-1 flex flex-col gap-2"
+                  className="mt-1 hidden flex-col gap-2 xl:flex"
                 >
                   <motion.button
                     type="button"
@@ -239,11 +262,11 @@ function ListYourBrandHeroSection() {
               initial={{ opacity: 0, x: 32 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, ...LYB_ENTER }}
-              className={`relative min-h-0 w-full ${formRevealed ? 'block h-full max-h-full' : 'hidden lg:block lg:h-full'}`}
+              className={`lyb-hero-form-slot relative min-h-0 w-full ${showForm ? 'block h-full max-h-full' : 'hidden xl:block xl:h-full'}`}
             >
               <AnimatePresence initial={false}>
-                {formRevealed ? (
-                  <HeroBrandInquiryForm key="form" id="hero-brand-inquiry" fitViewport />
+                {showForm ? (
+                  <HeroBrandInquiryForm key="form" id="hero-brand-inquiry" fitViewport={!isMobileTablet} />
                 ) : (
                   <HeroFormTeaser key="teaser" />
                 )}

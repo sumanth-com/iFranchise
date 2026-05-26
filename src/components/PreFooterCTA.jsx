@@ -2,72 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import brandLogo from '../assets/BrandNav.png';
 import FooterJumpLink from './footer/FooterJumpLink';
 import FooterSocialButtons from './footer/FooterSocialButtons';
+import { getPartnerBrandLogos } from '../data/franchiseData';
 import { navigateTo } from '../lib/navigation';
 import { TYPE } from '../lib/typography.js';
 import { SITE_CONTACT_ADDRESS, SITE_CONTACT_MAPS_URL } from '../data/siteContact';
 
-// -- Inline SVG logos ----------------------------------------------------------
-const LOGOS = [
-  {
-    name: 'Quantum',
-    svg: (
-      <svg viewBox="0 0 96 24" fill="currentColor" className="h-5 w-auto">
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-        <text x="28" y="17" fontSize="13" fontWeight="700" fontFamily="Inter,system-ui,sans-serif" letterSpacing="-0.3">Quantum</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'APEX',
-    svg: (
-      <svg viewBox="0 0 68 24" fill="currentColor" className="h-5 w-auto">
-        <polygon points="12,3 21,21 3,21" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
-        <text x="28" y="17" fontSize="13" fontWeight="800" fontFamily="Inter,system-ui,sans-serif" letterSpacing="0.5">APEX</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'Celestial',
-    svg: (
-      <svg viewBox="0 0 92 24" fill="currentColor" className="h-5 w-auto">
-        <path d="M12 3 L14.5 9.5 L21 12 L14.5 14.5 L12 21 L9.5 14.5 L3 12 L9.5 9.5 Z" />
-        <text x="28" y="17" fontSize="13" fontWeight="700" fontFamily="Inter,system-ui,sans-serif" letterSpacing="-0.3">Celestial</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'Nexus',
-    svg: (
-      <svg viewBox="0 0 76 24" fill="currentColor" className="h-5 w-auto">
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path d="M7 12h10M12 7v10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <text x="28" y="17" fontSize="13" fontWeight="700" fontFamily="Inter,system-ui,sans-serif" letterSpacing="-0.3">Nexus</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'Orbit',
-    svg: (
-      <svg viewBox="0 0 70 24" fill="currentColor" className="h-5 w-auto">
-        <ellipse cx="12" cy="12" rx="9" ry="5" fill="none" stroke="currentColor" strokeWidth="1.8" />
-        <circle cx="12" cy="12" r="2.5" />
-        <text x="28" y="17" fontSize="13" fontWeight="700" fontFamily="Inter,system-ui,sans-serif" letterSpacing="-0.3">Orbit</text>
-      </svg>
-    ),
-  },
-  {
-    name: 'Vanta',
-    svg: (
-      <svg viewBox="0 0 70 24" fill="currentColor" className="h-5 w-auto">
-        <path d="M3 5 L12 19 L21 5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        <text x="28" y="17" fontSize="13" fontWeight="700" fontFamily="Inter,system-ui,sans-serif" letterSpacing="-0.3">Vanta</text>
-      </svg>
-    ),
-  },
-];
-
-const LOGO_TRACK = [...LOGOS, ...LOGOS, ...LOGOS];
+const PARTNER_BRAND_NAMES = getPartnerBrandLogos(12).map((p) => p.name);
+const BRAND_NAME_TRACK =
+  PARTNER_BRAND_NAMES.length > 0
+    ? [...PARTNER_BRAND_NAMES, ...PARTNER_BRAND_NAMES]
+    : [];
 
 // -- Link dot indicator --------------------------------------------------------
 function LinkDot({ type, color }) {
@@ -281,20 +225,22 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
             </button>
           </div>
 
-          {/* Logo scroll */}
-          <div style={{ ...reveal(0.54), overflow: 'hidden', maskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 12%, black 88%, transparent)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '52px', width: 'max-content', animation: 'preFooterScroll 26s linear infinite' }}>
-              {LOGO_TRACK.map((logo, i) => (
-                <div
-                  key={`${logo.name}-${i}`}
-                  style={{ color: 'rgba(255,255,255,0.5)', opacity: 1, flexShrink: 0, transition: 'opacity 0.22s ease, color 0.22s ease, transform 0.22s ease', cursor: 'default', userSelect: 'none' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.transform = 'scale(1.08)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.transform = 'scale(1)'; }}
-                >
-                  {logo.svg}
+          {/* Franchise brand names — text rail (no image logos) */}
+          <div className="prefooter-brand-names" style={reveal(0.54)}>
+            <p className="prefooter-brand-names__label">
+              Trusted by franchise brands on the iFranchise network
+            </p>
+            {BRAND_NAME_TRACK.length > 0 && (
+              <div className="prefooter-brand-names__mask">
+                <div className="prefooter-brand-names__track animate-marquee-right">
+                  {BRAND_NAME_TRACK.map((name, i) => (
+                    <span key={`${name}-${i}`} className="prefooter-brand-names__item">
+                      {name}
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
 

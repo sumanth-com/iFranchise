@@ -125,9 +125,9 @@ const growthCards = [
 
 const statsCards = [
   {
-    value: 350,
+    value: 100,
     suffix: '+',
-    title: 'Brands Partnered',
+    title: 'Franchise brands',
     description: 'Trusted by businesses across multiple industries and growth stages.',
   },
   {
@@ -836,18 +836,9 @@ function FranchiseModelCard({ model, visible, delayMs }) {
 function TestimonialStatCard({ item }) {
   return (
     <article className="testimonial-stat-card rounded-[18px] border border-slate-200 bg-white p-5 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
-      <div className="flex items-center gap-3">
-        <img
-          src={item.avatar}
-          alt={item.name}
-          className="h-11 w-11 shrink-0 rounded-full object-cover object-center ring-2 ring-white/80"
-          loading="lazy"
-          decoding="async"
-        />
-        <div className="flex-1">
-          <p className="testimonial-stat-card__name text-sm font-semibold text-slate-900">{item.name}</p>
-          <p className="testimonial-stat-card__role text-xs text-slate-600">{item.role}</p>
-        </div>
+      <div className="testimonial-stat-card__header">
+        <p className="testimonial-stat-card__name text-sm font-semibold text-slate-900">{item.name}</p>
+        <p className="testimonial-stat-card__role text-xs text-slate-600">{item.role}</p>
       </div>
       {item.rating && (
         <div className="mt-4 flex items-center gap-1">
@@ -2742,17 +2733,17 @@ function Hero() {
             </div>
 
             {/* Mobile/tablet: mt-auto pins to hero bottom; desktop (xl+): directly under copy */}
-            <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-col items-center gap-3.5 pt-2 max-sm:px-1 min-[640px]:max-xl:flex-row min-[640px]:max-xl:justify-center min-[640px]:max-xl:gap-5 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:pt-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
+            <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-row flex-wrap items-stretch justify-center gap-2.5 px-1 pt-2 sm:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 xl:pt-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
               <HeroCtaButton
                 label="Explore Opportunities"
                 path="/franchise-opportunities"
-                className="w-full max-xl:max-w-[18rem] xl:w-full xl:max-w-none"
+                className="min-w-0 xl:w-full"
                 animDelay="220ms"
               />
               <HeroCtaButton
                 label="List Your Brand"
                 path="/list-your-brand"
-                className="w-full max-xl:max-w-[18rem] xl:w-full xl:max-w-none"
+                className="min-w-0 xl:w-full"
                 animDelay="300ms"
               />
             </div>
@@ -3231,7 +3222,7 @@ function Hero() {
             {/* Success pills */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {[
-                { label: '500+ franchise launches', color: '#a78bfa' },
+                { label: '100+ franchise brands', color: '#a78bfa' },
                 { label: '₹800Cr+ ecosystem influenced', color: '#34d399' },
                 { label: '72% investor preference', color: '#60a5fa' },
                 { label: '30% CAGR aligned', color: '#fb923c' },
