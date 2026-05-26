@@ -3,7 +3,11 @@ import { useEffect, useState } from 'react';
 const MOBILE_MAX_WIDTH = 767;
 
 function showsAssistantImmediately(pathname) {
-  return pathname === '/contact' || pathname === '/franchise-opportunities';
+  return (
+    pathname === '/' ||
+    pathname === '/contact' ||
+    pathname === '/franchise-opportunities'
+  );
 }
 
 function getMobileScrollThreshold(pathname) {
@@ -19,7 +23,7 @@ function isMobileViewport() {
 
 /**
  * Desktop: show assistant immediately (including over home hero).
- * Mobile: show only after scrolling past the hero on homepage (or slightly on other pages).
+ * Mobile: show immediately on home, contact, and opportunities; other pages after a short scroll.
  */
 export function useScrollPastHero(pathname, enabled = true) {
   const [showAssistant, setShowAssistant] = useState(() => {
