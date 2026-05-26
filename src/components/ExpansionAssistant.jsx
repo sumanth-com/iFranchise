@@ -87,6 +87,20 @@ function getAssistantPalette(siteIsLight) {
       closeBorder: 'rgba(255,255,255,0.14)',
       closeColor: '#e2e8f0',
       panelShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.45), 0 4px 16px rgba(0,0,0,0.25)',
+      strategyHeroBg:
+        'linear-gradient(165deg, #f5f3ff 0%, #ede9fe 46%, #e0e7ff 100%)',
+      strategyHeroBorder: 'rgba(167, 139, 250, 0.28)',
+      strategyHeroShadow: '0 4px 22px rgba(124, 58, 237, 0.14)',
+      strategyHeroTitle: '#0f172a',
+      strategyBadgeBg: 'rgba(255, 255, 255, 0.94)',
+      strategyBadgeText: '#6d28d9',
+      strategyBadgeBorder: 'rgba(139, 92, 246, 0.22)',
+      strategyCardBg: '#ffffff',
+      strategyCardBorder: 'rgba(226, 232, 240, 0.98)',
+      strategyPerkTitle: '#1e1b4b',
+      strategyPerkDesc: 'rgba(71, 85, 105, 0.78)',
+      strategyDivider: 'rgba(241, 245, 249, 1)',
+      strategyFlowBodyBg: 'rgba(15, 23, 42, 0.4)',
     };
   }
   return {
@@ -158,6 +172,20 @@ function getAssistantPalette(siteIsLight) {
     closeBorder: 'rgba(0,0,0,0.1)',
     closeColor: '#64748b',
     panelShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 20px 60px rgba(15,23,42,0.14), 0 4px 16px rgba(15,23,42,0.08)',
+    strategyHeroBg:
+      'linear-gradient(165deg, #f5f3ff 0%, #ede9fe 46%, #e0e7ff 100%)',
+    strategyHeroBorder: 'rgba(139, 92, 246, 0.2)',
+    strategyHeroShadow: '0 4px 18px rgba(124, 58, 237, 0.1)',
+    strategyHeroTitle: '#0f172a',
+    strategyBadgeBg: 'rgba(255, 255, 255, 0.95)',
+    strategyBadgeText: '#6d28d9',
+    strategyBadgeBorder: 'rgba(139, 92, 246, 0.18)',
+    strategyCardBg: '#ffffff',
+    strategyCardBorder: 'rgba(226, 232, 240, 0.98)',
+    strategyPerkTitle: '#1e1b4b',
+    strategyPerkDesc: 'rgba(71, 85, 105, 0.78)',
+    strategyDivider: 'rgba(241, 245, 249, 1)',
+    strategyFlowBodyBg: 'rgba(248, 250, 252, 0.65)',
   };
 }
 
@@ -1199,21 +1227,33 @@ function StrategyView({ setView }) {
       style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}
     >
       <FlowHeader title="Book Strategy Call" onBack={() => setView('home')} />
-      <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', padding: '10px 14px 14px', display: 'flex', flexDirection: 'column' }}>
+      <div
+        className="assistant-strategy-flow-body"
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflow: 'hidden',
+          padding: '10px 14px 14px',
+          display: 'flex',
+          flexDirection: 'column',
+          background: p.strategyFlowBodyBg,
+        }}
+      >
         <motion.div
+          className="assistant-strategy-hero"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.28 }}
           style={{
             position: 'relative',
-            flex: 1,
+            flex: '0 0 auto',
             display: 'flex',
             flexDirection: 'column',
             borderRadius: 16,
             padding: 14,
-            background: 'linear-gradient(165deg, rgba(245,243,255,0.98) 0%, rgba(237,233,254,0.96) 45%, rgba(224,231,255,0.94) 100%)',
-            border: '1px solid rgba(139,92,246,0.2)',
-            boxShadow: '0 4px 20px rgba(124, 58, 237, 0.08)',
+            background: p.strategyHeroBg,
+            border: `1px solid ${p.strategyHeroBorder}`,
+            boxShadow: p.strategyHeroShadow,
           }}
         >
           <div
@@ -1245,40 +1285,53 @@ function StrategyView({ setView }) {
               <CalendarIcon />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 5,
-                padding: '3px 9px',
-                borderRadius: 20,
-                background: 'rgba(255,255,255,0.85)',
-                border: '1px solid rgba(139,92,246,0.18)',
-                fontSize: 9.5,
-                fontWeight: 700,
-                letterSpacing: '0.07em',
-                textTransform: 'uppercase',
-                color: '#7c3aed',
-                marginBottom: 6,
-              }}>
+              <div
+                className="assistant-strategy-badge"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  padding: '3px 9px',
+                  borderRadius: 20,
+                  background: p.strategyBadgeBg,
+                  border: `1px solid ${p.strategyBadgeBorder}`,
+                  fontSize: 9.5,
+                  fontWeight: 700,
+                  letterSpacing: '0.07em',
+                  textTransform: 'uppercase',
+                  color: p.strategyBadgeText,
+                  marginBottom: 6,
+                }}
+              >
                 <SparkleIcon />
                 Free consultation
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: p.questionColor, letterSpacing: '-0.03em', lineHeight: 1.3 }}>
+              <div
+                className="assistant-strategy-hero-title"
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: p.strategyHeroTitle,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.3,
+                }}
+              >
                 Book a 30-min strategy session
               </div>
             </div>
           </div>
 
           <div
+            className="assistant-strategy-card"
             style={{
-              flex: 1,
+              flex: '0 0 auto',
               display: 'flex',
               flexDirection: 'column',
               borderRadius: 12,
               padding: 12,
-              background: '#fff',
-              border: '1px solid rgba(226,232,240,0.95)',
-              boxShadow: '0 1px 3px rgba(15,23,42,0.04)',
+              background: p.strategyCardBg,
+              border: `1px solid ${p.strategyCardBorder}`,
+              boxShadow: '0 1px 3px rgba(15,23,42,0.05)',
             }}
           >
             <motion.button
@@ -1313,7 +1366,7 @@ function StrategyView({ setView }) {
               <ExternalLinkIcon />
             </motion.button>
 
-            <div style={{ marginTop: 10, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column' }}>
               {perks.map(({ icon, title, desc }, i) => (
                 <motion.div
                   key={title}
@@ -1324,8 +1377,8 @@ function StrategyView({ setView }) {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 10,
-                    padding: '8px 4px',
-                    borderTop: i > 0 ? '1px solid rgba(241,245,249,1)' : 'none',
+                    padding: i > 0 ? '6px 4px 0' : '4px 4px 0',
+                    borderTop: i > 0 ? `1px solid ${p.strategyDivider}` : 'none',
                   }}
                 >
                   <div style={{
@@ -1342,8 +1395,8 @@ function StrategyView({ setView }) {
                     {icon}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: '#1e1b4b', letterSpacing: '-0.02em', lineHeight: 1.25 }}>{title}</div>
-                    <div style={{ fontSize: 10.5, color: 'rgba(71,85,105,0.78)', lineHeight: 1.35, marginTop: 1 }}>{desc}</div>
+                    <div className="assistant-strategy-perk-title" style={{ fontSize: 12, fontWeight: 600, color: p.strategyPerkTitle, letterSpacing: '-0.02em', lineHeight: 1.25 }}>{title}</div>
+                    <div className="assistant-strategy-perk-desc" style={{ fontSize: 10.5, color: p.strategyPerkDesc, lineHeight: 1.35, marginTop: 1 }}>{desc}</div>
                   </div>
                 </motion.div>
               ))}

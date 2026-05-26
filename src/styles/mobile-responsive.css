@@ -41,10 +41,16 @@
   }
 
   .hero-cinematic-layout .hero-cinematic-content {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     justify-content: flex-start;
     padding-top: clamp(0.25rem, 3vh, 1.75rem);
     min-height: 0;
+    align-self: flex-start;
+  }
+
+  .hero-cinematic-layout .hero-cinematic-content > div {
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   .hero-cinematic-layout .hero-cta-row {
@@ -53,10 +59,10 @@
     gap: clamp(0.5rem, 2vw, 0.75rem);
     width: 100%;
     max-width: min(100%, 22.5rem);
-    margin-top: auto;
+    margin-top: clamp(1rem, 2.5vh, 1.25rem);
     margin-inline: auto;
-    padding-top: clamp(0.75rem, 2vh, 1.25rem);
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+    padding-top: 0;
+    padding-bottom: 0;
     padding-inline: 0.25rem;
     align-items: stretch;
   }

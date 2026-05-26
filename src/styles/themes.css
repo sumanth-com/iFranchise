@@ -2518,6 +2518,39 @@ html[data-theme='light'] [class*='assistant-'][class*='bg-'] {
   border-color: var(--theme-border);
 }
 
+/* Strategy booking card — always dark text on light lavender (never inherit panel white) */
+html[data-theme='light'] .assistant-panel .assistant-strategy-hero,
+html[data-theme='light'] .assistant-panel .assistant-strategy-hero *,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-hero,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-hero * {
+  -webkit-text-fill-color: unset;
+}
+
+html[data-theme='light'] .assistant-panel .assistant-strategy-hero-title,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-hero-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] .assistant-panel .assistant-strategy-badge,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-badge {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='light'] .assistant-panel .assistant-strategy-card,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-card {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .assistant-panel .assistant-strategy-perk-title,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-perk-title {
+  color: #1e1b4b !important;
+}
+
+html[data-theme='light'] .assistant-panel .assistant-strategy-perk-desc,
+html[data-theme='dark'] .assistant-panel .assistant-strategy-perk-desc {
+  color: rgba(71, 85, 105, 0.78) !important;
+}
+
 /* Focus ring */
 *:focus-visible {
   outline-color: var(--theme-focus);

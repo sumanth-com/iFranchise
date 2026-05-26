@@ -2673,8 +2673,8 @@ function Hero() {
         />
 
         <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-8 sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
-          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-1 flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] xl:flex-none xl:justify-center">
-            <div className="flex w-full flex-col items-center justify-start xl:justify-center">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] xl:flex-none xl:justify-center">
+            <div className="flex w-full flex-none flex-col items-center justify-start xl:justify-center">
             <div
               className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 backdrop-blur-[10px] max-sm:mb-3.5 sm:mb-6 sm:gap-3 sm:px-6 sm:py-2.5"
               style={
@@ -2730,10 +2730,8 @@ function Hero() {
             >
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
-            </div>
 
-            {/* Mobile/tablet: mt-auto pins to hero bottom; desktop (xl+): directly under copy */}
-            <div className="hero-cta-row mx-auto mt-auto flex w-full max-w-[900px] shrink-0 flex-row flex-wrap items-stretch justify-center gap-2.5 px-1 pt-2 sm:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 xl:pt-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
+            <div className="hero-cta-row mx-auto mt-4 flex w-full max-w-[900px] shrink-0 flex-row flex-wrap items-stretch justify-center gap-2.5 px-1 sm:mt-5 sm:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
               <HeroCtaButton
                 label="Explore Opportunities"
                 path="/franchise-opportunities"
@@ -2746,6 +2744,7 @@ function Hero() {
                 className="min-w-0 xl:w-full"
                 animDelay="300ms"
               />
+            </div>
             </div>
           </div>
         </div>

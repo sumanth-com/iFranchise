@@ -248,6 +248,33 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
 }
 
+/* Strategy call — light card stays readable on dark inverted panel (site light mode) */
+.assistant-strategy-hero,
+.assistant-strategy-card {
+  color: #0f172a;
+}
+
+.assistant-strategy-hero-title,
+.assistant-strategy-badge {
+  -webkit-text-fill-color: unset;
+}
+
+.assistant-panel[data-assistant-theme='dark'] .assistant-strategy-hero-title {
+  color: #0f172a !important;
+}
+
+.assistant-panel[data-assistant-theme='dark'] .assistant-strategy-badge {
+  color: #6d28d9 !important;
+}
+
+.assistant-panel[data-assistant-theme='light'] .assistant-strategy-flow-body {
+  background: rgba(248, 250, 252, 0.85);
+}
+
+.assistant-panel[data-assistant-theme='dark'] .assistant-strategy-flow-body {
+  background: rgba(15, 23, 42, 0.45);
+}
+
 @media (max-width: 767px) {
   .assistant-panel {
     touch-action: manipulation;
