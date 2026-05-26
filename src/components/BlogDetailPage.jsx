@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './blog/BlogImage';
 import ShareIcons from './blog/ShareIcons';
 import BlogCard from './blog/BlogCard';
@@ -53,17 +54,17 @@ function BlogDetailHero({
       data-reveal
       className="blog-detail-hero-split flex w-full flex-col overflow-hidden rounded-3xl border border-violet-500/20 shadow-[0_24px_60px_rgba(15,23,42,0.12)] lg:flex-row lg:items-stretch"
     >
-      <div className="blog-detail-hero-split__content relative z-10 flex w-full flex-col justify-center gap-3.5 rounded-t-3xl border-b border-violet-500/20 bg-white p-6 sm:gap-4 sm:p-7 lg:w-1/2 lg:min-h-0 lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-none lg:border-b-0 lg:border-r lg:p-8 xl:gap-4 xl:p-9">
+      <div className="blog-detail-hero-split__content relative z-10 flex w-full flex-col items-center justify-center gap-3.5 rounded-t-3xl border-b border-violet-500/20 bg-white p-6 text-center sm:gap-4 sm:p-7 lg:w-1/2 lg:min-h-0 lg:items-start lg:text-left lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-none lg:border-b-0 lg:border-r lg:p-8 xl:gap-4 xl:p-9">
         <span className="blog-hero-category inline-flex w-fit rounded-full border border-violet-400/35 bg-violet-500/15 px-3 py-1 text-xs font-bold uppercase tracking-wide">
           {category}
         </span>
-        <h1 className={`blog-detail-hero-split__title ${TYPE.pageHero} lg:text-[1.65rem] lg:leading-[1.2] xl:text-[1.85rem]`}>
+        <h1 className={`blog-detail-hero-split__title w-full ${TYPE.pageHero} lg:text-[1.65rem] lg:leading-[1.2] xl:text-[1.85rem]`}>
           {title}
         </h1>
-        <p className="blog-detail-hero-split__excerpt text-[15px] leading-relaxed sm:text-base">
+        <p className="blog-detail-hero-split__excerpt w-full max-w-xl text-[15px] leading-relaxed sm:text-base lg:max-w-none">
           {excerpt}
         </p>
-        <div className="blog-detail-hero-split__meta flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+        <div className="blog-detail-hero-split__meta flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm lg:justify-start">
           <span>{readTime}</span>
           <span className="blog-detail-hero-split__meta-dot opacity-40" aria-hidden>
             ·
@@ -79,7 +80,7 @@ function BlogDetailHero({
           />
         ) : null}
 
-        <div className="blog-detail-hero-split__share flex flex-wrap items-center gap-2 border-t border-violet-500/15 pt-3.5">
+        <div className="blog-detail-hero-split__share flex w-full flex-wrap items-center justify-center gap-2 border-t border-violet-500/15 pt-3.5 lg:justify-start">
           <span className="blog-detail-hero-split__share-label text-sm font-semibold">Share</span>
           <ShareIcons url={articleUrl} title={shareTitle} variant="brand" className="blog-hero-share" />
         </div>
@@ -184,8 +185,8 @@ function ExploreMoreSection({ currentSlug }) {
 
   return (
     <section data-reveal className="blog-explore-more mt-12 pt-4 md:mt-14 md:pt-6" aria-labelledby="blog-explore-heading">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+        <div className="w-full sm:w-auto">
           <p className="blog-explore-eyebrow text-xs font-bold uppercase tracking-[0.2em] text-violet-400">Keep reading</p>
           <h2 id="blog-explore-heading" className={`blog-explore-title mt-2 ${TYPE.subsection}`}>
             Explore more insights
@@ -197,7 +198,7 @@ function ExploreMoreSection({ currentSlug }) {
             e.preventDefault();
             navigateTo('/blog');
           }}
-          className="blog-explore-link inline-flex items-center gap-1 text-sm font-semibold text-violet-400 transition hover:text-violet-300"
+          className="blog-explore-link inline-flex items-center justify-center gap-1 text-sm font-semibold text-violet-400 transition hover:text-violet-300 sm:justify-start"
         >
           View all articles
           <span aria-hidden>→</span>
@@ -211,11 +212,36 @@ function ExploreMoreSection({ currentSlug }) {
     </section>
   );
 }
+function OverviewSectionList({ headings, onHeadingClick, onSelect, menuClass, itemClass }) {
+  return (
+    <div role="listbox" aria-label="Article sections" className={menuClass}>
+      {headings.map((h, i) => (
+        <button
+          key={h.id}
+          type="button"
+          role="option"
+          onClick={() => {
+            onHeadingClick(h.id);
+            onSelect?.();
+          }}
+          className={itemClass}
+        >
+          <span className="blog-pill blog-overview-num mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold !text-white">
+            {i + 1}
+          </span>
+          <span className="blog-overview-label min-w-0 flex-1 text-[15px] leading-snug">{h.label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
   const [open, setOpen] = useState(false);
   const [menuRect, setMenuRect] = useState(null);
   const triggerRef = useRef(null);
   const menuRef = useRef(null);
+  const panelId = useMemo(() => `blog-overview-panel-${Math.random().toString(36).slice(2, 9)}`, []);
 
   const updateMenuRect = useCallback(() => {
     const el = triggerRef.current;
@@ -238,12 +264,12 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
   }, []);
 
   useLayoutEffect(() => {
-    if (open) updateMenuRect();
+    if (!embedded && open) updateMenuRect();
     else setMenuRect(null);
-  }, [open, updateMenuRect]);
+  }, [open, updateMenuRect, embedded]);
 
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open || embedded) return undefined;
 
     const onPointerDown = (e) => {
       const inTrigger = triggerRef.current?.contains(e.target);
@@ -254,21 +280,21 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
       if (e.key === 'Escape') setOpen(false);
     };
 
-    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('click', onPointerDown);
     document.addEventListener('keydown', onKeyDown);
     window.addEventListener('resize', updateMenuRect);
     window.addEventListener('scroll', updateMenuRect, true);
 
     return () => {
-      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('click', onPointerDown);
       document.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('resize', updateMenuRect);
       window.removeEventListener('scroll', updateMenuRect, true);
     };
-  }, [open, updateMenuRect]);
+  }, [open, updateMenuRect, embedded]);
 
   const triggerClass = embedded
-    ? `blog-overview-trigger blog-overview-trigger--embedded group flex w-full items-center justify-between rounded-xl border px-4 py-3 transition ${
+    ? `blog-overview-trigger blog-overview-trigger--embedded group flex w-full items-center justify-between rounded-xl border px-4 py-3 transition duration-200 ${
         open
           ? 'border-violet-400/50 bg-violet-500/20 ring-2 ring-violet-400/25'
           : 'border-violet-500/25 bg-violet-500/10 hover:border-violet-400/40 hover:bg-violet-500/15'
@@ -278,19 +304,17 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
       }`;
 
   const menuClass = embedded
-    ? 'blog-overview-menu blog-overview-menu--embedded overflow-y-auto rounded-xl border border-violet-200 bg-white py-1.5 shadow-[0_20px_48px_rgba(15,23,42,0.22)]'
+    ? 'blog-overview-menu blog-overview-menu--embedded max-h-[min(280px,50vh)] overflow-y-auto overscroll-contain rounded-xl border border-violet-200 bg-white py-1.5 shadow-[0_12px_32px_rgba(15,23,42,0.12)]'
     : 'blog-overview-menu overflow-y-auto rounded-2xl border border-slate-200 bg-white py-1.5 shadow-[0_20px_50px_rgba(15,23,42,0.15)]';
 
   const itemClass =
-    'blog-overview-item flex w-full items-start gap-3 px-4 py-2.5 text-left text-sm font-medium leading-snug text-slate-800 transition hover:bg-violet-50';
+    'blog-overview-item flex w-full items-start gap-3 px-4 py-2.5 text-left text-sm font-medium leading-snug text-slate-800 transition-colors duration-150 hover:bg-violet-50 active:bg-violet-100/80';
 
-  const menu =
-    open && menuRect
+  const floatingMenu =
+    !embedded && open && menuRect
       ? createPortal(
           <div
             ref={menuRef}
-            role="listbox"
-            aria-label="Article sections"
             className={menuClass}
             style={{
               position: 'fixed',
@@ -302,25 +326,15 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
               zIndex: 10050,
             }}
           >
-            {headings.map((h, i) => (
-              <button
-                key={h.id}
-                type="button"
-                role="option"
-                onClick={() => {
-                  onHeadingClick(h.id);
-                  setOpen(false);
-                }}
-                className={itemClass}
-              >
-                <span className="blog-pill blog-overview-num mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold !text-white">
-                  {i + 1}
-                </span>
-                <span className="blog-overview-label min-w-0 flex-1 text-[15px] leading-snug">{h.label}</span>
-              </button>
-            ))}
+            <OverviewSectionList
+              headings={headings}
+              onHeadingClick={onHeadingClick}
+              onSelect={() => setOpen(false)}
+              menuClass=""
+              itemClass={itemClass}
+            />
           </div>,
-          document.body
+          document.body,
         )
       : null;
 
@@ -332,9 +346,10 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
         onClick={() => setOpen((o) => !o)}
         className={triggerClass}
         aria-expanded={open}
+        aria-controls={embedded ? panelId : undefined}
         aria-haspopup="listbox"
       >
-        <div className="flex min-w-0 items-center gap-3">
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-2 sm:gap-3 lg:justify-start">
           <span className="relative flex h-2.5 w-2.5 shrink-0">
             {open ? (
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-violet-600" />
@@ -345,7 +360,7 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
               </>
             )}
           </span>
-          <span className="blog-overview-title truncate text-sm font-bold sm:text-base">Overview</span>
+          <span className="blog-overview-title text-sm font-bold sm:text-base">Overview</span>
           <span
             className={`blog-overview-badge shrink-0 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
               embedded ? 'bg-violet-100 text-violet-800' : 'bg-violet-100 text-violet-700'
@@ -355,9 +370,7 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
           </span>
         </div>
         <svg
-          className={`blog-overview-chevron h-5 w-5 shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''} ${
-            embedded ? 'text-violet-200' : 'text-violet-700'
-          }`}
+          className={`blog-overview-chevron h-5 w-5 shrink-0 text-violet-600 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -367,7 +380,28 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {menu}
+
+      {embedded ? (
+        <div
+          id={panelId}
+          className={`blog-overview-panel grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${
+            open ? 'mt-2 grid-rows-[1fr] opacity-100' : 'mt-0 grid-rows-[0fr] opacity-0'
+          }`}
+          aria-hidden={!open}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <OverviewSectionList
+              headings={headings}
+              onHeadingClick={onHeadingClick}
+              onSelect={() => setOpen(false)}
+              menuClass={menuClass}
+              itemClass={itemClass}
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {floatingMenu}
     </div>
   );
 }
@@ -421,12 +455,17 @@ function BlogDetailPage() {
     return sections.map((s) => ({ id: s.id, label: s.heading }));
   }, [headings, sections]);
 
-  const handleHeadingClick = (id) => {
+  const handleHeadingClick = useCallback((id) => {
     const el = document.getElementById(id);
     if (!el) return;
     const offset = (document.querySelector('header')?.offsetHeight || 80) + 20;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' });
-  };
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(top, { duration: 1.05 });
+    } else {
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }, []);
 
   if (!article) {
     return (
