@@ -24,12 +24,12 @@
   }
 
   .site-cta {
-    min-height: 44px;
+    min-height: 2.5rem;
   }
 
   .site-cta--lg {
-    width: 100%;
-    max-width: 22rem;
+    width: auto;
+    max-width: min(100%, 18rem);
     justify-content: center;
   }
 }
@@ -64,10 +64,11 @@
   .hero-cta-row .hero-cta {
     width: 100%;
     min-width: 0;
-    min-height: 2.75rem;
-    padding: 0.625rem 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.5625rem 0.5rem;
     gap: 0.35rem;
     justify-content: center;
+    font-weight: 600;
   }
 
   .hero-cta-row .hero-cta__label {
@@ -442,7 +443,25 @@
   }
 
   .footer-social-3d-row {
-    gap: 0.5rem;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    gap: 0.875rem !important;
+  }
+
+  .footer-social-3d {
+    width: 2.625rem !important;
+    height: 2.625rem !important;
+    min-width: 2.625rem !important;
+    min-height: 2.625rem !important;
+    max-width: 2.625rem !important;
+    max-height: 2.625rem !important;
+    border-radius: 50% !important;
+  }
+
+  .footer-social-3d {
+    flex: 0 0 auto;
   }
 
   .footer-col-heading {
@@ -827,6 +846,13 @@
     width: 100%;
   }
 
+  .contact-hero-social .footer-social-3d-row {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+  }
+
   .contact-form-grid {
     grid-template-columns: 1fr !important;
   }
@@ -879,6 +905,15 @@
 
   .services-page .services-process-section .section-header {
     padding-inline: 0.125rem;
+  }
+
+  .services-page .services-process-mobile {
+    max-width: min(100%, 21rem);
+  }
+
+  .services-page .services-process-mobile__list {
+    row-gap: 1.75rem;
+    column-gap: 0.625rem;
   }
 
   .services-page .services-audience-section .page-section-inner {
@@ -970,8 +1005,8 @@
   .services-page .services-section-cta .site-cta {
     width: auto !important;
     max-width: min(100%, calc(100vw - 2.5rem));
-    min-height: 44px;
-    padding: 0.75rem 1.125rem !important;
+    min-height: 2.5rem;
+    padding: 0.625rem 1.125rem !important;
     font-size: clamp(0.6875rem, 3.1vw, 0.8125rem) !important;
     gap: 0.5rem !important;
     white-space: nowrap;
@@ -1018,6 +1053,12 @@
     line-height: 1.2;
   }
 
+  .services-page .services-dashboard-panel .dashboard-pill--pan {
+    padding: 0.3125rem 0.625rem !important;
+    font-size: 0.5625rem !important;
+    min-height: 1.25rem;
+  }
+
   .services-page .services-process-section .section-header .site-section-pill {
     margin-left: auto;
     margin-right: auto;
@@ -1026,8 +1067,8 @@
   .services-page .why-ifranchise-section .why-section-cta {
     width: auto !important;
     max-width: min(100%, calc(100vw - 2.5rem));
-    min-height: 44px;
-    padding: 0.75rem 1.125rem !important;
+    min-height: 2.5rem;
+    padding: 0.625rem 1.125rem !important;
     font-size: clamp(0.6875rem, 3.1vw, 0.8125rem) !important;
     white-space: nowrap;
     margin-left: auto;
@@ -1066,8 +1107,8 @@
   .services-page .services-section-cta .site-cta {
     width: auto !important;
     max-width: none;
-    font-size: 1rem !important;
-    padding: 1rem 2rem !important;
+    font-size: 0.8125rem !important;
+    padding: 0.6875rem 1.375rem !important;
   }
 }
 
@@ -2577,13 +2618,27 @@
 /* ── 5. Global CTA buttons (mobile/tablet) ───────────────────────────────── */
 @media (max-width: 1279px) {
   .site-cta:not(.services-page-cta-btn):not(.why-section-cta),
+  .why-section-cta,
+  .section-primary-cta,
   .btn-purple-solid:not(.lyb-hero-cta),
   .hero-cta {
-    min-height: 44px;
-    max-width: min(100%, 20rem);
+    min-height: 2.5rem;
+    max-width: min(100%, 18rem);
+    font-size: clamp(0.75rem, 3vw, 0.8125rem);
+  }
+
+  .site-cta:not(.services-page-cta-btn):not(.why-section-cta),
+  .btn-purple-solid:not(.lyb-hero-cta),
+  .hero-cta {
     padding-left: 1.125rem;
     padding-right: 1.125rem;
-    font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  }
+
+  #main-content .why-section-cta,
+  #main-content .section-primary-cta {
+    padding: 0.625rem 1.125rem !important;
+    gap: 0.5rem !important;
+    font-weight: 600 !important;
   }
 
   .text-center > .site-cta,

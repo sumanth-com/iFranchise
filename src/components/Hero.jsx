@@ -3110,7 +3110,7 @@ function Hero() {
             <button
               type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
-              className="why-section-cta group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+              className="why-section-cta group inline-flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5"
               style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)' }}
               onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(109,40,217,0.45)'; }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(109,40,217,0.35)'; }}

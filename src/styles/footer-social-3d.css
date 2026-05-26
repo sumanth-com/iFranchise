@@ -1,157 +1,252 @@
-/* Footer / contact — 3D brand social buttons (real platform colors + icons) */
+/* Social bubbles — load after Tailwind; matches reference (round 3D pills + gap) */
 
+.footer-follow-block .footer-social-3d-row,
 .footer-social-3d-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  perspective: 480px;
+  --social-bubble-size: 2.625rem;
+  --social-bubble-gap: 0.875rem;
+
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--social-bubble-gap) !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+.footer-social-3d-row--contact {
+  --social-bubble-size: 2.875rem;
+  --social-bubble-gap: 1rem;
+}
+
+.prefooter-unified-card .footer-social-3d,
+.contact-hero-social .footer-social-3d,
 .footer-social-3d {
-  --social-i: 0;
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 9999px;
-  border: none;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: var(--social-bubble-size) !important;
+  height: var(--social-bubble-size) !important;
+  min-width: var(--social-bubble-size) !important;
+  min-height: var(--social-bubble-size) !important;
+  max-width: var(--social-bubble-size) !important;
+  max-height: var(--social-bubble-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+  overflow: hidden !important;
+  isolation: isolate;
   color: #ffffff !important;
-  text-decoration: none;
-  overflow: hidden;
-  flex-shrink: 0;
-  transform: translateY(0) scale(1);
-  transform-style: preserve-3d;
+  line-height: 0 !important;
+  vertical-align: middle;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.38) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.18) inset,
-    0 3px 0 rgba(0, 0, 0, 0.14),
-    0 5px 14px rgba(15, 23, 42, 0.22);
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.14) inset,
+    0 5px 14px rgba(0, 0, 0, 0.34) !important;
   transition:
-    transform 0.28s cubic-bezier(0.34, 1.45, 0.64, 1),
-    box-shadow 0.28s cubic-bezier(0.34, 1.45, 0.64, 1);
+    transform 0.24s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.24s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
 .footer-social-3d__glare {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.45) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    transparent 65%
-  );
+  z-index: 2;
+  border-radius: 50%;
   pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 30% 24%,
+      rgba(255, 255, 255, 0.58) 0%,
+      rgba(255, 255, 255, 0.16) 34%,
+      transparent 58%
+    ),
+    linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.04) 42%,
+      transparent 66%
+    );
+}
+
+.footer-social-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(0, 0, 0, 0.12) 76%,
+    rgba(0, 0, 0, 0.24) 100%
+  );
 }
 
 .footer-social-3d__icon {
   position: relative;
-  z-index: 1;
-  display: block;
-  width: 1.05rem;
-  height: 1.05rem;
+  z-index: 3;
+  display: block !important;
+  flex-shrink: 0;
+  width: 1.05rem !important;
+  height: 1.05rem !important;
   color: #ffffff !important;
-  fill: currentColor;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
-  transition: transform 0.28s cubic-bezier(0.34, 1.45, 0.64, 1);
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.footer-social-3d__icon path {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
 .footer-social-3d--facebook .footer-social-3d__icon {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 0.9rem !important;
+  height: 0.9rem !important;
 }
 
 .footer-social-3d--linkedin .footer-social-3d__icon {
-  width: 1rem;
-  height: 1rem;
+  width: 1rem !important;
+  height: 1rem !important;
 }
 
-.footer-social-3d:hover {
-  transform: translateY(-3px) scale(1.06) rotateX(6deg);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.12) inset,
-    0 2px 0 rgba(0, 0, 0, 0.1),
-    0 9px 20px rgba(15, 23, 42, 0.28);
-}
-
-.footer-social-3d:hover .footer-social-3d__icon {
-  transform: scale(1.08);
-}
-
-.footer-social-3d:active {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.28) inset,
-    0 -2px 0 rgba(0, 0, 0, 0.22) inset,
-    0 2px 0 rgba(0, 0, 0, 0.16),
-    0 5px 12px rgba(15, 23, 42, 0.22);
-  transition-duration: 0.1s;
-}
-
-/* Official brand fills */
 .footer-social-3d--linkedin {
-  background: linear-gradient(165deg, #3b8fd9 0%, #0a66c2 48%, #084a8f 100%);
+  background: linear-gradient(
+    145deg,
+    #5eb0f4 0%,
+    #2b8fd8 38%,
+    #0a66c2 68%,
+    #084d94 100%
+  ) !important;
 }
 
 .footer-social-3d--instagram {
   background: linear-gradient(
     135deg,
     #f9ce34 0%,
-    #ee2a7b 42%,
-    #6228d7 78%,
-    #8134af 100%
-  );
+    #f77737 22%,
+    #e1306c 48%,
+    #c13584 72%,
+    #833ab4 100%
+  ) !important;
 }
 
 .footer-social-3d--facebook {
-  background: linear-gradient(165deg, #3d8bfd 0%, #1877f2 48%, #0d5bbd 100%);
+  background: linear-gradient(
+    145deg,
+    #5ba3ff 0%,
+    #3b8ef8 36%,
+    #1877f2 68%,
+    #125fd4 100%
+  ) !important;
 }
 
-/* Contact hero — slightly larger */
-.footer-social-3d-row--contact {
-  gap: 0.625rem;
+.footer-social-3d:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.1) inset,
+    0 12px 26px rgba(0, 0, 0, 0.45) !important;
 }
 
-.footer-social-3d--lg {
-  width: 3rem;
-  height: 3rem;
+.footer-social-3d:active {
+  transform: translateY(-1px) scale(1.03);
 }
 
-.footer-social-3d--lg .footer-social-3d__icon {
-  width: 1.25rem;
-  height: 1.25rem;
+.contact-hero-social.footer-follow-block {
+  width: 100%;
+  align-items: center;
+  text-align: center;
 }
 
-.footer-social-3d--lg.footer-social-3d--facebook .footer-social-3d__icon {
-  width: 1.05rem;
-  height: 1.05rem;
+html[data-theme='light'] .contact-hero-social .footer-follow-heading,
+.footer-follow-heading--on-light {
+  color: #64748b !important;
 }
 
-.footer-social-3d--lg.footer-social-3d--linkedin .footer-social-3d__icon {
-  width: 1.2rem;
-  height: 1.2rem;
+html[data-theme='dark'] .contact-hero-social .footer-follow-heading,
+.contact-hero-dark .contact-hero-social .footer-follow-heading {
+  color: #ffffff !important;
 }
 
-/* Light + dark — keep white glyphs on brand fills (never override to purple) */
+/* Theme guards — never strip fills or flatten shapes */
+html[data-theme='light'] .prefooter-unified-card a.footer-social-3d,
+html[data-theme='dark'] .prefooter-unified-card a.footer-social-3d,
+html[data-theme='light'] .contact-hero-social a.footer-social-3d,
+html[data-theme='dark'] .contact-hero-social a.footer-social-3d {
+  border-radius: 50% !important;
+  width: var(--social-bubble-size) !important;
+  height: var(--social-bubble-size) !important;
+  min-width: var(--social-bubble-size) !important;
+  min-height: var(--social-bubble-size) !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-social-3d--linkedin,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--linkedin,
+html[data-theme='light'] .contact-hero-social .footer-social-3d--linkedin,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--linkedin {
+  background: linear-gradient(
+    145deg,
+    #5eb0f4 0%,
+    #2b8fd8 38%,
+    #0a66c2 68%,
+    #084d94 100%
+  ) !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-social-3d--instagram,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--instagram,
+html[data-theme='light'] .contact-hero-social .footer-social-3d--instagram,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--instagram {
+  background: linear-gradient(
+    135deg,
+    #f9ce34 0%,
+    #f77737 22%,
+    #e1306c 48%,
+    #c13584 72%,
+    #833ab4 100%
+  ) !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-social-3d--facebook,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--facebook,
+html[data-theme='light'] .contact-hero-social .footer-social-3d--facebook,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--facebook {
+  background: linear-gradient(
+    145deg,
+    #5ba3ff 0%,
+    #3b8ef8 36%,
+    #1877f2 68%,
+    #125fd4 100%
+  ) !important;
+}
+
 html[data-theme='light'] .prefooter-unified-card .footer-social-3d__icon,
 html[data-theme='dark'] .prefooter-unified-card .footer-social-3d__icon,
 html[data-theme='light'] .contact-hero-social .footer-social-3d__icon,
-html[data-theme='dark'] .contact-hero-social .footer-social-3d__icon {
+html[data-theme='dark'] .contact-hero-social .footer-social-3d__icon,
+html[data-theme='light'] .prefooter-unified-card .footer-social-3d__icon path,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d__icon path,
+html[data-theme='light'] .contact-hero-social .footer-social-3d__icon path,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d__icon path {
   color: #ffffff !important;
   fill: #ffffff !important;
+  stroke: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .footer-social-3d {
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .footer-social-3d:hover {
-    transform: translateY(-2px) scale(1.04);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
 }

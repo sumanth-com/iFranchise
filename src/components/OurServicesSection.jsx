@@ -153,7 +153,7 @@ export default function OurServicesSection({
           <button
             type="button"
             onClick={onViewAllServices}
-            className="group/btn relative overflow-hidden inline-flex items-center gap-3 rounded-full px-9 py-4 text-sm font-bold text-white"
+            className="section-primary-cta group/btn relative overflow-hidden inline-flex items-center text-white"
             style={{
               background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
               boxShadow: '0 4px 24px rgba(109,40,217,0.4)',
@@ -173,8 +173,8 @@ export default function OurServicesSection({
               style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
             />
             <span className="relative z-10">View All Services</span>
-            <span className="relative z-10 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
-              <FiArrowRight className="h-3.5 w-3.5" />
+            <span className="relative z-10 inline-flex items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
+              <FiArrowRight className="h-3 w-3" />
             </span>
           </button>
         </div>
@@ -185,7 +185,7 @@ export default function OurServicesSection({
           <button
             type="button"
             onClick={onContact}
-            className="group/btn relative overflow-hidden inline-flex items-center gap-3 rounded-full px-9 py-4 text-sm font-bold text-white"
+            className="section-primary-cta group/btn relative overflow-hidden inline-flex items-center text-white"
             style={{
               background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
               boxShadow: '0 4px 24px rgba(109,40,217,0.4)',
@@ -205,8 +205,8 @@ export default function OurServicesSection({
               style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
             />
             <span className="relative z-10">Get Started with Our Services</span>
-            <span className="relative z-10 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
-              <FiArrowRight className="h-3.5 w-3.5" />
+            <span className="relative z-10 inline-flex items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
+              <FiArrowRight className="h-3 w-3" />
             </span>
           </button>
         </div>

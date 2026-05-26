@@ -8,7 +8,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
-import FooterSocialButtons from './footer/FooterSocialButtons';
+import SocialFollowBlock from './footer/SocialFollowBlock';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import {
@@ -248,16 +248,11 @@ function ContactLeftPanel({ isLight }) {
         ))}
       </div>
 
-      <div className="contact-hero-social mt-5 flex flex-col items-center text-center sm:mt-6">
-        <p
-          className={`mb-3 text-xs font-semibold uppercase tracking-[0.16em] ${
-            isLight ? 'text-slate-500' : 'text-white/50'
-          }`}
-        >
-          Follow us
-        </p>
-        <FooterSocialButtons variant="contact" className="justify-center gap-2.5" />
-      </div>
+      <SocialFollowBlock
+        variant="contact"
+        className="contact-hero-social mt-5 sm:mt-6"
+        headingClassName={isLight ? 'footer-follow-heading--on-light' : ''}
+      />
     </motion.div>
   );
 }

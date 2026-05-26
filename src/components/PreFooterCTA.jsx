@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import brandLogo from '../assets/BrandNav.png';
 import FooterJumpLink from './footer/FooterJumpLink';
-import FooterSocialButtons from './footer/FooterSocialButtons';
+import SocialFollowBlock from './footer/SocialFollowBlock';
 import { getPartnerBrandLogos } from '../data/franchiseData';
 import { navigateTo } from '../lib/navigation';
 import { TYPE } from '../lib/typography.js';
@@ -307,10 +307,7 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
           <div className="footer-bottom-bar">
             <p className="footer-copyright">@ 2026 iFranchise. All rights reserved.</p>
             <div className="footer-bottom-right">
-              <div className="footer-follow-block">
-                <p className="footer-follow-heading">Follow Us</p>
-                <FooterSocialButtons />
-              </div>
+              <SocialFollowBlock />
               <div className="footer-legal-links">
                 {[
                   { label: 'Privacy Policy', path: '/privacy-policy' },

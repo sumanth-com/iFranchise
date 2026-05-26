@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { Fragment, useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiTrendingUp, FiTarget, FiUsers, FiMessageSquare,
@@ -270,7 +270,9 @@ function ExpansionCitiesPanel({ onHighlightChange }) {
             <span className="dashboard-txt-muted block text-[8px]">8 markets · 24 locations · swipe to browse</span>
           </div>
         </div>
-        <span className="dashboard-pill dashboard-pill--pan shrink-0">Pan India</span>
+        <span className="dashboard-pill dashboard-pill--pan shrink-0" title="Coverage across India">
+          Pan India
+        </span>
       </div>
       <ul
         ref={listRef}
@@ -596,40 +598,105 @@ function ProcessIcon({ step, size = 'md', isLight }) {
   );
 }
 
-/** Mobile: centered vertical stepper. icon, label, title stacked in the middle */
+const SERVICES_BENEFIT_ICON_COLORS = {
+  emerald: 'text-emerald-600',
+  purple: 'text-violet-600',
+  indigo: 'text-indigo-600',
+  blue: 'text-blue-600',
+  violet: 'text-violet-600',
+  sky: 'text-sky-600',
+  slate: 'text-slate-600',
+  amber: 'text-amber-600',
+  rose: 'text-rose-600',
+};
+
+function ServicesBenefitPillIcon({ Icon, colorKey, size = 'md' }) {
+  const shell = size === 'sm' ? 'h-6 w-6' : 'h-8 w-8';
+  const iconDim = size === 'sm' ? 'h-3.5 w-3.5' : 'h-4 w-4';
+  const iconColor = SERVICES_BENEFIT_ICON_COLORS[colorKey] || 'text-violet-600';
+  return (
+    <span
+      className={`services-benefit-pill-icon inline-flex ${shell} shrink-0 items-center justify-center rounded-full bg-white shadow-[0_1px_4px_rgba(15,23,42,0.12)] ring-1 ring-slate-200/70`}
+    >
+      <Icon className={`${iconDim} ${iconColor}`} strokeWidth={2.25} aria-hidden />
+    </span>
+  );
+}
+
+const SERVICES_MOBILE_BENEFITS = [
+  { title: 'Verified Franchise Listings', Icon: FiCheckCircle, color: 'emerald' },
+  { title: 'Strategic Planning', Icon: FiTarget, color: 'purple' },
+  { title: 'Data-Driven Insights', Icon: FiBarChart2, color: 'indigo' },
+  { title: 'Growth & Expansion Support', Icon: FiTrendingUp, color: 'blue' },
+  { title: 'Smart Investment Decisions', Icon: FiTarget, color: 'violet' },
+  { title: 'Market Intelligence', Icon: FiActivity, color: 'sky' },
+  { title: 'Real-Time Opportunity Updates', Icon: FiRefreshCw, color: 'blue' },
+  { title: 'Transparent Deal Information', Icon: FiFileText, color: 'slate' },
+  { title: 'Expert Guidance & Support', Icon: FiAward, color: 'amber' },
+  { title: 'Investor-Centric Platform', Icon: FiUsers, color: 'rose' },
+];
+
+/** Mobile: row1 (1|2), row2 (3|4), row3 (5 center) — centered copy + interactive stepper */
 function ProcessStepsMobile({ isLight }) {
   const [ref, visible] = useStepReveal();
 
   return (
-    <div ref={ref} className={TYPE.mobileSteps}>
-      <ol className={TYPE.mobileStepsList}>
-        {PROCESS_STEPS.map((step, i) => {
-          const isLast = i === PROCESS_STEPS.length - 1;
-          return (
-            <li
-              key={step.title}
-              className={`${TYPE.mobileStepsItem} transition-all duration-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-              style={{ transitionDelay: `${i * 60}ms` }}
+    <div
+      ref={ref}
+      className={`services-process-mobile xl:hidden ${visible ? 'is-visible' : ''}`}
+      aria-label="Franchise expansion process steps"
+    >
+      <div className="services-process-mobile__stepper" role="list" aria-label="Process progress">
+        {PROCESS_STEPS.map((_, i) => (
+          <Fragment key={`stepper-${i}`}>
+            <span
+              className="services-process-mobile__stepper-dot"
+              role="listitem"
+              aria-label={`Step ${i + 1}`}
+              style={{
+                transitionDelay: `${i * 0.12}s`,
+                animationDelay: `${i * 0.35}s`,
+              }}
             >
+              {i + 1}
+            </span>
+            {i < PROCESS_STEPS.length - 1 && (
+              <span
+                className="services-process-mobile__stepper-seg"
+                aria-hidden
+                style={{ transitionDelay: `${i * 0.12 + 0.06}s` }}
+              />
+            )}
+          </Fragment>
+        ))}
+      </div>
+
+      <div className="services-process-mobile__bridge" aria-hidden>
+        <span className="services-process-mobile__bridge-icon">↓</span>
+      </div>
+
+      <ol className="services-process-mobile__list">
+        {PROCESS_STEPS.map((step, i) => (
+          <li key={step.title} className="services-process-mobile__item">
+            <div className="services-process-mobile__card">
               <ProcessIcon step={step} size="sm" isLight={isLight} />
               <span
-                className={`type-caption mt-3 mb-1 font-bold uppercase tracking-wider ${
+                className={`services-process-mobile__label ${
                   isLight ? 'text-violet-600' : 'text-violet-200'
                 }`}
               >
                 Step {i + 1}
               </span>
               <p
-                className={`max-w-[14rem] text-base font-bold leading-snug text-balance ${
+                className={`services-process-mobile__title ${
                   isLight ? 'text-slate-900' : 'text-white'
                 }`}
               >
                 {step.title}
               </p>
-              {!isLast && <div className={TYPE.mobileStepsConnector} aria-hidden />}
-            </li>
-          );
-        })}
+            </div>
+          </li>
+        ))}
       </ol>
     </div>
   );
@@ -1352,9 +1419,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500/20">
-                    <FiCheckCircle className="h-3.5 w-3.5 text-emerald-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiCheckCircle} colorKey="emerald" size="sm" />
                   <p className="text-sm font-medium text-white">Verified Franchise Listings</p>
                 </div>
               </motion.div>
@@ -1366,9 +1431,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/20">
-                    <FiBarChart2 className="h-3.5 w-3.5 text-indigo-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiBarChart2} colorKey="indigo" size="sm" />
                   <p className="text-sm font-medium text-white">Data-Driven Insights</p>
                 </div>
               </motion.div>
@@ -1380,9 +1443,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-500/20">
-                    <FiTarget className="h-3.5 w-3.5 text-violet-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiTarget} colorKey="violet" size="sm" />
                   <p className="text-sm font-medium text-white">Smart Investment Decisions</p>
                 </div>
               </motion.div>
@@ -1394,9 +1455,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-amber-500/20">
-                    <FiAward className="h-3.5 w-3.5 text-amber-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiAward} colorKey="amber" size="sm" />
                   <p className="text-sm font-medium text-white">Expert Guidance & Support</p>
                 </div>
               </motion.div>
@@ -1408,9 +1467,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500/20">
-                    <FiRefreshCw className="h-3.5 w-3.5 text-blue-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiRefreshCw} colorKey="blue" size="sm" />
                   <p className="text-sm font-medium text-white">Real-Time Opportunity Updates</p>
                 </div>
               </motion.div>
@@ -1422,9 +1479,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full">
-                    <FiFileText className="h-3.5 w-3.5 text-white" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiFileText} colorKey="slate" size="sm" />
                   <p className="text-sm font-medium text-white">Transparent Deal Information</p>
                 </div>
               </motion.div>
@@ -1436,9 +1491,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-rose-500/20">
-                    <FiUsers className="h-3.5 w-3.5 text-rose-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiUsers} colorKey="rose" size="sm" />
                   <p className="text-sm font-medium text-white">Investor-Centric Platform</p>
                 </div>
               </motion.div>
@@ -1450,9 +1503,7 @@ export default function ServicesPage() {
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
                 className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
                 <div className="flex items-center gap-2.5">
-                  <span className="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-purple-500/20">
-                    <FiTarget className="h-3.5 w-3.5 text-purple-400" />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={FiTarget} colorKey="purple" size="sm" />
                   <p className="text-sm font-medium text-white">Strategic Planning</p>
                 </div>
               </motion.div>
@@ -1462,27 +1513,14 @@ export default function ServicesPage() {
 
           {/* Mobile - grid */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:hidden">
-            {[
-              { title: 'Verified Franchise Listings', Icon: FiCheckCircle, color: 'emerald' },
-              { title: 'Strategic Planning', Icon: FiTarget, color: 'purple' },
-              { title: 'Data-Driven Insights', Icon: FiBarChart2, color: 'indigo' },
-              { title: 'Growth & Expansion Support', Icon: FiTrendingUp, color: 'blue' },
-              { title: 'Smart Investment Decisions', Icon: FiTarget, color: 'violet' },
-              { title: 'Market Intelligence', Icon: FiActivity, color: 'sky' },
-              { title: 'Real-Time Opportunity Updates', Icon: FiRefreshCw, color: 'blue' },
-              { title: 'Transparent Deal Information', Icon: FiFileText, color: 'slate' },
-              { title: 'Expert Guidance & Support', Icon: FiAward, color: 'amber' },
-              { title: 'Investor-Centric Platform', Icon: FiUsers, color: 'rose' },
-            ].map((item, i) => (
+            {SERVICES_MOBILE_BENEFITS.map((item, i) => (
               <motion.div key={item.title}
                 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.25, delay: i * 0.02 }}
                 className="theme-light-pill rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]"
               >
                 <div className="flex items-center gap-3">
-                  <span className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-${item.color}-50`}>
-                    <item.Icon className={`h-4 w-4 text-${item.color}-600`} />
-                  </span>
+                  <ServicesBenefitPillIcon Icon={item.Icon} colorKey={item.color} />
                   <p className="text-sm font-medium text-white">{item.title}</p>
                 </div>
               </motion.div>
@@ -1650,7 +1688,7 @@ function WhyIFranchiseSection({ className = '' }) {
             onClick={() => {
               spaNavigate('/franchise-opportunities');
             }}
-            className="why-section-cta group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
+            className="why-section-cta group inline-flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5"
             style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)' }}
           >
             Explore Franchise Opportunities

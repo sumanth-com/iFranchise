@@ -2632,28 +2632,7 @@ html[data-theme='light'] .market-intel-tab-btn.is-active {
   background: linear-gradient(135deg, #5b21b6 0%, #4338ca 100%) !important;
 }
 
-/* Contact form - Send Message (purple in dark mode) */
-html[data-theme='dark'] .contact-send-btn,
-html[data-theme='dark'] #main-content .contact-send-btn,
-html[data-theme='dark'] .contact-send-btn *,
-html[data-theme='dark'] #main-content .contact-send-btn * {
-  color: #ffffff !important;
-}
-
-html[data-theme='dark'] .contact-send-btn,
-html[data-theme='dark'] #main-content .contact-send-btn {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%) !important;
-  border: 1px solid rgba(167, 139, 250, 0.35) !important;
-  box-shadow: 0 4px 24px rgba(109, 40, 217, 0.45) !important;
-}
-
-html[data-theme='dark'] .contact-send-btn:hover:not(:disabled),
-html[data-theme='dark'] #main-content .contact-send-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
-  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.5) !important;
-}
-
-/* Contact form - Send Message (purple in light mode) */
+/* Contact form - Send Message (light mode purple; dark mode white pill in index.css) */
 html[data-theme='light'] .contact-send-btn,
 html[data-theme='light'] #main-content .contact-send-btn,
 html[data-theme='light'] .contact-send-btn *,
@@ -5610,8 +5589,8 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
   border-color: #e2e8f0 !important;
 }
 
-html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option),
-html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option) {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option):not(.dashboard-pill),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light :is(p, span, li, label, div, h1, h2, h3, h4, select, option):not(.dashboard-pill) {
   color: #0f172a !important;
 }
 
@@ -5802,15 +5781,11 @@ html[data-theme='light'] #main-content .services-audience-copy .theme-section-ba
   color: #6d28d9 !important;
 }
 
-/* Services - audience section CTAs always white label */
+/* Services - audience section CTAs white label in light mode only */
 html[data-theme='light'] #main-content .services-audience-copy .site-cta,
 html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__label,
 html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__icon,
-html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__icon svg,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__label,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__icon,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta .site-cta__icon svg {
+html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-cta__icon svg {
   color: #ffffff !important;
 }
 
@@ -6361,22 +6336,22 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-copy {
   color: #ffffff !important;
 }
 
-/* Purple CTAs - white text (both themes) */
+/* Franchise details — purple CTAs in light; dark main CTAs use white pill (index.css) */
+html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid,
+html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid *,
 .franchise-details-page .btn-purple-solid,
 .franchise-details-page .btn-purple-solid span,
-.franchise-details-page .btn-purple-solid svg,
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid,
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid *,
-html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid,
-html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid * {
+.franchise-details-page .btn-purple-solid svg {
   color: #ffffff !important;
 }
 
-.franchise-details-page .btn-purple-solid {
+html[data-theme='light'] .franchise-details-page .btn-purple-solid,
+.franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active) {
   background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
 }
 
-.franchise-details-page .btn-purple-solid:hover {
+html[data-theme='light'] .franchise-details-page .btn-purple-solid:hover,
+.franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):hover {
   background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
 }
 

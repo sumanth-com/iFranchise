@@ -1,8 +1,19 @@
 /* Font loaded via <link> in index.html - non-blocking */
 
 @import './styles/typography.css';
+@import './styles/services-process-mobile.css';
+
+/* Services benefits pills — white icon disc, colored glyph */
+.services-benefit-pill-icon {
+  background-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .services-benefit-pill-icon svg,
+html[data-theme='light'] #main-content .services-benefit-pill-icon svg {
+  color: inherit;
+  stroke: currentColor;
+}
 @import './styles/blog-share-3d.css';
-@import './styles/footer-social-3d.css';
 @import './styles/leadership-linkedin-3d.css';
 
 @tailwind base;
@@ -1340,17 +1351,26 @@ img.loaded {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 0.875rem;
+}
+
+.footer-follow-block .footer-social-3d-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer-follow-heading {
   margin: 0;
   width: 100%;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.8125rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
   color: #ffffff;
 }
 
@@ -1662,12 +1682,13 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 1.25;
   color: #ffffff;
   border: none;
   border-radius: 9999px;
   background-color: #7c3aed;
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.32);
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
@@ -1678,21 +1699,53 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
 }
 
 .site-cta--sm {
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
   font-size: 0.75rem;
 }
 
 .site-cta--md {
-  gap: 0.625rem;
-  padding: 0.875rem 2rem;
-  font-size: 0.875rem;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.8125rem;
 }
 
 .site-cta--lg {
-  gap: 0.75rem;
-  padding: 1rem 2rem;
-  font-size: 1rem;
+  gap: 0.5rem;
+  padding: 0.6875rem 1.375rem;
+  font-size: 0.8125rem;
+}
+
+/* Section footer / inline main CTAs (View All Services, Explore Franchise, etc.) */
+#main-content .why-section-cta,
+#main-content .section-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  min-height: 2.5rem;
+  border-radius: 9999px;
+}
+
+#main-content .section-primary-cta span.inline-flex.rounded-full {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+#main-content .section-primary-cta span.inline-flex.rounded-full svg {
+  width: 0.6875rem;
+  height: 0.6875rem;
+}
+
+#main-content .why-section-cta > svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex-shrink: 0;
 }
 
 .site-cta__icon {
@@ -1716,23 +1769,23 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
 }
 
 .site-cta--md .site-cta__icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .site-cta--md .site-cta__icon svg {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.6875rem;
+  height: 0.6875rem;
 }
 
 .site-cta--lg .site-cta__icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .site-cta--lg .site-cta__icon svg {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 0.6875rem;
+  height: 0.6875rem;
 }
 
 .site-cta:hover:not(:disabled) {
@@ -2780,8 +2833,8 @@ img[loading="lazy"]:not([src=""]) {
 
   .hero-cinematic-layout .hero-cta-row .hero-cta {
     width: 100%;
-    min-height: 3.125rem;
-    padding: 0.8125rem 1.125rem;
+    min-height: 2.5rem;
+    padding: 0.625rem 1.125rem;
     justify-content: center;
     border: 1px solid rgba(109, 40, 217, 0.1);
     box-shadow:
@@ -2794,8 +2847,8 @@ img[loading="lazy"]:not([src=""]) {
   }
 
   .hero-cinematic-layout .hero-cta-row .hero-cta__icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   /* Dark hero — clean white copy (lighter weight, soft shadow) */
@@ -2824,17 +2877,17 @@ img[loading="lazy"]:not([src=""]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.625rem;
-  padding: 0.875rem 1.75rem;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
   border: none;
   border-radius: 9999px;
   background-color: #ffffff !important;
   color: #6d28d9 !important;
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   animation: cinematicCtaEnter 0.5s var(--ease-premium) both;
   transition:
     transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2853,8 +2906,8 @@ img[loading="lazy"]:not([src=""]) {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
   border-radius: 9999px;
   background-color: rgba(109, 40, 217, 0.12);
   color: #7c3aed !important;
@@ -2863,8 +2916,8 @@ img[loading="lazy"]:not([src=""]) {
 
 .hero-cta__icon svg,
 .hero-cta__arrow {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.6875rem;
+  height: 0.6875rem;
 }
 
 .hero-cta__arrow {
@@ -2946,6 +2999,107 @@ img[loading="lazy"]:not([src=""]) {
   .hero-cta__icon {
     animation: none !important;
   }
+}
+
+/* Dark mode — section main CTAs match home hero (white pill, purple label); card/button CTAs stay purple */
+html[data-theme='dark'] #main-content :is(
+    .site-cta,
+    a.site-cta,
+    button.site-cta,
+    .about-hero__cta.site-cta,
+    .why-section-cta,
+    .section-primary-cta,
+    .contact-send-btn
+  ) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #6d28d9 !important;
+  border: 1px solid rgba(109, 40, 217, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .site-cta .site-cta__label,
+html[data-theme='dark'] #main-content .site-cta .site-cta__icon,
+html[data-theme='dark'] #main-content .site-cta .site-cta__icon svg,
+html[data-theme='dark'] #main-content .why-section-cta,
+html[data-theme='dark'] #main-content .why-section-cta svg,
+html[data-theme='dark'] #main-content .section-primary-cta .relative.z-10,
+html[data-theme='dark'] #main-content .section-primary-cta span.relative.z-10,
+html[data-theme='dark'] #main-content .contact-send-btn,
+html[data-theme='dark'] #main-content .contact-send-btn * {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .site-cta .site-cta__icon,
+html[data-theme='dark'] #main-content :is(.section-primary-cta, .why-section-cta) span.inline-flex.rounded-full,
+html[data-theme='dark'] #main-content :is(.section-primary-cta, .why-section-cta) [class*='bg-white/20'] {
+  background-color: rgba(109, 40, 217, 0.12) !important;
+  color: #7c3aed !important;
+}
+
+html[data-theme='dark'] #main-content .site-cta .site-cta__icon svg,
+html[data-theme='dark'] #main-content :is(.section-primary-cta, .why-section-cta) span.inline-flex.rounded-full svg,
+html[data-theme='dark'] #main-content .why-section-cta > svg {
+  color: #7c3aed !important;
+  stroke: #7c3aed !important;
+}
+
+html[data-theme='dark'] #main-content :is(
+    .site-cta,
+    .about-hero__cta.site-cta,
+    .why-section-cta,
+    .section-primary-cta,
+    .contact-send-btn
+  ):hover:not(:disabled) {
+  background-color: #faf5ff !important;
+  color: #5b21b6 !important;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .site-cta:hover:not(:disabled) .site-cta__label,
+html[data-theme='dark'] #main-content .site-cta:hover:not(:disabled) .site-cta__icon,
+html[data-theme='dark'] #main-content .site-cta:hover:not(:disabled) .site-cta__icon svg,
+html[data-theme='dark'] #main-content .why-section-cta:hover,
+html[data-theme='dark'] #main-content .why-section-cta:hover svg,
+html[data-theme='dark'] #main-content .section-primary-cta:hover .relative.z-10,
+html[data-theme='dark'] #main-content .contact-send-btn:hover:not(:disabled),
+html[data-theme='dark'] #main-content .contact-send-btn:hover:not(:disabled) * {
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] #main-content .site-cta:hover:not(:disabled) .site-cta__icon {
+  background-color: rgba(109, 40, 217, 0.22) !important;
+}
+
+/* Dark mode — card / inline action buttons keep purple fill + white label */
+html[data-theme='dark'] #main-content .btn-purple-solid,
+html[data-theme='dark'] #main-content .btn-purple-solid span,
+html[data-theme='dark'] #main-content .btn-purple-solid svg,
+html[data-theme='dark'] #main-content a.btn-purple-solid,
+html[data-theme='dark'] #main-content a.btn-purple-solid *,
+html[data-theme='dark'] #main-content button.btn-purple-solid,
+html[data-theme='dark'] #main-content button.btn-purple-solid * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .btn-purple-solid:not(.fd-tab-btn--active) {
+  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .btn-purple-solid:not(.fd-tab-btn--active):hover {
+  background: linear-gradient(135deg, #5b21b6 0%, #4338ca 100%) !important;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45) !important;
+}
+
+html[data-theme='dark'] #main-content .btn-purple-solid svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 .cinematic-blur-reveal {
@@ -3581,9 +3735,7 @@ html[data-theme='light'] #main-content .theme-section-on-light .text-white\/90 {
 }
 
 html[data-theme='light'] #main-content .services-audience-copy .site-cta,
-html[data-theme='light'] #main-content .services-audience-copy .site-cta *,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta,
-html[data-theme='dark'] #main-content .services-audience-copy .site-cta * {
+html[data-theme='light'] #main-content .services-audience-copy .site-cta * {
   color: #ffffff !important;
 }
 
@@ -3694,7 +3846,7 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
   justify-content: center;
   border-radius: 9999px;
   padding: 0.2rem 0.45rem;
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -3702,8 +3854,9 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surfa
   white-space: nowrap;
 }
 
-html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-pill,
-html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-pill {
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-pill:not(.dashboard-pill--pan),
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-pill:not(.dashboard-pill--pan) {
+  color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
@@ -3726,11 +3879,25 @@ html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-pill 
 }
 
 .services-dashboard-panel .dashboard-pill--pan {
-  background-color: #ffffff !important;
-  color: #047857 !important;
-  border-color: #10b981 !important;
-  -webkit-text-fill-color: #047857 !important;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.35);
+  padding: 0.28rem 0.55rem;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid #047857 !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow:
+    0 1px 4px rgba(5, 150, 105, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+}
+
+html[data-theme='light'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-pill--pan,
+html[data-theme='dark'] #main-content .services-dashboard-panel .dashboard-surface-light .dashboard-pill--pan {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
 }
 
 /* Active Cities — touch / finger scroll */
@@ -4030,19 +4197,13 @@ html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-lead
   color: rgba(255, 255, 255, 0.92) !important;
 }
 
-/* Purple solid CTAs - white label in light & dark (wins over panel/card overrides) */
+/* Purple solid CTAs - white label in light mode (dark uses hero-style white pills above) */
 html[data-theme='light'] #main-content .btn-purple-solid,
 html[data-theme='light'] #main-content .btn-purple-solid *,
 html[data-theme='light'] #main-content a.btn-purple-solid,
 html[data-theme='light'] #main-content a.btn-purple-solid *,
 html[data-theme='light'] #main-content button.btn-purple-solid,
 html[data-theme='light'] #main-content button.btn-purple-solid *,
-html[data-theme='dark'] #main-content .btn-purple-solid,
-html[data-theme='dark'] #main-content .btn-purple-solid *,
-html[data-theme='dark'] #main-content a.btn-purple-solid,
-html[data-theme='dark'] #main-content a.btn-purple-solid *,
-html[data-theme='dark'] #main-content button.btn-purple-solid,
-html[data-theme='dark'] #main-content button.btn-purple-solid *,
 html[data-theme='light'] .card-premium-dark .btn-purple-solid,
 html[data-theme='light'] .card-premium-dark .btn-purple-solid *,
 html[data-theme='light'] .bg-white .btn-purple-solid,
@@ -4051,8 +4212,7 @@ html[data-theme='light'] .bg-white .btn-purple-solid * {
   -webkit-text-fill-color: #ffffff !important;
 }
 
-html[data-theme='light'] #main-content .btn-purple-solid svg,
-html[data-theme='dark'] #main-content .btn-purple-solid svg {
+html[data-theme='light'] #main-content .btn-purple-solid svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
 }
