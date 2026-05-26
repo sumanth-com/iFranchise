@@ -83,7 +83,7 @@ function TeamPage() {
   return (
     <main className="relative z-10 w-full py-10 lg:py-16 text-white">
       <section className="relative overflow-hidden bg-transparent py-20">
-        <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between gap-8">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
@@ -100,7 +100,7 @@ function TeamPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1200px] px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-[1200px] px-5 py-16 sm:px-6 lg:px-8">
         <div className="grid items-stretch gap-10 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Team of experts</p>
@@ -154,7 +154,7 @@ function TeamPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1200px] px-4 pb-20 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-[1200px] px-5 pb-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-violet-600">Our Team</p>
           <h2 className={`mt-3 ${TYPE.heroBrand} text-white`}>

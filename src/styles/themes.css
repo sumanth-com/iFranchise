@@ -758,17 +758,7 @@ html[data-theme='light'] .prefooter-cta-btn__arrow {
   background: rgba(255, 255, 255, 0.15) !important;
 }
 
-html[data-theme='light'] .prefooter-unified-card .footer-social-3d,
-html[data-theme='light'] .prefooter-unified-card .footer-social-3d__icon,
-html[data-theme='light'] .prefooter-unified-card .footer-social-3d__icon svg,
-html[data-theme='light'] .prefooter-unified-card .footer-social-3d__icon svg path,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d__icon,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d__icon svg,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d__icon svg path {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-}
+/* Social icon colors — see footer-social-3d.css */
 
 /* Why iFranchise CTA - purple pill, white label */
 html[data-theme='light'] .why-section-cta,
@@ -828,19 +818,6 @@ html[data-theme='light'] .contact-page #contact-form.contact-hero-dark .page-her
   color: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Light site theme: white hero uses default page-hero-light rules above */
-html[data-theme='light'] .contact-page #contact-form.page-hero-light:not(.contact-hero-dark) .contact-hero-social .contact-social-btn {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%) !important;
-  border: 1px solid rgba(167, 139, 250, 0.35) !important;
-  color: #ffffff !important;
-}
-
-html[data-theme='light'] .contact-page #contact-form.page-hero-light:not(.contact-hero-dark) .contact-hero-social .contact-social-btn:hover {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
-  border-color: rgba(167, 139, 250, 0.5) !important;
-  color: #ffffff !important;
-}
-
 /* FAQ number badges - keep white digits on dark circle */
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\].text-white,
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\] .text-white,
@@ -861,11 +838,54 @@ html[data-theme='light'] .why-feature-icon svg {
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-jump-link {
-  color: var(--theme-text-muted);
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-jump-link:hover {
-  color: var(--theme-accent);
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+
+/* Footer brand + office address (link is <a>, not covered by span rules above) */
+html[data-theme='light'] .prefooter-unified-card .footer-brand-name {
+  color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-brand-address__icon {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-brand-address__text,
+html[data-theme='light'] .prefooter-unified-card .footer-brand-address__link {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-brand-address__link:hover {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  text-decoration: underline;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-col-heading,
+html[data-theme='light'] .prefooter-unified-card .footer-copyright,
+html[data-theme='light'] .prefooter-unified-card .footer-follow-heading {
+  color: #0b0f19 !important;
+  -webkit-text-fill-color: #0b0f19 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-main-grid-col {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-main-grid-brand {
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] .prefooter-unified-card .footer-col-heading {
+  border-bottom-color: #e2e8f0 !important;
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-hiring-badge {
@@ -2610,20 +2630,6 @@ html[data-theme='light'] .market-intel-tab-btn.is-active {
 
 .btn-purple-solid:hover {
   background: linear-gradient(135deg, #5b21b6 0%, #4338ca 100%) !important;
-}
-
-/* Contact - black rounded social cubes */
-.contact-social-btn {
-  background: #0b0f19 !important;
-  border: 1px solid #0b0f19 !important;
-  color: #ffffff !important;
-  border-radius: 12px !important;
-}
-
-.contact-social-btn:hover {
-  background: #1e293b !important;
-  border-color: #1e293b !important;
-  color: #ffffff !important;
 }
 
 /* Contact form - Send Message (purple in dark mode) */

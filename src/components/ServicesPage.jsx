@@ -448,7 +448,7 @@ function InvestorDashboardContent({ navigateTo }) {
       </div>
 
       {/* Investment Analytics Panel - Real Market Intelligence Data */}
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="services-dashboard-metrics grid grid-cols-3 gap-1.5">
         {[
           { icon: FiBarChart2, label: 'Avg ROI', value: '31%', color: 'from-violet-500 to-purple-600' },
           { icon: FiTrendingUp, label: 'CAGR', value: '~30%', color: 'from-blue-500 to-cyan-600' },
@@ -640,7 +640,7 @@ function ProcessStepsDesktop({ isLight }) {
   const [ref, visible] = useStepReveal();
 
   return (
-    <div ref={ref} className="hidden sm:flex items-start justify-between gap-1 md:gap-3">
+    <div ref={ref} className="hidden xl:flex items-start justify-between gap-2">
       {PROCESS_STEPS.map((step, i) => {
         const isLast = i === PROCESS_STEPS.length - 1;
         return (
@@ -719,12 +719,12 @@ export default function ServicesPage() {
   }, []);
 
   return (
-    <main ref={pageRef} className="services-page relative z-10 w-full bg-transparent text-theme-primary">
+    <main ref={pageRef} className="services-page relative z-10 w-full max-w-full overflow-x-clip bg-transparent text-theme-primary">
 
       {/* HERO */}
       <section
         id="services-hero"
-        className="page-hero-light services-hero relative z-10 flex min-h-[calc(100vh-80px)] flex-col items-center justify-center overflow-hidden bg-transparent px-4 pb-10 pt-8 sm:px-6 lg:px-8"
+        className="page-hero-light services-hero relative z-10 flex flex-col items-center justify-center overflow-hidden bg-transparent px-5 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 lg:px-8 xl:min-h-[calc(100vh-80px)]"
       >
         <div className="page-hero-light__bg pointer-events-none absolute inset-0" aria-hidden>
           <div className="page-hero-light__gradient absolute inset-0 bg-gradient-to-br from-violet-950/35 via-transparent to-indigo-950/30" />
@@ -743,12 +743,12 @@ export default function ServicesPage() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[900px] text-center">
+        <div className="services-hero__content relative z-10 mx-auto flex w-full min-h-0 min-w-0 max-w-[900px] flex-col items-center justify-center text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className={`services-hero-title ${heroDisplayClass(isLight)} mb-5`}
+            className={`services-hero-title ${heroDisplayClass(isLight)}`}
           >
             <span className="services-hero-title__line">Everything you need to</span>
             <span className="services-hero-title__line">launch, fund & scale franchises</span>
@@ -758,7 +758,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className={`services-hero-lead mx-auto mb-8 max-w-[720px] text-lg leading-snug sm:text-xl ${isLight ? 'text-slate-600' : 'text-white/90'}`}
+            className={`services-hero-lead mx-auto max-w-[720px] text-base leading-relaxed sm:mb-8 sm:text-lg sm:leading-snug md:text-xl ${isLight ? 'text-slate-600' : 'text-white/90'}`}
           >
             <span className="services-hero-lead__line">
               iFranchise helps brands document their model, attract investors,
@@ -772,7 +772,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-6"
+            className="services-hero__cta-wrap"
           >
             <CtaButton
               type="button"
@@ -790,16 +790,20 @@ export default function ServicesPage() {
             transition={{ duration: 0.35, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
             className="services-hero-social flex flex-col items-center gap-3"
           >
-            <div className="services-hero-social__row flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+            <div className="services-hero-social__row flex w-full max-w-full flex-wrap items-center justify-center gap-3 sm:gap-5">
               <ServicesHeroAvatars isLight={isLight} />
               <div className="services-hero-social__rating flex flex-col items-center justify-center text-center">
                 <ServicesHeroStars isLight={isLight} />
-                <p className={`mt-1.5 text-sm font-medium leading-snug ${isLight ? 'text-slate-700' : 'text-white'}`}>
+                <p
+                  className={`services-hero-social__review mt-1.5 max-w-[16rem] text-center text-sm font-medium leading-snug text-balance sm:max-w-none ${isLight ? 'text-slate-700' : 'text-white'}`}
+                >
                   Over 15,725+ people gave us review
                 </p>
               </div>
             </div>
-            <p className={`max-w-md text-center text-sm ${isLight ? 'text-slate-500' : 'text-white/75'}`}>
+            <p
+              className={`services-hero-social__trust max-w-md text-center text-sm leading-relaxed ${isLight ? 'text-slate-500' : 'text-white/75'}`}
+            >
               Trusted by founders, operators, and investors building franchise businesses across India.
             </p>
           </motion.div>
@@ -813,7 +817,7 @@ export default function ServicesPage() {
 
       {/* HOW IT WORKS - franchise expansion process flow */}
       <section className="services-process-section relative z-10 overflow-hidden py-12 sm:py-16">
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="page-section-inner">
 
           <div className="section-header mb-8 sm:mb-10">
             <Reveal>
@@ -832,7 +836,7 @@ export default function ServicesPage() {
           <ProcessSteps />
 
           <Reveal delay={0.35}>
-            <div className={`${TYPE.mobileStatsGrid} mt-8 sm:mt-10 sm:grid-cols-4 sm:gap-4`}>
+            <div className={`${TYPE.mobileStatsGrid} mt-8 sm:mt-10 xl:grid-cols-4 xl:gap-4`}>
               {[
                 { value: '30 Days', label: 'Franchise-ready' },
                 { value: '90 Days', label: 'Investor matched' },
@@ -859,8 +863,13 @@ export default function ServicesPage() {
           </Reveal>
 
           <Reveal delay={0.45}>
-            <div className="mt-8 text-center sm:mt-10">
-              <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+            <div className="services-section-cta mt-8 text-center sm:mt-10">
+              <CtaButton
+                type="button"
+                size="lg"
+                className="services-page-cta-btn"
+                onClick={() => navigateTo('/contact')}
+              >
                 Start Your Expansion Journey
               </CtaButton>
             </div>
@@ -870,62 +879,63 @@ export default function ServicesPage() {
       </section>
 
       {/* SERVICES FOR BRANDS */}
-      <div className="relative z-10 overflow-hidden py-12">
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            
-            {/* RIGHT: Content */}
-            <div className="theme-section-on-light services-audience-copy">
+      <div className="services-audience-section relative z-10 overflow-hidden py-10 sm:py-12">
+        <div className="page-section-inner">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="theme-section-on-light services-audience-copy mx-auto w-full min-w-0 max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
               <Reveal>
-                <SectionPill className="mb-6">For Brands</SectionPill>
-                <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
+                <div className="services-audience-pill-wrap mb-5 flex justify-center lg:justify-start">
+                  <SectionPill>For Brands</SectionPill>
+                </div>
+                <h2 className={`${sectionTitleClass(isLight)} mb-5`}>
                   Franchise Services for Brands Looking to Expand
                 </h2>
               </Reveal>
-              
+
               <Reveal delay={0.1}>
-                <p className={`text-lg leading-relaxed mb-8 ${isLight ? 'text-slate-700' : 'text-white'}`}>
+                <p className={`services-audience-lead mx-auto mb-7 max-w-md text-base leading-relaxed sm:text-lg lg:mx-0 ${isLight ? 'text-slate-700' : 'text-white'}`}>
                   We help businesses transform into scalable franchise models with the right structure, strategy, and investor network.
                 </p>
               </Reveal>
 
-              {/* Key Benefits - Simple checkmark list */}
-              <div className="space-y-4 mb-10">
-                {[
-                  'Faster franchise expansion',
-                  'Structured onboarding process',
-                  'Investor acquisition support',
-                  'Brand visibility improvement',
-                  'Expansion planning & execution'
-                ].map((benefit, index) => (
-                  <Reveal key={benefit} delay={0.15 + index * 0.05}>
-                    <div className="flex items-center gap-3">
-                      <div className="services-benefit-check flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
+              <Reveal delay={0.15}>
+                <ul className="services-audience-benefits mx-auto mb-8 flex w-full max-w-[18.5rem] flex-col gap-3.5 sm:max-w-xs lg:mx-0 lg:max-w-none">
+                  {[
+                    'Faster franchise expansion',
+                    'Structured onboarding process',
+                    'Investor acquisition support',
+                    'Brand visibility improvement',
+                    'Expansion planning & execution',
+                  ].map((benefit) => (
+                    <li key={benefit} className="services-audience-benefit flex items-center gap-3 text-left">
+                      <div className="services-benefit-check flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600">
                         <FiCheck className="services-benefit-check__icon h-4 w-4 text-white" strokeWidth={3} />
                       </div>
-                      <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                      <span className={`text-[0.9375rem] font-medium leading-snug ${isLight ? 'text-slate-900' : 'text-white'}`}>
                         {benefit}
                       </span>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
 
-              {/* CTA */}
               <Reveal delay={0.4}>
-                <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
-                  Grow Your Brand with iFranchise
-                </CtaButton>
+                <div className="services-audience-cta">
+                  <CtaButton
+                    type="button"
+                    size="lg"
+                    className="services-page-cta-btn"
+                    onClick={() => navigateTo('/contact')}
+                  >
+                    Grow Your Brand with iFranchise
+                  </CtaButton>
+                </div>
               </Reveal>
             </div>
 
-            {/* RIGHT: Premium Franchise Expansion Dashboard */}
             <Reveal delay={0.2}>
-              <div className="relative max-w-md mx-auto lg:mx-0">
-                
-                {/* Main dashboard container */}
-                <div className="services-dashboard-panel theme-dark-surface relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-5 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+              <div className="services-dashboard-wrap relative mx-auto w-full min-w-0 max-w-md lg:mx-0">
+                <div className="services-dashboard-panel theme-dark-surface relative w-full min-w-0 overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl sm:p-5" style={{ boxShadow: '0 8px 40px rgba(99,102,241,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
                   
                   {/* Animated glow effects */}
                   <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl animate-pulse-slow" />
@@ -963,8 +973,7 @@ export default function ServicesPage() {
                       </div>
                     </div>
 
-                    {/* Growth Metrics Cards - Real Data (No Floating) */}
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="services-dashboard-metrics grid grid-cols-3 gap-2">
                       <div className="dashboard-metric-card rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                         <FiUsers className="dashboard-on-dark h-3.5 w-3.5 mb-1" />
@@ -1103,17 +1112,16 @@ export default function ServicesPage() {
       </div>
 
       {/* SERVICES FOR INVESTORS */}
-      <div className="relative z-10 overflow-hidden py-12">
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="services-audience-section relative z-10 overflow-hidden py-10 sm:py-12">
+        <div className="page-section-inner">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-12">
             
             {/* LEFT: Premium Investor Intelligence Dashboard */}
             <div className="order-2 lg:order-1">
-              <div className="relative max-w-md mx-auto lg:mx-0">
+              <div className="services-dashboard-wrap relative mx-auto w-full min-w-0 max-w-md lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="services-dashboard-panel theme-dark-surface relative overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="services-dashboard-panel theme-dark-surface relative w-full min-w-0 overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl sm:p-4" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
 
                   {/* Dashboard Content */}
                   <div className="relative space-y-2.5">
@@ -1161,47 +1169,44 @@ export default function ServicesPage() {
             </div>
 
             {/* RIGHT: Content */}
-            <div className="order-1 lg:order-2 theme-section-on-light services-audience-copy">
-              <div>
-                <SectionPill className="mb-6">For Investors</SectionPill>
-                <h2 className={`${sectionTitleClass(isLight)} mb-6`}>
-                  Helping Investors<br />
-                  Discover the Right<br />
-                  Franchise Opportunities
-                </h2>
+            <div className="order-1 mx-auto w-full min-w-0 max-w-xl text-center lg:order-2 lg:mx-0 lg:max-w-none lg:text-left theme-section-on-light services-audience-copy">
+              <div className="services-audience-pill-wrap mb-5 flex justify-center lg:justify-start">
+                <SectionPill>For Investors</SectionPill>
               </div>
-              
-              <div>
-                <p className={`text-base leading-relaxed mb-8 ${isLight ? 'text-slate-700' : 'text-white'}`}>
-                  We help investors explore verified franchise opportunities across industries with transparent business information and structured support.
-                </p>
-              </div>
+              <h2 className={`${sectionTitleClass(isLight)} mb-5`}>
+                Helping Investors Discover the Right Franchise Opportunities
+              </h2>
 
-              {/* Key Benefits - Simple checkmark list */}
-              <div className="space-y-4 mb-10">
+              <p className={`services-audience-lead mx-auto mb-7 max-w-md text-base leading-relaxed lg:mx-0 ${isLight ? 'text-slate-700' : 'text-white'}`}>
+                We help investors explore verified franchise opportunities across industries with transparent business information and structured support.
+              </p>
+
+              <ul className="services-audience-benefits mx-auto mb-8 flex w-full max-w-[18.5rem] flex-col gap-3.5 sm:max-w-xs lg:mx-0 lg:max-w-none">
                 {[
                   'Verified franchise opportunities',
                   'Investment-focused discovery',
                   'Business model transparency',
                   'Industry-based opportunity matching',
-                  'Investor onboarding support'
+                  'Investor onboarding support',
                 ].map((benefit) => (
-                  <div key={benefit}>
-                    <div className="flex items-center gap-3">
-                      <div className="services-benefit-check flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-violet-600">
-                        <FiCheck className="services-benefit-check__icon h-4 w-4 text-white" strokeWidth={3} />
-                      </div>
-                      <span className={`text-base font-medium ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                        {benefit}
-                      </span>
+                  <li key={benefit} className="services-audience-benefit flex items-center gap-3 text-left">
+                    <div className="services-benefit-check flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet-600">
+                      <FiCheck className="services-benefit-check__icon h-4 w-4 text-white" strokeWidth={3} />
                     </div>
-                  </div>
+                    <span className={`text-[0.9375rem] font-medium leading-snug ${isLight ? 'text-slate-900' : 'text-white'}`}>
+                      {benefit}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
 
-              {/* CTA */}
-              <div>
-                <CtaButton type="button" size="lg" onClick={() => navigateTo('/franchise-opportunities')}>
+              <div className="services-audience-cta">
+                <CtaButton
+                  type="button"
+                  size="lg"
+                  className="services-page-cta-btn"
+                  onClick={() => navigateTo('/franchise-opportunities')}
+                >
                   Explore Franchise Opportunities
                 </CtaButton>
               </div>
@@ -1213,8 +1218,8 @@ export default function ServicesPage() {
       </div>
 
       {/* INDUSTRIES WE SUPPORT */}
-      <div className="relative z-10 overflow-hidden py-12">
-        <div className="relative z-10 mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 overflow-hidden py-10 sm:py-12">
+        <div className="page-section-inner">
           
 
           {/* Section Header */}
@@ -1252,7 +1257,12 @@ export default function ServicesPage() {
             <p className="text-sm text-white mb-4">
               Don't see your industry? We work with businesses across all sectors.
             </p>
-            <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+            <CtaButton
+              type="button"
+              size="lg"
+              className="services-page-cta-btn"
+              onClick={() => navigateTo('/contact')}
+            >
               Discuss Your Industry
             </CtaButton>
           </Reveal>
@@ -1261,8 +1271,8 @@ export default function ServicesPage() {
       </div>
 
       {/* BENEFITS - More than just a franchise platform */}
-      <section className="relative z-10 w-full py-12 overflow-hidden">
-        <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8">
+      <section className="relative z-10 w-full overflow-hidden py-10 sm:py-12">
+        <div className="page-section-inner w-full max-w-[1240px]">
           <div className="theme-section-on-light mx-auto max-w-[680px] text-center mb-14">
             <motion.p
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
@@ -1620,10 +1630,10 @@ function WhyIFranchiseSection({ className = '' }) {
       <div className="section-container relative z-10">
         <div className="theme-section-on-light mb-8 text-center sm:mb-10">
           <SectionPill className="mb-4">Why iFranchise</SectionPill>
-          <h2 className={`why-section-heading mx-auto mb-3 max-w-3xl px-4 ${TYPE.sectionBand} text-white`}>
+          <h2 className={`why-section-heading mx-auto mb-3 max-w-3xl ${TYPE.sectionBand} text-white`}>
             Why Investors and Brands Choose iFranchise
           </h2>
-          <p className="why-section-subtitle mx-auto max-w-2xl px-4 text-sm leading-relaxed">
+          <p className="why-section-subtitle mx-auto max-w-2xl text-sm leading-relaxed">
             Built to simplify franchise discovery, expansion, and investment through structured business intelligence.
           </p>
         </div>

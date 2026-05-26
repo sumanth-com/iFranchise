@@ -83,8 +83,8 @@ export default function OurServicesSection({
   className = '',
 }) {
   return (
-    <div className={`relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-16 pb-12 ${className}`}>
-      <div className="text-center mb-14">
+    <div className={`relative z-10 mx-auto w-full min-w-0 max-w-[1280px] px-5 sm:px-6 lg:px-8 pt-12 pb-10 sm:pt-16 sm:pb-12 ${className}`}>
+      <div className="mb-10 text-center sm:mb-14">
         <SectionPill className="mb-5">Our Services</SectionPill>
         <h2 className={sectionTitleClass(isLight)}>
           Complete Franchise Growth &amp; Expansion Services
@@ -94,7 +94,7 @@ export default function OurServicesSection({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {OUR_SERVICES_ITEMS.map((s, i) => (
           <div
             key={s.title}

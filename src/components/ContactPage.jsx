@@ -449,8 +449,8 @@ function ContactPage() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-start gap-6 lg:grid-cols-2 lg:items-center lg:gap-8 xl:gap-10">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="contact-page-hero-grid grid items-start gap-6 lg:grid-cols-2 lg:items-center lg:gap-8 xl:gap-10">
             <ContactLeftPanel isLight={isLight} />
 
             <motion.div
@@ -476,7 +476,7 @@ function ContactPage() {
 
       {/* Location */}
       <section className="w-full py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -521,7 +521,7 @@ function ContactPage() {
 
       {/* FAQ - after location, Services style */}
       <section className="services-faq-section relative w-full overflow-hidden py-12 md:py-16">
-        <div className="relative z-10 mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-[900px] px-5 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <motion.div
               initial={{ opacity: 0, y: 16 }}

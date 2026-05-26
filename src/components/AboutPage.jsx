@@ -464,7 +464,7 @@ function AboutPage() {
       </section>
 
       {/* CUSTOMERS SECTION */}
-      <div className="mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8">
         <section className="pb-12 lg:pb-16">
           <div className="mx-auto max-w-[760px] text-center">
             <p className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg">

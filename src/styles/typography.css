@@ -138,7 +138,7 @@
 
   /* Mobile-centered vertical steps (process flows, timelines) */
   .mobile-steps-centered {
-    @apply mx-auto w-full max-w-[17rem] px-2 sm:hidden;
+    @apply mx-auto w-full max-w-[17rem] px-2 xl:hidden;
   }
 
   .mobile-steps-centered__list {

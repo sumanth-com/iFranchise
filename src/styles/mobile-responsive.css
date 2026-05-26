@@ -17,9 +17,10 @@
     overflow-x: clip;
   }
 
-  .section-container {
-    padding-left: clamp(1rem, 4vw, 1.5rem);
-    padding-right: clamp(1rem, 4vw, 1.5rem);
+  .section-container,
+  .page-section-inner {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem);
+    padding-right: clamp(1.25rem, 5vw, 1.5rem);
   }
 
   .site-cta {
@@ -247,7 +248,7 @@
 /* ── Mobile (≤639px) ───────────────────────────────────────────────────────── */
 @media (max-width: 639px) {
   .hero-cinematic-layout .hero-cinematic-content {
-    padding-top: clamp(2.5rem, 12vh, 4.25rem);
+    padding-top: clamp(0.5rem, 4vh, 1.25rem);
   }
 
   .cinematic-hero .hero-cinematic-pill {
@@ -404,6 +405,15 @@
   .footer-main-grid {
     column-gap: 10px;
     row-gap: 10px;
+  }
+
+  .footer-follow-block {
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-social-3d-row {
+    gap: 0.5rem;
   }
 
   .footer-col-heading {
@@ -615,11 +625,40 @@
     height: auto;
   }
 
-  /* Balanced page rhythm */
+  /* Balanced page rhythm — all pages */
+  #main-content > main,
+  #main-content main[class*='-page'] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .section-container,
+  .page-section-inner,
   main > section:not([class*='px-']) {
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Standard gutters on page shells (direct children of main only) */
+  #main-content > main[class*='max-w-'],
+  #main-content > main .page-section-inner,
+  #main-content > main .section-container {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem);
+    padding-right: clamp(1.25rem, 5vw, 1.5rem);
+    box-sizing: border-box;
+  }
+
+  #main-content .theme-section-on-light,
+  #main-content .services-audience-copy {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  #main-content .section-header {
+    padding-inline: 0.125rem;
   }
 
   /* Typography — readable scaling without touching desktop (xl+) */
@@ -721,12 +760,11 @@
 
 /* ── Page heroes (non-home) ───────────────────────────────────────────────── */
 @media (max-width: 1279px) {
-  .page-hero-light,
-  .about-hero,
-  .contact-page .page-hero-light {
+  .page-hero-light:not(.services-hero):not(#contact-form),
+  .about-hero {
     min-height: auto;
-    padding-top: clamp(1.5rem, 4vh, 2.5rem);
-    padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+    padding-top: clamp(1rem, 3vh, 1.75rem);
+    padding-bottom: clamp(1rem, 3vh, 1.75rem);
   }
 
   .page-hero-light .type-page-hero,
@@ -766,6 +804,248 @@
 
   .contact-send-btn {
     min-height: 48px;
+  }
+}
+
+/* ── Services page — hero, cards, dashboards (tablet + mobile; desktop xl+ unchanged) ── */
+@media (max-width: 1279px) {
+  .services-page {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* Services hero viewport shell — filled in refinement block below */
+
+  .services-page .services-hero-title {
+    font-size: clamp(1.625rem, 6.5vw, 2.5rem) !important;
+    line-height: 1.14 !important;
+    text-wrap: balance;
+  }
+
+  .services-page .services-hero-lead {
+    font-size: clamp(0.9375rem, 3.5vw, 1.125rem) !important;
+    line-height: 1.5 !important;
+  }
+
+  .services-page .services-hero-lead__line {
+    display: inline;
+  }
+
+  .services-page .services-hero-lead__line:not(:last-child)::after {
+    content: ' ';
+    white-space: pre;
+  }
+
+  .services-page .services-hero .site-cta {
+    max-width: min(100%, 20rem);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .services-page .services-dashboard-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .services-page .services-process-section .section-header {
+    padding-inline: 0.125rem;
+  }
+
+  .services-page .services-audience-section .page-section-inner {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem);
+    padding-right: clamp(1.25rem, 5vw, 1.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .services-page .services-hero-social__row {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .services-page .services-hero-social__rating {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .services-page .services-hero-social__rating p {
+    max-width: 100%;
+  }
+
+  /* For Brands / For Investors — centered copy on mobile/tablet */
+  .services-page .services-audience-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .services-page .services-audience-section .page-section-inner > .grid {
+    gap: 2rem;
+  }
+
+  .services-page .services-audience-copy {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .services-page .services-audience-pill-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .services-page .services-audience-copy .section-title,
+  .services-page .services-audience-copy h2 {
+    font-size: clamp(1.375rem, 5.25vw, 1.875rem) !important;
+    line-height: 1.2 !important;
+    text-wrap: balance;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .services-page .services-audience-lead {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Centered narrow column — checklist sits under heading, not flush left */
+  .services-page .services-audience-benefits {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .services-page .services-audience-benefit {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .services-page .services-audience-benefit span {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .services-page .services-audience-cta {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.25rem;
+  }
+
+  /* Single-line CTAs — compact but tappable */
+  .services-page .services-page-cta-btn.site-cta,
+  .services-page .services-section-cta .site-cta {
+    width: auto !important;
+    max-width: min(100%, calc(100vw - 2.5rem));
+    min-height: 44px;
+    padding: 0.75rem 1.125rem !important;
+    font-size: clamp(0.6875rem, 3.1vw, 0.8125rem) !important;
+    gap: 0.5rem !important;
+    white-space: nowrap;
+    justify-content: center;
+  }
+
+  .services-page .services-page-cta-btn .site-cta__label,
+  .services-page .services-section-cta .site-cta__label {
+    white-space: nowrap;
+  }
+
+  .services-page .services-page-cta-btn.site-cta--lg .site-cta__icon,
+  .services-page .services-section-cta .site-cta--lg .site-cta__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .services-page .services-dashboard-wrap {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
+    padding-bottom: 4.5rem;
+  }
+
+  .services-page .services-dashboard-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.375rem;
+  }
+
+  .services-page .services-dashboard-metrics .dashboard-metric-card {
+    min-width: 0;
+    padding: 0.5rem 0.375rem !important;
+  }
+
+  .services-page .services-dashboard-metrics .dashboard-metric-card .text-lg {
+    font-size: 0.9375rem !important;
+    line-height: 1.2;
+  }
+
+  .services-page .services-dashboard-metrics .dashboard-metric-card [class*='text-[9px]'],
+  .services-page .services-dashboard-metrics .dashboard-metric-card [class*='text-[8px]'] {
+    font-size: 0.625rem !important;
+    line-height: 1.2;
+  }
+
+  .services-page .services-process-section .section-header .site-section-pill {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .services-page .why-ifranchise-section .why-section-cta {
+    width: auto !important;
+    max-width: min(100%, calc(100vw - 2.5rem));
+    min-height: 44px;
+    padding: 0.75rem 1.125rem !important;
+    font-size: clamp(0.6875rem, 3.1vw, 0.8125rem) !important;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Services audience — restore left alignment on desktop two-column layout */
+@media (min-width: 1024px) {
+  .services-page .services-audience-copy {
+    text-align: left;
+  }
+
+  .services-page .services-audience-pill-wrap {
+    justify-content: flex-start;
+  }
+
+  .services-page .services-audience-copy .section-title,
+  .services-page .services-audience-copy h2,
+  .services-page .services-audience-copy p {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .services-page .services-audience-benefits {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+  }
+
+  .services-page .services-audience-cta {
+    justify-content: flex-start;
+  }
+
+  .services-page .services-page-cta-btn.site-cta,
+  .services-page .services-section-cta .site-cta {
+    width: auto !important;
+    max-width: none;
+    font-size: 1rem !important;
+    padding: 1rem 2rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .services-page .services-hero-social__row {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
@@ -1246,20 +1526,21 @@
     text-wrap: balance;
   }
 
-  .about-hero__footer {
+  .about-page .about-hero__footer {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  .about-hero__stats {
+  .about-page .about-hero__stats {
     justify-content: center;
     width: 100%;
   }
 
-  .about-hero__cta.site-cta {
+  .about-page .about-hero__cta.site-cta {
     width: 100%;
     max-width: 20rem;
+    margin-inline: auto;
     justify-content: center;
   }
 }
@@ -1442,6 +1723,26 @@
 
 /* Prevent iOS rubber-band horizontal bleed */
 @media (max-width: 767px) {
+  /* Center primary CTAs in section footers across all pages */
+  #main-content main .text-center .site-cta,
+  #main-content main .text-center .btn-purple-solid,
+  #main-content main .mobile-cta-center .site-cta {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #main-content main .text-center .site-cta,
+  #main-content main .text-center .btn-purple-solid {
+    width: 100%;
+    max-width: min(100%, 20rem);
+    justify-content: center;
+  }
+
+  .fo-page-shell {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem) !important;
+    padding-right: clamp(1.25rem, 5vw, 1.5rem) !important;
+  }
+
   html,
   body,
   #root {
@@ -1462,5 +1763,787 @@
     textarea:focus {
       scroll-margin-bottom: 20vh;
     }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile refinement pass — max-width only (desktop xl+ unchanged)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Section pills & headings — centered rhythm ───────────────────────── */
+@media (max-width: 1279px) {
+  .section-header,
+  .ifranchise-acronym__header,
+  .home-faq-section__head,
+  .services-faq-section .mb-12,
+  .blog-page > section:not(.blog-page-hero) > .mb-8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .section-header .site-section-pill,
+  .section-header > .site-section-pill,
+  .ifranchise-acronym__header .site-section-pill,
+  .home-faq-section__head .site-section-pill,
+  .services-process-section .section-header .site-section-pill,
+  .why-ifranchise-section .site-section-pill,
+  .fo-way-work__header .site-section-pill,
+  #main-content .text-center > .site-section-pill,
+  .services-faq-section__badge,
+  .lyb-section-badge,
+  .lyb-trust-badge {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-header .section-title,
+  .section-header .type-section-title,
+  .section-header h2,
+  .section-header .section-subtitle,
+  .section-header .type-section-subtitle,
+  .ifranchise-acronym__header .ifranchise-acronym__title,
+  .ifranchise-acronym__header .ifranchise-acronym__lead {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section-header .site-section-pill,
+  .ifranchise-acronym__header .site-section-pill {
+    margin-bottom: 0.875rem;
+  }
+
+  .section-header .section-title,
+  .section-header h2.type-section-title,
+  .section-header h2.section-title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-header .section-subtitle,
+  .section-header .type-section-subtitle {
+    margin-top: 0;
+  }
+
+  /* Custom About / page badges (non-SectionPill) */
+  .about-page section .inline-flex.rounded-full.border,
+  .about-page .text-center > .inline-flex.rounded-full {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ── 2. Services hero — mobile/tablet (matches site sections, full social proof) ─ */
+@media (max-width: 1279px) {
+  #main-content .services-page > #services-hero.services-hero {
+    --services-hero-offset: 4rem;
+    box-sizing: border-box;
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: clamp(1.25rem, 4vh, 2rem) clamp(1.25rem, 5vw, 1.5rem) clamp(1.5rem, 4vh, 2.25rem) !important;
+    margin-bottom: 0 !important;
+    background: transparent !important;
+    isolation: isolate;
+  }
+
+  /* Same open backdrop as other sections — no card-like hero panel */
+  .services-page .services-hero .page-hero-light__gradient {
+    opacity: 0.22 !important;
+  }
+
+  html[data-theme='light'] .services-page .services-hero .page-hero-light__gradient {
+    display: none !important;
+  }
+
+  html[data-theme='light'] .services-page .services-hero.page-hero-light {
+    background: transparent !important;
+  }
+
+  .services-page .services-hero .page-hero-light__bg > div[class*='blur'] {
+    opacity: 0.35 !important;
+    transform: translate(-50%, -50%) scale(0.65) !important;
+  }
+
+  .services-page .services-hero__content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: clamp(0.75rem, 2vh, 1.125rem) !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+  }
+
+  .services-page .services-hero-title {
+    margin: 0 !important;
+    font-size: clamp(1.375rem, 5.25vw, 1.875rem) !important;
+    line-height: 1.16 !important;
+    font-weight: 800 !important;
+  }
+
+  .services-page .services-hero-lead {
+    margin: 0 !important;
+    font-size: clamp(0.875rem, 3.4vw, 1rem) !important;
+    line-height: 1.55 !important;
+    max-width: min(100%, 22rem) !important;
+  }
+
+  .services-page .services-hero__cta-wrap {
+    margin: 0 !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .services-page .services-hero__cta-wrap .site-cta {
+    margin-inline: auto;
+    max-width: min(100%, 20rem);
+  }
+
+  .services-page .services-hero-social {
+    gap: clamp(0.5rem, 1.5vh, 0.75rem) !important;
+    margin: 0 !important;
+    width: 100%;
+    max-width: min(100%, 22rem);
+    align-items: center;
+    text-align: center;
+  }
+
+  .services-page .services-hero-social__row {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem 0.875rem !important;
+  }
+
+  .services-page .services-hero-social__rating {
+    align-items: center;
+    text-align: center;
+  }
+
+  .services-page .services-hero-social__review {
+    display: block !important;
+    font-size: clamp(0.75rem, 3vw, 0.875rem) !important;
+    line-height: 1.4 !important;
+    margin-top: 0.375rem !important;
+  }
+
+  .services-page .services-hero-social__trust {
+    display: block !important;
+    font-size: clamp(0.75rem, 2.9vw, 0.875rem) !important;
+    line-height: 1.5 !important;
+    max-width: min(100%, 20rem) !important;
+    margin-inline: auto;
+  }
+
+  .services-page .services-hero-avatars__img {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  .services-page .services-hero-star {
+    width: 0.875rem !important;
+    height: 0.875rem !important;
+  }
+
+  .services-page #services-overview {
+    margin-top: 0 !important;
+    scroll-margin-top: var(--services-hero-offset, 4rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .services-page #services-overview > div {
+    padding-top: clamp(2rem, 5vh, 2.75rem) !important;
+  }
+
+  .contact-page #contact-form.page-hero-light {
+    min-height: auto !important;
+    padding-top: clamp(0.875rem, 2.5vh, 1.25rem);
+    padding-bottom: clamp(1rem, 3vh, 1.5rem);
+  }
+
+  .contact-page-hero-grid {
+    gap: clamp(0.875rem, 2.5vw, 1.25rem) !important;
+    width: 100%;
+  }
+
+  .contact-hero-left__title {
+    margin-bottom: 0.375rem !important;
+    font-size: clamp(1.5rem, 5.5vw, 2rem) !important;
+    line-height: 1.14 !important;
+  }
+
+  .contact-hero-left__subtitle {
+    margin-bottom: 0.75rem !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.5 !important;
+    max-width: 22rem;
+  }
+
+  .contact-hero-card {
+    padding: 0.625rem 0.75rem !important;
+  }
+
+  .contact-hero-social {
+    margin-top: 0.75rem !important;
+  }
+
+  .contact-hero-form,
+  .contact-form-panel {
+    border-radius: 1.125rem;
+  }
+
+  .contact-hero-form .flex.flex-col.p-5,
+  .contact-form-panel .flex.flex-col.p-5 {
+    padding: 1rem 1.125rem !important;
+  }
+
+  .contact-hero-form form,
+  .contact-form-panel form {
+    gap: 0.625rem !important;
+  }
+
+  .contact-send-btn {
+    margin-top: 0.25rem;
+  }
+
+  /* About hero — horizontal pathway strip saves vertical space */
+  .about-hero {
+    padding-top: clamp(1rem, 3vh, 1.75rem);
+    padding-bottom: clamp(0.875rem, 2.5vh, 1.5rem);
+  }
+
+  .about-hero__head {
+    margin-bottom: clamp(0.875rem, 2.5vh, 1.25rem);
+  }
+
+  .about-hero__title {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+    margin-bottom: 0.625rem;
+  }
+
+  .about-hero__subtitle {
+    font-size: clamp(0.875rem, 3.25vw, 1rem);
+    line-height: 1.55;
+  }
+
+  .about-hero__pathways {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.625rem;
+    margin-bottom: 0.875rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-bottom: 0.125rem;
+  }
+
+  .about-hero__pathways::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-hero__pathway {
+    flex: 0 0 min(78vw, 17.5rem);
+    scroll-snap-align: start;
+    padding: 0.875rem 1rem;
+    gap: 0.25rem;
+  }
+
+  .about-hero__pathway-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .about-hero__pathway-title {
+    font-size: 0.9375rem;
+  }
+
+  .about-hero__pathway-desc {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .about-page .about-hero__footer {
+    padding-top: 0.75rem;
+    gap: 0.875rem;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
+
+  .about-page .about-hero__stats {
+    gap: 0.875rem 1.25rem;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-inline: auto;
+    padding: 0;
+  }
+
+  .about-page .about-hero__stats li {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-page .about-hero__cta.site-cta {
+    align-self: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    max-width: 20rem !important;
+    justify-content: center !important;
+  }
+
+  .about-page .about-hero__stats strong {
+    font-size: 1.125rem;
+  }
+
+  /* List Your Brand — override inline viewport lock on phones/tablets */
+  .list-your-brand-page .lyb-hero-section {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding-top: clamp(0.75rem, 2vh, 1.25rem) !important;
+    padding-bottom: clamp(0.75rem, 2vh, 1.25rem) !important;
+  }
+
+  .list-your-brand-page .lyb-hero-section > .relative {
+    height: auto;
+    min-height: 0;
+  }
+
+  .list-your-brand-page .lyb-hero-copy {
+    gap: 0.5rem !important;
+  }
+
+  .list-your-brand-page .lyb-hero-title {
+    font-size: clamp(1.375rem, 5.5vw, 1.875rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  .list-your-brand-page .lyb-hero-subtext {
+    font-size: 0.8125rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .list-your-brand-page .lyb-hero-badge {
+    margin-bottom: 0.125rem;
+  }
+
+  .list-your-brand-page .lyb-hero-cta.btn-purple-solid {
+    width: 100%;
+    max-width: 20rem;
+    justify-content: center;
+    min-height: 48px;
+    margin-inline: auto;
+  }
+
+  /* Blog listing hero */
+  .blog-page {
+    padding-top: clamp(0.875rem, 2.5vh, 1.5rem) !important;
+    padding-bottom: clamp(2.5rem, 6vh, 3.5rem) !important;
+  }
+
+  .blog-page-hero {
+    gap: clamp(1rem, 3vw, 1.5rem) !important;
+    padding: clamp(1rem, 3vw, 1.5rem) !important;
+  }
+
+  .blog-page-hero__media {
+    min-height: 0 !important;
+    max-height: min(42vw, 220px);
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    border-radius: 1.25rem;
+    background: rgba(15, 23, 42, 0.35);
+  }
+
+  .blog-page-hero__image-wrap {
+    min-height: 0 !important;
+    height: 100% !important;
+    max-height: min(42vw, 220px);
+    aspect-ratio: 16 / 10;
+  }
+
+  .blog-page-hero__image img,
+  .blog-page-hero__media img {
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .blog-page-hero h1 {
+    font-size: clamp(1.375rem, 5.25vw, 2rem) !important;
+    line-height: 1.15 !important;
+    margin-top: 0.75rem !important;
+  }
+
+  .blog-page-hero > div:last-child > p {
+    margin-top: 0.75rem !important;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .blog-page-hero .mt-8 {
+    margin-top: 1rem !important;
+  }
+
+  .blog-page-hero .flex.flex-wrap {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .blog-page-hero .flex.flex-wrap button,
+  .blog-page-hero .flex.flex-wrap .btn-purple-solid {
+    flex: 1 1 auto;
+    min-width: min(100%, 10.5rem);
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .blog-page-hero > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .blog-page-hero > div:last-child > p:first-child {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .blog-page-hero__media {
+    max-height: min(40vw, 180px) !important;
+  }
+
+  .blog-page-hero__image-wrap {
+    max-height: min(40vw, 180px) !important;
+  }
+
+  .blog-page-hero h1 {
+    max-width: 100%;
+  }
+}
+
+/* Short phones — balanced Services hero */
+@media (max-width: 639px) {
+  #main-content .services-page > #services-hero.services-hero {
+    --services-hero-offset: 3.75rem;
+    padding: clamp(1rem, 3vh, 1.5rem) clamp(1.25rem, 5vw, 1.5rem) clamp(0.875rem, 2vh, 1.25rem) !important;
+  }
+
+  .services-page .services-hero__content {
+    gap: clamp(0.625rem, 1.75vh, 0.875rem) !important;
+  }
+
+  .services-page .services-hero-title,
+  .services-page .services-hero-title.type-hero-display {
+    font-size: clamp(1.3rem, 5.5vw, 1.625rem) !important;
+  }
+
+  .services-page .services-hero-social__row {
+    gap: 0.5rem !important;
+  }
+
+  .about-hero__pathway {
+    flex-basis: min(84vw, 16.5rem);
+  }
+
+  .blog-page-hero__media,
+  .blog-page-hero__image-wrap {
+    max-height: min(48vw, 200px);
+  }
+}
+
+/* Landscape phones & foldables */
+@media (max-width: 1279px) and (max-height: 700px) {
+  .services-page .services-hero-social__row {
+    transform: scale(0.92);
+    transform-origin: center top;
+  }
+
+  .services-page .services-hero-title {
+    font-size: clamp(1.1rem, 4.8vw, 1.35rem) !important;
+  }
+}
+
+@media (max-width: 1279px) and (max-height: 520px) and (orientation: landscape) {
+  #main-content .services-page > #services-hero.services-hero {
+    --services-hero-offset: 3.25rem;
+    min-height: auto !important;
+    padding: 0.75rem 1.25rem !important;
+  }
+
+  .services-page .services-hero-social__trust {
+    display: none;
+  }
+
+  .services-page .services-hero,
+  .contact-page #contact-form.page-hero-light,
+  .about-hero,
+  .list-your-brand-page .lyb-hero-section,
+  .blog-page-hero {
+    padding-top: 0.5rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .about-hero__pathways {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    gap: 0.5rem;
+  }
+
+  .about-hero__pathway {
+    flex: unset;
+    min-width: 0;
+  }
+
+  .about-hero__pathway-desc {
+    -webkit-line-clamp: 2;
+  }
+
+  .blog-page-hero__media,
+  .blog-page-hero__image-wrap {
+    max-height: 36vh;
+  }
+
+  .hero-cinematic-layout .hero-cinematic-content {
+    padding-top: 0.25rem;
+  }
+
+  .hero-cinematic-layout .hero-cta-row {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* ── 3. About page — content blocks & CTAs ───────────────────────────────── */
+@media (max-width: 1279px) {
+  .about-page #about-our-story {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .about-page #about-our-story > div,
+  .about-page section > .mx-auto {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem);
+    padding-right: clamp(1.25rem, 5vw, 1.5rem);
+  }
+
+  .about-page #about-our-story .grid {
+    gap: 1.75rem;
+  }
+
+  .about-page .theme-section-on-light {
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .about-page .theme-section-on-light > .inline-flex.rounded-full {
+    margin-inline: auto;
+  }
+
+  .about-page .theme-section-on-light h2,
+  .about-page .theme-section-on-light .section-title {
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+
+  .about-page .theme-section-on-light p {
+    text-align: left;
+    max-width: 36rem;
+    margin-inline: auto;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .about-page article.card-premium-dark {
+    padding: 1.25rem 1.125rem !important;
+  }
+
+  .about-page .mt-16.text-center {
+    margin-top: 2rem !important;
+  }
+
+  .about-page .animate-marquee-left article {
+    width: min(88vw, 340px) !important;
+    padding: 1rem 1.125rem !important;
+  }
+
+  .about-page .pb-12 .text-center {
+    padding-inline: 0.25rem;
+  }
+}
+
+/* ── 4. Contact page — sections below hero ───────────────────────────────── */
+@media (max-width: 1279px) {
+  .contact-page > section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .contact-page > section > .mx-auto,
+  .contact-page .services-faq-section .relative.z-10 {
+    padding-left: clamp(1.25rem, 5vw, 1.5rem);
+    padding-right: clamp(1.25rem, 5vw, 1.5rem);
+  }
+
+  .contact-page .services-faq-section .mb-12 {
+    margin-bottom: 2rem !important;
+  }
+
+  .contact-page .services-faq-section__badge {
+    margin-bottom: 0.875rem !important;
+  }
+
+  .contact-page iframe {
+    height: min(52vw, 320px) !important;
+    min-height: 220px;
+  }
+
+  .contact-page .services-faq-list {
+    gap: 0.625rem;
+  }
+
+  .contact-page .services-faq-item button {
+    padding: 0.875rem 1rem !important;
+  }
+}
+
+/* ── 5. Global CTA buttons (mobile/tablet) ───────────────────────────────── */
+@media (max-width: 1279px) {
+  .site-cta:not(.services-page-cta-btn):not(.why-section-cta),
+  .btn-purple-solid:not(.lyb-hero-cta),
+  .hero-cta {
+    min-height: 44px;
+    max-width: min(100%, 20rem);
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+    font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+  }
+
+  .text-center > .site-cta,
+  .text-center > .btn-purple-solid,
+  .mobile-cta-center > .site-cta {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Full-width CTAs only when parent is stretch layout */
+  .mobile-cta-center .site-cta,
+  .prefooter-cta-btn,
+  form .contact-send-btn,
+  form button[type='submit'] {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ── 6. Cards — consistent mobile padding & stacking ───────────────────────── */
+@media (max-width: 1279px) {
+  .card-premium-dark,
+  .theme-light-card,
+  .fo-opportunity-card,
+  .blog-card,
+  .premium-faq-item,
+  .services-faq-item {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-premium-dark:not(.blog-page-hero),
+  .theme-light-card {
+    padding: clamp(1rem, 3vw, 1.25rem) !important;
+  }
+
+  #main-content .grid.gap-6,
+  #main-content .grid.gap-5 {
+    gap: clamp(0.75rem, 2.5vw, 1rem);
+  }
+
+  .blog-card {
+    border-radius: 1.25rem;
+    overflow: hidden;
+  }
+
+}
+
+/* ── 7. Typography & section spacing ───────────────────────────────────────── */
+@media (max-width: 1279px) {
+  #main-content p:not([class*='text-']) {
+    max-width: 100%;
+  }
+
+  #main-content .leading-relaxed {
+    line-height: 1.6;
+  }
+
+  #main-content section[class*='py-16'] {
+    padding-top: clamp(2.5rem, 6vh, 3.5rem);
+    padding-bottom: clamp(2.5rem, 6vh, 3.5rem);
+  }
+
+  #main-content section[class*='py-12'] {
+    padding-top: clamp(2rem, 5vh, 2.75rem);
+    padding-bottom: clamp(2rem, 5vh, 2.75rem);
+  }
+
+  .type-hero-brand {
+    font-size: clamp(1.375rem, 5.25vw, 2.25rem) !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .section-header {
+    margin-bottom: 1.75rem !important;
+  }
+
+  .type-page-hero,
+  .type-hero-display {
+    font-size: clamp(1.375rem, 6.5vw, 1.75rem) !important;
+  }
+}
+
+/* LYB — optional viewport cap on phones (teaser state only; form reveal stays scrollable) */
+@media (max-width: 767px) and (min-height: 560px) {
+  .list-your-brand-page .lyb-hero-section {
+    max-height: calc(100dvh - 4.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }

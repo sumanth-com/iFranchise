@@ -938,7 +938,7 @@ function ContactSection() {
   const canSend = isContactFormReady(formData);
 
   return (
-    <section className="relative mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <section className="relative mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
       <div className="relative overflow-hidden rounded-2xl sm:rounded-[28px] md:rounded-[32px] border border-emerald-300/20 bg-[radial-gradient(circle_at_50%_30%,rgba(16,185,129,0.16),transparent_50%),linear-gradient(130deg,#020506_0%,#051414_48%,#020506_100%)] px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-10 lg:py-12 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(52,211,153,0.18),transparent_42%)]" />
         <div className="pointer-events-none absolute -left-12 top-16 h-[1px] w-52 bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent hidden sm:block" />
@@ -1673,7 +1673,7 @@ function MarketIntelligenceSection() {
 
   return (
     <section ref={ref} className="w-full">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 lg:px-8 py-10">
 
         {/* Compact Header */}
         <div className="theme-section-on-light text-center mb-6">
@@ -2763,7 +2763,7 @@ function Hero() {
 
       {/* -- FEATURED OPPORTUNITIES (after hero) -- */}
       <div className="section-reveal relative w-full overflow-hidden bg-transparent">
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-12">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 pt-14 pb-12">
           <div className="reveal-child text-center mb-10">
             <SectionPill className="mb-4">Opportunities</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>Featured Franchises</h2>
@@ -2805,7 +2805,7 @@ function Hero() {
       <div className="relative w-full overflow-hidden bg-transparent">
 
         {/* -- WHO WE SERVE -- */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
             <SectionPill className="mb-4">Who We Serve</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>Built for Investors and Growing Brands</h2>
@@ -2923,7 +2923,7 @@ function Hero() {
         <div className="relative z-10 mx-auto max-w-[1280px] px-8"><div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,rgba(139,92,246,0.3),transparent)' }} /></div>
 
         {/* -- PROCESS -- */}
-        <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-14">
+        <div id="about" ref={processRef} className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-14">
             <SectionPill className="mb-4">iFranchise Process</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>Two Strategic Paths. One Growth Engine.</h2>
@@ -2966,7 +2966,7 @@ function Hero() {
       <div className="relative w-full overflow-hidden bg-transparent">
 
         {/* -- INDUSTRIES -- */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-14 pb-10">
+        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 pt-14 pb-10">
           <div className="theme-section-on-light text-center mb-10">
             <SectionPill className="mb-4">Industries</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>

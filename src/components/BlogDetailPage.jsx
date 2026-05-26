@@ -430,7 +430,7 @@ function BlogDetailPage() {
 
   if (!article) {
     return (
-      <main className="relative z-10 mx-auto w-full max-w-[1240px] px-4 pb-24 pt-8 sm:px-6 lg:px-8 text-white">
+      <main className="relative z-10 mx-auto w-full max-w-[1240px] px-5 pb-24 pt-8 sm:px-6 lg:px-8 text-white">
         <div className="rounded-2xl border border-violet-500/25 card-premium-dark p-8 text-center">
           <h1 className="text-2xl font-semibold text-white">Blog post unavailable</h1>
         </div>
@@ -442,7 +442,7 @@ function BlogDetailPage() {
 
   return (
     <main className="blog-detail-page relative z-10 w-full min-h-0 bg-transparent pb-24">
-      <div className="blog-detail-shell mx-auto w-full max-w-[1240px] px-4 pt-8 sm:px-6 lg:px-8">
+      <div className="blog-detail-shell mx-auto w-full max-w-[1240px] px-5 pt-8 sm:px-6 lg:px-8">
         <BlogDetailHero
           category={article.category}
           title={article.title}

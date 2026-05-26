@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
 import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
@@ -927,7 +927,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
 function ServicesStyleIndustriesSection() {
   return (
     <section className="lyb-industries-section relative z-10 overflow-hidden">
-      <motion.div className="relative z-10 mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+      <motion.div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8">
         <motion.div className="lyb-dark-heading mb-6 text-center lg:mb-7">
           <div className="mb-4 flex justify-center">
             <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
@@ -1324,7 +1324,7 @@ const FAQ_ITEMS = [
 function ListYourBrandFAQSection() {
   return (
     <section className="lyb-faq-section w-full">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

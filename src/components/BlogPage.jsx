@@ -21,16 +21,17 @@ function BlogPage() {
   }, []);
 
   return (
-    <main className="relative z-10 mx-auto w-full max-w-[1240px] px-4 pb-20 pt-12 sm:px-6 lg:px-8 text-white">
-      <section className="grid gap-10 rounded-[28px] card-premium-dark p-6 md:grid-cols-[1.02fr_0.98fr] md:p-10">
-        <div className="min-h-[280px] overflow-hidden rounded-3xl sm:min-h-[320px]">
+    <main className="blog-page relative z-10 mx-auto w-full max-w-[1240px] px-5 pb-20 pt-12 sm:px-6 lg:px-8 text-white">
+      <section className="blog-page-hero grid grid-cols-1 gap-10 rounded-[28px] card-premium-dark p-6 md:grid-cols-[1.02fr_0.98fr] md:p-10">
+        <div className="blog-page-hero__media min-h-[280px] overflow-hidden rounded-3xl sm:min-h-[320px]">
           <BlogImage
             src={BLOG_PAGE_HERO_IMAGE}
             alt="Franchise insights and investment guides"
             variant="card"
             priority
-            wrapperClassName="h-full min-h-[280px] sm:min-h-[320px]"
-            className="h-full w-full"
+            wrapperClassName="blog-page-hero__image-wrap h-full min-h-[280px] sm:min-h-[320px]"
+            className="blog-page-hero__image h-full w-full"
+            imgClassName="object-cover object-center"
           />
         </div>
         <div className="flex flex-col justify-center">
