@@ -118,106 +118,86 @@ const LIST_YOUR_BRAND_FAQS = [
   },
 ];
 
-// Page-level shell: left + right columns (brand/investor vs careers).
+const KICKER_CLASS = 'text-xs font-semibold uppercase tracking-[0.25em] text-violet-400';
+const GROUP_TITLE_CLASS = 'text-xl font-extrabold tracking-tight text-white sm:text-2xl';
+const GROUP_DESC_CLASS = 'text-sm leading-relaxed text-slate-300/90 min-h-[4.5rem]';
+
+function FaqGroup({ kicker, title, description, faqs, idPrefix }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="space-y-2">
+        <p className={KICKER_CLASS}>{kicker}</p>
+        <h2 className={GROUP_TITLE_CLASS}>{title}</h2>
+        <p className={GROUP_DESC_CLASS}>{description}</p>
+      </div>
+      <div className="space-y-3">
+        {faqs.map((faq, index) => (
+          <PremiumFAQItem
+            key={`${idPrefix}-${faq.question}`}
+            faq={{
+              question: faq.question,
+              answer: faq.answer,
+              number: faq.number || String(index + 1).padStart(2, '0'),
+            }}
+            index={index}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function FAQPage() {
-  const pageHeadingClass = 'text-2xl font-extrabold tracking-tight text-white sm:text-3xl';
-  const sectionHeadingClass = 'text-xl font-extrabold tracking-tight text-white sm:text-2xl';
   return (
     <main className="relative min-h-screen bg-transparent">
-      <div className="relative z-10 mx-auto w-full max-w-7xl flex flex-col gap-10 px-5 pb-16 pt-6 sm:px-6 sm:pt-8 lg:px-8">
-        {/* Left + right FAQ columns */}
-        <div className="flex w-full flex-col gap-10 lg:flex-row lg:gap-14">
-          {/* Left column: brand & investor FAQs */}
-          <section className="w-full lg:w-1/2 space-y-8">
-            <header className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-violet-400">
-                Frequently asked questions
-              </p>
-              <h1 className={pageHeadingClass}>
-                Franchise expansion & investment FAQs
-              </h1>
-              <p className="max-w-xl text-sm text-slate-300/90">
-                Central place for all the questions founders and investors ask across iFranchise – from costs and
-                models to readiness, timelines, and support.
-              </p>
-            </header>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-6 sm:px-6 sm:pt-8 lg:px-8">
+        <header className="mx-auto mb-10 max-w-3xl space-y-3 text-center lg:mb-12">
+          <p className={KICKER_CLASS}>Frequently asked questions</p>
+          <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+            Helpful franchise questions & answers
+          </h1>
+          <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-300/90">
+            Everything founders, investors, and future team members need to know about franchise growth on
+            iFranchise.
+          </p>
+        </header>
 
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-300">
-                  Investing & opportunities
-                </h2>
-                <div className="space-y-3">
-                  {HOME_FAQS.map((faq, index) => (
-                    <PremiumFAQItem key={`home-${faq.question}`} faq={faq} index={index} />
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-300">
-                  Contact & next steps
-                </h2>
-                <div className="space-y-3">
-                  {CONTACT_FAQS.map((faq, index) => (
-                    <PremiumFAQItem key={`contact-${faq.question}`} faq={faq} index={index} />
-                  ))}
-                </div>
-              </div>
-            </div>
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14">
+          <section className="flex flex-col gap-10">
+            <FaqGroup
+              idPrefix="home"
+              kicker="For investors"
+              title="Expansion & investment"
+              description="Costs, models, profitability, legal requirements, and launch timelines for franchise investors and buyers evaluating opportunities in India."
+              faqs={HOME_FAQS}
+            />
+            <FaqGroup
+              idPrefix="contact"
+              kicker="Get in touch"
+              title="Contact & next steps"
+              description="Investment ranges, break-even expectations, experience requirements, platform support, and multi-unit expansion after you connect with our team."
+              faqs={CONTACT_FAQS}
+            />
           </section>
 
-          {/* Right column: brand founders + careers & culture FAQs */}
-          <aside className="w-full lg:w-1/2 space-y-8">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-violet-400">
-              For brand founders
-            </p>
-            <h2 className={sectionHeadingClass}>
-              Brand expansion FAQs
-            </h2>
-            <p className="max-w-xl text-sm text-slate-300/90">
-              Quick answers for founders listing a brand, becoming franchise-ready, and matching with the right investors.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            {LIST_YOUR_BRAND_FAQS.map((faq, index) => (
-              <PremiumFAQItem key={`lyb-${faq.question}`} faq={faq} index={index} />
-            ))}
-          </div>
-
-            <header className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-violet-400">
-                Working with iFranchise
-              </p>
-              <h2 className={sectionHeadingClass}>
-                Careers, culture & ways of working
-              </h2>
-              <p className="max-w-xl text-sm text-slate-300/90">
-                Answers to common questions from future team members about remote work, growth, and how to get in
-                touch before roles go live.
-              </p>
-            </header>
-
-            <div className="space-y-3">
-              {CAREERS_FAQS.map((faq, index) => (
-                <PremiumFAQItem
-                  // PremiumFAQItem expects { question, answer, number? }; adapt field names.
-                  key={`careers-${faq.question}`}
-                  faq={{
-                    question: faq.question || faq.q,
-                    answer: faq.answer || faq.a,
-                    number: String(index + 1).padStart(2, '0'),
-                  }}
-                  index={index}
-                />
-              ))}
-            </div>
-          </aside>
+          <section className="flex flex-col gap-10">
+            <FaqGroup
+              idPrefix="lyb"
+              kicker="For brand founders"
+              title="Brand expansion"
+              description="Who can list, franchise-readiness timelines, investor matching, supported models, and post-launch support for brands scaling through franchising."
+              faqs={LIST_YOUR_BRAND_FAQS}
+            />
+            <FaqGroup
+              idPrefix="careers"
+              kicker="Working with iFranchise"
+              title="Careers & culture"
+              description="Who thrives here, remote and hybrid work, upcoming roles, early outreach, and growth paths for people joining India's franchise growth platform."
+              faqs={CAREERS_FAQS}
+            />
+          </section>
         </div>
       </div>
     </main>
   );
 }
-
