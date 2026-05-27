@@ -10,7 +10,6 @@ import odette3 from '../../assets/ODETTE/3.webp';
 import odette4 from '../../assets/ODETTE/4.webp';
 import odette5 from '../../assets/ODETTE/5.webp';
 import odette6 from '../../assets/ODETTE/6.webp';
-import odette7 from '../../assets/ODETTE/7.webp';
 
 // Original Burger co
 import originalBurgerLogo from '../../assets/Original Burger co/Logo.webp';
@@ -26,7 +25,6 @@ import franco1 from '../../assets/Franco/1.webp';
 import franco2 from '../../assets/Franco/2.webp';
 import franco3 from '../../assets/Franco/3.webp';
 import franco4 from '../../assets/Franco/4.webp';
-import franco5 from '../../assets/Franco/5.webp';
 
 // BIGGIES BURGER
 import biggiesLogo from '../../assets/BIGGIES BURGER/Logo.webp';
@@ -133,7 +131,7 @@ function packBrandAssets(logo, photos = [], opts = {}) {
 
 /** @type {Record<string, ReturnType<typeof packBrandAssets>>} */
 export const BRAND_IMAGES_BY_SLUG = {
-  odette: packBrandAssets(odetteLogo, [odette1, odette2, odette3, odette4, odette5, odette6, odette7], {
+  odette: packBrandAssets(odetteLogo, [odette1, odette2, odette3, odette4, odette5, odette6], {
     cardBackground: '#f8f6f3',
     cardAccent: '#c4b5a0',
     cardFit: 'fill',
@@ -143,7 +141,7 @@ export const BRAND_IMAGES_BY_SLUG = {
     [originalBurger1, originalBurger2, originalBurger3, originalBurger4, originalBurger5],
     { cardBackground: '#1d4ed8', cardAccent: '#3b82f6', cardFit: 'fill' }
   ),
-  franco: packBrandAssets(francoLogo, [franco1, franco2, franco3, franco4, franco5], {
+  franco: packBrandAssets(francoLogo, [franco1, franco2, franco3, franco4], {
     cardBackground: '#ffffff',
     cardAccent: '#e2e8f0',
     cardFit: 'fill',

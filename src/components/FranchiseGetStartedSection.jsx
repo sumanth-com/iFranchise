@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { TYPE } from '../lib/typography.js';
-import { FiArrowRight, FiCheckCircle, FiEdit3, FiSearch, FiZap } from 'react-icons/fi';
+import { FiCheckCircle, FiEdit3, FiSearch, FiZap } from 'react-icons/fi';
 
 const STEPS = [
   {
@@ -86,18 +86,10 @@ function StepCard({ step, index, total, reduceMotion }) {
   );
 }
 
-export default function FranchiseGetStartedSection({ onStartApply }) {
+export default function FranchiseGetStartedSection() {
   const sectionRef = useRef(null);
   const headerInView = useInView(sectionRef, { once: true, margin: '-80px' });
   const reduceMotion = useReducedMotion();
-
-  const handleCta = () => {
-    if (onStartApply) {
-      onStartApply();
-      return;
-    }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <section
@@ -127,25 +119,6 @@ export default function FranchiseGetStartedSection({ onStartApply }) {
             <StepCard key={step.title} step={step} index={i} total={STEPS.length} reduceMotion={reduceMotion} />
           ))}
         </div>
-
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.45, delay: 0.35, ease: EASE }}
-          className="mt-8 flex flex-col items-center gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:justify-center sm:gap-6"
-        >
-          <button
-            type="button"
-            onClick={handleCta}
-            className="btn-purple-solid inline-flex items-center gap-2 rounded-lg px-7 py-3 text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
-          >
-            Start your application
-            <FiArrowRight className="h-4 w-4" aria-hidden />
-          </button>
-          <p className="text-center text-xs text-black sm:text-left">
-            <span className="font-semibold">Typical timeline:</span> 8-12 weeks from apply to launch
-          </p>
-        </motion.div>
       </div>
     </section>
   );

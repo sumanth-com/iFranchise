@@ -17,6 +17,9 @@ export const SITE_CONTACT_ADDRESS_COMPACT =
 
 export const SITE_CONTACT_PHONE_TEL = `+91${SITE_CONTACT_PHONE}`;
 
+/** WhatsApp chat (India country code, no +) */
+export const SITE_CONTACT_WHATSAPP_URL = `https://wa.me/91${SITE_CONTACT_PHONE}`;
+
 export const SITE_CONTACT_PHONE_DISPLAY = `+91 ${SITE_CONTACT_PHONE.slice(0, 5)} ${SITE_CONTACT_PHONE.slice(5)}`;
 
 export const SITE_CONTACT_MAILTO = `mailto:${SITE_CONTACT_EMAIL}`;

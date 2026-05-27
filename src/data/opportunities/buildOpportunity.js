@@ -3,8 +3,13 @@ import {
   deriveBadge,
   deriveLocationsLabel,
   extractCities,
+  formatAgreementTerm,
+  formatExpansionDetailLabel,
+  formatExpansionHeroLabel,
   formatInrRange,
   formatIndianCurrencyText,
+  formatOutletsDisplay,
+  formatReturnsDisplay,
   formatSpaceSqFt,
   inrToUsdFilterAmount,
   isPlaceholder,
@@ -13,11 +18,11 @@ import {
   parseModels,
   parsePaybackMonths,
   parseRoiPercent,
-  primaryModel,
+  resolvePrimaryModel,
   slugifyBrand,
 } from './opportunityUtils.js';
 import { getBrandImages } from './brandImages.js';
-import { getBrochureUrlByFranchiseId } from './brochurePdfs.js';
+import { getBrochureUrlByFranchiseSlug } from './brochurePdfs.js';
 import {
   flattenLocationLabels,
   flattenLocationTags,
@@ -35,12 +40,20 @@ const MODEL_DESCRIPTIONS = {
 };
 
 function formatMultiLineField(text) {
-  const cleaned = cleanText(text);
-  if (!cleaned) return '';
-  return cleaned
+  if (text == null || text === false) return '';
+  const normalized = String(text).replace(/\r\n/g, '\n').trim();
+  if (!normalized) return '';
+  if (normalized.includes('\n')) {
+    return normalized
+      .split('\n')
+      .map((line) => cleanText(line))
+      .filter(Boolean)
+      .join('\n');
+  }
+  return cleanText(normalized)
     .replace(/,\s*(?=(?:Classic|Premium|Brew|FOFO|FICO|UF|MF|Unit))/gi, '\n')
     .replace(/\s*\/\s*/g, '\n')
-    .replace(/\s+(?=(?:PREMIUM|BREW|CLASSIC|TIER))/gi, '\n')
+    .replace(/\s+(?=(?:PREMIUM|BREW|CLASSIC)(?!\s*\())/gi, '\n')
     .replace(/\n+/g, '\n')
     .trim();
 }
@@ -54,14 +67,18 @@ function formatSpaceDisplay(text) {
 }
 
 function buildInvestorInvestmentSummary(raw, _investmentLabel, franchiseFee, returns, _models, paybackLabel) {
-  const slot = (label, value, fallback) => ({
+  const slot = (label, value, fallback, detail) => ({
     label,
     value: value && String(value).trim() ? value : fallback,
+    detail: detail || '',
   });
+  const returnsInfo = !isPlaceholder(returns)
+    ? formatReturnsDisplay(returns)
+    : { display: 'On request', full: '' };
   return [
     slot('Franchise fee', !isPlaceholder(franchiseFee) ? formatMoneyDisplay(franchiseFee) : '', 'On request'),
     slot('Space (Sq.ft)', !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : '', 'As per format'),
-    slot('Returns', !isPlaceholder(returns) ? formatIndianCurrencyText(cleanText(returns)) : '', 'On request'),
+    slot('Returns', returnsInfo.display, 'On request', returnsInfo.full),
     slot('Payback', paybackLabel || '', 'On request'),
   ];
 }
@@ -238,7 +255,7 @@ export function buildOpportunityRecord(raw, id) {
   const slug = slugifyBrand(brandName);
   const industry = normalizeCategory(raw.category);
   const models = parseModels(raw.businessModel);
-  const model = primaryModel(models);
+  const model = resolvePrimaryModel(slug, models);
 
   const { minInr, maxInr } = parseInvestmentAmounts(raw.investmentMin, raw.investmentMax);
   const minInvestment = minInr != null ? inrToUsdFilterAmount(minInr) : 50_000;
@@ -305,7 +322,7 @@ export function buildOpportunityRecord(raw, id) {
   };
 
   const paybackLabel = cleanText(raw.paybackPeriod) || (paybackMonths ? `${paybackMonths} months` : 'On request');
-  const outlets = cleanText(raw.totalOutlets) || 'Growing network';
+  const outlets = formatOutletsDisplay(raw.totalOutlets) || 'Growing network';
 
   const detail = {
     id: String(id),
@@ -322,7 +339,7 @@ export function buildOpportunityRecord(raw, id) {
     slideshow: brandImages.slideshow ?? brandImages.gallery,
     cardBackground: brandImages.cardBackground,
     cardFit: brandImages.cardFit || 'fill',
-    brochureUrl: getBrochureUrlByFranchiseId(id) || cleanText(raw.websiteBrochureLink) || '',
+    brochureUrl: getBrochureUrlByFranchiseSlug(slug) || cleanText(raw.websiteBrochureLink) || '',
     keyInfo: {
       investment,
       space: spaceLabel,
@@ -358,6 +375,18 @@ export function buildOpportunityRecord(raw, id) {
     locations: locationGroups ? flattenLocationTags(locationGroups) : buildExpansionPlans(raw, cities),
     locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : null,
     locationGroups: locationGroups ?? null,
+    expansionDisplay: formatExpansionHeroLabel({
+      cities: groupedCities.length ? groupedCities : cities,
+      locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : '',
+      targetAreas: raw.targetAreas,
+      locationType: raw.locationType,
+    }),
+    expansionDetail: formatExpansionDetailLabel({
+      cities: groupedCities.length ? groupedCities : cities,
+      locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : '',
+      targetAreas: raw.targetAreas,
+      locationType: raw.locationType,
+    }),
     faqs: buildFaqs(raw, investment, models),
     reviews: buildDefaultReviews(brandName),
     aboutBrand: [],
@@ -398,7 +427,10 @@ export function buildOpportunityRecord(raw, id) {
     ].filter((r) => r.value && r.value !== 'India, select markets'),
     trainingSupport: buildTrainingSupport(raw, models),
     agreementDetails: [
-      !isPlaceholder(raw.agreementTerm) && { label: 'Agreement Term', value: cleanText(raw.agreementTerm) },
+      !isPlaceholder(raw.agreementTerm) && {
+        label: 'Agreement Term',
+        value: formatAgreementTerm(raw.agreementTerm),
+      },
       !isPlaceholder(raw.lockInPeriod) && { label: 'Lock-in Period', value: cleanText(raw.lockInPeriod) },
       { label: 'Currency', value: raw.currency === 'INR' ? 'INR (₹)' : raw.currency || 'INR (₹)' },
     ].filter(Boolean),

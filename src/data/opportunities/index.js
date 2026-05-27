@@ -1,7 +1,16 @@
 import { RAW_BRANDS } from './rawBrands.js';
 import { buildOpportunityRecord } from './buildOpportunity.js';
+import { cleanText, slugifyBrand } from './opportunityUtils.js';
 
-const built = RAW_BRANDS.map((raw, index) => buildOpportunityRecord(raw, index + 1));
+/** Temporarily hidden from listings (data kept in rawBrands for later). */
+const HIDDEN_BRAND_SLUGS = new Set(['kasturi-creations']);
+
+const visibleRawBrands = RAW_BRANDS.filter((raw) => {
+  const name = cleanText(raw.franchiseName).replace(/\(2\)/i, '').trim();
+  return !HIDDEN_BRAND_SLUGS.has(slugifyBrand(name));
+});
+
+const built = visibleRawBrands.map((raw, index) => buildOpportunityRecord(raw, index + 1));
 
 /** @type {import('../franchiseData.js').franchiseOpportunities} */
 export const franchiseOpportunities = built.map((b) => b.listing);

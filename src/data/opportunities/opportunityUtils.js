@@ -49,6 +49,34 @@ export function cleanText(value) {
     .trim();
 }
 
+/**
+ * Normalize outlet copy for cards/detail stats (e.g. "40+", "9+").
+ * Sums city-wise breakdowns like "6 in bang, 2 in chen, 1 in hyd".
+ */
+export function formatOutletsDisplay(raw = '') {
+  const text = cleanText(raw);
+  if (!text) return '';
+
+  if (/\d+\s+in\s+/i.test(text)) {
+    const counts = [...text.matchAll(/(\d+)\s+in\s+/gi)].map((m) => parseInt(m[1], 10));
+    if (counts.length) {
+      const total = counts.reduce((sum, n) => sum + n, 0);
+      return total > 0 ? `${total}+` : text;
+    }
+  }
+
+  const compactPlus = text.match(/^(\d+)\s*\+/);
+  if (compactPlus) return `${compactPlus[1]}+`;
+
+  const embeddedPlus = text.match(/(\d+)\s*\+/);
+  if (embeddedPlus) return `${embeddedPlus[1]}+`;
+
+  const outletsWord = text.match(/^(\d+)\s+outlets?\b/i);
+  if (outletsWord) return `${outletsWord[1]}+`;
+
+  return text;
+}
+
 export function normalizeCategory(raw = '') {
   const c = cleanText(raw).toLowerCase();
   if (!c) return 'Food & Beverage';
@@ -96,6 +124,17 @@ export function parseModels(raw = '') {
 export function primaryModel(models) {
   const order = ['FOFO', 'FICO', 'FOCO', 'COFO', 'COCO', 'FIFO'];
   return order.find((m) => models.includes(m)) || models[0] || 'FOFO';
+}
+
+/** Card/detail primary model when brand supports multiple formats. */
+const PRIMARY_MODEL_BY_SLUG = {
+  'original-burger-co': 'FICO',
+};
+
+export function resolvePrimaryModel(slug, models) {
+  const override = PRIMARY_MODEL_BY_SLUG[slug?.toLowerCase?.()];
+  if (override && models.includes(override)) return override;
+  return primaryModel(models);
 }
 
 /**
@@ -186,6 +225,89 @@ export function formatIndianCurrencyText(text = '') {
     .join('\n');
 }
 
+function formatLakhShort(num) {
+  const n = parseFloat(num);
+  if (!Number.isFinite(n)) return '';
+  return String(n % 1 === 0 ? Math.round(n) : n.toFixed(2).replace(/\.?0+$/, ''));
+}
+
+function formatPercentShort(value, suffix = '') {
+  const n = parseFloat(value);
+  if (!Number.isFinite(n)) return '';
+  const label = n % 1 === 0 ? String(Math.round(n)) : n.toFixed(1);
+  return suffix ? `${label}% ${suffix}` : `${label}%`;
+}
+
+/**
+ * Short returns label for investment cards (full text kept for tooltip / about).
+ */
+export function formatReturnsDisplay(raw = '') {
+  const text = cleanText(raw);
+  if (!text || isPlaceholder(text)) return { display: 'On request', full: '' };
+
+  const full = formatIndianCurrencyText(text);
+
+  if (/break[- ]?even/i.test(text)) {
+    const range = text.match(/(\d+)\s*[-–]\s*(\d+)\s*years?/i);
+    if (range) return { display: `${range[1]}–${range[2]} yr`, full };
+    return { display: 'Break-even', full };
+  }
+
+  if (/multi[- ]channel/i.test(text)) return { display: 'Multi-channel', full };
+
+  const monthlyProfit = text.match(
+    /(?:avg(?:age)?\s*)?monthly\s*profit[^₹\d]*₹?\s*(\d+(?:\.\d+)?)\s*(?:lakhs?|lac)/i,
+  );
+  if (monthlyProfit) {
+    return { display: `₹${formatLakhShort(monthlyProfit[1])}L per month`, full };
+  }
+
+  const netRange = text.match(/net\s*profit\s*(\d+(?:\.\d+)?)\s*(?:to|-|–)\s*(\d+(?:\.\d+)?)\s*%/i);
+  if (netRange) {
+    return {
+      display: `${Math.round(parseFloat(netRange[1]))}–${Math.round(parseFloat(netRange[2]))}% net`,
+      full,
+    };
+  }
+
+  const perAnnum = text.match(/(\d+(?:\.\d+)?)\s*%\s*(?:per\s*annum|p\.?\s*a\.?|annum)/i);
+  if (perAnnum) {
+    return { display: formatPercentShort(perAnnum[1], 'per year'), full };
+  }
+
+  const percents = [...text.matchAll(/(\d+(?:\.\d+)?)\s*%/gi)]
+    .map((m) => parseFloat(m[1]))
+    .filter((n) => n > 0 && n <= 100);
+  const uniq = [...new Set(percents)].sort((a, b) => a - b);
+
+  const minLakh = text.match(
+    /(?:min(?:imum)?\s*guarantee|min\s*guaran)[^₹\d]*₹?\s*(\d+(?:\.\d+)?)\s*(?:lakhs?|lac)/i,
+  );
+
+  if (uniq.length >= 2 && /whichever| or \d/i.test(text)) {
+    const display = `${Math.round(uniq[0])}–${Math.round(uniq[uniq.length - 1])}%`;
+    return { display, full };
+  }
+
+  const parts = [];
+  if (uniq.length) {
+    const main = uniq[uniq.length - 1];
+    if (/margin/i.test(text)) parts.push(formatPercentShort(main, 'margin'));
+    else if (/sales|sale/i.test(text)) parts.push(formatPercentShort(main, 'sales'));
+    else if (/revenue|rev\b/i.test(text)) parts.push(formatPercentShort(main, 'rev'));
+    else parts.push(formatPercentShort(main));
+  }
+
+  if (minLakh) parts.push(`₹${formatLakhShort(minLakh[1])}L min`);
+
+  if (parts.length) {
+    return { display: parts.slice(0, 2).join(' · '), full };
+  }
+
+  if (full.length <= 28) return { display: full, full };
+  return { display: `${full.slice(0, 26)}…`, full };
+}
+
 /** Normalize space values to use Sq.ft consistently. */
 export function formatSpaceSqFt(text = '') {
   if (!text) return '';
@@ -194,12 +316,13 @@ export function formatSpaceSqFt(text = '') {
     .map((line) => {
       let l = cleanText(line);
       if (!l) return '';
+      l = l.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
       l = l.replace(/\bsq\.?\s*ft\.?\b/gi, 'Sq.ft');
       if (/\d/.test(l) && !/sq\.ft/i.test(l)) {
-        l = l.replace(/(\d[\d,]*)\s*(-)?\s*$/, (_, num, dash) =>
-          dash ? `${num} Sq.ft -` : `${num} Sq.ft`
-        );
+        l = l.replace(/(\d[\d,]*)\s*(-)?\s*$/, (_, num) => `${num} Sq.ft`);
       }
+      // Drop orphaned trailing dash (e.g. "700 Sq.ft -" with no upper bound)
+      l = l.replace(/(\d[\d,]*\s+Sq\.ft)\s*-\s*$/i, '$1');
       return l;
     })
     .filter(Boolean)
@@ -272,13 +395,70 @@ export function extractCities(...texts) {
 }
 
 export function deriveLocationsLabel(targetAreas, locationType, cities) {
+  return formatExpansionHeroLabel({ cities, targetAreas, locationType });
+}
+
+/**
+ * Short expansion line for detail hero (no trailing "+").
+ */
+export function formatExpansionHeroLabel({
+  cities = [],
+  locationsSummary = '',
+  targetAreas = '',
+  locationType = '',
+} = {}) {
+  const summary = cleanText(locationsSummary);
+  if (summary && /\(\d+\s*places?\)/i.test(summary)) {
+    return summary;
+  }
+
   const target = cleanText(targetAreas);
-  if (/pan\s*india/i.test(target)) return 'Pan India';
-  if (target) return target.length > 48 ? `${target.slice(0, 45)}…` : target;
-  if (cities.length) return cities.slice(0, 3).join(', ');
+  if (/pan\s*india/i.test(target) || cities.some((c) => /pan india/i.test(c))) return 'Pan India';
+  if (/tier\s*1/i.test(target) && /tier\s*2/i.test(target)) return 'Tier 1 & Tier 2';
+  if (/tier\s*1/i.test(target)) return 'Tier 1 cities';
+  if (/tier\s*2/i.test(target)) return 'Tier 2 cities';
+
+  const list = [...new Set(cities.map((c) => cleanText(c)).filter(Boolean))];
+  if (list.length === 1) return list[0];
+  if (list.length === 2) return list.join(' · ');
+  if (list.length === 3) return list.join(' · ');
+  if (list.length > 3) {
+    return `${list.slice(0, 3).join(' · ')} · +${list.length - 3} cities`;
+  }
+
+  if (target) {
+    if (/and other metro|other metro cities/i.test(target)) return 'Major metro cities';
+    const parts = target
+      .split(/[,;|]/)
+      .map((p) => cleanText(p))
+      .filter((p) => p && p.length < 48 && !/and other/i.test(p));
+    if (parts.length > 3) {
+      return `${parts.slice(0, 3).join(' · ')} · +${parts.length - 3} cities`;
+    }
+    if (parts.length) return parts.join(' · ');
+    if (target.length <= 44) return target.replace(/,\s*/g, ' · ');
+    return 'Multi-city expansion';
+  }
+
   const loc = cleanText(locationType);
-  if (loc) return loc.length > 48 ? `${loc.slice(0, 45)}…` : loc;
+  if (loc) return loc.length > 44 ? 'Select markets' : loc;
   return 'India';
+}
+
+/** Full expansion text for tooltip / locations tab. */
+export function formatExpansionDetailLabel({
+  cities = [],
+  locationsSummary = '',
+  targetAreas = '',
+  locationType = '',
+} = {}) {
+  const summary = cleanText(locationsSummary);
+  if (summary) return summary;
+  const target = cleanText(targetAreas);
+  if (target) return target.replace(/,\s*/g, ' · ');
+  const list = [...new Set(cities.map((c) => cleanText(c)).filter(Boolean))];
+  if (list.length) return list.join(' · ');
+  return cleanText(locationType) || 'India';
 }
 
 export function deriveBadge({ roi, paybackMonths, totalOutlets, targetAreas }) {
@@ -306,6 +486,24 @@ export function splitParagraphs(text, max = 4) {
     out.push(sentences.slice(i, i + chunk).join(' '));
   }
   return out.slice(0, max);
+}
+
+/** Agreement term: duration only — strip calendar years e.g. "(2020)". */
+export function formatAgreementTerm(raw) {
+  const text = cleanText(raw);
+  if (!text) return '';
+  return text
+    .split('\n')
+    .map((line) => {
+      let l = line.replace(/\s*\(\s*(?:19|20)\d{2}\s*\)/gi, '').trim();
+      if (!l) return '';
+      l = l.replace(/\bUF\b\s*-\s*/gi, 'Unit Franchise - ');
+      l = l.replace(/\bMF\b\s*-\s*/gi, 'Master Franchise - ');
+      l = l.replace(/(Unit Franchise\s*-\s*[^·\n]+?)\s+(Master Franchise\s*-\s*)/gi, '$1 · $2');
+      return l.replace(/\s+/g, ' ').trim();
+    })
+    .filter(Boolean)
+    .join(' · ');
 }
 
 export function isPlaceholder(value) {

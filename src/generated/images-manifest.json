@@ -1,430 +1,105 @@
 {
-  "404": {
-    "webp": "404.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/1": {
-    "webp": "10 Downing Street/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/2": {
-    "webp": "10 Downing Street/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/3": {
-    "webp": "10 Downing Street/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/4": {
-    "webp": "10 Downing Street/4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/5": {
-    "webp": "10 Downing Street/5.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/6": {
-    "webp": "10 Downing Street/6.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/7": {
-    "webp": "10 Downing Street/7.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/8": {
-    "webp": "10 Downing Street/8.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/9": {
-    "webp": "10 Downing Street/9.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "10 Downing Street/Logo": {
-    "webp": "10 Downing Street/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "abdul": {
-    "webp": "abdul.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "aboutus": {
-    "webp": "aboutus.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "abrar": {
-    "webp": "abrar.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Beauty & Lifestyle": {
-    "webp": "Beauty & Lifestyle.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGIES BURGER/1": {
-    "webp": "BIGGIES BURGER/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGIES BURGER/2": {
-    "webp": "BIGGIES BURGER/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGIES BURGER/3": {
-    "webp": "BIGGIES BURGER/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGIES BURGER/4": {
-    "webp": "BIGGIES BURGER/4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGIES BURGER/Logo": {
-    "webp": "BIGGIES BURGER/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGUYS/1": {
-    "webp": "BIGGUYS/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGUYS/2": {
-    "webp": "BIGGUYS/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGUYS/3": {
-    "webp": "BIGGUYS/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGUYS/4": {
-    "webp": "BIGGUYS/4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BIGGUYS/Logo": {
-    "webp": "BIGGUYS/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Blog": {
-    "webp": "Blog.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Blog1": {
-    "webp": "Blog1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Blog2": {
-    "webp": "Blog2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Blog3": {
-    "webp": "Blog3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Blog4": {
-    "webp": "Blog4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "bloghero": {
-    "webp": "bloghero.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/1": {
-    "webp": "Brand AVENUE/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/2": {
-    "webp": "Brand AVENUE/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/3": {
-    "webp": "Brand AVENUE/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/4": {
-    "webp": "Brand AVENUE/4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/5": {
-    "webp": "Brand AVENUE/5.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/6": {
-    "webp": "Brand AVENUE/6.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Brand AVENUE/Logo": {
-    "webp": "Brand AVENUE/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BrandLogo": {
-    "webp": "BrandLogo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "BrandNav": {
-    "webp": "BrandNav.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "carrer": {
-    "webp": "carrer.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Education & Training": {
-    "webp": "Education & Training.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Food & Beverage": {
-    "webp": "Food & Beverage.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Franco/1": {
+  "Franco/1.png": {
+    "original": "Franco/1.png",
+    "width": 1506,
+    "height": 1044,
     "webp": "Franco/1.webp",
     "avif": null,
     "variants": {}
   },
-  "Franco/2": {
+  "Franco/2.png": {
+    "original": "Franco/2.png",
+    "width": 1402,
+    "height": 1122,
     "webp": "Franco/2.webp",
     "avif": null,
     "variants": {}
   },
-  "Franco/3": {
+  "Franco/3.png": {
+    "original": "Franco/3.png",
+    "width": 1402,
+    "height": 1122,
     "webp": "Franco/3.webp",
     "avif": null,
     "variants": {}
   },
-  "Franco/4": {
+  "Franco/4.png": {
+    "original": "Franco/4.png",
+    "width": 1402,
+    "height": 1122,
     "webp": "Franco/4.webp",
     "avif": null,
     "variants": {}
   },
-  "Franco/5": {
-    "webp": "Franco/5.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Franco/Logo": {
-    "webp": "Franco/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Fusion pizza and Big burger/1": {
-    "webp": "Fusion pizza and Big burger/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Fusion pizza and Big burger/2": {
-    "webp": "Fusion pizza and Big burger/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Fusion pizza and Big burger/3": {
+  "Fusion pizza and Big burger/3.png": {
+    "original": "Fusion pizza and Big burger/3.png",
+    "width": 1536,
+    "height": 1024,
     "webp": "Fusion pizza and Big burger/3.webp",
     "avif": null,
     "variants": {}
   },
-  "Fusion pizza and Big burger/4": {
+  "Fusion pizza and Big burger/4.png": {
+    "original": "Fusion pizza and Big burger/4.png",
+    "width": 1536,
+    "height": 1024,
     "webp": "Fusion pizza and Big burger/4.webp",
     "avif": null,
     "variants": {}
   },
-  "Fusion pizza and Big burger/5": {
+  "Fusion pizza and Big burger/5.png": {
+    "original": "Fusion pizza and Big burger/5.png",
+    "width": 1402,
+    "height": 1122,
     "webp": "Fusion pizza and Big burger/5.webp",
     "avif": null,
     "variants": {}
   },
-  "Fusion pizza and Big burger/Logo": {
-    "webp": "Fusion pizza and Big burger/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Healthcare & Wellness": {
-    "webp": "Healthcare & Wellness.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "HomeHero": {
-    "webp": "HomeHero.webp",
-    "avif": "HomeHero.avif",
-    "variants": {
-      "480": "HomeHero-480w.webp",
-      "640": "HomeHero-640w.webp",
-      "768": "HomeHero-768w.webp",
-      "1024": "HomeHero-1024w.webp",
-      "1280": "HomeHero-1280w.webp",
-      "1536": "HomeHero-1536w.webp"
-    }
-  },
-  "HomeHero2": {
-    "webp": "HomeHero2.webp",
-    "avif": "HomeHero2.avif",
-    "variants": {
-      "480": "HomeHero2-480w.webp",
-      "640": "HomeHero2-640w.webp",
-      "768": "HomeHero2-768w.webp",
-      "1024": "HomeHero2-1024w.webp",
-      "1280": "HomeHero2-1280w.webp",
-      "1536": "HomeHero2-1536w.webp"
-    }
-  },
-  "kasturi/Logo": {
-    "webp": "kasturi/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Lassi N Cafe/1": {
-    "webp": "Lassi N Cafe/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Lassi N Cafe/2": {
-    "webp": "Lassi N Cafe/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Lassi N Cafe/3": {
-    "webp": "Lassi N Cafe/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Lassi N Cafe/Logo": {
-    "webp": "Lassi N Cafe/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Logistics & Infrastructure": {
-    "webp": "Logistics & Infrastructure.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "ODETTE/1": {
+  "ODETTE/1.png": {
+    "original": "ODETTE/1.png",
+    "width": 1672,
+    "height": 941,
     "webp": "ODETTE/1.webp",
     "avif": null,
     "variants": {}
   },
-  "ODETTE/2": {
+  "ODETTE/2.png": {
+    "original": "ODETTE/2.png",
+    "width": 1536,
+    "height": 1024,
     "webp": "ODETTE/2.webp",
     "avif": null,
     "variants": {}
   },
-  "ODETTE/3": {
+  "ODETTE/3.png": {
+    "original": "ODETTE/3.png",
+    "width": 1463,
+    "height": 1075,
     "webp": "ODETTE/3.webp",
     "avif": null,
     "variants": {}
   },
-  "ODETTE/4": {
+  "ODETTE/4.png": {
+    "original": "ODETTE/4.png",
+    "width": 1693,
+    "height": 929,
     "webp": "ODETTE/4.webp",
     "avif": null,
     "variants": {}
   },
-  "ODETTE/5": {
+  "ODETTE/5.png": {
+    "original": "ODETTE/5.png",
+    "width": 1448,
+    "height": 1086,
     "webp": "ODETTE/5.webp",
     "avif": null,
     "variants": {}
   },
-  "ODETTE/6": {
+  "ODETTE/6.png": {
+    "original": "ODETTE/6.png",
+    "width": 1672,
+    "height": 941,
     "webp": "ODETTE/6.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "ODETTE/7": {
-    "webp": "ODETTE/7.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "ODETTE/Logo": {
-    "webp": "ODETTE/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/1": {
-    "webp": "Original Burger co/1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/2": {
-    "webp": "Original Burger co/2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/3": {
-    "webp": "Original Burger co/3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/4": {
-    "webp": "Original Burger co/4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/5": {
-    "webp": "Original Burger co/5.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Original Burger co/Logo": {
-    "webp": "Original Burger co/Logo.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "R1": {
-    "webp": "R1.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "R2": {
-    "webp": "R2.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "R3": {
-    "webp": "R3.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "R4": {
-    "webp": "R4.webp",
-    "avif": null,
-    "variants": {}
-  },
-  "Retail & Jewelry": {
-    "webp": "Retail & Jewelry.webp",
     "avif": null,
     "variants": {}
   }

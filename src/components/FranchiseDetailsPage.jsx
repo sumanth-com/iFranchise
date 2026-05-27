@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useEffect, useMemo, useRef, useState } from 'react';
 import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
 import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
@@ -6,6 +6,7 @@ import { FiStar } from 'react-icons/fi';
 import ImageCarousel from './ImageCarousel';
 import FranchiseGetStartedSection from './FranchiseGetStartedSection';
 import BrochureDownloadButton from './BrochureDownloadButton';
+import FranchiseInquiryLauncher from './FranchiseInquiryLauncher';
 import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
 import {
   franchiseSlugToId,
@@ -16,7 +17,7 @@ import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportu
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 import FranchiseLocationsPanel from './franchise/FranchiseLocationsPanel';
 
-const tabs = ['Overview', 'Business Model', 'Investment Details', 'Locations', 'FAQ', 'Reviews'];
+const tabs = ['Overview', 'Locations', 'FAQ', 'Reviews'];
 
 const getSelectedFranchiseId = () => {
   const pathname = window.location.pathname;
@@ -43,6 +44,7 @@ const FRANCHISE_STAT_ITEMS = [
   { label: 'ROI', key: 'roi' },
   { label: 'Payback', key: 'payback' },
   { label: 'Outlets', key: 'outlets' },
+  { label: 'Lock-in', key: 'lockIn' },
 ];
 
 function formatMetricDisplay(key, value) {
@@ -51,32 +53,36 @@ function formatMetricDisplay(key, value) {
   if (text.includes('\n')) return text.trim();
   return text
     .replace(/\s*\/\s*/g, '\n')
-    .replace(/\s+(?=(?:PREMIUM|BREW|CLASSIC|TIER))/gi, '\n')
+    .replace(/\s+(?=(?:PREMIUM|BREW|CLASSIC)(?!\s*\())/gi, '\n')
     .replace(/\n+/g, '\n')
     .trim();
 }
 
 /** Same stat cards as About section (right column on detail page). */
 function FranchiseStatGrid({ franchise, className = '' }) {
+  const agreementItems = franchise?.agreementDetails || [];
+  const lockInValue = agreementItems.find((item) => item.label === 'Lock-in Period')?.value || '';
   return (
     <div className={`fd-about-stats grid grid-cols-2 gap-3 ${className}`.trim()}>
       {FRANCHISE_STAT_ITEMS.map((item) => {
-        const value = formatMetricDisplay(item.key, franchise.keyInfo[item.key]);
-        const isOutlets = item.key === 'outlets';
+        const rawValue = item.key === 'lockIn' ? lockInValue : franchise.keyInfo[item.key];
+        const value = formatMetricDisplay(item.key, rawValue);
         const isSpace = item.key === 'space';
+        const spaceMultiline = isSpace && String(value).includes('\n');
+        if (item.key === 'lockIn' && !value) return null;
         return (
           <article
             key={item.key}
-            className={`fd-stat-card fd-about-stat-card flex min-h-[92px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm${
-              isOutlets ? ' col-span-2' : ''
-            }`}
+            className="fd-stat-card fd-about-stat-card flex min-h-[92px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm"
           >
             <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">
               {item.label}
             </p>
             <p
               className={`fd-copy fd-body-text mt-1.5 w-full leading-tight ${
-                isSpace ? 'whitespace-pre-line text-sm leading-snug sm:text-base' : 'text-base sm:text-lg'
+                spaceMultiline
+                  ? 'whitespace-pre-line text-sm leading-snug sm:text-base'
+                  : 'text-base sm:text-lg'
               }`}
             >
               {value}
@@ -176,8 +182,59 @@ function BrandInsightsList({ insights, limit = 3, fallback }) {
   );
 }
 
-function InvestmentFinancialsGrid({ items, limit = 4 }) {
+function ReturnsCardValue({ value, detail }) {
+  const perYear = String(value || '').match(/^(\d+(?:\.\d+)?%)\s+per year$/i);
+  if (perYear) {
+    return (
+      <div className="fd-returns-compact mt-2 flex w-full flex-col items-center gap-0.5" title={detail || value}>
+        <span className="fd-returns-compact__primary fd-copy text-base font-bold leading-none text-violet-700 sm:text-lg">
+          {perYear[1]}
+        </span>
+        <span className="fd-returns-compact__secondary fd-copy text-[0.6875rem] font-semibold uppercase tracking-wide text-slate-500">
+          per year
+        </span>
+      </div>
+    );
+  }
+
+  const segments = String(value || '')
+    .split('·')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  if (segments.length <= 1) {
+    return (
+      <p
+        className="fd-returns-compact__primary fd-copy mt-2 w-full text-base font-bold leading-tight text-violet-700 sm:text-lg"
+        title={detail || value}
+      >
+        {value}
+      </p>
+    );
+  }
+
+  return (
+    <div className="fd-returns-compact mt-2 flex w-full flex-col items-center gap-1" title={detail || value}>
+      <span className="fd-returns-compact__primary fd-copy text-base font-bold leading-none text-violet-700 sm:text-lg">
+        {segments[0]}
+      </span>
+      <span className="fd-returns-compact__secondary fd-copy text-xs font-semibold leading-tight text-slate-600">
+        {segments.slice(1).join(' · ')}
+      </span>
+    </div>
+  );
+}
+
+function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [], limit = 4 }) {
   const displayItems = (items || []).slice(0, limit);
+  const structure = (franchiseStructure || []).map((s) => String(s).trim()).filter(Boolean);
+  const hasMaster = structure.some((s) => s.toLowerCase().includes('master'));
+  const hasUnit = structure.some((s) => s.toLowerCase().includes('unit'));
+  const typeLabels = [
+    hasMaster ? 'Master Franchise' : null,
+    hasUnit ? 'Unit Franchise' : null,
+    (models || []).length > 1 ? 'Multi-Model' : null,
+  ].filter(Boolean);
 
   return (
     <div className="fd-invest-financials flex min-h-0 flex-1 flex-col">
@@ -188,15 +245,30 @@ function InvestmentFinancialsGrid({ items, limit = 4 }) {
         {displayItems.map((item) => (
           <article
             key={item.label}
-            className="fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.75rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm sm:min-h-[7.25rem] sm:px-3.5"
+            className={`fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.75rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm sm:min-h-[7.25rem] sm:px-3.5${
+              item.label === 'Returns' ? ' fd-invest-card--returns' : ''
+            }`}
           >
             <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
-            <p className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug">
-              {item.value}
-            </p>
+            {item.label === 'Returns' ? (
+              <ReturnsCardValue value={item.value} detail={item.detail} />
+            ) : (
+              <p
+                className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug"
+                title={item.detail || undefined}
+              >
+                {item.value}
+              </p>
+            )}
           </article>
         ))}
       </div>
+      {typeLabels.length ? (
+        <div className="mt-4 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-center sm:px-4">
+          <p className="fd-copy fd-field-label text-[0.65rem] tracking-[0.12em]">FRANCHISE TYPES</p>
+          <p className="fd-copy fd-body-text mt-1 text-sm font-medium text-slate-700">{typeLabels.join(' · ')}</p>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -239,6 +311,7 @@ function AgreementDetailsContent({ items }) {
 
 function FranchiseDetailsPage() {
   const [activeTab, setActiveTab] = useState('Overview');
+  const [inquiryOpen, setInquiryOpen] = useState(false);
   const tabsPanelRef = useRef(null);
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
   const selectedFranchise = useMemo(
@@ -312,21 +385,6 @@ function FranchiseDetailsPage() {
           {selectedFranchise.businessModel && (
             <p className="fd-tab-body fd-copy text-base leading-relaxed">{selectedFranchise.businessModel}</p>
           )}
-          <DualSectionRow>
-            <DualSectionPanel title="Franchise Models">
-              <div className="flex flex-1 flex-col gap-3">
-                {selectedFranchise.franchiseModels.map((model) => (
-                  <article key={model.name} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
-                    <p className="fd-copy fd-heading text-base">{model.name}</p>
-                    <p className="fd-copy fd-body-text mt-1.5 text-sm leading-relaxed">{model.description}</p>
-                  </article>
-                ))}
-              </div>
-            </DualSectionPanel>
-            <DualSectionPanel title="Agreement Details">
-              <AgreementDetailsContent items={selectedFranchise.agreementDetails} />
-            </DualSectionPanel>
-          </DualSectionRow>
           <DualSectionPanel title="Franchise Structure">
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {selectedFranchise.franchiseStructure.map((item) => (
@@ -347,26 +405,13 @@ function FranchiseDetailsPage() {
       const investmentItems =
         selectedFranchise.investorInvestment || selectedFranchise.investmentDetails || [];
       return (
-        <div className="space-y-5">
-          <DualSectionPanel title="Investment & Financials">
-            <InvestmentFinancialsGrid items={investmentItems} />
-          </DualSectionPanel>
-          <DualSectionPanel title="Operations & Returns">
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: 'ROI', value: selectedFranchise.operationsReturns.roi },
-                { label: 'Payback Period', value: selectedFranchise.operationsReturns.payback },
-                { label: 'Hours Required', value: selectedFranchise.operationsReturns.hours },
-                { label: 'Staff Requirement', value: selectedFranchise.operationsReturns.staff },
-              ].map((metric) => (
-                <article key={metric.label} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
-                  <p className="fd-copy fd-field-label text-xs tracking-wide">{metric.label}</p>
-                  <p className="fd-copy fd-body-text mt-1 text-sm">{metric.value}</p>
-                </article>
-              ))}
-            </div>
-          </DualSectionPanel>
-        </div>
+        <DualSectionPanel title="Investment & Financials">
+          <InvestmentFinancialsGrid
+            items={investmentItems}
+            franchiseStructure={selectedFranchise.franchiseStructure}
+            models={selectedFranchise.franchiseModels}
+          />
+        </DualSectionPanel>
       );
     }
 
@@ -442,6 +487,13 @@ function FranchiseDetailsPage() {
 
   return (
     <main className={`franchise-details-page py-10 sm:py-12 lg:py-14 ${FRANCHISE_DETAILS_SHELL}`}>
+      <FranchiseInquiryLauncher
+        franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+        franchiseStructure={selectedFranchise.franchiseStructure}
+        className="fd-inquiry-side-rail"
+        open={inquiryOpen}
+        onOpenChange={setInquiryOpen}
+      />
       <div className="space-y-8">
         <section className="space-y-6">
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_22px_rgba(15,23,42,0.06)] lg:p-8">
@@ -466,10 +518,19 @@ function FranchiseDetailsPage() {
                 <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-semibold text-violet-700">{selectedFranchise.badge}</span>
               </div>
 
-              <BrochureDownloadButton
-                franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
-                brochureUrl={selectedFranchise.brochureUrl}
-              />
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
+                <button
+                  type="button"
+                  onClick={() => setInquiryOpen(true)}
+                  className="btn-purple-solid inline-flex w-fit items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]"
+                >
+                  Enquire now
+                </button>
+                <BrochureDownloadButton
+                  franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+                  brochureUrl={selectedFranchise.brochureUrl}
+                />
+              </div>
             </div>
 
           </div>
@@ -490,20 +551,38 @@ function FranchiseDetailsPage() {
                 <FranchiseStatGrid franchise={selectedFranchise} className="fd-hero-metrics w-full" />
 
                 <div className="flex flex-col gap-1.5 text-center lg:text-left">
+                  {(() => {
+                    const items = selectedFranchise.agreementDetails || [];
+                    const agreementTerm = items.find((item) => item.label === 'Agreement Term')?.value;
+                    const lockInPeriod = items.find((item) => item.label === 'Lock-in Period')?.value;
+                    if (!agreementTerm && !lockInPeriod) return null;
+                    return (
+                      <div className="flex flex-col gap-1.5">
+                        {agreementTerm ? (
+                          <p className="fd-hero-story-muted fd-body-text text-xs sm:text-sm">
+                            <span className="font-medium">Agreement term:</span> {agreementTerm}
+                          </p>
+                        ) : null}
+                      </div>
+                    );
+                  })()}
                   {selectedFranchise.franchiseModels?.[0]?.name && (
                     <p className="fd-hero-story-muted fd-body-text text-xs sm:text-sm">
                       <span className="font-medium">Model:</span>{' '}
                       {selectedFranchise.franchiseModels.map((m) => m.name).join(' · ')}
                     </p>
                   )}
-                  {(selectedFranchise.locationsSummary ||
+                  {(selectedFranchise.expansionDisplay ||
+                    selectedFranchise.locationsSummary ||
                     selectedFranchise.locations?.length > 0) && (
-                    <p className="fd-hero-story-muted fd-body-text text-xs leading-relaxed sm:text-sm">
+                    <p
+                      className="fd-hero-story-muted fd-body-text text-xs leading-relaxed sm:text-sm"
+                      title={selectedFranchise.expansionDetail || undefined}
+                    >
                       <span className="font-medium">Expansion:</span>{' '}
-                      {selectedFranchise.locationsSummary ||
-                        `${selectedFranchise.locations.slice(0, 4).join(' · ')}${
-                          selectedFranchise.locations.length > 4 ? ' +' : ''
-                        }`}
+                      {selectedFranchise.expansionDisplay ||
+                        selectedFranchise.locationsSummary ||
+                        selectedFranchise.locations.slice(0, 3).join(' · ')}
                     </p>
                   )}
                 </div>
@@ -604,74 +683,20 @@ function FranchiseDetailsPage() {
               <DualSectionPanel title="Investment & Financials">
                 <InvestmentFinancialsGrid
                   items={selectedFranchise.investorInvestment || selectedFranchise.investmentDetails}
+                  franchiseStructure={selectedFranchise.franchiseStructure}
+                  models={selectedFranchise.franchiseModels}
                 />
               </DualSectionPanel>
             </DualSectionRow>
           </section>
 
           <div className="fd-dual-sections space-y-5">
-            <DualSectionRow>
-              <DualSectionPanel title="Franchise Models">
-                <div className="flex flex-1 flex-col gap-3">
-                  {selectedFranchise.franchiseModels.map((model) => (
-                    <article key={model.name} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
-                      <p className="fd-copy fd-heading text-base">{model.name}</p>
-                      <p className="fd-copy fd-body-text mt-1.5 text-sm leading-relaxed">{model.description}</p>
-                    </article>
-                  ))}
-                </div>
-              </DualSectionPanel>
-              <DualSectionPanel title="Agreement Details">
-                <AgreementDetailsContent items={selectedFranchise.agreementDetails} />
-              </DualSectionPanel>
-            </DualSectionRow>
-
-            <DualSectionRow>
-              <DualSectionPanel title="Franchise Structure">
-                <div className="grid flex-1 grid-cols-2 gap-3">
-                  {selectedFranchise.franchiseStructure.map((item) => (
-                    <article key={item} className="fd-mini-card flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50/80 p-4 text-center">
-                      <p className="fd-copy fd-body-text text-sm">{item}</p>
-                    </article>
-                  ))}
-                </div>
-              </DualSectionPanel>
-              <DualSectionPanel title="Operations & Returns">
-                <div className="grid flex-1 grid-cols-2 gap-3">
-                  {[
-                    { label: 'ROI', value: selectedFranchise.operationsReturns.roi },
-                    { label: 'Payback Period', value: selectedFranchise.operationsReturns.payback },
-                    { label: 'Hours Required', value: selectedFranchise.operationsReturns.hours },
-                    { label: 'Staff Requirement', value: selectedFranchise.operationsReturns.staff },
-                  ].map((metric) => (
-                    <article key={metric.label} className="fd-mini-card rounded-xl border border-slate-200 bg-slate-50/80 p-4">
-                      <p className="fd-copy fd-field-label text-xs tracking-wide">{metric.label}</p>
-                      <p className="fd-copy fd-body-text mt-1 text-sm">{metric.value}</p>
-                    </article>
-                  ))}
-                </div>
-              </DualSectionPanel>
-            </DualSectionRow>
-
-            <DualSectionRow>
-              <DualSectionPanel title="Brand & Partner Support">
-                <BrandSupportList
-                  items={selectedFranchise.trainingSupport}
-                  fallback={selectedFranchise.idealInvestorProfile}
-                />
-              </DualSectionPanel>
-              <DualSectionPanel title="Requirements">
-                <div className="flex flex-1 flex-col gap-2.5">
-                  {selectedFranchise.requirements.map((item) => (
-                    <article key={item.label} className="fd-mini-card rounded-lg border border-slate-200 bg-slate-50/80 px-4 py-3">
-                      <p className="fd-copy fd-field-label text-xs tracking-wide">{item.label}</p>
-                      <p className="fd-copy fd-body-text mt-1 text-sm leading-relaxed">{item.value}</p>
-                    </article>
-                  ))}
-                </div>
-              </DualSectionPanel>
-            </DualSectionRow>
-
+            <DualSectionPanel title="Brand & Partner Support">
+              <BrandSupportList
+                items={selectedFranchise.trainingSupport}
+                fallback={selectedFranchise.idealInvestorProfile}
+              />
+            </DualSectionPanel>
           </div>
           </>
           )}

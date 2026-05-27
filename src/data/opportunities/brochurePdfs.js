@@ -1,5 +1,5 @@
 /**
- * Local brochure PDFs under src/assets. keyed by franchise listing id (rawBrands order).
+ * Local brochure PDFs under src/assets — keyed by brand slug (stable when listings change).
  */
 import odettePdf from '../../assets/ODETTE/ODETTE.pdf';
 import originalBurgerPdf from '../../assets/Original Burger co/Original Burger Co. Brand Presentation.pdf';
@@ -12,21 +12,26 @@ import fusionPdf from '../../assets/Fusion pizza and Big burger/TFP & BBC franch
 import tenDowningPdf from '../../assets/10 Downing Street/10 Downing Street.pdf';
 
 /** @type {Record<string, string>} */
-export const BROCHURE_PDF_BY_FRANCHISE_ID = {
-  '1': odettePdf,
-  '2': originalBurgerPdf,
-  '3': francoPdf,
-  '4': biggiesPdf,
-  '5': bigguysPdf,
-  '6': brandAvenuePdf,
-  '7': lassiPdf,
-  '8': fusionPdf,
-  // '9' Kasturi Creations — no PDF in assets yet
-  '10': tenDowningPdf,
+export const BROCHURE_PDF_BY_SLUG = {
+  odette: odettePdf,
+  'original-burger-co': originalBurgerPdf,
+  franco: francoPdf,
+  'biggies-burger': biggiesPdf,
+  bigguys: bigguysPdf,
+  'brand-avenue': brandAvenuePdf,
+  'lassi-n-cafe': lassiPdf,
+  'fusion-pizza-big-burger': fusionPdf,
+  '10-downing-street': tenDowningPdf,
 };
 
-export function getBrochureUrlByFranchiseId(id) {
-  return BROCHURE_PDF_BY_FRANCHISE_ID[String(id)] || '';
+export function getBrochureUrlByFranchiseSlug(slug) {
+  if (!slug) return '';
+  return BROCHURE_PDF_BY_SLUG[String(slug).toLowerCase().trim()] || '';
+}
+
+/** @deprecated Prefer getBrochureUrlByFranchiseSlug */
+export function getBrochureUrlByFranchiseId(id, slug) {
+  return getBrochureUrlByFranchiseSlug(slug) || '';
 }
 
 export function getBrochureFilename(brandName) {

@@ -81,7 +81,7 @@ function rankFeaturedOpportunities() {
 }
 
 /** Curated featured brands — home row + opportunities page default order. */
-export const FEATURED_BRAND_SLUGS = ['original-burger-co', 'odette', 'biggies-burger'];
+export const FEATURED_BRAND_SLUGS = ['odette', 'original-burger-co', '10-downing-street'];
 
 /** @deprecated Use FEATURED_BRAND_SLUGS */
 const HOME_PAGE_FEATURED_SLUGS = FEATURED_BRAND_SLUGS;

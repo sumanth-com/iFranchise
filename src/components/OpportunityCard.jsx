@@ -3,12 +3,15 @@ import { unsplashSrcSet } from '@/lib/unsplashResponsive';
 
 function getModelPill(model) {
   if (model === 'FOCO') {
-    return { label: 'Passive', variant: 'passive' };
+    return { label: 'Fully Managed', variant: 'passive' };
   }
   if (model === 'FOFO') {
     return { label: 'Owner-Op', variant: 'owner' };
   }
-  return { label: 'Hybrid', variant: 'hybrid' };
+  if (model === 'FICO') {
+    return { label: 'On Demand', variant: 'hybrid' };
+  }
+  return { label: 'Managed', variant: 'hybrid' };
 }
 
 export default function OpportunityCard({ opportunity }) {

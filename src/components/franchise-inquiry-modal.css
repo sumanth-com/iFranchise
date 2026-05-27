@@ -1,0 +1,232 @@
+.franchise-inquiry-modal {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  background: #fff;
+  box-shadow:
+    0 24px 64px rgba(15, 23, 42, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  overflow: hidden;
+}
+
+.franchise-inquiry-overlay--drawer {
+  background: transparent;
+}
+
+.franchise-inquiry-overlay--drawer > .absolute {
+  background: rgba(15, 23, 42, 0.35);
+}
+
+.franchise-inquiry-modal--drawer {
+  width: min(420px, calc(100vw - 56px));
+  max-width: 420px;
+  height: auto;
+  max-height: calc(100vh - 24px);
+  border-radius: 14px 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow:
+    0 16px 48px rgba(15, 23, 42, 0.2),
+    0 0 0 1px rgba(226, 232, 240, 0.9);
+}
+
+.franchise-inquiry-sheet .franchise-inquiry-modal--drawer {
+  animation: none;
+}
+
+.franchise-inquiry-modal--drawer .franchise-inquiry-modal__body {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+@keyframes franchise-inquiry-drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .franchise-inquiry-modal--drawer {
+    animation: none;
+  }
+}
+
+.franchise-inquiry-modal__header {
+  position: relative;
+  padding: 1.125rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  background: linear-gradient(135deg, #faf5ff 0%, #ffffff 55%, #f8fafc 100%);
+}
+
+.franchise-inquiry-modal__header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa, #38bdf8);
+}
+
+.franchise-inquiry-modal__kicker {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7c3aed;
+}
+
+.franchise-inquiry-modal__title {
+  margin-top: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.franchise-inquiry-modal__subtitle {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.franchise-inquiry-modal__body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.franchise-inquiry-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.franchise-inquiry-modal__type-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.franchise-inquiry-modal__type-btn {
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.franchise-inquiry-modal__type-btn:hover {
+  border-color: #c4b5fd;
+  background: #faf5ff;
+}
+
+.franchise-inquiry-modal__type-btn--selected {
+  border-color: #8b5cf6;
+  background: linear-gradient(145deg, #faf5ff 0%, #f5f3ff 100%);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.22);
+}
+
+.franchise-inquiry-modal__type-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.franchise-inquiry-modal__type-desc {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: #64748b;
+}
+
+.franchise-inquiry-modal__fields-row {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.franchise-inquiry-modal__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.franchise-inquiry-modal__input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.franchise-inquiry-modal__input:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+}
+
+.franchise-inquiry-modal__input--error {
+  border-color: #f87171;
+}
+
+.franchise-inquiry-modal__textarea {
+  min-height: 2.75rem;
+  resize: none;
+}
+
+.franchise-inquiry-modal__submit {
+  margin-top: 0.25rem;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.32);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.franchise-inquiry-modal__submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(109, 40, 217, 0.38);
+}
+
+.franchise-inquiry-modal__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .franchise-inquiry-modal__fields-row,
+  .franchise-inquiry-modal__type-grid {
+    grid-template-columns: 1fr;
+  }
+}
