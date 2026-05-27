@@ -44,7 +44,7 @@ export const RAW_BRANDS = [
       'FICO (8% on Net Sales or 15% as minimum guarantee on total investment, whichever is higher)',
     targetAreas: '',
     mcp:
-      'Bengaluru (15), Chennai (15), Hyderabad (12), Kolkata (10), Mumbai (10), Pune (10), Delhi NCR (15) — FICO. Gujarat (8), Kerala (8), Rajasthan (6), Coimbatore & Ooty (3), Indore & Bhopal (3), North East (6), Goa (6), Punjab (4) — FOFO',
+      'Bengaluru (15), Chennai (15), Hyderabad (12), Kolkata (10), Mumbai (10), Pune (10), Delhi NCR (15) — FICO. Gujarat (8), Kerala (8), Rajasthan (6), Coimbatore & Ooty (3), Indore & Bhopal (3), North-East (6), Goa (6), Punjab (4) — FOFO',
     agreementTerm: 'UF - 8 years\nMF - 6 Years',
     lockInPeriod: '6 Years',
   },

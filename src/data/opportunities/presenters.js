@@ -81,7 +81,17 @@ function rankFeaturedOpportunities() {
 }
 
 /** Curated featured brands — home row + opportunities page default order. */
-export const FEATURED_BRAND_SLUGS = ['odette', 'original-burger-co', '10-downing-street'];
+export const FEATURED_BRAND_SLUGS = [
+  'odette',
+  'original-burger-co',
+  '10-downing-street',
+  'bigguys',
+  'biggies-burger',
+  'franco',
+];
+
+/** Second-row curated brands on homepage. */
+export const SECONDARY_BRAND_SLUGS = ['brand-avenue', 'fusion-pizza-big-burger', 'lassi-n-cafe'];
 
 /** @deprecated Use FEATURED_BRAND_SLUGS */
 const HOME_PAGE_FEATURED_SLUGS = FEATURED_BRAND_SLUGS;
@@ -102,6 +112,12 @@ export function getFeaturedOpportunities(limit = 3) {
   const curated = FEATURED_BRAND_SLUGS.map(bySlug).filter(Boolean);
   if (curated.length) return curated.slice(0, limit);
   return rankFeaturedOpportunities().slice(0, limit);
+}
+
+export function getSecondaryOpportunities(limit = 3) {
+  const bySlug = (slug) => franchiseOpportunities.find((o) => o.slug === slug);
+  const curated = SECONDARY_BRAND_SLUGS.map(bySlug).filter(Boolean);
+  return curated.slice(0, limit);
 }
 
 export function getFeaturedFranchiseCards(limit = 3) {

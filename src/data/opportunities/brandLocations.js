@@ -36,7 +36,7 @@ export const BRAND_LOCATION_GROUPS = {
           cities: ['Indore', 'Bhopal'],
         },
         {
-          name: 'North East',
+          name: 'North-East',
           count: 6,
           cities: ['Guwahati', 'Shillong', 'Siliguri', 'Gangtok', 'Imphal'],
         },

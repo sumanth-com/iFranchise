@@ -18,8 +18,10 @@ export {
 
 export {
   FEATURED_BRAND_SLUGS,
+  SECONDARY_BRAND_SLUGS,
   getFeaturedFranchiseCards,
   getFeaturedOpportunities,
+  getSecondaryOpportunities,
   pinFeaturedOpportunitiesFirst,
   getInvestorDashboardOpportunities,
   toInvestorDashboardOpportunity,
