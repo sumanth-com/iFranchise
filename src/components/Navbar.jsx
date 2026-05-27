@@ -8,74 +8,58 @@ import { navigateTo as spaNavigate } from '../lib/navigation';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const MENU_EASE = [0.22, 1, 0.36, 1];
+const MENU_SPRING = { type: 'spring', stiffness: 520, damping: 38, mass: 0.85 };
 
-/** Paper-style unfold from top-right hinge (mobile drawer). */
+/** Mobile drawer — transform/opacity only (GPU-friendly). */
 const mobileMenuBackdrop = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.3, ease: MENU_EASE } },
-  exit: { opacity: 0, transition: { duration: 0.22, ease: MENU_EASE } },
+  visible: { opacity: 1, transition: { duration: 0.18, ease: MENU_EASE } },
+  exit: { opacity: 0, transition: { duration: 0.14, ease: MENU_EASE } },
 };
 
 const mobileMenuPaperPanel = {
-  hidden: {
-    opacity: 0,
-    x: 36,
-    rotateY: -26,
-    scale: 0.88,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    rotateY: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: MENU_EASE },
-  },
-  exit: {
-    opacity: 0,
-    x: 28,
-    rotateY: -18,
-    scale: 0.92,
-    transition: { duration: 0.36, ease: [0.4, 0, 0.2, 1] },
-  },
+  hidden: { opacity: 0, x: '100%' },
+  visible: { opacity: 1, x: 0, transition: MENU_SPRING },
+  exit: { opacity: 0, x: '100%', transition: { duration: 0.2, ease: MENU_EASE } },
 };
 
 const mobileMenuSlidePanel = {
   hidden: { x: '100%' },
-  visible: { x: 0, transition: { type: 'spring', damping: 32, stiffness: 320 } },
-  exit: { x: '100%', transition: { duration: 0.28, ease: MENU_EASE } },
+  visible: { x: 0, transition: { duration: 0 } },
+  exit: { x: '100%', transition: { duration: 0 } },
 };
 
 const mobileMenuNavStagger = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.05, delayChildren: 0.16 },
+    transition: { staggerChildren: 0.03, delayChildren: 0.05 },
   },
 };
 
 const mobileMenuNavItem = {
-  hidden: { opacity: 0, x: 16 },
+  hidden: { opacity: 0, x: 10 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.34, ease: MENU_EASE },
+    transition: { duration: 0.2, ease: MENU_EASE },
   },
 };
 
 const mobileMenuHeader = {
-  hidden: { opacity: 0, y: -8 },
+  hidden: { opacity: 0, y: -6 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.35, ease: MENU_EASE, delay: 0.08 },
+    transition: { duration: 0.2, ease: MENU_EASE, delay: 0.03 },
   },
 };
 
 const mobileMenuFooter = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.38, ease: MENU_EASE, delay: 0.28 },
+    transition: { duration: 0.2, ease: MENU_EASE, delay: 0.08 },
   },
 };
 
@@ -478,18 +462,22 @@ function ArrowRightIcon() {
 }
 
 function MenuIcon({ isOpen }) {
+  const barTransition = { duration: 0.2, ease: MENU_EASE };
   return (
     <div className="relative h-5 w-5 flex flex-col justify-center gap-1">
       <motion.span
         animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+        transition={barTransition}
         className="block h-0.5 w-5 bg-current origin-center"
       />
       <motion.span
         animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+        transition={barTransition}
         className="block h-0.5 w-5 bg-current"
       />
       <motion.span
         animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+        transition={barTransition}
         className="block h-0.5 w-5 bg-current origin-center"
       />
     </div>
@@ -968,7 +956,7 @@ function Navbar() {
             animate="visible"
             exit="exit"
             className="navbar-mobile-overlay fixed inset-0 z-[99999] bg-black/25 backdrop-blur-sm xl:hidden"
-            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, perspective: 1400 }}
+            style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.div
@@ -977,10 +965,7 @@ function Navbar() {
               animate="visible"
               exit="exit"
               className="navbar-mobile-panel navbar-mobile-panel--paper fixed right-0 top-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-sm flex-col overflow-hidden overscroll-contain shadow-2xl touch-pan-y"
-              style={{
-                transformOrigin: '100% 0%',
-                transformPerspective: 1200,
-              }}
+              style={{ transformOrigin: '100% 0%' }}
               onClick={(e) => e.stopPropagation()}
               data-lenis-prevent
             >
@@ -1046,7 +1031,7 @@ function Navbar() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.18, ease: MENU_EASE }}
                           className="navbar-mobile-accordion-panel w-full overflow-hidden border-t"
                         >
                           <div className="navbar-mobile-accordion-sub flex w-full flex-col gap-1 p-2">

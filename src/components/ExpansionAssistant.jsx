@@ -1688,7 +1688,7 @@ function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
           initial={{ opacity: 0, scale: 0.88 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.88 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.06, y: -2 }}
           whileTap={{ scale: 0.94 }}
           aria-label={isOpen ? 'Close iFranchise assistant' : 'Open iFranchise assistant'}
@@ -1740,7 +1740,7 @@ export default function ExpansionAssistant() {
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-    setTimeout(() => setView('home'), 300);
+    setTimeout(() => setView('home'), 220);
   }, []);
 
   const handleOpen = useCallback(() => setIsOpen(true), []);
@@ -1788,7 +1788,7 @@ export default function ExpansionAssistant() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
             onClick={handleClose}
             style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.28)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(4px)', zIndex: 9998 }}
           />
@@ -1802,11 +1802,23 @@ export default function ExpansionAssistant() {
             key="panel"
             className="assistant-panel"
             data-assistant-theme={palette.mode}
-            initial={{ opacity: 0, y: 16, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-            style={panelStyle}
+            initial={
+              isMobile
+                ? { opacity: 0, y: '100%' }
+                : { opacity: 0, y: 12, scale: 0.98 }
+            }
+            animate={
+              isMobile
+                ? { opacity: 1, y: 0 }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
+            exit={
+              isMobile
+                ? { opacity: 0, y: 28 }
+                : { opacity: 0, y: 6, scale: 0.99 }
+            }
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            style={{ ...panelStyle, willChange: 'transform, opacity' }}
           >
             <AssistantPaletteContext.Provider value={palette}>
             <motion.div
