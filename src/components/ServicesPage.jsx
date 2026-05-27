@@ -1,3 +1,4 @@
+import '../styles/services-process-mobile.css';
 import { Fragment, useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {

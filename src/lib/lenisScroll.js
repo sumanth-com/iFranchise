@@ -32,8 +32,11 @@ function isLowPowerDevice() {
 export async function initLenisScroll() {
   if (typeof window === 'undefined') return null;
 
+  const isMobile =
+    window.matchMedia('(max-width: 767px)').matches ||
+    window.matchMedia('(pointer: coarse)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion || isLowPowerDevice()) return null;
+  if (prefersReducedMotion || isMobile || isLowPowerDevice()) return null;
 
   const { default: Lenis } = await import('@studio-freight/lenis');
 

@@ -50,17 +50,6 @@ export function initGA4() {
 
   ensureGtag();
 
-  if (!isGtagLoadedFromHtml()) {
-    const scriptId = `ga4-gtag-js-${measurementId}`;
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-      document.head.appendChild(script);
-    }
-  }
-
   const applyConfig = () => {
     if (configSent) return;
     window.gtag('js', new Date());
@@ -85,6 +74,18 @@ export function initGA4() {
   return true;
 }
 
+function sendPageView(logicalRoute) {
+  const { pageKey, pagePath, pageLocation, pageTitle } = getPageInfo();
+  if (lastTrackedPageKey === pageKey) return;
+  lastTrackedPageKey = pageKey;
+  window.gtag('event', 'page_view', {
+    page_path: pagePath,
+    page_location: pageLocation,
+    page_title: pageTitle,
+    route_name: logicalRoute || undefined,
+  });
+}
+
 export function trackPageView({ logicalRoute } = {}) {
   const measurementId = getMeasurementId();
   if (!measurementId) return;
@@ -93,16 +94,11 @@ export function trackPageView({ logicalRoute } = {}) {
   initGA4();
   ensureGtag();
 
-  const { pageKey, pagePath, pageLocation, pageTitle } = getPageInfo();
-  if (lastTrackedPageKey === pageKey) return;
-  lastTrackedPageKey = pageKey;
-
-  window.gtag('event', 'page_view', {
-    page_path: pagePath,
-    page_location: pageLocation,
-    page_title: pageTitle,
-    route_name: logicalRoute || undefined,
-  });
+  if (window.__IFR_GA_READY__) {
+    sendPageView(logicalRoute);
+  } else {
+    window.addEventListener('ifr-ga-ready', () => sendPageView(logicalRoute), { once: true });
+  }
 
   if (GA4_DEBUG) {
     // eslint-disable-next-line no-console

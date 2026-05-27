@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import brandLogo from '../assets/BrandNav.webp';
+import { NAV_LOGO } from '../lib/uiAssets.js';
 import ThemeToggle from './ThemeToggle';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
@@ -53,11 +53,10 @@ const mobileMenuNavStagger = {
 };
 
 const mobileMenuNavItem = {
-  hidden: { opacity: 0, x: 16, filter: 'blur(4px)' },
+  hidden: { opacity: 0, x: 16 },
   visible: {
     opacity: 1,
     x: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.34, ease: MENU_EASE },
   },
 };
@@ -752,7 +751,9 @@ function Navbar() {
         <div className="site-navbar-brand flex min-w-0 flex-1 flex-col xl:mr-auto xl:flex-none">
           <a href="/" onClick={handleLogoClick} className="inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-3">
             <img
-              src={brandLogo}
+              src={NAV_LOGO.src}
+              srcSet={NAV_LOGO.srcSet}
+              sizes={NAV_LOGO.sizes}
               alt="iFranchise"
               className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10"
               width={40}
@@ -992,7 +993,9 @@ function Navbar() {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={brandLogo}
+                    src={NAV_LOGO.src}
+                    srcSet={NAV_LOGO.srcSet}
+                    sizes={NAV_LOGO.sizes}
                     alt="iFranchise"
                     className="h-9 w-9 rounded-xl"
                     width={36}

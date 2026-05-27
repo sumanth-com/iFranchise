@@ -107,3 +107,50 @@ html.low-power-device [class*='blur-3xl'],
 html.low-power-device [class*='blur-2xl'] {
   filter: blur(24px) !important;
 }
+
+/* Mobile: native scroll, lighter paints, no hover scale on cards */
+@media (max-width: 767px) {
+  html.lenis,
+  html.lenis-smooth {
+    scroll-behavior: auto;
+  }
+
+  #main-content section:not(:first-of-type) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 360px;
+  }
+
+  .fo-opportunity-card__img,
+  .fo-opportunity-card:hover .fo-opportunity-card__img {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .fo-opportunity-card__sheen,
+  .fo-opportunity-card:hover .fo-opportunity-card__sheen {
+    display: none;
+  }
+
+  .site-backdrop__orb {
+    animation-duration: 32s;
+  }
+
+  .hero-cinematic-pill--animated {
+    animation-duration: 0.6s;
+  }
+
+  [class*='backdrop-blur'] {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Pill contrast — small uppercase labels (Lighthouse a11y) */
+.hero-cinematic-pill-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme='light'] .hero-cinematic-pill-text {
+  text-shadow: none;
+  color: #0f172a;
+}

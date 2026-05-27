@@ -9,8 +9,10 @@ import retailJewelryImg from '../assets/Retail & Jewelry.webp';
 import logisticsInfrastructureImg from '../assets/Logistics & Infrastructure.webp';
 import beautyLifestyleImg from '../assets/Beauty & Lifestyle.webp';
 
-const u = (photoId, w = 1200) =>
-  `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${w}&q=85`;
+import { unsplashPhoto } from '../lib/unsplashResponsive.js';
+
+/** Mobile-first default width (avoids 1200px downloads on small screens). */
+const u = (photoId, w = 640) => unsplashPhoto(photoId, w);
 
 /** Generic remote fallback when no local asset applies */
 export const IMAGE_FALLBACK = foodBeverageImg;

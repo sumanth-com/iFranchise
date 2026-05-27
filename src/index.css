@@ -1,9 +1,6 @@
 /* Font loaded via <link> in index.html - non-blocking */
 
 @import './styles/typography.css';
-@import './styles/services-process-mobile.css';
-@import './styles/blog-share-3d.css';
-@import './styles/leadership-linkedin-3d.css';
 
 /* Services benefits pills — white icon disc, colored glyph */
 .services-benefit-pill-icon {

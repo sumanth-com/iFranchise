@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve, join } from 'path'
 import { tmpdir } from 'os'
+import { viteAsyncCss } from './plugins/vite-async-css.mjs'
 
 const require = createRequire(import.meta.url)
 
@@ -48,6 +49,7 @@ export default defineConfig({
       fastRefresh: true,
     }),
     ...loadOptionalPlugins(),
+    viteAsyncCss(),
   ],
   resolve: {
     alias: {
@@ -56,7 +58,7 @@ export default defineConfig({
   },
   build: {
     modulePreload: {
-      polyfill: true,
+      polyfill: false,
     },
     rollupOptions: {
       output: {

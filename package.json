@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "images:ui": "node scripts/optimize-ui-assets.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
     "images:patch-imports": "node scripts/patch-imports-to-webp.mjs",
     "cleanup": "node scripts/cleanup-unused.mjs && node scripts/rebuild-manifest.mjs",

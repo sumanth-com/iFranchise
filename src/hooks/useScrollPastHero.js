@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const MOBILE_MAX_WIDTH = 767;
 
@@ -33,6 +33,9 @@ export function useScrollPastHero(pathname, enabled = true) {
     return !isMobileViewport();
   });
 
+  const rafRef = useRef(null);
+  const lastScrollRef = useRef(-1);
+
   useEffect(() => {
     if (!enabled) {
       setShowAssistant(false);
@@ -41,23 +44,42 @@ export function useScrollPastHero(pathname, enabled = true) {
 
     const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
 
-    const update = () => {
+    const measure = () => {
       if (!mq.matches || showsAssistantImmediately(pathname)) {
         setShowAssistant(true);
         return;
       }
-      setShowAssistant(window.scrollY >= getMobileScrollThreshold(pathname));
+      const y = window.scrollY;
+      if (y === lastScrollRef.current) return;
+      lastScrollRef.current = y;
+      setShowAssistant(y >= getMobileScrollThreshold(pathname));
     };
 
-    update();
-    mq.addEventListener('change', update);
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
+    const schedule = () => {
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        measure();
+      });
+    };
+
+    schedule();
+    mq.addEventListener('change', schedule);
+    window.addEventListener('scroll', schedule, { passive: true });
+
+    let resizeTimer;
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(schedule, 150);
+    };
+    window.addEventListener('resize', onResize, { passive: true });
 
     return () => {
-      mq.removeEventListener('change', update);
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      mq.removeEventListener('change', schedule);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', onResize);
+      clearTimeout(resizeTimer);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [pathname, enabled]);
 

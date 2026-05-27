@@ -1,3 +1,4 @@
+import '../styles/leadership-linkedin-3d.css';
 import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';

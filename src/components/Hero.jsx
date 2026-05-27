@@ -18,7 +18,7 @@ import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
 import { SITE_CONTACT_ITEMS } from '../data/siteContact';
-import brandLogo from '../assets/BrandLogo.webp';
+import ResponsiveImg from './ui/ResponsiveImg.jsx';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
   FiCheck, FiArrowRight,
@@ -98,9 +98,9 @@ const growthCards = [
     linkText: 'For Brand Owners',
     href: '/contact',
     image:
-      'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=640&q=80',
     fallbackImage:
-      'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=640&q=80',
     accent: 'from-violet-600 to-indigo-600',
     accentText: 'text-violet-700',
     accentBg: 'bg-violet-50',
@@ -116,9 +116,9 @@ const growthCards = [
     linkText: 'For Investors',
     href: '/contact',
     image:
-      'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=640&q=80',
     fallbackImage:
-      'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=640&q=80',
     accent: 'from-emerald-600 to-teal-600',
     accentText: 'text-emerald-700',
     accentBg: 'bg-emerald-50',
@@ -162,7 +162,7 @@ const franchiseModels = [
     description:
       'The franchise partner owns the unit while our central team manages operations, staffing, and quality delivery.',
     image:
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=640&q=80',
     cta: 'Explore FOCO',
   },
   {
@@ -173,7 +173,7 @@ const franchiseModels = [
     description:
       'The franchise partner owns and runs daily business operations with standardized systems and growth support.',
     image:
-      'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=640&q=80',
     cta: 'Explore FOFO',
   },
   {
@@ -184,7 +184,7 @@ const franchiseModels = [
     description:
       'Investors fund expansion while the company executes operations end-to-end with transparent reporting.',
     image:
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=640&q=80',
     cta: 'Explore FICO',
   },
 ];
@@ -290,16 +290,18 @@ function GrowthCard({ card }) {
         )}
         {/* Image ? contain so nothing is cut */}
         {!imgError && (
-          <img
+          <ResponsiveImg
             ref={imgRef}
             src={card.image}
             alt={card.title}
+            remote
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 400px"
             loading="lazy"
-            decoding="async"
             onLoad={() => setImgLoaded(true)}
             onError={() => {
-              if (card.fallbackImage) {
+              if (card.fallbackImage && imgRef.current) {
                 imgRef.current.src = card.fallbackImage;
+                imgRef.current.removeAttribute('srcset');
                 imgRef.current.onerror = () => setImgError(true);
               } else {
                 setImgError(true);
@@ -2713,7 +2715,7 @@ function Hero() {
               <span className="hero-cinematic-pill-dot h-2.5 w-2.5 flex-shrink-0 rounded-full bg-violet-400 shadow-[0_0_10px_rgba(192,132,252,0.9)]" aria-hidden />
               <span
                 className={`hero-cinematic-pill-text text-xs font-bold uppercase tracking-[0.16em] sm:text-[13px] sm:tracking-[0.18em] ${
-                  isLight ? 'text-slate-900' : 'text-white'
+                  isLight ? 'text-slate-950' : 'text-white'
                 }`}
               >
                 Built for Ambitious Growth
@@ -2859,9 +2861,11 @@ function Hero() {
 
                 {/* Image ? full card width, natural height */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden">
-                  <img
+                  <ResponsiveImg
                     src={card.img}
                     alt={card.tag}
+                    remote
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 560px"
                     className="block h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                     loading="lazy"
                     decoding="async"

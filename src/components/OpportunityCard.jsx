@@ -1,4 +1,5 @@
 import { navigateTo } from '@/lib/navigation';
+import { unsplashSrcSet } from '@/lib/unsplashResponsive';
 
 function getModelPill(model) {
   if (model === 'FOCO') {
@@ -20,6 +21,9 @@ export default function OpportunityCard({ opportunity }) {
   const brandAccent = opportunity.cardAccent || brandBg;
   const cardFit = opportunity.cardFit || 'fill';
   const cardImage = opportunity.logo || opportunity.image;
+  const isRemote = typeof cardImage === 'string' && /^https?:\/\//i.test(cardImage);
+  const remoteSet = isRemote ? unsplashSrcSet(cardImage, [280, 400, 560], '(max-width: 640px) 92vw, 280px') : null;
+  const objectFit = cardFit === 'contain' ? 'contain' : 'cover';
   return (
     <article
       onClick={handleViewDetails}
@@ -35,14 +39,16 @@ export default function OpportunityCard({ opportunity }) {
         style={{ backgroundColor: brandBg }}
       >
         <img
-          src={cardImage}
+          src={remoteSet?.src ?? cardImage}
+          srcSet={remoteSet?.srcSet}
           alt={opportunity.brandName}
           className="fo-opportunity-card__img"
           loading="lazy"
           decoding="async"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 280px"
-          width={280}
-          height={187}
+          sizes={remoteSet?.sizes ?? '(max-width: 640px) 92vw, 280px'}
+          style={{ objectFit, objectPosition: 'center' }}
+          width={cardFit === 'contain' ? undefined : 280}
+          height={cardFit === 'contain' ? undefined : 187}
           onError={(e) => {
             const img = e.target;
             if (img.dataset.fallbackTried === '1') return;
