@@ -1,19 +1,53 @@
+import { createRequire } from 'node:module'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve, join } from 'path'
 import { tmpdir } from 'os'
 
+const require = createRequire(import.meta.url)
+
 // Keep Vite cache outside OneDrive — avoids EPERM on node_modules/.vite/deps (Windows sync locks)
 const cacheDir = join(tmpdir(), 'ifranchise-website-vite-cache')
 
+function loadOptionalPlugins() {
+  const optional = []
+  try {
+    const { ViteImageOptimizer } = require('vite-plugin-image-optimizer')
+    optional.push(
+      ViteImageOptimizer({
+        png: { quality: 86 },
+        jpeg: { quality: 86 },
+        jpg: { quality: 86 },
+        webp: { quality: 86 },
+        avif: { quality: 62 },
+      }),
+    )
+  } catch {
+    /* pre-optimized WebP assets via npm run images:optimize */
+  }
+  try {
+    const compression = require('vite-plugin-compression2').default
+    optional.push(
+      compression({
+        algorithms: ['gzip', 'brotliCompress'],
+        exclude: [/\.(br|gz)$/, /\.(png|jpe?g|webp|avif|gif|svg|ico)$/],
+        threshold: 1024,
+      }),
+    )
+  } catch {
+    /* optional: npm i -D vite-plugin-compression2 */
+  }
+  return optional
+}
+
 export default defineConfig({
-  // Vite loads .env only from project root (same folder as package.json)
   envDir: resolve(__dirname),
   cacheDir,
   plugins: [
     react({
       fastRefresh: true,
     }),
+    ...loadOptionalPlugins(),
   ],
   resolve: {
     alias: {
@@ -28,37 +62,37 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-            return 'react-core';
+            return 'react-core'
           }
           if (id.includes('node_modules/framer-motion')) {
-            return 'framer-motion';
+            return 'framer-motion'
           }
           if (id.includes('node_modules/react-icons')) {
-            return 'icons';
+            return 'icons'
           }
           if (id.includes('node_modules/@studio-freight/lenis')) {
-            return 'lenis';
+            return 'lenis'
           }
           if (id.includes('/src/lib/forms/')) {
-            return 'forms';
+            return 'forms'
           }
           if (id.includes('/src/components/Hero')) {
-            return 'page-home';
+            return 'page-home'
           }
           if (
             id.includes('/src/components/FranchiseOpportunitiesPage') ||
             id.includes('/src/components/FranchiseDetailsPage')
           ) {
-            return 'page-franchise';
+            return 'page-franchise'
           }
           if (id.includes('/src/components/ForBrandOwnersPage')) {
-            return 'page-brand-owners';
+            return 'page-brand-owners'
           }
           if (id.includes('/src/components/ExpansionAssistant')) {
-            return 'expansion-assistant';
+            return 'expansion-assistant'
           }
           if (id.includes('node_modules')) {
-            return 'vendor';
+            return 'vendor'
           }
         },
       },
@@ -67,22 +101,22 @@ export default defineConfig({
     minify: 'esbuild',
     sourcemap: false,
     target: 'es2020',
-    assetsInlineLimit: 4096,
+    assetsInlineLimit: 2048,
     cssCodeSplit: true,
     cssMinify: true,
     reportCompressedSize: false,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion', '@studio-freight/lenis'],
+    include: ['react', 'react-dom'],
+    exclude: ['framer-motion', '@studio-freight/lenis'],
   },
   server: {
     fs: {
       strict: true,
-      // Block dev server from serving env files if requested by URL
       deny: ['.env', '.env.*'],
     },
   },
   publicDir: 'public',
   base: '/',
-  assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jfif'],
+  assetsInclude: ['**/*.JPG', '**/*.JPEG', '**/*.jfif', '**/*.webp', '**/*.avif'],
 })

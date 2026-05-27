@@ -11,7 +11,7 @@ import {
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
-import BrandLogo from '../assets/BrandLogo.png';
+import BrandLogo from '../assets/BrandLogo.webp';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import {
   franchiseOpportunities,
@@ -23,10 +23,10 @@ import IndustryCard from './IndustryCard';
 import OurServicesSection from './OurServicesSection';
 import { heroDisplayClass, sectionTitleClass, sectionSubtitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
-import reviewR1 from '../assets/R1.png';
-import reviewR2 from '../assets/R2.png';
-import reviewR3 from '../assets/R3.png';
-import reviewR4 from '../assets/R4.png';
+import reviewR1 from '../assets/R1.webp';
+import reviewR2 from '../assets/R2.webp';
+import reviewR3 from '../assets/R3.webp';
+import reviewR4 from '../assets/R4.webp';
 
 const SERVICES_HERO_REVIEW_AVATARS = [reviewR1, reviewR2, reviewR3, reviewR4];
 

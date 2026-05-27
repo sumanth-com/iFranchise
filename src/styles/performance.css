@@ -6,7 +6,9 @@
   }
 
   .site-backdrop__orb,
-  [data-reveal] {
+  [data-reveal],
+  .cinematic-scroll-reveal,
+  .hero-cinematic-pill--animated {
     animation: none !important;
     transition: none !important;
   }
@@ -56,6 +58,27 @@ body {
   decoding: async;
 }
 
+/* GPU-friendly scroll reveals — transform + opacity only */
+.cinematic-scroll-reveal {
+  will-change: opacity, transform;
+}
+
+.cinematic-scroll-reveal.is-visible {
+  will-change: auto;
+}
+
+/* Hero LCP layers — contain paint, no layout thrash */
+.hero-cinematic-media-wrap {
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.hero-cinematic-media picture,
+.hero-cinematic-media img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* Respect user GPU on low-end / mobile — fewer orb animations */
 @media (max-width: 767px), (pointer: coarse) {
   .site-backdrop__orb--d,
@@ -63,4 +86,24 @@ body {
     opacity: 0.35;
     animation-duration: 28s;
   }
+
+  .leadership-atmospheric-orb {
+    animation: none !important;
+    opacity: 0.05 !important;
+  }
+}
+
+/* Low-power class toggled from useLowPowerDevice (optional body class via ThemeContext) */
+html.low-power-device .site-backdrop__orb--d,
+html.low-power-device .site-backdrop__orb--e {
+  display: none;
+}
+
+html.low-power-device .site-backdrop__grid {
+  opacity: 0.06;
+}
+
+html.low-power-device [class*='blur-3xl'],
+html.low-power-device [class*='blur-2xl'] {
+  filter: blur(24px) !important;
 }

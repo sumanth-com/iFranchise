@@ -2,12 +2,12 @@
  * Industry & section imagery — local assets (src/assets/*.jpeg).
  * Single source of truth for home industries, services, brand owners, and franchise fallbacks.
  */
-import foodBeverageImg from '../assets/Food & Beverage.jpeg';
-import healthcareWellnessImg from '../assets/Healthcare & Wellness.jpeg';
-import educationTrainingImg from '../assets/Education & Training.jpeg';
-import retailJewelryImg from '../assets/Retail & Jewelry.jpeg';
-import logisticsInfrastructureImg from '../assets/Logistics & Infrastructure.jpeg';
-import beautyLifestyleImg from '../assets/Beauty & Lifestyle.png';
+import foodBeverageImg from '../assets/Food & Beverage.webp';
+import healthcareWellnessImg from '../assets/Healthcare & Wellness.webp';
+import educationTrainingImg from '../assets/Education & Training.webp';
+import retailJewelryImg from '../assets/Retail & Jewelry.webp';
+import logisticsInfrastructureImg from '../assets/Logistics & Infrastructure.webp';
+import beautyLifestyleImg from '../assets/Beauty & Lifestyle.webp';
 
 const u = (photoId, w = 1200) =>
   `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${w}&q=85`;

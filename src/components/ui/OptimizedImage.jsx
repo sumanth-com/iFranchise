@@ -9,6 +9,7 @@ export default function OptimizedImage({
   width,
   height,
   sizes,
+  srcSet,
   loading = 'lazy',
   priority = false,
   draggable = false,
@@ -25,6 +26,7 @@ export default function OptimizedImage({
       width={width}
       height={height}
       sizes={sizes}
+      srcSet={srcSet}
       loading={resolvedLoading}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}

@@ -5,7 +5,10 @@ import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
-import { homeHeroBgDark, homeHeroBgLight, preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
+import { preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
+import { HOME_HERO_DARK, HOME_HERO_LIGHT } from '../lib/heroAssets.js';
+import ResponsivePicture from './ui/ResponsivePicture.jsx';
+import { HERO_SIZES } from '../lib/responsiveImage.js';
 import { submitContactForm } from '../lib/forms';
 import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
 import { phoneInputProps } from '@/lib/phoneInput';
@@ -15,7 +18,7 @@ import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
 import { SITE_CONTACT_ITEMS } from '../data/siteContact';
-import brandLogo from '../assets/BrandLogo.png';
+import brandLogo from '../assets/BrandLogo.webp';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
   FiCheck, FiArrowRight,
@@ -2401,7 +2404,8 @@ function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   );
 }
 
-function markImgReady(img, setter) {
+function markImgReady(container, setter) {
+  const img = container?.tagName === 'IMG' ? container : container?.querySelector?.('img');
   if (img?.complete && img.naturalWidth > 0) {
     setter(true);
   }
@@ -2630,32 +2634,52 @@ function Hero() {
         }`}
       >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
-          <img
+          <div
             ref={darkHeroRef}
-            src={homeHeroBgDark}
-            alt=""
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            onLoad={() => setDarkHeroReady(true)}
-            className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%] transition-opacity duration-300 ease-out ${
+            className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
               !isLight && darkHeroReady ? 'opacity-100' : 'opacity-0'
             }`}
             aria-hidden
-          />
-          <img
+          >
+            <ResponsivePicture
+              avif={HOME_HERO_DARK.avif}
+              webp={HOME_HERO_DARK.webp}
+              webpSrcSet={HOME_HERO_DARK.srcSetMap}
+              fallback={HOME_HERO_DARK.src}
+              sizes={HERO_SIZES}
+              width={1536}
+              height={1024}
+              alt=""
+              priority={!isLight}
+              loading={isLight ? 'lazy' : 'eager'}
+              onLoad={() => setDarkHeroReady(true)}
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%]"
+              pictureClassName="block h-full w-full"
+            />
+          </div>
+          <div
             ref={lightHeroRef}
-            src={homeHeroBgLight}
-            alt=""
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            onLoad={() => setLightHeroReady(true)}
-            className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_38%] transition-opacity duration-300 ease-out ${
+            className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
               isLight && lightHeroReady ? 'opacity-100' : 'opacity-0'
             }`}
             aria-hidden
-          />
+          >
+            <ResponsivePicture
+              avif={HOME_HERO_LIGHT.avif}
+              webp={HOME_HERO_LIGHT.webp}
+              webpSrcSet={HOME_HERO_LIGHT.srcSetMap}
+              fallback={HOME_HERO_LIGHT.src}
+              sizes={HERO_SIZES}
+              width={1536}
+              height={1024}
+              alt=""
+              priority={isLight}
+              loading={isLight ? 'eager' : 'lazy'}
+              onLoad={() => setLightHeroReady(true)}
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_38%]"
+              pictureClassName="block h-full w-full"
+            />
+          </div>
         </div>
         <div
           className={`hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 ${

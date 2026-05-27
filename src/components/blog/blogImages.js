@@ -2,12 +2,12 @@
  * Blog card / hero assets and optional Unsplash URLs for avatars.
  */
 
-import blogFallback from '../../assets/Blog.jfif';
-import blogPageHero from '../../assets/bloghero.png';
-import blog1 from '../../assets/Blog1.jfif';
-import blog2 from '../../assets/Blog2.jfif';
-import blog3 from '../../assets/Blog3.jfif';
-import blog4 from '../../assets/Blog4.png';
+import blogFallback from '../../assets/Blog.webp';
+import blogPageHero from '../../assets/bloghero.webp';
+import blog1 from '../../assets/Blog1.webp';
+import blog2 from '../../assets/Blog2.webp';
+import blog3 from '../../assets/Blog3.webp';
+import blog4 from '../../assets/Blog4.webp';
 
 /** Blog listing page top section (left-side hero image). */
 export const BLOG_PAGE_HERO_IMAGE = blogPageHero;

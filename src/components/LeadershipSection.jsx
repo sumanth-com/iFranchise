@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import OptimizedImage from './ui/OptimizedImage';
-import abdulPhoto from '../assets/abdul.png';
-import abrarPhoto from '../assets/abrar.png';
+import abdulPhoto from '../assets/abdul.webp';
+import abrarPhoto from '../assets/abrar.webp';
 
 function LeadershipSection() {
   const reducedMotion = usePrefersReducedMotion();
@@ -40,7 +40,7 @@ function LeadershipSection() {
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/35 bg-violet-500/10 px-4 py-1.5 shadow-sm backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-violet-400" />
-              <span className="text-xs font-bold uppercase tracking-[0.15em] text-white">From Our Founders</span>
+              <span className="text-xs font-bold uppercase tracking-[0.15em] text-violet-50">From Our Founders</span>
             </div>
             <h2 className={`mt-4 ${sectionTitleClass(false)}`}>
               What iFranchise Means to Us

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import careerImage from '../assets/carrer.png';
+import careerImage from '../assets/carrer.webp';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
 import CareersGrowthSection from './careers/CareersGrowthSection';

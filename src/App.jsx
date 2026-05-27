@@ -5,6 +5,7 @@ import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
 import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
+import { useLowPowerDevice } from './hooks/useLowPowerDevice';
 import PageSEO from './components/seo/PageSEO';
 import ErrorBoundary from './components/ErrorBoundary';
 import {
@@ -60,6 +61,7 @@ function PageSkeleton() {
 }
 
 function App() {
+  const lowPowerDevice = useLowPowerDevice();
   const [pathname, setPathname] = useState(getLogicalPathname);
   const [pagePhase, setPagePhase] = useState('idle');
   const transitionTimerRef = useRef(null);
@@ -260,6 +262,11 @@ function App() {
   const isListYourBrandPage       = pathname === '/list-your-brand';
   const isFAQPage                 = pathname === '/faq';
   const isHomePage                = pathname === '/';
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('low-power-device', lowPowerDevice);
+    return () => document.documentElement.classList.remove('low-power-device');
+  }, [lowPowerDevice]);
 
   return (
     <FranchiseOpportunityNavbarFiltersProvider>

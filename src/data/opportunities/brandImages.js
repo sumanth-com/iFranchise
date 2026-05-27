@@ -3,82 +3,82 @@
  */
 
 // ODETTE
-import odetteLogo from '../../assets/ODETTE/Logo.png';
-import odette1 from '../../assets/ODETTE/1.jfif';
-import odette2 from '../../assets/ODETTE/2.jfif';
-import odette3 from '../../assets/ODETTE/3.jfif';
-import odette4 from '../../assets/ODETTE/4.png';
-import odette5 from '../../assets/ODETTE/5.png';
-import odette6 from '../../assets/ODETTE/6.png';
-import odette7 from '../../assets/ODETTE/7.png';
+import odetteLogo from '../../assets/ODETTE/Logo.webp';
+import odette1 from '../../assets/ODETTE/1.webp';
+import odette2 from '../../assets/ODETTE/2.webp';
+import odette3 from '../../assets/ODETTE/3.webp';
+import odette4 from '../../assets/ODETTE/4.webp';
+import odette5 from '../../assets/ODETTE/5.webp';
+import odette6 from '../../assets/ODETTE/6.webp';
+import odette7 from '../../assets/ODETTE/7.webp';
 
 // Original Burger co
-import originalBurgerLogo from '../../assets/Original Burger co/Logo.png';
-import originalBurger1 from '../../assets/Original Burger co/1.JPG';
-import originalBurger2 from '../../assets/Original Burger co/2.JPG';
-import originalBurger3 from '../../assets/Original Burger co/3.JPG';
-import originalBurger4 from '../../assets/Original Burger co/4.JPG';
-import originalBurger5 from '../../assets/Original Burger co/5.JPG';
+import originalBurgerLogo from '../../assets/Original Burger co/Logo.webp';
+import originalBurger1 from '../../assets/Original Burger co/1.webp';
+import originalBurger2 from '../../assets/Original Burger co/2.webp';
+import originalBurger3 from '../../assets/Original Burger co/3.webp';
+import originalBurger4 from '../../assets/Original Burger co/4.webp';
+import originalBurger5 from '../../assets/Original Burger co/5.webp';
 
 // Franco
-import francoLogo from '../../assets/Franco/Logo.png';
-import franco1 from '../../assets/Franco/1.png';
-import franco2 from '../../assets/Franco/2.png';
-import franco3 from '../../assets/Franco/3.png';
-import franco4 from '../../assets/Franco/4.png';
-import franco5 from '../../assets/Franco/5.png';
+import francoLogo from '../../assets/Franco/Logo.webp';
+import franco1 from '../../assets/Franco/1.webp';
+import franco2 from '../../assets/Franco/2.webp';
+import franco3 from '../../assets/Franco/3.webp';
+import franco4 from '../../assets/Franco/4.webp';
+import franco5 from '../../assets/Franco/5.webp';
 
 // BIGGIES BURGER
-import biggiesLogo from '../../assets/BIGGIES BURGER/Logo.png';
-import biggies1 from '../../assets/BIGGIES BURGER/1.jpg';
-import biggies2 from '../../assets/BIGGIES BURGER/2.jpg';
-import biggies3 from '../../assets/BIGGIES BURGER/3.jpg';
-import biggies4 from '../../assets/BIGGIES BURGER/4.jpg';
+import biggiesLogo from '../../assets/BIGGIES BURGER/Logo.webp';
+import biggies1 from '../../assets/BIGGIES BURGER/1.webp';
+import biggies2 from '../../assets/BIGGIES BURGER/2.webp';
+import biggies3 from '../../assets/BIGGIES BURGER/3.webp';
+import biggies4 from '../../assets/BIGGIES BURGER/4.webp';
 
 // BIGGUYS
-import bigguysLogo from '../../assets/BIGGUYS/Logo.png';
-import bigguys1 from '../../assets/BIGGUYS/1.jpg';
-import bigguys2 from '../../assets/BIGGUYS/2.jpg';
-import bigguys3 from '../../assets/BIGGUYS/3.jpeg';
-import bigguys4 from '../../assets/BIGGUYS/4.JPG';
+import bigguysLogo from '../../assets/BIGGUYS/Logo.webp';
+import bigguys1 from '../../assets/BIGGUYS/1.webp';
+import bigguys2 from '../../assets/BIGGUYS/2.webp';
+import bigguys3 from '../../assets/BIGGUYS/3.webp';
+import bigguys4 from '../../assets/BIGGUYS/4.webp';
 
 // Brand AVENUE
-import brandAvenueLogo from '../../assets/Brand AVENUE/Logo.jfif';
-import brandAvenue1 from '../../assets/Brand AVENUE/1.png';
-import brandAvenue2 from '../../assets/Brand AVENUE/2.png';
-import brandAvenue3 from '../../assets/Brand AVENUE/3.png';
-import brandAvenue4 from '../../assets/Brand AVENUE/4.png';
-import brandAvenue5 from '../../assets/Brand AVENUE/5.png';
-import brandAvenue6 from '../../assets/Brand AVENUE/6.png';
+import brandAvenueLogo from '../../assets/Brand AVENUE/Logo.webp';
+import brandAvenue1 from '../../assets/Brand AVENUE/1.webp';
+import brandAvenue2 from '../../assets/Brand AVENUE/2.webp';
+import brandAvenue3 from '../../assets/Brand AVENUE/3.webp';
+import brandAvenue4 from '../../assets/Brand AVENUE/4.webp';
+import brandAvenue5 from '../../assets/Brand AVENUE/5.webp';
+import brandAvenue6 from '../../assets/Brand AVENUE/6.webp';
 
 // Lassi N Cafe
-import lassiLogo from '../../assets/Lassi N Cafe/Logo.png';
-import lassi1 from '../../assets/Lassi N Cafe/1.jpg';
-import lassi2 from '../../assets/Lassi N Cafe/2.png';
-import lassi3 from '../../assets/Lassi N Cafe/3.png';
+import lassiLogo from '../../assets/Lassi N Cafe/Logo.webp';
+import lassi1 from '../../assets/Lassi N Cafe/1.webp';
+import lassi2 from '../../assets/Lassi N Cafe/2.webp';
+import lassi3 from '../../assets/Lassi N Cafe/3.webp';
 
 // Fusion pizza and Big burger
-import fusionLogo from '../../assets/Fusion pizza and Big burger/Logo.png';
-import fusion1 from '../../assets/Fusion pizza and Big burger/1.jfif';
-import fusion2 from '../../assets/Fusion pizza and Big burger/2.jfif';
-import fusion3 from '../../assets/Fusion pizza and Big burger/3.jfif';
-import fusion4 from '../../assets/Fusion pizza and Big burger/4.jfif';
-import fusion5 from '../../assets/Fusion pizza and Big burger/5.jfif';
+import fusionLogo from '../../assets/Fusion pizza and Big burger/Logo.webp';
+import fusion1 from '../../assets/Fusion pizza and Big burger/1.webp';
+import fusion2 from '../../assets/Fusion pizza and Big burger/2.webp';
+import fusion3 from '../../assets/Fusion pizza and Big burger/3.webp';
+import fusion4 from '../../assets/Fusion pizza and Big burger/4.webp';
+import fusion5 from '../../assets/Fusion pizza and Big burger/5.webp';
 
 // Kasturi Creations
-import kasturiLogo from '../../assets/kasturi/Logo.png';
+import kasturiLogo from '../../assets/kasturi/Logo.webp';
 
 // 10 Downing Street
-import downingLogo from '../../assets/10 Downing Street/Logo.png';
-import downing1 from '../../assets/10 Downing Street/1.jpeg';
-import downing2 from '../../assets/10 Downing Street/2.jpeg';
-import downing3 from '../../assets/10 Downing Street/3.jpeg';
-import downing4 from '../../assets/10 Downing Street/4.jpeg';
-import downing5 from '../../assets/10 Downing Street/5.jpeg';
-import downing6 from '../../assets/10 Downing Street/6.jpeg';
-import downing7 from '../../assets/10 Downing Street/7.jpeg';
-import downing8 from '../../assets/10 Downing Street/8.jpeg';
-import downing9 from '../../assets/10 Downing Street/9.jpeg';
+import downingLogo from '../../assets/10 Downing Street/Logo.webp';
+import downing1 from '../../assets/10 Downing Street/1.webp';
+import downing2 from '../../assets/10 Downing Street/2.webp';
+import downing3 from '../../assets/10 Downing Street/3.webp';
+import downing4 from '../../assets/10 Downing Street/4.webp';
+import downing5 from '../../assets/10 Downing Street/5.webp';
+import downing6 from '../../assets/10 Downing Street/6.webp';
+import downing7 from '../../assets/10 Downing Street/7.webp';
+import downing8 from '../../assets/10 Downing Street/8.webp';
+import downing9 from '../../assets/10 Downing Street/9.webp';
 
 import { getIndustryGalleryFallback } from '../sectionImages.js';
 

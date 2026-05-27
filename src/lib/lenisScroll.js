@@ -20,11 +20,20 @@ function persistScrollPosition() {
   });
 }
 
+function isLowPowerDevice() {
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
+  const narrow = window.matchMedia('(max-width: 767px)').matches;
+  const cores = navigator.hardwareConcurrency ?? 8;
+  const memory = navigator.deviceMemory ?? 8;
+  const saveData = navigator.connection?.saveData === true;
+  return saveData || (coarse && narrow && cores <= 6) || memory <= 3;
+}
+
 export async function initLenisScroll() {
   if (typeof window === 'undefined') return null;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return null;
+  if (prefersReducedMotion || isLowPowerDevice()) return null;
 
   const { default: Lenis } = await import('@studio-freight/lenis');
 

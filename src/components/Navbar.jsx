@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import brandLogo from '../assets/BrandNav.png';
+import brandLogo from '../assets/BrandNav.webp';
 import ThemeToggle from './ThemeToggle';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';

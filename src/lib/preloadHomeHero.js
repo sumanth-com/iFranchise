@@ -1,5 +1,4 @@
-import homeHeroBgDark from '../assets/HomeHero.png';
-import homeHeroBgLight from '../assets/HomeHero2.png';
+import { homeHeroBgDark, homeHeroBgLight } from './heroAssets.js';
 import { resolveTheme, THEMES } from './theme';
 
 const PRELOAD_DARK_ID = 'preload-home-hero-dark';
@@ -16,11 +15,12 @@ function injectPreload(id, href) {
   link.rel = 'preload';
   link.as = 'image';
   link.href = href;
+  link.type = 'image/webp';
   link.setAttribute('fetchpriority', 'high');
   document.head.appendChild(link);
 }
 
-/** Preload both hero images on home - active theme first, then the other. */
+/** Preload only the active-theme hero (LCP). Alternate theme warms on idle. */
 export function preloadHomeHero() {
   if (typeof document === 'undefined') return;
 
@@ -33,24 +33,21 @@ export function preloadHomeHero() {
     primary,
   );
 
+  const warmSecondary = () => {
+    injectPreload(
+      theme === THEMES.LIGHT ? PRELOAD_DARK_ID : PRELOAD_LIGHT_ID,
+      secondary,
+    );
+  };
+
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      injectPreload(
-        theme === THEMES.LIGHT ? PRELOAD_DARK_ID : PRELOAD_LIGHT_ID,
-        secondary,
-      );
-    });
+    requestIdleCallback(warmSecondary, { timeout: 2500 });
   } else {
-    setTimeout(() => {
-      injectPreload(
-        theme === THEMES.LIGHT ? PRELOAD_DARK_ID : PRELOAD_LIGHT_ID,
-        secondary,
-      );
-    }, 120);
+    setTimeout(warmSecondary, 400);
   }
 }
 
-/** Warm hero asset for a theme (toggle / idle). */
+/** Warm hero asset for a theme (toggle). */
 export function preloadHomeHeroForTheme(theme) {
   if (typeof document === 'undefined') return;
   const href = theme === THEMES.LIGHT ? homeHeroBgLight : homeHeroBgDark;
@@ -60,6 +57,3 @@ export function preloadHomeHeroForTheme(theme) {
 }
 
 export { homeHeroBgDark, homeHeroBgLight };
-
-/** @deprecated Use homeHeroBgDark */
-export const homeHeroBg = homeHeroBgDark;

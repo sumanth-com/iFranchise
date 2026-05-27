@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import notFoundImage from '../assets/404.png';
+import notFoundImage from '../assets/404.webp';
 import { navigateTo } from '@/lib/navigation';
 import OptimizedImage from './ui/OptimizedImage';
 

@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:patch-imports": "node scripts/patch-imports-to-webp.mjs",
+    "cleanup": "node scripts/cleanup-unused.mjs && node scripts/rebuild-manifest.mjs",
     "build": "node scripts/generate-sitemap.mjs && vite build",
     "seo:sitemap": "node scripts/generate-sitemap.mjs",
     "lint": "eslint .",
@@ -28,7 +31,10 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
     "postcss": "^8.5.10",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
-    "vite": "^5.4.21"
+    "vite": "^5.4.21",
+    "vite-plugin-compression2": "^1.4.0",
+    "vite-plugin-image-optimizer": "^1.1.9"
   }
 }

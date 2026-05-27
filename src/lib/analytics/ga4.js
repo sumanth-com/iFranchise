@@ -61,12 +61,17 @@ export function initGA4() {
     }
   }
 
-  if (!configSent && !window.__IFR_GA_READY__) {
+  const applyConfig = () => {
+    if (configSent) return;
     window.gtag('js', new Date());
     window.gtag('config', measurementId, { send_page_view: false });
     configSent = true;
-  } else if (window.__IFR_GA_READY__) {
-    configSent = true;
+  };
+
+  if (window.__IFR_GA_READY__) {
+    applyConfig();
+  } else if (!configSent) {
+    window.addEventListener('ifr-ga-ready', applyConfig, { once: true });
   }
 
   if (!initialized) {

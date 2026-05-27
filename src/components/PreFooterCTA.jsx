@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import brandLogo from '../assets/BrandNav.png';
+import brandLogo from '../assets/BrandNav.webp';
 import FooterJumpLink from './footer/FooterJumpLink';
 import SocialFollowBlock from './footer/SocialFollowBlock';
 import { getPartnerBrandLogos } from '../data/franchiseData';

@@ -20,6 +20,8 @@ function IndustryCardImg({ src, alt, isLight, priority }) {
       <img
         src={src}
         alt={alt}
+        width={640}
+        height={480}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"

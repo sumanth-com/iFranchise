@@ -11,7 +11,7 @@ import { TYPE } from '../lib/typography.js';
 const SHOW_TEAM_SECTION = false;
 
 // Import actual images
-import aboutUsImage from '../assets/aboutus.png';
+import aboutUsImage from '../assets/aboutus.webp';
 import { ABOUT_PAGE_TESTIMONIALS } from '../data/testimonials.js';
 
 // Premium Team Card Component with In-Card Popup
