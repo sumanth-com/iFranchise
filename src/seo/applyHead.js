@@ -56,24 +56,26 @@ export function applyStructuredData(schemas = []) {
 
 function setMeta(attr, key, content) {
   if (content == null || content === '') return;
-  let el = document.head.querySelector(`meta[${attr}="${key}"][${MANAGED}]`);
+  // Update an existing tag if present (whether managed or not) to avoid duplicates.
+  let el = document.head.querySelector(`meta[${attr}="${key}"]`);
   if (!el) {
     el = document.createElement('meta');
     el.setAttribute(attr, key);
-    el.setAttribute(MANAGED, 'true');
     document.head.appendChild(el);
   }
+  el.setAttribute(MANAGED, 'true');
   el.setAttribute('content', content);
 }
 
 function setLink(rel, href) {
   if (!href) return;
-  let el = document.head.querySelector(`link[rel="${rel}"][${MANAGED}]`);
+  // Update an existing tag if present (whether managed or not) to avoid duplicates.
+  let el = document.head.querySelector(`link[rel="${rel}"]`);
   if (!el) {
     el = document.createElement('link');
     el.setAttribute('rel', rel);
-    el.setAttribute(MANAGED, 'true');
     document.head.appendChild(el);
   }
+  el.setAttribute(MANAGED, 'true');
   el.setAttribute('href', href);
 }

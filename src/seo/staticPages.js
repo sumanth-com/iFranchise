@@ -111,6 +111,16 @@ export const STATIC_PAGE_SEO = {
     ogDescription: 'Speak with our franchise growth team today.',
     ogType: 'website',
   },
+  '/faq': {
+    title: 'Franchise FAQs | iFranchise',
+    description:
+      'Central answers to common questions about franchise investment, brand expansion, timelines, legal, support, and careers at iFranchise.',
+    keywords: 'franchise faq, franchise questions, franchise investment faq, franchise expansion faq',
+    canonicalPath: '/faq',
+    ogTitle: 'Franchise FAQs | iFranchise',
+    ogDescription: 'Answers for investors, founders, and future team members in one place.',
+    ogType: 'website',
+  },
   '/privacy-policy': {
     title: 'Privacy Policy | iFranchise',
     description: 'How iFranchise collects, uses, and protects your personal information.',

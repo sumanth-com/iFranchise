@@ -737,7 +737,7 @@ function FranchiseModelModal({ model, onClose }) {
             Compare Models
           </button>
           <button
-            onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}
+            onClick={() => window.open('https://cal.com/ifranchise.in/30min', '_blank')}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-95"
             style={{ backgroundColor: details.accentColor, boxShadow: `0 4px 14px ${details.accentColor}40` }}
           >
@@ -2941,7 +2941,7 @@ function Hero() {
           </div>
 
           <div className="text-center mt-10">
-            <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise/30min', '_blank')}>
+            <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise.in/30min', '_blank')}>
               Start Your Expansion Journey
             </CtaButton>
           </div>

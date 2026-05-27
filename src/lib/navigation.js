@@ -29,6 +29,7 @@ export function getLogicalPathname() {
   if (pathname === '/blog') return '/blog';
   if (pathname === '/services') return '/services';
   if (pathname === '/careers') return '/careers';
+  if (pathname === '/faq') return '/faq';
   if (['/list-your-brand', '/for-brand-owners', '/brand-owners'].includes(pathname)) {
     return '/list-your-brand';
   }
@@ -53,6 +54,7 @@ export function getLogicalPathname() {
     '/services',
     '/careers',
     '/list-your-brand',
+    '/faq',
   ];
   if (!knownPaths.includes(pathname)) return '/404';
   return pathname;

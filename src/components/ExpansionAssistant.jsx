@@ -5,7 +5,7 @@ import { useAsyncFormAction } from '../hooks/useAsyncFormAction';
 import { PHONE_PLACEHOLDER, digitsOnlyPhone, formatPhoneDisplay, isValidPhone10 } from '@/lib/phoneInput';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 
-const STRATEGY_CAL_URL = 'https://cal.com/ifranchise/30min';
+const STRATEGY_CAL_URL = 'https://cal.com/ifranchise.in/30min';
 
 const PURPLE_ICON_GRADIENT = 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 52%, #6366f1 100%)';
 const PURPLE_ICON_SHADOW = '0 6px 16px rgba(124, 58, 237, 0.32)';

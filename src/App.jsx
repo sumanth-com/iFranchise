@@ -18,6 +18,7 @@ import {
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
 import { prefetchRoute } from './lib/routePrefetch.js';
+import { initGA4, trackPageView } from './lib/analytics/ga4.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
@@ -38,6 +39,7 @@ const LicensesPage            = lazy(() => import('./components/LicensesPage'));
 const CareersPage             = lazy(() => import('./components/CareersPage'));
 const CareerDetailPage        = lazy(() => import('./components/CareerDetailPage'));
 const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPage'));
+const FAQPage                 = lazy(() => import('./components/FAQPage'));
 
 // -- Minimal page-level skeleton -----------------------------------------------
 function PageSkeleton() {
@@ -222,6 +224,25 @@ function App() {
     };
   }, [pathname]);
 
+  // GA4: track initial page + every SPA route change.
+  // Uses a deduped singleton to prevent duplicate page_view events.
+  useEffect(() => {
+    initGA4();
+    const expectedPageKey = `${window.location.pathname}${window.location.search}`;
+    const raf1 = window.requestAnimationFrame(() => {
+      const raf2 = window.requestAnimationFrame(() => {
+        if (`${window.location.pathname}${window.location.search}` !== expectedPageKey) return;
+        trackPageView({ logicalRoute: pathname });
+      });
+      // In case of very rapid route changes, prevent stale callbacks.
+      // eslint-disable-next-line no-unused-vars
+      return raf2;
+    });
+    return () => {
+      window.cancelAnimationFrame(raf1);
+    };
+  }, [pathname]);
+
   const isAboutPage               = pathname === '/about';
   const isTeamPage                = pathname === '/team';
   const isFranchiseDetailsPage    = pathname === '/franchise-details';
@@ -237,6 +258,7 @@ function App() {
   const isBlogPage                = pathname === '/blog';
   const isBlogDetailPage          = pathname === '/blog-detail';
   const isListYourBrandPage       = pathname === '/list-your-brand';
+  const isFAQPage                 = pathname === '/faq';
   const isHomePage                = pathname === '/';
 
   return (
@@ -275,6 +297,7 @@ function App() {
           : isBlogPage ? <BlogPage />
           : isBlogDetailPage ? <BlogDetailPage />
           : isListYourBrandPage ? <ForBrandOwnersPage />
+          : isFAQPage ? <FAQPage />
           : <Hero />}
         </Suspense>
         </ErrorBoundary>

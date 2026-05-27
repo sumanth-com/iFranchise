@@ -255,7 +255,7 @@ Browser URL (pathname + search + hash)
 | **Resources** | `/blog`, `/#faq` ⚠️, `/blog`, `/blog` |
 | **Legal** | `/privacy-policy`, `/terms-and-conditions` |
 | **Pre-footer CTA** | `/franchise-opportunities` |
-| **External CTA** | `https://cal.com/ifranchise/30min` (new tab) |
+| **External CTA** | `https://cal.com/ifranchise.in/30min` (new tab) |
 
 ### Homepage CTAs (`src/components/Hero.jsx`)
 

@@ -16,7 +16,10 @@ export const SITE_URL = (
 
 export const SITE_TAGLINE = "India's Trusted Franchise Growth Platform";
 
-export const DEFAULT_OG_IMAGE_PATH = '/apple-touch-icon.png';
+// Bump this whenever icon assets are regenerated to avoid stale browser caches.
+export const ICON_VERSION = '20260527-1';
+
+export const DEFAULT_OG_IMAGE_PATH = `/apple-touch-icon.png?v=${ICON_VERSION}`;
 
 export const TWITTER_HANDLE = '@ifranchise';
 
@@ -24,7 +27,7 @@ export const ORGANIZATION = {
   name: SITE_NAME,
   legalName: 'iFranchise',
   url: SITE_URL,
-  logo: `${SITE_URL}/apple-touch-icon.png`,
+  logo: `${SITE_URL}/apple-touch-icon.png?v=${ICON_VERSION}`,
   description:
     "India's trusted franchise growth platform connecting brands, investors, and expansion leaders.",
   email: SITE_CONTACT_EMAIL,

@@ -1,0 +1,38 @@
+{
+  "name": "iFranchise",
+  "short_name": "iFranchise",
+  "description": "India's Trusted Franchise Growth Platform",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0618",
+  "theme_color": "#0a0618",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png?v=20260527-1",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png?v=20260527-1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png?v=20260527-1",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32x32.png?v=20260527-1",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "lang": "en-IN"
+}
+

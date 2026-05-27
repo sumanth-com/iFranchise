@@ -56,7 +56,7 @@ const FOOTER_COLS = [
     heading: 'Resources',
     links: [
       { label: 'Blog', path: '/blog', dot: 'none' },
-      { label: 'FAQs', path: '/#faq', dot: 'none' },
+      { label: 'FAQs', path: '/faq', dot: 'none' },
     ],
   },
 ];
@@ -84,7 +84,7 @@ const CTA_CONTENT = {
       'Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.',
     trust: 'Trusted by 1,200+ founders.',
     primary: { label: 'Explore Opportunities', action: () => navigateTo('/franchise-opportunities') },
-    secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise/30min', '_blank') },
+    secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
   },
   'careers-detail': {
     heading: 'Ready to Join Our Team?',
