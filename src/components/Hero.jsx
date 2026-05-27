@@ -6,6 +6,7 @@ import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import { preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
+import { removeStaticHero } from '../lib/removeStaticHero.js';
 import { HOME_HERO_DARK, HOME_HERO_LIGHT } from '../lib/heroAssets.js';
 import ResponsivePicture from './ui/ResponsivePicture.jsx';
 import { HERO_SIZES } from '../lib/responsiveImage.js';
@@ -2438,6 +2439,7 @@ function Hero() {
   const rightColumnLoop = [...TESTIMONIAL_COLUMNS.right, ...TESTIMONIAL_COLUMNS.right];
 
   useLayoutEffect(() => {
+    removeStaticHero();
     markImgReady(darkHeroRef.current, setDarkHeroReady);
     markImgReady(lightHeroRef.current, setLightHeroReady);
   }, [isLight, theme]);
@@ -2636,52 +2638,55 @@ function Hero() {
         }`}
       >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
-          <div
-            ref={darkHeroRef}
-            className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
-              !isLight && darkHeroReady ? 'opacity-100' : 'opacity-0'
-            }`}
-            aria-hidden
-          >
-            <ResponsivePicture
-              avif={HOME_HERO_DARK.avif}
-              webp={HOME_HERO_DARK.webp}
-              webpSrcSet={HOME_HERO_DARK.srcSetMap}
-              fallback={HOME_HERO_DARK.src}
-              sizes={HERO_SIZES}
-              width={1536}
-              height={1024}
-              alt=""
-              priority={!isLight}
-              loading={isLight ? 'lazy' : 'eager'}
-              onLoad={() => setDarkHeroReady(true)}
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%]"
-              pictureClassName="block h-full w-full"
-            />
-          </div>
-          <div
-            ref={lightHeroRef}
-            className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
-              isLight && lightHeroReady ? 'opacity-100' : 'opacity-0'
-            }`}
-            aria-hidden
-          >
-            <ResponsivePicture
-              avif={HOME_HERO_LIGHT.avif}
-              webp={HOME_HERO_LIGHT.webp}
-              webpSrcSet={HOME_HERO_LIGHT.srcSetMap}
-              fallback={HOME_HERO_LIGHT.src}
-              sizes={HERO_SIZES}
-              width={1536}
-              height={1024}
-              alt=""
-              priority={isLight}
-              loading={isLight ? 'eager' : 'lazy'}
-              onLoad={() => setLightHeroReady(true)}
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_38%]"
-              pictureClassName="block h-full w-full"
-            />
-          </div>
+          {!isLight ? (
+            <div
+              ref={darkHeroRef}
+              className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
+                darkHeroReady ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden
+            >
+              <ResponsivePicture
+                avif={HOME_HERO_DARK.avif}
+                webp={HOME_HERO_DARK.webp}
+                webpSrcSet={HOME_HERO_DARK.srcSetMap}
+                fallback={HOME_HERO_DARK.src}
+                sizes={HERO_SIZES}
+                width={1536}
+                height={1024}
+                alt=""
+                priority
+                loading="eager"
+                onLoad={() => setDarkHeroReady(true)}
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_42%]"
+                pictureClassName="block h-full w-full"
+              />
+            </div>
+          ) : (
+            <div
+              ref={lightHeroRef}
+              className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
+                lightHeroReady ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden
+            >
+              <ResponsivePicture
+                avif={HOME_HERO_LIGHT.avif}
+                webp={HOME_HERO_LIGHT.webp}
+                webpSrcSet={HOME_HERO_LIGHT.srcSetMap}
+                fallback={HOME_HERO_LIGHT.src}
+                sizes={HERO_SIZES}
+                width={1536}
+                height={1024}
+                alt=""
+                priority
+                loading="eager"
+                onLoad={() => setLightHeroReady(true)}
+                className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_38%]"
+                pictureClassName="block h-full w-full"
+              />
+            </div>
+          )}
         </div>
         <div
           className={`hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 ${

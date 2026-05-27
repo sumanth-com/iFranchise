@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { franchiseOpportunities } from '../data/franchiseData';
+import { franchiseOpportunities, pinFeaturedOpportunitiesFirst } from '../data/franchiseData';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import {
   investmentInrRangeMatchesOpportunity,
@@ -642,7 +642,7 @@ function FranchiseOpportunitiesPage() {
       sorted.sort((a, b) => b.id - a.id);
     }
 
-    return sorted;
+    return pinFeaturedOpportunitiesFirst(sorted);
   }, [sortBy, filters, navbarFilterSnapshot]);
 
   const totalPages = Math.max(1, Math.ceil(filteredAndSortedOpportunities.length / itemsPerPage));

@@ -45,6 +45,21 @@
     <script>
       (function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();
     </script>
+    <script>
+      (function () {
+        var p = location.pathname;
+        if (p !== '/' && p !== '') return;
+        var light = document.documentElement.getAttribute('data-theme') === 'light';
+        var href = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.type = 'image/webp';
+        link.href = href;
+        link.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(link);
+      })();
+    </script>
   <!-- Critical CSS: paint correct background + hide skip link before the JS bundle loads -->
     <style>
       html,
@@ -155,35 +170,45 @@
       html[data-theme='light'] .cinematic-hero--light {
         background-color: #f0f4fa;
       }
+      #ifr-static-hero {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      #ifr-static-hero img {
+        object-position: center 42%;
+      }
+      html[data-theme='light'] #ifr-static-hero img {
+        object-position: center 38%;
+      }
     </style>
     <title>iFranchise — India's Trusted Franchise Growth Platform</title>
 
-    <!-- Preconnect to font origins for zero-latency font load -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Non-render-blocking font load -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
-    </noscript>
-
-    <!-- DNS prefetch for external image domains -->
-    <link rel="dns-prefetch" href="https://i.pravatar.cc" />
-    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <!-- Inter loads after first paint (system font in critical CSS above) -->
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div id="root">
-      <div class="app-boot" role="status" aria-live="polite" aria-label="Loading iFranchise">
-        <div class="app-boot__spinner" aria-hidden="true"></div>
-        <span class="app-boot__label">Loading</span>
-      </div>
-    </div>
+    <div id="root"></div>
+    <script>
+      (function () {
+        var p = location.pathname;
+        if (p !== '/' && p !== '') return;
+        var root = document.getElementById('root');
+        if (!root) return;
+        var light = document.documentElement.getAttribute('data-theme') === 'light';
+        var href = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
+        var wrap = document.createElement('div');
+        wrap.id = 'ifr-static-hero';
+        wrap.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
+        wrap.setAttribute('aria-hidden', 'true');
+        wrap.innerHTML =
+          '<div class="hero-cinematic-media-wrap"><img src="' +
+          href +
+          '" alt="" width="640" height="427" fetchpriority="high" decoding="async"></div>';
+        root.appendChild(wrap);
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

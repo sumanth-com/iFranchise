@@ -17,8 +17,10 @@ export {
 } from './opportunities/index.js';
 
 export {
+  FEATURED_BRAND_SLUGS,
   getFeaturedFranchiseCards,
   getFeaturedOpportunities,
+  pinFeaturedOpportunitiesFirst,
   getInvestorDashboardOpportunities,
   toInvestorDashboardOpportunity,
   getPartnerBrandNames,

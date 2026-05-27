@@ -9,7 +9,7 @@
     "images:optimize": "node scripts/optimize-images.mjs",
     "images:patch-imports": "node scripts/patch-imports-to-webp.mjs",
     "cleanup": "node scripts/cleanup-unused.mjs && node scripts/rebuild-manifest.mjs",
-    "build": "node scripts/generate-sitemap.mjs && vite build",
+    "build": "node scripts/generate-sitemap.mjs && node scripts/copy-hero-lcp.mjs && vite build",
     "seo:sitemap": "node scripts/generate-sitemap.mjs",
     "lint": "eslint .",
     "preview": "vite preview"

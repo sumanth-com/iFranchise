@@ -23,8 +23,10 @@ import { initGA4, trackPageView } from './lib/analytics/ga4.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
 
-// -- Lazy-load all pages - only load what's needed -----------------------------
-const Hero                    = lazy(() => import('./components/Hero'));
+// Home hero loads with App (static HTML image is LCP until this paints)
+import Hero from './components/Hero';
+
+// -- Lazy-load all other pages -----------------------------------------------
 const AboutPage               = lazy(() => import('./components/AboutPage'));
 const TeamPage                = lazy(() => import('./components/TeamPage'));
 const FranchiseDetailsPage    = lazy(() => import('./components/FranchiseDetailsPage'));
@@ -64,6 +66,7 @@ function App() {
   const lowPowerDevice = useLowPowerDevice();
   const [pathname, setPathname] = useState(getLogicalPathname);
   const [pagePhase, setPagePhase] = useState('idle');
+  const [showBackdrop, setShowBackdrop] = useState(!lowPowerDevice);
   const transitionTimerRef = useRef(null);
 
   const assistantEligible = pathname !== '/404';
@@ -293,11 +296,29 @@ function App() {
     return () => document.documentElement.classList.remove('low-power-device');
   }, [lowPowerDevice]);
 
+  useEffect(() => {
+    if (!lowPowerDevice) {
+      setShowBackdrop(true);
+      return undefined;
+    }
+    let idleId;
+    const show = () => setShowBackdrop(true);
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(show, { timeout: 3500 });
+    } else {
+      idleId = window.setTimeout(show, 2000);
+    }
+    return () => {
+      if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+      else window.clearTimeout(idleId);
+    };
+  }, [lowPowerDevice]);
+
   return (
     <FranchiseOpportunityNavbarFiltersProvider>
       <div className="relative min-h-screen bg-transparent text-theme-primary">
         <PageSEO pathname={pathname} />
-        <AnimatedSiteBackdrop />
+        {showBackdrop ? <AnimatedSiteBackdrop /> : null}
         <Navbar />
 
       {/* Page transition wrapper */}
@@ -313,25 +334,29 @@ function App() {
         }}
       >
         <ErrorBoundary resetKey={pathname} label="Page">
-        <Suspense fallback={<PageSkeleton />}>
-          {isNotFoundPage ? <NotFoundPage />
-          : isTermsPage ? <TermsConditionsPage />
-          : isLicensesPage ? <LicensesPage />
-          : isPrivacyPolicyPage ? <PrivacyPolicyPage />
-          : isServicesPage ? <ServicesPage />
-          : isCareersPage ? <CareersPage />
-          : isCareerDetailPage ? <CareerDetailPage roleId={window.location.pathname.split('/careers/')[1]} />
-          : isFranchiseOpportunitiesPage ? <FranchiseOpportunitiesPage />
-          : isFranchiseDetailsPage ? <FranchiseDetailsPage />
-          : isTeamPage ? <TeamPage />
-          : isAboutPage ? <AboutPage />
-          : isContactPage ? <ContactPage />
-          : isBlogPage ? <BlogPage />
-          : isBlogDetailPage ? <BlogDetailPage />
-          : isListYourBrandPage ? <ForBrandOwnersPage />
-          : isFAQPage ? <FAQPage />
-          : <Hero />}
-        </Suspense>
+        {isHomePage ? (
+          <Hero />
+        ) : (
+          <Suspense fallback={<PageSkeleton />}>
+            {isNotFoundPage ? <NotFoundPage />
+            : isTermsPage ? <TermsConditionsPage />
+            : isLicensesPage ? <LicensesPage />
+            : isPrivacyPolicyPage ? <PrivacyPolicyPage />
+            : isServicesPage ? <ServicesPage />
+            : isCareersPage ? <CareersPage />
+            : isCareerDetailPage ? <CareerDetailPage roleId={window.location.pathname.split('/careers/')[1]} />
+            : isFranchiseOpportunitiesPage ? <FranchiseOpportunitiesPage />
+            : isFranchiseDetailsPage ? <FranchiseDetailsPage />
+            : isTeamPage ? <TeamPage />
+            : isAboutPage ? <AboutPage />
+            : isContactPage ? <ContactPage />
+            : isBlogPage ? <BlogPage />
+            : isBlogDetailPage ? <BlogDetailPage />
+            : isListYourBrandPage ? <ForBrandOwnersPage />
+            : isFAQPage ? <FAQPage />
+            : <NotFoundPage />}
+          </Suspense>
+        )}
         </ErrorBoundary>
       </main>
 

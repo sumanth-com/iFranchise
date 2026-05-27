@@ -80,13 +80,26 @@ function rankFeaturedOpportunities() {
   });
 }
 
-/** Curated homepage featured row. */
-const HOME_PAGE_FEATURED_SLUGS = ['10-downing-street', 'biggies-burger', 'odette'];
+/** Curated featured brands — home row + opportunities page default order. */
+export const FEATURED_BRAND_SLUGS = ['original-burger-co', 'odette', 'biggies-burger'];
+
+/** @deprecated Use FEATURED_BRAND_SLUGS */
+const HOME_PAGE_FEATURED_SLUGS = FEATURED_BRAND_SLUGS;
+
+/** Pin featured brands to the top (preserves order within pinned + rest). */
+export function pinFeaturedOpportunitiesFirst(list) {
+  if (!list?.length) return list;
+  const bySlug = new Map(list.map((o) => [o.slug, o]));
+  const pinned = FEATURED_BRAND_SLUGS.map((slug) => bySlug.get(slug)).filter(Boolean);
+  const pinnedSlugs = new Set(pinned.map((o) => o.slug));
+  const rest = list.filter((o) => !pinnedSlugs.has(o.slug));
+  return [...pinned, ...rest];
+}
 
 /** Raw opportunity rows for homepage featured section. */
 export function getFeaturedOpportunities(limit = 3) {
   const bySlug = (slug) => franchiseOpportunities.find((o) => o.slug === slug);
-  const curated = HOME_PAGE_FEATURED_SLUGS.map(bySlug).filter(Boolean);
+  const curated = FEATURED_BRAND_SLUGS.map(bySlug).filter(Boolean);
   if (curated.length) return curated.slice(0, limit);
   return rankFeaturedOpportunities().slice(0, limit);
 }
