@@ -2795,7 +2795,7 @@ function Hero() {
           </div>
 
           <div className="home-featured-opportunities grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {getFeaturedOpportunities(6).map((opportunity, i) => (
+            {getFeaturedOpportunities(3).map((opportunity, i) => (
               <div
                 key={opportunity.id}
                 className="flex h-full flex-col"
@@ -2804,26 +2804,6 @@ function Hero() {
                 <OpportunityCard opportunity={opportunity} />
               </div>
             ))}
-          </div>
-
-          <div className="mt-10">
-            <div className="reveal-child text-center mb-10">
-              <h2 className={sectionTitleClass(isLight, { tight: true })}>More opportunities</h2>
-              <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
-                Explore additional brands available for enquiry and brochure downloads.
-              </p>
-            </div>
-            <div className="home-featured-opportunities grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {getSecondaryOpportunities(3).map((opportunity, i) => (
-                <div
-                  key={opportunity.id}
-                  className="flex h-full flex-col"
-                  style={{ animation: `cardReveal 0.4s ease ${i * 0.08 + 0.1}s both` }}
-                >
-                  <OpportunityCard opportunity={opportunity} />
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="text-center mt-8">
