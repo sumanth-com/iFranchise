@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
-import { FiChevronLeft, FiChevronRight, FiMail } from 'react-icons/fi';
+import { FiChevronLeft, FiClipboard } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { SITE_CONTACT_WHATSAPP_URL } from '@/data/siteContact';
 import FranchiseInquiryModal from './FranchiseInquiryModal';
@@ -26,28 +26,58 @@ function useCompactInquirySheet() {
   return useSyncExternalStore(subscribeCompactSheet, getCompactSheetSnapshot, getCompactSheetServerSnapshot);
 }
 
-function InquiryRail({ open, onToggle, franchiseName, className = '' }) {
+const RAIL_CTA_LINES = ['SHOW', 'INTEREST'];
+
+function StackedRailLabel({ lines = RAIL_CTA_LINES }) {
+  const items = [];
+  lines.forEach((word, wordIndex) => {
+    if (wordIndex > 0) {
+      items.push({ type: 'gap', key: `gap-${wordIndex}` });
+    }
+    word.split('').forEach((letter, letterIndex) => {
+      items.push({ type: 'letter', key: `${wordIndex}-${letterIndex}`, letter });
+    });
+  });
+
+  return (
+    <span className="franchise-inquiry-rail__cta-label" aria-hidden>
+      {items.map((item) =>
+        item.type === 'gap' ? (
+          <span key={item.key} className="franchise-inquiry-rail__cta-gap" />
+        ) : (
+          <span key={item.key} className="franchise-inquiry-rail__cta-letter">
+            {item.letter}
+          </span>
+        ),
+      )}
+    </span>
+  );
+}
+
+function InquiryRail({ open, onToggle, franchiseName, className = '', showToggle = true }) {
   return (
     <aside
       className={`franchise-inquiry-rail__strip ${className}`.trim()}
       aria-label="Franchise interest actions"
     >
-      <div className="franchise-inquiry-rail__toggle-wrap">
-        <button
-          type="button"
-          onClick={onToggle}
-          className="franchise-inquiry-rail__toggle"
-          aria-label={open ? 'Close enquiry form' : `Enquire now about ${franchiseName}`}
-          aria-expanded={open}
-        >
-          {open ? <FiChevronRight aria-hidden /> : <FiChevronLeft aria-hidden />}
-        </button>
-      </div>
+      {showToggle ? (
+        <div className="franchise-inquiry-rail__toggle-wrap">
+          <button
+            type="button"
+            onClick={onToggle}
+            className="franchise-inquiry-rail__toggle"
+            aria-label={open ? 'Close enquiry form' : `Enquire now about ${franchiseName}`}
+            aria-expanded={open}
+          >
+            <FiChevronLeft aria-hidden />
+          </button>
+        </div>
+      ) : null}
       {open ? (
         <>
-          <div className="franchise-inquiry-rail__cta" aria-hidden>
-            <FiMail className="franchise-inquiry-rail__cta-icon" aria-hidden />
-            <span className="franchise-inquiry-rail__cta-label">Enquire now</span>
+          <div className="franchise-inquiry-rail__cta" aria-label="Show interest">
+            <FiClipboard className="franchise-inquiry-rail__cta-icon" aria-hidden />
+            <StackedRailLabel />
           </div>
           <a
             href={SITE_CONTACT_WHATSAPP_URL}
@@ -129,6 +159,7 @@ export default function FranchiseInquiryLauncher({
                     onToggle={toggle}
                     franchiseName={franchise.name}
                     className="franchise-inquiry-rail--sheet-adjunct"
+                    showToggle={false}
                   />
                 ) : null}
               </div>

@@ -318,6 +318,32 @@ html[data-theme='light'] .franchise-inquiry-rail__toggle:hover {
     height: 26px;
     stroke-width: 2.75;
   }
+
+  .franchise-inquiry-rail__cta {
+    width: 52px;
+    padding: 16px 4px 14px;
+    gap: 12px;
+  }
+
+  .franchise-inquiry-rail__cta-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .franchise-inquiry-rail__cta-letter {
+    font-size: 9.5px;
+    min-height: 11px;
+  }
+
+  .franchise-inquiry-rail__cta-gap {
+    flex-basis: 12px;
+    min-height: 10px;
+  }
+
+  .franchise-inquiry-rail__whatsapp {
+    width: 52px;
+    height: 48px;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -346,6 +372,32 @@ html[data-theme='light'] .franchise-inquiry-rail__toggle:hover {
   .franchise-inquiry-rail__toggle svg {
     width: 28px;
     height: 28px;
+  }
+
+  .franchise-inquiry-rail__cta {
+    width: 56px;
+    padding: 18px 5px 16px;
+    gap: 14px;
+  }
+
+  .franchise-inquiry-rail__cta-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .franchise-inquiry-rail__cta-letter {
+    font-size: 10px;
+    min-height: 12px;
+  }
+
+  .franchise-inquiry-rail__cta-gap {
+    flex-basis: 14px;
+    min-height: 12px;
+  }
+
+  .franchise-inquiry-rail__whatsapp {
+    width: 56px;
+    height: 52px;
   }
 }
 
@@ -377,13 +429,13 @@ html:not([data-theme='light']) .franchise-inquiry-rail__toggle:focus-visible {
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 10px;
   width: 44px;
   min-height: 120px;
   margin: 0;
-  padding: 14px 6px;
-  background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 55%, #5b21b6 100%);
+  padding: 14px 3px 12px;
+  background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%);
   color: #fff;
   box-shadow: 0 6px 20px rgba(109, 40, 217, 0.28);
 }
@@ -392,20 +444,46 @@ html:not([data-theme='light']) .franchise-inquiry-rail__toggle:focus-visible {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  color: #fff;
-  stroke: #fff;
+  color: rgba(255, 255, 255, 0.96);
+  stroke: rgba(255, 255, 255, 0.96);
+  stroke-width: 1.65px;
 }
 
 .franchise-inquiry-rail__cta-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 0;
+  padding: 2px 0 4px;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  color: #fff;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+  color: #ffffff;
   line-height: 1;
-  white-space: nowrap;
+  user-select: none;
+}
+
+.franchise-inquiry-rail__cta-gap {
+  flex: 0 0 10px;
+  width: 1px;
+  min-height: 8px;
+}
+
+.franchise-inquiry-rail__cta-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 10px;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-align: center;
 }
 
 .franchise-inquiry-rail__whatsapp {
@@ -505,29 +583,34 @@ body.franchise-inquiry-open::before {
     align-self: stretch;
   }
 
-  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__toggle-wrap {
-    display: flex;
-    width: 100%;
-    height: 52px;
-    flex-shrink: 0;
-  }
-
-  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__toggle {
-    width: 100%;
-    height: 100%;
-    flex: 1 1 auto;
-    border-radius: 0;
-    animation: none;
-    box-shadow: none;
-  }
-
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta {
     flex: 1 1 auto;
     width: 100%;
     min-height: 0;
     margin: 0;
-    padding: 12px 6px;
+    padding: 16px 4px 14px;
+    gap: 12px;
     box-shadow: none;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-label {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-letter {
+    font-size: 10px;
+    min-height: 12px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-gap {
+    flex-basis: 14px;
+    min-height: 12px;
   }
 
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__whatsapp {
@@ -544,10 +627,28 @@ body.franchise-inquiry-open::before {
     width: 56px;
   }
 
-  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__toggle-wrap,
-  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__toggle,
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__whatsapp {
     height: 56px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta {
+    padding: 18px 5px 16px;
+    gap: 14px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-letter {
+    font-size: 10.5px;
+    min-height: 13px;
+  }
+
+  .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-rail--sheet-adjunct .franchise-inquiry-rail__cta-gap {
+    flex-basis: 16px;
+    min-height: 14px;
   }
 }
 
