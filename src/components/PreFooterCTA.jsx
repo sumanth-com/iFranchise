@@ -37,7 +37,7 @@ const FOOTER_COLS = [
     heading: 'Company',
     links: [
       { label: 'About Us',  path: '/about-us',   dot: 'none' },
-      { label: 'Contact',   path: '/contact-us', dot: 'none' },
+      { label: 'Contact Us', path: '/contact-us', dot: 'none' },
       { label: 'Careers',   path: '/careers', dot: 'none' },
     ],
   },
