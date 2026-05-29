@@ -26,10 +26,10 @@ export default function FranchiseLocationsPanel({ groups }) {
   };
 
   return (
-    <div className="fd-locations grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+    <div className="fd-locations grid grid-cols-1 gap-4">
       {orderedGroups.map((group) => (
         <section key={group.model} className="fd-locations-group">
-          <div className="fd-locations-group__head mb-4 flex flex-wrap items-center gap-3">
+          <div className="fd-locations-group__head mb-3 flex flex-wrap items-center gap-2">
             <span
               className={`fd-locations-model inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${
                 group.model === 'FICO' ? 'fd-locations-model--fico' : 'fd-locations-model--fofo'
@@ -43,7 +43,7 @@ export default function FranchiseLocationsPanel({ groups }) {
             </p>
           </div>
 
-          <ul className="fd-locations-list space-y-2">
+          <ul className="fd-locations-list grid grid-cols-1 gap-2 sm:grid-cols-2">
             {group.items.map((item, index) => {
               const key = `${group.model}-${index}`;
               const panelId = `${baseId}-${key}`;
@@ -54,10 +54,8 @@ export default function FranchiseLocationsPanel({ groups }) {
               return (
                 <li
                   key={key}
-                  className={`fd-locations-item overflow-hidden rounded-xl border transition-colors ${
-                    isOpen
-                      ? 'border-violet-200 bg-violet-50/40'
-                      : 'border-slate-200 bg-slate-50/60'
+                  className={`fd-locations-item fd-tab-surface-card overflow-hidden rounded-xl border bg-white shadow-sm transition-colors ${
+                    isOpen ? 'border-violet-300' : 'border-slate-200'
                   }`}
                 >
                   <button
@@ -66,9 +64,9 @@ export default function FranchiseLocationsPanel({ groups }) {
                     aria-expanded={isOpen}
                     aria-controls={`${panelId}-panel`}
                     onClick={() => toggle(key)}
-                    className="fd-locations-item__trigger flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-white/80"
+                    className="fd-locations-item__trigger flex w-full items-center gap-2 px-4 py-3 text-left transition-colors sm:px-5 sm:py-3.5"
                   >
-                    <span className="fd-copy min-w-0 flex-1 text-sm font-semibold text-[#0b0f19] sm:text-base">
+                    <span className="fd-copy min-w-0 flex-1 text-sm font-semibold text-black sm:text-base">
                       {item.name}
                     </span>
                     <span className="fd-locations-count shrink-0 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold text-slate-700">
@@ -100,14 +98,14 @@ export default function FranchiseLocationsPanel({ groups }) {
                       <div className="border-t border-slate-200/80 px-4 pb-4 pt-3">
                         {hasSublist ? (
                           <>
-                            <p className="fd-copy mb-2.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                            <p className="fd-tab-surface-label fd-copy mb-2.5 text-xs font-semibold uppercase tracking-wide text-black/55">
                               Cities &amp; towns
                             </p>
                             <div className="flex flex-wrap gap-2">
                               {item.cities.map((city) => (
                                 <span
                                   key={city}
-                                  className="fd-copy rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700"
+                                  className="fd-tab-surface-card fd-copy rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-black shadow-sm"
                                 >
                                   {city}
                                 </span>
@@ -115,7 +113,7 @@ export default function FranchiseLocationsPanel({ groups }) {
                             </div>
                           </>
                         ) : (
-                          <p className="fd-copy text-sm leading-relaxed text-slate-600">
+                          <p className="fd-tab-body fd-copy text-sm leading-relaxed text-black/85">
                             {item.count} franchise locations planned across {item.name}. Contact the brand
                             team for catchment-level site availability.
                           </p>

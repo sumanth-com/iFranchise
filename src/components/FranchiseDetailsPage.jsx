@@ -14,6 +14,7 @@ import {
   getSimilarFranchiseDetails,
 } from '../data/franchiseData';
 import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportunities/brandImages';
+import { formatReturnsDisplay } from '../data/opportunities/opportunityUtils.js';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 import FranchiseLocationsPanel from './franchise/FranchiseLocationsPanel';
 
@@ -158,7 +159,15 @@ function BrandSupportList({ items, fallback }) {
   );
 }
 
-function BrandInsightsList({ insights, limit = 3, fallback }) {
+function formatInsightBody(insight) {
+  if (/returns are structured/i.test(insight.title)) {
+    const { display, full } = formatReturnsDisplay(insight.body);
+    return { text: display, title: full && full !== display ? full : undefined };
+  }
+  return { text: insight.body, title: insight.body.length > 100 ? insight.body : undefined };
+}
+
+function BrandInsightsList({ insights, limit = 4, fallback }) {
   const displayInsights = (insights || []).slice(0, limit);
   if (!displayInsights.length) {
     return fallback ? (
@@ -167,18 +176,24 @@ function BrandInsightsList({ insights, limit = 3, fallback }) {
   }
 
   return (
-    <div className="fd-insights-list flex min-h-0 flex-1 flex-col gap-3">
-      {displayInsights.map((insight) => (
-        <article
-          key={insight.title}
-          className="fd-insight-card fd-mini-card flex flex-col justify-center rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-4 text-center sm:px-5 sm:py-5"
-        >
-          <p className="fd-copy fd-field-label text-[0.65rem] tracking-[0.12em]">{insight.title}</p>
-          <p className="fd-copy fd-body-text mt-2 text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-7">
-            {insight.body}
-          </p>
-        </article>
-      ))}
+    <div className="fd-insights-grid grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {displayInsights.map((insight) => {
+        const body = formatInsightBody(insight);
+        return (
+          <article
+            key={insight.title}
+            title={body.title}
+            className="fd-insight-card fd-tab-surface-card flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
+          >
+            <p className="fd-tab-surface-label fd-copy text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-black/55">
+              {insight.title}
+            </p>
+            <p className="fd-tab-body fd-copy mt-2 flex-1 line-clamp-3 text-sm leading-relaxed text-black/85">
+              {body.text}
+            </p>
+          </article>
+        );
+      })}
     </div>
   );
 }
@@ -408,31 +423,39 @@ function FranchiseDetailsPage() {
 
     if (activeTab === 'Locations') {
       const hasGroupedLocations = selectedFranchise.locationGroups?.length > 0;
+      const simpleLocations = !hasGroupedLocations && selectedFranchise.locations?.length > 0;
+      const marketInsights = (selectedFranchise.aboutInsights || []).filter(
+        (insight) => !(simpleLocations && insight.title === 'Where the brand is expanding'),
+      );
+
       return (
-        <div className="space-y-5">
-          <DualSectionPanel title="Active & Target Locations">
-            {hasGroupedLocations ? (
-              <FranchiseLocationsPanel groups={selectedFranchise.locationGroups} />
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {selectedFranchise.locations.map((location) => (
-                  <span
-                    key={location}
-                    className="fd-copy rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium"
-                  >
-                    {location}
-                  </span>
-                ))}
-              </div>
-            )}
-          </DualSectionPanel>
-          <DualSectionPanel title="Market & Site Intelligence">
-            <BrandInsightsList
-              insights={selectedFranchise.aboutInsights}
-              fallback={selectedFranchise.marketOpportunity || selectedFranchise.expansionVision}
-            />
-          </DualSectionPanel>
-        </div>
+        <section className="fd-locations-tab rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
+          <DualSectionRow>
+            <DualSectionPanel title="Active & Target Locations">
+              {hasGroupedLocations ? (
+                <FranchiseLocationsPanel groups={selectedFranchise.locationGroups} />
+              ) : (
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+                  {selectedFranchise.locations.map((location) => (
+                    <span
+                      key={location}
+                      className="fd-location-tag fd-tab-surface-card fd-copy inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-center text-sm font-semibold text-black shadow-sm"
+                    >
+                      {location}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </DualSectionPanel>
+
+            <DualSectionPanel title="Market & Site Intelligence">
+              <BrandInsightsList
+                insights={marketInsights}
+                fallback={selectedFranchise.marketOpportunity || selectedFranchise.expansionVision}
+              />
+            </DualSectionPanel>
+          </DualSectionRow>
+        </section>
       );
     }
 
@@ -482,7 +505,7 @@ function FranchiseDetailsPage() {
             {reviews.map((review) => (
               <article
                 key={`${review.name}-${review.text.slice(0, 24)}`}
-                className="fd-review-card flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
+                className="fd-review-card fd-tab-surface-card flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="fd-copy text-sm font-semibold leading-snug text-black">{review.name}</p>

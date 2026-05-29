@@ -6081,7 +6081,13 @@ html[data-theme='light'] .franchise-details-page .fd-about-requirement {
   border-color: #e2e8f0 !important;
 }
 
-html[data-theme='light'] .franchise-details-page .fd-review-card {
+html[data-theme='light'] .franchise-details-page :is(
+  .fd-review-card,
+  .fd-tab-surface-card,
+  .fd-insight-card,
+  .fd-location-tag,
+  .fd-locations-item
+) {
   background: #ffffff !important;
   border-color: #e2e8f0 !important;
 }
@@ -6091,7 +6097,7 @@ html[data-theme='light'] .franchise-details-page .fd-reviews-summary {
   border-color: #e2e8f0 !important;
 }
 
-html[data-theme='light'] .franchise-details-page .fd-reviews-summary .fd-reviews-subtext {
+html[data-theme='light'] .franchise-details-page :is(.fd-reviews-subtext, .fd-tab-surface-label) {
   color: rgba(0, 0, 0, 0.55) !important;
 }
 
@@ -6099,7 +6105,13 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-intro 
   color: #ffffff !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card {
+html[data-theme='dark'] #main-content .franchise-details-page :is(
+  .fd-review-card,
+  .fd-tab-surface-card,
+  .fd-insight-card,
+  .fd-location-tag,
+  .fd-locations-item
+) {
   background: rgba(255, 255, 255, 0.06) !important;
   border-color: rgba(167, 139, 250, 0.28) !important;
   box-shadow: none !important;
@@ -6111,15 +6123,36 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summar
   box-shadow: none !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card :is(.fd-copy, .fd-tab-body),
+html[data-theme='dark'] #main-content .franchise-details-page :is(
+  .fd-review-card,
+  .fd-insight-card,
+  .fd-location-tag,
+  .fd-locations-item
+) :is(.fd-copy, .fd-tab-body),
 html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary :is(.fd-copy, .fd-tab-body),
-html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card [class*='text-black'],
-html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary [class*='text-black'] {
+html[data-theme='dark'] #main-content .franchise-details-page :is(
+  .fd-review-card,
+  .fd-insight-card,
+  .fd-location-tag,
+  .fd-locations-item,
+  .fd-reviews-summary
+) [class*='text-black'] {
   color: #ffffff !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary .fd-reviews-subtext {
+html[data-theme='dark'] #main-content .franchise-details-page :is(.fd-reviews-subtext, .fd-tab-surface-label) {
   color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-item[class*='border-violet'] {
+  border-color: rgba(167, 139, 250, 0.45) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-count {
+  background: rgba(139, 92, 246, 0.22) !important;
+  border-color: rgba(167, 139, 250, 0.35) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-block-title {
@@ -6261,6 +6294,7 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
   .fd-dual-panel,
   .fd-tabs-panel,
   .fd-about-section,
+  .fd-locations-tab,
   .fd-get-started,
   .fd-gs-card
 ) {
@@ -6274,10 +6308,17 @@ html[data-theme='dark'] #main-content .franchise-details-page article.group.curs
   border-color: rgba(139, 92, 246, 0.22) !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .bg-slate-50,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-mini-card {
-  background: rgba(139, 92, 246, 0.14) !important;
-  border-color: rgba(139, 92, 246, 0.25) !important;
+html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-group .text-slate-600 {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-item .border-slate-200\/80 {
+  border-color: rgba(167, 139, 250, 0.22) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-mini-card:not(.fd-tab-surface-card) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
 }
 
 /* Agreement Details — left stack + right currency (equal columns) */
