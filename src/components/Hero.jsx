@@ -392,64 +392,83 @@ function GrowthCard({ card }) {
   );
 }
 
-function StatCard({ stat, active }) {
+function StatCard({ stat }) {
+  const rootRef = useRef(null);
   const [count, setCount] = useState(0);
+  const hasRunRef = useRef(false);
 
   useEffect(() => {
-    let frameId;
-    let startTime;
-    const durationMs = 2000; // 2 seconds for smooth animation
+    const el = rootRef.current;
+    if (!el || hasRunRef.current) return undefined;
 
-    // Always reset to 0 when active changes
-    if (!active) {
-      setCount(0);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const runCountUp = () => {
+      if (hasRunRef.current) return;
+      hasRunRef.current = true;
+
+      if (reducedMotion) {
+        setCount(stat.value);
+        return;
+      }
+
+      let frameId;
+      let startTime;
+      const durationMs = 2000;
+
+      const animate = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / durationMs, 1);
+        const eased = 1 - (1 - progress) ** 3;
+        setCount(Math.floor(stat.value * eased));
+        if (progress < 1) {
+          frameId = window.requestAnimationFrame(animate);
+        } else {
+          setCount(stat.value);
+        }
+      };
+
+      frameId = window.requestAnimationFrame(animate);
+    };
+
+    const rect = el.getBoundingClientRect();
+    const alreadyVisible = rect.top < window.innerHeight * 0.92 && rect.bottom > 0;
+
+    if (alreadyVisible) {
+      runCountUp();
       return undefined;
     }
 
-    // Start animation from 0
-    setCount(0);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          runCountUp();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -5% 0px' },
+    );
 
-    const animate = (timestamp) => {
-      if (!startTime) {
-        startTime = timestamp;
-      }
+    observer.observe(el);
 
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      
-      // Eased animation for smooth counting
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const currentCount = Math.floor(stat.value * eased);
-      
-      setCount(currentCount);
-
-      if (progress < 1) {
-        frameId = window.requestAnimationFrame(animate);
-      } else {
-        // Ensure we end exactly at the target value
+    const fallbackId = window.setTimeout(() => {
+      if (!hasRunRef.current) {
         setCount(stat.value);
+        hasRunRef.current = true;
+        observer.disconnect();
       }
-    };
-
-    // Small delay before starting animation for better visual effect
-    const timeoutId = setTimeout(() => {
-      frameId = window.requestAnimationFrame(animate);
-    }, 200);
+    }, 2500);
 
     return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      observer.disconnect();
+      window.clearTimeout(fallbackId);
     };
-  }, [active, stat.value]); // Re-run when active changes
+  }, [stat.value]);
 
   return (
-    <div className="inline-block">
-      <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white tabular-nums mb-1">
-        {count.toLocaleString()}
+    <div ref={rootRef} className="inline-block">
+      <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white tabular-nums mb-1">
+        {count.toLocaleString('en-IN')}
         {stat.suffix}
       </p>
     </div>
@@ -2422,13 +2441,11 @@ function Hero() {
   const [darkHeroReady, setDarkHeroReady] = useState(false);
   const [lightHeroReady, setLightHeroReady] = useState(false);
   const growthRef = useRef(null);
-  const statsRef = useRef(null);
   const modelsRef = useRef(null);
   const processRef = useRef(null);
   const processTimelineRef = useRef(null);
   const stepRefs = useRef([]);
   const [growthVisible, setGrowthVisible] = useState(false);
-  const [statsInView, setStatsInView] = useState(false);
   const [modelsVisible, setModelsVisible] = useState(false);
   const [processLineProgress, setProcessLineProgress] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
@@ -2506,14 +2523,15 @@ function Hero() {
     };
   }, []);
 
-  // Section reveal ? replays every time section enters viewport
+  // Section reveal — attach after below-fold sections mount
   useEffect(() => {
+    if (!belowFoldReady) return undefined;
+
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
         } else {
-          // Remove so it re-animates next time it enters
           entry.target.classList.remove('is-visible');
         }
       });
@@ -2526,7 +2544,7 @@ function Hero() {
     });
 
     return () => obs.disconnect();
-  }, []);
+  }, [belowFoldReady]);
 
   useEffect(() => {
     if (!growthRef.current || growthVisible) {
@@ -2547,36 +2565,6 @@ function Hero() {
 
     return () => observer.disconnect();
   }, [growthVisible]);
-
-  useEffect(() => {
-    if (!statsRef.current) {
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Always reset to false first, then trigger animation
-          setStatsInView(false);
-          // Use requestAnimationFrame to ensure state update happens before triggering animation
-          requestAnimationFrame(() => {
-            setStatsInView(true);
-          });
-        } else {
-          // Reset when leaving viewport to prepare for next animation
-          setStatsInView(false);
-        }
-      },
-      { 
-        threshold: 0.3, // Trigger when 30% of section is visible
-        rootMargin: '-50px 0px' // Add some margin to prevent premature triggering
-      }
-    );
-
-    observer.observe(statsRef.current);
-
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     if (!modelsRef.current) {
@@ -3248,7 +3236,7 @@ function Hero() {
           </div>
 
           {/* Stats ? premium glassmorphism cards */}
-          <div ref={statsRef} className="mb-16 sm:mb-20">
+          <div className="hero-stats-block mb-16 sm:mb-20">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { ...statsCards[0], accent: '#a78bfa', glow: 'rgba(167,139,250,0.2)', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg> },
@@ -3271,7 +3259,7 @@ function Hero() {
 
                   {/* Number */}
                   <div className="mb-1">
-                    <StatCard stat={stat} active={statsInView} />
+                    <StatCard stat={stat} />
                   </div>
 
                   {/* Title */}

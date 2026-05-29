@@ -41,6 +41,12 @@ body {
     content-visibility: auto;
     contain-intrinsic-size: auto 480px;
   }
+
+  /* IntersectionObserver + count-up must run reliably */
+  .hero-stats-block,
+  .hero-stats-block * {
+    content-visibility: visible;
+  }
 }
 
 /* Route paint — promote main only during transition */
