@@ -32,15 +32,17 @@ function InquiryRail({ open, onToggle, franchiseName, className = '' }) {
       className={`franchise-inquiry-rail__strip ${className}`.trim()}
       aria-label="Franchise interest actions"
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        className="franchise-inquiry-rail__toggle"
-        aria-label={open ? 'Close enquiry form' : `Enquire now about ${franchiseName}`}
-        aria-expanded={open}
-      >
-        {open ? <FiChevronRight aria-hidden /> : <FiChevronLeft aria-hidden />}
-      </button>
+      <div className="franchise-inquiry-rail__toggle-wrap">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="franchise-inquiry-rail__toggle"
+          aria-label={open ? 'Close enquiry form' : `Enquire now about ${franchiseName}`}
+          aria-expanded={open}
+        >
+          {open ? <FiChevronRight aria-hidden /> : <FiChevronLeft aria-hidden />}
+        </button>
+      </div>
       {open ? (
         <>
           <div className="franchise-inquiry-rail__cta" aria-hidden>

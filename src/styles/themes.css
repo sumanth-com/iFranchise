@@ -6110,7 +6110,8 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
   .fd-tab-surface-card,
   .fd-insight-card,
   .fd-location-tag,
-  .fd-locations-item
+  .fd-locations-item,
+  .fd-similar-stat
 ) {
   background: rgba(255, 255, 255, 0.06) !important;
   border-color: rgba(167, 139, 250, 0.28) !important;
@@ -6127,7 +6128,8 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
   .fd-review-card,
   .fd-insight-card,
   .fd-location-tag,
-  .fd-locations-item
+  .fd-locations-item,
+  .fd-similar-stat
 ) :is(.fd-copy, .fd-tab-body),
 html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary :is(.fd-copy, .fd-tab-body),
 html[data-theme='dark'] #main-content .franchise-details-page :is(
@@ -6135,6 +6137,7 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
   .fd-insight-card,
   .fd-location-tag,
   .fd-locations-item,
+  .fd-similar-stat,
   .fd-reviews-summary
 ) [class*='text-black'] {
   color: #ffffff !important;
@@ -6303,9 +6306,30 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page article.group.cursor-pointer {
+html[data-theme='dark'] #main-content .franchise-details-page article.group.cursor-pointer,
+html[data-theme='dark'] #main-content .franchise-details-page article.fd-similar-card {
   background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
   border-color: rgba(139, 92, 246, 0.22) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-section {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border-color: rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-stat .fd-tab-surface-label {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-badge.bg-emerald-100 {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-badge.bg-slate-100 {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: #e9d5ff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-group .text-slate-600 {

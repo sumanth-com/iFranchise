@@ -751,7 +751,7 @@ function FranchiseDetailsPage() {
           </>
           )}
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
+          <section className="fd-similar-section rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h3 className={`fd-copy fd-heading ${TYPE.subsection}`}>Explore Similar Opportunities</h3>
@@ -773,7 +773,7 @@ function FranchiseDetailsPage() {
                       handleRelatedDetails(franchise.id);
                     }
                   }}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
+                  className="fd-similar-card group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(15,23,42,0.14)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
                 >
                   <div className="relative h-48 overflow-hidden">
                     <FranchiseSimilarCardImage
@@ -788,20 +788,20 @@ function FranchiseDetailsPage() {
                     <h4 className={`fd-copy ${TYPE.cardTitle}`}>{franchise.name}</h4>
                     <p className="fd-copy mt-2 line-clamp-3 text-sm leading-relaxed">{franchise.tagline}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                      <span className="fd-similar-badge rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
                         {franchise.keyInfo.investment}
                       </span>
-                      <span className="fd-copy rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold">
+                      <span className="fd-similar-badge fd-copy rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold">
                         {franchise.franchiseModels[0]?.name || 'FOFO'}
                       </span>
                     </div>
                     <div className="mt-4 grid grid-cols-2 gap-3">
-                      <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="fd-copy text-xs font-medium">ROI</p>
+                      <div className="fd-similar-stat fd-tab-surface-card rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                        <p className="fd-tab-surface-label fd-copy text-xs font-medium">ROI</p>
                         <p className="fd-copy fd-body-text text-lg">{franchise.keyInfo.roi}</p>
                       </div>
-                      <div className="rounded-lg bg-slate-50 p-3">
-                        <p className="fd-copy text-xs font-medium">Payback</p>
+                      <div className="fd-similar-stat fd-tab-surface-card rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+                        <p className="fd-tab-surface-label fd-copy text-xs font-medium">Payback</p>
                         <p className="fd-copy fd-body-text text-lg">{franchise.keyInfo.payback}</p>
                       </div>
                     </div>
