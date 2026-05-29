@@ -4,7 +4,7 @@ import { transformFranchiseInquiryData } from '../transformers/franchiseInquiryT
 import { createFormSubmitter } from '../utils/createFormSubmitter.js';
 
 export const submitFranchiseInquiry = createFormSubmitter({
-  formType: FORM_TYPES.CONTACT,
+  formType: FORM_TYPES.FRANCHISE_INQUIRY,
   validate: validateFranchiseInquiryForm,
   transform: transformFranchiseInquiryData,
   defaultSourcePage: 'franchise_details_inquiry',

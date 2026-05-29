@@ -39,20 +39,21 @@ const lightSrcSet = {
   1536: homeHeroLight1536,
 };
 
+/** 640w default keeps LCP small; srcset upgrades on larger viewports. */
 export const HOME_HERO_DARK = {
-  webp: homeHeroDarkWebp,
+  webp: homeHeroDark640,
   avif: homeHeroDarkAvif,
-  ...buildResponsiveSrc(darkSrcSet, homeHeroDarkWebp),
+  ...buildResponsiveSrc(darkSrcSet, homeHeroDark640),
   srcSetMap: darkSrcSet,
 };
 
 export const HOME_HERO_LIGHT = {
-  webp: homeHeroLightWebp,
+  webp: homeHeroLight640,
   avif: homeHeroLightAvif,
-  ...buildResponsiveSrc(lightSrcSet, homeHeroLightWebp),
+  ...buildResponsiveSrc(lightSrcSet, homeHeroLight640),
   srcSetMap: lightSrcSet,
 };
 
-/** Primary URL for link preload (active theme). */
-export const homeHeroBgDark = homeHeroDarkWebp;
-export const homeHeroBgLight = homeHeroLightWebp;
+/** Primary URL for link preload (active theme) — matches public/hero/lcp-*.webp */
+export const homeHeroBgDark = homeHeroDark640;
+export const homeHeroBgLight = homeHeroLight640;

@@ -6,7 +6,8 @@ function showsAssistantImmediately(pathname) {
   return (
     pathname === '/' ||
     pathname === '/contact' ||
-    pathname === '/franchise-opportunities'
+    pathname === '/franchise-opportunities' ||
+    pathname === '/franchise-details'
   );
 }
 

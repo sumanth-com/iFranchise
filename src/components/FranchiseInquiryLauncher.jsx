@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { FiChevronLeft, FiChevronRight, FiMail } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa6';
@@ -6,9 +6,32 @@ import { SITE_CONTACT_WHATSAPP_URL } from '@/data/siteContact';
 import FranchiseInquiryModal from './FranchiseInquiryModal';
 import './franchise-inquiry-icon.css';
 
-function InquiryRail({ open, onToggle, franchiseName }) {
+const COMPACT_SHEET_MQ = '(max-width: 1023px)';
+
+function subscribeCompactSheet(callback) {
+  const mq = window.matchMedia(COMPACT_SHEET_MQ);
+  mq.addEventListener('change', callback);
+  return () => mq.removeEventListener('change', callback);
+}
+
+function getCompactSheetSnapshot() {
+  return window.matchMedia(COMPACT_SHEET_MQ).matches;
+}
+
+function getCompactSheetServerSnapshot() {
+  return false;
+}
+
+function useCompactInquirySheet() {
+  return useSyncExternalStore(subscribeCompactSheet, getCompactSheetSnapshot, getCompactSheetServerSnapshot);
+}
+
+function InquiryRail({ open, onToggle, franchiseName, className = '' }) {
   return (
-    <aside className="franchise-inquiry-rail__strip" aria-label="Franchise interest actions">
+    <aside
+      className={`franchise-inquiry-rail__strip ${className}`.trim()}
+      aria-label="Franchise interest actions"
+    >
       <button
         type="button"
         onClick={onToggle}
@@ -47,6 +70,7 @@ export default function FranchiseInquiryLauncher({
   onOpenChange,
 }) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const isCompactSheet = useCompactInquirySheet();
   const isControlled = typeof controlledOpen === 'boolean' && typeof onOpenChange === 'function';
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? onOpenChange : setUncontrolledOpen;
@@ -55,6 +79,15 @@ export default function FranchiseInquiryLauncher({
 
   const toggle = () => setOpen((v) => !v);
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    if (!open) {
+      document.body.classList.remove('franchise-inquiry-open');
+      return undefined;
+    }
+    document.body.classList.add('franchise-inquiry-open');
+    return () => document.body.classList.remove('franchise-inquiry-open');
+  }, [open]);
 
   return (
     <>
@@ -67,7 +100,9 @@ export default function FranchiseInquiryLauncher({
       {open
         ? createPortal(
             <div
-              className="franchise-inquiry-sheet"
+              className={`franchise-inquiry-sheet${
+                isCompactSheet ? ' franchise-inquiry-sheet--mobile' : ''
+              }`}
               role="dialog"
               aria-modal="true"
               aria-labelledby="franchise-inquiry-title"
@@ -80,12 +115,20 @@ export default function FranchiseInquiryLauncher({
               />
               <div className="franchise-inquiry-sheet__inner">
                 <FranchiseInquiryModal
-                  franchise={{ id: franchise.id, name: franchise.name }}
+                  franchise={franchise}
                   franchiseStructure={franchiseStructure}
                   variant="panel"
                   onClose={close}
+                  mobileWhatsAppFooter={isCompactSheet}
                 />
-                <InquiryRail open onToggle={toggle} franchiseName={franchise.name} />
+                {!isCompactSheet ? (
+                  <InquiryRail
+                    open
+                    onToggle={toggle}
+                    franchiseName={franchise.name}
+                    className="franchise-inquiry-rail--sheet-adjunct"
+                  />
+                ) : null}
               </div>
             </div>,
             document.body,

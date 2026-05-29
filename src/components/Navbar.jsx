@@ -748,7 +748,7 @@ function Navbar() {
               height={40}
               loading="eager"
               decoding="async"
-              fetchPriority="high"
+              fetchPriority="low"
             />
             <div className="flex min-w-0 flex-col">
               <span className="site-navbar-logo-title truncate text-lg font-extrabold tracking-tight leading-tight text-violet-900 sm:text-2xl">

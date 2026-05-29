@@ -23,7 +23,9 @@ const SHEET_TABS = {
   job_application: 'Job_Applications',
   chatbot_brand: 'Chatbot_Brands',
   chatbot_investor: 'Chatbot_Investors',
-  chatbot_strategy: 'Chatbot_Strategy'
+  chatbot_strategy: 'Chatbot_Strategy',
+  brochure_download: 'Brochure_Downloads',
+  franchise_inquiry: 'Franchise_Inquiries'
 };
 
 /**
@@ -95,6 +97,30 @@ const SHEET_HEADERS = {
     'Email',
     'Preferred Date',
     'Preferred Time',
+    'Message',
+    'Submitted At'
+  ],
+  Brochure_Downloads: [
+    'Timestamp',
+    'Source Page',
+    'Name',
+    'Email',
+    'Phone',
+    'Franchise ID',
+    'Franchise Name',
+    'Message',
+    'Submitted At'
+  ],
+  Franchise_Inquiries: [
+    'Timestamp',
+    'Source Page',
+    'Franchise ID',
+    'Franchise Name',
+    'Franchise Type',
+    'Full Name',
+    'Email',
+    'Phone',
+    'Preferred City',
     'Message',
     'Submitted At'
   ]
@@ -367,6 +393,34 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         data.email || '',
         data.preferred_date || '',
         data.preferred_time || '',
+        data.message || '',
+        submittedAtTime
+      ];
+
+    case 'brochure_download':
+      return [
+        timestamp,
+        sourcePage || 'unknown',
+        data.name || '',
+        data.email || '',
+        data.phone || '',
+        data.franchise_id || '',
+        data.franchise_name || '',
+        data.message || '',
+        submittedAtTime
+      ];
+
+    case 'franchise_inquiry':
+      return [
+        timestamp,
+        sourcePage || 'unknown',
+        data.franchise_id || '',
+        data.franchise_name || '',
+        data.franchise_type || '',
+        data.full_name || '',
+        data.email || '',
+        data.phone || '',
+        data.city || '',
         data.message || '',
         submittedAtTime
       ];

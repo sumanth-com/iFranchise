@@ -66,7 +66,8 @@ function App() {
   const lowPowerDevice = useLowPowerDevice();
   const [pathname, setPathname] = useState(getLogicalPathname);
   const [pagePhase, setPagePhase] = useState('idle');
-  const [showBackdrop, setShowBackdrop] = useState(!lowPowerDevice);
+  const isHomeRoute = pathname === '/';
+  const [showBackdrop, setShowBackdrop] = useState(!lowPowerDevice && !isHomeRoute);
   const transitionTimerRef = useRef(null);
 
   const assistantEligible = pathname !== '/404';
@@ -297,22 +298,35 @@ function App() {
   }, [lowPowerDevice]);
 
   useEffect(() => {
-    if (!lowPowerDevice) {
-      setShowBackdrop(true);
-      return undefined;
+    if (lowPowerDevice) {
+      let idleId;
+      const show = () => setShowBackdrop(true);
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(show, { timeout: 3500 });
+      } else {
+        idleId = window.setTimeout(show, 2000);
+      }
+      return () => {
+        if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+        else window.clearTimeout(idleId);
+      };
     }
-    let idleId;
-    const show = () => setShowBackdrop(true);
-    if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(show, { timeout: 3500 });
-    } else {
-      idleId = window.setTimeout(show, 2000);
+    if (isHomeRoute) {
+      let idleId;
+      const show = () => setShowBackdrop(true);
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(show, { timeout: 1800 });
+      } else {
+        idleId = window.setTimeout(show, 600);
+      }
+      return () => {
+        if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+        else window.clearTimeout(idleId);
+      };
     }
-    return () => {
-      if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
-      else window.clearTimeout(idleId);
-    };
-  }, [lowPowerDevice]);
+    setShowBackdrop(true);
+    return undefined;
+  }, [lowPowerDevice, isHomeRoute]);
 
   return (
     <FranchiseOpportunityNavbarFiltersProvider>

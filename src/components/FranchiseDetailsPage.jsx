@@ -488,7 +488,7 @@ function FranchiseDetailsPage() {
   return (
     <main className={`franchise-details-page py-10 sm:py-12 lg:py-14 ${FRANCHISE_DETAILS_SHELL}`}>
       <FranchiseInquiryLauncher
-        franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+        franchise={{ id: selectedFranchise.id, name: selectedFranchise.name, logo: selectedFranchise.logo }}
         franchiseStructure={selectedFranchise.franchiseStructure}
         className="fd-inquiry-side-rail"
         open={inquiryOpen}

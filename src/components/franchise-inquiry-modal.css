@@ -4,6 +4,7 @@
   border-radius: 20px;
   border: 1px solid rgba(226, 232, 240, 0.95);
   background: #fff;
+  color-scheme: light;
   box-shadow:
     0 24px 64px rgba(15, 23, 42, 0.18),
     0 0 0 1px rgba(255, 255, 255, 0.6) inset;
@@ -40,6 +41,70 @@
   overflow-y: auto;
   flex: 1 1 auto;
   min-height: 0;
+}
+
+.franchise-inquiry-modal--drawer:has(.franchise-inquiry-modal__form--sticky-actions) .franchise-inquiry-modal__body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.franchise-inquiry-modal__form--sticky-actions {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  gap: 0;
+}
+
+.franchise-inquiry-modal__fields {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding-bottom: 0.25rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.franchise-inquiry-modal__fields::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.franchise-inquiry-modal__actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.625rem 0 0;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  background: #fff;
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.franchise-inquiry-modal__actions .franchise-inquiry-modal__submit,
+.franchise-inquiry-modal__actions .franchise-inquiry-modal__whatsapp-cta {
+  width: 100%;
+  max-width: 100% !important;
+  min-height: 3rem;
+  height: 3rem;
+  margin: 0 !important;
+  padding: 0 1rem !important;
+  border-radius: 12px;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+}
+
+.franchise-inquiry-modal__actions .franchise-inquiry-modal__submit {
+  margin-top: 0;
 }
 
 @keyframes franchise-inquiry-drawer-in {
@@ -86,11 +151,29 @@
 
 .franchise-inquiry-modal__title {
   margin-top: 0.25rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #0f172a;
+  color: #000000;
   line-height: 1.25;
+}
+
+.franchise-inquiry-modal__brand-logo {
+  height: 2.75rem;
+  width: auto;
+  max-width: 140px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .franchise-inquiry-modal__brand-logo {
+    height: 3rem;
+  }
 }
 
 .franchise-inquiry-modal__subtitle {
@@ -134,16 +217,29 @@
 }
 
 .franchise-inquiry-modal__type-btn--selected {
-  border-color: #8b5cf6;
-  background: linear-gradient(145deg, #faf5ff 0%, #f5f3ff 100%);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.22);
+  border-color: #7c3aed;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.32);
+}
+
+.franchise-inquiry-modal__type-btn--selected:hover {
+  border-color: #6d28d9;
+  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+}
+
+.franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title {
+  color: #ffffff;
+}
+
+.franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .franchise-inquiry-modal__type-title {
   display: block;
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #0f172a;
+  color: #000000;
 }
 
 .franchise-inquiry-modal__type-desc {
@@ -162,23 +258,48 @@
 
 .franchise-inquiry-modal__label {
   display: block;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
   font-size: 0.6875rem;
   font-weight: 600;
-  color: #475569;
+  color: #000000;
 }
 
 .franchise-inquiry-modal__input {
   width: 100%;
   box-sizing: border-box;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  border: 1px solid #cbd5e1;
+  background: #ffffff !important;
   padding: 0.5rem 0.75rem;
-  font-size: 0.8125rem;
-  color: #0f172a;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.franchise-inquiry-modal__input::placeholder,
+.franchise-inquiry-modal__textarea::placeholder {
+  color: #64748b;
+  -webkit-text-fill-color: #64748b;
+  opacity: 1;
+}
+
+.franchise-inquiry-modal__input:-webkit-autofill,
+.franchise-inquiry-modal__input:-webkit-autofill:hover,
+.franchise-inquiry-modal__input:-webkit-autofill:focus,
+.franchise-inquiry-modal__input:-webkit-autofill:active,
+.franchise-inquiry-modal__textarea:-webkit-autofill,
+.franchise-inquiry-modal__textarea:-webkit-autofill:hover,
+.franchise-inquiry-modal__textarea:-webkit-autofill:focus,
+.franchise-inquiry-modal__textarea:-webkit-autofill:active {
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  caret-color: #000000 !important;
+  transition: background-color 99999s ease-out 0s;
 }
 
 .franchise-inquiry-modal__input:focus {
@@ -191,19 +312,44 @@
 }
 
 .franchise-inquiry-modal__textarea {
-  min-height: 2.75rem;
+  min-height: 2.25rem;
   resize: none;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: #ffffff !important;
+}
+
+.franchise-inquiry-modal__submit,
+.franchise-inquiry-modal__whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 3rem;
+  height: 3rem;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 12px;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.franchise-inquiry-modal .btn-purple-solid.franchise-inquiry-modal__submit {
+  max-width: 100% !important;
+  width: 100% !important;
+  min-height: 3rem !important;
+  height: 3rem !important;
+  padding: 0 1rem !important;
+  margin: 0 !important;
 }
 
 .franchise-inquiry-modal__submit {
   margin-top: 0.25rem;
-  width: 100%;
-  border: none;
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
   color: #fff;
   cursor: pointer;
   background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
@@ -224,9 +370,173 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 480px) {
-  .franchise-inquiry-modal__fields-row,
-  .franchise-inquiry-modal__type-grid {
-    grid-template-columns: 1fr;
+.franchise-inquiry-modal__whatsapp-cta {
+  max-width: 100%;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #34d399 0%, #25d366 55%, #16a34a 100%);
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.28);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.franchise-inquiry-modal__whatsapp-cta svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+.franchise-inquiry-modal__whatsapp-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.34);
+}
+
+.franchise-inquiry-modal__handle {
+  display: none;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__handle {
+  display: block;
+  width: 2.5rem;
+  height: 0.25rem;
+  margin: 0.5rem auto 0;
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__header {
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 2.5rem 0.625rem;
+  text-align: center;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__header > div:first-of-type {
+  width: 100%;
+  max-width: 100%;
+  padding-right: 0;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__header > button {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__kicker,
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__title,
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__subtitle {
+  text-align: center;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__title {
+  justify-content: center;
+  font-size: 1.125rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__subtitle {
+  font-size: 0.6875rem;
+  max-width: 18rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.35;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__body {
+  padding: 0.625rem 1rem 0;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields {
+  gap: 0.5rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-btn {
+  padding: 0.5rem 0.625rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields-row {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__actions {
+  padding-top: 0.625rem;
+}
+
+@media (max-width: 1023px) {
+  .franchise-inquiry-modal__handle {
+    display: block;
+    width: 2.5rem;
+    height: 0.25rem;
+    margin: 0.5rem auto 0;
+    border-radius: 999px;
+    background: #cbd5e1;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__header {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 2.5rem 0.625rem;
+    text-align: center;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__header > div:first-of-type {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__header > button {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__kicker,
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__subtitle {
+    text-align: center;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__title {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .franchise-inquiry-modal__title {
+    font-size: 1.125rem;
+  }
+
+  .franchise-inquiry-modal__subtitle {
+    font-size: 0.6875rem;
+    max-width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.35;
+  }
+
+  .franchise-inquiry-modal__body {
+    padding: 0.625rem 1rem 0;
+  }
+
+  .franchise-inquiry-modal--drawer .franchise-inquiry-modal__actions {
+    padding-top: 0.625rem;
+  }
+
+  .franchise-inquiry-modal__actions .franchise-inquiry-modal__submit,
+  .franchise-inquiry-modal__actions .franchise-inquiry-modal__whatsapp-cta {
+    min-height: 3rem;
+    height: 3rem;
+    max-width: 100% !important;
   }
 }

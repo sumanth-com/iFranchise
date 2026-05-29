@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import CtaButton from './ui/CtaButton';
@@ -30,13 +30,13 @@ import {
   getAverageROI,
   calculateGrowthMetrics,
   getFeaturedOpportunities,
-  getSecondaryOpportunities,
 } from '../data/franchiseData';
-import OpportunityCard from './OpportunityCard';
+
+const OpportunityCard = lazy(() => import('./OpportunityCard'));
+const ProcessGrowthEngineVisual = lazy(() => import('./ProcessGrowthEngineVisual'));
+const OurServicesSection = lazy(() => import('./OurServicesSection'));
 import { useTheme } from '../context/ThemeContext';
-import ProcessGrowthEngineVisual from './ProcessGrowthEngineVisual';
 import IndustryCard from './IndustryCard';
-import OurServicesSection from './OurServicesSection';
 import {
   getCardBaseStyle,
   cardHoverHandlers,
@@ -2439,15 +2439,44 @@ function Hero() {
   const middleColumnLoop = [...TESTIMONIAL_COLUMNS.middle, ...TESTIMONIAL_COLUMNS.middle];
   const rightColumnLoop = [...TESTIMONIAL_COLUMNS.right, ...TESTIMONIAL_COLUMNS.right];
 
+  const [belowFoldReady, setBelowFoldReady] = useState(false);
+  const heroImageReady = isLight ? lightHeroReady : darkHeroReady;
+  const heroUseAvif = useMemo(
+    () => typeof window !== 'undefined' && !window.matchMedia('(max-width: 767px)').matches,
+    [],
+  );
+
   useLayoutEffect(() => {
-    removeStaticHero();
     markImgReady(darkHeroRef.current, setDarkHeroReady);
     markImgReady(lightHeroRef.current, setLightHeroReady);
   }, [isLight, theme]);
 
   useEffect(() => {
+    if (heroImageReady) removeStaticHero();
+  }, [heroImageReady]);
+
+  useEffect(() => {
     preloadHomeHeroForTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const show = () => {
+      if (!cancelled) startTransition(() => setBelowFoldReady(true));
+    };
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(show, { timeout: 900 });
+      return () => {
+        cancelled = true;
+        window.cancelIdleCallback(id);
+      };
+    }
+    const t = window.setTimeout(show, 350);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, []);
 
   useEffect(() => {
     let frameId;
@@ -2635,7 +2664,11 @@ function Hero() {
       {/* -- HERO SECTION ? cinematic entry -- */}
       <section
         className={`cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden ${
-          isLight ? 'cinematic-hero--light bg-[#f0f4fa]' : 'cinematic-hero--dark bg-[#0a0618]'
+          heroImageReady
+            ? isLight
+              ? 'cinematic-hero--light bg-[#f0f4fa]'
+              : 'cinematic-hero--dark bg-[#0a0618]'
+            : 'bg-transparent'
         }`}
       >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
@@ -2648,7 +2681,7 @@ function Hero() {
               aria-hidden
             >
               <ResponsivePicture
-                avif={HOME_HERO_DARK.avif}
+                avif={heroUseAvif ? HOME_HERO_DARK.avif : undefined}
                 webp={HOME_HERO_DARK.webp}
                 webpSrcSet={HOME_HERO_DARK.srcSetMap}
                 fallback={HOME_HERO_DARK.src}
@@ -2672,7 +2705,7 @@ function Hero() {
               aria-hidden
             >
               <ResponsivePicture
-                avif={HOME_HERO_LIGHT.avif}
+                avif={heroUseAvif ? HOME_HERO_LIGHT.avif : undefined}
                 webp={HOME_HERO_LIGHT.webp}
                 webpSrcSet={HOME_HERO_LIGHT.srcSetMap}
                 fallback={HOME_HERO_LIGHT.src}
@@ -2783,6 +2816,8 @@ function Hero() {
 
       </section>
 
+      {belowFoldReady ? (
+      <Suspense fallback={null}>
       {/* -- FEATURED OPPORTUNITIES (after hero) -- */}
       <div className="section-reveal relative w-full overflow-hidden bg-transparent">
         <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 pt-14 pb-12">
@@ -3369,6 +3404,8 @@ function Hero() {
 
       {/* Smooth transition to footer */}
       </div>
+      </Suspense>
+      ) : null}
     </main>
   );
 }

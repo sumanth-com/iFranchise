@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { FiX } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa6';
+import { SITE_CONTACT_WHATSAPP_URL } from '@/data/siteContact';
 import { submitFranchiseInquiry } from '@/lib/forms/submitters/franchiseInquirySubmitter';
 import { validateFranchiseInquiryForm } from '@/lib/forms/validators/franchiseInquiryValidator';
 import { checkHoneypot, stripHoneypot } from '@/lib/forms/utils/honeypot';
@@ -54,7 +56,14 @@ function FieldError({ id, message }) {
   );
 }
 
-export default function FranchiseInquiryModal({ franchise, franchiseStructure, onClose, variant = 'modal' }) {
+export default function FranchiseInquiryModal({
+  franchise,
+  franchiseStructure,
+  onClose,
+  variant = 'modal',
+  mobileWhatsAppFooter = false,
+  whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
+}) {
   const typeOptions = filterFranchiseTypes(franchiseStructure);
 
   const {
@@ -131,11 +140,23 @@ export default function FranchiseInquiryModal({ franchise, franchiseStructure, o
         isPanel ? ' franchise-inquiry-modal--drawer' : ''
       }`}
     >
+        <div className="franchise-inquiry-modal__handle" aria-hidden="true" />
         <div className="franchise-inquiry-modal__header flex items-start justify-between gap-3 pr-2">
           <div className="min-w-0">
             <p className="franchise-inquiry-modal__kicker">Franchise interest</p>
             <h2 id="franchise-inquiry-title" className="franchise-inquiry-modal__title">
-              {franchise.name}
+              {franchise.logo ? (
+                <img
+                  src={franchise.logo}
+                  alt=""
+                  decoding="async"
+                  className="franchise-inquiry-modal__brand-logo"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : null}
+              <span className="franchise-inquiry-modal__title-text">{franchise.name}</span>
             </h2>
             <p className="franchise-inquiry-modal__subtitle">
               {isSuccess
@@ -172,9 +193,17 @@ export default function FranchiseInquiryModal({ franchise, franchiseStructure, o
               resetLabel="Close"
             />
           ) : (
-            <form onSubmit={handleSubmit} className="franchise-inquiry-modal__form" autoComplete="off" noValidate>
+            <form
+              onSubmit={handleSubmit}
+              className={`franchise-inquiry-modal__form${
+                mobileWhatsAppFooter ? ' franchise-inquiry-modal__form--sticky-actions' : ''
+              }`}
+              autoComplete="off"
+              noValidate
+            >
               <HoneypotField value={values[HONEYPOT_FIELD]} onChange={setField} />
 
+              <div className={mobileWhatsAppFooter ? 'franchise-inquiry-modal__fields' : undefined}>
               <fieldset className="border-0 p-0 m-0">
                 <legend className="franchise-inquiry-modal__label mb-1.5">
                   I am interested in <span className="text-red-500">*</span>
@@ -186,7 +215,9 @@ export default function FranchiseInquiryModal({ franchise, franchiseStructure, o
                       <button
                         key={opt.value}
                         type="button"
-                        onClick={() => setField('franchiseType', opt.value)}
+                        onClick={() =>
+                          setField('franchiseType', selected ? '' : opt.value)
+                        }
                         className={`franchise-inquiry-modal__type-btn${
                           selected ? ' franchise-inquiry-modal__type-btn--selected' : ''
                         }`}
@@ -280,7 +311,7 @@ export default function FranchiseInquiryModal({ franchise, franchiseStructure, o
                 </label>
                 <textarea
                   id="fi-message"
-                  rows={2}
+                  rows={1}
                   value={values.message}
                   onChange={(e) => setField('message', e.target.value)}
                   className={`${inputClass(fieldErrors.message)} franchise-inquiry-modal__textarea`}
@@ -294,14 +325,37 @@ export default function FranchiseInquiryModal({ franchise, franchiseStructure, o
                   {submitError}
                 </p>
               ) : null}
+              </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="franchise-inquiry-modal__submit btn-purple-solid"
-              >
-                {isSubmitting ? 'Sending…' : 'Send interest'}
-              </button>
+              {mobileWhatsAppFooter ? (
+                <div className="franchise-inquiry-modal__actions">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="franchise-inquiry-modal__submit"
+                  >
+                    {isSubmitting ? 'Sending…' : 'Send interest'}
+                  </button>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="franchise-inquiry-modal__whatsapp-cta"
+                    aria-label="Chat on WhatsApp"
+                  >
+                    <FaWhatsapp aria-hidden />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                </div>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="franchise-inquiry-modal__submit"
+                >
+                  {isSubmitting ? 'Sending…' : 'Send interest'}
+                </button>
+              )}
             </form>
           )}
         </div>

@@ -176,11 +176,25 @@
         z-index: 0;
         pointer-events: none;
       }
-      #ifr-static-hero img {
+      #ifr-static-hero .hero-static-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         object-position: center 42%;
       }
-      html[data-theme='light'] #ifr-static-hero img {
+      html[data-theme='light'] #ifr-static-hero .hero-static-img {
         object-position: center 38%;
+      }
+      html[data-theme='light'] #ifr-static-hero .hero-static-img--dark {
+        display: none;
+      }
+      html:not([data-theme='light']) #ifr-static-hero .hero-static-img--light {
+        display: none;
+      }
+      #ifr-static-hero.ifr-static-hero--hidden {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
       }
     </style>
     <title>iFranchise — India's Trusted Franchise Growth Platform</title>
@@ -189,26 +203,49 @@
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div id="root"></div>
+    <!-- LCP hero: outside #root so React mount does not remove it -->
+    <div
+      id="ifr-static-hero"
+      class="cinematic-hero cinematic-hero--dark"
+      aria-hidden="true"
+      data-route="home"
+    >
+      <div class="hero-cinematic-media-wrap">
+        <img
+          class="hero-static-img hero-static-img--dark"
+          src="/hero/lcp-dark.webp"
+          alt=""
+          width="640"
+          height="427"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <img
+          class="hero-static-img hero-static-img--light"
+          src="/hero/lcp-light.webp"
+          alt=""
+          width="640"
+          height="427"
+          loading="lazy"
+          fetchpriority="low"
+          decoding="async"
+        />
+      </div>
+    </div>
     <script>
       (function () {
         var p = location.pathname;
-        if (p !== '/' && p !== '') return;
-        var root = document.getElementById('root');
-        if (!root) return;
+        var el = document.getElementById('ifr-static-hero');
+        if (!el) return;
+        if (p !== '/' && p !== '') {
+          el.remove();
+          return;
+        }
         var light = document.documentElement.getAttribute('data-theme') === 'light';
-        var href = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
-        var wrap = document.createElement('div');
-        wrap.id = 'ifr-static-hero';
-        wrap.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
-        wrap.setAttribute('aria-hidden', 'true');
-        wrap.innerHTML =
-          '<div class="hero-cinematic-media-wrap"><img src="' +
-          href +
-          '" alt="" width="640" height="427" fetchpriority="high" decoding="async"></div>';
-        root.appendChild(wrap);
+        el.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
       })();
     </script>
+    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

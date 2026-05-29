@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/themes.css'
 import './index.css'
-import './styles/mobile-responsive.css'
 import './styles/performance.css'
 import { initScrollRestoration } from './lib/navigation.js'
 import { ThemeProvider } from './context/ThemeContext.jsx'
@@ -23,7 +22,12 @@ function runWhenIdle(fn, timeout = 4000) {
   }
 }
 
+if (!isHome) {
+  import('./styles/mobile-responsive.css')
+}
+
 runWhenIdle(() => {
+  if (isHome) import('./styles/mobile-responsive.css')
   import('./lib/routePrefetch.js').then(({ initRoutePrefetch }) => initRoutePrefetch())
   import('./lib/deferStyles.js').then(({ deferNonCriticalStyles }) => deferNonCriticalStyles())
   import('./lib/scheduleAnalytics.js').then(({ scheduleAnalytics }) => scheduleAnalytics())
