@@ -1,27 +1,19 @@
 /**
- * Local brochure PDFs under src/assets — keyed by brand slug (stable when listings change).
+ * Brochure PDFs live in public/brochures/ (copied at build via scripts/copy-brochures.mjs).
+ * Static paths keep ~30MB of PDFs out of the JS module graph on first load.
  */
-import odettePdf from '../../assets/ODETTE/ODETTE.pdf';
-import originalBurgerPdf from '../../assets/Original Burger co/Original Burger Co. Brand Presentation.pdf';
-import francoPdf from '../../assets/Franco/Franco.pdf';
-import biggiesPdf from '../../assets/BIGGIES BURGER/Biggies Brand Presentation.pdf';
-import bigguysPdf from '../../assets/BIGGUYS/BIGGUYS Brand.pdf';
-import brandAvenuePdf from '../../assets/Brand AVENUE/avenue.pdf';
-import lassiPdf from '../../assets/Lassi N Cafe/Lassi n Cafe.pdf';
-import fusionPdf from '../../assets/Fusion pizza and Big burger/TFP & BBC franchise.pdf';
-import tenDowningPdf from '../../assets/10 Downing Street/10 Downing Street.pdf';
 
 /** @type {Record<string, string>} */
 export const BROCHURE_PDF_BY_SLUG = {
-  odette: odettePdf,
-  'original-burger-co': originalBurgerPdf,
-  franco: francoPdf,
-  'biggies-burger': biggiesPdf,
-  bigguys: bigguysPdf,
-  'brand-avenue': brandAvenuePdf,
-  'lassi-n-cafe': lassiPdf,
-  'fusion-pizza-big-burger': fusionPdf,
-  '10-downing-street': tenDowningPdf,
+  odette: '/brochures/odette.pdf',
+  'original-burger-co': '/brochures/original-burger-co.pdf',
+  franco: '/brochures/franco.pdf',
+  'biggies-burger': '/brochures/biggies-burger.pdf',
+  bigguys: '/brochures/bigguys.pdf',
+  'brand-avenue': '/brochures/brand-avenue.pdf',
+  'lassi-n-cafe': '/brochures/lassi-n-cafe.pdf',
+  'fusion-pizza-big-burger': '/brochures/fusion-pizza-big-burger.pdf',
+  '10-downing-street': '/brochures/10-downing-street.pdf',
 };
 
 export function getBrochureUrlByFranchiseSlug(slug) {

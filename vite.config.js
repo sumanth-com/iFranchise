@@ -107,10 +107,13 @@ export default defineConfig({
     reportCompressedSize: false,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    include: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
     exclude: ['framer-motion', '@studio-freight/lenis'],
   },
   server: {
+    warmup: {
+      clientFiles: ['./src/main.jsx', './src/App.jsx', './src/components/Navbar.jsx'],
+    },
     fs: {
       strict: true,
       deny: ['.env', '.env.*'],

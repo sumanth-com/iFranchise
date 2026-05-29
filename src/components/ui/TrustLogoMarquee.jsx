@@ -32,12 +32,12 @@ export function TrustLogoMarquee({
         {track.map((partner, i) => (
           <div
             key={`${partner.id}-${i}`}
-            className={`trust-logo-card flex shrink-0 items-stretch justify-center ${isHero ? 'trust-logo-card--hero' : 'lyb-trust-logo-card trust-logo-card--franchise'}`}
+            className={`trust-logo-card shrink-0 ${isHero ? 'trust-logo-card--hero' : 'lyb-trust-logo-card trust-logo-card--franchise'}`}
           >
             <img
               src={partner.src}
               alt={partner.name || partner.label}
-              className="trust-logo-img h-full w-full"
+              className="trust-logo-img"
               loading="lazy"
               decoding="async"
               draggable={false}

@@ -39,8 +39,13 @@ runWhenIdle(() => {
   }
 }, isMobile ? 5000 : 2500)
 
-if (isHome && !isMobile) {
-  import('./lib/preloadHomeHero.js').then(({ preloadHomeHero }) => preloadHomeHero())
+if (isHome) {
+  runWhenIdle(() => {
+    import('./components/Hero.jsx')
+  }, isMobile ? 1200 : 400)
+  if (!isMobile) {
+    import('./lib/preloadHomeHero.js').then(({ preloadHomeHero }) => preloadHomeHero())
+  }
 }
 
 initScrollRestoration()

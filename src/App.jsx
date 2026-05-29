@@ -2,7 +2,6 @@ import { useEffect, useState, lazy, Suspense, useRef, useCallback, startTransiti
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
-import PreFooterCTA from './components/PreFooterCTA';
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
 import { useLowPowerDevice } from './hooks/useLowPowerDevice';
@@ -19,12 +18,11 @@ import {
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
 import { prefetchRoute } from './lib/routePrefetch.js';
-import { initGA4, trackPageView } from './lib/analytics/ga4.js';
+import { trackPageView } from './lib/analytics/ga4.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
-
-// Home hero loads with App (static HTML image is LCP until this paints)
-import Hero from './components/Hero';
+const Hero = lazy(() => import('./components/Hero'));
+const PreFooterCTA = lazy(() => import('./components/PreFooterCTA'));
 
 // -- Lazy-load all other pages -----------------------------------------------
 const AboutPage               = lazy(() => import('./components/AboutPage'));
@@ -72,6 +70,7 @@ function App() {
   const assistantEligible = pathname !== '/404';
   const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
   const [assistantMounted, setAssistantMounted] = useState(() => !lowPowerDevice);
+  const [showPreFooter, setShowPreFooter] = useState(false);
 
   useEffect(() => {
     if (!lowPowerDevice) {
@@ -254,10 +253,25 @@ function App() {
     };
   }, [pathname]);
 
+  // Below-fold footer CTA — defer chunk until after first paint (all routes).
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
+    const show = () => setShowPreFooter(true);
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(show, { timeout: 2200 });
+    } else {
+      timeoutId = window.setTimeout(show, 500);
+    }
+    return () => {
+      if (idleId != null) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   // GA4: track initial page + every SPA route change.
   // Uses a deduped singleton to prevent duplicate page_view events.
   useEffect(() => {
-    initGA4();
     const expectedPageKey = `${window.location.pathname}${window.location.search}`;
     const raf1 = window.requestAnimationFrame(() => {
       const raf2 = window.requestAnimationFrame(() => {
@@ -347,7 +361,9 @@ function App() {
       >
         <ErrorBoundary resetKey={pathname} label="Page">
         {isHomePage ? (
-          <Hero />
+          <Suspense fallback={null}>
+            <Hero />
+          </Suspense>
         ) : (
           <Suspense fallback={<PageSkeleton />}>
             {isNotFoundPage ? <NotFoundPage />
@@ -371,15 +387,19 @@ function App() {
         </ErrorBoundary>
       </main>
 
-      <PreFooterCTA
-        shellClassName={
-          isFranchiseOpportunitiesPage
-            ? FRANCHISE_OPPORTUNITIES_SHELL
-            : isFranchiseDetailsPage
-              ? FRANCHISE_DETAILS_SHELL
-              : ''
-        }
-      />
+      {showPreFooter ? (
+        <Suspense fallback={null}>
+          <PreFooterCTA
+            shellClassName={
+              isFranchiseOpportunitiesPage
+                ? FRANCHISE_OPPORTUNITIES_SHELL
+                : isFranchiseDetailsPage
+                  ? FRANCHISE_DETAILS_SHELL
+                  : ''
+            }
+          />
+        </Suspense>
+      ) : null}
       <Footer />
 
         {showExpansionAssistant && (
