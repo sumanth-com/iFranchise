@@ -15,11 +15,12 @@
 import { FORM_TYPES } from './formTypes.js';
 
 /**
- * Google Apps Script Web App URL configuration
- * This URL should be set in .env as VITE_GOOGLE_APPS_SCRIPT_URL
- * The script should handle POST requests and route to appropriate sheet tabs
+ * Google Apps Script Web App URL (inlined at Vite build time).
+ * Production: set VITE_GOOGLE_APPS_SCRIPT_URL in Vercel env vars.
+ * Runtime fallback: /forms-endpoint.json (see resolveFormEndpoint.js).
+ * Prefer resolveFormEndpointUrl() for submissions — this may be empty in misconfigured builds.
  */
-export const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL || '';
+export const GOOGLE_APPS_SCRIPT_URL = (import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL || '').trim();
 
 /**
  * Sheet tab mappings for each form type

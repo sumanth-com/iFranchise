@@ -2,6 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
+# Vite inlines VITE_* at build time. .env is not committed — set these for live forms + SEO.
+[build.environment]
+  VITE_GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTFGt9Gy83Wg2w78PnMCZu4lTrI39YAez5YMH3QUdZln1t5_gv7C7Wf1jAp22Wm10W/exec"
+  VITE_SITE_URL = "https://www.ifranchise.in"
+  VITE_GA_MEASUREMENT_ID = "G-SSHRXE8TFM"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -34,6 +40,11 @@
   for = "/brochures/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/forms-endpoint.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/index.html"

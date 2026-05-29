@@ -4,6 +4,8 @@
 export { FORM_TYPES } from './constants/formTypes.js';
 export { GOOGLE_APPS_SCRIPT_URL, SHEET_TABS, SOURCE_PAGES } from './constants/formEndpoints.js';
 export { HONEYPOT_FIELD } from './utils/honeypot.js';
+export { bootstrapFormPipeline, getFormHealth } from './formBootstrap.js';
+export { FORM_REGISTRY } from './FORM_REGISTRY.js';
 
 export { runFormSubmission } from './utils/submitPipeline.js';
 export { runGuardedSubmission, clearSubmissionGuard } from './utils/submissionGuard.js';

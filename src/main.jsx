@@ -8,6 +8,7 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { logger } from './lib/logger.js'
+import { bootstrapFormPipeline } from './lib/forms/formBootstrap.js'
 const isHome =
   typeof window !== 'undefined' &&
   (window.location.pathname === '/' || window.location.pathname === '')
@@ -49,6 +50,10 @@ if (isHome) {
 }
 
 initScrollRestoration()
+
+bootstrapFormPipeline().catch(() => {
+  logger.error('Form pipeline bootstrap failed')
+})
 
 if (!import.meta.env.DEV) {
   window.addEventListener('unhandledrejection', (event) => {

@@ -109,19 +109,23 @@ npm run dev
 - **Default:** `development`
 - **Purpose:** Environment indicator for logging and behavior
 
-## Production Deployment
+## Production Deployment (Vercel)
 
-When deploying to production (Vercel, Netlify, etc.):
+This site deploys with **Vercel** (`vercel.json`). `netlify.toml` is not used.
 
-1. Add the environment variable in your hosting platform:
-   - Variable name: `VITE_GOOGLE_APPS_SCRIPT_URL`
-   - Value: Your Web App URL
-   - Variable name: `VITE_APP_ENV`
-   - Value: `production`
+1. In [Vercel Dashboard](https://vercel.com) → your project → **Settings** → **Environment Variables**, add:
 
-2. Do NOT commit `.env` to git (it's in `.gitignore`)
+   | Name | Value | Environments |
+   |------|--------|--------------|
+   | `VITE_GOOGLE_APPS_SCRIPT_URL` | Your Apps Script `/exec` URL | Production, Preview |
+   | `VITE_SITE_URL` | `https://www.ifranchise.in` | Production |
+   | `VITE_GA_MEASUREMENT_ID` | `G-SSHRXE8TFM` | Production, Preview |
 
-3. Use `.env.example` as a template for team members
+2. **Redeploy** after saving variables (Deployments → … → Redeploy).
+
+3. Backup: `public/forms-endpoint.json` is generated at build and also supplies the URL on the live site if env vars were missing.
+
+4. Do NOT commit `.env` to git (it's in `.gitignore`). Use `.env.example` as a template.
 
 ## Security Notes
 

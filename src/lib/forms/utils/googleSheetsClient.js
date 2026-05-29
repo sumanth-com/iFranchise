@@ -1,45 +1,33 @@
 /**
  * Google Sheets client - POSTs JSON payloads to Google Apps Script Web App.
- *
- * Uses no-cors POST (no preflight). Response body is opaque; success is inferred
- * when the browser completes the send without network error.
  */
 
-import { GOOGLE_APPS_SCRIPT_URL } from '../constants/formEndpoints.js';
-import { logger } from '../../logger.js';
-import { createConfigErrorResponse } from './responseHandler.js';
+import { createConfigErrorResponse, parseSubmissionResponse } from './responseHandler.js';
 import { fetchWithRetry, mapRequestError } from './requestClient.js';
 import { prepareOutboundPayload } from './sanitizePayload.js';
+import {
+  resolveFormEndpointUrl,
+  isValidFormEndpointUrl,
+  maskFormEndpointUrl,
+} from './resolveFormEndpoint.js';
+import { logFormInfo, logFormError, logFormWarn } from './formLogger.js';
 
-function isValidScriptUrl(url) {
-  if (!url || typeof url !== 'string') return false;
-  try {
-    const parsed = new URL(url);
-    return (
-      parsed.protocol === 'https:' &&
-      parsed.hostname.includes('script.google.com') &&
-      parsed.pathname.includes('/macros/s/')
-    );
-  } catch {
-    return false;
-  }
-}
-
-function successPayload(payload) {
+function successPayload(payload, extra = {}) {
   return {
     success: true,
     data: {
       message: 'Form submitted successfully',
       timestamp: payload.submitted_at,
       form_type: payload.form_type,
+      ...extra,
     },
   };
 }
 
 /**
- * POST payload to Apps Script. Resolves when the browser has sent the request.
+ * POST payload to Apps Script. Uses CORS to read the real server response.
  */
-async function postToAppsScript(payload, signal) {
+async function postToAppsScript(scriptUrl, payload, signal) {
   let jsonBody;
   try {
     jsonBody = JSON.stringify(payload);
@@ -47,20 +35,72 @@ async function postToAppsScript(payload, signal) {
     throw new Error('SERIALIZE_ERROR');
   }
 
-  // Form-encoded field is the most reliable transport for Google Apps Script web apps.
   const formBody = new URLSearchParams({ payload: jsonBody }).toString();
+  const started = typeof performance !== 'undefined' ? performance.now() : 0;
 
-  await fetchWithRetry(GOOGLE_APPS_SCRIPT_URL, {
+  const response = await fetchWithRetry(scriptUrl, {
     method: 'POST',
-    mode: 'no-cors',
+    mode: 'cors',
+    credentials: 'omit',
+    redirect: 'follow',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     body: formBody,
     signal,
-    timeout: 12_000,
+    timeout: 18_000,
     retries: 1,
   });
 
-  return successPayload(payload);
+  const durationMs = typeof performance !== 'undefined' ? Math.round(performance.now() - started) : undefined;
+  const text = await response.text();
+
+  let parsed = null;
+  try {
+    parsed = text ? JSON.parse(text) : null;
+  } catch {
+    logFormWarn('response_not_json', {
+      formType: payload.form_type,
+      status: response.status,
+      transport: 'cors',
+      durationMs,
+    });
+  }
+
+  if (!response.ok) {
+    logFormError('submission_http_error', {
+      formType: payload.form_type,
+      status: response.status,
+      code: 'HTTP_ERROR',
+      transport: 'cors',
+      durationMs,
+    });
+    const fromBody = parseSubmissionResponse(parsed);
+    return {
+      success: false,
+      error: fromBody.error || `Server error (${response.status}). Please try again.`,
+      code: fromBody.code || 'HTTP_ERROR',
+    };
+  }
+
+  const result = parseSubmissionResponse(parsed);
+  if (!result.success) {
+    logFormError('submission_rejected', {
+      formType: payload.form_type,
+      status: response.status,
+      code: result.code || 'SERVER_ERROR',
+      transport: 'cors',
+      durationMs,
+    });
+    return result;
+  }
+
+  logFormInfo('submission_success', {
+    formType: payload.form_type,
+    status: response.status,
+    transport: 'cors',
+    durationMs,
+  });
+
+  return successPayload(payload, { transport: 'cors' });
 }
 
 /**
@@ -70,27 +110,43 @@ async function postToAppsScript(payload, signal) {
  * @param {{ signal?: AbortSignal }} [options]
  */
 export async function submitToGoogleSheets(payload, options = {}) {
+  const formType = payload?.form_type;
+  const started = typeof performance !== 'undefined' ? performance.now() : 0;
+
   try {
     const { signal } = options;
 
-    if (import.meta.env.DEV) {
-      logger.log('[GoogleSheetsClient] Submission started', payload?.form_type);
-    }
+    logFormInfo('submission_started', { formType });
 
-    if (!GOOGLE_APPS_SCRIPT_URL) {
-      logger.error('[GoogleSheetsClient] Form endpoint not configured');
+    const scriptUrl = await resolveFormEndpointUrl();
+
+    if (!scriptUrl) {
+      logFormError('endpoint_missing', {
+        formType,
+        code: 'CONFIG_ERROR',
+        endpointReady: false,
+        debug: import.meta.env.DEV
+          ? 'VITE_GOOGLE_APPS_SCRIPT_URL empty and /forms-endpoint.json has no url'
+          : undefined,
+      });
       return createConfigErrorResponse(
-        'Form service is not configured yet. Please email us directly or try again later.',
+        'Form service is not configured on the live site. Please email us directly or try again later.',
       );
     }
 
-    if (!isValidScriptUrl(GOOGLE_APPS_SCRIPT_URL)) {
-      logger.error('[GoogleSheetsClient] Invalid endpoint configuration');
+    if (!isValidFormEndpointUrl(scriptUrl)) {
+      logFormError('endpoint_invalid', {
+        formType,
+        code: 'CONFIG_ERROR',
+        endpointReady: false,
+        debug: import.meta.env.DEV ? maskFormEndpointUrl(scriptUrl) : undefined,
+      });
       return createConfigErrorResponse('Invalid form endpoint configuration.');
     }
 
     const prepared = prepareOutboundPayload(payload);
     if (!prepared.ok) {
+      logFormError('payload_invalid', { formType, code: prepared.code });
       return {
         success: false,
         error: prepared.error,
@@ -102,18 +158,36 @@ export async function submitToGoogleSheets(payload, options = {}) {
       return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
     }
 
-    const result = await postToAppsScript(prepared.payload, signal);
-    if (import.meta.env.DEV) logger.log('[GoogleSheetsClient] Submission sent');
+    if (import.meta.env.DEV) {
+      logFormInfo('submission_posting', {
+        formType,
+        endpointReady: true,
+        debug: maskFormEndpointUrl(scriptUrl),
+      });
+    }
+
+    const result = await postToAppsScript(scriptUrl, prepared.payload, signal);
     return result;
   } catch (err) {
+    const durationMs =
+      typeof performance !== 'undefined' ? Math.round(performance.now() - started) : undefined;
+
     if (err?.message === 'SERIALIZE_ERROR') {
+      logFormError('serialize_error', { formType, code: 'SERIALIZE_ERROR', durationMs });
       return {
         success: false,
         error: 'Invalid submission data. Please try again.',
         code: 'SERIALIZE_ERROR',
       };
     }
-    logger.error('[GoogleSheetsClient] Submission failed');
-    return mapRequestError(err);
+
+    const mapped = mapRequestError(err);
+    logFormError('submission_failed', {
+      formType,
+      code: mapped.code,
+      durationMs,
+      debug: import.meta.env.DEV ? err?.message : undefined,
+    });
+    return mapped;
   }
 }

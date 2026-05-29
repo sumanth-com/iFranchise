@@ -8,6 +8,7 @@ import { createValidationErrorResponse } from './responseHandler.js';
 import { submitToGoogleSheets } from './googleSheetsClient.js';
 import { runGuardedSubmission } from './submissionGuard.js';
 import { prepareOutboundPayload } from './sanitizePayload.js';
+import { logFormInfo, logFormError } from './formLogger.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -36,7 +37,7 @@ function attachMetadata(payload, sourcePage) {
  * @param {(data: object) => { success: boolean, errors?: object, data?: object }} options.validate
  * @param {(data: object, sourcePage: string) => object} options.transform
  * @param {AbortSignal} [options.signal]
- * @param {string} [options.guardKey] - Concurrent duplicate guard key
+ * @param {string} [options.guardKey] - Concurrent duplicate guard key (double-click only)
  */
 export async function runFormSubmission({
   formType,
@@ -48,12 +49,15 @@ export async function runFormSubmission({
   guardKey,
 }) {
   const pipeline = async () => {
+    logFormInfo('pipeline_start', { formType, sourcePage });
+
     if (signal?.aborted) {
       return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
     }
 
     const honeypotResult = checkHoneypot(rawData);
     if (!honeypotResult.ok) {
+      logFormError('pipeline_spam', { formType, sourcePage, code: 'SPAM' });
       return { success: false, error: 'Submission rejected.', code: 'SPAM' };
     }
 
@@ -61,6 +65,7 @@ export async function runFormSubmission({
     const validation = validate(cleaned);
 
     if (!validation.success) {
+      logFormInfo('pipeline_validation_failed', { formType, sourcePage, code: 'VALIDATION_ERROR' });
       return createValidationErrorResponse(validation.errors);
     }
 
@@ -71,13 +76,23 @@ export async function runFormSubmission({
     const rawPayload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
     const prepared = prepareOutboundPayload(rawPayload);
     if (!prepared.ok) {
+      logFormError('pipeline_payload_invalid', { formType, sourcePage, code: prepared.code });
       return {
         success: false,
         error: prepared.error,
         code: prepared.code,
       };
     }
-    return submitToGoogleSheets(prepared.payload, { signal });
+
+    const result = await submitToGoogleSheets(prepared.payload, { signal });
+
+    if (result.success) {
+      logFormInfo('pipeline_success', { formType, sourcePage });
+    } else {
+      logFormError('pipeline_failure', { formType, sourcePage, code: result.code });
+    }
+
+    return result;
   };
 
   const key = guardKey || `${formType}:${sourcePage}`;

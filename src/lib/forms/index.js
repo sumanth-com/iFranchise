@@ -1,5 +1,7 @@
 export * from './constants/formTypes.js';
 export * from './constants/formEndpoints.js';
+export { bootstrapFormPipeline, getFormHealth } from './formBootstrap.js';
+export { FORM_REGISTRY } from './FORM_REGISTRY.js';
 export * from './utils/googleSheetsClient.js';
 export * from './utils/fieldValidators.js';
 export * from './utils/honeypot.js';
