@@ -23,6 +23,7 @@ import {
 } from './opportunityUtils.js';
 import { getBrandImages } from './brandImages.js';
 import { getBrochureUrlByFranchiseSlug } from './brochurePdfs.js';
+import { getBrandGoogleReviews } from './brandGoogleReviews.js';
 import {
   flattenLocationLabels,
   flattenLocationTags,
@@ -168,28 +169,6 @@ function buildTrainingSupport(raw, models) {
   return [...new Set(items)].slice(0, 6);
 }
 
-function buildDefaultReviews(brandName) {
-  const templates = [
-    {
-      name: 'Priya S.',
-      text: `Transparent disclosure and professional support from the ${brandName} team. Investment terms were clear from day one.`,
-    },
-    {
-      name: 'Rahul M.',
-      text: `Solid franchise framework with practical onboarding. ${brandName} helped us evaluate location and payback realistically.`,
-    },
-    {
-      name: 'Anita K.',
-      text: `Listing quality on iFranchise matched what we heard on calls. ${brandName} operations playbook is well structured for new partners.`,
-    },
-    {
-      name: 'Vikram D.',
-      text: `Confident after due diligence, ${brandName} shared unit economics and expansion plans without overpromising returns.`,
-    },
-  ];
-  return templates.map((r) => ({ ...r, rating: 5 }));
-}
-
 function buildFaqs(raw, investmentLabel, models) {
   const brand = cleanText(raw.franchiseName);
   const faqs = [
@@ -260,7 +239,7 @@ export function buildOpportunityRecord(raw, id) {
   const { minInr, maxInr } = parseInvestmentAmounts(raw.investmentMin, raw.investmentMax);
   const minInvestment = minInr != null ? inrToUsdFilterAmount(minInr) : 50_000;
   const maxInvestment = maxInr != null ? inrToUsdFilterAmount(maxInr) : minInvestment * 2;
-  const investment = formatInrRange(minInr, maxInr);
+  const investment = cleanText(raw.investmentDisplay) || formatInrRange(minInr, maxInr);
 
   const roiValue = parseRoiPercent(raw.roiPercentage) ?? parseRoiPercent(raw.returns);
   const roi = roiValue != null ? `${roiValue}%` : 'On request';
@@ -323,6 +302,7 @@ export function buildOpportunityRecord(raw, id) {
 
   const paybackLabel = cleanText(raw.paybackPeriod) || (paybackMonths ? `${paybackMonths} months` : 'On request');
   const outlets = formatOutletsDisplay(raw.totalOutlets) || 'Growing network';
+  const googleReviews = getBrandGoogleReviews(slug);
 
   const detail = {
     id: String(id),
@@ -388,7 +368,10 @@ export function buildOpportunityRecord(raw, id) {
       locationType: raw.locationType,
     }),
     faqs: buildFaqs(raw, investment, models),
-    reviews: buildDefaultReviews(brandName),
+    reviews: googleReviews?.reviews ?? [],
+    reviewSummary: googleReviews
+      ? { rating: googleReviews.rating, count: googleReviews.count, source: 'Google' }
+      : null,
     aboutBrand: [],
     financialHighlights: {
       investmentRange: investment,

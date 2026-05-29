@@ -10,7 +10,8 @@ export const RAW_BRANDS = [
     shortDescription:
       'Premium women’s fashion and accessories brand offering modern apparel, handbags, footwear, perfumes, and lifestyle collections through omnichannel retail stores across India.',
     investmentMin: 'Units Franchise- 45L, Master Franchise - 1',
-    investmentMax: '90 Lakhs+',
+    investmentMax: '',
+    investmentDisplay: '₹45 Lakhs onwards',
     sqFt: '700 Sq.ft',
     currency: 'INR',
     businessModel: 'FICO',

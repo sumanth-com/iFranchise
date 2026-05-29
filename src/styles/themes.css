@@ -6082,13 +6082,44 @@ html[data-theme='light'] .franchise-details-page .fd-about-requirement {
 }
 
 html[data-theme='light'] .franchise-details-page .fd-review-card {
-  background: #f8fafc !important;
+  background: #ffffff !important;
   border-color: #e2e8f0 !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-intro,
+html[data-theme='light'] .franchise-details-page .fd-reviews-summary {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='light'] .franchise-details-page .fd-reviews-summary .fd-reviews-subtext {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
 html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-intro {
   color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card :is(.fd-copy, .fd-tab-body),
+html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary :is(.fd-copy, .fd-tab-body),
+html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card [class*='text-black'],
+html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary [class*='text-black'] {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-reviews-summary .fd-reviews-subtext {
+  color: rgba(255, 255, 255, 0.72) !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-block-title {
@@ -6104,12 +6135,9 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-about-requirem
   background: rgba(255, 255, 255, 0.06) !important;
   border-color: rgba(167, 139, 250, 0.28) !important;
 }
-
-html[data-theme='dark'] #main-content .franchise-details-page .fd-review-card {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(167, 139, 250, 0.28) !important;
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-intro {
+  color: #ffffff !important;
 }
-
 html[data-theme='light'] .franchise-details-page .fd-about-section :is(p, h3, strong) {
   color: #000000 !important;
 }

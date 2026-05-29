@@ -96,12 +96,13 @@ function FranchiseStatGrid({ franchise, className = '' }) {
 
 function StarRating({ rating, max = 5 }) {
   const safeRating = Math.min(max, Math.max(0, Number(rating) || 0));
+  const filledStars = Math.round(safeRating);
   return (
     <span className="inline-flex items-center gap-0.5" role="img" aria-label={`${safeRating} out of ${max} stars`}>
       {Array.from({ length: max }, (_, i) => (
         <FiStar
           key={i}
-          className={`h-4 w-4 ${i < safeRating ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`}
+          className={`h-4 w-4 ${i < filledStars ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`}
           aria-hidden
         />
       ))}
@@ -450,21 +451,44 @@ function FranchiseDetailsPage() {
 
     if (activeTab === 'Reviews') {
       const reviews = (selectedFranchise.reviews || []).slice(0, 4);
+      const summary = selectedFranchise.reviewSummary;
+      const aggregateRating = summary?.rating ?? null;
+      const reviewCount = summary?.count ?? reviews.length;
+
+      if (!reviews.length) {
+        return (
+          <p className="fd-tab-body fd-copy text-sm leading-relaxed text-black/70">
+            Google customer reviews for this brand will be added soon.
+          </p>
+        );
+      }
+
       return (
         <div className="space-y-4">
-          <div className="fd-reviews-summary flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3">
-            <StarRating rating={5} />
-            <p className="fd-tab-body fd-copy text-sm font-semibold">5.0 · {reviews.length} reviews</p>
-            <span className="fd-copy text-xs">Verified partner feedback</span>
+          <div className="fd-reviews-summary fd-reviews-intro flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-slate-200 bg-white px-4 py-3.5 shadow-sm">
+            {aggregateRating != null ? (
+              <>
+                <StarRating rating={aggregateRating} />
+                <p className="fd-tab-body fd-copy text-sm font-semibold text-black">
+                  {aggregateRating.toFixed(1)} · {reviewCount} Google reviews
+                </p>
+              </>
+            ) : (
+              <p className="fd-tab-body fd-copy text-sm font-semibold text-black">{reviewCount} Google reviews</p>
+            )}
+            <span className="fd-reviews-subtext fd-copy text-xs text-black/55">Customer ratings from Google Maps</span>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {reviews.map((review) => (
-              <article key={review.name} className="rounded-xl border border-slate-200 bg-white p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="fd-copy text-sm font-semibold">{review.name}</p>
+              <article
+                key={`${review.name}-${review.text.slice(0, 24)}`}
+                className="fd-review-card flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <p className="fd-copy text-sm font-semibold leading-snug text-black">{review.name}</p>
                   <StarRating rating={review.rating} />
                 </div>
-                <p className="fd-tab-body fd-copy mt-2 text-sm leading-relaxed">{review.text}</p>
+                <p className="fd-tab-body fd-copy mt-3 flex-1 text-sm leading-relaxed text-black/85">{review.text}</p>
               </article>
             ))}
           </div>
