@@ -36,12 +36,38 @@ const STEPS = [
 
 const EASE = [0.22, 1, 0.36, 1];
 
-function StepCard({ step, index, total, reduceMotion }) {
+function StepCard({ step, index, total, reduceMotion, compact = false }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
   const Icon = step.icon;
   const isLast = index === total - 1;
   const delay = reduceMotion ? 0 : index * 0.1;
+
+  if (compact) {
+    return (
+      <motion.article
+        ref={ref}
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.4, delay, ease: EASE }}
+        className="fd-gs-card fd-gs-card--compact group flex h-full min-h-[8.5rem] flex-col rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 transition-all duration-300 hover:border-violet-200 hover:bg-white hover:shadow-[0_6px_20px_rgba(15,23,42,0.08)]"
+      >
+        <div className="mb-3 flex items-start justify-between gap-2">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-violet-100 bg-violet-50/90 text-violet-700">
+            <Icon className="h-4 w-4" aria-hidden />
+          </div>
+          <span className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide text-black">
+            {step.time}
+          </span>
+        </div>
+        <p className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-black/45">
+          Step {step.number}
+        </p>
+        <h4 className="mt-0.5 text-sm font-bold leading-snug tracking-tight text-black">{step.title}</h4>
+        <p className="mt-1.5 line-clamp-3 flex-1 text-xs leading-relaxed text-black/80">{step.desc}</p>
+      </motion.article>
+    );
+  }
 
   return (
     <div ref={ref} className="fd-gs-step relative flex min-w-0 flex-1 flex-col">
@@ -86,10 +112,33 @@ function StepCard({ step, index, total, reduceMotion }) {
   );
 }
 
-export default function FranchiseGetStartedSection() {
+export default function FranchiseGetStartedSection({ variant = 'full' }) {
   const sectionRef = useRef(null);
   const headerInView = useInView(sectionRef, { once: true, margin: '-80px' });
   const reduceMotion = useReducedMotion();
+  const compact = variant === 'compact';
+
+  if (compact) {
+    return (
+      <div ref={sectionRef} className="fd-get-started fd-get-started--compact flex min-h-0 flex-1 flex-col">
+        <p className="fd-copy mb-4 text-sm leading-relaxed text-black/80">
+          Four clear steps from first click to launch. No guesswork between milestones.
+        </p>
+        <div className="fd-gs-grid grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+          {STEPS.map((step, i) => (
+            <StepCard
+              key={step.title}
+              step={step}
+              index={i}
+              total={STEPS.length}
+              reduceMotion={reduceMotion}
+              compact
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section

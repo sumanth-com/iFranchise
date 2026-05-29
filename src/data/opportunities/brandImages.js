@@ -8,7 +8,7 @@ import odette1 from '../../assets/ODETTE/1.webp';
 import odette2 from '../../assets/ODETTE/2.webp';
 import odette3 from '../../assets/ODETTE/3.webp';
 import odette4 from '../../assets/ODETTE/4.webp';
-import odette5 from '../../assets/ODETTE/5.webp';
+import odette5 from '../../assets/ODETTE/5.png';
 import odette6 from '../../assets/ODETTE/6.webp';
 
 // Original Burger co

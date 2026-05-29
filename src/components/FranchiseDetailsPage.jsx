@@ -1,5 +1,5 @@
 ﻿import { useEffect, useMemo, useRef, useState } from 'react';
-import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
+import { navigateTo, NAVIGATE_EVENT, restoreScrollWithRetry } from '@/lib/navigation';
 import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import { FiStar } from 'react-icons/fi';
@@ -338,16 +338,8 @@ function FranchiseDetailsPage() {
 
   useEffect(() => {
     setActiveTab('Overview');
+    restoreScrollWithRetry(0);
   }, [selectedFranchiseId]);
-
-  const skipInitialTabScroll = useRef(true);
-  useEffect(() => {
-    if (skipInitialTabScroll.current) {
-      skipInitialTabScroll.current = false;
-      return;
-    }
-    tabsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, [activeTab]);
 
   useEffect(() => {
     const syncFromLocation = () => {
@@ -372,8 +364,6 @@ function FranchiseDetailsPage() {
     } else {
       navigateTo(`/franchise-details?id=${nextId}`);
     }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const isOverviewTab = activeTab === 'Overview';
@@ -624,7 +614,13 @@ function FranchiseDetailsPage() {
                 <button
                   key={tab}
                   type="button"
-                  onClick={() => setActiveTab(tab)}
+                  onClick={() => {
+                    if (tab === activeTab) return;
+                    setActiveTab(tab);
+                    requestAnimationFrame(() => {
+                      tabsPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                  }}
                   className={`fd-tab-btn rounded-full px-4 py-2 text-sm font-semibold transition ${
                     activeTab === tab ? 'fd-tab-btn--active btn-purple-solid' : 'fd-tab-btn--inactive'
                   }`}
@@ -691,18 +687,22 @@ function FranchiseDetailsPage() {
             </DualSectionRow>
           </section>
 
-          <div className="fd-dual-sections space-y-5">
-            <DualSectionPanel title="Brand & Partner Support">
-              <BrandSupportList
-                items={selectedFranchise.trainingSupport}
-                fallback={selectedFranchise.idealInvestorProfile}
-              />
-            </DualSectionPanel>
-          </div>
+          <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
+            <DualSectionRow>
+              <DualSectionPanel title="Brand & Partner Support">
+                <BrandSupportList
+                  items={selectedFranchise.trainingSupport}
+                  fallback={selectedFranchise.idealInvestorProfile}
+                />
+              </DualSectionPanel>
+
+              <DualSectionPanel title="How to Get Started">
+                <FranchiseGetStartedSection variant="compact" />
+              </DualSectionPanel>
+            </DualSectionRow>
+          </section>
           </>
           )}
-
-          <FranchiseGetStartedSection />
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:p-8">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
