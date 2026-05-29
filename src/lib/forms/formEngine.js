@@ -12,10 +12,10 @@ export { createFormSubmitter } from './utils/createFormSubmitter.js';
 
 export { submitContactForm } from './submitters/contactSubmitter.js';
 export { submitBrandApplication } from './submitters/applicationSubmitter.js';
-export { submitJobApplication } from './submitters/jobApplicationSubmitter.js';
 export {
   submitChatbotLead,
   submitBrandConsultation,
   submitStrategyCall,
 } from './submitters/chatbotSubmitter.js';
 export { submitBrochureDownload } from './submitters/brochureDownloadSubmitter.js';
+export { submitFranchiseInquiry } from './submitters/franchiseInquirySubmitter.js';

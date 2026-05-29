@@ -34,7 +34,7 @@ export function getLogicalPathname() {
     return '/list-your-brand';
   }
   if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
-    return '/career-detail';
+    return '/careers';
   }
   if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) {
     return '/blog-detail';

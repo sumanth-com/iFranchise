@@ -1,6 +1,5 @@
 /** Mirrors App.jsx lazy() imports for idle / link-hover prefetch. */
 const ROUTE_LOADERS = {
-  '/': () => import('../components/Hero'),
   '/about': () => import('../components/AboutPage'),
   '/team': () => import('../components/TeamPage'),
   '/franchise-details': () => import('../components/FranchiseDetailsPage'),
@@ -14,7 +13,6 @@ const ROUTE_LOADERS = {
   '/services': () => import('../components/ServicesPage'),
   '/licenses': () => import('../components/LicensesPage'),
   '/careers': () => import('../components/CareersPage'),
-  '/career-detail': () => import('../components/CareerDetailPage'),
   '/list-your-brand': () => import('../components/ForBrandOwnersPage'),
 };
 
@@ -39,7 +37,7 @@ export function logicalPathFromPathname(pathname) {
     return '/list-your-brand';
   }
   if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
-    return '/career-detail';
+    return '/careers';
   }
   if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) {
     return '/blog-detail';

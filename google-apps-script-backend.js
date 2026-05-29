@@ -20,7 +20,6 @@
 const SHEET_TABS = {
   contact: 'Contact_Leads',
   brand_application: 'Brand_Applications',
-  job_application: 'Job_Applications',
   chatbot_brand: 'Chatbot_Brands',
   chatbot_investor: 'Chatbot_Investors',
   chatbot_strategy: 'Chatbot_Strategy',
@@ -55,18 +54,6 @@ const SHEET_HEADERS = {
     'Description',
     'Submitted At'
   ],
-  Job_Applications: [
-    'Timestamp',
-    'Source Page',
-    'Job Title',
-    'Name',
-    'Email',
-    'Phone',
-    'Resume URL',
-    'Cover Letter',
-    'Experience',
-    'Submitted At'
-  ],
   Chatbot_Brands: [
     'Timestamp',
     'Source Page',
@@ -85,8 +72,9 @@ const SHEET_HEADERS = {
     'Industries',
     'Budget',
     'Cities',
-    'ROI',
     'Timeline',
+    'Contact Name',
+    'Contact Phone',
     'Submitted At'
   ],
   Chatbot_Strategy: [
@@ -143,75 +131,124 @@ function doGet(e) {
 }
 
 /**
+ * Parse JSON payload from POST body or form field (browser-friendly).
+ */
+function parseRequestPayload(e) {
+  if (!e) return null;
+
+  if (e.parameter && e.parameter.payload) {
+    try {
+      return JSON.parse(String(e.parameter.payload));
+    } catch (parseError) {
+      console.error('Failed to parse e.parameter.payload:', parseError);
+    }
+  }
+
+  if (e.postData && e.postData.contents) {
+    try {
+      return JSON.parse(e.postData.contents);
+    } catch (parseError) {
+      console.error('Failed to parse e.postData.contents:', parseError);
+    }
+  }
+
+  return null;
+}
+
+/**
  * Central request handler
  * Processes incoming requests and returns appropriate response
  */
 function handleRequest(e) {
   const lock = LockService.getScriptLock();
-  
+  var lockHeld = false;
+
   try {
-    // Wait for lock (max 10 seconds) to prevent concurrent submissions
-    lock.waitLock(10000);
-    
-    // Set CORS headers
-    const output = ContentService.createTextOutput();
-    output.setMimeType(ContentService.MimeType.JSON);
-    
-    // Handle OPTIONS preflight request
-    if (!e || !e.postData) {
-      return createResponse({
-        success: false,
-        error: 'No data received. Please use POST method with JSON payload.'
-      }, 400);
-    }
-    
-    // Parse request data
-    let payload;
     try {
-      payload = JSON.parse(e.postData.contents);
-    } catch (parseError) {
+      lock.waitLock(10000);
+      lockHeld = true;
+    } catch (lockError) {
+      console.warn('Lock not acquired, continuing submission:', lockError);
+    }
+
+    if (!e) {
       return createResponse({
         success: false,
-        error: 'Invalid JSON payload. Please send valid JSON data.'
+        error: 'No data received. Please use POST with a JSON payload.',
       }, 400);
     }
-    
-    // Validate payload
-    if (!payload || typeof payload !== 'object') {
+
+    const payload = parseRequestPayload(e);
+    if (!payload) {
       return createResponse({
         success: false,
-        error: 'Empty or invalid payload. Please send valid JSON data.'
+        error: 'Invalid or missing payload. Send JSON via POST body or form field "payload".',
       }, 400);
     }
-    
+    // Validate payload shape
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+      return createResponse({
+        success: false,
+        error: 'Empty or invalid payload. Please send valid JSON data.',
+      }, 400);
+    }
     // Validate required fields
     if (!payload.form_type || !payload.sheet_tab || !payload.data) {
       return createResponse({
         success: false,
-        error: 'Missing required fields: form_type, sheet_tab, or data'
+        error: 'Missing required fields: form_type, sheet_tab, or data',
       }, 400);
     }
-    
-    // Process the submission
+
     const result = processSubmission(payload);
-    
-    // Return response
+
     return createResponse(result, result.success ? 200 : 400);
-    
   } catch (error) {
     console.error('Error in handleRequest:', error);
     return createResponse({
       success: false,
-      error: 'Internal server error: ' + error.toString()
+      error: 'Internal server error: ' + error.toString(),
     }, 500);
   } finally {
-    lock.releaseLock();
+    if (lockHeld) {
+      lock.releaseLock();
+    }
   }
 }
 
 // ============================================================================
 // SUBMISSION PROCESSING
 // ============================================================================
+
+/**
+ * Map display tab names to header config keys.
+ */
+function headerKeyForSheet(sheetName) {
+  if (sheetName === 'Contact Leads') return 'Contact_Leads';
+  return sheetName;
+}
+
+/**
+ * Resolve sheet tab (handles legacy tab names like "Contact Leads").
+ */
+function resolveSheetTab(formType, requestedTab) {
+  const expectedTab = SHEET_TABS[formType];
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  if (requestedTab === expectedTab && ss.getSheetByName(expectedTab)) {
+    return expectedTab;
+  }
+  if (ss.getSheetByName(expectedTab)) {
+    return expectedTab;
+  }
+  if (requestedTab && ss.getSheetByName(requestedTab)) {
+    return requestedTab;
+  }
+  if (formType === 'contact' && ss.getSheetByName('Contact Leads')) {
+    return 'Contact Leads';
+  }
+  return expectedTab;
+}
 
 /**
  * Process form submission and route to appropriate sheet
@@ -228,20 +265,13 @@ function processSubmission(payload) {
       };
     }
     
-    // Validate sheet_tab matches form_type
-    const expectedTab = SHEET_TABS[form_type];
-    if (sheet_tab !== expectedTab) {
-      return {
-        success: false,
-        error: `Sheet tab mismatch. Expected: ${expectedTab}, Received: ${sheet_tab}`
-      };
-    }
-    
+    const resolvedTab = resolveSheetTab(form_type, sheet_tab);
+
     // Get or create sheet
-    const sheet = getOrCreateSheet(sheet_tab);
+    const sheet = getOrCreateSheet(resolvedTab);
     
     // Ensure headers exist
-    ensureHeaders(sheet, sheet_tab);
+    ensureHeaders(sheet, headerKeyForSheet(resolvedTab));
     
     // Prepare row data
     const rowData = prepareRowData(form_type, data, source_page, submitted_at);
@@ -250,14 +280,14 @@ function processSubmission(payload) {
     sheet.appendRow(rowData);
     
     // Log successful submission
-    console.log(`Successfully submitted ${form_type} to ${sheet_tab}`);
+    console.log(`Successfully submitted ${form_type} to ${resolvedTab}`);
     
     return {
       success: true,
       message: 'Form submitted successfully',
       data: {
         form_type: form_type,
-        sheet_tab: sheet_tab,
+        sheet_tab: resolvedTab,
         timestamp: new Date().toISOString()
       }
     };
@@ -272,17 +302,24 @@ function processSubmission(payload) {
 }
 
 /**
- * Get or create sheet by name
+ * Get or create sheet by name (supports common tab name variants).
  */
 function getOrCreateSheet(sheetName) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(sheetName);
-  
+
+  if (!sheet && sheetName === 'Contact_Leads') {
+    sheet = ss.getSheetByName('Contact Leads');
+  }
+  if (!sheet && sheetName === 'Contact Leads') {
+    sheet = ss.getSheetByName('Contact_Leads');
+  }
+
   if (!sheet) {
     sheet = ss.insertSheet(sheetName);
     console.log(`Created new sheet: ${sheetName}`);
   }
-  
+
   return sheet;
 }
 
@@ -344,20 +381,6 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         submittedAtTime
       ];
       
-    case 'job_application':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.roleTitle || '',
-        data.name || '',
-        data.email || '',
-        data.phone || '',
-        data.resumeUrl || '',
-        data.coverLetter || '',
-        data.experience || '',
-        submittedAtTime
-      ];
-      
     case 'chatbot_brand':
       return [
         timestamp,
@@ -379,8 +402,9 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         data.industries || '',
         data.budget || '',
         data.cities || '',
-        data.roi || '',
         data.timeline || '',
+        data.contact_name || '',
+        data.contact_phone || '',
         submittedAtTime
       ];
 

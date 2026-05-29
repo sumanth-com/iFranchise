@@ -1,6 +1,5 @@
 import { franchiseOpportunities, franchiseSlugToId } from '../data/franchiseData';
 import { getBlogBySlug } from '../components/blogData';
-import { ROLES } from '../components/careersData';
 import { STATIC_PAGE_SEO } from './staticPages';
 import { absoluteUrl, truncateMeta, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
 
@@ -20,12 +19,6 @@ const SLUG_TO_FRANCHISE_ID = franchiseSlugToId;
 function getBlogSlugFromPath(pathname) {
   const parts = pathname.split('/').filter(Boolean);
   if (parts[0] !== 'blog' || parts.length < 2) return '';
-  return parts[1];
-}
-
-function getCareerRoleIdFromPath(pathname) {
-  const parts = pathname.split('/').filter(Boolean);
-  if (parts[0] !== 'careers' || parts.length < 2) return '';
   return parts[1];
 }
 
@@ -89,28 +82,6 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         robots: 'noindex, nofollow',
       };
       canonicalPath = pathname;
-    }
-  }
-
-  if (logicalPathname === '/career-detail') {
-    const roleId = getCareerRoleIdFromPath(pathname);
-    const role = ROLES.find((r) => r.id === roleId);
-    if (role) {
-      canonicalPath = `/careers/${role.id}`;
-      entry = {
-        title: `${role.title} | Careers | iFranchise`,
-        description: truncateMeta(
-          `Apply for ${role.title} at iFranchise. ${role.location} · ${role.type} · ${role.salary}.`,
-        ),
-        keywords: `${role.title} job, iFranchise hiring, ${role.dept} jobs`,
-        canonicalPath,
-        ogTitle: `${role.title} | iFranchise Careers`,
-        ogDescription: truncateMeta(`Join iFranchise as ${role.title}. View responsibilities and apply.`),
-        ogType: 'website',
-        robots: 'index, follow',
-      };
-    } else {
-      entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
     }
   }
 

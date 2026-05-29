@@ -68,15 +68,6 @@ const FOOTER_LOCATION_ICON = (
   </svg>
 );
 
-function scrollToCareerApply() {
-  const el = document.getElementById('career-apply');
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return;
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
 const CTA_CONTENT = {
   default: {
     heading: 'Ready to Build, Invest, or Expand?',
@@ -85,14 +76,6 @@ const CTA_CONTENT = {
     trust: 'Trusted by 1,200+ founders.',
     primary: { label: 'Explore Opportunities', action: () => navigateTo('/franchise-opportunities') },
     secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
-  },
-  'careers-detail': {
-    heading: 'Ready to Join Our Team?',
-    description:
-      "Help us build India's franchise intelligence platform. Submit your application above, or explore other open roles across design, growth, engineering, and operations.",
-    trust: 'We read every application - Response within 5 business days.',
-    primary: { label: 'Apply for This Role', action: scrollToCareerApply },
-    secondary: { label: 'View All Open Roles', action: () => navigateTo('/careers') },
   },
 };
 

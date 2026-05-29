@@ -162,17 +162,6 @@ export function buildSchemasForRoute(seo, context = {}) {
     });
   }
 
-  if (seo.logicalPathname === '/career-detail' && context.careerRole) {
-    schemas.push({
-      id: 'breadcrumbs',
-      data: buildBreadcrumbSchema([
-        { name: 'Home', path: '/' },
-        { name: 'Careers', path: '/careers' },
-        { name: context.careerRole.title, path: seo.canonicalPath },
-      ]),
-    });
-  }
-
   if (seo.logicalPathname === '/franchise-details' && context.franchiseBrand) {
     schemas.push({
       id: 'breadcrumbs',

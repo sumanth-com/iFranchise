@@ -40,7 +40,6 @@ const BlogDetailPage          = lazy(() => import('./components/BlogDetailPage')
 const ServicesPage            = lazy(() => import('./components/ServicesPage'));
 const LicensesPage            = lazy(() => import('./components/LicensesPage'));
 const CareersPage             = lazy(() => import('./components/CareersPage'));
-const CareerDetailPage        = lazy(() => import('./components/CareerDetailPage'));
 const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPage'));
 const FAQPage                 = lazy(() => import('./components/FAQPage'));
 
@@ -284,7 +283,6 @@ function App() {
   const isLicensesPage            = pathname === '/licenses';
   const isServicesPage            = pathname === '/services';
   const isCareersPage             = pathname === '/careers';
-  const isCareerDetailPage        = pathname === '/career-detail';
   const isNotFoundPage            = pathname === '/404';
   const isBlogPage                = pathname === '/blog';
   const isBlogDetailPage          = pathname === '/blog-detail';
@@ -339,7 +337,7 @@ function App() {
       <main
         id="main-content"
         data-phase={pagePhase === 'idle' ? undefined : pagePhase}
-        className={`relative z-10 ${isCareerDetailPage || isHomePage ? '' : 'pt-16'}`}
+        className={`relative z-10 ${isHomePage ? '' : 'pt-16'}`}
         style={{
           opacity: pagePhase === 'idle' ? 1 : 0,
           transition: pagePhase === 'idle'
@@ -358,7 +356,6 @@ function App() {
             : isPrivacyPolicyPage ? <PrivacyPolicyPage />
             : isServicesPage ? <ServicesPage />
             : isCareersPage ? <CareersPage />
-            : isCareerDetailPage ? <CareerDetailPage roleId={window.location.pathname.split('/careers/')[1]} />
             : isFranchiseOpportunitiesPage ? <FranchiseOpportunitiesPage />
             : isFranchiseDetailsPage ? <FranchiseDetailsPage />
             : isTeamPage ? <TeamPage />
@@ -375,7 +372,6 @@ function App() {
       </main>
 
       <PreFooterCTA
-        variant={isCareerDetailPage ? 'careers-detail' : 'default'}
         shellClassName={
           isFranchiseOpportunitiesPage
             ? FRANCHISE_OPPORTUNITIES_SHELL

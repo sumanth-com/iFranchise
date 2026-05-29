@@ -1,5 +1,5 @@
 // --- Shared careers data -----------------------------------------------------
-// Single source of truth for all role data, used by CareersPage and CareerDetailPage.
+// Shared careers content (culture page; role listings reserved for future hiring).
 
 /** Set true when live roles are published on CareersPage. */
 export const HIRING_ACTIVE = false;

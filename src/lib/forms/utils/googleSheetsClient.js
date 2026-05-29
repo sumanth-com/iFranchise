@@ -40,22 +40,26 @@ function successPayload(payload) {
  * POST payload to Apps Script. Resolves when the browser has sent the request.
  */
 async function postToAppsScript(payload, signal) {
-  let body;
+  let jsonBody;
   try {
-    body = JSON.stringify(payload);
+    jsonBody = JSON.stringify(payload);
   } catch {
     throw new Error('SERIALIZE_ERROR');
   }
 
+  // Form-encoded field is the most reliable transport for Google Apps Script web apps.
+  const formBody = new URLSearchParams({ payload: jsonBody }).toString();
+
   await fetchWithRetry(GOOGLE_APPS_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body,
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: formBody,
     signal,
     timeout: 12_000,
     retries: 1,
   });
+
   return successPayload(payload);
 }
 

@@ -25,13 +25,6 @@ export const FORM_REGISTRY = [
     hook: 'useFormSubmission',
   },
   {
-    id: 'career_detail',
-    label: 'Careers / Job Applications',
-    submitter: 'submitJobApplication',
-    sourcePage: 'career_detail',
-    hook: 'useFormSubmission',
-  },
-  {
     id: 'expansion_assistant_brand',
     label: 'Chatbot. Brand lead',
     submitter: 'submitChatbotLead',
@@ -58,5 +51,12 @@ export const FORM_REGISTRY = [
     submitter: 'submitBrochureDownload',
     sourcePage: 'franchise_details_brochure',
     hook: 'useFormSubmission',
+  },
+  {
+    id: 'franchise_details_inquiry',
+    label: 'Franchise interest inquiry',
+    submitter: 'submitFranchiseInquiry',
+    sourcePage: 'franchise_details_inquiry',
+    hook: 'FranchiseInquiryModal',
   },
 ];

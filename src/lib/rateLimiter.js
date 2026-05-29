@@ -19,7 +19,6 @@ export function recordSubmission() {
 export const RATE_LIMIT_KEYS = {
   CONTACT:           'contact',
   BRAND_APPLICATION: 'brand_application',
-  JOB_APPLICATION:   'job_application',
   CHATBOT_BRAND:     'chatbot_brand',
   CHATBOT_INVESTOR:  'chatbot_investor',
   CHATBOT_STRATEGY:  'chatbot_strategy',

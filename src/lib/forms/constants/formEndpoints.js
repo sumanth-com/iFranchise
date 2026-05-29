@@ -28,7 +28,6 @@ export const GOOGLE_APPS_SCRIPT_URL = import.meta.env.VITE_GOOGLE_APPS_SCRIPT_UR
 export const SHEET_TABS = {
   [FORM_TYPES.CONTACT]: 'Contact_Leads',
   [FORM_TYPES.BRAND_APPLICATION]: 'Brand_Applications',
-  [FORM_TYPES.JOB_APPLICATION]: 'Job_Applications',
   [FORM_TYPES.CHATBOT_BRAND]: 'Chatbot_Brands',
   [FORM_TYPES.CHATBOT_INVESTOR]: 'Chatbot_Investors',
   [FORM_TYPES.CHATBOT_STRATEGY]: 'Chatbot_Strategy',
@@ -43,8 +42,6 @@ export const SHEET_TABS = {
 export const SOURCE_PAGES = {
   CONTACT_PAGE: 'contact_page',
   BRAND_OWNERS_PAGE: 'brand_owners_page',
-  CAREERS_PAGE: 'careers_page',
-  CAREER_DETAIL: 'career_detail',
   HOMEPAGE: 'homepage',
   CHATBOT: 'chatbot',
   FRANCHISE_DETAILS: 'franchise_details_brochure',
