@@ -153,13 +153,13 @@ function App() {
   // Warm likely next routes after navigation (idle, non-blocking)
   useEffect(() => {
     const RELATED_PREFETCH = {
-      '/': ['/franchise-opportunities', '/list-your-brand', '/contact'],
-      '/list-your-brand': ['/contact', '/franchise-opportunities', '/services'],
-      '/franchise-opportunities': ['/franchise-details', '/contact', '/list-your-brand'],
-      '/about': ['/team', '/contact', '/services'],
-      '/services': ['/contact', '/list-your-brand', '/franchise-opportunities'],
-      '/contact': ['/list-your-brand', '/franchise-opportunities'],
-      '/blog': ['/blog-detail', '/contact'],
+      '/': ['/franchise-opportunities', '/list-your-brand', '/contact-us'],
+      '/list-your-brand': ['/contact-us', '/franchise-opportunities', '/services'],
+      '/franchise-opportunities': ['/franchise-details', '/contact-us', '/list-your-brand'],
+      '/about-us': ['/team', '/contact-us', '/services'],
+      '/services': ['/contact-us', '/list-your-brand', '/franchise-opportunities'],
+      '/contact-us': ['/list-your-brand', '/franchise-opportunities'],
+      '/blog': ['/blog-detail', '/contact-us'],
     };
     const targets = RELATED_PREFETCH[pathname];
     if (!targets?.length) return undefined;
@@ -287,13 +287,13 @@ function App() {
     };
   }, [pathname]);
 
-  const isAboutPage               = pathname === '/about';
+  const isAboutPage               = pathname === '/about-us';
   const isTeamPage                = pathname === '/team';
   const isFranchiseDetailsPage    = pathname === '/franchise-details';
   const isFranchiseOpportunitiesPage = pathname === '/franchise-opportunities';
   const isPrivacyPolicyPage       = pathname === '/privacy-policy';
   const isTermsPage               = pathname === '/terms-and-conditions';
-  const isContactPage             = pathname === '/contact';
+  const isContactPage             = pathname === '/contact-us';
   const isLicensesPage            = pathname === '/licenses';
   const isServicesPage            = pathname === '/services';
   const isCareersPage             = pathname === '/careers';

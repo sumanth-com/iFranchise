@@ -31,12 +31,12 @@ export const STATIC_PAGE_SEO = {
       "Build, invest, or expand with India's trusted franchise marketplace and growth partner.",
     ogType: 'website',
   },
-  '/about': {
+  '/about-us': {
     title: 'About iFranchise | Mission, Vision & Franchise Expertise',
     description:
       'Learn how iFranchise helps investors, entrepreneurs, and brand owners navigate franchise discovery, expansion, and growth across India.',
     keywords: 'about iFranchise, franchise company India, franchise platform',
-    canonicalPath: '/about',
+    canonicalPath: '/about-us',
     ogTitle: 'About iFranchise',
     ogDescription: 'Our mission is to make franchise growth accessible, data-driven, and scalable.',
     ogType: 'website',
@@ -101,12 +101,12 @@ export const STATIC_PAGE_SEO = {
     ogDescription: 'Future opportunities at iFranchise. Follow on LinkedIn for updates as we grow our team.',
     ogType: 'website',
   },
-  '/contact': {
+  '/contact-us': {
     title: 'Contact iFranchise | Talk to Our Franchise Experts',
     description:
       'Get in touch with iFranchise for franchise investment, brand listing, partnerships, and support. We respond within 24 hours.',
     keywords: 'contact iFranchise, franchise inquiry, franchise consultation',
-    canonicalPath: '/contact',
+    canonicalPath: '/contact-us',
     ogTitle: 'Contact iFranchise',
     ogDescription: 'Speak with our franchise growth team today.',
     ogType: 'website',

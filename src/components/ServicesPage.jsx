@@ -936,7 +936,7 @@ export default function ServicesPage() {
                 type="button"
                 size="lg"
                 className="services-page-cta-btn"
-                onClick={() => navigateTo('/contact')}
+                onClick={() => navigateTo('/contact-us')}
               >
                 Start Your Expansion Journey
               </CtaButton>
@@ -993,7 +993,7 @@ export default function ServicesPage() {
                     type="button"
                     size="lg"
                     className="services-page-cta-btn"
-                    onClick={() => navigateTo('/contact')}
+                    onClick={() => navigateTo('/contact-us')}
                   >
                     Grow Your Brand with iFranchise
                   </CtaButton>
@@ -1329,7 +1329,7 @@ export default function ServicesPage() {
               type="button"
               size="lg"
               className="services-page-cta-btn"
-              onClick={() => navigateTo('/contact')}
+              onClick={() => navigateTo('/contact-us')}
             >
               Discuss Your Industry
             </CtaButton>

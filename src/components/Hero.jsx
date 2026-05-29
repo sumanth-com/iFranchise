@@ -98,7 +98,7 @@ const growthCards = [
     description:
       'Turn your successful business into a scalable franchise model. We help brand owners structure, launch, and grow through strategic franchising systems, legal frameworks, and investor connections.',
     linkText: 'For Brand Owners',
-    href: '/contact',
+    href: '/contact-us',
     image:
       'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=640&q=80',
     fallbackImage:
@@ -116,7 +116,7 @@ const growthCards = [
     description:
       'Discover vetted franchise businesses across high-growth industries. Find the right investment based on your budget, goals, and market demand ? with clarity and confidence.',
     linkText: 'For Investors',
-    href: '/contact',
+    href: '/contact-us',
     image:
       'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=640&q=80',
     fallbackImage:

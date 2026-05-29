@@ -16,14 +16,14 @@ const siteUrl = (process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://w
 /** Canonical main routes only (primary nav + legal). */
 const MAIN_PAGES = [
   { path: '/', changefreq: 'daily', priority: '1.0' },
-  { path: '/about', changefreq: 'monthly', priority: '0.8' },
+  { path: '/about-us', changefreq: 'monthly', priority: '0.8' },
   { path: '/team', changefreq: 'monthly', priority: '0.6' },
   { path: '/services', changefreq: 'weekly', priority: '0.9' },
   { path: '/franchise-opportunities', changefreq: 'daily', priority: '0.95' },
   { path: '/list-your-brand', changefreq: 'weekly', priority: '0.9' },
   { path: '/blog', changefreq: 'weekly', priority: '0.85' },
   { path: '/careers', changefreq: 'weekly', priority: '0.75' },
-  { path: '/contact', changefreq: 'monthly', priority: '0.8' },
+  { path: '/contact-us', changefreq: 'monthly', priority: '0.8' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms-and-conditions', changefreq: 'yearly', priority: '0.3' },
   { path: '/licenses', changefreq: 'yearly', priority: '0.3' },

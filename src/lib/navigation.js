@@ -4,6 +4,7 @@
  */
 
 import { prefetchRoute } from './routePrefetch';
+import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
 
 export const NAVIGATE_EVENT = 'ifr:navigate';
 
@@ -14,9 +15,19 @@ export function scrollStorageKey(pathname = window.location.pathname, search = w
 }
 
 /** Logical route key used by App.jsx (pathname aliases, detail routes). */
+/** Replace legacy URLs in the address bar with canonical paths (e.g. /contact → /contact-us). */
+export function canonicalizePublicUrl() {
+  if (typeof window === 'undefined') return;
+  const { pathname, search, hash } = window.location;
+  const target = LEGACY_PATH_REDIRECTS[pathname];
+  if (!target) return;
+  history.replaceState(history.state, '', `${target}${search}${hash}`);
+}
+
 export function getLogicalPathname() {
   const pathname = window.location.pathname;
-  if (pathname === '/about-us') return '/about';
+  if (pathname === '/about' || pathname === ROUTES.ABOUT) return ROUTES.ABOUT;
+  if (pathname === '/contact' || pathname === ROUTES.CONTACT) return ROUTES.CONTACT;
   if (pathname === '/meet-the-team') return '/team';
   if (pathname === '/franchise') return '/franchise-details';
   if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) {
@@ -25,7 +36,6 @@ export function getLogicalPathname() {
   if (pathname === '/privacy-policy') return '/privacy-policy';
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
-  if (pathname === '/contact-us') return '/contact';
   if (pathname === '/blog') return '/blog';
   if (pathname === '/services') return '/services';
   if (pathname === '/careers') return '/careers';
@@ -42,14 +52,14 @@ export function getLogicalPathname() {
   if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
   const knownPaths = [
     '/',
-    '/about',
+    ROUTES.ABOUT,
     '/team',
     '/franchise-details',
     '/franchise-opportunities',
     '/privacy-policy',
     '/terms-and-conditions',
     '/licenses',
-    '/contact',
+    ROUTES.CONTACT,
     '/blog',
     '/services',
     '/careers',
@@ -190,6 +200,7 @@ export function dispatchRouteChange() {
 }
 
 export function initScrollRestoration() {
+  canonicalizePublicUrl();
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }

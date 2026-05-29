@@ -1,13 +1,15 @@
+import { ROUTES } from './routes.js';
+
 /** Mirrors App.jsx lazy() imports for idle / link-hover prefetch. */
 const ROUTE_LOADERS = {
-  '/about': () => import('../components/AboutPage'),
+  [ROUTES.ABOUT]: () => import('../components/AboutPage'),
   '/team': () => import('../components/TeamPage'),
   '/franchise-details': () => import('../components/FranchiseDetailsPage'),
   '/franchise-opportunities': () => import('../components/FranchiseOpportunitiesPage'),
   '/privacy-policy': () => import('../components/PrivacyPolicyPage'),
   '/terms-and-conditions': () => import('../components/TermsConditionsPage'),
   '/404': () => import('../components/NotFoundPage'),
-  '/contact': () => import('../components/ContactPage'),
+  [ROUTES.CONTACT]: () => import('../components/ContactPage'),
   '/blog': () => import('../components/BlogPage'),
   '/blog-detail': () => import('../components/BlogDetailPage'),
   '/services': () => import('../components/ServicesPage'),
@@ -20,7 +22,7 @@ const prefetched = new Set();
 
 /** Resolve logical route from a pathname (aligned with navigation.js). */
 export function logicalPathFromPathname(pathname) {
-  if (pathname === '/about-us') return '/about';
+  if (pathname === '/about' || pathname === ROUTES.ABOUT) return ROUTES.ABOUT;
   if (pathname === '/meet-the-team') return '/team';
   if (pathname === '/franchise') return '/franchise-details';
   if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) {
@@ -29,7 +31,7 @@ export function logicalPathFromPathname(pathname) {
   if (pathname === '/privacy-policy') return '/privacy-policy';
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
-  if (pathname === '/contact-us') return '/contact';
+  if (pathname === '/contact' || pathname === ROUTES.CONTACT) return ROUTES.CONTACT;
   if (pathname === '/blog') return '/blog';
   if (pathname === '/services') return '/services';
   if (pathname === '/careers') return '/careers';
@@ -45,14 +47,14 @@ export function logicalPathFromPathname(pathname) {
   if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
   const knownPaths = [
     '/',
-    '/about',
+    ROUTES.ABOUT,
     '/team',
     '/franchise-details',
     '/franchise-opportunities',
     '/privacy-policy',
     '/terms-and-conditions',
     '/licenses',
-    '/contact',
+    ROUTES.CONTACT,
     '/blog',
     '/services',
     '/careers',
@@ -92,8 +94,8 @@ export function prefetchRoute(pathnameOrHref) {
 const COMMON_IDLE_ROUTES = [
   '/franchise-opportunities',
   '/list-your-brand',
-  '/about',
-  '/contact',
+  ROUTES.ABOUT,
+  ROUTES.CONTACT,
   '/services',
 ];
 

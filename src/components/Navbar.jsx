@@ -594,7 +594,7 @@ function CompanyNavIconWrap({ children }) {
 }
 
 const COMPANY_ITEMS = [
-  { title: 'About Us', description: 'Our story, mission, and leadership.', Icon: AboutIcon, path: '/about' },
+  { title: 'About Us', description: 'Our story, mission, and leadership.', Icon: AboutIcon, path: '/about-us' },
   { title: 'Careers', description: 'Build your career with iFranchise.', Icon: TeamIcon, path: '/careers' },
 ];
 
@@ -777,7 +777,7 @@ function Navbar() {
           >
             <button
               type="button"
-              onClick={() => navigateTo('/about')}
+              onClick={() => navigateTo('/about-us')}
               className={`${NAV_LINK_BASE} ${
                 activeDropdown === 'company' ? NAV_LINK_ACTIVE : NAV_LINK_IDLE
               }`}
@@ -905,8 +905,8 @@ function Navbar() {
           {/* Contact Us */}
           <li>
             <a
-              href="/contact"
-              onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
+              href="/contact-us"
+              onClick={(e) => { e.preventDefault(); navigateTo('/contact-us'); }}
               className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
             >
               Contact Us
@@ -1090,8 +1090,8 @@ function Navbar() {
 
                   <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
-                    href="/contact"
-                    onClick={(e) => { e.preventDefault(); navigateTo('/contact'); }}
+                    href="/contact-us"
+                    onClick={(e) => { e.preventDefault(); navigateTo('/contact-us'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Contact Us

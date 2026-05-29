@@ -1542,7 +1542,7 @@ const SUPPORT_LINKS = [
   {
     title: 'Contact our team',
     desc: 'Talk to franchise advisors',
-    path: '/contact',
+    path: '/contact-us',
     icon: <MailMiniIcon />,
   },
 ];

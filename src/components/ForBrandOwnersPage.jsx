@@ -647,7 +647,7 @@ function ProblemSolutionPanel({ item, active, setActive, className = '' }) {
           </div>
           <button
             type="button"
-            onClick={() => { navigateTo('/contact'); }}
+            onClick={() => { navigateTo('/contact-us'); }}
             className="lyb-problem-solution-cta group inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-5 py-2.5 text-[0.78rem] font-semibold shadow-md transition hover:bg-violet-500"
           >
             Get This Solution
@@ -1062,7 +1062,7 @@ function ServicesStyleIndustriesSection() {
           <p className="lyb-section-subtext mb-5 text-sm">
             Don&apos;t see your industry? We work with businesses across all sectors.
           </p>
-          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact-us')}>
             Discuss Your Industry
           </CtaButton>
         </motion.div>
@@ -1409,7 +1409,7 @@ function CaseStudiesSection() {
             </p>
             <CtaButton
               className="lyb-proven-sidebar-cta-btn mx-auto w-full max-w-xs justify-center"
-              onClick={() => { navigateTo('/contact'); }}
+              onClick={() => { navigateTo('/contact-us'); }}
             >
               Start Your Franchise Journey
             </CtaButton>
@@ -1449,7 +1449,7 @@ function CaseStudiesSection() {
               </p>
               <CtaButton
                 className="lyb-proven-sidebar-cta-btn mx-auto w-full max-w-xs justify-center"
-                onClick={() => { navigateTo('/contact'); }}
+                onClick={() => { navigateTo('/contact-us'); }}
               >
                 Start Your Franchise Journey
               </CtaButton>
@@ -1561,7 +1561,7 @@ function ListYourBrandFAQSection() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => { navigateTo('/contact'); }}
+                  onClick={() => { navigateTo('/contact-us'); }}
                   className="lyb-faq-cta-secondary w-full rounded-xl py-3 text-sm font-semibold transition"
                 >
                   Book expansion call

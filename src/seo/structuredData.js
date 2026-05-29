@@ -114,7 +114,7 @@ export function buildServiceSchema() {
 }
 
 const BREADCRUMB_MAP = {
-  '/about': [{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }],
+  '/about-us': [{ name: 'Home', path: '/' }, { name: 'About Us', path: '/about-us' }],
   '/team': [{ name: 'Home', path: '/' }, { name: 'Team', path: '/team' }],
   '/services': [{ name: 'Home', path: '/' }, { name: 'Services', path: '/services' }],
   '/franchise-opportunities': [
@@ -124,7 +124,7 @@ const BREADCRUMB_MAP = {
   '/list-your-brand': [{ name: 'Home', path: '/' }, { name: 'List Your Brand', path: '/list-your-brand' }],
   '/blog': [{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog' }],
   '/careers': [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers' }],
-  '/contact': [{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }],
+  '/contact-us': [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact-us' }],
   '/privacy-policy': [{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy-policy' }],
   '/terms-and-conditions': [
     { name: 'Home', path: '/' },

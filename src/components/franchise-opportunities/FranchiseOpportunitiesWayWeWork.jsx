@@ -79,7 +79,7 @@ export default function FranchiseOpportunitiesWayWeWork() {
         </ol>
 
         <div className="mt-8 flex justify-center">
-          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact')}>
+          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact-us')}>
             Talk to an advisor
           </CtaButton>
         </div>

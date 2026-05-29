@@ -4,9 +4,9 @@ import { STATIC_PAGE_SEO } from './staticPages';
 import { absoluteUrl, truncateMeta, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
 
 const PATHNAME_ALIASES = {
-  '/about-us': '/about',
+  '/about': '/about-us',
+  '/contact': '/contact-us',
   '/meet-the-team': '/team',
-  '/contact-us': '/contact',
   '/for-brand-owners': '/list-your-brand',
   '/brand-owners': '/list-your-brand',
   '/featured-opportunities': '/franchise-opportunities',

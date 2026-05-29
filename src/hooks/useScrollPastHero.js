@@ -5,7 +5,7 @@ const MOBILE_MAX_WIDTH = 767;
 function showsAssistantImmediately(pathname) {
   return (
     pathname === '/' ||
-    pathname === '/contact' ||
+    pathname === '/contact-us' ||
     pathname === '/franchise-opportunities' ||
     pathname === '/franchise-details'
   );
