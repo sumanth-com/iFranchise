@@ -5929,6 +5929,10 @@ html[data-theme='light'] .franchise-details-page .fd-hero-story-kicker {
   color: #6d28d9 !important;
 }
 
+html[data-theme='light'] .franchise-details-page .fd-hero-story-highlights {
+  color: #6d28d9 !important;
+}
+
 html[data-theme='light'] .franchise-details-page .fd-hero-story-title {
   color: #000000 !important;
 }
@@ -5968,6 +5972,10 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story {
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-kicker {
   color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-highlights {
+  color: #a78bfa !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-title {

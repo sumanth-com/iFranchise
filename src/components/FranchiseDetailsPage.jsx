@@ -323,6 +323,13 @@ function FranchiseDetailsPage() {
     [selectedFranchiseId]
   );
 
+  const franchiseOpportunityTitle = useMemo(
+    () => `${selectedFranchise?.name ?? ''} FRANCHISE OPPORTUNITY`.trim(),
+    [selectedFranchise?.name],
+  );
+
+  const franchiseTitleSingleLine = franchiseOpportunityTitle.length <= 34;
+
   const galleryImages = useMemo(
     () => resolveDetailGalleryImages(selectedFranchise),
     [selectedFranchise]
@@ -533,7 +540,7 @@ function FranchiseDetailsPage() {
                     }}
                   />
                 ) : null}
-                <h1 className={`fd-copy fd-heading ${heroDisplayClass(true)}`}>{selectedFranchise.name}</h1>
+                <p className={`fd-copy fd-heading ${heroDisplayClass(true)}`}>{selectedFranchise.name}</p>
                 <span className="rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-semibold text-emerald-700">{selectedFranchise.status}</span>
                 <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-semibold text-violet-700">{selectedFranchise.badge}</span>
               </div>
@@ -558,14 +565,20 @@ function FranchiseDetailsPage() {
 
           {/* Key details (left) + gallery (right) */}
           <div className="fd-hero-split overflow-hidden rounded-2xl border border-slate-200 shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
-            <div className="fd-hero-split-grid grid grid-cols-1 lg:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)] xl:grid-cols-[minmax(280px,38%)_minmax(0,1fr)] lg:items-stretch">
+            <div className="fd-hero-split-grid grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] xl:grid-cols-[minmax(300px,42%)_minmax(0,1fr)] lg:items-stretch">
               <div className="fd-hero-story flex flex-col justify-center gap-3 border-b border-slate-200 p-5 sm:p-6 lg:gap-3.5 lg:border-b-0 lg:border-r lg:py-6 lg:pl-6 lg:pr-5 xl:py-7">
-                <div className="text-center lg:text-left">
-                  <p className="fd-hero-story-kicker fd-field-label text-[0.65rem] tracking-[0.14em]">
-                    Opportunity highlights
-                  </p>
-                  <p className="fd-hero-story-title fd-heading mt-1 text-base leading-snug sm:text-lg lg:text-[1.05rem] xl:text-lg">
-                    {selectedFranchise.name}
+                <div className="min-w-0 text-center lg:text-left">
+                  <h1
+                    className={`fd-hero-story-title fd-heading mt-0 font-bold leading-snug tracking-tight ${
+                      franchiseTitleSingleLine
+                        ? 'text-[clamp(1.1875rem,3.8vw,1.5625rem)] whitespace-nowrap'
+                        : 'text-[clamp(0.8125rem,2.4vw,1.0625rem)] text-balance break-words'
+                    }`}
+                  >
+                    {franchiseOpportunityTitle}
+                  </h1>
+                  <p className="fd-hero-story-highlights fd-heading mt-1 text-base font-bold leading-snug sm:text-lg lg:text-[1.05rem] xl:text-lg">
+                    Highlights
                   </p>
                 </div>
 
