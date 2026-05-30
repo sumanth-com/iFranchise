@@ -434,7 +434,7 @@ function BlogDetailPage() {
     };
   }, []);
 
-  const article = useMemo(() => getBlogBySlug(slug) || blogPosts[0] || null, [slug]);
+  const article = useMemo(() => (slug ? getBlogBySlug(slug) : null), [slug]);
   const sections = article?.sections ?? [];
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -25,6 +25,7 @@ export const franchiseSlugToId = Object.fromEntries(
 );
 
 export function getFranchiseDetailById(id) {
+  if (id == null || id === '') return null;
   const key = String(id);
   return franchiseDetailsById[key] || franchiseDetailsById['1'] || null;
 }

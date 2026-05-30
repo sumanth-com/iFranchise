@@ -512,6 +512,24 @@ function FranchiseDetailsPage() {
     return null;
   };
 
+  if (!selectedFranchise) {
+    return (
+      <main className={`franchise-details-page py-10 sm:py-12 lg:py-14 ${FRANCHISE_DETAILS_SHELL}`}>
+        <div className="mx-auto max-w-lg rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <h1 className="text-xl font-bold text-slate-900">Franchise not found</h1>
+          <p className="mt-2 text-sm text-slate-600">This franchise opportunity is unavailable or the link may be incorrect.</p>
+          <button
+            type="button"
+            onClick={() => navigateTo('/franchise-opportunities')}
+            className="btn-purple-solid mt-6 rounded-xl px-6 py-2.5 text-sm font-semibold text-white"
+          >
+            Browse opportunities
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className={`franchise-details-page py-10 sm:py-12 lg:py-14 ${FRANCHISE_DETAILS_SHELL}`}>
       <FranchiseInquiryLauncher

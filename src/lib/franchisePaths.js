@@ -26,6 +26,10 @@ export function resolveFranchiseIdFromLocation(pathname = '', search = '') {
     return null;
   }
 
+  if (pathname === '/franchise-details' || pathname === '/franchise') {
+    return params.get('id') || '1';
+  }
+
   return null;
 }
 
