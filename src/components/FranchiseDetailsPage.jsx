@@ -9,10 +9,14 @@ import BrochureDownloadButton from './BrochureDownloadButton';
 import FranchiseInquiryLauncher from './FranchiseInquiryLauncher';
 import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
 import {
-  franchiseSlugToId,
   getFranchiseDetailById,
   getSimilarFranchiseDetails,
 } from '../data/franchiseData';
+import {
+  getFranchiseDetailPath,
+  resolveFranchiseIdFromLocation,
+  canonicalizeFranchiseUrl,
+} from '../lib/franchisePaths';
 import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportunities/brandImages';
 import { formatReturnsDisplay } from '../data/opportunities/opportunityUtils.js';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
@@ -20,24 +24,8 @@ import FranchiseLocationsPanel from './franchise/FranchiseLocationsPanel';
 
 const tabs = ['Overview', 'Locations', 'FAQ', 'Reviews'];
 
-const getSelectedFranchiseId = () => {
-  const pathname = window.location.pathname;
-  const params = new URLSearchParams(window.location.search);
-  const idFromQuery = params.get('id');
-
-  if (idFromQuery) {
-    return idFromQuery;
-  }
-
-  if (pathname.startsWith('/franchise/')) {
-    const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
-    if (franchiseSlugToId[slug]) {
-      return franchiseSlugToId[slug];
-    }
-  }
-
-  return '1';
-};
+const getSelectedFranchiseId = () =>
+  resolveFranchiseIdFromLocation(window.location.pathname, window.location.search);
 
 const FRANCHISE_STAT_ITEMS = [
   { label: 'Investment', key: 'investment' },
@@ -359,6 +347,7 @@ function FranchiseDetailsPage() {
 
   useEffect(() => {
     const syncFromLocation = () => {
+      canonicalizeFranchiseUrl();
       setSelectedFranchiseId(getSelectedFranchiseId());
     };
 
@@ -373,13 +362,7 @@ function FranchiseDetailsPage() {
   const handleRelatedDetails = (id) => {
     const nextId = String(id);
     setSelectedFranchiseId(nextId);
-
-    const detail = getFranchiseDetailById(nextId);
-    if (detail?.slug) {
-      navigateTo(`/franchise/${detail.slug}`);
-    } else {
-      navigateTo(`/franchise-details?id=${nextId}`);
-    }
+    navigateTo(getFranchiseDetailPath(nextId));
   };
 
   const isOverviewTab = activeTab === 'Overview';

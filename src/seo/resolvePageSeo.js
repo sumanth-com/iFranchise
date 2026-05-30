@@ -90,11 +90,7 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     const franchise = franchiseId ? getFranchiseById(franchiseId) : null;
     if (franchise) {
       const brand = franchise.brandName;
-      const slugPart = pathname.startsWith('/franchise/')
-        ? pathname.replace('/franchise/', '').trim().toLowerCase()
-        : '';
-      const hasKnownSlug = slugPart && SLUG_TO_FRANCHISE_ID[slugPart];
-      canonicalPath = hasKnownSlug ? `/franchise/${slugPart}` : `/franchise-details?id=${franchise.id}`;
+      canonicalPath = franchise.slug ? `/franchise/${franchise.slug}` : pathname;
       const description = truncateMeta(
         franchise.metaDescription ||
           `${brand} franchise opportunity: investment range, business model, locations, and ROI. Apply or inquire on iFranchise.`,

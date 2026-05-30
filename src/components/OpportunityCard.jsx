@@ -1,4 +1,5 @@
 import { navigateTo } from '@/lib/navigation';
+import { getFranchiseDetailPath } from '@/lib/franchisePaths';
 import { unsplashSrcSet } from '@/lib/unsplashResponsive';
 
 function getModelPill(model) {
@@ -16,7 +17,7 @@ function getModelPill(model) {
 
 export default function OpportunityCard({ opportunity }) {
   const handleViewDetails = () => {
-    navigateTo(`/franchise-details?id=${opportunity.id}`);
+    navigateTo(getFranchiseDetailPath(opportunity));
   };
 
   const modelPill = getModelPill(opportunity.model);

@@ -4,6 +4,7 @@
  */
 
 import { prefetchRoute } from './routePrefetch';
+import { canonicalizeFranchiseUrl } from './franchisePaths.js';
 import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
 
 export const NAVIGATE_EVENT = 'ifr:navigate';
@@ -201,6 +202,7 @@ export function dispatchRouteChange() {
 
 export function initScrollRestoration() {
   canonicalizePublicUrl();
+  canonicalizeFranchiseUrl();
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
