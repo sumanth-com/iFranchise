@@ -15,10 +15,10 @@ function BlogCard({ post, priority = false }) {
       className="group overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
     >
       <a
-        href={`/blog/${post.slug}`}
+        href={`/blogs/${post.slug}`}
         onClick={(event) => {
           event.preventDefault();
-          navigateTo(`/blog/${post.slug}`);
+          navigateTo(`/blogs/${post.slug}`);
         }}
         className="block"
       >

@@ -55,7 +55,7 @@ const FOOTER_COLS = [
   {
     heading: 'Resources',
     links: [
-      { label: 'Blog', path: '/blog', dot: 'none' },
+      { label: 'Blogs', path: '/blogs', dot: 'none' },
       { label: 'FAQs', path: '/faq', dot: 'none' },
     ],
   },

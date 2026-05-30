@@ -610,13 +610,13 @@ const SERVICES_ITEMS = [
 
 // Blogs nav (Resources renamed) - active items only
 const BLOGS_NAV_ITEMS = [
-  { title: 'Blogs', description: 'Latest insights and updates', Icon: BlogIcon, path: '/blog' },
+  { title: 'Blogs', description: 'Latest insights and updates', Icon: BlogIcon, path: '/blogs' },
 ];
 
 /** @deprecated Hidden - restore when re-enabling Resources dropdown extras */
 const RESOURCES_ITEMS_HIDDEN = [
   { title: 'FAQs', description: 'Common questions answered', Icon: FAQIcon, path: '/services' },
-  { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blog' },
+  { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blogs' },
 ];
 
 /** @deprecated Hidden - Company dropdown right column (legal pages + Book A Call) */
@@ -894,8 +894,8 @@ function Navbar() {
           {/* Blogs - direct link */}
           <li>
             <a
-              href="/blog"
-              onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
+              href="/blogs"
+              onClick={(e) => { e.preventDefault(); navigateTo('/blogs'); }}
               className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
             >
               Blogs
@@ -1081,8 +1081,8 @@ function Navbar() {
 
                   <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
-                    href="/blog"
-                    onClick={(e) => { e.preventDefault(); navigateTo('/blog'); }}
+                    href="/blogs"
+                    onClick={(e) => { e.preventDefault(); navigateTo('/blogs'); }}
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Blogs

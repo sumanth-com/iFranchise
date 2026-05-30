@@ -42,7 +42,7 @@ const MAIN_PAGES = [
   { path: '/services', changefreq: 'weekly', priority: '0.9' },
   { path: '/franchise-opportunities', changefreq: 'daily', priority: '0.95' },
   { path: '/list-your-brand', changefreq: 'weekly', priority: '0.9' },
-  { path: '/blog', changefreq: 'weekly', priority: '0.85' },
+  { path: '/blogs', changefreq: 'weekly', priority: '0.85' },
   { path: '/careers', changefreq: 'weekly', priority: '0.75' },
   { path: '/contact-us', changefreq: 'monthly', priority: '0.8' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },

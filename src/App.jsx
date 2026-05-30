@@ -159,7 +159,7 @@ function App() {
       '/about-us': ['/team', '/contact-us', '/services'],
       '/services': ['/contact-us', '/list-your-brand', '/franchise-opportunities'],
       '/contact-us': ['/list-your-brand', '/franchise-opportunities'],
-      '/blog': ['/blog-detail', '/contact-us'],
+      '/blogs': ['/blog-detail', '/contact-us'],
     };
     const targets = RELATED_PREFETCH[pathname];
     if (!targets?.length) return undefined;
@@ -298,7 +298,7 @@ function App() {
   const isServicesPage            = pathname === '/services';
   const isCareersPage             = pathname === '/careers';
   const isNotFoundPage            = pathname === '/404';
-  const isBlogPage                = pathname === '/blog';
+  const isBlogPage                = pathname === '/blogs';
   const isBlogDetailPage          = pathname === '/blog-detail';
   const isListYourBrandPage       = pathname === '/list-your-brand';
   const isFAQPage                 = pathname === '/faq';

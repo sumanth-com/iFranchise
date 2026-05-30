@@ -81,12 +81,12 @@ export const STATIC_PAGE_SEO = {
     ogDescription: 'Connect with qualified franchise investors and grow your brand.',
     ogType: 'website',
   },
-  '/blog': {
+  '/blogs': {
     title: 'Franchise & Investment Insights | iFranchise Blog',
     description:
       'Practical franchise guides for investors and brand owners: evaluating opportunities, FOFO vs FICO, unit economics, and market trends in India.',
     keywords: 'franchise blog, investment guides, franchise news India, franchise resources',
-    canonicalPath: '/blog',
+    canonicalPath: '/blogs',
     ogTitle: 'iFranchise Blog',
     ogDescription: 'Insights for franchise investors and brand owners.',
     ogType: 'website',

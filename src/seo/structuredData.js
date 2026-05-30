@@ -122,7 +122,7 @@ const BREADCRUMB_MAP = {
     { name: 'Franchise Opportunities', path: '/franchise-opportunities' },
   ],
   '/list-your-brand': [{ name: 'Home', path: '/' }, { name: 'List Your Brand', path: '/list-your-brand' }],
-  '/blog': [{ name: 'Home', path: '/' }, { name: 'Blog', path: '/blog' }],
+  '/blogs': [{ name: 'Home', path: '/' }, { name: 'Blogs', path: '/blogs' }],
   '/careers': [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers' }],
   '/contact-us': [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact-us' }],
   '/privacy-policy': [{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy-policy' }],
@@ -156,7 +156,7 @@ export function buildSchemasForRoute(seo, context = {}) {
       id: 'breadcrumbs',
       data: buildBreadcrumbSchema([
         { name: 'Home', path: '/' },
-        { name: 'Blog', path: '/blog' },
+        { name: 'Blogs', path: '/blogs' },
         { name: context.blogPost.title, path: seo.canonicalPath },
       ]),
     });

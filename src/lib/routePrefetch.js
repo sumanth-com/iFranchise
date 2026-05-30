@@ -10,7 +10,7 @@ const ROUTE_LOADERS = {
   '/terms-and-conditions': () => import('../components/TermsConditionsPage'),
   '/404': () => import('../components/NotFoundPage'),
   [ROUTES.CONTACT]: () => import('../components/ContactPage'),
-  '/blog': () => import('../components/BlogPage'),
+  [ROUTES.BLOG]: () => import('../components/BlogPage'),
   '/blog-detail': () => import('../components/BlogDetailPage'),
   '/services': () => import('../components/ServicesPage'),
   '/licenses': () => import('../components/LicensesPage'),
@@ -32,7 +32,7 @@ export function logicalPathFromPathname(pathname) {
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
   if (pathname === '/contact' || pathname === ROUTES.CONTACT) return ROUTES.CONTACT;
-  if (pathname === '/blog') return '/blog';
+  if (pathname === ROUTES.BLOG || pathname === '/blog') return ROUTES.BLOG;
   if (pathname === '/services') return '/services';
   if (pathname === '/careers') return '/careers';
   if (['/list-your-brand', '/for-brand-owners', '/brand-owners'].includes(pathname)) {
@@ -41,7 +41,10 @@ export function logicalPathFromPathname(pathname) {
   if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
     return '/careers';
   }
-  if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) {
+  if (
+    (pathname.startsWith('/blogs/') || pathname.startsWith('/blog/')) &&
+    pathname.split('/').filter(Boolean).length >= 2
+  ) {
     return '/blog-detail';
   }
   if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
@@ -55,7 +58,7 @@ export function logicalPathFromPathname(pathname) {
     '/terms-and-conditions',
     '/licenses',
     ROUTES.CONTACT,
-    '/blog',
+    ROUTES.BLOG,
     '/services',
     '/careers',
     '/list-your-brand',

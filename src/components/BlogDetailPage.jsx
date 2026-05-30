@@ -194,10 +194,10 @@ function ExploreMoreSection({ currentSlug }) {
           </h2>
         </div>
         <a
-          href="/blog"
+          href="/blogs"
           onClick={(e) => {
             e.preventDefault();
-            navigateTo('/blog');
+            navigateTo('/blogs');
           }}
           className="blog-explore-link inline-flex items-center justify-center gap-1 text-sm font-semibold text-violet-400 transition hover:text-violet-300 sm:justify-start"
         >
@@ -478,7 +478,7 @@ function BlogDetailPage() {
     );
   }
 
-  const articleUrl = `${window.location.origin}/blog/${article.slug}`;
+  const articleUrl = `${window.location.origin}/blogs/${article.slug}`;
 
   return (
     <main className="blog-detail-page relative z-10 w-full min-h-0 bg-transparent pb-24">

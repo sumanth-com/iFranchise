@@ -20,9 +20,19 @@ export function scrollStorageKey(pathname = window.location.pathname, search = w
 export function canonicalizePublicUrl() {
   if (typeof window === 'undefined') return;
   const { pathname, search, hash } = window.location;
+
   const target = LEGACY_PATH_REDIRECTS[pathname];
-  if (!target) return;
-  history.replaceState(history.state, '', `${target}${search}${hash}`);
+  if (target) {
+    history.replaceState(history.state, '', `${target}${search}${hash}`);
+    return;
+  }
+
+  if (pathname.startsWith('/blog/')) {
+    const slug = pathname.slice('/blog/'.length);
+    if (slug) {
+      history.replaceState(history.state, '', `${ROUTES.BLOG}/${slug}${search}${hash}`);
+    }
+  }
 }
 
 export function getLogicalPathname() {
@@ -37,7 +47,7 @@ export function getLogicalPathname() {
   if (pathname === '/privacy-policy') return '/privacy-policy';
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
-  if (pathname === '/blog') return '/blog';
+  if (pathname === ROUTES.BLOG || pathname === '/blog') return ROUTES.BLOG;
   if (pathname === '/services') return '/services';
   if (pathname === '/careers') return '/careers';
   if (pathname === '/faq') return '/faq';
@@ -47,7 +57,10 @@ export function getLogicalPathname() {
   if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
     return '/careers';
   }
-  if (pathname.startsWith('/blog/') && pathname.split('/').filter(Boolean).length >= 2) {
+  if (
+    (pathname.startsWith('/blogs/') || pathname.startsWith('/blog/')) &&
+    pathname.split('/').filter(Boolean).length >= 2
+  ) {
     return '/blog-detail';
   }
   if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
@@ -61,7 +74,7 @@ export function getLogicalPathname() {
     '/terms-and-conditions',
     '/licenses',
     ROUTES.CONTACT,
-    '/blog',
+    ROUTES.BLOG,
     '/services',
     '/careers',
     '/list-your-brand',

@@ -18,7 +18,7 @@ const SLUG_TO_FRANCHISE_ID = franchiseSlugToId;
 
 function getBlogSlugFromPath(pathname) {
   const parts = pathname.split('/').filter(Boolean);
-  if (parts[0] !== 'blog' || parts.length < 2) return '';
+  if ((parts[0] !== 'blogs' && parts[0] !== 'blog') || parts.length < 2) return '';
   return parts[1];
 }
 
@@ -63,7 +63,7 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     const slug = getBlogSlugFromPath(pathname);
     const post = getBlogBySlug(slug);
     if (post) {
-      canonicalPath = `/blog/${post.slug}`;
+      canonicalPath = `/blogs/${post.slug}`;
       const description = truncateMeta(post.excerpt);
       entry = {
         title: `${post.title} | iFranchise Blog`,

@@ -9,7 +9,7 @@ export const ROUTES = {
   SERVICES: '/services',
   FRANCHISE_OPPORTUNITIES: '/franchise-opportunities',
   LIST_YOUR_BRAND: '/list-your-brand',
-  BLOG: '/blog',
+  BLOG: '/blogs',
   CAREERS: '/careers',
   FAQ: '/faq',
   PRIVACY: '/privacy-policy',
@@ -21,4 +21,5 @@ export const ROUTES = {
 export const LEGACY_PATH_REDIRECTS = {
   '/about': ROUTES.ABOUT,
   '/contact': ROUTES.CONTACT,
+  '/blog': ROUTES.BLOG,
 };
