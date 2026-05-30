@@ -615,7 +615,7 @@ const BLOGS_NAV_ITEMS = [
 
 /** @deprecated Hidden - restore when re-enabling Resources dropdown extras */
 const RESOURCES_ITEMS_HIDDEN = [
-  { title: 'FAQs', description: 'Common questions answered', Icon: FAQIcon, path: '/services' },
+  { title: 'FAQs', description: 'Common questions answered', Icon: FAQIcon, path: '/faq' },
   { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blogs' },
 ];
 

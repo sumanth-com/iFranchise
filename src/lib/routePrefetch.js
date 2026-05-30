@@ -1,4 +1,5 @@
 import { ROUTES } from './routes.js';
+import { franchiseSlugToId } from '../data/franchiseData';
 
 /** Mirrors App.jsx lazy() imports for idle / link-hover prefetch. */
 const ROUTE_LOADERS = {
@@ -47,7 +48,10 @@ export function logicalPathFromPathname(pathname) {
   ) {
     return '/blog-detail';
   }
-  if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
+  if (pathname.startsWith('/franchise/') && pathname.length > '/franchise/'.length) {
+    const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
+    return franchiseSlugToId[slug] ? '/franchise-details' : '/404';
+  }
   const knownPaths = [
     '/',
     ROUTES.ABOUT,

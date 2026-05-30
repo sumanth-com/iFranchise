@@ -22,4 +22,10 @@ export const LEGACY_PATH_REDIRECTS = {
   '/about': ROUTES.ABOUT,
   '/contact': ROUTES.CONTACT,
   '/blog': ROUTES.BLOG,
+  '/meet-the-team': ROUTES.TEAM,
+  '/featured-opportunities': ROUTES.FRANCHISE_OPPORTUNITIES,
+  '/opportunities': ROUTES.FRANCHISE_OPPORTUNITIES,
+  '/for-brand-owners': ROUTES.LIST_YOUR_BRAND,
+  '/brand-owners': ROUTES.LIST_YOUR_BRAND,
+  '/terms': ROUTES.TERMS,
 };

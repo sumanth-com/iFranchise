@@ -5,6 +5,7 @@
 
 import { prefetchRoute } from './routePrefetch';
 import { canonicalizeFranchiseUrl } from './franchisePaths.js';
+import { franchiseSlugToId } from '../data/franchiseData';
 import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
 
 export const NAVIGATE_EVENT = 'ifr:navigate';
@@ -63,7 +64,10 @@ export function getLogicalPathname() {
   ) {
     return '/blog-detail';
   }
-  if (pathname.startsWith('/franchise/') && pathname.length > 12) return '/franchise-details';
+  if (pathname.startsWith('/franchise/') && pathname.length > '/franchise/'.length) {
+    const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
+    return franchiseSlugToId[slug] ? '/franchise-details' : '/404';
+  }
   const knownPaths = [
     '/',
     ROUTES.ABOUT,

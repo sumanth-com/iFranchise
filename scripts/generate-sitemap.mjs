@@ -2,7 +2,7 @@
  * Build sitemap.xml into public/ before Vite production build.
  * Includes main marketing pages and all franchise detail URLs.
  */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RAW_BRANDS } from '../src/data/opportunities/rawBrands.js';
@@ -45,6 +45,7 @@ const MAIN_PAGES = [
   { path: '/blogs', changefreq: 'weekly', priority: '0.85' },
   { path: '/careers', changefreq: 'weekly', priority: '0.75' },
   { path: '/contact-us', changefreq: 'monthly', priority: '0.8' },
+  { path: '/faq', changefreq: 'monthly', priority: '0.7' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms-and-conditions', changefreq: 'yearly', priority: '0.3' },
   { path: '/licenses', changefreq: 'yearly', priority: '0.3' },
@@ -55,6 +56,11 @@ const FRANCHISE_PAGES = RAW_BRANDS.map((raw) => {
   const slug = slugifyBrand(name);
   return { slug, path: `/franchise/${slug}` };
 }).filter(({ slug }) => slug && !HIDDEN_BRAND_SLUGS.has(slug));
+
+const blogDataSource = readFileSync(join(root, 'src/components/blogData.js'), 'utf8');
+const BLOG_PAGES = [...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => ({
+  path: `/blogs/${match[1]}`,
+}));
 
 function escapeXml(value) {
   return String(value)
@@ -75,6 +81,11 @@ const entries = [
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.85',
+  })),
+  ...BLOG_PAGES.map(({ path }) => ({
+    loc: `${siteUrl}${path}`,
+    changefreq: 'monthly',
+    priority: '0.75',
   })),
 ];
 
@@ -99,5 +110,5 @@ mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
 console.log(
-  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise) to public/sitemap.xml (${siteUrl})`,
+  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${BLOG_PAGES.length} blog) to public/sitemap.xml (${siteUrl})`,
 );

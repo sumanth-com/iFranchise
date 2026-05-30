@@ -834,8 +834,7 @@ function FranchiseModelCard({ model, visible, delayMs }) {
             <button
               type="button"
               onClick={() => {
-                window.history.pushState({}, '', `/franchise/${model.slug}`);
-                window.dispatchEvent(new PopStateEvent('popstate'));
+                navigateTo('/franchise-opportunities');
               }}
               className="flex-1 rounded-xl btn-wave bg-[#0B1220] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#1a2332] hover:shadow-lg hover:-translate-y-0.5"
             >

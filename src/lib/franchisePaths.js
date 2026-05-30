@@ -23,9 +23,10 @@ export function resolveFranchiseIdFromLocation(pathname = '', search = '') {
   if (pathname.startsWith('/franchise/')) {
     const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
     if (franchiseSlugToId[slug]) return franchiseSlugToId[slug];
+    return null;
   }
 
-  return '1';
+  return null;
 }
 
 /** Replace legacy `/franchise-details?id=` URLs with slug-based paths in the address bar. */

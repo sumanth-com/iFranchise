@@ -22,6 +22,36 @@
       "source": "/about",
       "destination": "/about-us",
       "permanent": true
+    },
+    {
+      "source": "/meet-the-team",
+      "destination": "/team",
+      "permanent": true
+    },
+    {
+      "source": "/featured-opportunities",
+      "destination": "/franchise-opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/opportunities",
+      "destination": "/franchise-opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/for-brand-owners",
+      "destination": "/list-your-brand",
+      "permanent": true
+    },
+    {
+      "source": "/brand-owners",
+      "destination": "/list-your-brand",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms-and-conditions",
+      "permanent": true
     }
   ],
   "rewrites": [
