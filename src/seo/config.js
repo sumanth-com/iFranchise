@@ -17,7 +17,7 @@ export const SITE_URL = (
 export const SITE_TAGLINE = "India's Trusted Franchise Growth Platform";
 
 // Bump this whenever icon assets are regenerated to avoid stale browser caches.
-export const ICON_VERSION = '20260527-1';
+export const ICON_VERSION = '20260530-1';
 
 export const DEFAULT_OG_IMAGE_PATH = `/apple-touch-icon.png?v=${ICON_VERSION}`;
 
