@@ -18,21 +18,21 @@ export default function CareersLinkedInSection() {
   const href = LINKEDIN?.href || '#';
 
   return (
-    <section className="careers-linkedin-section careers-section border-t border-slate-200">
+    <section className="careers-linkedin-section careers-section">
       <div ref={ref} className="max-w-3xl mx-auto px-6 sm:px-8 xl:px-12 py-12 sm:py-16">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="careers-growth-linkedin-cta flex flex-col items-center gap-5 rounded-2xl border border-slate-200 bg-white px-6 py-8 text-center shadow-[0_8px_30px_rgba(15,23,42,0.06)] sm:flex-row sm:justify-between sm:text-left sm:px-8 sm:py-7"
+          className="careers-linkedin-card careers-growth-linkedin-cta flex flex-col items-center gap-5 rounded-2xl px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left sm:px-8 sm:py-7"
         >
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#0A66C2]/10 text-[#0A66C2]">
+            <div className="careers-linkedin-card__icon flex h-12 w-12 shrink-0 items-center justify-center rounded-xl">
               <LinkedInIcon className="h-6 w-6" />
             </div>
-            <div>
-              <p className="text-base font-bold text-slate-900">More roles coming soon</p>
-              <p className="mt-1 text-sm text-slate-600 leading-relaxed max-w-md">
+            <div className="careers-linkedin-card__copy min-w-0">
+              <p className="careers-linkedin-card__title text-base font-bold">More roles coming soon</p>
+              <p className="careers-linkedin-card__desc mt-1 text-sm leading-relaxed max-w-md">
                 Follow iFranchise on LinkedIn for new openings, team updates, and franchise growth
                 stories from our ecosystem.
               </p>

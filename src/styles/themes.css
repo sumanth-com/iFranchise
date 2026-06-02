@@ -4300,6 +4300,57 @@ html[data-theme='dark'] .careers-page .careers-growth-linkedin-btn {
   color: #ffffff !important;
 }
 
+/* LinkedIn follow card — light / dark */
+.careers-linkedin-section {
+  border-top: 1px solid #e2e8f0;
+}
+
+html[data-theme='light'] .careers-page .careers-linkedin-card {
+  border: 1px solid #e2e8f0;
+  background: #ffffff !important;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme='light'] .careers-page .careers-linkedin-card__icon {
+  background: rgba(10, 102, 194, 0.1) !important;
+  color: #0a66c2 !important;
+}
+
+html[data-theme='light'] .careers-page .careers-linkedin-card__title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] .careers-page .careers-linkedin-card__desc {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-linkedin-section {
+  border-top-color: rgba(139, 92, 246, 0.2) !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-linkedin-card {
+  border: 1px solid rgba(139, 92, 246, 0.28) !important;
+  background: linear-gradient(160deg, rgba(26, 16, 56, 0.95) 0%, rgba(14, 8, 32, 0.98) 100%) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme='dark'] .careers-page .careers-linkedin-card__icon {
+  background: rgba(10, 102, 194, 0.22) !important;
+  color: #93c5fd !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-linkedin-card__title,
+html[data-theme='dark'] #main-content .careers-page .careers-linkedin-card__title {
+  color: #f8fafc !important;
+  -webkit-text-fill-color: #f8fafc !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-linkedin-card__desc,
+html[data-theme='dark'] #main-content .careers-page .careers-linkedin-card__desc {
+  color: rgba(226, 232, 240, 0.88) !important;
+  -webkit-text-fill-color: rgba(226, 232, 240, 0.88) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .careers-growth-visual .animate-pulse {
     animation: none !important;
