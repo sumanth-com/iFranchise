@@ -4148,6 +4148,38 @@ html[data-theme='dark'] .career-detail-page .career-detail-prompt-list li::befor
   align-items: flex-start;
 }
 
+.career-detail-page .career-detail-qual-group + .career-detail-qual-group {
+  margin-top: 1.25rem;
+}
+
+.career-detail-page .career-detail-qual-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.625rem;
+  text-transform: uppercase;
+}
+
+html[data-theme='light'] .career-detail-page .career-detail-qual-label {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] .career-detail-page .career-detail-qual-label {
+  color: rgba(196, 181, 253, 0.85) !important;
+}
+
+html[data-theme='light'] .career-detail-page .career-detail-company-line {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] .career-detail-page .career-detail-company-line {
+  color: rgba(248, 250, 252, 0.78) !important;
+}
+
+html[data-theme='dark'] .career-detail-page .career-detail-sidebar-note p:last-child {
+  color: rgba(248, 250, 252, 0.85) !important;
+}
+
 .career-detail-page .career-detail-list__icon {
   flex-shrink: 0;
   margin-top: 0.15rem;

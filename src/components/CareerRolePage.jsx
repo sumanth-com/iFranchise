@@ -23,9 +23,9 @@ function HeroPill({ children, className = '' }) {
   );
 }
 
-function SectionBlock({ title, children, highlight = false }) {
+function SectionBlock({ title, children }) {
   return (
-    <section className={`career-detail-block${highlight ? ' career-detail-block--highlight' : ''}`}>
+    <section className="career-detail-block">
       <h2 className="career-detail-section-title">{title}</h2>
       <div className="career-detail-prose">{children}</div>
     </section>
@@ -41,6 +41,7 @@ function ListCheckIcon() {
 }
 
 function BulletList({ items }) {
+  if (!items?.length) return null;
   return (
     <ul className="career-detail-list">
       {items.map((item) => (
@@ -55,14 +56,39 @@ function BulletList({ items }) {
   );
 }
 
-function PromptList({ items }) {
+function QualGroup({ label, items }) {
+  if (!items?.length) return null;
   return (
-    <ul className="career-detail-prompt-list">
-      {items.map((prompt) => (
-        <li key={prompt}>{prompt}</li>
-      ))}
-    </ul>
+    <div className="career-detail-qual-group">
+      <h3 className="career-detail-qual-label">{label}</h3>
+      <BulletList items={items} />
+    </div>
   );
+}
+
+function partitionRequirements(requirements = []) {
+  const required = [];
+  const preferred = [];
+  for (const item of requirements) {
+    if (/\(preferred\)/i.test(item)) {
+      preferred.push(item.replace(/\s*\(preferred\)\s*/gi, '').trim());
+    } else {
+      required.push(item);
+    }
+  }
+  return { required, preferred };
+}
+
+function buildRoleIntro(role) {
+  if (role.aboutRole) return role.aboutRole;
+  if (role.about) return role.about;
+  return '';
+}
+
+function buildCompanyLine(role) {
+  if (!role.about || !role.aboutRole || role.about === role.aboutRole) return null;
+  const firstSentence = role.about.trim().match(/^[^.!?]+[.!?]?/)?.[0]?.trim();
+  return firstSentence || null;
 }
 
 function ApplyPanel({ role }) {
@@ -88,6 +114,13 @@ function ApplyPanel({ role }) {
           <p className="mt-4 text-center text-xs text-slate-500">
             Include resume, portfolio, social handles, and your best content samples.
           </p>
+
+          {role.whyJoin ? (
+            <div className="career-detail-sidebar-note mt-6 border-t border-slate-200 pt-5">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Why this role</p>
+              <p className="text-sm text-slate-600 leading-relaxed">{role.whyJoin}</p>
+            </div>
+          ) : null}
 
           <div className="mt-6 border-t border-slate-200 pt-5">
             <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Hiring process</p>
@@ -125,12 +158,23 @@ export default function CareerRolePage() {
     }
   }, [role]);
 
+  const qualifications = useMemo(() => {
+    if (!role) return { minimum: [], preferred: [] };
+    const { required, preferred } = partitionRequirements(role.requirements);
+    return {
+      minimum: [...(role.keySkills || []), ...required],
+      preferred,
+    };
+  }, [role]);
+
   if (!role || !role.active) {
     return null;
   }
 
   const deptClass = (isDark ? DEPT_COLORS_DARK : DEPT_COLORS)[role.dept] || DEPT_COLORS.Marketing;
   const modeClass = (isDark ? MODE_COLORS_DARK : MODE_COLORS)[role.mode] || MODE_COLORS.Remote;
+  const roleIntro = buildRoleIntro(role);
+  const companyLine = buildCompanyLine(role);
 
   const insights = [
     { label: 'Duration', value: role.duration },
@@ -138,6 +182,9 @@ export default function CareerRolePage() {
     { label: 'Working days', value: role.workingDays },
     { label: 'Working hours', value: role.workingHours },
   ].filter((item) => item.value);
+
+  const hasQualifications =
+    qualifications.minimum.length > 0 || qualifications.preferred.length > 0;
 
   return (
     <div className="career-detail-page relative z-10 min-h-screen text-theme-primary">
@@ -172,6 +219,19 @@ export default function CareerRolePage() {
               {role.tagline}
             </p>
 
+            {companyLine ? (
+              <p className="career-detail-company-line mt-3 text-sm text-slate-600 max-w-3xl leading-relaxed hidden sm:block">
+                {companyLine}{' '}
+                <button
+                  type="button"
+                  onClick={() => navigateTo('/about-us')}
+                  className="font-semibold text-violet-700 hover:text-violet-900 transition"
+                >
+                  About iFranchise →
+                </button>
+              </p>
+            ) : null}
+
             <p className="career-detail-mobile-summary mt-3 text-xs text-slate-600 leading-snug sm:hidden">
               {role.location}
               {role.duration ? ` · ${role.duration}` : ''}
@@ -202,35 +262,25 @@ export default function CareerRolePage() {
       <div className="career-detail-body">
         <div className="career-detail-rail py-6 sm:py-14">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:gap-10">
-            <div className="career-detail-content space-y-6 sm:space-y-8 min-w-0">
-              <SectionBlock title="About iFranchise">
-                <p>{role.about}</p>
-              </SectionBlock>
-
-              <SectionBlock title="The opportunity" highlight>
-                {role.opportunityPrompts?.length > 0 && (
-                  <PromptList items={role.opportunityPrompts} />
-                )}
-                <p>{role.aboutRole}</p>
-              </SectionBlock>
-
-              {role.keySkills?.length > 0 && (
-                <SectionBlock title="What we’re looking for">
-                  <BulletList items={role.keySkills} />
+            <div className="career-detail-content space-y-8 sm:space-y-10 min-w-0">
+              {roleIntro ? (
+                <SectionBlock title="About this role">
+                  <p>{roleIntro}</p>
                 </SectionBlock>
-              )}
+              ) : null}
 
-              <SectionBlock title="What you’ll be doing">
-                <BulletList items={role.responsibilities} />
-              </SectionBlock>
+              {role.responsibilities?.length > 0 ? (
+                <SectionBlock title="What you’ll do">
+                  <BulletList items={role.responsibilities} />
+                </SectionBlock>
+              ) : null}
 
-              <SectionBlock title="You’re a great fit if you…">
-                <BulletList items={role.requirements} />
-              </SectionBlock>
-
-              <SectionBlock title="Why join iFranchise?">
-                <p>{role.whyJoin}</p>
-              </SectionBlock>
+              {hasQualifications ? (
+                <SectionBlock title="What we’re looking for">
+                  <QualGroup label="Minimum qualifications" items={qualifications.minimum} />
+                  <QualGroup label="Preferred qualifications" items={qualifications.preferred} />
+                </SectionBlock>
+              ) : null}
             </div>
 
             <ApplyPanel role={role} />
