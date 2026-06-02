@@ -818,6 +818,201 @@ html[data-theme='light'] .contact-page #contact-form.contact-hero-dark .page-her
   color: rgba(255, 255, 255, 0.2) !important;
 }
 
+.contact-hero-card__text {
+  font-weight: 700 !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-card__text {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.contact-hero-card__title {
+  font-size: 1rem !important;
+  line-height: 1.35 !important;
+}
+
+.contact-hero-card__value {
+  font-size: 0.9375rem !important;
+  line-height: 1.4 !important;
+  margin-top: 0.125rem;
+}
+
+.contact-hero-card-list,
+.contact-hero-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-card__icon {
+  border: 1px solid rgb(237 233 254) !important;
+  background: rgb(245 243 255) !important;
+  color: rgb(109 40 217) !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-card__icon svg {
+  color: rgb(109 40 217) !important;
+  stroke: rgb(109 40 217) !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-card__arrow {
+  border: 1px solid rgb(226 232 240) !important;
+  color: rgb(100 116 139) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card:hover {
+  border-color: rgba(167, 139, 250, 0.38) !important;
+  box-shadow: 0 12px 32px rgba(109, 40, 217, 0.22) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__title {
+  font-size: 0.6875rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__value {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  margin-top: 0.25rem !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__icon {
+  border: 1px solid rgba(167, 139, 250, 0.35) !important;
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__icon svg {
+  color: #c4b5fd !important;
+  stroke: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card__arrow {
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-card:hover .contact-hero-card__arrow {
+  border-color: rgba(167, 139, 250, 0.45) !important;
+  background: rgba(139, 92, 246, 0.22) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-card:hover .contact-hero-card__arrow {
+  border-color: rgb(196 181 253) !important;
+  background: rgb(245 243 255) !important;
+  color: rgb(109 40 217) !important;
+}
+
+/* Contact form card — dark mode (matches franchise highlight cards) */
+html[data-theme='dark'] .contact-page .contact-hero-form {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-form__title {
+  color: #4c1d95 !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-form__subtitle {
+  color: #64748b !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-form__label {
+  color: #5b21b6 !important;
+}
+
+html[data-theme='light'] .contact-page .contact-hero-form__required {
+  color: #7c3aed !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__title {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__subtitle {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__label {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__required {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__input {
+  border: 1px solid rgba(167, 139, 250, 0.28) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__input::placeholder {
+  color: rgba(255, 255, 255, 0.38) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-hero-form__input:focus {
+  border-color: rgba(167, 139, 250, 0.55) !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--ready,
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--ready * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--ready {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #5b21b6 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.35) !important;
+  box-shadow: 0 4px 24px rgba(109, 40, 217, 0.35) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--ready:hover:not(:disabled) {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45) !important;
+}
+
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--disabled,
+html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--disabled * {
+  background: rgba(139, 92, 246, 0.22) !important;
+  border: 1px solid rgba(167, 139, 250, 0.18) !important;
+  color: rgba(255, 255, 255, 0.42) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.42) !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='light'] .contact-page .contact-send-btn.contact-send-btn--disabled,
+html[data-theme='light'] .contact-page .contact-send-btn.contact-send-btn--disabled * {
+  background: rgba(124, 58, 237, 0.4) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: none !important;
+}
+
 /* FAQ number badges - keep white digits on dark circle */
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\].text-white,
 html[data-theme='light'] #main-content .bg-\[\#0b0f19\] .text-white,
@@ -854,6 +1049,23 @@ html[data-theme='light'] .prefooter-unified-card .footer-brand-name {
 
 html[data-theme='light'] .prefooter-unified-card .footer-brand-address__icon {
   color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  border-radius: 0.375rem !important;
+  background: rgba(139, 92, 246, 0.22) !important;
+  border: 1px solid rgba(167, 139, 250, 0.35) !important;
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__icon svg {
+  color: #c4b5fd !important;
+  stroke: #c4b5fd !important;
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-brand-address__text,

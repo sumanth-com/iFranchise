@@ -13,12 +13,9 @@ import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import {
   SITE_CONTACT_EMAIL,
-  SITE_CONTACT_MAPS_URL,
   SITE_CONTACT_PHONE_DISPLAY,
   SITE_CONTACT_PHONE_TEL,
-  SITE_CONTACT_ADDRESS,
   SITE_CONTACT_MAILTO,
-  SITE_CONTACT_MAPS_EMBED_URL,
 } from '../data/siteContact';
 
 const CONTACT_FORM_INITIAL = withHoneypot({
@@ -67,18 +64,6 @@ const CONTACT_LINKS = [
     href: `tel:${SITE_CONTACT_PHONE_TEL}`,
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-    ),
-  },
-  {
-    title: 'Our location',
-    value: SITE_CONTACT_ADDRESS,
-    href: SITE_CONTACT_MAPS_URL,
-    external: true,
-    icon: (
-      <>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </>
     ),
   },
 ];
@@ -163,19 +148,17 @@ function ArrowUpRightIcon() {
 }
 
 const CONTACT_INPUT_DARK =
-  'w-full rounded-lg border border-white/12 bg-white/[0.06] px-3 py-2.5 text-sm text-white transition placeholder:text-white/35 focus:border-violet-400/45 focus:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-violet-500/20';
+  'contact-hero-form__input w-full rounded-lg border px-3 py-2.5 text-sm transition focus:outline-none focus:ring-2';
 
 const CONTACT_INPUT_LIGHT =
-  'w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/15';
+  'contact-hero-form__input w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/15';
 
-function ContactField({ label, required, className = '', isLight, children }) {
+function ContactField({ label, required, className = '', children }) {
   return (
     <div className={className}>
-      <label
-        className={`mb-1 block text-xs font-medium ${isLight ? 'text-violet-800' : 'text-white/75'}`}
-      >
+      <label className="contact-hero-form__label mb-1 block text-xs font-medium">
         {label}
-        {required && <span className={isLight ? 'text-violet-600' : 'text-violet-300'}> *</span>}
+        {required && <span className="contact-hero-form__required"> *</span>}
       </label>
       {children}
     </div>
@@ -188,7 +171,7 @@ function ContactLeftPanel({ isLight }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      className="contact-hero-left lg:flex lg:max-h-full lg:flex-col lg:justify-center"
+      className="contact-hero-left w-full lg:flex lg:max-h-full lg:flex-col lg:justify-center"
     >
       <h1
         className={`contact-hero-left__title mb-1.5 ${TYPE.pageHero} ${isLight ? 'text-violet-900' : 'text-white'}`}
@@ -203,7 +186,7 @@ function ContactLeftPanel({ isLight }) {
         Questions about franchise expansion? Our advisory team responds within one business day.
       </p>
 
-      <div className="space-y-2">
+      <div className="contact-hero-card-list w-full space-y-3">
         {CONTACT_LINKS.map((item, i) => (
           <motion.a
             key={item.title}
@@ -214,34 +197,22 @@ function ContactLeftPanel({ isLight }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.12 + i * 0.08, duration: 0.45 }}
             whileHover={{ x: 4 }}
-            className={`contact-hero-card group flex items-center gap-3 rounded-xl px-3.5 py-3 transition-all duration-300 ${
+            className={`contact-hero-card group flex w-full items-center gap-4 rounded-xl px-5 py-4 transition-all duration-300 ${
               isLight
-                ? 'border border-slate-200/90 bg-white shadow-sm hover:border-violet-300 hover:shadow-md'
-                : 'border border-white/[0.12] bg-white/[0.06] backdrop-blur-md hover:border-violet-400/45 hover:bg-white/[0.1] hover:shadow-[0_12px_40px_rgba(109,40,217,0.18)]'
+                ? 'contact-hero-card--light border border-slate-200/90 bg-white shadow-sm hover:border-violet-300 hover:shadow-md'
+                : 'contact-hero-card--dark'
             }`}
           >
-            <div
-              className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg shadow-inner ${
-                isLight
-                  ? 'border border-violet-100 bg-violet-50 text-violet-700'
-                  : 'border border-white/10 bg-gradient-to-br from-violet-500/20 to-white/5 text-white'
-              }`}
-            >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="contact-hero-card__icon flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-inner">
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {item.icon}
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <p className={`text-[13px] font-semibold ${isLight ? 'text-violet-900' : 'text-white'}`}>{item.title}</p>
-              <p className={`truncate text-xs ${isLight ? 'text-slate-500' : 'text-white/55'}`}>{item.value}</p>
+              <p className="contact-hero-card__text contact-hero-card__title font-bold">{item.title}</p>
+              <p className="contact-hero-card__text contact-hero-card__value truncate font-bold">{item.value}</p>
             </div>
-            <span
-              className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                isLight
-                  ? 'border-slate-200 text-slate-500 group-hover:border-violet-300 group-hover:bg-violet-50 group-hover:text-violet-700'
-                  : 'border-white/10 text-white/70 group-hover:border-violet-400/50 group-hover:bg-violet-500/20 group-hover:text-white'
-              }`}
-            >
+            <span className="contact-hero-card__arrow flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-300">
               <ArrowUpRightIcon />
             </span>
           </motion.a>
@@ -274,22 +245,16 @@ function ContactHeroForm({
     <div
       className={`contact-hero-form relative flex w-full max-h-full flex-col overflow-hidden rounded-2xl lg:max-h-full ${
         isLight
-          ? 'border border-slate-200/90 bg-white shadow-lg shadow-slate-200/50'
-          : 'border border-white/[0.12] bg-[#0c0816]/95 shadow-[0_20px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl'
+          ? 'contact-hero-form--light border border-slate-200/90 bg-white shadow-lg shadow-slate-200/50'
+          : 'contact-hero-form--dark'
       }`}
     >
       <div className="flex flex-col p-5 sm:p-6">
         <div className="mb-4 shrink-0">
-          <h2
-            className={`${TYPE.formTitle} ${isLight ? 'text-violet-900' : 'text-white'}`}
-          >
+          <h2 className={`contact-hero-form__title ${TYPE.formTitle}`}>
             Send Message
           </h2>
-          <p
-            className={`mt-1 text-xs leading-relaxed sm:text-[13px] ${
-              isLight ? 'text-slate-500' : 'text-white/55'
-            }`}
-          >
+          <p className="contact-hero-form__subtitle mt-1 text-xs leading-relaxed sm:text-[13px]">
             We&apos;ll get back to you within 24 hours.
           </p>
         </div>
@@ -305,7 +270,7 @@ function ContactHeroForm({
           <form onSubmit={handleSubmit} className="relative flex flex-col gap-3">
             <HoneypotField value={formData._hp} onChange={handleInputChange} />
             <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
-              <ContactField label="Full Name" required isLight={isLight}>
+              <ContactField label="Full Name" required>
                 <input
                   type="text"
                   required
@@ -315,7 +280,7 @@ function ContactHeroForm({
                   placeholder="Enter your full name"
                 />
               </ContactField>
-              <ContactField label="Contact Number" required isLight={isLight}>
+              <ContactField label="Contact Number" required>
                 <input
                   required
                   value={formData.contactNumber}
@@ -326,7 +291,7 @@ function ContactHeroForm({
               </ContactField>
             </div>
 
-            <ContactField label="Email Address" required className="shrink-0" isLight={isLight}>
+            <ContactField label="Email Address" required className="shrink-0">
               <input
                 type="email"
                 required
@@ -337,7 +302,7 @@ function ContactHeroForm({
               />
             </ContactField>
 
-            <ContactField label="Company Name" className="shrink-0" isLight={isLight}>
+            <ContactField label="Company Name" className="shrink-0">
               <input
                 type="text"
                 value={formData.company}
@@ -347,7 +312,7 @@ function ContactHeroForm({
               />
             </ContactField>
 
-            <ContactField label="Message" required isLight={isLight}>
+            <ContactField label="Message" required>
               <textarea
                 rows={2}
                 required
@@ -364,13 +329,7 @@ function ContactHeroForm({
               whileHover={canSend && !isSubmitting ? { scale: 1.02, y: -1 } : undefined}
               whileTap={canSend && !isSubmitting ? { scale: 0.98 } : undefined}
               className={`contact-send-btn w-full shrink-0 rounded-lg py-3 text-sm font-semibold shadow-lg transition-all duration-300 disabled:cursor-not-allowed ${
-                canSend && !isSubmitting
-                  ? isLight
-                    ? 'bg-violet-600 !text-white shadow-violet-600/30 hover:bg-violet-700 hover:shadow-violet-600/40'
-                    : 'bg-white text-slate-900 shadow-[0_8px_28px_rgba(255,255,255,0.15)] hover:bg-white/95'
-                  : isLight
-                    ? 'bg-violet-400/40 !text-white/70 shadow-none'
-                    : 'bg-white/20 text-white/45 shadow-none'
+                canSend && !isSubmitting ? 'contact-send-btn--ready' : 'contact-send-btn--disabled'
               }`}
             >
               {isSubmitting ? 'Sending…' : 'Send Message'}
@@ -469,52 +428,7 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* Location */}
-      <section className="w-full py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            viewport={{ once: true }}
-            className="mb-8 text-center"
-          >
-            <span className="services-faq-section__badge mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-violet-600" />
-              Our Location
-            </span>
-            <h2 className={`mb-3 ${sectionTitleClass(false)}`}>Built in Bangalore. Scaling Across India.</h2>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/85">
-              Strategically positioned in India&apos;s innovation capital to connect founders, investors, and franchise ecosystems.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-            viewport={{ once: true }}
-            className="group relative"
-          >
-            <div className="relative overflow-hidden rounded-2xl border border-[rgba(139,92,246,0.25)] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-500 hover:shadow-[0_24px_60px_rgba(109,40,217,0.2)]">
-              <iframe
-                src={SITE_CONTACT_MAPS_EMBED_URL}
-                width="100%"
-                height="500"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-[500px] w-full"
-                title="iFranchise office location"
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent transition-all duration-300 group-hover:border-violet-500/30" />
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FAQ - after location, Services style */}
+      {/* FAQ */}
       <section className="services-faq-section relative w-full overflow-hidden py-12 md:py-16">
         <div className="relative z-10 mx-auto max-w-[900px] px-5 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">

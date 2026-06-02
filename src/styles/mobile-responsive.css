@@ -2179,7 +2179,15 @@
   }
 
   .contact-hero-card {
-    padding: 0.625rem 0.75rem !important;
+    padding: 0.875rem 1.125rem !important;
+  }
+
+  .contact-hero-card__title {
+    font-size: 0.9375rem !important;
+  }
+
+  .contact-hero-card__value {
+    font-size: 0.875rem !important;
   }
 
   .contact-hero-social {
