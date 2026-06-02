@@ -9,6 +9,7 @@ import { submitToGoogleSheets } from './googleSheetsClient.js';
 import { runGuardedSubmission } from './submissionGuard.js';
 import { prepareOutboundPayload } from './sanitizePayload.js';
 import { logFormInfo, logFormError } from './formLogger.js';
+import { notifyLeadSubmission } from './leadNotification.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -88,6 +89,7 @@ export async function runFormSubmission({
 
     if (result.success) {
       logFormInfo('pipeline_success', { formType, sourcePage });
+      notifyLeadSubmission(prepared.payload);
     } else {
       logFormError('pipeline_failure', { formType, sourcePage, code: result.code });
     }

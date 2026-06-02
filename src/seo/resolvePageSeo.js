@@ -1,5 +1,6 @@
 import { franchiseOpportunities, franchiseSlugToId } from '../data/franchiseData';
 import { getBlogBySlug } from '../components/blogData';
+import { getRoleById, getRoleIdFromPathname } from '../components/careersData';
 import { STATIC_PAGE_SEO } from './staticPages';
 import { absoluteUrl, truncateMeta, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
 
@@ -81,6 +82,30 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         ...STATIC_PAGE_SEO['/404'],
         robots: 'noindex, nofollow',
       };
+      canonicalPath = pathname;
+    }
+  }
+
+  if (logicalPathname === '/career-detail') {
+    const roleId = getRoleIdFromPathname(pathname);
+    const role = roleId ? getRoleById(roleId) : null;
+    if (role?.active) {
+      canonicalPath = `/careers/${role.id}`;
+      const description = truncateMeta(
+        `${role.title} at iFranchise — ${role.mode}, ${role.location}. ${role.duration}. ${role.tagline}`,
+      );
+      entry = {
+        title: `${role.title} | Careers at iFranchise`,
+        description,
+        keywords: `${role.title}, iFranchise careers, marketing internship Bangalore, content creator internship India`,
+        canonicalPath,
+        ogTitle: `${role.title} | iFranchise Careers`,
+        ogDescription: description,
+        ogType: 'website',
+        robots: 'index, follow',
+      };
+    } else {
+      entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
       canonicalPath = pathname;
     }
   }

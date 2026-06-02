@@ -124,6 +124,7 @@ const BREADCRUMB_MAP = {
   '/list-your-brand': [{ name: 'Home', path: '/' }, { name: 'List Your Brand', path: '/list-your-brand' }],
   '/blogs': [{ name: 'Home', path: '/' }, { name: 'Blogs', path: '/blogs' }],
   '/careers': [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers' }],
+  '/career-detail': [{ name: 'Home', path: '/' }, { name: 'Careers', path: '/careers' }],
   '/contact-us': [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact-us' }],
   '/privacy-policy': [{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy-policy' }],
   '/terms-and-conditions': [
@@ -158,6 +159,17 @@ export function buildSchemasForRoute(seo, context = {}) {
         { name: 'Home', path: '/' },
         { name: 'Blogs', path: '/blogs' },
         { name: context.blogPost.title, path: seo.canonicalPath },
+      ]),
+    });
+  }
+
+  if (seo.logicalPathname === '/career-detail' && context.careerRole) {
+    schemas.push({
+      id: 'breadcrumbs',
+      data: buildBreadcrumbSchema([
+        { name: 'Home', path: '/' },
+        { name: 'Careers', path: '/careers' },
+        { name: context.careerRole.title, path: seo.canonicalPath },
       ]),
     });
   }

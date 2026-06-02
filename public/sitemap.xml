@@ -106,6 +106,11 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://www.ifranchise.in/franchise/kasturi-creations</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://www.ifranchise.in/franchise/10-downing-street</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>

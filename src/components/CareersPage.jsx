@@ -3,7 +3,9 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import careerImage from '../assets/carrer.webp';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
-import CareersGrowthSection from './careers/CareersGrowthSection';
+import CareersOpenRoles from './careers/CareersOpenRoles';
+import CareersLinkedInSection from './careers/CareersLinkedInSection';
+import { CAREERS_APPLY_EMAIL, HIRING_ACTIVE } from './careersData';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
 
 const BENEFITS = [
@@ -55,12 +57,12 @@ const FAQS = [
     a: 'Yes, for many future roles. We focus on quality of work and clear collaboration, not where your desk sits.',
   },
   {
-    q: 'When will roles open, and how do I hear about them?',
-    a: 'We are preparing our next hiring wave across strategy, product, growth, and operations. Follow us on LinkedIn for announcements, or email careers@ifranchise.in if you want to introduce yourself early.',
+    q: 'What roles are open right now?',
+    a: 'We are currently hiring for a Social Media & Content Creator Intern (remote, Bengaluru-based team). View the full role on our careers page and apply with your resume and portfolio.',
   },
   {
-    q: 'Can I reach out before a role is posted?',
-    a: 'Yes. Send a short note and your background to careers@ifranchise.in. We review thoughtful introductions as we plan upcoming hires.',
+    q: 'How do I apply?',
+    a: `Email ${CAREERS_APPLY_EMAIL} with your resume, content samples, portfolio, and social media handles. Tell us about the work you are most proud of—we would love to see it.`,
   },
   {
     q: 'What growth looks like here',
@@ -181,8 +183,9 @@ function CareersPage() {
             </h1>
 
             <p className="careers-hero-lead text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
-              At iFranchise we build franchise growth systems and meaningful careers. Our next team expansion
-              is on the way.
+              {HIRING_ACTIVE
+                ? 'At iFranchise we build franchise growth systems and meaningful careers. We have open roles—come build with us.'
+                : 'At iFranchise we build franchise growth systems and meaningful careers. Our next team expansion is on the way.'}
             </p>
           </motion.div>
 
@@ -225,7 +228,9 @@ function CareersPage() {
         </div>
       </section>
 
-      <CareersGrowthSection isDark={isDark} />
+      <CareersOpenRoles />
+
+      <CareersLinkedInSection />
 
       <CultureScrollGallery
         isDark={isDark}
@@ -245,8 +250,8 @@ function CareersPage() {
             </h2>
             <p className="careers-faq-intro text-sm text-slate-600">
               Email{' '}
-              <a href="mailto:careers@ifranchise.in" className="careers-faq-email text-violet-700 hover:text-violet-900 hover:underline font-medium">
-                careers@ifranchise.in
+              <a href={`mailto:${CAREERS_APPLY_EMAIL}`} className="careers-faq-email text-violet-700 hover:text-violet-900 hover:underline font-medium">
+                {CAREERS_APPLY_EMAIL}
               </a>{' '}
               for anything else.
             </p>

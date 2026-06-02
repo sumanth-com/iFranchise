@@ -80,7 +80,7 @@ export const FORM_REGISTRY = [
   },
 ];
 
-/** Careers page is marketing-only (HIRING_ACTIVE=false); no sheet integration. */
+/** Careers page uses email apply (hr@ifranchise.in); no sheet integration. */
 export const FORM_REGISTRY_NOTES = {
-  careers: 'No form submission — careers page does not POST to Google Sheets.',
+  careers: 'No form submission — careers applications via email only.',
 };

@@ -65,6 +65,10 @@ import fusion5 from '../../assets/Fusion pizza and Big burger/5.webp';
 
 // Kasturi Creations
 import kasturiLogo from '../../assets/kasturi/Logo.webp';
+import kasturi1 from '../../assets/kasturi/1.webp';
+import kasturi2 from '../../assets/kasturi/2.png';
+import kasturi3 from '../../assets/kasturi/3.png';
+import kasturi4 from '../../assets/kasturi/4.webp';
 
 // 10 Downing Street
 import downingLogo from '../../assets/10 Downing Street/Logo.webp';
@@ -90,24 +94,6 @@ function industryGallery(industry = 'Food & Beverage') {
 }
 
 /**
- * Listing card uses logo; detail carousel uses brand photos (or industry fallback if logo-only).
- */
-function packLogoCard(logo, cardBackground, cardAccent = cardBackground, cardFit = 'fill', industry = 'Food & Beverage') {
-  const gallery = industryGallery(industry);
-  return {
-    logo,
-    card: logo,
-    banner: gallery[0],
-    gallery,
-    slideshow: gallery,
-    cardFit,
-    cardBackground,
-    cardAccent,
-    hasLocalGallery: false,
-  };
-}
-
-/**
  * @param {string} logo
  * @param {string[]} photos
  * @param {{ card?: string, cardFit?: 'fill' | 'contain', cardBackground?: string, cardAccent?: string }} [opts]
@@ -126,6 +112,21 @@ function packBrandAssets(logo, photos = [], opts = {}) {
     cardBackground,
     cardAccent: opts.cardAccent ?? cardBackground,
     hasLocalGallery: slideshow.length > 0,
+  };
+}
+
+function packLogoCard(logo, cardBackground, cardAccent = cardBackground, cardFit = 'fill', industry = 'Food & Beverage') {
+  const gallery = industryGallery(industry);
+  return {
+    logo,
+    card: logo,
+    banner: gallery[0],
+    gallery,
+    slideshow: gallery,
+    cardFit,
+    cardBackground,
+    cardAccent,
+    hasLocalGallery: false,
   };
 }
 
@@ -166,11 +167,19 @@ export const BRAND_IMAGES_BY_SLUG = {
     cardAccent: '#ef4444',
     cardFit: 'fill',
   }),
-  'kasturi-creations': packLogoCard(kasturiLogo, '#1c1208', '#d97706', 'fill', 'Food & Beverage'),
-  kasturi: packLogoCard(kasturiLogo, '#1c1208', '#d97706', 'fill', 'Food & Beverage'),
   'fusion-pizza-big-burger': packBrandAssets(fusionLogo, [fusion1, fusion2, fusion3, fusion4, fusion5], {
     cardBackground: '#1a0a24',
     cardAccent: '#a855f7',
+    cardFit: 'fill',
+  }),
+  'kasturi-creations': packBrandAssets(kasturiLogo, [kasturi1, kasturi2, kasturi3, kasturi4], {
+    cardBackground: '#1c1208',
+    cardAccent: '#d97706',
+    cardFit: 'fill',
+  }),
+  kasturi: packBrandAssets(kasturiLogo, [kasturi1, kasturi2, kasturi3, kasturi4], {
+    cardBackground: '#1c1208',
+    cardAccent: '#d97706',
     cardFit: 'fill',
   }),
   '10-downing-street': packBrandAssets(

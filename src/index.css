@@ -1547,6 +1547,17 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
   transform: translateX(3px);
 }
 
+.prefooter-cta-btn--outline {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+}
+
+.prefooter-cta-btn--outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
 .prefooter-brand-names {
   width: 100%;
   max-width: 100%;

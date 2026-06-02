@@ -2,7 +2,9 @@
 // Shared careers content (culture page; role listings reserved for future hiring).
 
 /** Set true when live roles are published on CareersPage. */
-export const HIRING_ACTIVE = false;
+export const HIRING_ACTIVE = true;
+
+export const CAREERS_APPLY_EMAIL = 'hr@ifranchise.in';
 
 import React from 'react';
 
@@ -50,7 +52,75 @@ export const HIRING_STEPS = [
 
 export const ROLES = [
   {
+    id: 'social-media-content-creator-intern',
+    active: true,
+    title: 'Social Media & Content Creator Intern',
+    dept: 'Marketing',
+    type: 'Internship',
+    mode: 'Remote',
+    location: 'Bengaluru, Karnataka (Remote)',
+    duration: '6–12 Months',
+    stipend: 'Competitive Stipend',
+    workingDays: 'Monday – Saturday',
+    workingHours: '10:00 AM – 7:00 PM',
+    tagline:
+      'Turn ideas into scroll-stopping content for LinkedIn, Instagram, and the iFranchise brand story.',
+    reportsTo: 'Head of Marketing',
+    experience: 'Internship',
+    openings: '1',
+    joining: 'Rolling basis',
+    rounds: '2–3 Rounds',
+    applyEmail: CAREERS_APPLY_EMAIL,
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+        />
+      </svg>
+    ),
+    opportunityPrompts: [
+      'Do you find yourself analyzing why a post went viral?',
+      'Do you save content ideas before going to sleep?',
+      'Do you instantly think of better captions when scrolling LinkedIn or Instagram?',
+    ],
+    keySkills: [
+      'Creating SEO-friendly content (blogs, website copy, and discoverable posts)',
+      'Handling social media content across LinkedIn and Instagram',
+      'Writing scripts for short-form video and campaign storytelling',
+    ],
+    whyJoin:
+      'Work on real-world content that reaches thousands of people. Learn from experienced marketers, build a portfolio that stands out, and get exposure to branding, franchise growth, and business storytelling—with a potential full-time path based on performance.',
+    about:
+      'iFranchise is a fast-growing franchise consulting firm helping brands scale and enabling entrepreneurs to discover the right business opportunities. We work with ambitious brands across industries, helping them grow through strategic expansion, powerful storytelling, and impactful marketing. As we continue to grow, we need creative minds who can help us tell stories that educate, inspire, and engage thousands of people online.',
+    aboutRole:
+      'We are looking for a Social Media & Content Creator Intern who can turn ideas into engaging content, spot trends before they become mainstream, and create content that people actually want to consume. This is not a traditional writing internship—we are looking for creators, storytellers, and idea generators.',
+    responsibilities: [
+      'Create scroll-stopping content for LinkedIn, Instagram, and other platforms',
+      'Write powerful hooks, captions, posts, blogs, and website content',
+      'Brainstorm content ideas that drive engagement and brand awareness',
+      'Research trends, competitors, and audience interests',
+      'Assist in content planning and campaign execution',
+      'Collaborate with marketing and design teams',
+      'Turn complex business concepts into simple, engaging content',
+      'Help build the digital presence of fast-growing brands',
+    ],
+    requirements: [
+      'Love social media and understand what captures attention',
+      'Enjoy storytelling and creative writing',
+      'Constantly come up with new content ideas',
+      'Strong communication skills',
+      'Curious, creative, and eager to learn',
+      'Can think from the audience’s perspective',
+      'Content samples, portfolio, blog, page, or personal projects (preferred)',
+    ],
+    applyNote:
+      'Send your resume along with your best content samples, portfolio, social media handles, or any creative work you are proud of. Show us what you have created—we would love to see it.',
+  },
+  {
     id: 'creative-director',
+    active: false,
     title: 'Creative Director',
     dept: 'Design',
     type: 'Full Time',
@@ -89,6 +159,7 @@ export const ROLES = [
   },
   {
     id: 'motion-designer',
+    active: false,
     title: 'Motion Designer',
     dept: 'Design',
     type: 'Full Time',
@@ -125,6 +196,7 @@ export const ROLES = [
   },
   {
     id: 'franchise-growth-strategist',
+    active: false,
     title: 'Franchise Growth Strategist',
     dept: 'Growth',
     type: 'Full Time',
@@ -162,6 +234,7 @@ export const ROLES = [
   },
   {
     id: 'ui-ux-designer',
+    active: false,
     title: 'UI/UX Designer',
     dept: 'Design',
     type: 'Full Time',
@@ -198,6 +271,7 @@ export const ROLES = [
   },
   {
     id: 'content-strategist',
+    active: false,
     title: 'Content Strategist',
     dept: 'Marketing',
     type: 'Full Time',
@@ -235,6 +309,7 @@ export const ROLES = [
   },
   {
     id: 'business-development-lead',
+    active: false,
     title: 'Business Development Lead',
     dept: 'Sales',
     type: 'Full Time',
@@ -271,3 +346,18 @@ export const ROLES = [
     ],
   },
 ];
+
+export function getOpenRoles() {
+  if (!HIRING_ACTIVE) return [];
+  return ROLES.filter((role) => role.active);
+}
+
+export function getRoleById(id) {
+  return ROLES.find((role) => role.id === id) ?? null;
+}
+
+export function getRoleIdFromPathname(pathname = '') {
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts[0] !== 'careers' || parts.length !== 2) return '';
+  return parts[1];
+}

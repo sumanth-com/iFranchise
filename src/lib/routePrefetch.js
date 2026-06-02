@@ -16,6 +16,7 @@ const ROUTE_LOADERS = {
   '/services': () => import('../components/ServicesPage'),
   '/licenses': () => import('../components/LicensesPage'),
   '/careers': () => import('../components/CareersPage'),
+  '/career-detail': () => import('../components/CareerRolePage'),
   '/list-your-brand': () => import('../components/ForBrandOwnersPage'),
 };
 
@@ -40,7 +41,7 @@ export function logicalPathFromPathname(pathname) {
     return '/list-your-brand';
   }
   if (pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2) {
-    return '/careers';
+    return '/career-detail';
   }
   if (
     (pathname.startsWith('/blogs/') || pathname.startsWith('/blog/')) &&

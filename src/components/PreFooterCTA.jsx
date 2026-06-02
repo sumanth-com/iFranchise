@@ -6,6 +6,10 @@ import { getPartnerBrandLogos } from '../data/franchiseData';
 import { navigateTo } from '../lib/navigation';
 import { TYPE } from '../lib/typography.js';
 import { SITE_CONTACT_ADDRESS, SITE_CONTACT_MAPS_URL } from '../data/siteContact';
+import { SOCIAL_LINKS } from '../constants/socialLinks';
+import { CAREERS_APPLY_EMAIL } from './careersData';
+
+const LINKEDIN_HREF = SOCIAL_LINKS.find((s) => s.id === 'linkedin')?.href || '#';
 
 const PARTNER_BRAND_NAMES = getPartnerBrandLogos(12).map((p) => p.name);
 const BRAND_NAME_TRACK =
@@ -76,6 +80,22 @@ const CTA_CONTENT = {
     trust: 'Trusted by 1,200+ founders.',
     primary: { label: 'Explore Opportunities', action: () => navigateTo('/franchise-opportunities') },
     secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
+  },
+  careers: {
+    heading: 'Join the iFranchise team',
+    description:
+      'We are building a franchise growth platform with ambitious people. View open roles, apply with your portfolio, or follow us for future openings.',
+    primary: { label: 'View open roles', action: () => navigateTo('/careers') },
+    secondary: {
+      label: 'Apply via email',
+      action: () => {
+        window.location.href = `mailto:${CAREERS_APPLY_EMAIL}?subject=${encodeURIComponent('Application — iFranchise Careers')}`;
+      },
+    },
+    tertiary: {
+      label: 'Follow on LinkedIn',
+      action: () => window.open(LINKEDIN_HREF, '_blank', 'noopener,noreferrer'),
+    },
   },
 };
 
@@ -167,20 +187,19 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
             {cta.description}
           </p>
 
-          {/* Status */}
-          <div className="prefooter-trust-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, marginBottom: '28px', ...reveal(0.36) }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 0 3px rgba(34,197,94,0.2)', display: 'inline-block', flexShrink: 0 }} />
-            {cta.trust}
-          </div>
+          {cta.trust ? (
+            <div className="prefooter-trust-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 500, marginBottom: '28px', ...reveal(0.36) }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 0 3px rgba(34,197,94,0.2)', display: 'inline-block', flexShrink: 0 }} />
+              {cta.trust}
+            </div>
+          ) : null}
 
           {/* Pre-footer CTAs - black buttons, white text */}
-          <div className="prefooter-cta-row" style={reveal(0.44)}>
-            {/* Primary - Explore Opportunities */}
-            <button
-              type="button"
-              onClick={cta.primary.action}
-              className="prefooter-cta-btn"
-            >
+          <div
+            className={`prefooter-cta-row${variant === 'careers' ? ' prefooter-cta-row--careers' : ''}`}
+            style={reveal(0.44)}
+          >
+            <button type="button" onClick={cta.primary.action} className="prefooter-cta-btn">
               <span className="prefooter-cta-btn__inner">
                 {cta.primary.label}
                 <span className="prefooter-cta-btn__arrow" aria-hidden>
@@ -191,12 +210,7 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
               </span>
             </button>
 
-            {/* Secondary - Book Strategic Call (Changed from List Your Brand) */}
-            <button
-              type="button"
-              onClick={cta.secondary.action}
-              className="prefooter-cta-btn"
-            >
+            <button type="button" onClick={cta.secondary.action} className="prefooter-cta-btn">
               <span className="prefooter-cta-btn__inner">
                 {cta.secondary.label}
                 <span className="prefooter-cta-btn__arrow" aria-hidden>
@@ -206,6 +220,19 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
                 </span>
               </span>
             </button>
+
+            {cta.tertiary ? (
+              <button type="button" onClick={cta.tertiary.action} className="prefooter-cta-btn prefooter-cta-btn--outline">
+                <span className="prefooter-cta-btn__inner">
+                  {cta.tertiary.label}
+                  <span className="prefooter-cta-btn__arrow" aria-hidden>
+                    <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M8 12h9" />
+                    </svg>
+                  </span>
+                </span>
+              </button>
+            ) : null}
           </div>
 
           {/* Franchise brand names — text rail (no image logos) */}

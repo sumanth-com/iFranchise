@@ -14,9 +14,6 @@ const siteUrl = (process.env.VITE_SITE_URL || process.env.SITE_URL || 'https://w
   '',
 );
 
-/** Temporarily hidden from listings (must match src/data/opportunities/index.js). */
-const HIDDEN_BRAND_SLUGS = new Set(['kasturi-creations']);
-
 function slugifyBrand(name = '') {
   return name
     .toLowerCase()
@@ -55,7 +52,7 @@ const FRANCHISE_PAGES = RAW_BRANDS.map((raw) => {
   const name = cleanText(raw.franchiseName).replace(/\(2\)/i, '').trim();
   const slug = slugifyBrand(name);
   return { slug, path: `/franchise/${slug}` };
-}).filter(({ slug }) => slug && !HIDDEN_BRAND_SLUGS.has(slug));
+}).filter(({ slug }) => slug);
 
 const blogDataSource = readFileSync(join(root, 'src/components/blogData.js'), 'utf8');
 const BLOG_PAGES = [...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => ({

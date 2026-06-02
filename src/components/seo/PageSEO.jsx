@@ -5,6 +5,7 @@ import { buildSchemasForRoute } from '../../seo/structuredData';
 import { THEME_COLORS } from '../../seo/config';
 import { getBlogBySlug } from '../blogData';
 import { franchiseOpportunities, franchiseSlugToId } from '../../data/franchiseData';
+import { getRoleById, getRoleIdFromPathname } from '../careersData';
 
 function getThemeColor() {
   if (typeof document === 'undefined') return THEME_COLORS.dark;
@@ -22,6 +23,12 @@ function getSeoContext(logicalPathname) {
   if (logicalPathname === '/blog-detail') {
     const slug = pathname.split('/').filter(Boolean)[1];
     return { blogPost: getBlogBySlug(slug) };
+  }
+
+  if (logicalPathname === '/career-detail') {
+    const roleId = getRoleIdFromPathname(pathname);
+    const role = roleId ? getRoleById(roleId) : null;
+    return { careerRole: role };
   }
 
   if (logicalPathname === '/franchise-details') {

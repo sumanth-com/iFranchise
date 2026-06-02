@@ -76,12 +76,12 @@ const CAREERS_FAQS = [
   {
     question: 'When will roles open, and how do I hear about them?',
     answer:
-      'We are preparing our next hiring wave across strategy, product, growth, and operations. Follow us on LinkedIn for announcements, or email careers@ifranchise.in if you want to introduce yourself early.',
+      'We are preparing our next hiring wave across strategy, product, growth, and operations. Follow us on LinkedIn for announcements, or email hr@ifranchise.in if you want to introduce yourself early.',
   },
   {
     question: 'Can I reach out before a role is posted?',
     answer:
-      'Yes. Send a short note and your background to careers@ifranchise.in. We review thoughtful introductions as we plan upcoming hires.',
+      'Yes. Send a short note and your background to hr@ifranchise.in. We review thoughtful introductions as we plan upcoming hires.',
   },
   {
     question: 'What does growth look like here?',
