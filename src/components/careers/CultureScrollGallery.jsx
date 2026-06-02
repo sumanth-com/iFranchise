@@ -75,14 +75,14 @@ export default function CultureScrollGallery({
   return (
     <section
       ref={ref}
-      className={`career-culture-section border-t py-12 sm:py-16 ${isDark ? 'border-violet-500/20' : 'border-slate-200/80'} ${className}`}
+      className={`career-culture-section py-8 sm:py-10 ${className}`}
       aria-labelledby={headingId}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-4xl px-6 sm:px-8 text-center mb-8 sm:mb-10"
+        className="careers-content-rail mx-auto max-w-4xl w-full px-6 sm:px-8 xl:px-12 text-center mb-6 sm:mb-8"
       >
         <span
           className={`culture-gallery-label inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest mb-3 ${labelClass}`}

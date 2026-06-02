@@ -19,12 +19,12 @@ export default function CareersLinkedInSection() {
 
   return (
     <section className="careers-linkedin-section careers-section">
-      <div ref={ref} className="max-w-3xl mx-auto px-6 sm:px-8 xl:px-12 py-12 sm:py-16">
+      <div ref={ref} className="careers-content-rail max-w-4xl mx-auto w-full px-6 sm:px-8 xl:px-12 pt-2 pb-8 sm:pt-3 sm:pb-10">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="careers-linkedin-card careers-growth-linkedin-cta flex flex-col items-center gap-5 rounded-2xl px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left sm:px-8 sm:py-7"
+          className="careers-linkedin-card careers-growth-linkedin-cta flex w-full flex-col items-center gap-5 rounded-2xl px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left sm:px-8 sm:py-6"
         >
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:gap-4">
             <div className="careers-linkedin-card__icon flex h-12 w-12 shrink-0 items-center justify-center rounded-xl">

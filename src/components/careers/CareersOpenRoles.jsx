@@ -2,13 +2,8 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { navigateTo } from '../../lib/navigation';
 import { sectionTitleClass } from '../../lib/cardThemeStyles';
-import { useTheme } from '../../context/ThemeContext';
 import {
   CAREERS_APPLY_EMAIL,
-  DEPT_COLORS,
-  DEPT_COLORS_DARK,
-  MODE_COLORS,
-  MODE_COLORS_DARK,
   getOpenRoles,
   HIRING_ACTIVE,
 } from '../careersData';
@@ -22,76 +17,43 @@ function SectionLabel({ text }) {
   );
 }
 
-function MetaItem({ icon, label, value }) {
-  return (
-    <div className="careers-role-card__meta">
-      <span className="careers-role-card__meta-icon" aria-hidden>
-        {icon}
-      </span>
-      <div className="careers-role-card__meta-text min-w-0">
-        <p className="careers-role-card__meta-label">{label}</p>
-        <p className="careers-role-card__meta-value">{value}</p>
-      </div>
-    </div>
-  );
-}
-
 function RoleListingCard({ role, inView }) {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-  const deptClass = (isDark ? DEPT_COLORS_DARK : DEPT_COLORS)[role.dept] || (isDark ? DEPT_COLORS_DARK : DEPT_COLORS).Marketing;
-  const modeClass = (isDark ? MODE_COLORS_DARK : MODE_COLORS)[role.mode] || (isDark ? MODE_COLORS_DARK : MODE_COLORS).Remote;
   const applyEmail = role.applyEmail || CAREERS_APPLY_EMAIL;
   const mailto = `mailto:${applyEmail}?subject=${encodeURIComponent(`Application: ${role.title}`)}`;
 
+  const primaryMeta = [role.location, role.type, role.mode].filter(Boolean);
+  const secondaryMeta = [role.duration, role.stipend, `${role.workingDays} · ${role.workingHours}`].filter(
+    Boolean,
+  );
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-      className="careers-role-card careers-role-card--listing"
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.06 }}
+      className="careers-role-card careers-role-card--listing careers-role-card--pro"
     >
-      <div className="careers-role-card__header">
-        <div className="careers-role-card__header-main">
-          <div className="careers-role-card__icon">{role.icon}</div>
-          <div className="careers-role-card__header-copy min-w-0 flex-1">
-            <p className="careers-role-card__eyebrow">iFranchise · {role.dept}</p>
-            <h3 className="careers-role-card__title">{role.title}</h3>
-            <div className="careers-role-card__tags">
-              <span className={`careers-role-card__tag careers-role-card__tag--dept ${deptClass}`}>
-                {role.dept}
-              </span>
-              <span className="careers-role-card__tag careers-role-card__tag--neutral">{role.type}</span>
-              <span className={`careers-role-card__tag ${modeClass}`}>{role.mode}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="careers-role-card__inner">
+        <p className="careers-role-card__company">iFranchise · {role.dept}</p>
+        <h3 className="careers-role-card__title">
+          <button
+            type="button"
+            className="careers-role-card__title-link"
+            onClick={() => navigateTo(`/careers/${role.id}`)}
+          >
+            {role.title}
+          </button>
+        </h3>
 
-      <div className="careers-role-card__body">
-        <p className="careers-role-card__tagline">{role.tagline}</p>
-
-        <div className="careers-role-card__facts">
-          <div className="careers-role-card__meta-grid">
-            <MetaItem icon="📍" label="Location" value={role.location} />
-            <MetaItem icon="⏳" label="Duration" value={role.duration} />
-            <MetaItem icon="💰" label="Stipend" value={role.stipend} />
-            <MetaItem icon="🕙" label="Schedule" value={`${role.workingDays} · ${role.workingHours}`} />
-          </div>
-        </div>
-
-        {role.keySkills?.length > 0 && (
-          <div className="careers-role-card__skills careers-role-card__skills--listing">
-            <p className="careers-role-card__skills-label">Key focus areas</p>
-            <ul className="careers-role-card__skills-list">
-              {role.keySkills.map((skill) => (
-                <li key={skill} className="careers-role-card__skill">
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
+        {primaryMeta.length > 0 && (
+          <p className="careers-role-card__meta-line">{primaryMeta.join(' · ')}</p>
         )}
+
+        {secondaryMeta.length > 0 && (
+          <p className="careers-role-card__meta-secondary">{secondaryMeta.join(' · ')}</p>
+        )}
+
+        {role.tagline ? <p className="careers-role-card__summary">{role.tagline}</p> : null}
 
         <div className="careers-role-card__actions">
           <button
@@ -99,23 +61,12 @@ function RoleListingCard({ role, inView }) {
             onClick={() => navigateTo(`/careers/${role.id}`)}
             className="careers-role-card__btn careers-role-card__btn--primary"
           >
-            <span className="careers-role-card__btn-label careers-role-card__btn-label--short">View role</span>
-            <span className="careers-role-card__btn-label careers-role-card__btn-label--full">
-              View full job description
-            </span>
-            <span aria-hidden>→</span>
+            View job
           </button>
           <a href={mailto} className="careers-role-card__btn careers-role-card__btn--secondary">
-            Apply via email
+            Apply
           </a>
         </div>
-        <p className="careers-role-card__apply-note careers-role-card__apply-note--full">
-          Apply to{' '}
-          <a href={mailto} className="careers-role-card__apply-link">
-            {applyEmail}
-          </a>{' '}
-          with resume, portfolio, and your best content samples.
-        </p>
       </div>
     </motion.article>
   );
@@ -129,13 +80,13 @@ export default function CareersOpenRoles() {
   if (!HIRING_ACTIVE || openRoles.length === 0) return null;
 
   return (
-    <section className="careers-open-roles careers-section border-y border-slate-200">
-      <div ref={ref} className="max-w-4xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
+    <section className="careers-open-roles careers-section">
+      <div ref={ref} className="careers-content-rail max-w-4xl mx-auto w-full px-6 sm:px-8 xl:px-12 pt-10 pb-4 sm:pt-12 sm:pb-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
           <div className="flex justify-center">
             <SectionLabel text="Open positions" />
@@ -147,12 +98,11 @@ export default function CareersOpenRoles() {
             </span>
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-            Real roles on our team today. Read the full description, then apply with your resume and
-            creative work.
+            Read the full role on the next page, then apply with your resume and portfolio.
           </p>
         </motion.div>
 
-        <div className="space-y-6">
+        <div className="careers-role-list space-y-4">
           {openRoles.map((role) => (
             <RoleListingCard key={role.id} role={role} inView={inView} />
           ))}

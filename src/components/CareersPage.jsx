@@ -208,7 +208,7 @@ function CareersPage() {
         </div>
       </section>
 
-      <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-14 sm:py-20">
+      <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-10 sm:py-12">
         <RevealSection className="text-center mb-10">
           <div className="flex justify-center">
             <SectionLabel text="Benefits" />
@@ -234,11 +234,11 @@ function CareersPage() {
 
       <CultureScrollGallery
         isDark={isDark}
-        className="careers-culture-section careers-section border-t border-slate-200"
+        className="careers-culture-section careers-section"
         intro="A collaborative, outcome-driven culture. We value clear communication, ownership, and people who want to grow with the company."
       />
 
-      <section className="careers-faq-section careers-section py-14 sm:py-20">
+      <section className="careers-faq-section careers-section py-10 sm:py-12">
         <div className="max-w-2xl mx-auto px-6 sm:px-8">
           <RevealSection className="text-center mb-8">
             <div className="flex justify-center">

@@ -102,5 +102,29 @@
     "webp": "ODETTE/6.webp",
     "avif": null,
     "variants": {}
+  },
+  "cerlink.png": {
+    "original": "cerlink.png",
+    "width": 1254,
+    "height": 1254,
+    "webp": "cerlink.webp",
+    "avif": null,
+    "variants": {}
+  },
+  "kasturi/2.png": {
+    "original": "kasturi/2.png",
+    "width": 1536,
+    "height": 1024,
+    "webp": "kasturi/2.webp",
+    "avif": null,
+    "variants": {}
+  },
+  "kasturi/3.png": {
+    "original": "kasturi/3.png",
+    "width": 1536,
+    "height": 1024,
+    "webp": "kasturi/3.webp",
+    "avif": null,
+    "variants": {}
   }
 }

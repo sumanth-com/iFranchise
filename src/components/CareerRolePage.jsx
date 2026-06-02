@@ -25,29 +25,41 @@ function HeroPill({ children, className = '' }) {
 
 function SectionBlock({ title, children, highlight = false }) {
   return (
-    <section
-      className={
-        highlight
-          ? 'career-detail-highlight rounded-2xl border border-violet-200 bg-violet-50/80 p-6 sm:p-7'
-          : ''
-      }
-    >
-      <h2 className="career-detail-section-title text-lg font-bold text-slate-900 mb-3">{title}</h2>
-      <div className="career-detail-prose text-[15px] text-slate-700 leading-relaxed space-y-3">
-        {children}
-      </div>
+    <section className={`career-detail-block${highlight ? ' career-detail-block--highlight' : ''}`}>
+      <h2 className="career-detail-section-title">{title}</h2>
+      <div className="career-detail-prose">{children}</div>
     </section>
+  );
+}
+
+function ListCheckIcon() {
+  return (
+    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.25}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
   );
 }
 
 function BulletList({ items }) {
   return (
-    <ul className="space-y-2.5">
+    <ul className="career-detail-list">
       {items.map((item) => (
-        <li key={item} className="flex gap-2.5">
-          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-600" aria-hidden />
-          <span>{item}</span>
+        <li key={item} className="career-detail-list__item">
+          <span className="career-detail-list__icon" aria-hidden>
+            <ListCheckIcon />
+          </span>
+          <span className="career-detail-list__text">{item}</span>
         </li>
+      ))}
+    </ul>
+  );
+}
+
+function PromptList({ items }) {
+  return (
+    <ul className="career-detail-prompt-list">
+      {items.map((prompt) => (
+        <li key={prompt}>{prompt}</li>
       ))}
     </ul>
   );
@@ -130,7 +142,7 @@ export default function CareerRolePage() {
   return (
     <div className="career-detail-page relative z-10 min-h-screen text-theme-primary">
       <div className="career-detail-hero border-b border-slate-200 bg-gradient-to-br from-violet-50/90 via-white to-indigo-50/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 xl:px-12 py-5 sm:py-12">
+        <div className="career-detail-rail py-5 sm:py-12">
           <button
             type="button"
             onClick={() => navigateTo('/careers')}
@@ -187,46 +199,42 @@ export default function CareerRolePage() {
         </div>
       </div>
 
-      <div className="career-detail-body max-w-6xl mx-auto px-4 sm:px-8 xl:px-12 py-6 sm:py-14">
-        <div className="grid grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:gap-12">
-          <div className="career-detail-content space-y-7 sm:space-y-10">
-            <SectionBlock title="About iFranchise">
-              <p>{role.about}</p>
-            </SectionBlock>
-
-            <SectionBlock title="The opportunity" highlight>
-              {role.opportunityPrompts?.length > 0 && (
-                <ul className="space-y-2 mb-4">
-                  {role.opportunityPrompts.map((prompt) => (
-                    <li key={prompt} className="font-medium text-slate-800">
-                      {prompt}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <p>{role.aboutRole}</p>
-            </SectionBlock>
-
-            {role.keySkills?.length > 0 && (
-              <SectionBlock title="What we’re looking for">
-                <BulletList items={role.keySkills} />
+      <div className="career-detail-body">
+        <div className="career-detail-rail py-6 sm:py-14">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:gap-10">
+            <div className="career-detail-content space-y-6 sm:space-y-8 min-w-0">
+              <SectionBlock title="About iFranchise">
+                <p>{role.about}</p>
               </SectionBlock>
-            )}
 
-            <SectionBlock title="What you’ll be doing">
-              <BulletList items={role.responsibilities} />
-            </SectionBlock>
+              <SectionBlock title="The opportunity" highlight>
+                {role.opportunityPrompts?.length > 0 && (
+                  <PromptList items={role.opportunityPrompts} />
+                )}
+                <p>{role.aboutRole}</p>
+              </SectionBlock>
 
-            <SectionBlock title="You’re a great fit if you…">
-              <BulletList items={role.requirements} />
-            </SectionBlock>
+              {role.keySkills?.length > 0 && (
+                <SectionBlock title="What we’re looking for">
+                  <BulletList items={role.keySkills} />
+                </SectionBlock>
+              )}
 
-            <SectionBlock title="Why join iFranchise?">
-              <p>{role.whyJoin}</p>
-            </SectionBlock>
+              <SectionBlock title="What you’ll be doing">
+                <BulletList items={role.responsibilities} />
+              </SectionBlock>
+
+              <SectionBlock title="You’re a great fit if you…">
+                <BulletList items={role.requirements} />
+              </SectionBlock>
+
+              <SectionBlock title="Why join iFranchise?">
+                <p>{role.whyJoin}</p>
+              </SectionBlock>
+            </div>
+
+            <ApplyPanel role={role} />
           </div>
-
-          <ApplyPanel role={role} />
         </div>
       </div>
     </div>
