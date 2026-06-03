@@ -270,7 +270,14 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
             {/* -- Col 1: Brand + office address (footer only) -- */}
             <div className="footer-main-grid-brand">
               <div className="footer-brand-lockup">
-                <img src={brandLogo} alt="iFranchise" className="footer-brand-logo" width={34} height={34} />
+                <img
+                  src={brandLogo}
+                  alt="iFranchise India franchise consulting company"
+                  title="iFranchise"
+                  className="footer-brand-logo"
+                  width={34}
+                  height={34}
+                />
                 <span className="footer-brand-name">iFranchise</span>
               </div>
               <div className="footer-brand-address">

@@ -45,7 +45,8 @@ export default function OpportunityCard({ opportunity }) {
         <img
           src={remoteSet?.src ?? cardImage}
           srcSet={remoteSet?.srcSet}
-          alt={opportunity.brandName}
+          alt={`${opportunity.brandName} franchise business opportunity in India`}
+          title={`${opportunity.brandName} franchise`}
           className="fo-opportunity-card__img"
           loading="lazy"
           decoding="async"

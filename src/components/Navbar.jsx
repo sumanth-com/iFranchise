@@ -742,7 +742,7 @@ function Navbar() {
               src={NAV_LOGO.src}
               srcSet={NAV_LOGO.srcSet}
               sizes={NAV_LOGO.sizes}
-              alt="iFranchise"
+              alt="iFranchise India franchise consulting company"
               className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10"
               width={40}
               height={40}
@@ -981,7 +981,7 @@ function Navbar() {
                     src={NAV_LOGO.src}
                     srcSet={NAV_LOGO.srcSet}
                     sizes={NAV_LOGO.sizes}
-                    alt="iFranchise"
+                    alt="iFranchise India franchise consulting company"
                     className="h-9 w-9 rounded-xl"
                     width={36}
                     height={36}

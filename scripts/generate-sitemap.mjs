@@ -59,6 +59,11 @@ const BLOG_PAGES = [...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match
   path: `/blogs/${match[1]}`,
 }));
 
+const careersSource = readFileSync(join(root, 'src/components/careersData.jsx'), 'utf8');
+const CAREER_PAGES = [...careersSource.matchAll(/id:\s*'([^']+)',\s*\n\s*active:\s*true/g)].map((match) => ({
+  path: `/careers/${match[1]}`,
+}));
+
 function escapeXml(value) {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -84,6 +89,11 @@ const entries = [
     changefreq: 'monthly',
     priority: '0.75',
   })),
+  ...CAREER_PAGES.map(({ path }) => ({
+    loc: `${siteUrl}${path}`,
+    changefreq: 'weekly',
+    priority: '0.7',
+  })),
 ];
 
 const urls = entries
@@ -107,5 +117,5 @@ mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
 console.log(
-  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${BLOG_PAGES.length} blog) to public/sitemap.xml (${siteUrl})`,
+  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${BLOG_PAGES.length} blog + ${CAREER_PAGES.length} careers) to public/sitemap.xml (${siteUrl})`,
 );

@@ -1,3 +1,5 @@
+import { TWITTER_HANDLE } from './config.js';
+
 const MANAGED = 'data-seo-managed';
 
 /**
@@ -29,6 +31,9 @@ export function applyPageHead(seo, options = {}) {
   setMeta('property', 'og:locale', 'en_IN');
 
   setMeta('name', 'twitter:card', seo.twitter.card);
+  if (TWITTER_HANDLE) {
+    setMeta('name', 'twitter:site', TWITTER_HANDLE);
+  }
   setMeta('name', 'twitter:title', seo.twitter.title);
   setMeta('name', 'twitter:description', seo.twitter.description);
   setMeta('name', 'twitter:image', seo.twitter.image);

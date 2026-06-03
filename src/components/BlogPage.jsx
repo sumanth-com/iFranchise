@@ -26,7 +26,8 @@ function BlogPage() {
         <div className="blog-page-hero__media min-h-[280px] w-full overflow-hidden sm:min-h-[300px] md:min-h-[320px] md:rounded-3xl">
           <BlogImage
             src={BLOG_PAGE_HERO_IMAGE}
-            alt="Franchise insights and investment guides"
+            alt="Franchise investment insights and business opportunity guides for India"
+            title="iFranchise franchise blog"
             variant="card"
             priority
             wrapperClassName="blog-page-hero__image-wrap h-full min-h-[inherit] w-full"

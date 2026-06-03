@@ -198,7 +198,8 @@ function CareersPage() {
             <div className="careers-hero-image-frame rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.12)] border border-slate-200 bg-white">
               <img
                 src={careerImage}
-                alt="iFranchise Careers"
+                alt="Join iFranchise careers team — franchise growth platform India"
+                title="Careers at iFranchise"
                 className="w-full h-auto object-cover"
                 loading="eager"
               />

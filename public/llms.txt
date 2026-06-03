@@ -1,0 +1,36 @@
+# iFranchise
+
+> India's trusted franchise growth platform connecting brands, investors, and expansion leaders.
+
+## Website
+- https://www.ifranchise.in
+
+## Organization
+- Name: iFranchise
+- Type: Franchise consulting and marketplace platform
+- Email: contact@ifranchise.in
+- Location: Bengaluru, Karnataka, India
+
+## Primary services
+- Franchise opportunity discovery for investors
+- Franchise expansion consulting for brands
+- Investor matching and lead generation
+- Franchise documentation and onboarding support
+- Market research and territory planning
+
+## Key pages
+- Home: https://www.ifranchise.in/
+- About: https://www.ifranchise.in/about-us
+- Services: https://www.ifranchise.in/services
+- Franchise opportunities: https://www.ifranchise.in/franchise-opportunities
+- List your brand: https://www.ifranchise.in/list-your-brand
+- Contact: https://www.ifranchise.in/contact-us
+- FAQ: https://www.ifranchise.in/faq
+- Blog: https://www.ifranchise.in/blogs
+- Careers: https://www.ifranchise.in/careers
+
+## Topics covered
+Franchise consulting in India, franchise business opportunities, FOFO FOCO FICO models, franchise investment, franchise expansion, food and retail franchises, investor matching, brand listing.
+
+## Sitemap
+https://www.ifranchise.in/sitemap.xml

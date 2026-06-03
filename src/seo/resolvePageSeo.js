@@ -2,7 +2,9 @@ import { franchiseOpportunities, franchiseSlugToId } from '../data/franchiseData
 import { getBlogBySlug } from '../components/blogData';
 import { getRoleById, getRoleIdFromPathname } from '../components/careersData';
 import { STATIC_PAGE_SEO } from './staticPages';
-import { absoluteUrl, truncateMeta, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
+import { absoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
+import { DEFAULT_META_KEYWORDS } from './keywords.js';
+import { formatDescription, formatTitle, normalizeSeoEntry } from './metaUtils.js';
 
 const PATHNAME_ALIASES = {
   '/about': '/about-us',
@@ -56,7 +58,9 @@ export function resolvePageSeo(logicalPathname, location = {}) {
   const aliasCanonical = PATHNAME_ALIASES[pathname];
   let canonicalPath = aliasCanonical || pathname;
 
-  let entry = STATIC_PAGE_SEO[logicalPathname] ? { ...STATIC_PAGE_SEO[logicalPathname] } : null;
+  let entry = STATIC_PAGE_SEO[logicalPathname]
+    ? normalizeSeoEntry({ ...STATIC_PAGE_SEO[logicalPathname] })
+    : null;
   let ogImage = absoluteUrl(DEFAULT_OG_IMAGE_PATH);
   let ogType = entry?.ogType || 'website';
 
@@ -65,17 +69,17 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     const post = getBlogBySlug(slug);
     if (post) {
       canonicalPath = `/blogs/${post.slug}`;
-      const description = truncateMeta(post.excerpt);
-      entry = {
-        title: `${post.title} | iFranchise Blog`,
+      const description = formatDescription(post.excerpt);
+      entry = normalizeSeoEntry({
+        title: formatTitle(`${post.title} | iFranchise Blog`),
         description,
-        keywords: `${post.category}, franchise, investment, franchise blog India`,
+        keywords: `${post.category}, franchise investment, franchise blog india, ${DEFAULT_META_KEYWORDS}`,
         canonicalPath,
         ogTitle: post.title,
         ogDescription: description,
         ogType: 'article',
         robots: 'index, follow',
-      };
+      });
       ogImage = post.image?.startsWith('http') ? post.image : absoluteUrl(post.image);
     } else {
       entry = {
@@ -91,19 +95,19 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     const role = roleId ? getRoleById(roleId) : null;
     if (role?.active) {
       canonicalPath = `/careers/${role.id}`;
-      const description = truncateMeta(
+      const description = formatDescription(
         `${role.title} at iFranchise — ${role.mode}, ${role.location}. ${role.duration}. ${role.tagline}`,
       );
-      entry = {
-        title: `${role.title} | Careers at iFranchise`,
+      entry = normalizeSeoEntry({
+        title: formatTitle(`${role.title} | Careers at iFranchise`),
         description,
-        keywords: `${role.title}, iFranchise careers, marketing internship Bangalore, content creator internship India`,
+        keywords: `${role.title}, ifranchise careers, franchise jobs india, ${DEFAULT_META_KEYWORDS}`,
         canonicalPath,
-        ogTitle: `${role.title} | iFranchise Careers`,
+        ogTitle: formatTitle(`${role.title} | iFranchise Careers`),
         ogDescription: description,
         ogType: 'website',
         robots: 'index, follow',
-      };
+      });
     } else {
       entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
       canonicalPath = pathname;
@@ -116,20 +120,23 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     if (franchise) {
       const brand = franchise.brandName;
       canonicalPath = franchise.slug ? `/franchise/${franchise.slug}` : pathname;
-      const description = truncateMeta(
+      const industry = franchise.industry || franchise.category || '';
+      const description = formatDescription(
         franchise.metaDescription ||
-          `${brand} franchise opportunity: investment range, business model, locations, and ROI. Apply or inquire on iFranchise.`,
+          `${brand} franchise opportunity in India: investment range, business model, locations, ROI, and payback. Inquire on iFranchise.`,
       );
-      entry = {
-        title: `${brand} Franchise | Investment, ROI & Details | iFranchise`,
+      entry = normalizeSeoEntry({
+        title: formatTitle(`${brand} Franchise Opportunity India | iFranchise`),
         description,
-        keywords: `${brand} franchise, franchise investment, ${franchise.industry || franchise.category} franchise India`,
+        keywords: `${brand} franchise, ${industry} franchise india, franchise investment opportunities, ${DEFAULT_META_KEYWORDS}`,
         canonicalPath,
-        ogTitle: `${brand} | Franchise Opportunity`,
-        ogDescription: truncateMeta(`Investment, model, and expansion details for ${brand} on iFranchise.`),
+        ogTitle: formatTitle(`${brand} Franchise | iFranchise`),
+        ogDescription: formatDescription(
+          `Investment, model, and expansion details for ${brand} franchise on iFranchise.`,
+        ),
         ogType: 'website',
         robots: 'index, follow',
-      };
+      });
       if (franchise.image?.startsWith('http')) ogImage = franchise.image;
     } else {
       entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };

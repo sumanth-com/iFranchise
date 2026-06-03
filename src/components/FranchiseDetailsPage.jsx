@@ -21,6 +21,7 @@ import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportu
 import { formatReturnsDisplay } from '../data/opportunities/opportunityUtils.js';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 import FranchiseLocationsPanel from './franchise/FranchiseLocationsPanel';
+import { franchiseBrandAlt } from '../seo/imageAlt.js';
 
 const tabs = ['Overview', 'Locations', 'FAQ', 'Reviews'];
 
@@ -549,7 +550,7 @@ function FranchiseDetailsPage() {
                 {selectedFranchise.logo ? (
                   <img
                     src={selectedFranchise.logo}
-                    alt=""
+                    alt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
                     decoding="async"
                     loading="eager"
                     className="h-11 w-auto max-w-[140px] shrink-0 object-contain sm:h-12"
@@ -655,7 +656,7 @@ function FranchiseDetailsPage() {
                 <ImageCarousel
                   key={selectedFranchiseId}
                   images={galleryImages}
-                  alt={selectedFranchise.name}
+                  alt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
                   category={carouselCategory}
                   showThumbnails={false}
                   fillParent

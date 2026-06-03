@@ -24,7 +24,7 @@ function NotFoundPage() {
         <div className="animate-float">
           <OptimizedImage
             src={notFoundImage}
-            alt="404"
+            alt="Page not found on iFranchise franchise website"
             className="w-auto object-contain max-h-[78vh] max-w-[95vw] drop-shadow-2xl"
             width={800}
             height={600}

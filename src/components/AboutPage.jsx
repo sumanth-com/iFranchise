@@ -275,7 +275,14 @@ function AboutPage() {
                 transition={{ duration: 0.4 }}
                 className="relative overflow-hidden rounded-3xl shadow-2xl"
               >
-                <img src={aboutUsImage} alt="iFranchise Journey" className="w-full h-auto object-cover" loading="lazy" />
+                <img
+                  src={aboutUsImage}
+                  alt="iFranchise franchise development and expansion journey in India"
+                  title="About iFranchise franchise consulting"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent" />
               </motion.div>
             </motion.div>
