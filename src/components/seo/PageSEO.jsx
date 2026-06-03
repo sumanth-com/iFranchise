@@ -4,7 +4,11 @@ import { applyPageHead, applyStructuredData } from '../../seo/applyHead';
 import { buildSchemasForRoute } from '../../seo/structuredData';
 import { THEME_COLORS } from '../../seo/config';
 import { getBlogBySlug } from '../blogData';
-import { franchiseOpportunities, franchiseSlugToId } from '../../data/franchiseData';
+import {
+  franchiseOpportunities,
+  franchiseSlugToId,
+  getFranchiseDetailById,
+} from '../../data/franchiseData';
 import { getRoleById, getRoleIdFromPathname } from '../careersData';
 
 function getThemeColor() {
@@ -39,7 +43,8 @@ function getSeoContext(logicalPathname) {
       id = franchiseSlugToId[slug];
     }
     const franchise = id ? franchiseOpportunities.find((f) => String(f.id) === String(id)) : null;
-    return { franchiseBrand: franchise?.brandName };
+    const franchiseDetail = id ? getFranchiseDetailById(id) : null;
+    return { franchise, franchiseDetail };
   }
 
   return {};

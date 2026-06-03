@@ -7,6 +7,7 @@ import {
   SITE_CONTACT_EMAIL,
   SITE_CONTACT_PHONE_TEL,
 } from '../data/siteContact.js';
+import { SOCIAL_LINKS } from '../constants/socialLinks.js';
 
 export const SITE_NAME = 'iFranchise';
 
@@ -27,7 +28,7 @@ export const ORGANIZATION = {
   name: SITE_NAME,
   legalName: 'iFranchise',
   url: SITE_URL,
-  logo: `${SITE_URL}/apple-touch-icon.png?v=${ICON_VERSION}`,
+  logo: `${SITE_URL}/android-chrome-512x512.png?v=${ICON_VERSION}`,
   description:
     "India's trusted franchise growth platform connecting brands, investors, and expansion leaders.",
   email: SITE_CONTACT_EMAIL,
@@ -39,7 +40,7 @@ export const ORGANIZATION = {
     addressRegion: 'Karnataka',
     addressCountry: 'IN',
   },
-  sameAs: [],
+  sameAs: SOCIAL_LINKS.map((link) => link.href).filter(Boolean),
 };
 
 export const THEME_COLORS = {
