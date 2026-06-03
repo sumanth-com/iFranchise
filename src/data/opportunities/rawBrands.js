@@ -1,6 +1,12 @@
 /**
  * Source-of-truth brand records from Opp Page.xlsx (Franchise Form Data sheet).
  * Update this file when new brands are added to the spreadsheet.
+ *
+ * Adding a brand here automatically creates:
+ * - Listing + detail page at /franchise/{slug}
+ * - Sitemap URL (scripts/generate-sitemap.mjs)
+ * - JSON-LD: Organization, Offer, FAQPage, BreadcrumbList (PageSEO)
+ * - ItemList entry on /franchise-opportunities
  */
 export const RAW_BRANDS = [
   {

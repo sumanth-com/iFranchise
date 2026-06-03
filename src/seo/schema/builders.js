@@ -52,7 +52,11 @@ export function buildWebSiteSchema() {
         '@type': 'EntryPoint',
         urlTemplate: `${SITE_URL}/franchise-opportunities?q={search_term_string}`,
       },
-      'query-input': 'required name=search_term_string',
+      'query-input': {
+        '@type': 'PropertyValueSpecification',
+        valueRequired: true,
+        valueName: 'search_term_string',
+      },
     },
   };
 }
@@ -146,8 +150,7 @@ export function buildItemListSchema({ canonicalUrl, name, items }) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      url: item.url,
-      ...(item.image ? { image: item.image } : {}),
+      item: item.url,
     })),
   };
 }
@@ -180,15 +183,22 @@ export function buildFranchiseOpportunitiesListSchemas(canonicalUrl) {
  */
 export function buildFranchiseBrandSchemas(franchise, detail, canonicalUrl) {
   const schemas = [];
-  const brandName = franchise?.brandName || detail?.name;
+  const brandName = franchise?.brandName || detail?.name || 'Franchise';
+  const industry = franchise?.industry || franchise?.category || detail?.industry || '';
   const description =
     franchise?.metaDescription ||
     detail?.overview ||
-    `${brandName} franchise opportunity on iFranchise.`;
+    `${brandName} franchise opportunity in India on iFranchise.`;
 
   const image = toAbsoluteImageUrl(
     franchise?.image || detail?.banner || detail?.logo || detail?.image,
   );
+
+  const investmentLabel =
+    franchise?.investmentDisplay ||
+    detail?.keyInfo?.investment ||
+    detail?.financialHighlights?.investmentRange ||
+    '';
 
   schemas.push({
     '@context': 'https://schema.org',
@@ -198,34 +208,39 @@ export function buildFranchiseBrandSchemas(franchise, detail, canonicalUrl) {
     description,
     url: canonicalUrl,
     image,
+    ...(industry ? { knowsAbout: industry } : {}),
     parentOrganization: { '@id': ORG_ID },
   });
 
-  if (franchise?.investmentDisplay || franchise?.minInvestment) {
-    schemas.push({
-      '@context': 'https://schema.org',
-      '@type': 'Offer',
-      name: `${brandName} Franchise Opportunity`,
-      description,
-      url: canonicalUrl,
-      category: franchise.industry || franchise.category,
-      seller: { '@id': `${canonicalUrl}#brand` },
-      offeredBy: organizationReference(),
-      areaServed: {
-        '@type': 'Country',
-        name: 'India',
-      },
-      ...(franchise.investmentDisplay
-        ? {
-            priceSpecification: {
-              '@type': 'PriceSpecification',
-              price: franchise.investmentDisplay,
-              priceCurrency: 'INR',
-            },
-          }
-        : {}),
-    });
-  }
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: `${brandName} Franchise Opportunity | iFranchise`,
+    description,
+    isPartOf: { '@id': WEBSITE_ID },
+    about: { '@id': `${canonicalUrl}#brand` },
+    publisher: { '@id': ORG_ID },
+  });
+
+  const offerDescription = investmentLabel
+    ? `${description} Indicative investment: ${investmentLabel}.`
+    : description;
+
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'Offer',
+    name: `${brandName} Franchise Opportunity`,
+    description: offerDescription,
+    url: canonicalUrl,
+    category: industry || 'Franchise',
+    seller: { '@id': `${canonicalUrl}#brand` },
+    areaServed: {
+      '@type': 'Country',
+      name: 'India',
+    },
+  });
 
   const faqSchema = buildFaqPageSchema(detail?.faqs);
   if (faqSchema) schemas.push(faqSchema);
@@ -255,7 +270,7 @@ export function buildBlogPostingSchema(post, canonicalUrl) {
 
   return {
     '@context': 'https://schema.org',
-    '@type': ['BlogPosting', 'Article'],
+    '@type': 'BlogPosting',
     '@id': `${canonicalUrl}#article`,
     headline: post.title,
     description: post.excerpt,
@@ -322,8 +337,11 @@ export function buildJobPostingSchema(role, canonicalUrl) {
       '@type': 'Organization',
       '@id': ORG_ID,
       name: ORGANIZATION.name,
-      sameAs: ORGANIZATION.url,
-      logo: ORGANIZATION.logo,
+      url: ORGANIZATION.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: ORGANIZATION.logo,
+      },
     },
     jobLocation: {
       '@type': 'Place',

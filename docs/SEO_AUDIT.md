@@ -17,7 +17,7 @@ Full-stack SEO is implemented via `PageSEO` (meta + JSON-LD), build-time `sitema
 | **About** | + `AboutPage`, `BreadcrumbList` |
 | **Services** | + `Service` (×6), `FAQPage`, `BreadcrumbList` |
 | **Franchise listing** | + `CollectionPage`, `ItemList`, `BreadcrumbList` |
-| **Franchise detail** | + `Organization` (brand), `Offer`, `FAQPage` (if FAQs exist), `BreadcrumbList` |
+| **Franchise detail** (every brand in `rawBrands.js`, auto for new entries) | + Brand `Organization`, `WebPage`, `Offer`, `FAQPage`, `BreadcrumbList` |
 | **List your brand** | + `Service`, `ContactPage`, `FAQPage`, `BreadcrumbList` |
 | **Contact** | + `ContactPage`, `FAQPage`, `BreadcrumbList` |
 | **FAQ** | + `FAQPage`, `BreadcrumbList` |

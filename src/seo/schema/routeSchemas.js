@@ -111,7 +111,8 @@ export function buildSchemasForRoute(seo, context = {}) {
     return schemas;
   }
 
-  if (logicalPathname === '/franchise-details' && context.franchise && context.franchiseDetail) {
+  // Every brand in rawBrands.js → auto slug, sitemap, and schemas (no per-brand config).
+  if (logicalPathname === '/franchise-details' && context.franchiseDetail && context.franchise) {
     buildFranchiseBrandSchemas(context.franchise, context.franchiseDetail, canonicalUrl).forEach(
       (block, index) => {
         pushSchema(schemas, `franchise-${index}`, block);

@@ -1,4 +1,5 @@
 import { TWITTER_HANDLE } from './config.js';
+import { buildSchemaGraphDocument } from './schema/sanitize.js';
 
 const MANAGED = 'data-seo-managed';
 
@@ -48,15 +49,15 @@ export function applyStructuredData(schemas = []) {
 
   document.querySelectorAll(`script[type="application/ld+json"][${MANAGED}]`).forEach((node) => node.remove());
 
-  schemas.forEach(({ id, data }) => {
-    if (!data) return;
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = `seo-jsonld-${id}`;
-    script.setAttribute(MANAGED, 'true');
-    script.textContent = JSON.stringify(data);
-    document.head.appendChild(script);
-  });
+  const document_ = buildSchemaGraphDocument(schemas);
+  if (!document_) return;
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = 'seo-jsonld-graph';
+  script.setAttribute(MANAGED, 'true');
+  script.textContent = JSON.stringify(document_);
+  document.head.appendChild(script);
 }
 
 function setMeta(attr, key, content) {

@@ -4,11 +4,8 @@ import { applyPageHead, applyStructuredData } from '../../seo/applyHead';
 import { buildSchemasForRoute } from '../../seo/structuredData';
 import { THEME_COLORS } from '../../seo/config';
 import { getBlogBySlug } from '../blogData';
-import {
-  franchiseOpportunities,
-  franchiseSlugToId,
-  getFranchiseDetailById,
-} from '../../data/franchiseData';
+import { getFranchiseBySlug, getFranchiseListingById } from '../../data/franchiseData';
+import { franchiseDetailsById } from '../../data/opportunities/index.js';
 import { getRoleById, getRoleIdFromPathname } from '../careersData';
 
 function getThemeColor() {
@@ -36,15 +33,23 @@ function getSeoContext(logicalPathname) {
   }
 
   if (logicalPathname === '/franchise-details') {
-    const params = new URLSearchParams(search);
-    let id = params.get('id');
-    if (!id && pathname.startsWith('/franchise/')) {
+    if (pathname.startsWith('/franchise/')) {
       const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
-      id = franchiseSlugToId[slug];
+      const bundle = getFranchiseBySlug(slug);
+      if (bundle?.listing && bundle?.detail) {
+        return { franchise: bundle.listing, franchiseDetail: bundle.detail };
+      }
+      return {};
     }
-    const franchise = id ? franchiseOpportunities.find((f) => String(f.id) === String(id)) : null;
-    const franchiseDetail = id ? getFranchiseDetailById(id) : null;
-    return { franchise, franchiseDetail };
+    const id = new URLSearchParams(search).get('id');
+    if (id) {
+      const franchise = getFranchiseListingById(id);
+      const franchiseDetail = franchiseDetailsById[String(id)] || null;
+      if (franchise && franchiseDetail) {
+        return { franchise, franchiseDetail };
+      }
+    }
+    return {};
   }
 
   return {};
