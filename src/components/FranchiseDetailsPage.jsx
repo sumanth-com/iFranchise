@@ -563,7 +563,9 @@ function FranchiseDetailsPage() {
                 <span className="rounded-full bg-violet-100 px-4 py-1.5 text-sm font-semibold text-violet-700">{selectedFranchise.badge}</span>
               </div>
 
-              <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:gap-3">
+              <div
+                className={`grid w-full gap-2 sm:flex sm:w-auto sm:gap-3 ${selectedFranchise.brochureUrl ? 'grid-cols-2' : 'grid-cols-1'}`}
+              >
                 <button
                   type="button"
                   onClick={() => setInquiryOpen(true)}
@@ -571,11 +573,13 @@ function FranchiseDetailsPage() {
                 >
                   Enquire now
                 </button>
-                <BrochureDownloadButton
-                  franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
-                  brochureUrl={selectedFranchise.brochureUrl}
-                  className="btn-purple-solid group inline-flex w-full items-center justify-center whitespace-nowrap rounded-xl px-2 py-2.5 text-[0.625rem] font-semibold leading-none tracking-tight text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 sm:w-auto sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
-                />
+                {selectedFranchise.brochureUrl ? (
+                  <BrochureDownloadButton
+                    franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+                    brochureUrl={selectedFranchise.brochureUrl}
+                    className="btn-purple-solid group inline-flex w-full items-center justify-center whitespace-nowrap rounded-xl px-2 py-2.5 text-[0.625rem] font-semibold leading-none tracking-tight text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:w-auto sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
+                  />
+                ) : null}
               </div>
             </div>
 
