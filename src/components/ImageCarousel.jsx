@@ -21,7 +21,7 @@ function fallbackForSlide(category, idx) {
 
 function Chevron({ direction = 'left' }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-6 lg:w-6">
       <path
         d={direction === 'left' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'}
         fill="none"
@@ -219,7 +219,7 @@ export default function ImageCarousel({
                 e.stopPropagation();
                 goPrev();
               }}
-              className="absolute left-4 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/95 p-3 text-slate-900 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-xl pointer-events-auto lg:left-6 lg:p-4"
+              className="absolute left-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/75 p-1 text-slate-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/90 pointer-events-auto sm:left-2.5 sm:p-1.5 lg:left-6 lg:bg-white/95 lg:p-4 lg:text-slate-900 lg:shadow-lg lg:hover:scale-110 lg:hover:bg-white lg:hover:shadow-xl"
               aria-label="Previous image"
             >
               <Chevron direction="left" />
@@ -230,14 +230,14 @@ export default function ImageCarousel({
                 e.stopPropagation();
                 goNext();
               }}
-              className="absolute right-4 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/95 p-3 text-slate-900 shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-xl pointer-events-auto lg:right-6 lg:p-4"
+              className="absolute right-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/75 p-1 text-slate-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/90 pointer-events-auto sm:right-2.5 sm:p-1.5 lg:right-6 lg:bg-white/95 lg:p-4 lg:text-slate-900 lg:shadow-lg lg:hover:scale-110 lg:hover:bg-white lg:hover:shadow-xl"
               aria-label="Next image"
             >
               <Chevron direction="right" />
             </button>
 
             {/* Dot indicators */}
-            <div className="ic-gallery-dots absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/40 px-4 py-2.5 text-white backdrop-blur-md lg:bottom-6 lg:px-5 lg:py-3">
+            <div className="ic-gallery-dots absolute bottom-2.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-black/35 px-2.5 py-1.5 text-white backdrop-blur-md sm:bottom-3 sm:gap-2 sm:px-3 sm:py-2 lg:bottom-6 lg:gap-2 lg:px-5 lg:py-3">
               {safeImages.map((_, idx) => (
                 <button
                   key={idx}
@@ -246,7 +246,7 @@ export default function ImageCarousel({
                     e.stopPropagation();
                     setActiveIdx(idx);
                   }}
-                  className={`h-2.5 w-2.5 cursor-pointer rounded-full transition-all duration-300 lg:h-3 lg:w-3 ${
+                  className={`h-1.5 w-1.5 cursor-pointer rounded-full transition-all duration-300 sm:h-2 sm:w-2 lg:h-3 lg:w-3 ${
                     idx === activeIdx ? 'bg-white scale-110' : 'bg-white/50 hover:bg-white/80'
                   }`}
                   aria-label={`Go to image ${idx + 1}`}
@@ -255,7 +255,7 @@ export default function ImageCarousel({
             </div>
 
             {/* Image counter */}
-            <div className="ic-gallery-counter absolute right-4 top-4 z-10 rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md lg:right-6 lg:top-6 lg:px-4 lg:py-2 lg:text-sm">
+            <div className="ic-gallery-counter absolute right-2 top-2 z-10 rounded-full bg-black/45 px-2 py-0.5 text-[0.625rem] font-medium text-white backdrop-blur-md sm:right-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-xs lg:right-6 lg:top-6 lg:px-4 lg:py-2 lg:text-sm">
               {activeIdx + 1} / {safeImages.length}
             </div>
           </>
