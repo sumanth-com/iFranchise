@@ -2707,15 +2707,7 @@ html.lenis {
 .stagger-children > *:nth-child(5)  { transition-delay: 0.24s; }
 .stagger-children > *:nth-child(6)  { transition-delay: 0.30s; }
 
-/* --- Image lazy load fade-in -------------------------------------------------- */
-img[loading="lazy"] {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-img[loading="lazy"].loaded,
-img[loading="lazy"]:not([src=""]) {
-  opacity: 1;
-}
+/* Lazy images: no opacity:0 (causes CLS); parents use aspect-ratio / fixed height */
 
 /* --- Contain paint for heavy sections ---------------------------------------- */
 .contain-paint {

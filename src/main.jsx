@@ -44,16 +44,18 @@ if (isHome) {
   runWhenIdle(() => {
     import('./components/Hero.jsx')
   }, isMobile ? 1200 : 400)
-  if (!isMobile) {
-    import('./lib/preloadHomeHero.js').then(({ preloadHomeHero }) => preloadHomeHero())
-  }
 }
 
 initScrollRestoration()
 
-bootstrapFormPipeline().catch(() => {
-  logger.error('Form pipeline bootstrap failed')
-})
+runWhenIdle(
+  () => {
+    bootstrapFormPipeline().catch(() => {
+      logger.error('Form pipeline bootstrap failed')
+    })
+  },
+  isMobile ? 6000 : 3000,
+)
 
 if (!import.meta.env.DEV) {
   window.addEventListener('unhandledrejection', (event) => {

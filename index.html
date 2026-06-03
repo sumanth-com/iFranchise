@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png?v=20260603-1" />
     <link rel="manifest" href="/manifest.webmanifest?v=20260603-1" />
     <link rel="manifest" href="/manifest.json?v=20260603-1" />
+    <link rel="manifest" href="/manifest.json?v=20260603-1" />
     <meta name="apple-mobile-web-app-title" content="iFranchise" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="application-name" content="iFranchise" />
@@ -187,12 +188,6 @@
       html[data-theme='light'] #ifr-static-hero .hero-static-img {
         object-position: center 38%;
       }
-      html[data-theme='light'] #ifr-static-hero .hero-static-img--dark {
-        display: none;
-      }
-      html:not([data-theme='light']) #ifr-static-hero .hero-static-img--light {
-        display: none;
-      }
       #ifr-static-hero.ifr-static-hero--hidden {
         opacity: 0;
         visibility: hidden;
@@ -256,27 +251,7 @@
       aria-hidden="true"
       data-route="home"
     >
-      <div class="hero-cinematic-media-wrap">
-        <img
-          class="hero-static-img hero-static-img--dark"
-          src="/hero/lcp-dark.webp"
-          alt=""
-          width="640"
-          height="427"
-          fetchpriority="high"
-          decoding="async"
-        />
-        <img
-          class="hero-static-img hero-static-img--light"
-          src="/hero/lcp-light.webp"
-          alt=""
-          width="640"
-          height="427"
-          loading="lazy"
-          fetchpriority="low"
-          decoding="async"
-        />
-      </div>
+      <div class="hero-cinematic-media-wrap" id="ifr-static-hero-media"></div>
     </div>
     <script>
       (function () {
@@ -289,6 +264,17 @@
         }
         var light = document.documentElement.getAttribute('data-theme') === 'light';
         el.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
+        var wrap = document.getElementById('ifr-static-hero-media');
+        if (!wrap || wrap.querySelector('img')) return;
+        var img = document.createElement('img');
+        img.className = 'hero-static-img';
+        img.src = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
+        img.alt = '';
+        img.width = 640;
+        img.height = 427;
+        img.decoding = 'async';
+        img.setAttribute('fetchpriority', 'high');
+        wrap.appendChild(img);
       })();
     </script>
     <div id="root"></div>

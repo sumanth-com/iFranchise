@@ -182,6 +182,8 @@ export default function ImageCarousel({
             }}
             src={src}
             alt={`${alt} - Image ${idx + 1}`}
+            width={1200}
+            height={800}
             loading={preloadAll ? 'eager' : idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
             fetchPriority={idx === activeIdx ? 'high' : 'low'}

@@ -38,6 +38,8 @@ export function TrustLogoMarquee({
               src={partner.src}
               alt={partner.name || partner.label}
               className="trust-logo-img"
+              width={120}
+              height={48}
               loading="lazy"
               decoding="async"
               draggable={false}

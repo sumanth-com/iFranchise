@@ -30,4 +30,4 @@ export function buildResponsiveSrc(widthToUrl, fallback, sizes = '100vw') {
  * Hero LCP: mobile-first sizes — full viewport width, cap at 1920px.
  */
 export const HERO_SIZES =
-  '(max-width: 640px) 100vw, (max-width: 1024px) 100vw, (max-width: 1536px) 100vw, 1920px';
+  '(max-width: 767px) 640px, (max-width: 1024px) 100vw, (max-width: 1536px) 100vw, 1920px';

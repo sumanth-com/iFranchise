@@ -1,4 +1,4 @@
-import { useReducedMotion } from 'framer-motion';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { useTheme } from '../context/ThemeContext';
 
 function SunIcon({ className = '' }) {
@@ -35,7 +35,7 @@ function MoonIcon({ className = '' }) {
 
 export default function ThemeToggle({ className = '', compact = false }) {
   const { isDark, toggleTheme } = useTheme();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const isLight = !isDark;
 
   const motionClass = reduceMotion ? 'theme-toggle--no-motion' : '';

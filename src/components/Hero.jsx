@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition } from 'react';
+import { useIsMobileViewport } from '../hooks/useIsMobileViewport';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import CtaButton from './ui/CtaButton';
@@ -2447,7 +2448,6 @@ function Hero() {
   const [growthVisible, setGrowthVisible] = useState(false);
   const [modelsVisible, setModelsVisible] = useState(false);
   const [processLineProgress, setProcessLineProgress] = useState(0);
-  const [reviewCount, setReviewCount] = useState(0);
   const [visibleProcessSteps, setVisibleProcessSteps] = useState(() =>
     processSteps.map(() => false)
   );
@@ -2456,13 +2456,18 @@ function Hero() {
   const rightColumnLoop = [...TESTIMONIAL_COLUMNS.right, ...TESTIMONIAL_COLUMNS.right];
 
   const [belowFoldReady, setBelowFoldReady] = useState(false);
+  const isMobileViewport = useIsMobileViewport();
   const heroImageReady = isLight ? lightHeroReady : darkHeroReady;
-  const heroUseAvif = useMemo(
-    () => typeof window !== 'undefined' && !window.matchMedia('(max-width: 767px)').matches,
-    [],
-  );
+  const heroSrcSetDark = isMobileViewport ? undefined : HOME_HERO_DARK.srcSetMap;
+  const heroSrcSetLight = isMobileViewport ? undefined : HOME_HERO_LIGHT.srcSetMap;
 
   useLayoutEffect(() => {
+    const staticImg = document.querySelector('#ifr-static-hero img');
+    if (staticImg?.complete && staticImg.naturalWidth > 0) {
+      const lightStatic = document.documentElement.getAttribute('data-theme') === 'light';
+      if (lightStatic) setLightHeroReady(true);
+      else setDarkHeroReady(true);
+    }
     markImgReady(darkHeroRef.current, setDarkHeroReady);
     markImgReady(lightHeroRef.current, setLightHeroReady);
   }, [isLight, theme]);
@@ -2480,47 +2485,20 @@ function Hero() {
     const show = () => {
       if (!cancelled) startTransition(() => setBelowFoldReady(true));
     };
+    const idleMs = isMobileViewport ? 1400 : 900;
     if ('requestIdleCallback' in window) {
-      const id = window.requestIdleCallback(show, { timeout: 900 });
+      const id = window.requestIdleCallback(show, { timeout: idleMs });
       return () => {
         cancelled = true;
         window.cancelIdleCallback(id);
       };
     }
-    const t = window.setTimeout(show, 350);
+    const t = window.setTimeout(show, isMobileViewport ? 500 : 350);
     return () => {
       cancelled = true;
       window.clearTimeout(t);
     };
-  }, []);
-
-  useEffect(() => {
-    let frameId;
-    let startTime;
-    const durationMs = 1400;
-    const targetCount = 150;
-
-    const animate = (timestamp) => {
-      if (!startTime) {
-        startTime = timestamp;
-      }
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setReviewCount(Math.floor(targetCount * eased));
-
-      if (progress < 1) {
-        frameId = window.requestAnimationFrame(animate);
-      }
-    };
-
-    frameId = window.requestAnimationFrame(animate);
-    return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
-    };
-  }, []);
+  }, [isMobileViewport]);
 
   // Section reveal — attach after below-fold sections mount
   useEffect(() => {
@@ -2668,10 +2646,9 @@ function Hero() {
               aria-hidden
             >
               <ResponsivePicture
-                avif={heroUseAvif ? HOME_HERO_DARK.avif : undefined}
                 webp={HOME_HERO_DARK.webp}
-                webpSrcSet={HOME_HERO_DARK.srcSetMap}
-                fallback={HOME_HERO_DARK.src}
+                webpSrcSet={heroSrcSetDark}
+                fallback={HOME_HERO_DARK.webp}
                 sizes={HERO_SIZES}
                 width={1536}
                 height={1024}
@@ -2692,10 +2669,9 @@ function Hero() {
               aria-hidden
             >
               <ResponsivePicture
-                avif={heroUseAvif ? HOME_HERO_LIGHT.avif : undefined}
                 webp={HOME_HERO_LIGHT.webp}
-                webpSrcSet={HOME_HERO_LIGHT.srcSetMap}
-                fallback={HOME_HERO_LIGHT.src}
+                webpSrcSet={heroSrcSetLight}
+                fallback={HOME_HERO_LIGHT.webp}
                 sizes={HERO_SIZES}
                 width={1536}
                 height={1024}

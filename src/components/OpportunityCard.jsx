@@ -52,8 +52,8 @@ export default function OpportunityCard({ opportunity }) {
           decoding="async"
           sizes={remoteSet?.sizes ?? '(max-width: 640px) 92vw, 280px'}
           style={{ objectFit, objectPosition: 'center' }}
-          width={cardFit === 'contain' ? undefined : 280}
-          height={cardFit === 'contain' ? undefined : 187}
+          width={280}
+          height={187}
           onError={(e) => {
             const img = e.target;
             if (img.dataset.fallbackTried === '1') return;

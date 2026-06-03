@@ -1,7 +1,8 @@
 import { useEffect, useState, lazy, Suspense, useRef, useCallback, startTransition } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import AnimatedSiteBackdrop from './components/AnimatedSiteBackdrop';
+
+const AnimatedSiteBackdrop = lazy(() => import('./components/AnimatedSiteBackdrop'));
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
 import { useScrollPastHero } from './hooks/useScrollPastHero';
 import { useLowPowerDevice } from './hooks/useLowPowerDevice';
@@ -346,7 +347,11 @@ function App() {
     <FranchiseOpportunityNavbarFiltersProvider>
       <div className="relative min-h-screen bg-transparent text-theme-primary">
         <PageSEO pathname={pathname} />
-        {showBackdrop ? <AnimatedSiteBackdrop /> : null}
+        {showBackdrop ? (
+          <Suspense fallback={null}>
+            <AnimatedSiteBackdrop />
+          </Suspense>
+        ) : null}
         <Navbar />
 
       {/* Page transition wrapper */}

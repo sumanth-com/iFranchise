@@ -113,10 +113,14 @@ function scheduleIdlePrefetch() {
     COMMON_IDLE_ROUTES.filter((r) => r !== current).forEach((r) => prefetchRoute(r));
   };
 
+  const mobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+  const timeout = mobile ? 8000 : 2500;
+  const delay = mobile ? 3500 : 1200;
+
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(run, { timeout: 2500 });
+    requestIdleCallback(run, { timeout });
   } else {
-    setTimeout(run, 1200);
+    setTimeout(run, delay);
   }
 }
 
