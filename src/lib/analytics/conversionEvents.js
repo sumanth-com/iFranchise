@@ -10,6 +10,7 @@ export const FORM_TYPE_CONVERSION_EVENTS = {
   [FORM_TYPES.FRANCHISE_INQUIRY]: 'franchise_inquiry_submit',
   [FORM_TYPES.BRAND_APPLICATION]: 'list_brand_submit',
   [FORM_TYPES.BROCHURE_DOWNLOAD]: 'brochure_download',
+  [FORM_TYPES.CAREER_APPLICATION]: 'career_apply',
 };
 
 export const CONVERSION_CLICK_EVENTS = {

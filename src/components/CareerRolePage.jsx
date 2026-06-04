@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { navigateTo } from '../lib/navigation';
+import CareerApplyForm from './careers/CareerApplyForm';
 import {
-  CAREERS_APPLY_EMAIL,
   DEPT_COLORS,
   DEPT_COLORS_DARK,
   HIRING_STEPS,
@@ -91,53 +91,42 @@ function buildCompanyLine(role) {
   return firstSentence || null;
 }
 
-function ApplyPanel({ role }) {
-  const email = role.applyEmail || CAREERS_APPLY_EMAIL;
-  const subject = encodeURIComponent(`Application: ${role.title}`);
-  const mailto = `mailto:${email}?subject=${subject}`;
-
+function RoleSidebarExtras({ role }) {
   return (
-    <aside className="career-detail-form lg:col-span-1">
-      <div className="career-detail-form-sticky lg:sticky lg:top-24">
-        <div className="career-detail-form-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_12px_40px_rgba(15,23,42,0.08)]">
-          <p className="text-xs font-bold uppercase tracking-widest text-violet-700">Apply now</p>
-          <h3 className="mt-2 text-lg font-bold text-slate-900">Ready to create with us?</h3>
-          <p className="mt-2 text-sm text-slate-600 leading-relaxed">{role.applyNote}</p>
+    <div className="career-detail-extras mt-10 space-y-8 border-t border-slate-200 pt-8 lg:mt-12">
+      {role.whyJoin ? (
+        <section>
+          <h2 className="career-detail-section-title">Why this role</h2>
+          <p className="mt-3 text-sm text-slate-600 leading-relaxed">{role.whyJoin}</p>
+        </section>
+      ) : null}
 
-          <a
-            href={mailto}
-            className="mt-5 flex w-full items-center justify-center rounded-xl bg-violet-600 px-4 py-3 text-sm font-bold text-white shadow-md transition hover:bg-violet-700"
-          >
-            Email {email}
-          </a>
+      <section>
+        <h2 className="career-detail-section-title">Hiring process</h2>
+        <ol className="mt-4 space-y-3">
+          {HIRING_STEPS.slice(0, 4).map((step) => (
+            <li key={step.step} className="flex gap-3 text-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-[11px] font-bold text-violet-800">
+                {step.step}
+              </span>
+              <div>
+                <p className="font-semibold text-slate-900">{step.title}</p>
+                <p className="text-xs text-slate-600 leading-relaxed">{step.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+  );
+}
 
-          <p className="mt-4 text-center text-xs text-slate-500">
-            Include resume, portfolio, social handles, and your best content samples.
-          </p>
-
-          {role.whyJoin ? (
-            <div className="career-detail-sidebar-note mt-6 border-t border-slate-200 pt-5">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Why this role</p>
-              <p className="text-sm text-slate-600 leading-relaxed">{role.whyJoin}</p>
-            </div>
-          ) : null}
-
-          <div className="mt-6 border-t border-slate-200 pt-5">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Hiring process</p>
-            <ol className="space-y-3">
-              {HIRING_STEPS.slice(0, 4).map((step) => (
-                <li key={step.step} className="flex gap-3 text-sm">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-[11px] font-bold text-violet-800">
-                    {step.step}
-                  </span>
-                  <div>
-                    <p className="font-semibold text-slate-900">{step.title}</p>
-                    <p className="text-xs text-slate-600 leading-relaxed">{step.desc}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+function ApplyPanel({ role }) {
+  return (
+    <aside className="career-detail-form w-full lg:col-span-1 lg:max-w-[400px] lg:justify-self-end lg:self-stretch">
+      <div className="career-detail-form-sticky career-detail-form-sticky--range lg:pt-4">
+        <div className="career-detail-form-card career-detail-form-card--apply rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.08)] sm:p-5">
+          <CareerApplyForm role={role} />
         </div>
       </div>
     </aside>
@@ -261,7 +250,7 @@ export default function CareerRolePage() {
 
       <div className="career-detail-body">
         <div className="career-detail-rail py-6 sm:py-14">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:gap-10">
+          <div className="career-detail-layout grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)] lg:items-stretch lg:gap-10 xl:gap-12">
             <div className="career-detail-content space-y-8 sm:space-y-10 min-w-0">
               {roleIntro ? (
                 <SectionBlock title="About this role">
@@ -281,6 +270,8 @@ export default function CareerRolePage() {
                   <QualGroup label="Preferred qualifications" items={qualifications.preferred} />
                 </SectionBlock>
               ) : null}
+
+              <RoleSidebarExtras role={role} />
             </div>
 
             <ApplyPanel role={role} />

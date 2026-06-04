@@ -119,6 +119,141 @@ export const ROLES = [
       'Send your resume along with your best content samples, portfolio, social media handles, or any creative work you are proud of. Show us what you have created—we would love to see it.',
   },
   {
+    id: 'business-development-trainee',
+    active: true,
+    title: 'Business Development Trainee',
+    dept: 'Sales',
+    type: 'Internship',
+    mode: 'Hybrid',
+    location: 'Bengaluru, Karnataka (Remote / On-site)',
+    duration: '6 Months',
+    stipend: 'Competitive Fixed Stipend + Performance Incentives',
+    workingDays: 'Monday – Saturday',
+    workingHours: '10:00 AM – 7:00 PM',
+    tagline:
+      'Identify and onboard brands, build relationships with business leaders, and grow iFranchise through hands-on business development.',
+    reportsTo: 'Business Development / Leadership Team',
+    experience: 'Internship',
+    openings: '1',
+    joining: 'Rolling basis',
+    rounds: '2–3 Rounds',
+    applyEmail: CAREERS_APPLY_EMAIL,
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        />
+      </svg>
+    ),
+    keySkills: [
+      "Recently completed Bachelor's or Master's in Business Administration, Marketing, Commerce, Management, or related fields",
+      'Excellent communication and interpersonal skills',
+      'Strong persuasion and relationship-building abilities',
+      'Comfortable speaking with senior executives and business owners',
+      'Self-motivated, target-driven, and eager to learn',
+    ],
+    whyJoin:
+      'Attractive performance-based incentives for every brand successfully onboarded, practical exposure to sales and franchise consulting, direct interaction with founders and CEOs, work on real expansion projects, and a path to a full-time Business Development Executive role after a successful 6-month internship.',
+    about:
+      'iFranchise is a growing franchise development and business expansion platform that helps brands scale through strategic franchise partnerships. We work closely with emerging and established brands to support their growth and market expansion objectives.',
+    aboutRole:
+      'We are looking for a highly motivated and energetic Business Development Trainee to identify and onboard brands, build relationships with business leaders, and promote iFranchise services. This role offers hands-on exposure to business development, sales strategy, client acquisition, and franchise consulting—with structured training and mentorship throughout the internship.',
+    responsibilities: [
+      'Research and identify potential brands suitable for franchise development and expansion',
+      'Reach out to CEOs, Founders, Directors, and decision-makers via calls, emails, LinkedIn, and other channels',
+      'Present and explain iFranchise services and business solutions to prospective clients',
+      'Schedule meetings and coordinate discussions between prospects and senior management',
+      'Maintain and update lead databases, CRM systems, and business development reports',
+      'Follow up with prospective clients and nurture relationships through the onboarding process',
+      'Assist in preparing proposals, presentations, and partnership documentation',
+      'Support brand onboarding activities and ensure a smooth client experience',
+      'Achieve assigned business development and client acquisition targets',
+      'Represent iFranchise professionally while building long-term business relationships',
+    ],
+    requirements: [
+      'Basic knowledge of sales, marketing, and business development (preferred)',
+      'Monthly stipend: competitive fixed stipend plus performance incentives for successful brand onboarding',
+      'Potential full-time employment after successful completion of the internship',
+    ],
+    applyNote:
+      'Submit your resume with a brief introduction highlighting your interest in business development and client acquisition. You can also reach us on LinkedIn.',
+  },
+  {
+    id: 'asst-business-development-manager-franchise-expansion',
+    active: true,
+    title: 'Asst. Business Development Manager (Franchise Expansion)',
+    dept: 'Sales',
+    type: 'Full Time',
+    mode: 'Hybrid',
+    location: 'Bengaluru, Karnataka (Remote / On-site) · NCR-based candidates',
+    duration: 'Full-time',
+    stipend: 'Competitive Fixed Salary + Performance Incentives + Travel Reimbursements',
+    workingDays: 'Monday – Saturday',
+    workingHours: '10:00 AM – 7:00 PM',
+    tagline:
+      'Lead brand acquisition and franchise expansion—own the full BD cycle from outreach to onboarding across India.',
+    reportsTo: 'Head of Business Development / Leadership',
+    experience: '3–6 Years',
+    openings: '1',
+    joining: 'Immediate / Rolling',
+    rounds: '3–4 Rounds',
+    applyEmail: CAREERS_APPLY_EMAIL,
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        />
+      </svg>
+    ),
+    keySkills: [
+      '3–6 years in Business Development, B2B Sales, Franchise Sales, Consulting, or Brand Partnerships',
+      'Proven track record of acquiring clients and closing business deals',
+      'Excellent communication, presentation, and negotiation skills',
+      'Ability to engage confidently with senior business leaders',
+      'Strong networking and business development capabilities',
+    ],
+    whyJoin:
+      'Work with India’s growing brands and entrepreneurs, build a strong network of business leaders, contribute directly to company growth, performance-driven culture with substantial earning potential, competitive salary with incentives for every successful brand onboarded, travel allowance for official business travel, and fast-track progression into senior leadership.',
+    about:
+      'iFranchise is a leading franchise consulting and business expansion company helping brands scale through strategic franchise development, partner acquisition, and growth-focused expansion solutions. We work directly with founders, CEOs, and business leaders across India to build scalable franchise networks.',
+    aboutRole:
+      'We are looking for a dynamic Asst. Business Development Manager to lead brand acquisition and franchise expansion. Ideal candidates are based in the NCR region, love networking and travel, and want to own the complete cycle—from identifying brands and engaging founders/CEOs to onboarding them on iFranchise.',
+    responsibilities: [
+      'Drive franchise sales for brands associated with iFranchise',
+      'Identify, qualify, and engage potential franchise investors and business buyers',
+      'Generate opportunities through inbound leads, outbound outreach, referrals, networking, and partnerships',
+      'Achieve monthly and quarterly franchise sales and revenue targets',
+      'Conduct investor consultations on capacity, location, objectives, and risk appetite',
+      'Recommend suitable franchise opportunities and guide prospects through selection',
+      'Work with partner brands on expansion goals and franchise requirements',
+      'Match qualified investors with suitable franchise brands and support network expansion',
+      'Manage the full sales cycle from lead generation and qualification to deal closure',
+      'Schedule and coordinate meetings between investors and brand representatives',
+      'Follow up with prospects to maximize conversions; maintain accurate pipeline and CRM records',
+      'Facilitate discussions, support negotiations, and ensure smooth franchise onboarding and agreements',
+      'Build relationships with investors, partners, founders, and CEOs; drive referrals and repeat business',
+      'Stay updated on franchise industry trends, competitors, and emerging sectors; share insights with leadership',
+      'Consistently achieve and exceed assigned franchise sales targets',
+      'Travel for brand meetings, presentations, industry events, and partnership discussions',
+    ],
+    requirements: [
+      'Self-driven and target-oriented mindset',
+      'Young, energetic, and highly motivated professional',
+      'Passion for travelling and meeting clients in person',
+      'Entrepreneurial mindset with strong ownership',
+      'Professional, confident, and growth-oriented personality',
+      'Competitive fixed salary with attractive onboarding incentives',
+      'Travel allowance and reimbursement for official business travel',
+      'Direct exposure to founders, CEOs, and leading brands across India',
+    ],
+    applyNote:
+      'Submit your resume with a brief introduction highlighting your experience in business development, franchise sales, and client acquisition. You can also apply via LinkedIn.',
+  },
+  {
     id: 'creative-director',
     active: false,
     title: 'Creative Director',

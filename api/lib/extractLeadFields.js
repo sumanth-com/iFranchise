@@ -65,6 +65,7 @@ const FORM_TYPE_LABELS = {
   chatbot_strategy: 'Chatbot Lead — Strategy Call',
   brochure_download: 'Brochure Download',
   franchise_inquiry: 'Franchise Interest Inquiry Form',
+  career_application: 'Career Application',
 };
 
 export function getFormTypeLabel(formType) {

@@ -170,7 +170,7 @@
     scroll-margin-top: 64px;
   }
 
-  .career-detail-form .grid-cols-2 {
+  .career-detail-form .grid-cols-2:not(.career-apply-row--split) {
     grid-template-columns: 1fr;
   }
 
@@ -1496,8 +1496,12 @@
   }
 
   .career-detail-page .grid-cols-2,
-  .career-detail-form .grid-cols-2 {
+  .career-detail-form .grid-cols-2:not(.career-apply-row--split) {
     grid-template-columns: 1fr !important;
+  }
+
+  .career-detail-page .career-apply-row--split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) !important;
   }
 
   .career-detail-page form input,

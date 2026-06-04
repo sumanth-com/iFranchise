@@ -21,3 +21,4 @@ export {
 } from './submitters/chatbotSubmitter.js';
 export { submitBrochureDownload } from './submitters/brochureDownloadSubmitter.js';
 export { submitFranchiseInquiry } from './submitters/franchiseInquirySubmitter.js';
+export { submitCareerApplication } from './submitters/careerApplicationSubmitter.js';

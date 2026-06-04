@@ -24,7 +24,8 @@ const SHEET_TABS = {
   chatbot_investor: 'Chatbot_Investors',
   chatbot_strategy: 'Chatbot_Strategy',
   brochure_download: 'Brochure_Downloads',
-  franchise_inquiry: 'Franchise_Inquiries'
+  franchise_inquiry: 'Franchise_Inquiries',
+  career_application: 'Career_Applications'
 };
 
 /**
@@ -109,6 +110,19 @@ const SHEET_HEADERS = {
     'Email',
     'Phone',
     'Preferred City',
+    'Message',
+    'Submitted At'
+  ],
+  Career_Applications: [
+    'Timestamp',
+    'Source Page',
+    'Role ID',
+    'Role Title',
+    'Name',
+    'Email',
+    'Phone',
+    'Resume Link',
+    'Portfolio Link',
     'Message',
     'Submitted At'
   ]
@@ -448,6 +462,21 @@ function prepareRowData(formType, data, sourcePage, submittedAt) {
         data.message || '',
         submittedAtTime
       ];
+
+    case 'career_application':
+      return [
+        timestamp,
+        sourcePage || 'unknown',
+        data.role_id || '',
+        data.role_title || '',
+        data.name || '',
+        data.email || '',
+        data.phone || '',
+        data.resume_link || '',
+        data.portfolio_link || '',
+        data.message || '',
+        submittedAtTime
+      ];
       
     default:
       throw new Error(`Unknown form type: ${formType}`);
@@ -493,6 +522,32 @@ function testSubmission() {
   
   const result = processSubmission(testPayload);
   console.log('Test submission result:', JSON.stringify(result, null, 2));
+  return result;
+}
+
+/**
+ * Test career apply form routing (run from Apps Script editor).
+ */
+function testCareerSubmission() {
+  const testPayload = {
+    form_type: 'career_application',
+    sheet_tab: 'Career_Applications',
+    source_page: 'careers_role_test',
+    submitted_at: new Date().toISOString(),
+    data: {
+      role_id: 'social-media-content-creator-intern',
+      role_title: 'Social Media & Content Creator Intern',
+      name: 'Test Applicant',
+      email: 'test@example.com',
+      phone: '9876543210',
+      resume_link: 'https://drive.google.com/example',
+      portfolio_link: '',
+      message: 'Career apply test row'
+    }
+  };
+
+  const result = processSubmission(testPayload);
+  console.log('Career test result:', JSON.stringify(result, null, 2));
   return result;
 }
 

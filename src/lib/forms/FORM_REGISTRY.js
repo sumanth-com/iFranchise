@@ -78,9 +78,17 @@ export const FORM_REGISTRY = [
     sourcePage: 'franchise_details_inquiry',
     hook: 'FranchiseInquiryModal',
   },
+  {
+    id: 'careers_role_apply',
+    label: 'Careers — role application',
+    formType: FORM_TYPES.CAREER_APPLICATION,
+    sheetTab: SHEET_TABS[FORM_TYPES.CAREER_APPLICATION],
+    submitter: 'submitCareerApplication',
+    sourcePage: 'careers_role_detail',
+    hook: 'CareerApplyForm',
+  },
 ];
 
-/** Careers page uses email apply (hr@ifranchise.in); no sheet integration. */
 export const FORM_REGISTRY_NOTES = {
-  careers: 'No form submission — careers applications via email only.',
+  careers: 'Applications submitted from role detail sidebar form (Career_Applications sheet).',
 };

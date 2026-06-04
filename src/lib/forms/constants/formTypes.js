@@ -14,6 +14,7 @@ export const FORM_TYPES = {
   CHATBOT_STRATEGY: 'chatbot_strategy',
   BROCHURE_DOWNLOAD: 'brochure_download',
   FRANCHISE_INQUIRY: 'franchise_inquiry',
+  CAREER_APPLICATION: 'career_application',
 };
 
 export const FORM_LABELS = {
@@ -24,4 +25,5 @@ export const FORM_LABELS = {
   [FORM_TYPES.CHATBOT_STRATEGY]: 'Strategy Call Request',
   [FORM_TYPES.BROCHURE_DOWNLOAD]: 'Brochure Download Lead',
   [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise Interest Inquiry',
+  [FORM_TYPES.CAREER_APPLICATION]: 'Career Application',
 };

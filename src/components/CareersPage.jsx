@@ -4,7 +4,6 @@ import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
 import CareersOpenRoles from './careers/CareersOpenRoles';
-import CareersLinkedInSection from './careers/CareersLinkedInSection';
 import { CAREERS_APPLY_EMAIL, HIRING_ACTIVE } from './careersData';
 import { heroDisplayClass, sectionTitleClass } from '../lib/cardThemeStyles';
 
@@ -58,11 +57,11 @@ const FAQS = [
   },
   {
     q: 'What roles are open right now?',
-    a: 'We are currently hiring for a Social Media & Content Creator Intern (remote, Bengaluru-based team). View the full role on our careers page and apply with your resume and portfolio.',
+    a: 'We are hiring for Social Media & Content Creator Intern, Business Development Trainee (6-month internship), and Asst. Business Development Manager (Franchise Expansion). View each role on our careers page and apply with your resume.',
   },
   {
     q: 'How do I apply?',
-    a: `Email ${CAREERS_APPLY_EMAIL} with your resume, content samples, portfolio, and social media handles. Tell us about the work you are most proud of—we would love to see it.`,
+    a: `Use the apply form on each role page, or email ${CAREERS_APPLY_EMAIL} with your resume and a short introduction. Include relevant samples or portfolio links where applicable.`,
   },
   {
     q: 'What growth looks like here',
@@ -209,7 +208,7 @@ function CareersPage() {
         </div>
       </section>
 
-      <section className="careers-benefits-section careers-section max-w-6xl mx-auto px-6 sm:px-8 xl:px-12 py-10 sm:py-12">
+      <section className="careers-benefits-section careers-section careers-page-rail py-10 sm:py-12">
         <RevealSection className="text-center mb-10">
           <div className="flex justify-center">
             <SectionLabel text="Benefits" />
@@ -230,8 +229,6 @@ function CareersPage() {
       </section>
 
       <CareersOpenRoles />
-
-      <CareersLinkedInSection />
 
       <CultureScrollGallery
         isDark={isDark}

@@ -34,6 +34,7 @@ export const SHEET_TABS = {
   [FORM_TYPES.CHATBOT_STRATEGY]: 'Chatbot_Strategy',
   [FORM_TYPES.BROCHURE_DOWNLOAD]: 'Brochure_Downloads',
   [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise_Inquiries',
+  [FORM_TYPES.CAREER_APPLICATION]: 'Career_Applications',
 };
 
 /**
