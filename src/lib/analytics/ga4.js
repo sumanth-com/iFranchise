@@ -132,7 +132,11 @@ export function trackEvent(eventName, params = {}) {
 export function scheduleAnalytics() {
   if (isGtmInstalled()) {
     scheduleGtmAnalytics();
-    return;
+  } else {
+    scheduleFallbackGtag();
   }
-  scheduleFallbackGtag();
+
+  import('./conversionClickTracking.js').then(({ initConversionClickTracking }) => {
+    initConversionClickTracking();
+  });
 }

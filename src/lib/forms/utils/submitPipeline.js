@@ -10,6 +10,7 @@ import { runGuardedSubmission } from './submissionGuard.js';
 import { prepareOutboundPayload } from './sanitizePayload.js';
 import { logFormInfo, logFormError } from './formLogger.js';
 import { notifyLeadSubmission } from './leadNotification.js';
+import { trackFormConversion } from '../../analytics/conversionEvents.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -90,6 +91,7 @@ export async function runFormSubmission({
     if (result.success) {
       logFormInfo('pipeline_success', { formType, sourcePage });
       notifyLeadSubmission(prepared.payload);
+      trackFormConversion(formType, sourcePage);
     } else {
       logFormError('pipeline_failure', { formType, sourcePage, code: result.code });
     }
