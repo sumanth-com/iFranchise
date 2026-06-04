@@ -271,8 +271,7 @@ function App() {
     };
   }, []);
 
-  // GA4: track initial page + every SPA route change.
-  // Uses a deduped singleton to prevent duplicate page_view events.
+  // GTM analytics: one dataLayer page_view per SPA route (GA4 via GTM container).
   useEffect(() => {
     const expectedPageKey = `${window.location.pathname}${window.location.search}`;
     const raf1 = window.requestAnimationFrame(() => {

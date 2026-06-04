@@ -2,9 +2,6 @@ import '../styles/leadership-linkedin-3d.css';
 import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
-import OptimizedImage from './ui/OptimizedImage';
-import { SITE_IMAGES } from '../data/siteImageManifest.js';
-
 function LeadershipSection() {
   const reducedMotion = usePrefersReducedMotion();
 
@@ -59,32 +56,11 @@ function LeadershipSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-transparent to-indigo-500/5" />
             </div>
 
-            <div className="relative flex flex-col lg:flex-row gap-6 p-6 lg:gap-8 lg:p-8">
-              {/* LEFT - IMAGE CARD - MATCHES CONTENT HEIGHT */}
-              <div className="relative lg:w-[35%] flex-shrink-0">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[320px] lg:h-full lg:max-h-[480px]">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-violet-300/30 via-purple-200/20 to-indigo-300/30 blur-3xl opacity-60" />
-                  
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
-                    <OptimizedImage
-                      src={SITE_IMAGES.abdul}
-                      alt="Syed Abdul Khader"
-                      className="h-full w-full object-cover object-center brightness-105"
-                      width={400}
-                      height={480}
-                      priority
-                    />
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-                  </div>
-                </div>
-              </div>
-
-              {/* RIGHT - CONTENT - COMPACT */}
-              <div className="flex flex-col justify-between lg:flex-1">
+            <div className="relative p-6 sm:p-8 lg:p-10">
+              <div className="mx-auto flex w-full max-w-3xl flex-col">
                 <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.2 }}
                   className="space-y-4"
@@ -121,22 +97,21 @@ function LeadershipSection() {
                   </motion.div>
                 </motion.div>
 
-                {/* SIGNATURE ROW */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-end border-t border-violet-500/25 pt-4 mt-4"
+                  className="mt-6 flex items-center justify-end border-t border-violet-500/25 pt-5 sm:mt-8 sm:pt-6"
                 >
-                  <div className="inline-flex flex-col items-center">
+                  <div className="inline-flex flex-col items-end text-right">
                     <p
-                      className="whitespace-nowrap text-2xl text-white lg:text-[28px]"
+                      className="whitespace-nowrap text-2xl text-white sm:text-[26px] lg:text-[28px]"
                       style={{ fontFamily: 'Brush Script MT, cursive' }}
                     >
                       Syed Abdul Khader
                     </p>
-                    <p className="mt-1 text-center text-xs font-semibold uppercase tracking-wider text-white">
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
                       Founder & Director
                     </p>
                   </div>
@@ -149,7 +124,7 @@ function LeadershipSection() {
             </div>
           </motion.div>
 
-          {/* CARD 2: CO-FOUNDER - IMAGE RIGHT, CONTENT LEFT */}
+          {/* CARD 2: CO-FOUNDER */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -161,12 +136,11 @@ function LeadershipSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-violet-500/5" />
             </div>
 
-            <div className="relative flex flex-col lg:flex-row gap-6 p-6 lg:gap-8 lg:p-8">
-              {/* LEFT - CONTENT */}
-              <div className="flex flex-col justify-between order-2 lg:order-1 lg:flex-1">
+            <div className="relative p-6 sm:p-8 lg:p-10">
+              <div className="mx-auto flex w-full max-w-3xl flex-col">
                 <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.2 }}
                   className="space-y-4"
@@ -206,50 +180,29 @@ function LeadershipSection() {
                   </motion.div>
                 </motion.div>
 
-                {/* SIGNATURE ROW */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  className="flex items-center justify-start border-t border-violet-500/25 pt-4 mt-4"
+                  className="mt-6 flex items-center justify-end border-t border-violet-500/25 pt-5 sm:mt-8 sm:pt-6"
                 >
-                  <div className="inline-flex flex-col items-center">
+                  <div className="inline-flex flex-col items-end text-right">
                     <p
-                      className="whitespace-nowrap text-2xl text-white lg:text-[28px]"
+                      className="whitespace-nowrap text-2xl text-white sm:text-[26px] lg:text-[28px]"
                       style={{ fontFamily: 'Brush Script MT, cursive' }}
                     >
                       Mohammad Abrar
                     </p>
-                    <p className="mt-1 text-center text-xs font-semibold uppercase tracking-wider text-white">
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white">
                       Co-Founder
                     </p>
                   </div>
                 </motion.div>
               </div>
-
-              {/* RIGHT - IMAGE CARD - MATCHES CONTENT HEIGHT */}
-              <div className="relative order-1 lg:order-2 lg:w-[35%] flex-shrink-0">
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl h-[320px] lg:h-full lg:max-h-[480px]">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-indigo-300/30 via-blue-200/20 to-violet-300/30 blur-3xl opacity-60" />
-                  
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
-                    <OptimizedImage
-                      src={SITE_IMAGES.abrar}
-                      alt="Mohammad Abrar"
-                      className="h-full w-full object-cover object-center brightness-105"
-                      width={400}
-                      height={480}
-                      loading="lazy"
-                    />
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
-                  </div>
-                </div>
-              </div>
             </div>
 
-              <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none">
+            <div className="absolute inset-0 rounded-[28px] opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none">
               <div className="absolute inset-0 rounded-[28px] border border-violet-400/30" />
             </div>
           </motion.div>

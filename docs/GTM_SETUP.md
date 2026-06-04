@@ -1,82 +1,46 @@
-# Google Tag Manager — iFranchise
+# Google Tag Manager — iFranchise (GTM-only)
 
 **Container ID:** `GTM-P6Z67GFD`  
+**GA4 property (configure in GTM only):** `G-SSHRXE8TFM`  
 **Site:** https://www.ifranchise.in
 
-## Implementation
+## Architecture
 
-| Piece | Location |
-|-------|----------|
-| GTM `<head>` snippet | `index.html` (first scripts in `<head>`) |
-| GTM `<noscript>` iframe | `index.html` (immediately after `<body>`) |
-| SPA page views | `src/lib/analytics/gtm.js` + `trackPageView()` in `ga4.js` |
-| No duplicate gtag load | `src/lib/scheduleAnalytics.js` skips direct `gtag/js` when GTM is present |
-| Route changes | `src/App.jsx` → `trackPageView({ logicalRoute })` on every pathname change |
+| Layer | Responsibility |
+|-------|----------------|
+| `index.html` | Official GTM snippet (loads once) |
+| `gtm.js` | `dataLayer` + deduped SPA `page_view` pushes |
+| `ga4.js` | Thin facade; **no direct GA4 hits when GTM is present** |
+| GTM UI | GA4 Configuration + tags/triggers for `G-SSHRXE8TFM` |
 
-## GTM container setup (Tag Manager UI)
+Application code does **not** load `gtag/js` or send GA4 `page_view` when GTM is installed.
 
-1. In [tagmanager.google.com](https://tagmanager.google.com), open container **GTM-P6Z67GFD**.
-2. Add a **Google Analytics: GA4 Configuration** tag with measurement ID `G-SSHRXE8TFM`.
-3. Trigger: **All Pages** (initial load) and/or a **Custom Event** trigger for event name `page_view` (SPA).
-4. Disable duplicate GA4 tags if you also load gtag elsewhere.
-5. **Publish** the container after testing in Preview mode.
+## GTM container setup
+
+1. Open [tagmanager.google.com](https://tagmanager.google.com) → **GTM-P6Z67GFD**.
+2. Create **GA4 Configuration** tag → Measurement ID `G-SSHRXE8TFM`.
+3. Disable automatic page view on that tag (SPA handled by custom event).
+4. Create **Trigger:** Custom Event → Event name equals `page_view`.
+5. Fire GA4 Event (or Configuration) on that trigger; map `page_path`, `page_location`, `page_title`, `route_name` from Data Layer.
+6. **Publish** after Preview testing.
+
+See `docs/ANALYTICS_GTM_MIGRATION.md` for removed vs active code.
 
 ## Verification checklist
 
-### Source code (after deploy)
+- [ ] View source: `GTM-P6Z67GFD` in `<head>` and noscript after `<body>`
+- [ ] `window.dataLayer` is an array
+- [ ] One `gtm.js?id=GTM-P6Z67GFD` in Network tab
+- [ ] No `gtag/js?id=G-SSHRXE8TFM` in Network when GTM is present
+- [ ] SPA routes push one `{ event: 'page_view', ... }` per navigation
+- [ ] GTM Preview: one GA4 tag fire per route change
+- [ ] GA4 Realtime shows traffic with measurement ID `G-SSHRXE8TFM`
 
-- [ ] View page source on https://www.ifranchise.in
-- [ ] Find `GTM-P6Z67GFD` in `<head>` GTM script
-- [ ] Find `googletagmanager.com/ns.html?id=GTM-P6Z67GFD` in `<noscript>` after `<body>`
-
-### Browser DevTools (any page)
-
-- [ ] Console: `window.dataLayer` is an array with length ≥ 1
-- [ ] Console: `window.__IFR_GTM_CONTAINER__` → `"GTM-P6Z67GFD"`
-- [ ] Network tab: request to `googletagmanager.com/gtm.js?id=GTM-P6Z67GFD` (once)
-- [ ] No second duplicate `gtm.js` or duplicate `gtag/js` unless configured only in GTM
-
-### SPA routes (navigate in-site, watch dataLayer)
-
-- [ ] Home `/`
-- [ ] About `/about-us`
-- [ ] Services `/services`
-- [ ] Franchise Opportunities `/franchise-opportunities`
-- [ ] Franchise detail `/franchise/{slug}`
-- [ ] List Your Brand `/list-your-brand`
-- [ ] Contact `/contact-us`
-- [ ] Careers `/careers` and job detail `/careers/{id}`
-- [ ] Blogs `/blogs` and post `/blogs/{slug}`
-
-For each route change, run in console:
-
-```js
-window.dataLayer.filter((e) => e.event === 'page_view').slice(-3)
+```javascript
+window.dataLayer.filter((e) => e && e.event === 'page_view').slice(-3)
 ```
 
-You should see `page_path`, `page_location`, `page_title`, and `route_name`.
+## Env vars (optional)
 
-### GTM Preview / Tag Assistant
-
-- [ ] GTM → **Preview** → connect to www.ifranchise.in
-- [ ] Tags fire on load and on internal navigation
-- [ ] GA4 receives page views (if GA4 tag is configured in GTM)
-
-### Existing GA4
-
-- [ ] `VITE_GA_MEASUREMENT_ID=G-SSHRXE8TFM` set on Vercel
-- [ ] GA4 Realtime still shows traffic after deploy
-- [ ] Prefer **one** GA4 path: either GTM-only or confirm no double page_view in GA4 DebugView
-
-## Deployment
-
-1. Commit and push to `main` (Vercel auto-deploy).
-2. Optional env on Vercel: `VITE_GTM_CONTAINER_ID=GTM-P6Z67GFD` (defaults in code if omitted).
-3. Publish GTM container in Tag Manager after code is live.
-4. Re-test with Tag Assistant and GA4 Realtime.
-
-## Duplicate prevention
-
-- GTM loads **once** from `index.html` only.
-- `scheduleAnalytics.js` does **not** inject a second `gtag/js` when GTM is installed.
-- `trackPageView` dedupes by `pathname + search` for both GTM dataLayer and GA4 gtag events.
+- `VITE_GTM_CONTAINER_ID=GTM-P6Z67GFD` (default in code)
+- `VITE_GA_MEASUREMENT_ID=G-SSHRXE8TFM` (reference for GTM tag; not used for direct page_view in prod)

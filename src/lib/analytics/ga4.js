@@ -1,31 +1,24 @@
-import { pushToDataLayer, trackGtmPageView } from './gtm.js';
+/**
+ * Analytics facade — GTM-only in production. Direct gtag fallback only if GTM snippet is absent (local dev).
+ */
+import {
+  GA4_MEASUREMENT_ID,
+  ensureDataLayer,
+  isGtmInstalled,
+  pushToDataLayer,
+  scheduleAnalytics as scheduleGtmAnalytics,
+  trackEvent as trackGtmEvent,
+  trackPageView as pushGtmPageView,
+} from './gtm.js';
 
-const GA4_DEBUG = false;
+export { GA4_MEASUREMENT_ID };
 
-let initialized = false;
-let configSent = false;
-let lastTrackedPageKey = null;
+let fallbackReady = false;
+let fallbackScheduled = false;
+let lastFallbackPageKey = null;
 
-function getMeasurementId() {
-  return import.meta.env.VITE_GA_MEASUREMENT_ID;
-}
-
-function getPageInfo() {
-  const { pathname, search, hash } = window.location;
-  const pageKey = `${pathname}${search}`;
-  const pageLocation = `${pathname}${search}${hash}`;
-  return {
-    pageKey,
-    pagePath: `${pathname}${search}`,
-    pageLocation: `${window.location.origin}${pageLocation}`,
-    pageTitle: document.title || 'iFranchise',
-    pageUrl: window.location.href,
-  };
-}
-
-function ensureGtag() {
-  if (typeof window === 'undefined') return;
-  window.dataLayer = window.dataLayer || [];
+function ensureGtagStub() {
+  ensureDataLayer();
   if (!window.gtag) {
     window.gtag = function gtag() {
       // eslint-disable-next-line prefer-rest-params
@@ -34,91 +27,112 @@ function ensureGtag() {
   }
 }
 
-function isGtagLoadedFromHtml() {
-  return (
-    typeof window !== 'undefined' &&
-    (window.__IFR_GA_READY__ === true ||
-      !!document.querySelector('script[src*="googletagmanager.com/gtag/js"]'))
-  );
+function loadFallbackGtag() {
+  if (fallbackReady || typeof document === 'undefined') return;
+  if (document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+    fallbackReady = true;
+    return;
+  }
+
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+  s.onload = () => {
+    ensureGtagStub();
+    window.gtag('js', new Date());
+    window.gtag('config', GA4_MEASUREMENT_ID, { send_page_view: false });
+    fallbackReady = true;
+  };
+  document.head.appendChild(s);
 }
 
-/**
- * GA4 singleton init. Uses index.html tag when present; no duplicate script/config.
- */
-export function initGA4() {
-  const measurementId = getMeasurementId();
-  if (!measurementId) return false;
-  if (typeof window === 'undefined') return false;
+function scheduleFallbackGtag() {
+  if (fallbackScheduled || typeof window === 'undefined') return;
+  fallbackScheduled = true;
+  ensureGtagStub();
 
-  ensureGtag();
-
-  const applyConfig = () => {
-    if (configSent) return;
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId, { send_page_view: false });
-    configSent = true;
+  const trigger = () => {
+    window.removeEventListener('pointerdown', trigger, true);
+    window.removeEventListener('keydown', trigger, true);
+    window.removeEventListener('scroll', trigger, true);
+    loadFallbackGtag();
   };
 
-  if (window.__IFR_GA_READY__) {
-    applyConfig();
-  } else if (!configSent) {
-    window.addEventListener('ifr-ga-ready', applyConfig, { once: true });
-  }
+  window.addEventListener('pointerdown', trigger, { once: true, capture: true, passive: true });
+  window.addEventListener('keydown', trigger, { once: true, capture: true });
+  window.addEventListener('scroll', trigger, { once: true, passive: true });
 
-  if (!initialized) {
-    initialized = true;
-    if (GA4_DEBUG) {
-      // eslint-disable-next-line no-console
-      console.log('[ga4] initialized', { measurementId, fromHtml: isGtagLoadedFromHtml() });
-    }
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => loadFallbackGtag(), { timeout: 8000 });
+  } else {
+    setTimeout(loadFallbackGtag, 5000);
   }
-
-  return true;
 }
 
-function sendPageView(logicalRoute) {
-  const { pageKey, pagePath, pageLocation, pageTitle } = getPageInfo();
-  if (lastTrackedPageKey === pageKey) return;
-  lastTrackedPageKey = pageKey;
-  window.gtag('event', 'page_view', {
-    page_path: pagePath,
-    page_location: pageLocation,
-    page_title: pageTitle,
-    route_name: logicalRoute || undefined,
-  });
+function sendFallbackPageView(logicalRoute) {
+  const pagePath = `${window.location.pathname}${window.location.search}`;
+  if (lastFallbackPageKey === pagePath) return;
+  lastFallbackPageKey = pagePath;
+
+  const send = () => {
+    window.gtag('event', 'page_view', {
+      page_path: pagePath,
+      page_location: window.location.href,
+      page_title: document.title || 'iFranchise',
+      route_name: logicalRoute || undefined,
+    });
+  };
+
+  if (fallbackReady) {
+    send();
+  } else {
+    const onReady = () => {
+      if (fallbackReady) send();
+    };
+    const interval = setInterval(() => {
+      if (fallbackReady) {
+        clearInterval(interval);
+        onReady();
+      }
+    }, 100);
+    setTimeout(() => clearInterval(interval), 10000);
+  }
 }
 
+/** SPA page view — GTM dataLayer only when GTM is installed. */
 export function trackPageView({ logicalRoute } = {}) {
   if (typeof window === 'undefined') return;
 
-  trackGtmPageView({ logicalRoute });
-
-  const measurementId = getMeasurementId();
-  if (!measurementId) return;
-
-  initGA4();
-  ensureGtag();
-
-  if (window.__IFR_GA_READY__) {
-    sendPageView(logicalRoute);
-  } else {
-    window.addEventListener('ifr-ga-ready', () => sendPageView(logicalRoute), { once: true });
+  if (isGtmInstalled()) {
+    pushGtmPageView({ logicalRoute });
+    return;
   }
 
-  if (GA4_DEBUG) {
-    const { pageKey } = getPageInfo();
-    // eslint-disable-next-line no-console
-    console.log('[ga4] page_view', { pageKey, logicalRoute });
+  scheduleFallbackGtag();
+  sendFallbackPageView(logicalRoute);
+}
+
+/** Custom events — dataLayer (GTM) or gtag fallback. */
+export function trackEvent(eventName, params = {}) {
+  if (typeof window === 'undefined' || !eventName) return;
+
+  if (isGtmInstalled()) {
+    trackGtmEvent(eventName, params);
+    return;
+  }
+
+  scheduleFallbackGtag();
+  ensureGtagStub();
+  pushToDataLayer({ event: eventName, ...params });
+  if (fallbackReady) {
+    window.gtag('event', eventName, params);
   }
 }
 
-export function trackEvent(eventName, params = {}) {
-  const measurementId = getMeasurementId();
-  if (!measurementId) return;
-  if (typeof window === 'undefined') return;
-
-  initGA4();
-  ensureGtag();
-  pushToDataLayer({ event: eventName, ...params });
-  window.gtag('event', eventName, params);
+export function scheduleAnalytics() {
+  if (isGtmInstalled()) {
+    scheduleGtmAnalytics();
+    return;
+  }
+  scheduleFallbackGtag();
 }
