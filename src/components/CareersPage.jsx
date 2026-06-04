@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import careerImage from '../assets/carrer.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
 import CareersOpenRoles from './careers/CareersOpenRoles';
@@ -197,7 +197,7 @@ function CareersPage() {
           >
             <div className="careers-hero-image-frame rounded-2xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.12)] border border-slate-200 bg-white">
               <img
-                src={careerImage}
+                src={SITE_IMAGES.careersHero}
                 alt="Join iFranchise careers team — franchise growth platform India"
                 title="Careers at iFranchise"
                 className="w-full h-auto object-cover"

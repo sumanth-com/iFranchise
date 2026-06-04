@@ -12,7 +12,7 @@ import {
 import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
-import BrandLogo from '../assets/BrandLogo.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import {
   franchiseOpportunities,
@@ -24,12 +24,12 @@ import IndustryCard from './IndustryCard';
 import OurServicesSection from './OurServicesSection';
 import { heroDisplayClass, sectionTitleClass, sectionSubtitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
-import reviewR1 from '../assets/R1.webp';
-import reviewR2 from '../assets/R2.webp';
-import reviewR3 from '../assets/R3.webp';
-import reviewR4 from '../assets/R4.webp';
-
-const SERVICES_HERO_REVIEW_AVATARS = [reviewR1, reviewR2, reviewR3, reviewR4];
+const SERVICES_HERO_REVIEW_AVATARS = [
+  SITE_IMAGES.review1,
+  SITE_IMAGES.review2,
+  SITE_IMAGES.review3,
+  SITE_IMAGES.review4,
+];
 
 function ServicesHeroStars({ isLight }) {
   return (
@@ -1394,7 +1394,7 @@ export default function ServicesPage() {
               {/* Center logo with purple background and animations */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 shadow-[0_0_40px_rgba(139,92,246,0.4),0_8px_32px_rgba(124,58,237,0.3)] flex items-center justify-center p-5 animate-logo-float">
                 <img 
-                  src={BrandLogo} 
+                  src={SITE_IMAGES.brandLogo} 
                   alt="iFranchise Logo" 
                   className="w-full h-full object-contain drop-shadow-lg"
                 />

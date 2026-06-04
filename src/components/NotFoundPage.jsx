@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import notFoundImage from '../assets/404.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { navigateTo } from '@/lib/navigation';
 import OptimizedImage from './ui/OptimizedImage';
 
@@ -23,7 +23,7 @@ function NotFoundPage() {
         {/* 404 Image - viewport-fitted hero */}
         <div className="animate-float">
           <OptimizedImage
-            src={notFoundImage}
+            src={SITE_IMAGES.notFound}
             alt="Page not found on iFranchise franchise website"
             className="w-auto object-contain max-h-[78vh] max-w-[95vw] drop-shadow-2xl"
             width={800}

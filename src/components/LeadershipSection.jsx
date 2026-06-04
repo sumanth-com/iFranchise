@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import OptimizedImage from './ui/OptimizedImage';
-import abdulPhoto from '../assets/abdul.webp';
-import abrarPhoto from '../assets/abrar.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 
 function LeadershipSection() {
   const reducedMotion = usePrefersReducedMotion();
@@ -68,7 +67,7 @@ function LeadershipSection() {
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <OptimizedImage
-                      src={abdulPhoto}
+                      src={SITE_IMAGES.abdul}
                       alt="Syed Abdul Khader"
                       className="h-full w-full object-cover object-center brightness-105"
                       width={400}
@@ -236,7 +235,7 @@ function LeadershipSection() {
                   
                   <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-950/50 to-slate-900/70">
                     <OptimizedImage
-                      src={abrarPhoto}
+                      src={SITE_IMAGES.abrar}
                       alt="Mohammad Abrar"
                       className="h-full w-full object-cover object-center brightness-105"
                       width={400}

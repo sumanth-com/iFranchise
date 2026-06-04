@@ -1,21 +1,20 @@
 /**
  * Blog card / hero assets and optional Unsplash URLs for avatars.
  */
-
-import blogFallback from '../../assets/Blog.webp';
-import blogPageHero from '../../assets/bloghero.webp';
-import blog1 from '../../assets/Blog1.webp';
-import blog2 from '../../assets/Blog2.webp';
-import blog3 from '../../assets/Blog3.webp';
-import blog4 from '../../assets/Blog4.webp';
+import { SITE_IMAGES } from '../../data/siteImageManifest.js';
 
 /** Blog listing page top section (left-side hero image). */
-export const BLOG_PAGE_HERO_IMAGE = blogPageHero;
+export const BLOG_PAGE_HERO_IMAGE = SITE_IMAGES.blogHero;
 
 /** Local images for blog cards and matching detail-page heroes (one per post). */
-export const BLOG_POST_IMAGES = [blog1, blog2, blog3, blog4];
+export const BLOG_POST_IMAGES = [
+  SITE_IMAGES.blogPost1,
+  SITE_IMAGES.blogPost2,
+  SITE_IMAGES.blogPost3,
+  SITE_IMAGES.blogPost4,
+];
 
-export const BLOG_FALLBACK = blogFallback;
+export const BLOG_FALLBACK = SITE_IMAGES.blogFallback;
 
 export const PHOTO = {
   businessPlanning: '1454165804606-c3d57bc86b40',

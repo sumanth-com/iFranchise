@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import brandLogo from '../assets/BrandNav.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import FooterJumpLink from './footer/FooterJumpLink';
 import SocialFollowBlock from './footer/SocialFollowBlock';
 import { getPartnerBrandLogos } from '../data/franchiseData';
@@ -271,7 +271,7 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
             <div className="footer-main-grid-brand">
               <div className="footer-brand-lockup">
                 <img
-                  src={brandLogo}
+                  src={SITE_IMAGES.brandNav}
                   alt="iFranchise India franchise consulting company"
                   title="iFranchise"
                   className="footer-brand-logo"

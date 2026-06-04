@@ -1,3 +1,5 @@
+import { pushToDataLayer, trackGtmPageView } from './gtm.js';
+
 const GA4_DEBUG = false;
 
 let initialized = false;
@@ -87,9 +89,12 @@ function sendPageView(logicalRoute) {
 }
 
 export function trackPageView({ logicalRoute } = {}) {
+  if (typeof window === 'undefined') return;
+
+  trackGtmPageView({ logicalRoute });
+
   const measurementId = getMeasurementId();
   if (!measurementId) return;
-  if (typeof window === 'undefined') return;
 
   initGA4();
   ensureGtag();
@@ -101,6 +106,7 @@ export function trackPageView({ logicalRoute } = {}) {
   }
 
   if (GA4_DEBUG) {
+    const { pageKey } = getPageInfo();
     // eslint-disable-next-line no-console
     console.log('[ga4] page_view', { pageKey, logicalRoute });
   }
@@ -113,5 +119,6 @@ export function trackEvent(eventName, params = {}) {
 
   initGA4();
   ensureGtag();
+  pushToDataLayer({ event: eventName, ...params });
   window.gtag('event', eventName, params);
 }

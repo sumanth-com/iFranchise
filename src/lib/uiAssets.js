@@ -1,29 +1,21 @@
-/** Navbar / header logos — responsive WebP (see scripts/optimize-ui-assets.mjs). */
-import brandNav from '../assets/BrandNav.webp';
-import brandNav96 from '../assets/BrandNav-96w.webp';
-import brandNav192 from '../assets/BrandNav-192w.webp';
-import brandNav384 from '../assets/BrandNav-384w.webp';
-
-import brandLogo from '../assets/BrandLogo.webp';
-import brandLogo96 from '../assets/BrandLogo-96w.webp';
-import brandLogo192 from '../assets/BrandLogo-192w.webp';
-
+/** Navbar / header logos — public /images/ URLs (see siteImageManifest.js). */
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { buildResponsiveSrc } from './responsiveImage';
 
 export const NAV_LOGO = {
-  src: brandNav,
+  src: SITE_IMAGES.brandNav,
   ...buildResponsiveSrc(
-    { 96: brandNav96, 192: brandNav192, 384: brandNav384 },
-    brandNav,
+    { 96: SITE_IMAGES.brandNav96, 192: SITE_IMAGES.brandNav192, 384: SITE_IMAGES.brandNav384 },
+    SITE_IMAGES.brandNav,
     '(max-width: 640px) 40px, 48px',
   ),
 };
 
 export const HEADER_BRAND_LOGO = {
-  src: brandLogo,
+  src: SITE_IMAGES.brandLogo,
   ...buildResponsiveSrc(
-    { 96: brandLogo96, 192: brandLogo192 },
-    brandLogo,
+    { 96: SITE_IMAGES.brandLogo96, 192: SITE_IMAGES.brandLogo192 },
+    SITE_IMAGES.brandLogo,
     '(max-width: 640px) 48px, 64px',
   ),
 };

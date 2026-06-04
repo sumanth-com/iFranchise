@@ -33,6 +33,20 @@ const OUTPUTS = [
   { name: 'favicon.png', size: 512, fill: 0.86, sharpen: false },
 ];
 
+const REQUIRED_PUBLIC = [
+  'favicon.ico',
+  'favicon-16x16.png',
+  'favicon-32x32.png',
+  'favicon-48x48.png',
+  'apple-touch-icon.png',
+  'android-chrome-192x192.png',
+  'android-chrome-512x512.png',
+];
+
+function publicFaviconsReady() {
+  return REQUIRED_PUBLIC.every((name) => existsSync(join(outDir, name)));
+}
+
 function resolveSharp() {
   const bases = [
     join(root, 'node_modules'),
@@ -49,17 +63,21 @@ function resolveSharp() {
   const toolRoot = join(process.env.TEMP || '/tmp', 'ifr-sharp-tools');
   mkdirSync(toolRoot, { recursive: true });
   if (!existsSync(join(toolRoot, 'package.json'))) {
-    spawnSync('npm', ['init', '-y'], { cwd: toolRoot, stdio: 'ignore' });
+    spawnSync('npm', ['init', '-y'], { cwd: toolRoot, stdio: 'ignore', shell: true });
   }
   const install = spawnSync(
     'npm',
     ['install', 'sharp@0.34.5', '--no-save', '--no-audit', '--no-fund'],
-    { cwd: toolRoot, stdio: 'inherit' },
+    { cwd: toolRoot, stdio: 'pipe', shell: true },
   );
   if (install.status !== 0) {
-    throw new Error('[favicon] sharp not found — run npm install in project root');
+    return null;
   }
-  return require(join(toolRoot, 'node_modules', 'sharp'));
+  try {
+    return require(join(toolRoot, 'node_modules', 'sharp'));
+  } catch {
+    return null;
+  }
 }
 
 const sourcePath = SOURCE_CANDIDATES.find((p) => existsSync(p));
@@ -69,6 +87,20 @@ if (!sourcePath) {
 }
 
 const sharp = resolveSharp();
+if (!sharp) {
+  if (publicFaviconsReady()) {
+    console.warn(
+      '[favicon] sharp not available — using existing public/ favicons (run npm install to regenerate)',
+    );
+    process.exit(0);
+  }
+  console.error(
+    '[favicon] sharp not found and public/ favicons missing.\n' +
+      '  Fix: close other terminals, then run: npm install\n' +
+      '  (OneDrive can block node_modules — pause sync or move the project off OneDrive if install keeps failing)',
+  );
+  process.exit(1);
+}
 const logoSharp = await loadTrimmedLogo(sharp, sourcePath);
 
 const buffers = new Map();

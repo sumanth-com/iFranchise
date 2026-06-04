@@ -1,7 +1,21 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- GA4 loaded from scheduleAnalytics.js after interaction / idle -->
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-P6Z67GFD');
+      window.__IFR_GTM_CONTAINER__ = 'GTM-P6Z67GFD';
+    </script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <!-- Favicons: BrandNav → scripts/generate-favicons.mjs (Google prefers ≥48×48) -->
     <link rel="icon" type="image/png" href="/favicon-48x48.png?v=20260603-1" sizes="48x48" />
@@ -243,6 +257,16 @@
     <!-- Inter loads after first paint (system font in critical CSS above) -->
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-P6Z67GFD"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- LCP hero: outside #root so React mount does not remove it -->
     <div

@@ -1,15 +1,17 @@
 /**
- * Industry & section imagery — local assets (src/assets/*.jpeg).
- * Single source of truth for home industries, services, brand owners, and franchise fallbacks.
+ * Industry & section imagery — public /images/ URLs (see siteImageManifest.js).
  */
-import foodBeverageImg from '../assets/Food & Beverage.webp';
-import healthcareWellnessImg from '../assets/Healthcare & Wellness.webp';
-import educationTrainingImg from '../assets/Education & Training.webp';
-import retailJewelryImg from '../assets/Retail & Jewelry.webp';
-import logisticsInfrastructureImg from '../assets/Logistics & Infrastructure.webp';
-import beautyLifestyleImg from '../assets/Beauty & Lifestyle.webp';
-
 import { unsplashPhoto } from '../lib/unsplashResponsive.js';
+import { SITE_IMAGES } from './siteImageManifest.js';
+
+const {
+  foodBeverage: foodBeverageImg,
+  healthcareWellness: healthcareWellnessImg,
+  educationTraining: educationTrainingImg,
+  retailJewelry: retailJewelryImg,
+  logisticsInfrastructure: logisticsInfrastructureImg,
+  beautyLifestyle: beautyLifestyleImg,
+} = SITE_IMAGES;
 
 /** Mobile-first default width (avoids 1200px downloads on small screens). */
 const u = (photoId, w = 640) => unsplashPhoto(photoId, w);

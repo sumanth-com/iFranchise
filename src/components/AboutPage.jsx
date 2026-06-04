@@ -11,7 +11,7 @@ import { TYPE } from '../lib/typography.js';
 const SHOW_TEAM_SECTION = false;
 
 // Import actual images
-import aboutUsImage from '../assets/aboutus.webp';
+import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { ABOUT_PAGE_TESTIMONIALS } from '../data/testimonials.js';
 
 // Premium Team Card Component with In-Card Popup
@@ -276,7 +276,7 @@ function AboutPage() {
                 className="relative overflow-hidden rounded-3xl shadow-2xl"
               >
                 <img
-                  src={aboutUsImage}
+                  src={SITE_IMAGES.aboutUs}
                   alt="iFranchise franchise development and expansion journey in India"
                   title="About iFranchise franchise consulting"
                   className="w-full h-auto object-cover"
