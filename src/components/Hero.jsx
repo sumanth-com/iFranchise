@@ -2700,9 +2700,9 @@ function Hero() {
           aria-hidden
         />
 
-        <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-8 sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
-          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] xl:flex-none xl:justify-center">
-            <div className="flex w-full flex-none flex-col items-center justify-start xl:justify-center">
+        <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-8 sm:max-xl:justify-center sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] sm:max-xl:justify-center xl:flex-none xl:justify-center">
+            <div className="flex w-full flex-none flex-col items-center justify-start sm:max-xl:justify-center xl:justify-center">
             <div
               className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 backdrop-blur-[10px] max-sm:mb-3.5 sm:mb-6 sm:gap-3 sm:px-6 sm:py-2.5"
               style={
@@ -2738,10 +2738,10 @@ function Hero() {
                     }
               }
             >
-              Where <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : 'text-violet-300'}`}>Brands</span> Expand
+              Where Brands Expand
               <br className="hidden xl:block" />
               <span className="xl:hidden"> </span>
-              and <span className={`hero-cinematic-accent ${isLight ? 'text-violet-700' : 'text-violet-300'}`}>Investors</span> Discover What&apos;s Next
+              and Investors Discover What&apos;s Next
             </h1>
 
             <p
