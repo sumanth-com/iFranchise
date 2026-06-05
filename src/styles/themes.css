@@ -4841,10 +4841,15 @@ html[data-theme='dark'] .career-detail-page .career-detail-form-card {
   min-height: 0 !important;
 }
 
-/* Career detail cards — match franchise Highlights stat cards (dark mode) */
-html[data-theme='dark'] #main-content .career-detail-page .career-detail-insights-panel,
-html[data-theme='dark'] #main-content .career-detail-page .career-detail-insight-card,
+/* Career detail form card — match franchise Highlights stat cards (dark mode) */
 html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border-color: rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Career detail insight stat cards (no outer panel wrapper) */
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-insight-card {
   background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
   border-color: rgba(139, 92, 246, 0.22) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
@@ -4864,7 +4869,6 @@ html[data-theme='dark'] #main-content .career-detail-page .career-detail-insight
   text-transform: uppercase;
 }
 
-html[data-theme='light'] .career-detail-page .career-detail-insights-panel,
 html[data-theme='light'] .career-detail-page .career-detail-insight-card {
   background: #ffffff !important;
   border-color: #e2e8f0 !important;
@@ -4876,26 +4880,37 @@ html[data-theme='light'] .career-detail-page .career-detail-insight-card p {
   text-align: center !important;
 }
 
-/* Career insights — single row on desktop */
 @media (min-width: 1024px) {
-  .career-detail-page .career-detail-insights-panel {
-    max-width: 100%;
-  }
-
-  .career-detail-page .career-detail-insights .career-detail-insight-card {
+  .career-detail-page .career-detail-insights-grid .career-detail-insight-card {
     min-height: 5.5rem;
     padding: 0.75rem 0.625rem;
   }
 
-  .career-detail-page .career-detail-insights .career-detail-insight-card .fd-field-label {
+  .career-detail-page .career-detail-insights-grid .career-detail-insight-card .fd-field-label {
     font-size: 0.6rem;
     line-height: 1.2;
   }
 
-  .career-detail-page .career-detail-insights .career-detail-insight-card .fd-body-text {
+  .career-detail-page .career-detail-insights-grid .career-detail-insight-card .fd-body-text {
     font-size: 0.875rem;
     line-height: 1.35;
   }
+}
+
+/* Career apply form — phone input matches dark inputs */
+html[data-theme='dark'] .career-detail-page .phone-input--dark .phone-input__row {
+  background: rgba(15, 10, 35, 0.85) !important;
+  border-color: rgba(139, 92, 246, 0.3) !important;
+}
+
+html[data-theme='dark'] .career-detail-page .phone-input--dark .phone-input__country-btn {
+  background: rgba(15, 10, 35, 0.95) !important;
+  border-right-color: rgba(139, 92, 246, 0.25) !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme='dark'] .career-detail-page .phone-input--dark .phone-input__chevron {
+  color: rgba(196, 181, 253, 0.7) !important;
 }
 
 html[data-theme='dark'] .career-detail-page .career-detail-form,
@@ -4908,23 +4923,31 @@ html[data-theme='dark'] .career-detail-page .career-detail-form-sticky {
   height: fit-content !important;
 }
 
-/* Career detail hero - centered pills, high contrast in dark mode */
-html[data-theme='dark'] .career-detail-page .career-detail-hero-pill,
-html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero-pill {
-  color: #ffffff !important;
+/* Career detail hero — unified pills for dept, type, mode, status */
+.career-detail-page .career-detail-hero-pill--unified {
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  background: rgba(139, 92, 246, 0.1);
+  color: #5b21b6;
+}
+
+html[data-theme='light'] .career-detail-page .career-detail-hero-pill--unified,
+html[data-theme='light'] #main-content .career-detail-page .career-detail-hero-pill--unified {
+  background: rgba(139, 92, 246, 0.08) !important;
+  border-color: rgba(139, 92, 246, 0.22) !important;
+  color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] .career-detail-page .career-detail-hero-pill--unified,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero-pill--unified {
+  background: rgba(139, 92, 246, 0.22) !important;
+  border-color: rgba(167, 139, 250, 0.38) !important;
+  color: #f5f3ff !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 html[data-theme='dark'] .career-detail-page .career-detail-hero-pill svg {
   color: #c4b5fd !important;
   stroke: #c4b5fd !important;
-}
-
-html[data-theme='dark'] .career-detail-page .career-detail-mode-pill.bg-amber-50,
-html[data-theme='dark'] .career-detail-page .career-detail-hero-pill[class*='amber'] {
-  background: rgba(245, 158, 11, 0.28) !important;
-  color: #ffffff !important;
-  border-color: rgba(251, 191, 36, 0.5) !important;
 }
 
 html[data-theme='dark'] .careers-page h1,

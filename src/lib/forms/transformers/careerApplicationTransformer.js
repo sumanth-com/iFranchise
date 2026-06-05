@@ -1,5 +1,6 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { SHEET_TABS } from '../constants/formEndpoints.js';
+import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 export function transformCareerApplicationData(formData, sourcePage = 'careers_role_detail') {
   return {
@@ -13,6 +14,7 @@ export function transformCareerApplicationData(formData, sourcePage = 'careers_r
       name: formData.fullName,
       email: formData.email,
       phone: formData.contactNumber,
+      ...spreadPhoneFields(formData),
       resume_link: formData.resumeLink,
       portfolio_link: formData.portfolioLink || '',
       message: formData.message,

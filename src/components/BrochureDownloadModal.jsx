@@ -4,7 +4,8 @@ import { FiDownload, FiX } from 'react-icons/fi';
 import { submitBrochureDownload } from '@/lib/forms/submitters/brochureDownloadSubmitter';
 import { validateBrochureDownloadForm } from '@/lib/forms/validators/brochureDownloadValidator';
 import { checkHoneypot, stripHoneypot } from '@/lib/forms/utils/honeypot';
-import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from './forms/PhoneInput';
 import { triggerBrochureDownload } from '@/data/opportunities/brochurePdfs';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
@@ -14,7 +15,7 @@ import FormSuccessState from './forms/FormSuccessState';
 const INITIAL = withHoneypot({
   fullName: '',
   email: '',
-  contactNumber: '',
+  contactNumber: createEmptyPhoneValue(),
 });
 
 const inputBase =
@@ -211,21 +212,14 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
 
               <div>
                 <RequiredLabel htmlFor="brochure-phone">Mobile number</RequiredLabel>
-                <input
+                <PhoneInput
                   id="brochure-phone"
                   required
+                  variant="modal"
                   value={values.contactNumber}
-                  onChange={(e) => setField('contactNumber', digitsOnlyPhone(e.target.value))}
-                  className={fieldClass(fieldErrors.contactNumber)}
-                  aria-invalid={Boolean(fieldErrors.contactNumber)}
-                  aria-describedby={fieldErrors.contactNumber ? 'brochure-phone-error' : undefined}
-                  {...phoneInputProps()}
+                  onChange={(value) => setField('contactNumber', value)}
+                  error={fieldErrors.contactNumber}
                 />
-                {fieldErrors.contactNumber ? (
-                  <p id="brochure-phone-error" className="mt-1 text-xs font-medium text-red-600" role="alert">
-                    {fieldErrors.contactNumber}
-                  </p>
-                ) : null}
               </div>
 
               {submitError ? (

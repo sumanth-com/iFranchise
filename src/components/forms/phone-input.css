@@ -1,0 +1,286 @@
+.phone-input {
+  width: 100%;
+}
+
+.phone-input__row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 2.625rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(203 213 225);
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.phone-input__row:focus-within {
+  border-color: rgb(167 139 250);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+}
+
+.phone-input__row--error {
+  border-color: rgb(220 38 38);
+}
+
+.phone-input__row--error:focus-within {
+  border-color: rgb(220 38 38);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+}
+
+.phone-input__country {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.phone-input__country-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 100%;
+  min-height: 2.625rem;
+  padding: 0.625rem 0.55rem;
+  border: 0;
+  border-right: 1px solid rgb(226 232 240);
+  background: rgb(248 250 252);
+  color: rgb(15 23 42);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.phone-input__country-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.phone-input__flag {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.phone-input__dial {
+  font-variant-numeric: tabular-nums;
+}
+
+.phone-input__chevron {
+  font-size: 0.6rem;
+  color: rgb(100 116 139);
+  margin-left: 0.1rem;
+}
+
+/* Portaled dropdown — above modals/chatbot, scrollable with mouse wheel */
+.phone-input__dropdown {
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  max-height: 14rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(226 232 240);
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+  scrollbar-width: thin;
+  scrollbar-color: rgb(148 163 184) rgb(241 245 249);
+  isolation: isolate;
+}
+
+.phone-input__dropdown--above {
+  box-shadow: 0 -12px 36px rgba(15, 23, 42, 0.16);
+}
+
+.phone-input__dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.phone-input__dropdown::-webkit-scrollbar-track {
+  background: rgb(241 245 249);
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.phone-input__dropdown::-webkit-scrollbar-thumb {
+  background: rgb(148 163 184);
+  border-radius: 999px;
+  border: 2px solid rgb(241 245 249);
+}
+
+.phone-input__dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+.phone-input__option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.5rem 0.55rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgb(15 23 42);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.phone-input__option:hover,
+.phone-input__option--active {
+  background: rgb(238 242 255);
+}
+
+.phone-input__option-code {
+  flex-shrink: 0;
+  width: 1.35rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgb(100 116 139);
+}
+
+.phone-input__option-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phone-input__option-dial {
+  flex-shrink: 0;
+  color: rgb(100 116 139);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.phone-input__number {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(15 23 42);
+  outline: none;
+}
+
+.phone-input__number::placeholder {
+  color: rgb(148 163 184);
+}
+
+.phone-input__error {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(220 38 38);
+}
+
+/* Light — matches contact form inputs */
+.phone-input--light .phone-input__row {
+  border-color: rgb(226 232 240);
+  background: rgb(248 250 252);
+}
+
+.phone-input--light .phone-input__country-btn {
+  border-right-color: rgb(226 232 240);
+  background: rgb(241 245 249);
+}
+
+.phone-input--light .phone-input__row:focus-within {
+  border-color: rgb(167 139 250);
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+}
+
+/* Dark — contact page dark theme */
+.phone-input--dark .phone-input__row {
+  border-color: rgba(167, 139, 250, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.phone-input--dark .phone-input__country-btn {
+  border-right-color: rgba(167, 139, 250, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.phone-input--dark .phone-input__number {
+  color: #fff;
+}
+
+.phone-input--dark .phone-input__number::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.phone-input--dark .phone-input__row:focus-within {
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+/* Emerald — homepage contact */
+.phone-input--emerald .phone-input__row {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 0.75rem;
+}
+
+.phone-input--emerald .phone-input__country-btn {
+  border-right-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.phone-input--emerald .phone-input__number {
+  color: #fff;
+}
+
+.phone-input--emerald .phone-input__number::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.phone-input--emerald .phone-input__row:focus-within {
+  border-color: rgba(167, 243, 208, 0.45);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.14);
+}
+
+.phone-input--emerald .phone-input__error,
+.phone-input--dark .phone-input__error {
+  color: rgb(252 165 165);
+}
+
+.phone-input--modal .phone-input__row {
+  border-radius: 0.75rem;
+  border-color: rgb(226 232 240);
+}
+
+.phone-input--assistant .phone-input__row {
+  border-radius: 10px;
+  min-height: 2.5rem;
+}
+
+.phone-input--assistant .phone-input__country-btn,
+.phone-input--assistant .phone-input__number {
+  min-height: 2.5rem;
+  font-size: 13px;
+}
+
+@media (max-width: 380px) {
+  .phone-input__country-btn {
+    padding: 0.625rem 0.4rem;
+    gap: 0.15rem;
+  }
+
+  .phone-input__dial {
+    font-size: 0.75rem;
+  }
+
+  .phone-input__option-name {
+    font-size: 0.75rem;
+  }
+}

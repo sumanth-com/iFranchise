@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
 import { submitContactForm } from '@/lib/forms';
-import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
-import { phoneInputProps } from '@/lib/phoneInput';
+import { createEmptyPhoneValue, isContactFormReady } from '@/lib/contactForm';
+import PhoneInput from './forms/PhoneInput';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -20,7 +20,7 @@ import {
 
 const CONTACT_FORM_INITIAL = withHoneypot({
   fullName: '',
-  contactNumber: '',
+  contactNumber: createEmptyPhoneValue(),
   email: '',
   company: '',
   message: '',
@@ -269,7 +269,7 @@ function ContactHeroForm({
         ) : (
           <form onSubmit={handleSubmit} className="relative flex flex-col gap-3">
             <HoneypotField value={formData._hp} onChange={handleInputChange} />
-            <div className="grid shrink-0 grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="grid shrink-0 grid-cols-1 items-start gap-3 sm:grid-cols-2">
               <ContactField label="Full Name" required>
                 <input
                   type="text"
@@ -281,12 +281,12 @@ function ContactHeroForm({
                 />
               </ContactField>
               <ContactField label="Contact Number" required>
-                <input
+                <PhoneInput
+                  id="contact-page-phone"
                   required
+                  variant={isLight ? 'light' : 'dark'}
                   value={formData.contactNumber}
-                  onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
-                  className={inputClass}
-                  {...phoneInputProps()}
+                  onChange={(value) => handleInputChange('contactNumber', value)}
                 />
               </ContactField>
             </div>

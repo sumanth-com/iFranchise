@@ -1,5 +1,6 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { SHEET_TABS } from '../constants/formEndpoints.js';
+import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 function buildMessage(formData) {
   const parts = [];
@@ -17,6 +18,7 @@ export function transformContactData(formData, sourcePage = 'contact_page') {
       name: formData.fullName,
       email: formData.email,
       phone: formData.contactNumber,
+      ...spreadPhoneFields(formData),
       company: formData.company || '',
       message: buildMessage(formData),
     },

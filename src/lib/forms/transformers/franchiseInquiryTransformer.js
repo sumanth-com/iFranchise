@@ -1,5 +1,6 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { SHEET_TABS } from '../constants/formEndpoints.js';
+import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 export function transformFranchiseInquiryData(formData, sourcePage = 'franchise_details_inquiry') {
   return {
@@ -14,6 +15,7 @@ export function transformFranchiseInquiryData(formData, sourcePage = 'franchise_
       full_name: formData.fullName,
       email: formData.email,
       phone: formData.contactNumber,
+      ...spreadPhoneFields(formData),
       city: formData.city || '',
       message: formData.message || '',
     },

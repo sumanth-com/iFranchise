@@ -1,6 +1,14 @@
 /** Shared field validators for all form types. */
 
-import { isValidPhone10, normalizePhone10 } from '../../phoneInput.js';
+import {
+  buildPhoneSubmission,
+  coercePhoneValue,
+  getPhoneValidationError,
+  isValidPhoneValue,
+  isValidPhone10,
+  normalizePhone10,
+} from '../../phoneInput.js';
+import { applyPhoneSubmission } from './phoneSubmission.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -10,11 +18,12 @@ export function isValidEmail(value) {
   return trimmed.length <= 254 && EMAIL_REGEX.test(trimmed);
 }
 
-/** Exactly 10 digits (non-digit characters stripped before check). */
+/** @deprecated Use isValidPhoneValue */
 export function isValidPhone(value) {
   return isValidPhone10(value);
 }
 
+/** @deprecated Use validatePhoneField */
 export function normalizePhone(value) {
   return normalizePhone10(value);
 }
@@ -37,11 +46,35 @@ export function validateRequiredString(value, fieldLabel, { min = 2, max = 5000 
   return { ok: true, value: trimmed };
 }
 
-export const PHONE_VALIDATION_ERROR = 'Please enter a valid 10-digit phone number';
+export const PHONE_VALIDATION_ERROR = 'Please enter a valid phone number';
 
+/**
+ * Validate international phone value and return E.164 + metadata.
+ * @param {unknown} value - PhoneValue object or legacy string
+ */
 export function validatePhoneField(value) {
-  if (!isValidPhone10(value)) {
+  const phone = coercePhoneValue(value);
+  if (!phone.local) {
     return { ok: false, error: PHONE_VALIDATION_ERROR };
   }
-  return { ok: true, value: normalizePhone10(value) };
+  if (!isValidPhoneValue(phone)) {
+    return { ok: false, error: getPhoneValidationError(phone.countryCode) };
+  }
+  const submission = buildPhoneSubmission(phone.countryCode, phone.local);
+  return { ok: true, value: submission.phone, ...submission };
+}
+
+/**
+ * Validate a named phone field on form data and attach metadata.
+ * @param {object} data
+ * @param {object} errors
+ * @param {string} fieldName
+ */
+export function validatePhoneFieldOnData(data, errors, fieldName) {
+  const result = validatePhoneField(data[fieldName]);
+  if (!result.ok) {
+    errors[fieldName] = result.error;
+    return;
+  }
+  applyPhoneSubmission(data, result, fieldName);
 }

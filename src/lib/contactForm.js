@@ -1,13 +1,13 @@
 /** Contact form helpers. re-export phone utilities + email readiness */
 
-import { digitsOnlyPhone, isValidPhone10 } from './phoneInput.js';
+import { createEmptyPhoneValue, isValidPhoneValue } from './phoneInput.js';
 
-export { digitsOnlyPhone };
+export { createEmptyPhoneValue, isValidPhoneValue };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isValidContactPhone10(value) {
-  return isValidPhone10(value);
+  return isValidPhoneValue(value);
 }
 
 export function isValidContactEmail(value) {
@@ -19,7 +19,7 @@ export function isValidContactEmail(value) {
 export function isContactFormReady(form) {
   return (
     String(form?.fullName ?? '').trim().length >= 2 &&
-    isValidContactPhone10(form?.contactNumber) &&
+    isValidPhoneValue(form?.contactNumber) &&
     isValidContactEmail(form?.email) &&
     String(form?.message ?? '').trim().length >= 1
   );

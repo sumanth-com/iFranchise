@@ -1,5 +1,6 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { SHEET_TABS } from '../constants/formEndpoints.js';
+import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 function resolveCities(formData) {
   if (formData.cities === 'Other') {
@@ -22,6 +23,7 @@ export function transformBrandChatbotData(formData, sourcePage = 'chatbot') {
       investment: formData.investment || '',
       contact_name: formData.contactName,
       contact_phone: formData.contactPhone,
+      ...spreadPhoneFields(formData),
       preferred_date: formData.preferredDate || '',
       preferred_time: formData.preferredTime || '',
       consultation_email: formData.email?.trim() || '',
@@ -46,6 +48,7 @@ export function transformInvestorChatbotData(formData, sourcePage = 'chatbot') {
       timeline: formData.timeline || '',
       contact_name: formData.contactName,
       contact_phone: formData.contactPhone,
+      ...spreadPhoneFields(formData),
     },
   };
 }
@@ -59,6 +62,7 @@ export function transformStrategyCallData(formData, sourcePage = 'chatbot') {
     data: {
       name: formData.name,
       phone: formData.phone,
+      ...spreadPhoneFields(formData),
       email: formData.email?.trim() || '',
       preferred_date: formData.preferredDate,
       preferred_time: formData.preferredTime,

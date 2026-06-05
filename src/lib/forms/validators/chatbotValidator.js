@@ -1,5 +1,5 @@
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { isNonEmptyString, validatePhoneField } from '../utils/fieldValidators.js';
+import { isNonEmptyString, validatePhoneFieldOnData } from '../utils/fieldValidators.js';
 
 function resolveCities(data) {
   if (data.cities === 'Other') {
@@ -24,9 +24,7 @@ export function validateBrandChatbotForm(formData) {
     data.contactName = data.contactName.trim();
   }
 
-  const brandPhone = validatePhoneField(data.contactPhone);
-  if (!brandPhone.ok) errors.contactPhone = brandPhone.error;
-  else data.contactPhone = brandPhone.value;
+  validatePhoneFieldOnData(data, errors, 'contactPhone');
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
@@ -94,9 +92,7 @@ export function validateInvestorChatbotForm(formData) {
     data.contactName = data.contactName.trim();
   }
 
-  const investorPhone = validatePhoneField(data.contactPhone);
-  if (!investorPhone.ok) errors.contactPhone = investorPhone.error;
-  else data.contactPhone = investorPhone.value;
+  validatePhoneFieldOnData(data, errors, 'contactPhone');
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
@@ -115,9 +111,7 @@ export function validateStrategyCallForm(formData) {
     data.name = data.name.trim();
   }
 
-  const strategyPhone = validatePhoneField(data.phone);
-  if (!strategyPhone.ok) errors.phone = strategyPhone.error;
-  else data.phone = strategyPhone.value;
+  validatePhoneFieldOnData(data, errors, 'phone');
 
   if (!data.preferredDate) {
     errors.preferredDate = 'Please select a preferred date';

@@ -1,7 +1,6 @@
-import { digitsOnlyPhone } from '../../phoneInput.js';
 import { isValidContactEmail } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { validateRequiredString } from '../utils/fieldValidators.js';
+import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
 
 function isValidHttpsUrl(value) {
   try {
@@ -30,12 +29,7 @@ export function validateCareerApplicationForm(formData) {
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  const phoneDigits = digitsOnlyPhone(data.contactNumber);
-  if (!/^\d{10}$/.test(phoneDigits)) {
-    errors.contactNumber = 'Please enter a valid 10-digit mobile number';
-  } else {
-    data.contactNumber = phoneDigits;
-  }
+  validatePhoneFieldOnData(data, errors, 'contactNumber');
 
   if (!isValidContactEmail(data.email)) {
     errors.email = 'Please enter a valid email address';

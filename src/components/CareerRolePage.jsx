@@ -3,15 +3,10 @@ import { motion } from 'framer-motion';
 import { navigateTo } from '../lib/navigation';
 import CareerApplyForm from './careers/CareerApplyForm';
 import {
-  DEPT_COLORS,
-  DEPT_COLORS_DARK,
   HIRING_STEPS,
-  MODE_COLORS,
-  MODE_COLORS_DARK,
   getRoleById,
   getRoleIdFromPathname,
 } from './careersData';
-import { useTheme } from '../context/ThemeContext';
 
 function HeroPill({ children, className = '' }) {
   return (
@@ -134,8 +129,6 @@ function ApplyPanel({ role }) {
 }
 
 export default function CareerRolePage() {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   const roleId = getRoleIdFromPathname(
     typeof window !== 'undefined' ? window.location.pathname : '',
   );
@@ -160,8 +153,6 @@ export default function CareerRolePage() {
     return null;
   }
 
-  const deptClass = (isDark ? DEPT_COLORS_DARK : DEPT_COLORS)[role.dept] || DEPT_COLORS.Marketing;
-  const modeClass = (isDark ? MODE_COLORS_DARK : MODE_COLORS)[role.mode] || MODE_COLORS.Remote;
   const roleIntro = buildRoleIntro(role);
   const companyLine = buildCompanyLine(role);
 
@@ -193,10 +184,10 @@ export default function CareerRolePage() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-              <HeroPill className={deptClass}>{role.dept}</HeroPill>
-              <HeroPill className="bg-slate-100 text-slate-800 border border-slate-200">{role.type}</HeroPill>
-              <HeroPill className={`career-detail-mode-pill ${modeClass}`}>{role.mode}</HeroPill>
-              <HeroPill className="hidden sm:inline-flex bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <HeroPill className="career-detail-hero-pill--unified">{role.dept}</HeroPill>
+              <HeroPill className="career-detail-hero-pill--unified">{role.type}</HeroPill>
+              <HeroPill className="career-detail-hero-pill--unified">{role.mode}</HeroPill>
+              <HeroPill className="career-detail-hero-pill--unified hidden sm:inline-flex">
                 Open role
               </HeroPill>
             </div>
@@ -230,8 +221,8 @@ export default function CareerRolePage() {
               {role.stipend ? ` · ${role.stipend}` : ''}
             </p>
 
-            <div className="career-detail-insights-panel fd-hero-split mt-4 sm:mt-6 hidden sm:block w-full overflow-hidden rounded-2xl border border-slate-200 p-4 shadow-sm sm:p-5 lg:p-6">
-              <div className="career-detail-insights fd-about-stats fd-hero-metrics grid w-full grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+            <div className="career-detail-insights mt-4 sm:mt-6 hidden sm:block w-full">
+              <div className="career-detail-insights-grid grid w-full grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
                 {insights.map((item) => (
                   <article
                     key={item.label}

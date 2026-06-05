@@ -6,7 +6,8 @@ import { SITE_CONTACT_WHATSAPP_URL } from '@/data/siteContact';
 import { submitFranchiseInquiry } from '@/lib/forms/submitters/franchiseInquirySubmitter';
 import { validateFranchiseInquiryForm } from '@/lib/forms/validators/franchiseInquiryValidator';
 import { checkHoneypot, stripHoneypot } from '@/lib/forms/utils/honeypot';
-import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from './forms/PhoneInput';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from './forms/HoneypotField';
@@ -30,7 +31,7 @@ const INITIAL = withHoneypot({
   franchiseType: '',
   fullName: '',
   email: '',
-  contactNumber: '',
+  contactNumber: createEmptyPhoneValue(),
   city: '',
   message: '',
 });
@@ -232,77 +233,71 @@ export default function FranchiseInquiryModal({
                 <FieldError message={fieldErrors.franchiseType} />
               </fieldset>
 
-              <div className="franchise-inquiry-modal__fields-row">
-                <div>
-                  <label htmlFor="fi-full-name" className="franchise-inquiry-modal__label">
-                    Full name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="fi-full-name"
-                    type="text"
-                    required
-                    minLength={2}
-                    value={values.fullName}
-                    onChange={(e) => setField('fullName', e.target.value)}
-                    className={inputClass(fieldErrors.fullName)}
-                    placeholder="Your full name"
-                    autoComplete="name"
-                    aria-invalid={Boolean(fieldErrors.fullName)}
-                  />
-                  <FieldError message={fieldErrors.fullName} />
-                </div>
-                <div>
-                  <label htmlFor="fi-email" className="franchise-inquiry-modal__label">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="fi-email"
-                    type="email"
-                    required
-                    value={values.email}
-                    onChange={(e) => setField('email', e.target.value)}
-                    className={inputClass(fieldErrors.email)}
-                    placeholder="you@email.com"
-                    autoComplete="email"
-                    aria-invalid={Boolean(fieldErrors.email)}
-                  />
-                  <FieldError message={fieldErrors.email} />
-                </div>
+              <div>
+                <label htmlFor="fi-full-name" className="franchise-inquiry-modal__label">
+                  Full name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="fi-full-name"
+                  type="text"
+                  required
+                  minLength={2}
+                  value={values.fullName}
+                  onChange={(e) => setField('fullName', e.target.value)}
+                  className={inputClass(fieldErrors.fullName)}
+                  placeholder="Your full name"
+                  autoComplete="name"
+                  aria-invalid={Boolean(fieldErrors.fullName)}
+                />
+                <FieldError message={fieldErrors.fullName} />
               </div>
 
-              <div className="franchise-inquiry-modal__fields-row">
-                <div>
-                  <label htmlFor="fi-phone" className="franchise-inquiry-modal__label">
-                    Mobile <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id="fi-phone"
-                    type="tel"
-                    required
-                    value={values.contactNumber}
-                    onChange={(e) => setField('contactNumber', digitsOnlyPhone(e.target.value))}
-                    className={inputClass(fieldErrors.contactNumber)}
-                    placeholder="10-digit mobile"
-                    {...phoneInputProps}
-                    aria-invalid={Boolean(fieldErrors.contactNumber)}
-                  />
-                  <FieldError message={fieldErrors.contactNumber} />
-                </div>
-                <div>
-                  <label htmlFor="fi-city" className="franchise-inquiry-modal__label">
-                    Preferred city
-                  </label>
-                  <input
-                    id="fi-city"
-                    type="text"
-                    value={values.city}
-                    onChange={(e) => setField('city', e.target.value)}
-                    className={inputClass(fieldErrors.city)}
-                    placeholder="e.g. Bengaluru"
-                    autoComplete="address-level2"
-                  />
-                  <FieldError message={fieldErrors.city} />
-                </div>
+              <div>
+                <label htmlFor="fi-email" className="franchise-inquiry-modal__label">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="fi-email"
+                  type="email"
+                  required
+                  value={values.email}
+                  onChange={(e) => setField('email', e.target.value)}
+                  className={inputClass(fieldErrors.email)}
+                  placeholder="you@email.com"
+                  autoComplete="email"
+                  aria-invalid={Boolean(fieldErrors.email)}
+                />
+                <FieldError message={fieldErrors.email} />
+              </div>
+
+              <div>
+                <label htmlFor="fi-phone" className="franchise-inquiry-modal__label">
+                  Mobile <span className="text-red-500">*</span>
+                </label>
+                <PhoneInput
+                  id="fi-phone"
+                  required
+                  variant="modal"
+                  value={values.contactNumber}
+                  onChange={(value) => setField('contactNumber', value)}
+                  error={fieldErrors.contactNumber}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="fi-city" className="franchise-inquiry-modal__label">
+                  Preferred city
+                </label>
+                <input
+                  id="fi-city"
+                  type="text"
+                  value={values.city}
+                  onChange={(e) => setField('city', e.target.value)}
+                  className={inputClass(fieldErrors.city)}
+                  placeholder="e.g. Bengaluru"
+                  autoComplete="address-level2"
+                />
+                <FieldError message={fieldErrors.city} />
               </div>
 
               <div>

@@ -2,21 +2,14 @@
  * contactValidator.js - Validation logic for contact forms.
  */
 
-import { digitsOnlyPhone, isValidPhone10 } from '../../phoneInput.js';
 import { isValidContactEmail } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { validateRequiredString } from '../utils/fieldValidators.js';
+import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
 
 /**
  * Validate contact form data
- * 
+ *
  * @param {object} formData - Raw form data
- * @param {string} formData.fullName - Contact's full name
- * @param {string} formData.contactNumber - Contact's phone number
- * @param {string} formData.email - Contact's email address
- * @param {string} formData.company - Contact's company name (optional)
- * @param {string} formData.message - Contact's message
- * 
  * @returns {{ success: boolean, errors?: object, data?: object }}
  */
 export function validateContactForm(formData) {
@@ -27,11 +20,7 @@ export function validateContactForm(formData) {
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  if (!isValidPhone10(data.contactNumber)) {
-    errors.contactNumber = 'Please enter a valid 10-digit phone number';
-  } else {
-    data.contactNumber = digitsOnlyPhone(data.contactNumber);
-  }
+  validatePhoneFieldOnData(data, errors, 'contactNumber');
 
   if (!isValidContactEmail(data.email)) {
     errors.email = 'Please enter a valid email address';
@@ -39,7 +28,6 @@ export function validateContactForm(formData) {
     data.email = data.email.trim().toLowerCase();
   }
 
-  // Company validation (optional)
   if (data.company) {
     if (data.company.trim().length > 200) {
       errors.company = 'Company name is too long';

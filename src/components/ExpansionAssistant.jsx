@@ -2,7 +2,12 @@ import { useState, useEffect, useCallback, useRef, createContext, useContext, us
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
 import { useAsyncFormAction } from '../hooks/useAsyncFormAction';
-import { PHONE_PLACEHOLDER, digitsOnlyPhone, formatPhoneDisplay, isValidPhone10 } from '@/lib/phoneInput';
+import {
+  createEmptyPhoneValue,
+  formatPhoneDisplay,
+  isValidPhoneValue,
+} from '@/lib/phoneInput';
+import PhoneInput from './forms/PhoneInput';
 import { navigateTo as spaNavigate } from '@/lib/navigation';
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise.in/30min';
@@ -626,18 +631,12 @@ function ConsultationScheduleFields({ schedule, setSchedule }) {
 // -- Text Input ----------------------------------------------------------------
 function TextInput({ placeholder, value, onChange, type = 'text' }) {
   const p = useAssistantPalette();
-  const isPhone = type === 'tel';
   return (
     <input
       type={type}
       placeholder={placeholder}
       value={value || ''}
-      inputMode={isPhone ? 'numeric' : undefined}
-      autoComplete={isPhone ? 'tel-national' : undefined}
-      maxLength={isPhone ? 10 : undefined}
-      pattern={isPhone ? '[0-9]{10}' : undefined}
-      title={isPhone ? 'Enter a 10-digit mobile number' : undefined}
-      onChange={(e) => onChange(isPhone ? digitsOnlyPhone(e.target.value) : e.target.value)}
+      onChange={(e) => onChange(e.target.value)}
       className="ea-text-input mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none transition-all duration-150"
       style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
       onFocus={(e) => { e.target.style.border = `1px solid ${p.inputFocusBorder}`; e.target.style.background = p.inputFocusBg; }}
@@ -900,7 +899,7 @@ function BrandsView({ setView }) {
   const val = data[current?.key];
   const canContinue = (() => {
     if (current?.type === 'contact') {
-      return Boolean(data.contactName?.trim() && isValidPhone10(data.contactPhone));
+      return Boolean(data.contactName?.trim() && isValidPhoneValue(data.contactPhone));
     }
     if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
       return Boolean(data[current.otherKey]?.trim());
@@ -1021,7 +1020,13 @@ function BrandsView({ setView }) {
         {current.type === 'contact' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <TextInput placeholder="Your full name" value={data.contactName} onChange={v => setData(d => ({ ...d, contactName: v }))} />
-            <TextInput placeholder={PHONE_PLACEHOLDER} value={data.contactPhone} onChange={v => setData(d => ({ ...d, contactPhone: v }))} type="tel" />
+            <PhoneInput
+              id="assistant-brand-phone"
+              required
+              variant="assistant"
+              value={data.contactPhone || createEmptyPhoneValue()}
+              onChange={(value) => setData((d) => ({ ...d, contactPhone: value }))}
+            />
           </div>
         )}
       </div>
@@ -1059,7 +1064,7 @@ function InvestorsView({ setView }) {
   const val = data[current?.key];
   const canContinue = (() => {
     if (current?.type === 'contact') {
-      return Boolean(data.contactName?.trim() && isValidPhone10(data.contactPhone));
+      return Boolean(data.contactName?.trim() && isValidPhoneValue(data.contactPhone));
     }
     if (current?.type === 'chips' && val === 'Other' && current.otherKey) {
       return Boolean(data[current.otherKey]?.trim());
@@ -1176,7 +1181,13 @@ function InvestorsView({ setView }) {
         {current.type === 'contact' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <TextInput placeholder="Your full name" value={data.contactName} onChange={v => setData(d => ({ ...d, contactName: v }))} />
-            <TextInput placeholder={PHONE_PLACEHOLDER} value={data.contactPhone} onChange={v => setData(d => ({ ...d, contactPhone: v }))} type="tel" />
+            <PhoneInput
+              id="assistant-brand-phone"
+              required
+              variant="assistant"
+              value={data.contactPhone || createEmptyPhoneValue()}
+              onChange={(value) => setData((d) => ({ ...d, contactPhone: value }))}
+            />
           </div>
         )}
       </div>
@@ -1207,7 +1218,7 @@ function StrategyView({ setView }) {
     submitStrategyCall(
       {
         name: 'Strategy call',
-        phone: '0000000000',
+        phone: '+919000000000',
         preferredDate: today,
         preferredTime: 'Cal.com booking',
         message: 'User opened external strategy calendar',
@@ -1664,9 +1675,10 @@ function SupportView({ setView, setIsOpen }) {
 
 const EA_FAB_SIZE = 56;
 const EA_FAB_INSET = 24;
-const EA_FAB_PANEL_GAP = 12;
+const EA_FAB_PANEL_GAP = 20;
 /** Panel bottom offset: FAB inset + FAB height + gap above launcher */
 const EA_PANEL_BOTTOM = EA_FAB_INSET + EA_FAB_SIZE + EA_FAB_PANEL_GAP;
+const EA_PANEL_MAX_HEIGHT = 500;
 
 // -- Main Component ------------------------------------------------------------
 function AssistantFabLauncher({ isOpen, isLight, onOpen, onClose }) {
@@ -1746,7 +1758,7 @@ export default function ExpansionAssistant() {
   const handleOpen = useCallback(() => setIsOpen(true), []);
 
   const panelBase = {
-    zIndex: 9999,
+    zIndex: 10000,
     background: palette.panel,
     backdropFilter: 'blur(40px)',
     WebkitBackdropFilter: 'blur(40px)',
@@ -1774,7 +1786,7 @@ export default function ExpansionAssistant() {
         bottom: EA_PANEL_BOTTOM,
         right: EA_FAB_INSET,
         width: 372,
-        maxHeight: 540,
+        maxHeight: `min(${EA_PANEL_MAX_HEIGHT}px, calc(100vh - ${EA_PANEL_BOTTOM + 24}px))`,
         borderRadius: 18,
       };
 

@@ -1,7 +1,8 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { submitBrandApplication } from '../lib/forms';
-import { digitsOnlyPhone, phoneInputProps } from '@/lib/phoneInput';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from './forms/PhoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
@@ -13,7 +14,7 @@ const BRAND_APP_INITIAL = withHoneypot({
   brandName: '',
   name: '',
   email: '',
-  phone: '',
+  phone: createEmptyPhoneValue(),
   industry: '',
   outlets: '',
   vision: '',
@@ -958,12 +959,12 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
                     />
                   </Field>
                   <Field label="Phone" required compact={fitViewport}>
-                    <input
-                      className={fieldClass}
-                      value={form.phone}
-                      onChange={(e) => set('phone', digitsOnlyPhone(e.target.value))}
+                    <PhoneInput
+                      id="brand-owners-phone"
                       required
-                      {...phoneInputProps()}
+                      variant="default"
+                      value={form.phone}
+                      onChange={(value) => set('phone', value)}
                     />
                   </Field>
                   <Field label="Category" required compact={fitViewport}>

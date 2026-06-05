@@ -1,5 +1,6 @@
 import { FORM_TYPES } from '../constants/formTypes.js';
 import { SHEET_TABS } from '../constants/formEndpoints.js';
+import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 function buildDescription(formData) {
   const lines = [];
@@ -36,6 +37,7 @@ export function transformApplicationData(formData, sourcePage = 'brand_owners_pa
       contactName: formData.name,
       contactEmail: formData.email,
       contactPhone: formData.phone,
+      ...spreadPhoneFields(formData),
       description: buildDescription(formData),
     },
   };

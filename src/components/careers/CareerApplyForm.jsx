@@ -1,6 +1,8 @@
+import { useTheme } from '../../context/ThemeContext';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { submitCareerApplication } from '@/lib/forms/submitters/careerApplicationSubmitter';
-import { phoneInputProps } from '@/lib/phoneInput';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from '../forms/PhoneInput';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from '../forms/HoneypotField';
 import FormSuccessState from '../forms/FormSuccessState';
@@ -30,7 +32,7 @@ function Label({ htmlFor, children, required = false }) {
 function buildInitial(role) {
   return withHoneypot({
     fullName: '',
-    contactNumber: '',
+    contactNumber: createEmptyPhoneValue(),
     email: '',
     resumeLink: '',
     portfolioLink: '',
@@ -41,6 +43,8 @@ function buildInitial(role) {
 }
 
 export default function CareerApplyForm({ role }) {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const {
     values,
     setField,
@@ -111,16 +115,14 @@ export default function CareerApplyForm({ role }) {
             <Label htmlFor={`career-phone-${role.id}`} required>
               Contact number
             </Label>
-            <input
+            <PhoneInput
               id={`career-phone-${role.id}`}
+              required
+              variant={isLight ? 'light' : 'dark'}
               value={values.contactNumber}
-              onChange={(e) => setField('contactNumber', e.target.value)}
-              className={fieldClass(fieldErrors.contactNumber)}
-              {...phoneInputProps}
+              onChange={(value) => setField('contactNumber', value)}
+              error={fieldErrors.contactNumber}
             />
-            {fieldErrors.contactNumber ? (
-              <p className="mt-0.5 text-[11px] text-red-600">{fieldErrors.contactNumber}</p>
-            ) : null}
           </div>
 
           <div className="career-apply-field">

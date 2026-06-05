@@ -1,61 +1,39 @@
-import { digitsOnlyPhone, isValidPhone10 } from '../../phoneInput.js';
-import { isValidContactEmail } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { validateRequiredString } from '../utils/fieldValidators.js';
-
-const FRANCHISE_TYPES = ['Master Franchise', 'Unit Franchise'];
+import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
 
 export function validateFranchiseInquiryForm(formData) {
   const errors = {};
   const data = sanitizeObjectStrings({ ...formData });
 
-  if (!data.franchiseType || !FRANCHISE_TYPES.includes(data.franchiseType)) {
-    errors.franchiseType = 'Please select Master or Unit franchise';
+  if (!data.franchiseType?.trim()) {
+    errors.franchiseType = 'Please select a franchise type';
+  } else {
+    data.franchiseType = data.franchiseType.trim();
   }
 
-  const nameResult = validateRequiredString(data.fullName, 'Name', { min: 2, max: 100 });
+  const nameResult = validateRequiredString(data.fullName, 'Full name', { min: 2, max: 100 });
   if (!nameResult.ok) errors.fullName = nameResult.error;
   else data.fullName = nameResult.value;
 
-  const phoneDigits = digitsOnlyPhone(data.contactNumber);
-  if (!phoneDigits) {
-    errors.contactNumber = 'Mobile number is required';
-  } else if (!isValidPhone10(phoneDigits)) {
-    errors.contactNumber = 'Please enter a valid 10-digit mobile number';
-  } else {
-    data.contactNumber = phoneDigits;
-  }
-
-  if (!data.email?.trim()) {
-    errors.email = 'Email is required';
-  } else if (!isValidContactEmail(data.email)) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!data.email || !emailRegex.test(data.email.trim())) {
     errors.email = 'Please enter a valid email address';
   } else {
     data.email = data.email.trim().toLowerCase();
   }
 
-  if (!data.franchiseId?.trim()) {
-    errors.franchiseId = 'Franchise is required';
+  validatePhoneFieldOnData(data, errors, 'contactNumber');
+
+  if (data.city && data.city.trim().length > 100) {
+    errors.city = 'City name is too long';
+  } else {
+    data.city = data.city?.trim() || '';
   }
 
-  if (!data.franchiseName?.trim()) {
-    errors.franchiseName = 'Franchise name is required';
+  if (data.message && data.message.trim().length > 2000) {
+    errors.message = 'Message must be under 2000 characters';
   } else {
-    data.franchiseName = data.franchiseName.trim();
-  }
-
-  if (data.city?.trim()) {
-    if (data.city.trim().length > 80) errors.city = 'City name is too long';
-    else data.city = data.city.trim();
-  } else {
-    data.city = '';
-  }
-
-  if (data.message?.trim()) {
-    if (data.message.trim().length > 500) errors.message = 'Message is too long';
-    else data.message = data.message.trim();
-  } else {
-    data.message = '';
+    data.message = data.message?.trim() || '';
   }
 
   if (Object.keys(errors).length > 0) {

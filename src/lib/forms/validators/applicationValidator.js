@@ -1,7 +1,7 @@
 /** Validation logic for brand application forms. */
 
 import { sanitizeObjectStrings } from '../../sanitize.js';
-import { validatePhoneField } from '../utils/fieldValidators.js';
+import { validatePhoneFieldOnData } from '../utils/fieldValidators.js';
 
 /**
  * Validate brand application form data
@@ -171,9 +171,7 @@ export function validateApplicationForm(formData) {
     data.email = data.email.trim().toLowerCase();
   }
 
-  const phoneResult = validatePhoneField(data.phone);
-  if (!phoneResult.ok) errors.phone = phoneResult.error;
-  else data.phone = phoneResult.value;
+  validatePhoneFieldOnData(data, errors, 'phone');
 
   // Company validation (optional)
   if (data.company && data.company.trim()) {

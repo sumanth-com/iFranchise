@@ -12,8 +12,9 @@ import { HOME_HERO_DARK, HOME_HERO_LIGHT } from '../lib/heroAssets.js';
 import ResponsivePicture from './ui/ResponsivePicture.jsx';
 import { HERO_SIZES } from '../lib/responsiveImage.js';
 import { submitContactForm } from '../lib/forms';
-import { digitsOnlyPhone, isContactFormReady } from '@/lib/contactForm';
-import { phoneInputProps } from '@/lib/phoneInput';
+import { isContactFormReady } from '@/lib/contactForm';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from './forms/PhoneInput';
 import { navigateTo } from '@/lib/navigation';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -932,7 +933,7 @@ const HOMEPAGE_CONTACT_INITIAL = withHoneypot({
   fullName: '',
   email: '',
   website: '',
-  contactNumber: '',
+  contactNumber: createEmptyPhoneValue(),
   message: '',
   company: '',
 });
@@ -1046,12 +1047,12 @@ function ContactSection() {
                 onChange={(e) => handleInputChange('website', e.target.value)}
                 className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
               />
-              <input
-                value={formData.contactNumber}
-                onChange={(e) => handleInputChange('contactNumber', digitsOnlyPhone(e.target.value))}
+              <PhoneInput
+                id="homepage-contact-phone"
                 required
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
-                {...phoneInputProps()}
+                variant="emerald"
+                value={formData.contactNumber}
+                onChange={(value) => handleInputChange('contactNumber', value)}
               />
               <textarea
                 placeholder="Message"
