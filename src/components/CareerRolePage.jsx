@@ -136,7 +136,7 @@ export default function CareerRolePage() {
 
   useEffect(() => {
     if (!role) {
-      navigateTo('/careers', { replace: true });
+      navigateTo('/careers#open-roles', { replace: true });
     }
   }, [role]);
 
@@ -172,7 +172,7 @@ export default function CareerRolePage() {
         <div className="career-detail-rail py-5 sm:py-12">
           <button
             type="button"
-            onClick={() => navigateTo('/careers')}
+            onClick={() => navigateTo('/careers#open-roles')}
             className="mb-4 sm:mb-6 inline-flex items-center gap-2 text-sm font-semibold text-violet-700 hover:text-violet-900 transition"
           >
             <span aria-hidden>←</span> Back to careers

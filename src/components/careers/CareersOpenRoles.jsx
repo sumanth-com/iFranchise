@@ -141,38 +141,40 @@ function RoleListingCard({ role, index, inView, isDark }) {
   );
 }
 
-function RolesComingSoonBanner({ inView }) {
+function RolesComingSoonBanner({ inView, index }) {
   const href = LINKEDIN?.href || '#';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
+    <motion.article
+      initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-      className="careers-role-soon careers-role-card--v2"
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.04 + index * 0.05 }}
+      className="careers-role-card careers-role-soon careers-role-card--listing careers-role-card--v2"
     >
       <div className="careers-role-soon__inner">
         <div className="careers-role-soon__icon-wrap" aria-hidden>
           <BellIcon />
         </div>
+
         <div className="careers-role-soon__copy">
-          <p className="careers-role-soon__title">More roles coming soon</p>
+          <h3 className="careers-role-soon__title">More roles coming soon</h3>
           <p className="careers-role-soon__desc">
-            Follow iFranchise on LinkedIn for new openings, team updates, and franchise growth stories.
+            Follow iFranchise on LinkedIn for new openings and team updates.
           </p>
         </div>
+
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-            className="careers-role-soon__cta careers-cta-pill careers-cta-pill--linkedin"
-          >
-            <LinkedInIcon className="h-4 w-4" />
-            Follow on LinkedIn
-            <ArrowIcon />
-          </a>
+          className="careers-role-soon__cta careers-cta-pill careers-cta-pill--linkedin"
+        >
+          <LinkedInIcon className="h-4 w-4" />
+          Follow on LinkedIn
+          <ArrowIcon />
+        </a>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -214,7 +216,7 @@ export default function CareersOpenRoles() {
           {openRoles.map((role, index) => (
             <RoleListingCard key={role.id} role={role} index={index} inView={inView} isDark={isDark} />
           ))}
-          <RolesComingSoonBanner inView={inView} />
+          <RolesComingSoonBanner inView={inView} index={openRoles.length} />
         </div>
       </div>
     </section>

@@ -11,6 +11,11 @@ import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
 export const NAVIGATE_EVENT = 'ifr:navigate';
 
 const SCROLL_PREFIX = 'ifr:scroll:';
+const CAREERS_OPEN_ROLES_HASH = '#open-roles';
+
+function isCareerRolePath(pathname) {
+  return pathname.startsWith('/careers/') && pathname.split('/').filter(Boolean).length === 2;
+}
 
 export function scrollStorageKey(pathname = window.location.pathname, search = window.location.search) {
   return `${SCROLL_PREFIX}${pathname}${search}`;
@@ -196,6 +201,28 @@ export function navigateTo(path, { replace = false } = {}) {
   }
 
   persistCurrentScrollInHistory();
+
+  const currentPath = window.location.pathname;
+  const leavingCareersForRole =
+    currentPath === '/careers' && isCareerRolePath(target.pathname);
+  const returningFromRoleToCareers =
+    isCareerRolePath(currentPath) && target.pathname === '/careers';
+
+  if (leavingCareersForRole) {
+    const scrollY = history.state?.scrollY ?? window.scrollY;
+    history.replaceState(
+      { ...(history.state || {}), scrollY, ifrNav: true },
+      '',
+      `/careers${CAREERS_OPEN_ROLES_HASH}`,
+    );
+    sessionStorage.setItem(scrollStorageKey('/careers', ''), String(scrollY));
+  }
+
+  if (returningFromRoleToCareers && !target.hash) {
+    target.hash = CAREERS_OPEN_ROLES_HASH;
+    target.href = `/careers${CAREERS_OPEN_ROLES_HASH}${target.search}`;
+  }
+
   prefetchRoute(target.pathname);
 
   const nextState = { scrollY: 0, ifrNav: true };

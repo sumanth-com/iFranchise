@@ -4178,25 +4178,28 @@ html[data-theme='dark'] .careers-page .careers-cta-pill--linkedin:hover {
   box-shadow: 0 4px 16px rgba(10, 102, 194, 0.35);
 }
 
-/* Full-width “more roles coming soon” — same card language as listings */
+/* Full-width “more roles coming soon” — compact bar, same rounded corners as job cards */
 .careers-role-soon {
   grid-column: 1 / -1;
   margin-top: 0.25rem;
+  height: auto !important;
+  min-height: 0 !important;
 }
 
 .careers-role-soon__inner {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 1rem;
-  padding: 1.375rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.875rem 1.125rem;
 }
 
 @media (min-width: 640px) {
   .careers-role-soon__inner {
     flex-direction: row;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
   }
 }
 
@@ -4204,8 +4207,8 @@ html[data-theme='dark'] .careers-page .careers-cta-pill--linkedin:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   flex-shrink: 0;
   border-radius: 0.5rem;
 }
@@ -4223,8 +4226,8 @@ html[data-theme='dark'] .careers-page .careers-role-soon__icon-wrap {
 }
 
 .careers-role-soon__icon-wrap svg {
-  width: 1.375rem;
-  height: 1.375rem;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .careers-role-soon__copy {
@@ -4241,9 +4244,9 @@ html[data-theme='dark'] .careers-page .careers-role-soon__icon-wrap {
 
 .careers-role-soon__title {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
@@ -4256,10 +4259,32 @@ html[data-theme='dark'] .careers-page .careers-role-soon__title {
 }
 
 .careers-role-soon__desc {
-  margin: 0.35rem 0 0;
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
   max-width: 42rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.careers-role-soon__cta {
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .careers-role-soon__desc {
+    -webkit-line-clamp: 1;
+  }
+
+  .careers-role-soon__cta {
+    width: auto;
+    flex-shrink: 0;
+  }
 }
 
 html[data-theme='light'] .careers-page .careers-role-soon__desc {
@@ -4281,7 +4306,7 @@ html[data-theme='dark'] .careers-page .careers-role-soon__desc {
     gap: 0.75rem;
   }
 
-  .careers-page .careers-role-soon .careers-cta-pill--linkedin {
+  .careers-page .careers-role-soon .careers-role-soon__cta {
     width: 100%;
   }
 }
