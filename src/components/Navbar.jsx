@@ -6,6 +6,9 @@ import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpport
 import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
 import { navigateTo as spaNavigate } from '../lib/navigation';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { getOpenRoles, HIRING_ACTIVE } from './careersData';
+
+const CAREERS_OPEN_COUNT = HIRING_ACTIVE ? getOpenRoles().length : 0;
 
 const MENU_EASE = [0.22, 1, 0.36, 1];
 const MENU_SPRING = { type: 'spring', stiffness: 520, damping: 38, mass: 0.85 };
@@ -95,25 +98,6 @@ function NavbarFilterChevron({ isOpen = false }) {
         strokeLinejoin="round"
       />
     </svg>
-  );
-}
-
-function CompanyNavRowArrow() {
-  return (
-    <span
-      className="company-nav-row-arrow inline-flex shrink-0 translate-x-0 text-violet-600 transition-transform duration-300 ease-out group-hover:translate-x-2"
-      aria-hidden
-    >
-      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M5 12h13M14 7l5 5-5 5"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
   );
 }
 
@@ -213,7 +197,6 @@ function FranchiseFilterPanelBody({ navFranchiseFilters, embedded = false, compa
   );
 }
 
-const NAV_COMPANY_PANEL_CLASS = 'w-[min(400px,calc(100vw-32px))]';
 const NAV_FRANCHISE_PANEL_CLASS = 'w-[min(440px,calc(100vw-32px))]';
 const NAV_DROPDOWN_PANEL_CLASS =
   'navbar-dropdown-panel rounded-2xl border border-slate-200/60 bg-white shadow-2xl';
@@ -221,9 +204,25 @@ const NAV_SUBMENU_CLASS =
   'navbar-dropdown-panel min-w-[15.5rem] w-max max-w-[min(18rem,calc(100vw-40px))] max-h-52 overflow-y-auto overflow-x-hidden overscroll-contain rounded-2xl border border-slate-200/60 bg-white p-2.5 shadow-2xl';
 
 const NAV_LINK_BASE =
-  'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200';
+  'inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-bold transition-all duration-200';
 const NAV_LINK_IDLE = 'site-navbar-link text-violet-800 hover:bg-violet-50 hover:text-violet-950';
 const NAV_LINK_ACTIVE = 'site-navbar-link site-navbar-link--active bg-violet-100 text-violet-950';
+
+function NavbarCareersOpenPill({ count, reduceMotion = false }) {
+  if (!count) return null;
+
+  return (
+    <span
+      className="navbar-careers-pill relative ml-1 inline-flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full px-1 text-[10px] font-bold leading-none"
+      aria-label={`${count} open ${count === 1 ? 'position' : 'positions'}`}
+    >
+      {!reduceMotion && (
+        <span className="navbar-careers-pill__pulse absolute inset-0 rounded-full" aria-hidden />
+      )}
+      <span className="relative z-[1]">{count}</span>
+    </span>
+  );
+}
 
 function NavbarFranchiseFilterMenuCheckbox({ checked, label, onChange }) {
   return (
@@ -557,16 +556,6 @@ function ReportIcon() {
   );
 }
 
-function TeamIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="2" y="7" width="20" height="14" rx="2" />
-      <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
-      <path d="M12 11v3M8 11h8" />
-    </svg>
-  );
-}
-
 function ProcessIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5 stroke-slate-500 group-hover:stroke-[#0b0f19]" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -574,29 +563,6 @@ function ProcessIcon() {
     </svg>
   );
 }
-
-function AboutIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] shrink-0 text-white" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 10v6" />
-      <path d="M12 7h.01" />
-    </svg>
-  );
-}
-
-function CompanyNavIconWrap({ children }) {
-  return (
-    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 text-white shadow-[0_4px_14px_rgba(124,58,237,0.35)] transition-all duration-200 group-hover:from-violet-700 group-hover:to-violet-900 group-hover:shadow-[0_6px_18px_rgba(124,58,237,0.45)] [&_svg]:text-white [&_svg]:stroke-white">
-      {children}
-    </span>
-  );
-}
-
-const COMPANY_ITEMS = [
-  { title: 'About Us', description: 'Our story, mission, and leadership.', Icon: AboutIcon, path: '/about-us' },
-  { title: 'Careers', description: 'Build your career with iFranchise.', Icon: TeamIcon, path: '/careers' },
-];
 
 // Services Dropdown Items
 const SERVICES_ITEMS = [
@@ -619,9 +585,6 @@ const RESOURCES_ITEMS_HIDDEN = [
   { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blogs' },
 ];
 
-/** @deprecated Hidden - Company dropdown right column (legal pages + Book A Call) */
-const SHOW_COMPANY_DROPDOWN_EXTRAS = false;
-
 function Navbar() {
   const navFranchiseFilters = useFranchiseOpportunityNavbarFilters();
   const reduceMotion = usePrefersReducedMotion();
@@ -629,10 +592,8 @@ function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileAccordion, setMobileAccordion] = useState(null);
   const savedScrollRef = useRef(0);
 
-  const companyRef = useRef(null);
   const franchiseRef = useRef(null);
   useEffect(() => {
     function onScroll() {
@@ -681,7 +642,6 @@ function Navbar() {
     const onKeyDown = (e) => {
       if (e.key === 'Escape') {
         setIsMobileMenuOpen(false);
-        setMobileAccordion(null);
       }
     };
     document.addEventListener('keydown', onKeyDown);
@@ -692,13 +652,12 @@ function Navbar() {
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
-  // Company & Franchise filters: close when clicking outside (opened via hover on desktop)
+  // Franchise filters: close when clicking outside (opened via hover on desktop)
   useEffect(() => {
-    if (activeDropdown !== 'company' && activeDropdown !== 'franchiseFilters') return undefined;
+    if (activeDropdown !== 'franchiseFilters') return undefined;
 
     const onPointerDown = (e) => {
       const target = e.target;
-      if (companyRef.current?.contains(target)) return;
       if (franchiseRef.current?.contains(target)) return;
       setActiveDropdown(null);
     };
@@ -715,7 +674,6 @@ function Navbar() {
     spaNavigate(path);
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
-    setMobileAccordion(null);
   };
 
   const handleLogoClick = (e) => {
@@ -766,71 +724,17 @@ function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden flex-1 items-center justify-center gap-1 xl:flex">
+        <ul className="hidden flex-1 items-center justify-center gap-1.5 xl:flex">
           
-          {/* Company - hover shows menu; click goes to About Us */}
-          <li
-            className="relative"
-            ref={companyRef}
-            onMouseEnter={() => setActiveDropdown('company')}
-            onMouseLeave={() => setActiveDropdown(null)}
-          >
-            <button
-              type="button"
-              onClick={() => navigateTo('/about-us')}
-              className={`${NAV_LINK_BASE} ${
-                activeDropdown === 'company' ? NAV_LINK_ACTIVE : NAV_LINK_IDLE
-              }`}
-              aria-expanded={activeDropdown === 'company'}
-              aria-haspopup="true"
+          {/* About Us */}
+          <li>
+            <a
+              href="/about-us"
+              onClick={(e) => { e.preventDefault(); navigateTo('/about-us'); }}
+              className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
             >
-              Company
-              <ChevronIcon className={activeDropdown === 'company' ? 'rotate-180' : ''} />
-            </button>
-
-            <AnimatePresence>
-              {activeDropdown === 'company' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className={`absolute -left-20 top-full mt-2 ${NAV_COMPANY_PANEL_CLASS} ${NAV_DROPDOWN_PANEL_CLASS}`}
-                >
-                  <div className="p-4">
-                    <div className="space-y-1">
-                      <h3 className="text-sm font-semibold text-slate-900 mb-3">Company</h3>
-                      {COMPANY_ITEMS.map((item) => (
-                        <a
-                          key={item.title}
-                          href={item.path}
-                          onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                          className="group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-slate-50"
-                        >
-                          <CompanyNavIconWrap>
-                            <item.Icon />
-                          </CompanyNavIconWrap>
-                          <div className="flex-1">
-                            <span className="flex items-center gap-2 text-sm font-bold text-slate-800 group-hover:text-violet-700">
-                              {item.title}
-                              {item.badge && (
-                                <span className="relative inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm">
-                                  {item.badge}
-                                  <span className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-60" />
-                                </span>
-                              )}
-                            </span>
-                            <span className="mt-0.5 block text-xs font-medium leading-snug text-slate-600">{item.description}</span>
-                          </div>
-                          <CompanyNavRowArrow />
-                        </a>
-                      ))}
-                    </div>
-
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              About Us
+            </a>
           </li>
 
           {/* Services - direct link */}
@@ -902,6 +806,18 @@ function Navbar() {
             </a>
           </li>
 
+          {/* Careers */}
+          <li>
+            <a
+              href="/careers"
+              onClick={(e) => { e.preventDefault(); navigateTo('/careers'); }}
+              className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
+            >
+              Careers
+              <NavbarCareersOpenPill count={CAREERS_OPEN_COUNT} reduceMotion={reduceMotion} />
+            </a>
+          </li>
+
           {/* Contact Us */}
           <li>
             <a
@@ -932,7 +848,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => navigateTo('/list-your-brand')}
-            className="site-navbar-cta group !hidden items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] xl:!inline-flex"
+            className="site-navbar-cta group !hidden h-10 items-center gap-2 rounded-full bg-violet-600 px-6 py-0 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] xl:!inline-flex"
           >
           List Your Brand
           <motion.div
@@ -1012,54 +928,14 @@ function Navbar() {
                   initial={reduceMotion ? false : 'hidden'}
                   animate={reduceMotion ? undefined : 'visible'}
                 >
-                  {/* Company Accordion. sub-items open downward */}
-                  <motion.div
+                  <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
-                    className="navbar-mobile-accordion w-full overflow-hidden rounded-xl border"
+                    href="/about-us"
+                    onClick={(e) => { e.preventDefault(); navigateTo('/about-us'); }}
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
-                    <button
-                      type="button"
-                      onClick={() => setMobileAccordion(mobileAccordion === 'company' ? null : 'company')}
-                      className="navbar-mobile-nav-item flex w-full items-center justify-between px-4 py-3.5 text-left"
-                    >
-                      <span className="navbar-mobile-nav-label text-base font-bold">Company</span>
-                      <ChevronIcon className={mobileAccordion === 'company' ? 'rotate-180' : ''} />
-                    </button>
-                    <AnimatePresence>
-                      {mobileAccordion === 'company' && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.18, ease: MENU_EASE }}
-                          className="navbar-mobile-accordion-panel w-full overflow-hidden border-t"
-                        >
-                          <div className="navbar-mobile-accordion-sub flex w-full flex-col gap-1 p-2">
-                            {COMPANY_ITEMS.map((item) => (
-                              <a
-                                key={item.title}
-                                href={item.path}
-                                onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                                className="navbar-mobile-sub-link mobile-nav-link group flex w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold"
-                              >
-                                <CompanyNavIconWrap>
-                                  <item.Icon />
-                                </CompanyNavIconWrap>
-                                <span className="flex min-w-0 flex-1 items-center gap-2 font-bold">
-                                  {item.title}
-                                  {item.badge && (
-                                    <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
-                                      {item.badge}
-                                    </span>
-                                  )}
-                                </span>
-                              </a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
+                    About Us
+                  </motion.a>
 
                   <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
@@ -1086,6 +962,16 @@ function Navbar() {
                     className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
                     Blogs
+                  </motion.a>
+
+                  <motion.a
+                    variants={reduceMotion ? undefined : mobileMenuNavItem}
+                    href="/careers"
+                    onClick={(e) => { e.preventDefault(); navigateTo('/careers'); }}
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
+                  >
+                    Careers
+                    <NavbarCareersOpenPill count={CAREERS_OPEN_COUNT} reduceMotion={reduceMotion} />
                   </motion.a>
 
                   <motion.a

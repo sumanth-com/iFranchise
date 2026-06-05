@@ -71,6 +71,7 @@ export default function BlogImage({
           ref={imgRef}
           src={displaySrc}
           alt={alt}
+          title={alt || undefined}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
           fetchPriority={priority ? 'high' : 'auto'}

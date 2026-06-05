@@ -53,7 +53,7 @@ export default function ThemeToggle({ className = '', compact = false }) {
         <span className="theme-toggle__ring" aria-hidden />
         <span className={`theme-toggle__orbit-knob theme-toggle__orbit-knob--compact ${isLight ? 'is-day' : 'is-night'}`}>
           <span className="theme-toggle__orbit-knob-inner">
-            {isDark ? <MoonIcon className="h-[17px] w-[17px]" /> : <SunIcon className="h-[17px] w-[17px]" />}
+            {isDark ? <MoonIcon className="h-[15px] w-[15px]" /> : <SunIcon className="h-[15px] w-[15px]" />}
           </span>
         </span>
         <span className="sr-only">

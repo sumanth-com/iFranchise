@@ -2,7 +2,7 @@
  * Curated franchise insights (4 articles) for investors and brand owners.
  */
 
-import { BLOG_POST_IMAGES, blogPhoto } from './blog/blogImages';
+import { blogPostImage, blogPhoto } from './blog/blogImages';
 
 const authors = [
   {
@@ -41,12 +41,13 @@ function withSectionIds(slug, sections) {
   }));
 }
 
-/** @param {string} src @param {string} alt */
-function packImages(src, alt) {
+/** @param {string} slug @param {string} title */
+function packImages(slug, title) {
+  const src = blogPostImage(slug);
   return {
     thumbnail: src,
     image: src,
-    imageAlt: alt,
+    imageAlt: title,
   };
 }
 
@@ -57,7 +58,7 @@ const posts = [
     category: 'Investor Guide',
     date: '2026-04-18',
     readTime: '9 min read',
-    ...packImages(BLOG_POST_IMAGES[0], 'Investors reviewing franchise documents in a meeting'),
+    ...packImages('how-to-evaluate-franchise-opportunity-india', 'How to Evaluate a Franchise Opportunity in India'),
     excerpt:
       'A practical framework to compare brands, investment bands, payback, and support before you sign a franchise agreement.',
     quote:
@@ -114,7 +115,7 @@ const posts = [
     category: 'Investor Guide',
     date: '2026-04-10',
     readTime: '8 min read',
-    ...packImages(BLOG_POST_IMAGES[1], 'Quick-service restaurant counter and dining area'),
+    ...packImages('fofo-vs-fico-franchise-model-guide', 'FOFO vs FICO: Choosing the Right Franchise Model'),
     excerpt:
       'Understand owner-operated vs investor-operated models so your role, risk, and returns match how you want to build wealth.',
     quote: 'Pick the model that fits how you want to spend your time—not just the headline ROI.',
@@ -170,7 +171,7 @@ const posts = [
     category: 'For Operators',
     date: '2026-03-28',
     readTime: '7 min read',
-    ...packImages(BLOG_POST_IMAGES[2], 'Business analytics dashboard on a laptop'),
+    ...packImages('franchise-unit-economics-checklist', 'Unit Economics Checklist Before You Sign'),
     excerpt:
       'Breakeven, contribution margin, and working capital—what to model line by line before you commit to a franchise unit.',
     quote: 'If the spreadsheet only works on best-case rent and best-case sales, it is not ready for a signature.',
@@ -226,7 +227,7 @@ const posts = [
     category: 'Market Insight',
     date: '2026-03-15',
     readTime: '6 min read',
-    ...packImages(BLOG_POST_IMAGES[3], 'Indian food service and dining spread'),
+    ...packImages('franchise-demand-india-2026', 'Where Franchise Demand Is Heading in India'),
     excerpt:
       'Food, retail, and service formats continue to attract investors—here is how to read category momentum and city-level opportunity.',
     quote:

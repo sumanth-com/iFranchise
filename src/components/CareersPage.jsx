@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { scrollToHashSection } from '../lib/navigation';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { useTheme } from '../context/ThemeContext';
@@ -159,6 +160,19 @@ function CareersPage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const heroRef = useRef(null);
+
+  useEffect(() => {
+    if (!window.location.hash) return undefined;
+    const run = () => scrollToHashSection();
+    const t1 = window.setTimeout(run, 120);
+    const t2 = window.setTimeout(run, 400);
+    const t3 = window.setTimeout(run, 800);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.clearTimeout(t3);
+    };
+  }, []);
 
   return (
     <div className="careers-page relative z-10 min-h-screen bg-transparent text-theme-primary">

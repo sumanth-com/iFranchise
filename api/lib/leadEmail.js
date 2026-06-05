@@ -17,9 +17,20 @@ function row(label, value) {
   return `<tr><td style="padding:8px 12px;font-weight:600;color:#374151;vertical-align:top;width:160px;">${escapeHtml(label)}</td><td style="padding:8px 12px;color:#111827;">${escapeHtml(value)}</td></tr>`;
 }
 
+function resolveNotificationRecipient(formType) {
+  if (formType === 'career_application') {
+    return process.env.LEAD_NOTIFICATION_TO_CAREERS || 'hr@ifranchise.in';
+  }
+  return process.env.LEAD_NOTIFICATION_TO;
+}
+
 export function buildLeadEmail(payload) {
   const lead = extractLeadFields(payload);
-  const subject = `[New Lead] ${lead.formTypeLabel} - ${lead.name}`;
+  const roleTitle = payload?.data?.role_title?.trim() || '';
+  const subject =
+    lead.formType === 'career_application'
+      ? `[Career Application] ${roleTitle || lead.formTypeLabel} - ${lead.name}`
+      : `[New Lead] ${lead.formTypeLabel} - ${lead.name}`;
 
   const additionalRows = Object.entries(lead.additionalFields)
     .map(([label, value]) => row(label, value))
@@ -77,13 +88,17 @@ export function buildLeadEmail(payload) {
  */
 export async function sendLeadEmail(payload) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.LEAD_NOTIFICATION_TO;
+  const formType = payload?.form_type || '';
+  const to = resolveNotificationRecipient(formType);
   const from = process.env.LEAD_NOTIFICATION_FROM;
 
   if (!apiKey || !to || !from) {
     return {
       ok: false,
-      error: 'Email service not configured (RESEND_API_KEY, LEAD_NOTIFICATION_TO, LEAD_NOTIFICATION_FROM).',
+      error:
+        formType === 'career_application'
+          ? 'Email service not configured (RESEND_API_KEY, LEAD_NOTIFICATION_TO_CAREERS or hr@ifranchise.in default, LEAD_NOTIFICATION_FROM).'
+          : 'Email service not configured (RESEND_API_KEY, LEAD_NOTIFICATION_TO, LEAD_NOTIFICATION_FROM).',
     };
   }
 

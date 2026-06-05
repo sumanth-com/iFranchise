@@ -6,13 +6,10 @@ import { SITE_IMAGES } from '../../data/siteImageManifest.js';
 /** Blog listing page top section (left-side hero image). */
 export const BLOG_PAGE_HERO_IMAGE = SITE_IMAGES.blogHero;
 
-/** Local images for blog cards and matching detail-page heroes (one per post). */
-export const BLOG_POST_IMAGES = [
-  SITE_IMAGES.blogPost1,
-  SITE_IMAGES.blogPost2,
-  SITE_IMAGES.blogPost3,
-  SITE_IMAGES.blogPost4,
-];
+/** Blog card / detail hero image URL — filename matches post slug for readable “open image” tabs. */
+export function blogPostImage(slug) {
+  return `/images/${slug}.webp`;
+}
 
 export const BLOG_FALLBACK = SITE_IMAGES.blogFallback;
 

@@ -32,10 +32,10 @@ export const SITE_IMAGE_MANIFEST = [
   // Blog
   { dest: 'blog-fallback.webp', src: 'Blog.webp' },
   { dest: 'blog-hero.webp', src: 'bloghero.webp' },
-  { dest: 'blog-post-1.webp', src: 'Blog1.webp' },
-  { dest: 'blog-post-2.webp', src: 'Blog2.webp' },
-  { dest: 'blog-post-3.webp', src: 'Blog3.webp' },
-  { dest: 'blog-post-4.webp', src: 'Blog4.webp' },
+  { dest: 'how-to-evaluate-franchise-opportunity-india.webp', src: 'Blog1.webp' },
+  { dest: 'fofo-vs-fico-franchise-model-guide.webp', src: 'Blog2.webp' },
+  { dest: 'franchise-unit-economics-checklist.webp', src: 'Blog3.webp' },
+  { dest: 'franchise-demand-india-2026.webp', src: 'Blog4.webp' },
 
   // Logos (navbar / header)
   { dest: 'BrandNav.webp', src: 'BrandNav.webp' },
@@ -83,10 +83,6 @@ export const SITE_IMAGES = {
 
   blogFallback: siteImageUrl('blog-fallback.webp'),
   blogHero: siteImageUrl('blog-hero.webp'),
-  blogPost1: siteImageUrl('blog-post-1.webp'),
-  blogPost2: siteImageUrl('blog-post-2.webp'),
-  blogPost3: siteImageUrl('blog-post-3.webp'),
-  blogPost4: siteImageUrl('blog-post-4.webp'),
 
   brandNav: siteImageUrl('BrandNav.webp'),
   brandNav96: siteImageUrl('BrandNav-96w.webp'),

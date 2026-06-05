@@ -85,7 +85,7 @@ const CTA_CONTENT = {
     heading: 'Join the iFranchise team',
     description:
       'We are building a franchise growth platform with ambitious people. View open roles, apply with your portfolio, or follow us for future openings.',
-    primary: { label: 'View open roles', action: () => navigateTo('/careers') },
+    primary: { label: 'View open roles', action: () => navigateTo('/careers#open-roles') },
     secondary: {
       label: 'Apply via email',
       action: () => {

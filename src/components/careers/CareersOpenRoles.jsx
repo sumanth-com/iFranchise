@@ -188,7 +188,7 @@ export default function CareersOpenRoles() {
   const deptList = [...new Set(openRoles.map((r) => r.dept))].join(', ');
 
   return (
-    <section className="careers-open-roles careers-section">
+    <section id="open-roles" className="careers-open-roles careers-section scroll-mt-24">
       <div
         ref={ref}
         className="careers-open-roles-rail pt-10 pb-10 sm:pt-12 sm:pb-12"

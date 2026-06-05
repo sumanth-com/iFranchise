@@ -11,7 +11,7 @@ sequenceDiagram
   participant Sheets as Google Apps Script
   participant Notify as /api/notify-lead
   participant Resend as Resend API
-  participant Inbox as contact@ifranchise.in
+  participant Inbox as contact@ or hr@ifranchise.in
 
   User->>Pipeline: Submit form
   Pipeline->>Pipeline: honeypot, validate, transform
@@ -61,7 +61,8 @@ All forms using `runFormSubmission` / `createFormSubmitter` are covered automati
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `RESEND_API_KEY` | Yes | [Resend](https://resend.com) API key |
-| `LEAD_NOTIFICATION_TO` | Yes | Recipient, e.g. `contact@ifranchise.in` |
+| `LEAD_NOTIFICATION_TO` | Yes | Default recipient for all forms except careers, e.g. `contact@ifranchise.in` |
+| `LEAD_NOTIFICATION_TO_CAREERS` | No | Career apply forms only; defaults to `hr@ifranchise.in` |
 | `LEAD_NOTIFICATION_FROM` | Yes | Verified sender, e.g. `Leads <notifications@ifranchise.in>` |
 | `LEAD_NOTIFY_SECRET` | Yes | Same value as `VITE_LEAD_NOTIFY_SECRET` |
 | `LEAD_NOTIFY_ALLOWED_ORIGINS` | Recommended | Comma-separated site origins for CORS. If unset, the service will reflect the request origin (auth still enforced by `LEAD_NOTIFY_SECRET`). |
@@ -105,5 +106,5 @@ node scripts/verify-lead-notify.mjs
 
 ## Careers / future forms
 
-- **Careers:** No sheet integration today; when a careers submitter uses `createFormSubmitter`, it will pick up notifications automatically.
-- **New forms:** Add `form_type` to `api/lib/validateNotifyRequest.js` allowlist and `api/lib/extractLeadFields.js` labels if you want a friendly email label.
+- **Careers:** `career_application` submissions go to `hr@ifranchise.in` by default (`LEAD_NOTIFICATION_TO_CAREERS`). All other forms use `LEAD_NOTIFICATION_TO` (`contact@ifranchise.in`).
+- **New forms:** Add friendly labels in `api/lib/extractLeadFields.js` if you want a clearer email subject/body.

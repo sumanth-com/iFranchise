@@ -125,7 +125,7 @@ function ApplyPanel({ role }) {
   return (
     <aside className="career-detail-form w-full lg:col-span-1 lg:max-w-[400px] lg:justify-self-end lg:self-stretch">
       <div className="career-detail-form-sticky career-detail-form-sticky--range lg:pt-4">
-        <div className="career-detail-form-card career-detail-form-card--apply rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.08)] sm:p-5">
+        <div className="career-detail-form-card career-detail-form-card--apply fd-dual-panel rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
           <CareerApplyForm role={role} />
         </div>
       </div>
@@ -211,13 +211,16 @@ export default function CareerRolePage() {
             {companyLine ? (
               <p className="career-detail-company-line mt-3 text-sm text-slate-600 max-w-3xl leading-relaxed hidden sm:block">
                 {companyLine}{' '}
-                <button
-                  type="button"
-                  onClick={() => navigateTo('/about-us')}
-                  className="font-semibold text-violet-700 hover:text-violet-900 transition"
+                <a
+                  href="/about-us"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo('/about-us');
+                  }}
+                  className="career-detail-about-link font-semibold text-violet-700 hover:text-violet-900 transition hover:underline"
                 >
                   About iFranchise →
-                </button>
+                </a>
               </p>
             ) : null}
 
@@ -227,18 +230,22 @@ export default function CareerRolePage() {
               {role.stipend ? ` · ${role.stipend}` : ''}
             </p>
 
-            <div className="career-detail-insights mt-4 sm:mt-6 hidden sm:grid sm:grid-cols-4 gap-3">
-              {insights.map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-xl border border-slate-200 bg-white/95 px-4 py-3 shadow-sm"
-                >
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{item.label}</p>
-                  <p className="career-detail-insight-value mt-1 text-sm font-semibold text-slate-900">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
+            <div className="career-detail-insights-panel fd-hero-split mt-4 sm:mt-6 hidden sm:block w-full overflow-hidden rounded-2xl border border-slate-200 p-4 shadow-sm sm:p-5 lg:p-6">
+              <div className="career-detail-insights fd-about-stats fd-hero-metrics grid w-full grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
+                {insights.map((item) => (
+                  <article
+                    key={item.label}
+                    className="career-detail-insight-card fd-stat-card fd-about-stat-card flex min-h-[92px] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm"
+                  >
+                    <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">
+                      {item.label}
+                    </p>
+                    <p className="career-detail-insight-value fd-copy fd-body-text mt-1.5 w-full text-base leading-tight sm:text-lg">
+                      {item.value}
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
 
             <p className="mt-3 sm:mt-4 text-sm text-slate-600 hidden sm:block">
