@@ -18,6 +18,12 @@ function extFromPath(assetPath) {
   return (m?.[1] || 'webp').toLowerCase();
 }
 
+/** Public URL extension — raster sources are served as WebP after copy-brand-images.mjs. */
+function publicExtFromPath(assetPath) {
+  const ext = extFromPath(assetPath);
+  return ['png', 'jpg', 'jpeg', 'jfif'].includes(ext) ? 'webp' : ext;
+}
+
 /**
  * @typedef {{ slug: string, logoSrc: string, gallerySrc: string[], cardBackground?: string, cardAccent?: string, cardFit?: 'fill' | 'contain', card?: string }} BrandAssetEntry
  */
@@ -110,7 +116,7 @@ export const BRAND_ASSET_MANIFEST = [
   {
     slug: 'kasturi-creations',
     logoSrc: 'kasturi/Logo.webp',
-    gallerySrc: ['kasturi/1.webp', 'kasturi/2.png', 'kasturi/3.png', 'kasturi/4.webp'],
+    gallerySrc: ['kasturi/1.webp', 'kasturi/2.webp', 'kasturi/3.webp', 'kasturi/4.webp'],
     cardBackground: '#1c1208',
     cardAccent: '#d97706',
     cardFit: 'fill',
@@ -136,8 +142,14 @@ export const BRAND_ASSET_MANIFEST = [
   },
   {
     slug: 'freshco-goli-soda',
-    logoSrc: 'Freshco/Logo.png',
-    gallerySrc: ['Freshco/1 (1).png', 'Freshco/1 (2).png'],
+    logoSrc: 'Freshco/Logo.webp',
+    gallerySrc: [
+      'Freshco/2.webp',
+      'Freshco/3.webp',
+      'Freshco/4.webp',
+      'Freshco/5.webp',
+      'Freshco/6.webp',
+    ],
     cardBackground: '#ffffff',
     cardAccent: '#2563eb',
     cardFit: 'fill',
@@ -150,17 +162,17 @@ export const BRAND_ASSET_MANIFEST = [
  */
 export function resolveBrandPublicPaths(entry) {
   const { slug } = entry;
-  const logoExt = extFromPath(entry.logoSrc);
+  const logoExt = publicExtFromPath(entry.logoSrc);
   const logo = brandPublicImage(slug, fileName(slug, 'franchise-logo', logoExt));
   const gallery = entry.gallerySrc.map((src, index) => {
-    const ext = extFromPath(src);
+    const ext = publicExtFromPath(src);
     return brandPublicImage(slug, fileName(slug, `franchise-gallery-${index + 1}`, ext));
   });
   const cardSrc = entry.card || entry.logoSrc;
   const card =
     cardSrc === entry.logoSrc
       ? logo
-      : brandPublicImage(slug, fileName(slug, 'franchise-card', extFromPath(cardSrc)));
+      : brandPublicImage(slug, fileName(slug, 'franchise-card', publicExtFromPath(cardSrc)));
 
   return { logo, card, gallery };
 }

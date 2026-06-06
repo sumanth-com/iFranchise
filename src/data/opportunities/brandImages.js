@@ -97,16 +97,15 @@ export function getBrandImages(slug, industry = 'Food & Beverage') {
 }
 
 /**
- * Detail-page hero gallery: real brand photos only (never listing logo or mixed Unsplash).
+ * Detail-page hero gallery: brand assets under /brands/{slug}/ only (no Unsplash).
  */
 export function resolveDetailGalleryImages(franchise) {
   if (!franchise) return [];
 
-  const industry = franchise.industry || 'Food & Beverage';
+  const logo = franchise.logo;
   const raw = franchise.slideshow?.length ? franchise.slideshow : franchise.gallery ?? [];
   let list = Array.isArray(raw) ? raw.filter(Boolean) : [];
 
-  const logo = franchise.logo;
   list = list.filter((src) => src && src !== logo);
 
   const bundled = list.filter(isBundledGallerySrc);
@@ -119,7 +118,7 @@ export function resolveDetailGalleryImages(franchise) {
     return [...new Set(remote)];
   }
 
-  return industryGallery(industry);
+  return logo ? [logo] : [];
 }
 
 /** ImageCarousel `category` prop for fallback styling. */

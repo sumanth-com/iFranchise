@@ -676,6 +676,7 @@ function FranchiseDetailsPage() {
                   images={galleryImages}
                   alt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
                   category={carouselCategory}
+                  brandAssetsOnly
                   showThumbnails={false}
                   fillParent
                   preloadAll

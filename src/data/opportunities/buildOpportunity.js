@@ -2,6 +2,7 @@ import {
   cleanText,
   deriveBadge,
   deriveLocationsLabel,
+  formatBrandDisplayName,
   extractCities,
   formatAgreementTerm,
   formatExpansionDetailLabel,
@@ -239,8 +240,9 @@ function buildExpansionPlans(raw, cities) {
  * @param {number} id
  */
 export function buildOpportunityRecord(raw, id) {
-  const brandName = cleanText(raw.franchiseName).replace(/\(2\)/i, '').trim();
-  const slug = slugifyBrand(brandName);
+  const rawName = cleanText(raw.franchiseName).replace(/\(2\)/i, '').trim();
+  const slug = slugifyBrand(rawName);
+  const brandName = formatBrandDisplayName(raw.franchiseName, slug);
   const industry = normalizeCategory(raw.category);
   const models = parseModels(raw.businessModel);
   const model = resolvePrimaryModel(slug, models);
@@ -257,9 +259,13 @@ export function buildOpportunityRecord(raw, id) {
   const cities = extractCities(raw.targetAreas, raw.mcp, raw.locationType);
   const locationGroups = getBrandLocationGroups(slug);
   const groupedCities = locationGroups ? flattenLocationLabels(locationGroups) : cities;
-  const locations = locationGroups
-    ? getLocationGroupsSummary(locationGroups)
-    : deriveLocationsLabel(raw.targetAreas, raw.locationType, cities);
+  const locationCities = groupedCities.length ? groupedCities : cities;
+  const locations = cleanText(raw.expansionDisplay)
+    || deriveLocationsLabel(
+      cleanText(raw.targetAreas) || cleanText(raw.mcp),
+      raw.locationType,
+      locationCities,
+    );
   const badge = deriveBadge({
     roi: roiValue,
     paybackMonths,
@@ -365,7 +371,8 @@ export function buildOpportunityRecord(raw, id) {
     locations: locationGroups ? flattenLocationTags(locationGroups) : buildExpansionPlans(raw, cities),
     locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : null,
     locationGroups: locationGroups ?? null,
-    expansionDisplay: formatExpansionHeroLabel({
+    expansionDisplay: cleanText(raw.expansionDisplay)
+      || formatExpansionHeroLabel({
       cities: groupedCities.length ? groupedCities : cities,
       locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : '',
       targetAreas: raw.targetAreas,

@@ -108,7 +108,7 @@ export const RAW_BRANDS = [
     investmentMax: '₹45 Lakhs+',
     sqFt: '300Sq.ft - 1200+ Sq.ft',
     currency: 'INR',
-    businessModel: 'FICO Hybrid Model',
+    businessModel: 'FICO, FOFO',
     locationType: 'High Streets / Malls / Delivery Markets',
     roiPercentage: '',
     paybackPeriod: '18 to 30 Months',
@@ -247,6 +247,7 @@ export const RAW_BRANDS = [
     returns: 'Avg monthly profit ₹3 Lakhs after all expenses',
     targetAreas:
       'Pan-India across 21 states; Sri Lanka, UAE, Nepal, Malaysia, Bangladesh',
+    expansionDisplay: 'Pan-India across 21 states',
     agreementTerm: 'On request',
     lockInPeriod: '--',
     whyChoose: [

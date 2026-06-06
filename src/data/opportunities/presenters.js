@@ -83,11 +83,12 @@ function rankFeaturedOpportunities() {
 /** Curated featured brands — home row + opportunities page default order. */
 export const FEATURED_BRAND_SLUGS = [
   'odette',
+  'freshco-goli-soda',
   'original-burger-co',
-  '10-downing-street',
   'bigguys',
   'biggies-burger',
   'franco',
+  '10-downing-street',
 ];
 
 /** Second-row curated brands on homepage. */

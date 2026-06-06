@@ -21,6 +21,7 @@ function loadOptionalPlugins() {
         jpg: { quality: 86 },
         webp: { quality: 86 },
         avif: { quality: 62 },
+        exclude: [/brands\//, /brochures\//],
       }),
     )
   } catch {

@@ -47,6 +47,13 @@ function markImageLoaded(setLoaded, idx) {
   });
 }
 
+function alternateBundledSrc(src) {
+  if (!isBundledSrc(src)) return null;
+  if (/\.webp$/i.test(src)) return src.replace(/\.webp$/i, '.png');
+  if (/\.(png|jpe?g)$/i.test(src)) return src.replace(/\.(png|jpe?g)$/i, '.webp');
+  return null;
+}
+
 export default function ImageCarousel({
   images,
   alt,
@@ -59,14 +66,18 @@ export default function ImageCarousel({
   galleryBackground,
   /** Preload every slide (brand detail galleries) so prev/next always show real photos */
   preloadAll = false,
+  /** When true, never substitute Unsplash/category stock photos on missing or failed loads */
+  brandAssetsOnly = false,
   imageSizes = '(max-width: 1023px) 100vw, 42vw',
 }) {
   const safeImages = useMemo(() => {
     const list = (images || []).filter(Boolean);
     const unique = Array.from(new Set(list));
+    if (unique.length) return unique;
+    if (brandAssetsOnly) return [];
     const fallback = CATEGORY_FALLBACKS[category] || CATEGORY_FALLBACKS.default;
-    return unique.length ? unique : [fallback];
-  }, [images, category]);
+    return [fallback];
+  }, [images, category, brandAssetsOnly]);
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [loaded, setLoaded] = useState(() => safeImages.map(() => false));
@@ -198,7 +209,17 @@ export default function ImageCarousel({
             onError={(e) => {
               const img = e.currentTarget;
               const src = safeImages[idx];
-              if (!isBundledSrc(src)) {
+
+              if (isBundledSrc(src) && img.dataset.extFallback !== '1') {
+                const alternate = alternateBundledSrc(src);
+                if (alternate && img.src !== alternate) {
+                  img.dataset.extFallback = '1';
+                  img.src = alternate;
+                  return;
+                }
+              }
+
+              if (!brandAssetsOnly) {
                 const fallback = fallbackForSlide(category, idx);
                 if (img.dataset.fallbackTried !== '1' && img.src !== fallback) {
                   img.dataset.fallbackTried = '1';
@@ -206,6 +227,7 @@ export default function ImageCarousel({
                   return;
                 }
               }
+
               img.onerror = null;
               markImageLoaded(setLoaded, idx);
             }}

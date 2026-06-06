@@ -32,6 +32,24 @@ const INDIAN_CITY_ALIASES = {
   guwahati: 'Guwahati',
 };
 
+export function formatBrandDisplayName(name, slug = '') {
+  const key = slug?.toLowerCase?.() || '';
+  if (key === 'original-burger-co') return 'Original Burger CO.';
+
+  const cleaned = cleanText(name).replace(/\(2\)/i, '').trim();
+  if (!cleaned) return '';
+
+  return cleaned
+    .split(/\s+/)
+    .map((word) => {
+      if (/^co\.?$/i.test(word)) return 'CO.';
+      if (/^\d+$/.test(word)) return word;
+      if (word.length <= 2 && /^[A-Z.&]+$/.test(word)) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(' ');
+}
+
 export function slugifyBrand(name = '') {
   return name
     .toLowerCase()
@@ -108,8 +126,9 @@ export function normalizeCategory(raw = '') {
   return 'Food & Beverage';
 }
 
-export function parseModels(raw = '') {
-  const text = cleanText(raw).toUpperCase();
+const MODEL_TOKENS = ['FOFO', 'FICO', 'FOCO', 'COFO', 'COCO', 'FIFO'];
+
+function detectModels(text) {
   const found = new Set();
   if (/FOFO|FRANCHISE\s+OWNED.*FRANCHISE\s+OPERATED|UNIT\s+FRANCHISE/.test(text)) found.add('FOFO');
   if (/FICO|HYBRID/.test(text)) found.add('FICO');
@@ -118,7 +137,27 @@ export function parseModels(raw = '') {
   if (/COCO/.test(text)) found.add('COCO');
   if (/FIFO/.test(text)) found.add('FIFO');
   if (!found.size) found.add('FOFO');
-  return [...found];
+  return found;
+}
+
+export function parseModels(raw = '') {
+  const text = cleanText(raw).toUpperCase();
+  const found = detectModels(text);
+  const ordered = [];
+
+  for (const segment of text.split(/[,/|]+|\band\b/gi)) {
+    for (const model of MODEL_TOKENS) {
+      if (segment.includes(model) && found.has(model) && !ordered.includes(model)) {
+        ordered.push(model);
+      }
+    }
+  }
+
+  for (const model of MODEL_TOKENS) {
+    if (found.has(model) && !ordered.includes(model)) ordered.push(model);
+  }
+
+  return ordered;
 }
 
 export function primaryModel(models) {
@@ -129,6 +168,8 @@ export function primaryModel(models) {
 /** Card/detail primary model when brand supports multiple formats. */
 const PRIMARY_MODEL_BY_SLUG = {
   'original-burger-co': 'FICO',
+  'bigguys': 'FICO',
+  'brand-avenue': 'FOFO',
 };
 
 export function resolvePrimaryModel(slug, models) {
