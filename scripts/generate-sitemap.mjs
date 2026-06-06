@@ -6,6 +6,7 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RAW_BRANDS } from '../src/data/opportunities/rawBrands.js';
+import { getAllLocationPaths } from '../src/data/opportunityLocations.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -54,6 +55,8 @@ const FRANCHISE_PAGES = RAW_BRANDS.map((raw) => {
   return { slug, path: `/franchise/${slug}` };
 }).filter(({ slug }) => slug);
 
+const LOCATION_PAGES = getAllLocationPaths().map((path) => ({ path }));
+
 const blogDataSource = readFileSync(join(root, 'src/components/blogData.js'), 'utf8');
 const BLOG_PAGES = [...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => ({
   path: `/blogs/${match[1]}`,
@@ -83,6 +86,11 @@ const entries = [
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.85',
+  })),
+  ...LOCATION_PAGES.map(({ path }) => ({
+    loc: `${siteUrl}${path}`,
+    changefreq: 'weekly',
+    priority: '0.9',
   })),
   ...BLOG_PAGES.map(({ path }) => ({
     loc: `${siteUrl}${path}`,
@@ -117,5 +125,5 @@ mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
 console.log(
-  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${BLOG_PAGES.length} blog + ${CAREER_PAGES.length} careers) to public/sitemap.xml (${siteUrl})`,
+  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${LOCATION_PAGES.length} location + ${BLOG_PAGES.length} blog + ${CAREER_PAGES.length} careers) to public/sitemap.xml (${siteUrl})`,
 );

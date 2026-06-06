@@ -52,6 +52,26 @@
       "source": "/terms",
       "destination": "/terms-and-conditions",
       "permanent": true
+    },
+    {
+      "source": "/location/bangalore",
+      "destination": "/location/bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/location/bengalore",
+      "destination": "/location/bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/location/delhi",
+      "destination": "/location/delhi-ncr",
+      "permanent": true
+    },
+    {
+      "source": "/location/new-delhi",
+      "destination": "/location/delhi-ncr",
+      "permanent": true
     }
   ],
   "rewrites": [

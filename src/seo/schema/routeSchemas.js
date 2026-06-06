@@ -1,3 +1,4 @@
+import { parseLocationPathname } from '../../data/opportunityLocations.js';
 import { getFranchiseDetailById } from '../../data/franchiseData.js';
 import { getOpenRoles } from '../../components/careersData.jsx';
 import {
@@ -104,10 +105,19 @@ export function buildSchemasForRoute(seo, context = {}) {
   }
 
   if (logicalPathname === '/franchise-opportunities') {
+    const locationCity = parseLocationPathname(seo.canonicalPath || '');
     const { collection, itemList } = buildFranchiseOpportunitiesListSchemas(canonicalUrl);
     pushSchema(schemas, 'collection', collection);
     pushSchema(schemas, 'itemlist', itemList);
-    addBreadcrumbs(schemas, seo);
+    if (locationCity) {
+      addBreadcrumbs(schemas, seo, [
+        { name: 'Home', path: '/' },
+        { name: 'Franchise Opportunities', path: '/franchise-opportunities' },
+        { name: locationCity, path: seo.canonicalPath },
+      ]);
+    } else {
+      addBreadcrumbs(schemas, seo);
+    }
     return schemas;
   }
 

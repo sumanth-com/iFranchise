@@ -17,6 +17,7 @@ const BROCHURES = [
   ['lassi-n-cafe.pdf', 'Lassi N Cafe/Lassi n Cafe.pdf'],
   ['fusion-pizza-big-burger.pdf', 'Fusion pizza and Big burger/TFP & BBC franchise.pdf'],
   ['10-downing-street.pdf', '10 Downing Street/10 Downing Street.pdf'],
+  ['freshco-goli-soda.pdf', 'Freshco/Freshco Brochure.pdf'],
 ];
 
 await mkdir(OUT, { recursive: true });

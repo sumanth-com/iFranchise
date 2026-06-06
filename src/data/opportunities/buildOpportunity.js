@@ -76,12 +76,21 @@ function buildInvestorInvestmentSummary(raw, _investmentLabel, franchiseFee, ret
   const returnsInfo = !isPlaceholder(returns)
     ? formatReturnsDisplay(returns)
     : { display: 'On request', full: '' };
-  return [
+  const base = [
     slot('Franchise fee', !isPlaceholder(franchiseFee) ? formatMoneyDisplay(franchiseFee) : '', 'On request'),
     slot('Space (Sq.ft)', !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : '', 'As per format'),
     slot('Returns', returnsInfo.display, 'On request', returnsInfo.full),
     slot('Payback', paybackLabel || '', 'On request'),
   ];
+  const extras = Array.isArray(raw.investorHighlights)
+    ? raw.investorHighlights
+        .map((item) =>
+          slot(cleanText(item.label), cleanText(item.value), 'On request', cleanText(item.detail)),
+        )
+        .filter((item) => item.label && item.value)
+    : [];
+  const omit = new Set((raw.investorPanelOmit || []).map((label) => cleanText(label)));
+  return [...base, ...extras].filter((item) => !omit.has(item.label));
 }
 
 function buildAboutInsights(raw, brandName, summary) {
@@ -322,6 +331,7 @@ export function buildOpportunityRecord(raw, id) {
     brochureUrl: getBrochureUrlByFranchiseSlug(slug) || cleanText(raw.websiteBrochureLink) || '',
     keyInfo: {
       investment,
+      investmentNote: cleanText(raw.investmentNote) || '',
       space: spaceLabel,
       roi,
       payback: paybackLabel,
@@ -385,7 +395,13 @@ export function buildOpportunityRecord(raw, id) {
       name,
       description: MODEL_DESCRIPTIONS[name] || `${name} partnership format.`,
     })),
-    whyChoose: buildWhyChoose(raw, industry, roiValue, outlets, models),
+    whyChoose:
+      Array.isArray(raw.whyChoose) && raw.whyChoose.length
+        ? raw.whyChoose.map((item) => ({
+            title: cleanText(item.title),
+            description: cleanText(item.description),
+          }))
+        : buildWhyChoose(raw, industry, roiValue, outlets, models),
     franchiseStructure: buildFranchiseStructure(models, raw),
     operationsReturns: {
       roi: roiValue != null ? `${roiValue}% indicative annual return` : cleanText(raw.returns) || 'Shared on enquiry',

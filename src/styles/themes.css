@@ -7740,6 +7740,10 @@ html[data-theme='light'] .franchise-details-page .fd-about-section .fd-dual-pane
   max-width: 100%;
 }
 
+.franchise-details-page .fd-about-section--compact .fd-dual-row {
+  align-items: start;
+}
+
 .franchise-details-page .fd-about-benefits-list li {
   padding-left: 0;
 }
@@ -7839,6 +7843,9 @@ html[data-theme='light'] .franchise-details-page .fd-body-text {
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-stats .fd-about-stat-card p:first-child,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-metrics .fd-about-stat-card p:first-child,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-stat-card .text-slate-500 {
+  color: rgba(196, 181, 253, 0.72) !important;
+}
 html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-grid .fd-about-stat-card p,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-grid .fd-about-stat-card p:first-child {
   color: #ffffff !important;
@@ -8272,7 +8279,26 @@ html[data-theme='light'] .franchise-opportunities-page .fo-filter-sheet__close {
 
 html[data-theme='light'] .franchise-opportunities-page .fo-filter-sheet__clear {
   border-color: #e2e8f0 !important;
-  color: #475569 !important;
+  color: #000000 !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-clear-btn {
+  border-color: #cbd5e1 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: #f8fafc !important;
+}
+
+html[data-theme='light'] .franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-clear-btn:hover {
+  border-color: #94a3b8 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: #f1f5f9 !important;
+}
+
+html[data-theme='dark'] .franchise-opportunities-page .fo-filter-toolbar--desktop .fo-filter-clear-btn {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-theme='light'] .franchise-opportunities-page .fo-filter-label {

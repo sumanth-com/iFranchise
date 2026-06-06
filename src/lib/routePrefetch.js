@@ -1,5 +1,6 @@
 import { ROUTES } from './routes.js';
 import { franchiseSlugToId } from '../data/franchiseData';
+import { parseLocationPathname } from '../data/opportunityLocations.js';
 
 /** Mirrors App.jsx lazy() imports for idle / link-hover prefetch. */
 const ROUTE_LOADERS = {
@@ -29,6 +30,9 @@ export function logicalPathFromPathname(pathname) {
   if (pathname === '/franchise') return '/franchise-details';
   if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) {
     return '/franchise-opportunities';
+  }
+  if (pathname.startsWith(`${ROUTES.FRANCHISE_LOCATION}/`)) {
+    return parseLocationPathname(pathname) ? '/franchise-opportunities' : '/404';
   }
   if (pathname === '/privacy-policy') return '/privacy-policy';
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';

@@ -134,6 +134,14 @@ export const BRAND_ASSET_MANIFEST = [
     cardAccent: '#ca8a04',
     cardFit: 'fill',
   },
+  {
+    slug: 'freshco-goli-soda',
+    logoSrc: 'Freshco/Logo.png',
+    gallerySrc: ['Freshco/1 (1).png', 'Freshco/1 (2).png'],
+    cardBackground: '#ffffff',
+    cardAccent: '#2563eb',
+    cardFit: 'fill',
+  },
 ];
 
 /**

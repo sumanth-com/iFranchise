@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { franchiseOpportunities, pinFeaturedOpportunitiesFirst } from '../data/franchiseData';
+import { INDIAN_CITIES, getLocationPath, parseLocationPathname } from '../data/opportunityLocations';
+import { NAVIGATE_EVENT, navigateTo } from '../lib/navigation';
 import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
 import {
   investmentInrRangeMatchesOpportunity,
@@ -18,10 +20,6 @@ const opportunities = franchiseOpportunities;
 
 const INDUSTRY_OPTIONS = ['Food & Beverage', 'Retail', 'Health & Wellness', 'Home Services', 'Technology', 'Education', 'Entertainment'];
 const MODEL_OPTIONS = ['FOCO', 'FOFO', 'FICO'];
-const INDIAN_CITIES = [
-  'Mumbai', 'Delhi NCR', 'Bengaluru', 'Hyderabad', 'Chennai',
-  'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Chandigarh',
-];
 
 const parseInvestmentValue = (investmentLabel) => {
   const cleaned = investmentLabel.replace(/[$,]/g, '');
@@ -177,10 +175,15 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   );
 }
 
-function FilterFields({ filters, setFilters, onChange, variant = 'stacked' }) {
+function FilterFields({ filters, setFilters, onChange, onLocationChange, variant = 'stacked' }) {
   const update = (patch) => {
     setFilters((prev) => ({ ...prev, ...patch }));
     onChange?.();
+  };
+
+  const handleLocationChange = (location) => {
+    update({ location });
+    onLocationChange?.(location);
   };
 
   const isToolbar = variant === 'toolbar';
@@ -236,7 +239,7 @@ function FilterFields({ filters, setFilters, onChange, variant = 'stacked' }) {
         compact={isToolbar}
         label="Location"
         value={filters.location}
-        onChange={(location) => update({ location })}
+        onChange={handleLocationChange}
       >
         <option value="">All locations</option>
         {INDIAN_CITIES.map((city) => (
@@ -274,6 +277,7 @@ function MobileFilterBar({
   onSort,
   onClearAll,
   onFilterChange,
+  onLocationChange,
   activeFilterCount,
   resultCount,
 }) {
@@ -418,6 +422,7 @@ function MobileFilterBar({
                   filters={filters}
                   setFilters={setFilters}
                   onChange={onFilterChange}
+                  onLocationChange={onLocationChange}
                 />
               </div>
 
@@ -444,6 +449,7 @@ function FilterToolbar({
   onSort,
   onClearAll,
   onFilterChange,
+  onLocationChange,
   activeFilterCount,
   resultCount,
 }) {
@@ -456,6 +462,7 @@ function FilterToolbar({
         onSort={onSort}
         onClearAll={onClearAll}
         onFilterChange={onFilterChange}
+        onLocationChange={onLocationChange}
         activeFilterCount={activeFilterCount}
         resultCount={resultCount}
       />
@@ -467,6 +474,7 @@ function FilterToolbar({
             filters={filters}
             setFilters={setFilters}
             onChange={onFilterChange}
+            onLocationChange={onLocationChange}
           />
           <div className="fo-filter-toolbar__actions flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
             <div className="fo-filter-field min-w-[9.5rem] flex-1 sm:flex-none sm:w-40 lg:w-44">
@@ -497,7 +505,7 @@ function FilterToolbar({
               <button
                 type="button"
                 onClick={onClearAll}
-                className="fo-filter-clear-btn w-full rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition-colors hover:border-violet-300/60 sm:w-auto"
+                className="fo-filter-clear-btn w-full rounded-lg border border-violet-400/40 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-violet-300/60 sm:w-auto"
               >
                 Clear All
               </button>
@@ -509,7 +517,7 @@ function FilterToolbar({
   );
 }
 
-function ActiveFilterChips({ filters, setFilters }) {
+function ActiveFilterChips({ filters, setFilters, onLocationClear }) {
   const hasFilters = Boolean(
     filters.industry || filters.investment || filters.model || filters.location
   );
@@ -544,7 +552,14 @@ function ActiveFilterChips({ filters, setFilters }) {
       {filters.location && (
         <span className="inline-flex items-center gap-1 rounded-full border border-violet-400/40 bg-violet-500/20 px-3 py-1 text-sm text-white">
           {filters.location}
-          <button type="button" onClick={() => setFilters({ ...filters, location: '' })} className="ml-1">
+          <button
+            type="button"
+            onClick={() => {
+              setFilters({ ...filters, location: '' });
+              onLocationClear?.();
+            }}
+            className="ml-1"
+          >
             ×
           </button>
         </span>
@@ -558,11 +573,15 @@ function FranchiseOpportunitiesPage() {
   const [sortBy, setSortBy] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [filters, setFilters] = useState({
-    industry: '',
-    investment: '',
-    model: '',
-    location: '',
+  const [filters, setFilters] = useState(() => {
+    const cityFromUrl =
+      typeof window !== 'undefined' ? parseLocationPathname(window.location.pathname) : null;
+    return {
+      industry: '',
+      investment: '',
+      model: '',
+      location: cityFromUrl || '',
+    };
   });
 
   const {
@@ -584,6 +603,32 @@ function FranchiseOpportunitiesPage() {
   );
   
   const itemsPerPage = 6;
+
+  const syncUrlForLocation = (location) => {
+    if (typeof window === 'undefined') return;
+    const currentPath = window.location.pathname;
+    if (location) {
+      const targetPath = getLocationPath(location);
+      if (targetPath && currentPath !== targetPath) {
+        navigateTo(targetPath, { replace: currentPath.startsWith('/location/') });
+      }
+      return;
+    }
+    if (currentPath.startsWith('/location/')) {
+      navigateTo('/franchise-opportunities', { replace: true });
+    }
+  };
+
+  const handleLocationChange = (location) => {
+    syncUrlForLocation(location);
+    setCurrentPage(1);
+  };
+
+  const handleLocationClear = () => {
+    syncUrlForLocation('');
+    setCurrentPage(1);
+  };
+
   const clearAllFilters = () => {
     clearNavbarFilters();
     setFilters({
@@ -592,7 +637,34 @@ function FranchiseOpportunitiesPage() {
       model: '',
       location: '',
     });
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/location/')) {
+      navigateTo('/franchise-opportunities', { replace: true });
+    }
   };
+
+  useEffect(() => {
+    const syncFiltersFromUrl = () => {
+      const cityFromUrl = parseLocationPathname(window.location.pathname);
+      const onBasePage = window.location.pathname === '/franchise-opportunities';
+      setFilters((prev) => {
+        if (cityFromUrl) {
+          return prev.location === cityFromUrl ? prev : { ...prev, location: cityFromUrl };
+        }
+        if (onBasePage && prev.location) {
+          return { ...prev, location: '' };
+        }
+        return prev;
+      });
+    };
+
+    syncFiltersFromUrl();
+    window.addEventListener('popstate', syncFiltersFromUrl);
+    window.addEventListener(NAVIGATE_EVENT, syncFiltersFromUrl);
+    return () => {
+      window.removeEventListener('popstate', syncFiltersFromUrl);
+      window.removeEventListener(NAVIGATE_EVENT, syncFiltersFromUrl);
+    };
+  }, []);
 
   const handleSort = (e) => {
     setSortBy(e.target.value);
@@ -661,7 +733,7 @@ function FranchiseOpportunitiesPage() {
   return (
     <main className="franchise-opportunities-page relative z-10 min-h-screen bg-transparent text-white">
       <div className={`fo-page-shell relative ${FRANCHISE_OPPORTUNITIES_SHELL} pb-10 pt-8 lg:pb-12 lg:pt-10`}>
-        <FranchiseOpportunitiesHeader />
+        <FranchiseOpportunitiesHeader cityName={filters.location || undefined} />
 
         <div className="fo-toolbar-sticky sticky top-16 z-40 mb-4 pb-2 pt-1">
           <FilterToolbar
@@ -674,11 +746,16 @@ function FranchiseOpportunitiesPage() {
               setCurrentPage(1);
             }}
             onFilterChange={() => setCurrentPage(1)}
+            onLocationChange={handleLocationChange}
             activeFilterCount={countActiveFilters(filters, navbarFilterSnapshot)}
             resultCount={filteredAndSortedOpportunities.length}
           />
 
-          <ActiveFilterChips filters={filters} setFilters={setFilters} />
+          <ActiveFilterChips
+            filters={filters}
+            setFilters={setFilters}
+            onLocationClear={handleLocationClear}
+          />
         </div>
 
         <div className="fo-cards-grid mb-8 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:gap-7 xl:grid-cols-3 xl:gap-8">
@@ -690,7 +767,9 @@ function FranchiseOpportunitiesPage() {
             <div className="fo-empty-state col-span-full flex flex-col items-center justify-center rounded-xl border py-16 px-6 text-center">
               <p className="text-base font-semibold text-white">No franchise opportunities found</p>
               <p className="mt-2 max-w-md text-sm text-white">
-                Adjust filters above, use the Franchise Opportunities menu in the navbar, or choose Clear All.
+                {filters.location
+                  ? `No listings match ${filters.location} with the current filters. Try adjusting industry, investment, or model—or choose Clear All.`
+                  : 'Adjust filters above, use the Franchise Opportunities menu in the navbar, or choose Clear All.'}
               </p>
             </div>
           ) : (

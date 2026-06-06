@@ -6,6 +6,10 @@
 import { prefetchRoute } from './routePrefetch';
 import { canonicalizeFranchiseUrl } from './franchisePaths.js';
 import { franchiseSlugToId } from '../data/franchiseData';
+import {
+  getCanonicalLocationPath,
+  parseLocationPathname,
+} from '../data/opportunityLocations.js';
 import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
 
 export const NAVIGATE_EVENT = 'ifr:navigate';
@@ -37,7 +41,13 @@ export function canonicalizePublicUrl() {
     const slug = pathname.slice('/blog/'.length);
     if (slug) {
       history.replaceState(history.state, '', `${ROUTES.BLOG}/${slug}${search}${hash}`);
+      return;
     }
+  }
+
+  const canonicalLocation = getCanonicalLocationPath(pathname);
+  if (canonicalLocation && pathname !== canonicalLocation) {
+    history.replaceState(history.state, '', `${canonicalLocation}${search}${hash}`);
   }
 }
 
@@ -49,6 +59,9 @@ export function getLogicalPathname() {
   if (pathname === '/franchise') return '/franchise-details';
   if (['/featured-opportunities', '/opportunities', '/franchise-opportunities'].includes(pathname)) {
     return '/franchise-opportunities';
+  }
+  if (pathname.startsWith(`${ROUTES.FRANCHISE_LOCATION}/`)) {
+    return parseLocationPathname(pathname) ? '/franchise-opportunities' : '/404';
   }
   if (pathname === '/privacy-policy') return '/privacy-policy';
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';

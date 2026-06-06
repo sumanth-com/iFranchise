@@ -8,6 +8,8 @@ export const ROUTES = {
   CONTACT: '/contact-us',
   SERVICES: '/services',
   FRANCHISE_OPPORTUNITIES: '/franchise-opportunities',
+  /** Prefix for city-filtered listing pages, e.g. /location/bengaluru */
+  FRANCHISE_LOCATION: '/location',
   LIST_YOUR_BRAND: '/list-your-brand',
   BLOG: '/blogs',
   CAREERS: '/careers',

@@ -226,4 +226,43 @@ export const RAW_BRANDS = [
     agreementTerm: '5 Years',
     lockInPeriod: '2 Years',
   },
+  {
+    franchiseName: 'Freshco Goli Soda',
+    category: 'F&B / Beverage Manufacturing',
+    tagline: '207+ factories · 21 states · 5+ countries',
+    shortDescription:
+      'India’s fastest-growing beverage manufacturing franchise — from heritage Goli Soda roots to 207+ factories, 100+ patented flavours, and 10+ products with pan-India and international scale.',
+    investmentMin: '₹12.9 Lakhs',
+    investmentMax: '',
+    investmentDisplay: '₹12.9 Lakhs',
+    investmentNote: '+ 18% GST & transportation extra',
+    sqFt: 'Min 600 Sq.ft',
+    currency: 'INR',
+    businessModel: 'Unit Franchise',
+    locationType: 'Manufacturing unit with water, power & local supply logistics',
+    roiPercentage: '85%',
+    paybackPeriod: '4 Months',
+    totalOutlets: '207+ Factories',
+    franchiseFee: '₹3.9 Lakhs',
+    returns: 'Avg monthly profit ₹3 Lakhs after all expenses',
+    targetAreas:
+      'Pan-India across 21 states; Sri Lanka, UAE, Nepal, Malaysia, Bangladesh',
+    agreementTerm: 'On request',
+    lockInPeriod: '--',
+    whyChoose: [
+      {
+        title: 'Proven scale',
+        description: '207+ factories, 100+ patented flavours, and 10+ high-demand beverage products.',
+      },
+      {
+        title: 'Unit economics',
+        description: '85% gross margin per bottle with ~₹3L monthly profit potential and 4-month payback.',
+      },
+      {
+        title: 'Global footprint',
+        description: '21 Indian states plus Sri Lanka, UAE, Nepal, Malaysia & Bangladesh.',
+      },
+    ],
+    investorPanelOmit: ['Space (Sq.ft)'],
+  },
 ];

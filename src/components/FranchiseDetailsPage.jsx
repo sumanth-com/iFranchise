@@ -48,6 +48,28 @@ function formatMetricDisplay(key, value) {
     .trim();
 }
 
+function StatCardValue({ value, note, multiline = false }) {
+  const spaceMultiline = multiline && String(value).includes('\n');
+  return (
+    <>
+      <p
+        className={`fd-copy fd-body-text mt-1.5 w-full leading-tight ${
+          spaceMultiline
+            ? 'whitespace-pre-line text-sm leading-snug sm:text-base'
+            : 'text-base font-medium sm:text-lg'
+        }`}
+      >
+        {value}
+      </p>
+      {note ? (
+        <p className="fd-copy mt-1 w-full text-[0.6875rem] font-semibold leading-snug text-slate-500">
+          {note}
+        </p>
+      ) : null}
+    </>
+  );
+}
+
 /** Same stat cards as About section (right column on detail page). */
 function FranchiseStatGrid({ franchise, className = '' }) {
   const agreementItems = franchise?.agreementDetails || [];
@@ -58,7 +80,7 @@ function FranchiseStatGrid({ franchise, className = '' }) {
         const rawValue = item.key === 'lockIn' ? lockInValue : franchise.keyInfo[item.key];
         const value = formatMetricDisplay(item.key, rawValue);
         const isSpace = item.key === 'space';
-        const spaceMultiline = isSpace && String(value).includes('\n');
+        const note = item.key === 'investment' ? franchise.keyInfo.investmentNote : '';
         if (item.key === 'lockIn' && !value) return null;
         return (
           <article
@@ -68,15 +90,7 @@ function FranchiseStatGrid({ franchise, className = '' }) {
             <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">
               {item.label}
             </p>
-            <p
-              className={`fd-copy fd-body-text mt-1.5 w-full leading-tight ${
-                spaceMultiline
-                  ? 'whitespace-pre-line text-sm leading-snug sm:text-base'
-                  : 'text-base sm:text-lg'
-              }`}
-            >
-              {value}
-            </p>
+            <StatCardValue value={value} note={note} multiline={isSpace} />
           </article>
         );
       })}
@@ -230,8 +244,8 @@ function ReturnsCardValue({ value, detail }) {
   );
 }
 
-function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [], limit = 4 }) {
-  const displayItems = (items || []).slice(0, limit);
+function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [] }) {
+  const displayItems = [...(items || [])];
   const structure = (franchiseStructure || []).map((s) => String(s).trim()).filter(Boolean);
   const hasMaster = structure.some((s) => s.toLowerCase().includes('master'));
   const hasUnit = structure.some((s) => s.toLowerCase().includes('unit'));
@@ -241,22 +255,32 @@ function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [],
     (models || []).length > 1 ? 'Multi-Model' : null,
   ].filter(Boolean);
 
+  if (typeLabels.length) {
+    displayItems.push({
+      label: 'Franchise types',
+      value: typeLabels.join(' · '),
+      detail: '',
+    });
+  }
+
   return (
-    <div className="fd-invest-financials flex min-h-0 flex-1 flex-col">
-      <p className="fd-invest-intro fd-copy text-xs leading-relaxed sm:text-sm">
+    <div className="fd-invest-financials flex min-h-0 flex-col gap-3">
+      <p className="fd-invest-intro fd-copy shrink-0 text-xs leading-relaxed sm:text-sm">
         Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
       </p>
-      <div className="fd-invest-grid mt-4 grid flex-1 grid-cols-2 gap-3 sm:gap-3.5">
+      <div className="fd-invest-grid grid grid-cols-2 gap-3 sm:gap-3.5">
         {displayItems.map((item) => (
           <article
             key={item.label}
-            className={`fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.75rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-4 text-center shadow-sm sm:min-h-[7.25rem] sm:px-3.5${
+            className={`fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.25rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:min-h-[6.75rem] sm:px-3.5 sm:py-4${
               item.label === 'Returns' ? ' fd-invest-card--returns' : ''
             }`}
           >
             <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
             {item.label === 'Returns' ? (
               <ReturnsCardValue value={item.value} detail={item.detail} />
+            ) : item.detail ? (
+              <StatCardValue value={item.value} note={item.detail} />
             ) : (
               <p
                 className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug"
@@ -268,12 +292,6 @@ function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [],
           </article>
         ))}
       </div>
-      {typeLabels.length ? (
-        <div className="mt-4 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-center sm:px-4">
-          <p className="fd-copy fd-field-label text-[0.65rem] tracking-[0.12em]">FRANCHISE TYPES</p>
-          <p className="fd-copy fd-body-text mt-1 text-sm font-medium text-slate-700">{typeLabels.join(' · ')}</p>
-        </div>
-      ) : null}
     </div>
   );
 }
@@ -706,20 +724,24 @@ function FranchiseDetailsPage() {
 
           {isOverviewTab && (
           <>
-          <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
+          <section
+            className={`fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7${
+              selectedFranchise.slug === 'freshco-goli-soda' ? ' fd-about-section--compact' : ''
+            }`}
+          >
             <DualSectionRow>
               <DualSectionPanel title={`About ${selectedFranchise.name}`}>
                 <div className="fd-about-panel-body flex min-h-0 flex-1 flex-col gap-5">
-                  {selectedFranchise.tagline && (
+                  {selectedFranchise.tagline ? (
                     <p className="fd-about-tagline fd-copy text-sm font-semibold leading-snug sm:text-base">
                       {selectedFranchise.tagline}
                     </p>
-                  )}
-                  {selectedFranchise.overview && (
+                  ) : null}
+                  {selectedFranchise.overview ? (
                     <p className="fd-about-description fd-copy text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-7">
                       {selectedFranchise.overview}
                     </p>
-                  )}
+                  ) : null}
                   <div className="fd-about-benefits">
                     <p className="fd-about-block-title fd-field-label text-[0.65rem] tracking-[0.12em]">
                       What this means for you

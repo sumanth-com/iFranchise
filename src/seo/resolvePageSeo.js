@@ -1,6 +1,7 @@
 import { franchiseOpportunities, franchiseSlugToId } from '../data/franchiseData';
 import { getBlogBySlug } from '../components/blogData';
 import { getRoleById, getRoleIdFromPathname } from '../components/careersData';
+import { getLocationPath, parseLocationPathname } from '../data/opportunityLocations.js';
 import { STATIC_PAGE_SEO } from './staticPages';
 import { absoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
 import { DEFAULT_META_KEYWORDS } from './keywords.js';
@@ -141,6 +142,27 @@ export function resolvePageSeo(logicalPathname, location = {}) {
     } else {
       entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
       canonicalPath = pathname;
+    }
+  }
+
+  if (logicalPathname === '/franchise-opportunities') {
+    const locationCity = parseLocationPathname(pathname);
+    if (locationCity) {
+      canonicalPath = getLocationPath(locationCity);
+      const cityLower = locationCity.toLowerCase();
+      const description = formatDescription(
+        `Browse verified franchise opportunities in ${locationCity}. Compare investment in INR, business models, ROI, payback, and expansion-ready brands across food, retail, and services on iFranchise.`,
+      );
+      entry = normalizeSeoEntry({
+        title: formatTitle(`Franchise Opportunities in ${locationCity} | iFranchise`),
+        description,
+        keywords: `franchise opportunities in ${cityLower}, franchise business in ${cityLower}, best franchise in ${cityLower}, franchise investment ${cityLower}, ${DEFAULT_META_KEYWORDS}`,
+        canonicalPath,
+        ogTitle: formatTitle(`Franchise Opportunities in ${locationCity} | iFranchise`),
+        ogDescription: description,
+        ogType: 'website',
+        robots: 'index, follow',
+      });
     }
   }
 
