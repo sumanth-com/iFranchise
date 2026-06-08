@@ -14,6 +14,7 @@ export const BROCHURE_PDF_BY_SLUG = {
   'lassi-n-cafe': '/brochures/lassi-n-cafe.pdf',
   'fusion-pizza-big-burger': '/brochures/fusion-pizza-big-burger.pdf',
   '10-downing-street': '/brochures/10-downing-street.pdf',
+  'kasturi-creations': '/brochures/kasturi-creations.pdf',
   'freshco-goli-soda': '/brochures/freshco-goli-soda.pdf',
 };
 
