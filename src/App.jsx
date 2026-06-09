@@ -75,27 +75,13 @@ function App() {
   const [showPreFooter, setShowPreFooter] = useState(false);
 
   useEffect(() => {
-    if (!lowPowerDevice) {
-      setAssistantMounted(true);
-      return undefined;
-    }
     if (!assistantEligible || !scrolledPastHero) {
       setAssistantMounted(false);
       return undefined;
     }
-    let idleId;
-    let timeoutId;
-    const mount = () => setAssistantMounted(true);
-    if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(mount, { timeout: 4000 });
-    } else {
-      timeoutId = window.setTimeout(mount, 1500);
-    }
-    return () => {
-      if (idleId != null) window.cancelIdleCallback(idleId);
-      if (timeoutId) window.clearTimeout(timeoutId);
-    };
-  }, [lowPowerDevice, assistantEligible, scrolledPastHero, pathname]);
+    setAssistantMounted(true);
+    return undefined;
+  }, [assistantEligible, scrolledPastHero, pathname]);
 
   const showExpansionAssistant = assistantEligible && scrolledPastHero && assistantMounted;
 

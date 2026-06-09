@@ -52,10 +52,7 @@ function StepCard({ step, index, total, reduceMotion, compact = false }) {
         transition={{ duration: 0.4, delay, ease: EASE }}
         className="fd-gs-card fd-gs-card--compact group flex h-full min-h-[8.5rem] flex-col rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 transition-all duration-300 hover:border-violet-200 hover:bg-white hover:shadow-[0_6px_20px_rgba(15,23,42,0.08)]"
       >
-        <div className="mb-3 flex items-start justify-between gap-2">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-violet-100 bg-violet-50/90 text-violet-700">
-            <Icon className="h-4 w-4" aria-hidden />
-          </div>
+        <div className="mb-2 flex justify-end">
           <span className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide text-black">
             {step.time}
           </span>

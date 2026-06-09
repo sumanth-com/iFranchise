@@ -122,9 +122,13 @@ function DualSectionRow({ children }) {
   );
 }
 
-function DualSectionPanel({ title, children }) {
+function DualSectionPanel({ title, children, plainOnMobile = false }) {
   return (
-    <article className="fd-dual-panel flex h-full min-h-0 flex-col rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_4px_24px_rgba(15,23,42,0.06)] sm:p-6 lg:p-7">
+    <article
+      className={`fd-dual-panel flex h-full min-h-0 flex-col rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_4px_24px_rgba(15,23,42,0.06)] sm:p-6 lg:p-7${
+        plainOnMobile ? ' fd-dual-panel--plain-mobile' : ''
+      }`}
+    >
       <div className="fd-dual-panel-header shrink-0 border-b border-slate-100 pb-4">
         <h3 className={`fd-dual-panel-title fd-heading fd-copy ${TYPE.h3}`}>{title}</h3>
       </div>
@@ -141,24 +145,18 @@ function BrandSupportList({ items, fallback }) {
   }
 
   return (
-    <ul className="fd-support-list flex min-h-0 flex-1 flex-col justify-center gap-3">
+    <div className="fd-support-grid fd-invest-grid grid grid-cols-2 gap-3 sm:gap-3.5">
       {items.map((item) => (
-        <li
+        <article
           key={item}
-          className="fd-support-item fd-mini-card flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3.5 sm:py-4"
+          className="fd-support-card fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.25rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:min-h-[6.75rem] sm:px-3.5 sm:py-4"
         >
-          <span
-            className="fd-support-check flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm font-bold text-violet-700"
-            aria-hidden
-          >
-            ✓
-          </span>
-          <p className="fd-copy min-w-0 flex-1 text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-6">
+          <p className="fd-copy fd-body-text w-full text-xs font-medium leading-snug sm:text-sm">
             {item}
           </p>
-        </li>
+        </article>
       ))}
-    </ul>
+    </div>
   );
 }
 
@@ -735,7 +733,7 @@ function FranchiseDetailsPage() {
             }`}
           >
             <DualSectionRow>
-              <DualSectionPanel title={`About ${selectedFranchise.name}`}>
+              <DualSectionPanel title={`About ${selectedFranchise.name}`} plainOnMobile>
                 <div className="fd-about-panel-body flex min-h-0 flex-1 flex-col gap-5">
                   {selectedFranchise.tagline ? (
                     <p className="fd-about-tagline fd-copy text-sm font-semibold leading-snug sm:text-base">
@@ -770,7 +768,7 @@ function FranchiseDetailsPage() {
                 </div>
               </DualSectionPanel>
 
-              <DualSectionPanel title="Investment & Financials">
+              <DualSectionPanel title="Investment & Financials" plainOnMobile>
                 <InvestmentFinancialsGrid
                   items={selectedFranchise.investorInvestment || selectedFranchise.investmentDetails}
                   franchiseStructure={selectedFranchise.franchiseStructure}
@@ -782,14 +780,14 @@ function FranchiseDetailsPage() {
 
           <section className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7">
             <DualSectionRow>
-              <DualSectionPanel title="Brand & Partner Support">
+              <DualSectionPanel title="Brand & Partner Support" plainOnMobile>
                 <BrandSupportList
                   items={selectedFranchise.trainingSupport}
                   fallback={selectedFranchise.idealInvestorProfile}
                 />
               </DualSectionPanel>
 
-              <DualSectionPanel title="How to Get Started">
+              <DualSectionPanel title="How to Get Started" plainOnMobile>
                 <FranchiseGetStartedSection variant="compact" />
               </DualSectionPanel>
             </DualSectionRow>

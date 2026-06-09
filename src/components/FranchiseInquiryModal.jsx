@@ -62,7 +62,9 @@ export default function FranchiseInquiryModal({
   franchiseStructure,
   onClose,
   variant = 'modal',
-  mobileWhatsAppFooter = false,
+  lockScroll = true,
+  onUserInput,
+  showWhatsAppAction = false,
   whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
 }) {
   const typeOptions = filterFranchiseTypes(franchiseStructure);
@@ -113,8 +115,26 @@ export default function FranchiseInquiryModal({
   });
 
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (!onUserInput) return undefined;
+
+    const hasInput =
+      Boolean(values.franchiseType) ||
+      Boolean(values.fullName?.trim()) ||
+      Boolean(values.email?.trim()) ||
+      Boolean(values.city?.trim()) ||
+      Boolean(values.message?.trim()) ||
+      Boolean(values.contactNumber?.local?.trim?.());
+
+    if (hasInput) onUserInput();
+  }, [values, onUserInput]);
+
+  useEffect(() => {
+    const prev = lockScroll ? document.body.style.overflow : undefined;
+
+    if (lockScroll) {
+      document.body.style.overflow = 'hidden';
+    }
+
     const onKey = (e) => {
       if (e.key === 'Escape' && !isSubmitting) {
         if (isSuccess) resetForm();
@@ -122,11 +142,14 @@ export default function FranchiseInquiryModal({
       }
     };
     window.addEventListener('keydown', onKey);
+
     return () => {
-      document.body.style.overflow = prev;
+      if (lockScroll) {
+        document.body.style.overflow = prev;
+      }
       window.removeEventListener('keydown', onKey);
     };
-  }, [onClose, isSubmitting, isSuccess, resetForm]);
+  }, [onClose, isSubmitting, isSuccess, resetForm, lockScroll]);
 
   if (!franchise) return null;
 
@@ -138,8 +161,8 @@ export default function FranchiseInquiryModal({
   const panel = (
     <div
       className={`franchise-inquiry-modal relative z-10${
-        isPanel ? ' franchise-inquiry-modal--drawer' : ''
-      }`}
+        isPanel ? ' franchise-inquiry-modal--drawer franchise-inquiry-modal--compact' : ''
+      }${showWhatsAppAction ? ' franchise-inquiry-modal--mobile-actions' : ''}`}
     >
         <div className="franchise-inquiry-modal__handle" aria-hidden="true" />
         <div className="franchise-inquiry-modal__header flex items-start justify-between gap-3 pr-2">
@@ -159,11 +182,13 @@ export default function FranchiseInquiryModal({
               ) : null}
               <span className="franchise-inquiry-modal__title-text">{franchise.name}</span>
             </h2>
-            <p className="franchise-inquiry-modal__subtitle">
-              {isSuccess
-                ? 'We will be in touch shortly.'
-                : 'Choose your format and share your details — we respond within 1 business day.'}
-            </p>
+            {!isPanel ? (
+              <p className="franchise-inquiry-modal__subtitle">
+                {isSuccess
+                  ? 'We will be in touch shortly.'
+                  : 'Choose your format and share your details — we respond within 1 business day.'}
+              </p>
+            ) : null}
           </div>
           <button
             type="button"
@@ -196,15 +221,13 @@ export default function FranchiseInquiryModal({
           ) : (
             <form
               onSubmit={handleSubmit}
-              className={`franchise-inquiry-modal__form${
-                mobileWhatsAppFooter ? ' franchise-inquiry-modal__form--sticky-actions' : ''
-              }`}
+              className="franchise-inquiry-modal__form franchise-inquiry-modal__form--sticky-actions"
               autoComplete="off"
               noValidate
             >
               <HoneypotField value={values[HONEYPOT_FIELD]} onChange={setField} />
 
-              <div className={mobileWhatsAppFooter ? 'franchise-inquiry-modal__fields' : undefined}>
+              <div className="franchise-inquiry-modal__fields">
               <fieldset className="border-0 p-0 m-0">
                 <legend className="franchise-inquiry-modal__label mb-1.5">
                   I am interested in <span className="text-red-500">*</span>
@@ -233,41 +256,43 @@ export default function FranchiseInquiryModal({
                 <FieldError message={fieldErrors.franchiseType} />
               </fieldset>
 
-              <div>
-                <label htmlFor="fi-full-name" className="franchise-inquiry-modal__label">
-                  Full name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="fi-full-name"
-                  type="text"
-                  required
-                  minLength={2}
-                  value={values.fullName}
-                  onChange={(e) => setField('fullName', e.target.value)}
-                  className={inputClass(fieldErrors.fullName)}
-                  placeholder="Your full name"
-                  autoComplete="name"
-                  aria-invalid={Boolean(fieldErrors.fullName)}
-                />
-                <FieldError message={fieldErrors.fullName} />
-              </div>
+              <div className={isPanel ? 'franchise-inquiry-modal__fields-row' : undefined}>
+                <div>
+                  <label htmlFor="fi-full-name" className="franchise-inquiry-modal__label">
+                    Full name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="fi-full-name"
+                    type="text"
+                    required
+                    minLength={2}
+                    value={values.fullName}
+                    onChange={(e) => setField('fullName', e.target.value)}
+                    className={inputClass(fieldErrors.fullName)}
+                    placeholder="Your full name"
+                    autoComplete="name"
+                    aria-invalid={Boolean(fieldErrors.fullName)}
+                  />
+                  <FieldError message={fieldErrors.fullName} />
+                </div>
 
-              <div>
-                <label htmlFor="fi-email" className="franchise-inquiry-modal__label">
-                  Email <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="fi-email"
-                  type="email"
-                  required
-                  value={values.email}
-                  onChange={(e) => setField('email', e.target.value)}
-                  className={inputClass(fieldErrors.email)}
-                  placeholder="you@email.com"
-                  autoComplete="email"
-                  aria-invalid={Boolean(fieldErrors.email)}
-                />
-                <FieldError message={fieldErrors.email} />
+                <div>
+                  <label htmlFor="fi-email" className="franchise-inquiry-modal__label">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="fi-email"
+                    type="email"
+                    required
+                    value={values.email}
+                    onChange={(e) => setField('email', e.target.value)}
+                    className={inputClass(fieldErrors.email)}
+                    placeholder="you@email.com"
+                    autoComplete="email"
+                    aria-invalid={Boolean(fieldErrors.email)}
+                  />
+                  <FieldError message={fieldErrors.email} />
+                </div>
               </div>
 
               <div>
@@ -286,7 +311,7 @@ export default function FranchiseInquiryModal({
 
               <div>
                 <label htmlFor="fi-city" className="franchise-inquiry-modal__label">
-                  Preferred city
+                  Preferred city / location
                 </label>
                 <input
                   id="fi-city"
@@ -294,7 +319,7 @@ export default function FranchiseInquiryModal({
                   value={values.city}
                   onChange={(e) => setField('city', e.target.value)}
                   className={inputClass(fieldErrors.city)}
-                  placeholder="e.g. Bengaluru"
+                  placeholder="e.g. Bengaluru or preferred area"
                   autoComplete="address-level2"
                 />
                 <FieldError message={fieldErrors.city} />
@@ -322,15 +347,15 @@ export default function FranchiseInquiryModal({
               ) : null}
               </div>
 
-              {mobileWhatsAppFooter ? (
-                <div className="franchise-inquiry-modal__actions">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="franchise-inquiry-modal__submit"
-                  >
-                    {isSubmitting ? 'Sending…' : 'Send interest'}
-                  </button>
+              <div className="franchise-inquiry-modal__actions">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="franchise-inquiry-modal__submit"
+                >
+                  {isSubmitting ? 'Sending…' : 'Send interest'}
+                </button>
+                {showWhatsAppAction ? (
                   <a
                     href={whatsappUrl}
                     target="_blank"
@@ -339,18 +364,9 @@ export default function FranchiseInquiryModal({
                     aria-label="Chat on WhatsApp"
                   >
                     <FaWhatsapp aria-hidden />
-                    <span>Chat on WhatsApp</span>
                   </a>
-                </div>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="franchise-inquiry-modal__submit"
-                >
-                  {isSubmitting ? 'Sending…' : 'Send interest'}
-                </button>
-              )}
+                ) : null}
+              </div>
             </form>
           )}
         </div>

@@ -7778,7 +7778,7 @@ html[data-theme='light'] .franchise-details-page .fd-about-section .fd-dual-pane
   padding-left: 0;
 }
 
-html[data-theme='light'] .franchise-details-page .fd-dual-sections .fd-support-item p,
+html[data-theme='light'] .franchise-details-page .fd-dual-sections .fd-support-card p,
 html[data-theme='light'] .franchise-details-page .fd-dual-sections .fd-insight-card :is(.fd-field-label, .fd-body-text) {
   color: #000000 !important;
 }
@@ -8000,6 +8000,36 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-content .t
 .franchise-details-page .fd-dual-sections {
   width: 100%;
   max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .franchise-details-page .fd-dual-panel--plain-mobile {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .franchise-details-page .fd-dual-panel--plain-mobile:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .franchise-details-page .fd-dual-panel--plain-mobile .fd-dual-panel-header {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  .franchise-details-page .fd-dual-panel--plain-mobile .fd-dual-panel-body {
+    margin-top: 0.75rem !important;
+  }
+
+  html[data-theme='dark'] #main-content .franchise-details-page .fd-dual-panel--plain-mobile {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
 }
 
 .franchise-details-page .fd-dual-row {

@@ -50,6 +50,11 @@ export function useScrollPastHero(pathname, enabled = true) {
         setShowAssistant(true);
         return;
       }
+      /* Mobile: keep chatbot visible on every page without waiting for scroll */
+      if (mq.matches) {
+        setShowAssistant(true);
+        return;
+      }
       const y = window.scrollY;
       if (y === lastScrollRef.current) return;
       lastScrollRef.current = y;
