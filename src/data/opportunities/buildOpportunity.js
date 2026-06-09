@@ -81,7 +81,10 @@ function buildInvestorInvestmentSummary(raw, _investmentLabel, franchiseFee, ret
   const base = [
     slot('Franchise fee', !isPlaceholder(franchiseFee) ? formatMoneyDisplay(franchiseFee) : '', 'On request'),
     slot('Space (Sq.ft)', !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : '', 'As per format'),
-    slot('Returns', returnsInfo.display, 'On request', returnsInfo.full),
+    {
+      ...slot('Returns', returnsInfo.display, 'On request', returnsInfo.full),
+      ...(returnsInfo.structured ? { returnsStructured: returnsInfo.structured } : {}),
+    },
     slot('Payback', paybackLabel || '', 'On request'),
   ];
   const extras = Array.isArray(raw.investorHighlights)

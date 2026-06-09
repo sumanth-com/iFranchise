@@ -26,7 +26,7 @@ export const RAW_BRANDS = [
     paybackPeriod: '24 - 28 months',
     totalOutlets: '40+',
     franchiseFee: '7lakh + GST',
-    returns: 'Min Guaran - 33.33 % per annum  Revenue Share - 12% margin of the sales',
+    returns: 'Minimum Guarantee ₹1.25 Lakhs per month or 12% Revenue Share (whichever is higher)',
     targetAreas: 'Tier 1, Tier 2',
     agreementTerm: '5 years',
     lockInPeriod: '5 Years',

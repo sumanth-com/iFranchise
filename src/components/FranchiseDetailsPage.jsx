@@ -199,7 +199,37 @@ function BrandInsightsList({ insights, limit = 4, fallback }) {
   );
 }
 
-function ReturnsCardValue({ value, detail }) {
+function ReturnsCardValue({ value, detail, structured, inline = false }) {
+  if (structured && inline) {
+    return (
+      <div
+        className="fd-returns-inline mt-2 flex w-full flex-wrap items-baseline justify-center gap-x-1.5 gap-y-0.5 text-center"
+        title={detail || value}
+      >
+        <span className="fd-copy text-xs font-bold leading-snug text-violet-700 sm:text-sm">{structured.primary}</span>
+        <span className="fd-copy text-xs font-medium lowercase text-slate-500">{structured.connector}</span>
+        <span className="fd-copy text-xs font-bold leading-snug text-violet-700 sm:text-sm">{structured.secondary}</span>
+        <span className="fd-copy text-[0.6875rem] font-medium text-slate-500 sm:text-xs">{structured.footnote}</span>
+      </div>
+    );
+  }
+
+  if (structured) {
+    return (
+      <div
+        className="fd-returns-structured mt-2 flex w-full flex-col items-center gap-0.5 text-center"
+        title={detail || value}
+      >
+        <span className="fd-returns-compact__primary fd-copy text-sm font-bold leading-tight text-violet-700 sm:text-base">
+          {structured.primary}
+        </span>
+        <span className="fd-copy text-[0.65rem] font-medium lowercase text-slate-500">{structured.connector}</span>
+        <span className="fd-copy text-xs font-bold leading-tight text-violet-700 sm:text-sm">{structured.secondary}</span>
+        <span className="fd-copy text-[0.6rem] font-medium leading-snug text-slate-500">{structured.footnote}</span>
+      </div>
+    );
+  }
+
   const perYear = String(value || '').match(/^(\d+(?:\.\d+)?%)\s+per year$/i);
   if (perYear) {
     return (
@@ -242,8 +272,8 @@ function ReturnsCardValue({ value, detail }) {
   );
 }
 
-function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [] }) {
-  const displayItems = [...(items || [])];
+function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [], slug = '' }) {
+  const isOdetteReturnsLayout = slug === 'odette';
   const structure = (franchiseStructure || []).map((s) => String(s).trim()).filter(Boolean);
   const hasMaster = structure.some((s) => s.toLowerCase().includes('master'));
   const hasUnit = structure.some((s) => s.toLowerCase().includes('unit'));
@@ -253,13 +283,60 @@ function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [] 
     (models || []).length > 1 ? 'Multi-Model' : null,
   ].filter(Boolean);
 
-  if (typeLabels.length) {
-    displayItems.push({
-      label: 'Franchise types',
-      value: typeLabels.join(' · '),
-      detail: '',
-    });
+  const franchiseTypesItem = typeLabels.length
+    ? {
+        label: 'Franchise types',
+        value: typeLabels.join(' · '),
+        detail: '',
+      }
+    : null;
+
+  let gridItems = [...(items || [])];
+  let returnsItem = null;
+
+  if (isOdetteReturnsLayout) {
+    returnsItem = gridItems.find((item) => item.label === 'Returns') || null;
+    gridItems = gridItems.filter((item) => item.label !== 'Returns');
+    if (franchiseTypesItem) {
+      const spaceIdx = gridItems.findIndex((item) => /space/i.test(item.label));
+      if (spaceIdx >= 0) gridItems.splice(spaceIdx + 1, 0, franchiseTypesItem);
+      else gridItems.push(franchiseTypesItem);
+    }
+  } else if (franchiseTypesItem) {
+    gridItems.push(franchiseTypesItem);
   }
+
+  const renderInvestCard = (item, { fullWidth = false, returnsInline = false } = {}) => (
+    <article
+      key={`${item.label}${fullWidth ? '-full' : ''}`}
+      className={`fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.25rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:min-h-[6.75rem] sm:px-3.5 sm:py-4${
+        item.label === 'Returns' ? ' fd-invest-card--returns' : ''
+      }${fullWidth ? ' fd-invest-card--returns-full col-span-2' : ''}${
+        item.returnsStructured && !returnsInline
+          ? ' fd-invest-card--returns-structured min-h-[9.75rem] sm:min-h-[10.25rem]'
+          : ''
+      }`}
+    >
+      <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
+      {item.label === 'Returns' ? (
+        <ReturnsCardValue
+          value={item.value}
+          detail={item.detail}
+          structured={item.returnsStructured}
+          inline={returnsInline}
+        />
+      ) : item.detail ? (
+        <StatCardValue value={item.value} note={item.detail} />
+      ) : (
+        <p
+          className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug"
+          title={item.detail || undefined}
+        >
+          {item.value}
+        </p>
+      )}
+    </article>
+  );
 
   return (
     <div className="fd-invest-financials flex min-h-0 flex-col gap-3">
@@ -267,28 +344,10 @@ function InvestmentFinancialsGrid({ items, franchiseStructure = [], models = [] 
         Indicative figures from brand disclosure. Final numbers depend on city, format, and site.
       </p>
       <div className="fd-invest-grid grid grid-cols-2 gap-3 sm:gap-3.5">
-        {displayItems.map((item) => (
-          <article
-            key={item.label}
-            className={`fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.25rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:min-h-[6.75rem] sm:px-3.5 sm:py-4${
-              item.label === 'Returns' ? ' fd-invest-card--returns' : ''
-            }`}
-          >
-            <p className="fd-copy fd-field-label w-full text-[0.65rem] tracking-[0.12em]">{item.label}</p>
-            {item.label === 'Returns' ? (
-              <ReturnsCardValue value={item.value} detail={item.detail} />
-            ) : item.detail ? (
-              <StatCardValue value={item.value} note={item.detail} />
-            ) : (
-              <p
-                className="fd-copy fd-body-text mt-2 w-full whitespace-pre-line text-sm font-medium leading-snug"
-                title={item.detail || undefined}
-              >
-                {item.value}
-              </p>
-            )}
-          </article>
-        ))}
+        {gridItems.map((item) => renderInvestCard(item))}
+        {isOdetteReturnsLayout && returnsItem
+          ? renderInvestCard(returnsItem, { fullWidth: true, returnsInline: true })
+          : null}
       </div>
     </div>
   );
@@ -423,6 +482,7 @@ function FranchiseDetailsPage() {
             items={investmentItems}
             franchiseStructure={selectedFranchise.franchiseStructure}
             models={selectedFranchise.franchiseModels}
+            slug={selectedFranchise.slug}
           />
         </DualSectionPanel>
       );
@@ -773,6 +833,7 @@ function FranchiseDetailsPage() {
                   items={selectedFranchise.investorInvestment || selectedFranchise.investmentDetails}
                   franchiseStructure={selectedFranchise.franchiseStructure}
                   models={selectedFranchise.franchiseModels}
+                  slug={selectedFranchise.slug}
                 />
               </DualSectionPanel>
             </DualSectionRow>

@@ -304,6 +304,28 @@ export function formatReturnsDisplay(raw = '') {
     return { display: `₹${formatLakhShort(monthlyProfit[1])}L per month`, full };
   }
 
+  const minGuaranteeLakh = text.match(
+    /(?:min(?:imum)?\s*guarantee|min\s*guaran)[^₹\d]*₹?\s*(\d+(?:\.\d+)?)\s*(?:lakhs?|lac)/i,
+  );
+  const revenueSharePct = text.match(
+    /(\d+(?:\.\d+)?)\s*%\s*(?:revenue\s*share|margin(?:\s+of\s+the\s+sales)?|of\s*(?:sale|sales))/i,
+  );
+  if (minGuaranteeLakh && revenueSharePct && /whichever|higher/i.test(text)) {
+    const pct = parseFloat(revenueSharePct[1]);
+    const pctLabel = pct % 1 === 0 ? String(Math.round(pct)) : String(pct);
+    const lakhLabel = formatLakhShort(minGuaranteeLakh[1]);
+    return {
+      display: `₹${lakhLabel} Lakhs / Month* or ${pctLabel}% Revenue Share`,
+      full,
+      structured: {
+        primary: `₹${lakhLabel} Lakhs / Month*`,
+        connector: 'or',
+        secondary: `${pctLabel}% Revenue Share`,
+        footnote: '(Whichever Is Higher)',
+      },
+    };
+  }
+
   const netRange = text.match(/net\s*profit\s*(\d+(?:\.\d+)?)\s*(?:to|-|–)\s*(\d+(?:\.\d+)?)\s*%/i);
   if (netRange) {
     return {
