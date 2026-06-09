@@ -37,9 +37,9 @@
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-modal--drawer {
     width: min(440px, calc(100vw - 96px));
     max-width: 440px;
-    max-height: min(720px, calc(100vh - 48px));
-    height: auto;
-    flex: 0 0 auto;
+    height: 100%;
+    max-height: 100%;
+    flex: 1 1 auto;
     align-self: stretch;
     min-height: 0;
     border-radius: 0;

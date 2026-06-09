@@ -26,30 +26,10 @@ function useCompactInquirySheet() {
   return useSyncExternalStore(subscribeCompactSheet, getCompactSheetSnapshot, getCompactSheetServerSnapshot);
 }
 
-const RAIL_CTA_LINES = ['SHOW', 'INTEREST'];
-
-function StackedRailLabel({ lines = RAIL_CTA_LINES }) {
-  const items = [];
-  lines.forEach((word, wordIndex) => {
-    if (wordIndex > 0) {
-      items.push({ type: 'gap', key: `gap-${wordIndex}` });
-    }
-    word.split('').forEach((letter, letterIndex) => {
-      items.push({ type: 'letter', key: `${wordIndex}-${letterIndex}`, letter });
-    });
-  });
-
+function RailLabel() {
   return (
     <span className="franchise-inquiry-rail__cta-label" aria-hidden>
-      {items.map((item) =>
-        item.type === 'gap' ? (
-          <span key={item.key} className="franchise-inquiry-rail__cta-gap" />
-        ) : (
-          <span key={item.key} className="franchise-inquiry-rail__cta-letter">
-            {item.letter}
-          </span>
-        ),
-      )}
+      Show interest
     </span>
   );
 }
@@ -76,8 +56,12 @@ function InquiryRail({ open, onToggle, franchiseName, className = '', showToggle
       {open ? (
         <>
           <div className="franchise-inquiry-rail__cta" aria-label="Show interest">
-            <FiClipboard className="franchise-inquiry-rail__cta-icon" aria-hidden />
-            <StackedRailLabel />
+            <div className="franchise-inquiry-rail__cta-head">
+              <FiClipboard className="franchise-inquiry-rail__cta-icon" aria-hidden />
+            </div>
+            <div className="franchise-inquiry-rail__cta-mid">
+              <RailLabel />
+            </div>
           </div>
           <a
             href={SITE_CONTACT_WHATSAPP_URL}
