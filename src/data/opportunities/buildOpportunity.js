@@ -24,6 +24,7 @@ import {
 } from './opportunityUtils.js';
 import { getBrandImages } from './brandImages.js';
 import { getBrochureUrlByFranchiseSlug } from './brochurePdfs.js';
+import { resolveBrandSeo } from './brandSeo.js';
 import { getBrandGoogleReviews } from './brandGoogleReviews.js';
 import {
   flattenLocationLabels,
@@ -277,6 +278,7 @@ export function buildOpportunityRecord(raw, id) {
   const summary = cleanText(raw.shortDescription);
   const spaceLabel = raw.sqFt && !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : 'As per brand format';
   const brandImages = getBrandImages(slug, industry);
+  const brandSeo = resolveBrandSeo(slug, { brandName, industry, investment, model, summary });
 
   const listing = {
     id,
@@ -307,8 +309,11 @@ export function buildOpportunityRecord(raw, id) {
     minInr: minInr ?? null,
     maxInr: maxInr ?? null,
     currency: raw.currency || 'INR',
-    metaTitle: `${brandName} Franchise | Investment, Model & Expansion | iFranchise`,
-    metaDescription: `${brandName}: ${summary.slice(0, 120)}… Investment ${investment}. ${model} model. Explore on iFranchise.`,
+    metaTitle: brandSeo.title,
+    metaDescription: brandSeo.description,
+    metaKeywords: brandSeo.keywords,
+    ogTitle: brandSeo.ogTitle,
+    ogDescription: brandSeo.ogDescription,
     searchText: [brandName, industry, tagline, summary, locations, models.join(' '), raw.targetAreas, raw.mcp]
       .filter(Boolean)
       .join(' ')

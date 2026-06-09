@@ -127,18 +127,21 @@ export function resolvePageSeo(logicalPathname, location = {}) {
           `${brand} franchise opportunity in India: investment range, business model, locations, ROI, and payback. Inquire on iFranchise.`,
       );
       entry = normalizeSeoEntry({
-        title: formatTitle(`${brand} Franchise Opportunity India | iFranchise`),
+        title: formatTitle(franchise.metaTitle || `${brand} Franchise Opportunity India | iFranchise`),
         description,
-        keywords: `${brand} franchise, ${industry} franchise india, franchise investment opportunities, ${DEFAULT_META_KEYWORDS}`,
+        keywords: franchise.metaKeywords || `${brand} franchise, ${industry} franchise india, franchise investment opportunities, ${DEFAULT_META_KEYWORDS}`,
         canonicalPath,
-        ogTitle: formatTitle(`${brand} Franchise | iFranchise`),
+        ogTitle: formatTitle(franchise.ogTitle || franchise.metaTitle || `${brand} Franchise | iFranchise`),
         ogDescription: formatDescription(
-          `Investment, model, and expansion details for ${brand} franchise on iFranchise.`,
+          franchise.ogDescription ||
+            `Investment, model, and expansion details for ${brand} franchise on iFranchise.`,
         ),
         ogType: 'website',
         robots: 'index, follow',
       });
-      if (franchise.image?.startsWith('http')) ogImage = franchise.image;
+      const brandImage = franchise.logo || franchise.image;
+      if (brandImage?.startsWith('http')) ogImage = brandImage;
+      else if (brandImage) ogImage = absoluteUrl(brandImage);
     } else {
       entry = { ...STATIC_PAGE_SEO['/404'], robots: 'noindex, nofollow' };
       canonicalPath = pathname;

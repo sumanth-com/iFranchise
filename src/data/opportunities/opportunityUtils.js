@@ -34,8 +34,8 @@ const INDIAN_CITY_ALIASES = {
 
 export function formatBrandDisplayName(name, slug = '') {
   const key = slug?.toLowerCase?.() || '';
-  if (key === 'original-burger-co') return 'Original Burger Co.';
-  if (key === 'fusion-pizza-big-burger') return 'Fusion Pizza & Big Burger Co.';
+  if (key === 'original-burger-co') return 'Original Burger Co';
+  if (key === 'fusion-pizza-big-burger') return 'Fusion Pizza & Big Burger Co';
 
   const cleaned = cleanText(name).replace(/\(2\)/i, '').trim();
   if (!cleaned) return '';
@@ -43,7 +43,7 @@ export function formatBrandDisplayName(name, slug = '') {
   return cleaned
     .split(/\s+/)
     .map((word) => {
-      if (/^co\.?$/i.test(word)) return 'Co.';
+      if (/^co\.?$/i.test(word)) return 'Co';
       if (/^\d+$/.test(word)) return word;
       if (word.length <= 2 && /^[A-Z.&]+$/.test(word)) return word;
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
