@@ -264,16 +264,17 @@
   }
 
   .footer-main-grid {
-    column-gap: 12px;
-    row-gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+    row-gap: 0.5rem;
   }
 
   .footer-main-grid-col {
-    padding: 12px 10px 14px;
+    padding: 0.375rem 0;
   }
 
   .footer-links-list {
-    gap: 10px;
+    gap: 0.125rem;
   }
 
   .contact-hero-left,
@@ -498,8 +499,8 @@
   }
 
   .footer-main-grid {
-    column-gap: 10px;
-    row-gap: 10px;
+    column-gap: 1.25rem;
+    row-gap: 1rem;
   }
 
   .footer-follow-block {
@@ -530,15 +531,16 @@
   }
 
   .footer-col-heading {
-    font-size: 9px;
+    font-size: 0.625rem;
     letter-spacing: 0.12em;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0;
   }
 
   .footer-links-list .footer-jump-link {
-    font-size: 12px;
-    width: 100%;
+    font-size: 0.8125rem;
+    width: auto;
+    min-height: 0;
   }
 
   .footer-links-list__item {
@@ -555,6 +557,13 @@
     min-width: 44px;
     align-items: center;
     justify-content: center;
+  }
+
+  .footer-links-list .footer-jump-link,
+  .footer-legal-links .footer-jump-link {
+    min-height: 0;
+    min-width: 0;
+    justify-content: flex-start;
   }
 
   .navbar-mobile-panel .mobile-nav-link,
@@ -1719,6 +1728,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
+    margin-bottom: 1rem;
   }
 
   .prefooter-unified-card {
@@ -1732,22 +1742,22 @@
   .prefooter-brand-names {
     width: 100%;
     max-width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 0;
     overflow: hidden;
   }
 
   .prefooter-brand-names__label {
-    font-size: clamp(0.75rem, 3vw, 0.875rem);
-    margin-bottom: 1rem;
-    padding-inline: 0.5rem;
+    font-size: 0.8125rem;
+    margin-bottom: 0.75rem;
+    padding-inline: 0.25rem;
   }
 
   .prefooter-brand-names__track {
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   .prefooter-brand-names__item {
-    font-size: clamp(0.8125rem, 3.2vw, 0.9375rem);
+    font-size: 0.8125rem;
   }
 
   .about-hero__title {
@@ -1808,16 +1818,15 @@
 @media (max-width: 479px) {
   .footer-main-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 10px;
-    row-gap: 10px;
+    column-gap: 1rem;
   }
 
   .footer-main-grid-col {
-    padding: 12px 8px 14px;
+    padding: 0.375rem 0;
   }
 
   .footer-col-heading {
-    font-size: 9px;
+    font-size: 0.625rem;
     letter-spacing: 0.12em;
   }
 }

@@ -594,7 +594,11 @@ function FranchiseDetailsPage() {
                 </button>
                 {selectedFranchise.brochureUrl ? (
                   <BrochureDownloadButton
-                    franchise={{ id: selectedFranchise.id, name: selectedFranchise.name }}
+                    franchise={{
+                      id: selectedFranchise.id,
+                      name: selectedFranchise.name,
+                      slug: selectedFranchise.slug,
+                    }}
                     brochureUrl={selectedFranchise.brochureUrl}
                     className="btn-purple-solid group inline-flex w-full items-center justify-center whitespace-nowrap rounded-xl px-2 py-2.5 text-[0.625rem] font-semibold leading-none tracking-tight text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:w-auto sm:gap-2 sm:px-6 sm:py-3 sm:text-sm"
                   />

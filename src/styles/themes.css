@@ -1092,6 +1092,36 @@ html[data-theme='light'] .prefooter-unified-card .footer-main-grid-col {
   border-color: #e2e8f0 !important;
 }
 
+@media (max-width: 768px) {
+  html[data-theme='light'] .prefooter-unified-card .footer-main-grid-col {
+    background: transparent !important;
+    border: none !important;
+    border-bottom-color: #e2e8f0 !important;
+  }
+
+  html[data-theme='light'] .prefooter-unified-card .footer-main-grid-brand {
+    border-bottom-color: #e2e8f0 !important;
+  }
+
+  html[data-theme='light'] .prefooter-unified-card .footer-col-heading,
+  html[data-theme='light'] .prefooter-unified-card .footer-follow-heading {
+    border-bottom: none !important;
+    color: #64748b !important;
+  }
+
+  html[data-theme='light'] .prefooter-unified-card .footer-links-list .footer-jump-link {
+    color: #334155 !important;
+  }
+
+  html[data-theme='light'] .prefooter-unified-card .footer-legal-links .footer-jump-link {
+    color: #64748b !important;
+  }
+
+  html[data-theme='light'] .prefooter-unified-card .footer-copyright {
+    color: #94a3b8 !important;
+  }
+}
+
 html[data-theme='light'] .prefooter-unified-card .footer-main-grid-brand {
   border-bottom-color: #e2e8f0 !important;
 }

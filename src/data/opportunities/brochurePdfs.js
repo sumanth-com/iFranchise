@@ -28,21 +28,69 @@ export function getBrochureUrlByFranchiseId(id, slug) {
   return getBrochureUrlByFranchiseSlug(slug) || '';
 }
 
-export function getBrochureFilename(brandName) {
-  const safe = String(brandName || 'franchise')
-    .replace(/[^\w\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-  return `${safe || 'franchise'}-brochure.pdf`;
+/** e.g. /brochures/kasturi-creations.pdf → kasturi-creations.pdf */
+export function getBrochureFilename(brochureUrl, slug = '') {
+  const fromUrl = String(brochureUrl || '')
+    .split('/')
+    .pop()
+    ?.split('?')[0]
+    ?.trim();
+  if (fromUrl && /\.pdf$/i.test(fromUrl)) return fromUrl;
+
+  const safeSlug = String(slug || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  if (safeSlug) return `${safeSlug}.pdf`;
+
+  return 'franchise-brochure.pdf';
 }
 
-export function triggerBrochureDownload(brochureUrl, brandName) {
-  if (!brochureUrl) return;
+async function blobLooksLikePdf(blob) {
+  if (!blob?.size) return false;
+  if (blob.type && /pdf/i.test(blob.type)) return true;
+  const header = new Uint8Array(await blob.slice(0, 4).arrayBuffer());
+  return String.fromCharCode(...header) === '%PDF';
+}
+
+function resolveBrochureUrl(brochureUrl) {
+  if (!brochureUrl) return '';
+  if (/^https?:\/\//i.test(brochureUrl)) return brochureUrl;
+  return new URL(brochureUrl, window.location.origin).href;
+}
+
+function saveBlobAsFile(blob, filename) {
+  const objectUrl = URL.createObjectURL(blob);
   const link = document.createElement('a');
-  link.href = brochureUrl;
-  link.download = getBrochureFilename(brandName);
+  link.href = objectUrl;
+  link.download = filename;
   link.rel = 'noopener';
   document.body.appendChild(link);
   link.click();
   link.remove();
+  URL.revokeObjectURL(objectUrl);
+}
+
+/** Fetch PDF as blob so the saved file uses the brand slug (not index.html.pdf). */
+export async function triggerBrochureDownload(brochureUrl, slug = '') {
+  if (!brochureUrl) return { ok: false, error: 'missing_url' };
+
+  const filename = getBrochureFilename(brochureUrl, slug);
+  const absoluteUrl = resolveBrochureUrl(brochureUrl);
+
+  try {
+    const res = await fetch(absoluteUrl, { credentials: 'same-origin' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const blob = await res.blob();
+    if (!(await blobLooksLikePdf(blob))) {
+      throw new Error('not_pdf');
+    }
+
+    saveBlobAsFile(blob, filename);
+    return { ok: true, filename };
+  } catch {
+    window.open(absoluteUrl, '_blank', 'noopener,noreferrer');
+    return { ok: false, error: 'fallback_open', filename };
+  }
 }

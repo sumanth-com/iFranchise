@@ -217,46 +217,82 @@ html[data-theme='dark'] .ifranchise-acronym__box {
 
 @media (max-width: 639px) {
   .ifranchise-acronym__track {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
     overflow-x: visible;
     scroll-snap-type: none;
-    padding-bottom: 0;
-  }
-
-  .ifranchise-acronym__item {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-  }
-
-  .ifranchise-acronym__box-wrap {
-    max-width: 5rem;
+    padding: 0;
+    max-width: 26rem;
     margin-inline: auto;
   }
 
+  .ifranchise-acronym__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.875rem;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    text-align: left;
+  }
+
+  html[data-theme='dark'] .ifranchise-acronym__item {
+    background: rgba(139, 92, 246, 0.12);
+    border-color: rgba(167, 139, 250, 0.22);
+  }
+
+  .ifranchise-acronym__box-wrap {
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    max-width: 2.75rem;
+    margin: 0;
+  }
+
+  .ifranchise-acronym__box {
+    border-radius: 0.5rem;
+    box-shadow: 0 3px 10px rgba(76, 29, 149, 0.2);
+  }
+
+  html[data-theme='dark'] .ifranchise-acronym__box {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+  }
+
+  .ifranchise-acronym__letter {
+    font-size: 1.2rem;
+    text-shadow:
+      1px 1px 0 var(--ifa-letter-shadow),
+      2px 2px 0 var(--ifa-letter-shadow);
+  }
+
+  .ifranchise-acronym__pointer,
   .ifranchise-acronym__connector {
     display: none;
   }
 
+  .ifranchise-acronym__label {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.45;
+    text-align: left;
+    hyphens: none;
+  }
+
   .ifranchise-acronym__item--stagger-high .ifranchise-acronym__label,
   .ifranchise-acronym__item--stagger-low .ifranchise-acronym__label {
-    margin-top: 0.5rem;
+    margin-top: 0;
   }
 
   .ifranchise-acronym__scroll-hint {
     display: none;
-  }
-}
-
-@media (max-width: 380px) {
-  .ifranchise-acronym__track {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .ifranchise-acronym__box-wrap {
-    max-width: 4.5rem;
   }
 }

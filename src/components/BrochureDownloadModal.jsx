@@ -73,7 +73,7 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
         signal,
       });
 
-      triggerBrochureDownload(brochureUrl, franchise.name);
+      await triggerBrochureDownload(brochureUrl, franchise.slug);
 
       if (result?.success) {
         return result;

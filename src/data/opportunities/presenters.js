@@ -83,7 +83,7 @@ function rankFeaturedOpportunities() {
 /** Curated featured brands — home row + opportunities page default order. */
 export const FEATURED_BRAND_SLUGS = [
   'odette',
-  'freshco-goli-soda',
+  'kasturi-creations',
   'original-burger-co',
   'bigguys',
   'biggies-burger',

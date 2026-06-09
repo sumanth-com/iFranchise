@@ -120,7 +120,7 @@
   height: 1rem !important;
 }
 
-.footer-social-3d--linkedin {
+html[data-theme='light'] .footer-social-3d--linkedin {
   background: linear-gradient(
     145deg,
     #5eb0f4 0%,
@@ -130,7 +130,7 @@
   ) !important;
 }
 
-.footer-social-3d--instagram {
+html[data-theme='light'] .footer-social-3d--instagram {
   background: linear-gradient(
     135deg,
     #f9ce34 0%,
@@ -141,7 +141,7 @@
   ) !important;
 }
 
-.footer-social-3d--facebook {
+html[data-theme='light'] .footer-social-3d--facebook {
   background: linear-gradient(
     145deg,
     #5ba3ff 0%,
@@ -192,9 +192,7 @@ html[data-theme='dark'] .contact-hero-social a.footer-social-3d {
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-social-3d--linkedin,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--linkedin,
-html[data-theme='light'] .contact-hero-social .footer-social-3d--linkedin,
-html[data-theme='dark'] .contact-hero-social .footer-social-3d--linkedin {
+html[data-theme='light'] .contact-hero-social .footer-social-3d--linkedin {
   background: linear-gradient(
     145deg,
     #5eb0f4 0%,
@@ -205,9 +203,7 @@ html[data-theme='dark'] .contact-hero-social .footer-social-3d--linkedin {
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-social-3d--instagram,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--instagram,
-html[data-theme='light'] .contact-hero-social .footer-social-3d--instagram,
-html[data-theme='dark'] .contact-hero-social .footer-social-3d--instagram {
+html[data-theme='light'] .contact-hero-social .footer-social-3d--instagram {
   background: linear-gradient(
     135deg,
     #f9ce34 0%,
@@ -219,15 +215,32 @@ html[data-theme='dark'] .contact-hero-social .footer-social-3d--instagram {
 }
 
 html[data-theme='light'] .prefooter-unified-card .footer-social-3d--facebook,
-html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--facebook,
-html[data-theme='light'] .contact-hero-social .footer-social-3d--facebook,
-html[data-theme='dark'] .contact-hero-social .footer-social-3d--facebook {
+html[data-theme='light'] .contact-hero-social .footer-social-3d--facebook {
   background: linear-gradient(
     145deg,
     #5ba3ff 0%,
     #3b8ef8 36%,
     #1877f2 68%,
     #125fd4 100%
+  ) !important;
+}
+
+/* Dark mode — unified purple bubbles, white icons */
+html[data-theme='dark'] .footer-social-3d--linkedin,
+html[data-theme='dark'] .footer-social-3d--instagram,
+html[data-theme='dark'] .footer-social-3d--facebook,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--linkedin,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--instagram,
+html[data-theme='dark'] .prefooter-unified-card .footer-social-3d--facebook,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--linkedin,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--instagram,
+html[data-theme='dark'] .contact-hero-social .footer-social-3d--facebook {
+  background: linear-gradient(
+    145deg,
+    #8b5cf6 0%,
+    #7c3aed 38%,
+    #6d28d9 68%,
+    #5b21b6 100%
   ) !important;
 }
 
