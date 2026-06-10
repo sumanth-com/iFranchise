@@ -50,7 +50,7 @@ function StepCard({ step, index, total, reduceMotion, compact = false }) {
         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.4, delay, ease: EASE }}
-        className="fd-gs-card fd-gs-card--compact group flex h-full min-h-[8.5rem] flex-col rounded-xl border border-slate-200/90 bg-slate-50/80 p-4 transition-all duration-300 hover:border-violet-200 hover:bg-white hover:shadow-[0_6px_20px_rgba(15,23,42,0.08)]"
+        className="fd-gs-card fd-gs-card--compact group flex h-full min-h-[6.75rem] flex-col rounded-xl border border-slate-200/90 bg-slate-50/80 p-3 transition-all duration-300 hover:border-violet-200 hover:bg-white hover:shadow-[0_6px_20px_rgba(15,23,42,0.08)] sm:min-h-[7rem] sm:p-3.5"
       >
         <div className="mb-2 flex justify-end">
           <span className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide text-black">
@@ -118,10 +118,10 @@ export default function FranchiseGetStartedSection({ variant = 'full' }) {
   if (compact) {
     return (
       <div ref={sectionRef} className="fd-get-started fd-get-started--compact flex min-h-0 flex-1 flex-col">
-        <p className="fd-copy mb-4 text-sm leading-relaxed text-black/80">
+        <p className="fd-copy mb-3 text-sm leading-relaxed text-black/80">
           Four clear steps from first click to launch. No guesswork between milestones.
         </p>
-        <div className="fd-gs-grid grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="fd-gs-grid grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-3">
           {STEPS.map((step, i) => (
             <StepCard
               key={step.title}

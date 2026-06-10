@@ -108,6 +108,13 @@
   height: 0;
 }
 
+.franchise-inquiry-modal__form-footer {
+  flex-shrink: 0;
+  background: #fff;
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+}
+
 .franchise-inquiry-modal__actions {
   flex-shrink: 0;
   display: flex;
@@ -116,9 +123,32 @@
   gap: 0.5rem;
   width: 100%;
   padding: 0.625rem 0 0;
-  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   background: #fff;
-  border-top: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.franchise-inquiry-modal__legal {
+  margin: 0.5rem 0 0;
+  padding: 0 0.125rem;
+  font-size: 0.6875rem;
+  line-height: 1.55;
+  color: #64748b;
+  text-align: center;
+}
+
+.franchise-inquiry-modal__legal a {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.franchise-inquiry-modal__legal a:hover {
+  color: #5b21b6;
+}
+
+.franchise-inquiry-modal__legal strong {
+  font-weight: 600;
+  color: #475569;
 }
 
 .franchise-inquiry-modal__actions .franchise-inquiry-modal__submit {

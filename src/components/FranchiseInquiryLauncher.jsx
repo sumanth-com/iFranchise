@@ -84,6 +84,8 @@ export default function FranchiseInquiryLauncher({
   className = '',
   open: controlledOpen,
   onOpenChange,
+  hideOnDesktop = false,
+  hideSideRail = false,
 }) {
   const [phase, setPhase] = useState('closed');
   const [pinned, setPinned] = useState(false);
@@ -152,6 +154,8 @@ export default function FranchiseInquiryLauncher({
 
   if (!franchise?.id || !franchise?.name) return null;
 
+  if (!isCompactSheet && hideOnDesktop) return null;
+
   const handleDockEnter = () => {
     clearTimeout(leaveTimerRef.current);
     if (phase === 'rail' || phase === 'form') setPhase('form');
@@ -191,7 +195,7 @@ export default function FranchiseInquiryLauncher({
 
     return (
       <>
-        {phase === 'closed' ? createPortal(closedToggle, document.body) : null}
+        {phase === 'closed' && !hideSideRail ? createPortal(closedToggle, document.body) : null}
 
         {mobileOpen
           ? createPortal(

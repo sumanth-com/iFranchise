@@ -353,12 +353,15 @@ export function buildOpportunityRecord(raw, id) {
     },
     overview: summary,
     businessModel: [
-      models.length ? `Franchise model: ${models.join(', ')}.` : '',
+      models.length
+        ? `Franchise model: ${cleanText(raw.businessModelDescription) || models.join(', ')}.`
+        : '',
       !isPlaceholder(raw.locationType) ? `Location fit: ${cleanText(raw.locationType)}.` : '',
       !isPlaceholder(raw.returns) ? `Returns: ${cleanText(raw.returns)}.` : '',
     ]
       .filter(Boolean)
       .join(' '),
+    businessModelDisplay: cleanText(raw.businessModelDescription) || '',
     investorInvestment: buildInvestorInvestmentSummary(
       raw,
       investment,

@@ -116,7 +116,16 @@ export const BRAND_ASSET_MANIFEST = [
   {
     slug: 'kasturi-creations',
     logoSrc: 'kasturi/Logo.webp',
-    gallerySrc: ['kasturi/1.webp', 'kasturi/2.webp', 'kasturi/3.webp', 'kasturi/4.webp'],
+    gallerySrc: [
+      'kasturi/1.webp',
+      'kasturi/2.webp',
+      'kasturi/3.webp',
+      'kasturi/4.webp',
+      'kasturi/5.webp',
+      'kasturi/6.webp',
+      'kasturi/7.webp',
+      'kasturi/8.webp',
+    ],
     cardBackground: '#1c1208',
     cardAccent: '#d97706',
     cardFit: 'fill',

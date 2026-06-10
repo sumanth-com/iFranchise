@@ -57,6 +57,19 @@ function FieldError({ id, message }) {
   );
 }
 
+function FranchiseInquiryFormDisclaimer({ franchiseName }) {
+  const brand = String(franchiseName || 'this brand').trim();
+
+  return (
+    <p className="franchise-inquiry-modal__legal">
+      By submitting this form, you agree to our{' '}
+      <a href="/privacy-policy">Privacy Policy</a> and{' '}
+      <a href="/terms-and-conditions">Terms of Service</a>. iFranchise will review your enquiry for{' '}
+      <strong>{brand}</strong> franchise opportunities in India, including your preferred city or region.
+    </p>
+  );
+}
+
 export default function FranchiseInquiryModal({
   franchise,
   franchiseStructure,
@@ -347,25 +360,28 @@ export default function FranchiseInquiryModal({
               ) : null}
               </div>
 
-              <div className="franchise-inquiry-modal__actions">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="franchise-inquiry-modal__submit"
-                >
-                  {isSubmitting ? 'Sending…' : 'Send interest'}
-                </button>
-                {showWhatsAppAction ? (
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="franchise-inquiry-modal__whatsapp-cta"
-                    aria-label="Chat on WhatsApp"
+              <div className="franchise-inquiry-modal__form-footer">
+                <div className="franchise-inquiry-modal__actions">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="franchise-inquiry-modal__submit"
                   >
-                    <FaWhatsapp aria-hidden />
-                  </a>
-                ) : null}
+                    {isSubmitting ? 'Sending…' : 'Send interest'}
+                  </button>
+                  {showWhatsAppAction ? (
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="franchise-inquiry-modal__whatsapp-cta"
+                      aria-label="Chat on WhatsApp"
+                    >
+                      <FaWhatsapp aria-hidden />
+                    </a>
+                  ) : null}
+                </div>
+                <FranchiseInquiryFormDisclaimer franchiseName={franchise.name} />
               </div>
             </form>
           )}
