@@ -19,7 +19,7 @@ export function buildOrganizationSchema() {
   const sameAs = SOCIAL_LINKS.map((link) => link.href).filter(Boolean);
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': ORG_ID,
     name: ORGANIZATION.name,
     legalName: ORGANIZATION.legalName,
@@ -33,6 +33,24 @@ export function buildOrganizationSchema() {
     email: ORGANIZATION.email,
     telephone: ORGANIZATION.telephone,
     address: ORGANIZATION.address,
+    areaServed: { '@type': 'Country', name: 'India' },
+    knowsAbout: [
+      'Franchise consulting',
+      'Franchise investment',
+      'Franchise business opportunities',
+      'Brand expansion',
+      'FOFO FOCO FICO franchise models',
+      'Retail franchise',
+      'Food and beverage franchise',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      email: ORGANIZATION.email,
+      telephone: ORGANIZATION.telephone,
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi'],
+    },
     sameAs,
   };
 }
@@ -155,23 +173,30 @@ export function buildItemListSchema({ canonicalUrl, name, items }) {
   };
 }
 
-export function buildFranchiseOpportunitiesListSchemas(canonicalUrl) {
+export function buildFranchiseOpportunitiesListSchemas(canonicalUrl, locationCity = null) {
   const items = franchiseOpportunities.map((opp) => ({
     name: opp.brandName,
     url: absoluteUrl(opp.slug ? `/franchise/${opp.slug}` : '/franchise-opportunities'),
     image: toAbsoluteImageUrl(opp.image),
   }));
 
+  const cityLabel = locationCity ? String(locationCity).trim() : '';
+  const collectionName = cityLabel
+    ? `Franchise Opportunities in ${cityLabel}, India`
+    : 'Franchise Opportunities in India';
+  const collectionDescription = cityLabel
+    ? `Browse verified franchise business opportunities in ${cityLabel}. Compare investment, models, payback, and expansion-ready brands on iFranchise.`
+    : 'Explore verified franchise opportunities across food, wellness, education, retail, and more on iFranchise.';
+
   return {
     collection: buildCollectionPageSchema({
       canonicalUrl,
-      name: 'Franchise Opportunities in India',
-      description:
-        'Explore verified franchise opportunities across food, wellness, education, retail, and more on iFranchise.',
+      name: collectionName,
+      description: collectionDescription,
     }),
     itemList: buildItemListSchema({
       canonicalUrl,
-      name: 'Franchise Opportunities',
+      name: cityLabel ? `Franchise Opportunities in ${cityLabel}` : 'Franchise Opportunities',
       items,
     }),
   };

@@ -701,12 +701,20 @@ function Navbar() {
               srcSet={NAV_LOGO.srcSet}
               sizes={NAV_LOGO.sizes}
               alt="iFranchise India franchise consulting company"
-              className="h-9 w-9 shrink-0 rounded-xl sm:h-10 sm:w-10"
+              className="h-9 w-9 shrink-0 rounded-xl object-contain sm:h-10 sm:w-10"
               width={40}
               height={40}
               loading="eager"
               decoding="async"
-              fetchPriority="low"
+              fetchPriority="high"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (img.dataset.fallbackTried === '1') return;
+                img.dataset.fallbackTried = '1';
+                img.removeAttribute('srcset');
+                img.removeAttribute('sizes');
+                img.src = NAV_LOGO.src;
+              }}
             />
             <div className="flex min-w-0 flex-col">
               <span className="site-navbar-logo-title truncate text-lg font-extrabold tracking-tight leading-tight text-violet-900 sm:text-2xl">

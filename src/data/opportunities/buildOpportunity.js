@@ -4,6 +4,7 @@ import {
   deriveLocationsLabel,
   formatBrandDisplayName,
   extractCities,
+  extractNamedCities,
   formatAgreementTerm,
   formatExpansionDetailLabel,
   formatExpansionHeroLabel,
@@ -260,15 +261,16 @@ export function buildOpportunityRecord(raw, id) {
   const roi = roiValue != null ? `${roiValue}%` : 'On request';
   const paybackMonths = parsePaybackMonths(raw.paybackPeriod);
 
+  const namedCities = extractNamedCities(raw.targetAreas, raw.mcp, raw.locationType);
   const cities = extractCities(raw.targetAreas, raw.mcp, raw.locationType);
   const locationGroups = getBrandLocationGroups(slug);
-  const groupedCities = locationGroups ? flattenLocationLabels(locationGroups) : cities;
-  const locationCities = groupedCities.length ? groupedCities : cities;
+  const groupedCities = locationGroups ? flattenLocationLabels(locationGroups) : [];
+  const displayCities = groupedCities.length ? groupedCities : namedCities;
   const locations = cleanText(raw.expansionDisplay)
     || deriveLocationsLabel(
       cleanText(raw.targetAreas) || cleanText(raw.mcp),
       raw.locationType,
-      locationCities,
+      displayCities,
     );
   const badge = deriveBadge({
     roi: roiValue,
@@ -299,7 +301,7 @@ export function buildOpportunityRecord(raw, id) {
     model,
     models,
     locations,
-    cities: groupedCities.length ? groupedCities : cities,
+    cities: groupedCities.length ? groupedCities : cities.length ? cities : namedCities,
     roi,
     roiValue,
     summary,
@@ -384,13 +386,13 @@ export function buildOpportunityRecord(raw, id) {
     locationGroups: locationGroups ?? null,
     expansionDisplay: cleanText(raw.expansionDisplay)
       || formatExpansionHeroLabel({
-      cities: groupedCities.length ? groupedCities : cities,
+      cities: displayCities,
       locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : '',
       targetAreas: raw.targetAreas,
       locationType: raw.locationType,
     }),
     expansionDetail: formatExpansionDetailLabel({
-      cities: groupedCities.length ? groupedCities : cities,
+      cities: displayCities,
       locationsSummary: locationGroups ? getLocationGroupsSummary(locationGroups) : '',
       targetAreas: raw.targetAreas,
       locationType: raw.locationType,

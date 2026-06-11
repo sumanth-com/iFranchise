@@ -172,7 +172,7 @@ export default function OurServicesSection({
               className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"
               style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
             />
-            <span className="relative z-10">View All Services</span>
+            <span className="relative z-10">Explore Franchise Consulting Services</span>
             <span className="relative z-10 inline-flex items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
               <FiArrowRight className="h-3 w-3" />
             </span>

@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { submitCareerApplication } from '@/lib/forms/submitters/careerApplicationSubmitter';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
@@ -18,7 +17,7 @@ function fieldClass(hasError) {
 
 function Label({ htmlFor, children, required = false }) {
   return (
-    <label htmlFor={htmlFor} className="career-apply-label mb-1 block text-xs font-semibold text-slate-700">
+    <label htmlFor={htmlFor} className="career-apply-label mb-1 block text-sm font-semibold text-slate-700">
       {children}
       {required ? (
         <span className="ml-0.5 text-red-500" aria-hidden>
@@ -26,6 +25,23 @@ function Label({ htmlFor, children, required = false }) {
         </span>
       ) : null}
     </label>
+  );
+}
+
+function CareerApplyFormDisclaimer({ roleTitle }) {
+  const title = String(roleTitle || 'this role').trim();
+
+  return (
+    <div className="career-apply-legal-wrap">
+      <p className="career-apply-legal">
+        By submitting this form, you agree to our{' '}
+        <a href="/privacy-policy">Privacy Policy</a> and{' '}
+        <a href="/terms-and-conditions">Terms of Service</a>.
+      </p>
+      <p className="career-apply-legal">
+        iFranchise will review your application for the <strong>{title}</strong> role in India.
+      </p>
+    </div>
   );
 }
 
@@ -43,8 +59,6 @@ function buildInitial(role) {
 }
 
 export default function CareerApplyForm({ role }) {
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
   const {
     values,
     setField,
@@ -70,7 +84,7 @@ export default function CareerApplyForm({ role }) {
       <p className="career-apply-kicker text-[11px] font-bold uppercase tracking-widest text-violet-700">
         Apply now
       </p>
-      <h3 className="career-apply-title mt-1 text-base font-bold text-slate-900 sm:text-lg">
+      <h3 className="career-apply-title mt-0.5 text-base font-bold text-slate-900 lg:text-[1.0625rem]">
         Ready to create with us?
       </h3>
 
@@ -88,7 +102,7 @@ export default function CareerApplyForm({ role }) {
           />
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="career-apply-fields mt-3 space-y-2" autoComplete="off" noValidate>
+        <form onSubmit={handleSubmit} className="career-apply-fields mt-2 space-y-1.5 lg:space-y-1" autoComplete="off" noValidate>
           <HoneypotField value={values[HONEYPOT_FIELD]} onChange={setField} />
 
           <div className="career-apply-field">
@@ -118,7 +132,8 @@ export default function CareerApplyForm({ role }) {
             <PhoneInput
               id={`career-phone-${role.id}`}
               required
-              variant={isLight ? 'light' : 'dark'}
+              variant="light"
+              className="career-apply-phone"
               value={values.contactNumber}
               onChange={(value) => setField('contactNumber', value)}
               error={fieldErrors.contactNumber}
@@ -153,11 +168,12 @@ export default function CareerApplyForm({ role }) {
               value={values.resumeLink}
               onChange={(e) => setField('resumeLink', e.target.value)}
               className={fieldClass(fieldErrors.resumeLink)}
-              placeholder="https://drive.google.com/file/d/…"
+              placeholder="Drive link (Anyone with the link)"
+              title="Use a viewable Google Drive link"
               inputMode="url"
             />
             {!fieldErrors.resumeLink ? (
-              <p className="mt-0.5 text-[10px] text-slate-500 leading-tight">
+              <p className="career-apply-resume-hint mt-0.5 text-[10px] text-slate-500 leading-tight">
                 Use a viewable Drive link (Anyone with the link).
               </p>
             ) : (
@@ -199,15 +215,19 @@ export default function CareerApplyForm({ role }) {
             ) : null}
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="career-apply-submit flex w-full shrink-0 items-center justify-center rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmitting ? 'Sending…' : 'Send application'}
-          </button>
+          <div className="career-apply-form-footer pt-1 lg:pt-1.5">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="career-apply-submit flex w-full shrink-0 items-center justify-center rounded-xl bg-violet-600 px-4 py-2 text-sm font-bold text-white shadow-md transition hover:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60 lg:py-2"
+            >
+              {isSubmitting ? 'Sending…' : 'Send application'}
+            </button>
 
-          {submitError ? <p className="text-center text-xs text-red-600">{submitError}</p> : null}
+            <CareerApplyFormDisclaimer roleTitle={role.title} />
+
+            {submitError ? <p className="mt-2 text-center text-xs text-red-600">{submitError}</p> : null}
+          </div>
         </form>
       )}
     </div>

@@ -3,27 +3,29 @@
  */
 
 export const PRIMARY_KEYWORDS = [
+  'franchise opportunities india',
   'franchise consulting company india',
-  'franchise business opportunities india',
-  'franchise consultants',
+  'franchise business opportunities',
+  'franchise investment opportunities',
+  'franchise consultants india',
   'franchise expansion services',
   'franchise development company',
-  'franchise investment opportunities',
   'franchise advisory services',
-  'franchise growth consulting',
+  'brand expansion india',
   'franchise business consultant',
-  'franchise opportunities',
 ];
 
 export const SECONDARY_KEYWORDS = [
-  'best franchise opportunities',
-  'low investment franchise',
+  'retail franchise india',
   'food franchise opportunities',
-  'retail franchise opportunities',
+  'startup investment india',
+  'investor opportunities india',
+  'business expansion services',
+  'franchise growth consulting',
+  'low investment franchise',
   'franchise marketing',
-  'investor franchise network',
   'franchise support services',
-  'franchise business growth',
+  'best franchise opportunities india',
 ];
 
 /** Comma-separated default for meta keywords tag */

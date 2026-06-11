@@ -4897,10 +4897,155 @@ html[data-theme='dark'] .career-detail-page .career-detail-form-card {
 }
 
 /* Career detail form card — match franchise Highlights stat cards (dark mode) */
-html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card {
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card:not(.career-detail-form-card--apply) {
   background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
   border-color: rgba(139, 92, 246, 0.22) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Career apply form — always white shell (matches franchise enquiry form) */
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply,
+html[data-theme='light'] #main-content .career-detail-page .career-detail-form-card--apply {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-kicker {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-label {
+  color: #334155 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-input,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply textarea.career-apply-input {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-input::placeholder,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply textarea.career-apply-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .text-slate-500 {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__row,
+html[data-theme='light'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__row {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__country-btn,
+html[data-theme='light'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__country-btn {
+  background: #f8fafc !important;
+  border-right-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__chevron,
+html[data-theme='light'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__chevron {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply input,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply textarea {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply input::placeholder,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .phone-input__number {
+  background: transparent !important;
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .phone-input__number::placeholder {
+  color: #94a3b8 !important;
+}
+
+.career-apply-form-footer {
+  flex-shrink: 0;
+}
+
+.career-apply-legal-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+
+.career-apply-legal {
+  margin: 0;
+  padding: 0 0.125rem;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: #475569;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.career-apply-legal a {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.career-apply-legal a:hover {
+  color: #5b21b6;
+}
+
+.career-apply-legal strong {
+  font-weight: 600;
+  color: #1e293b;
+  word-break: break-word;
+}
+
+/* White apply card — readable copy when site is in dark mode */
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply {
+  color: #0f172a !important;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply p,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-legal {
+  color: #475569 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-legal a {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-legal a:hover {
+  color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .career-apply-legal strong {
+  color: #1e293b !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply .text-red-600 {
+  color: #dc2626 !important;
 }
 
 /* Career detail insight stat cards (no outer panel wrapper) */
@@ -5009,10 +5154,14 @@ html[data-theme='dark'] .careers-page h1,
 html[data-theme='dark'] .careers-page h2,
 html[data-theme='dark'] .careers-page h3,
 html[data-theme='dark'] .careers-page .text-slate-900,
-html[data-theme='dark'] .career-detail-page h1,
-html[data-theme='dark'] .career-detail-page h2,
-html[data-theme='dark'] .career-detail-page h3,
-html[data-theme='dark'] .career-detail-page .text-slate-900 {
+html[data-theme='dark'] .career-detail-page .career-detail-hero h1,
+html[data-theme='dark'] .career-detail-page .career-detail-content h2,
+html[data-theme='dark'] .career-detail-page .career-detail-extras h2,
+html[data-theme='dark'] .career-detail-page .career-detail-content h3,
+html[data-theme='dark'] .career-detail-page .career-detail-extras h3,
+html[data-theme='dark'] .career-detail-page .career-detail-hero .text-slate-900,
+html[data-theme='dark'] .career-detail-page .career-detail-content .text-slate-900,
+html[data-theme='dark'] .career-detail-page .career-detail-extras .text-slate-900 {
   color: #ffffff !important;
 }
 
@@ -5028,11 +5177,18 @@ html[data-theme='dark'] .career-detail-page .text-slate-800,
 html[data-theme='dark'] .career-detail-page .career-detail-prose,
 html[data-theme='dark'] .career-detail-page .career-detail-section-title,
 html[data-theme='dark'] .career-detail-page .text-\[15px\],
-html[data-theme='dark'] #main-content .career-detail-page p,
-html[data-theme='dark'] #main-content .career-detail-page li,
-html[data-theme='dark'] #main-content .career-detail-page .career-detail-prose,
-html[data-theme='dark'] #main-content .career-detail-page .text-slate-700,
-html[data-theme='dark'] #main-content .career-detail-page [class*='text-white/'] {
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content p,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero p,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-extras p,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content li,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero li,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-extras li,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content .career-detail-prose,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content .text-slate-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero .text-slate-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-extras .text-slate-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content [class*='text-white/'],
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero [class*='text-white/'] {
   color: #ffffff !important;
 }
 
@@ -5343,10 +5499,12 @@ html[data-theme='dark'] .career-detail-page .text-violet-600,
 html[data-theme='dark'] .career-detail-page .text-violet-700,
 html[data-theme='dark'] .career-detail-page .text-violet-800,
 html[data-theme='dark'] #main-content .career-detail-page .text-violet-600,
-html[data-theme='dark'] #main-content .career-detail-page .text-violet-700,
-html[data-theme='dark'] #main-content .career-detail-page .text-violet-800,
-html[data-theme='dark'] #main-content .career-detail-page .career-apply-kicker,
-html[data-theme='dark'] #main-content .career-detail-page .career-apply-title {
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content .text-violet-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero .text-violet-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-extras .text-violet-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content .text-violet-800,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero .text-violet-800,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-extras .text-violet-800 {
   color: #ffffff !important;
 }
 
@@ -5399,20 +5557,26 @@ html[data-theme='dark'] .careers-page .bg-amber-50 {
   border-color: rgba(251, 191, 36, 0.35) !important;
 }
 
-html[data-theme='dark'] .career-detail-page input,
-html[data-theme='dark'] .career-detail-page textarea {
+html[data-theme='dark'] .career-detail-page .career-detail-content input,
+html[data-theme='dark'] .career-detail-page .career-detail-content textarea,
+html[data-theme='dark'] .career-detail-page .career-detail-hero input,
+html[data-theme='dark'] .career-detail-page .career-detail-hero textarea {
   background: rgba(15, 10, 35, 0.85) !important;
   border-color: rgba(139, 92, 246, 0.3) !important;
   color: #f8fafc !important;
 }
 
-html[data-theme='dark'] .career-detail-page input::placeholder,
-html[data-theme='dark'] .career-detail-page textarea::placeholder {
+html[data-theme='dark'] .career-detail-page .career-detail-content input::placeholder,
+html[data-theme='dark'] .career-detail-page .career-detail-content textarea::placeholder,
+html[data-theme='dark'] .career-detail-page .career-detail-hero input::placeholder,
+html[data-theme='dark'] .career-detail-page .career-detail-hero textarea::placeholder {
   color: rgba(196, 181, 253, 0.45) !important;
 }
 
-html[data-theme='dark'] .career-detail-page label,
-html[data-theme='dark'] #main-content .career-detail-page label {
+html[data-theme='dark'] .career-detail-page .career-detail-content label,
+html[data-theme='dark'] .career-detail-page .career-detail-hero label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-content label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero label {
   color: #ffffff !important;
 }
 
@@ -5440,8 +5604,9 @@ html[data-theme='dark'] #main-content .career-detail-page label {
    */
   .career-detail-page .career-detail-form-sticky--range {
     position: sticky !important;
-    top: 7rem !important;
-    padding-top: 1.25rem !important;
+    top: 6.5rem !important;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
     z-index: 25 !important;
     width: 100% !important;
     max-width: 400px;
@@ -5462,28 +5627,65 @@ html[data-theme='dark'] #main-content .career-detail-page label {
   html[data-theme='light'] .career-detail-page .career-detail-form-card--apply {
     width: 100%;
     max-width: 400px;
-    /* Full form (header → Send) fits between navbar and bottom of screen */
-    max-height: calc(100dvh - 8rem) !important;
+    max-height: calc(100dvh - 8.5rem) !important;
     overflow: visible !important;
   }
 
-  .career-detail-page .career-detail-form-card--apply .career-apply-form {
-    display: flex;
-    flex-direction: column;
+  .career-detail-page .career-detail-form-card--apply .career-apply-label {
+    margin-bottom: 0.125rem !important;
+    font-size: 0.8125rem !important;
   }
 
-  .career-detail-page .career-detail-form-card--apply .career-apply-fields {
-    flex: 0 1 auto;
+  .career-detail-page .career-detail-form-card--apply .career-apply-input,
+  .career-detail-page .career-detail-form-card--apply textarea.career-apply-input {
+    padding-top: 0.375rem !important;
+    padding-bottom: 0.375rem !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .career-detail-page .career-detail-form-card--apply textarea.career-apply-input {
+    min-height: 2.125rem !important;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__row {
+    min-height: 2.25rem !important;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-phone .phone-input__country-btn {
+    min-height: 2.25rem !important;
+    padding-top: 0.375rem !important;
+    padding-bottom: 0.375rem !important;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-resume-hint {
+    display: none;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-form-footer {
+    border-top: 1px solid #f1f5f9;
+    background: #ffffff;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-legal {
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
   }
 
   .career-detail-page .career-detail-form-card--apply .career-apply-submit {
-    margin-top: 0.25rem;
+    margin-top: 0;
   }
 }
 
 @media (max-height: 780px) and (min-width: 1024px) {
+  .career-detail-page .career-detail-form-sticky--range {
+    top: 6rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
   .career-detail-page .career-detail-form-card--apply {
-    padding: 0.875rem 1rem !important;
+    padding: 0.75rem 0.875rem !important;
+    max-height: calc(100dvh - 7.5rem) !important;
   }
 
   .career-detail-page .career-detail-form-card--apply .career-apply-title {
@@ -5491,22 +5693,7 @@ html[data-theme='dark'] #main-content .career-detail-page label {
   }
 
   .career-detail-page .career-detail-form-card--apply .career-apply-fields {
-    gap: 0.375rem !important;
-  }
-
-  .career-detail-page .career-detail-form-card--apply .career-apply-input {
-    padding-top: 0.375rem !important;
-    padding-bottom: 0.375rem !important;
-    font-size: 0.8125rem !important;
-  }
-
-  .career-detail-page .career-detail-form-card--apply textarea.career-apply-input {
-    min-height: 2.5rem !important;
-  }
-
-  .career-detail-page .career-detail-form-card--apply .career-apply-submit {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+    gap: 0.25rem !important;
   }
 }
 
@@ -7440,10 +7627,16 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-b
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal {
-  border-color: rgba(139, 92, 246, 0.2) !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+  background: #ffffff !important;
   box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(139, 92, 246, 0.12) inset !important;
+    0 12px 32px rgba(15, 23, 42, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-bar .fd-brand-header-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-bar .text-slate-900 {
+  color: #ffffff !important;
 }
 
 .franchise-details-page .fd-hero-metrics.fd-about-stats {
@@ -7466,7 +7659,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-kic
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-highlights {
-  color: #a78bfa !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-title {
@@ -7481,11 +7674,11 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-story-mut
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-callout {
   background: rgba(109, 40, 217, 0.28) !important;
   border-color: rgba(167, 139, 250, 0.4) !important;
-  color: rgba(255, 255, 255, 0.92) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-callout-label {
-  color: #e9d5ff !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-gallery {
@@ -7642,7 +7835,7 @@ html[data-theme='dark'] #main-content .franchise-details-page :is(
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page :is(.fd-reviews-subtext, .fd-tab-surface-label) {
-  color: rgba(255, 255, 255, 0.72) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-item[class*='border-violet'] {
@@ -7831,7 +8024,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-sectio
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-stat .fd-tab-surface-label {
-  color: rgba(255, 255, 255, 0.72) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-badge.bg-emerald-100 {
@@ -7845,7 +8038,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-similar-badge.
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-group .text-slate-600 {
-  color: rgba(255, 255, 255, 0.72) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-locations-item .border-slate-200\/80 {
@@ -7875,7 +8068,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-mini-card:not(
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-agreement-detail-card .fd-field-label {
-  color: rgba(255, 255, 255, 0.65) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-agreement-detail-card .fd-body-text {
@@ -7921,11 +8114,11 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-investment-ove
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-investment-overview__label {
-  color: #94a3b8 !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-investment-overview__value {
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 .franchise-details-page .fd-about-panel-body {
@@ -7995,7 +8188,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-get-started :i
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-highlight,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section .fd-about-highlight {
-  color: #c4b5fd !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-callout {
@@ -8008,10 +8201,14 @@ html[data-theme='light'] .franchise-details-page .fd-about-highlight {
   color: #6d28d9 !important;
 }
 
-/* Body copy — full contrast (no dim/muted grays) */
-html[data-theme='dark'] #main-content .franchise-details-page .text-slate-500,
-html[data-theme='dark'] #main-content .franchise-details-page .text-slate-600,
+/* Body copy — pure white (no dim/muted grays) */
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-900,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-800,
 html[data-theme='dark'] #main-content .franchise-details-page .text-slate-700,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-600,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-500,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-400,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-300,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-body,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-tab-content .text-slate-700,
 html[data-theme='dark'] #main-content .franchise-details-page [class*='text-black/'],
@@ -8036,7 +8233,7 @@ html[data-theme='light'] .franchise-details-page .fd-body-text {
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-stats .fd-about-stat-card p:first-child,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-metrics .fd-about-stat-card p:first-child,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-stat-card .text-slate-500 {
-  color: rgba(196, 181, 253, 0.72) !important;
+  color: #ffffff !important;
 }
 html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-grid .fd-about-stat-card p,
 html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-grid .fd-about-stat-card p:first-child {
@@ -8049,7 +8246,7 @@ html[data-theme='light'] .franchise-details-page .fd-invest-grid .fd-about-stat-
 
 /* Financial highlights & table */
 html[data-theme='dark'] #main-content .franchise-details-page .fd-financial-highlight__label {
-  color: #c4b5fd !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-financial-highlight__value {
@@ -8058,7 +8255,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-financial-high
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-financial-table__header {
   background: rgba(109, 40, 217, 0.32) !important;
-  color: #c4b5fd !important;
+  color: #ffffff !important;
   border-color: rgba(139, 92, 246, 0.2) !important;
 }
 
@@ -8318,7 +8515,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .border-slate-200\
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .text-slate-300 {
-  color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .bg-emerald-100 {
@@ -9139,4 +9336,160 @@ html[data-theme='dark'] .brochure-download-modal .brochure-modal-input {
   -webkit-text-fill-color: #0f172a !important;
   box-shadow: 0 0 0 1000px #ffffff inset !important;
   caret-color: #0f172a !important;
+}
+
+/* Career apply card — white light island in dark mode (wins over page-level white text rules) */
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
+  color: #0f172a !important;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-kicker,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-kicker {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-title,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-title,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .text-slate-900,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .text-slate-900 {
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white label,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .text-slate-700,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .text-slate-700 {
+  color: #334155 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .text-slate-500,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .text-slate-500,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-legal,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-legal,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface p,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white p {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-legal a,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-legal a {
+  color: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-legal strong,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-legal strong {
+  color: #1e293b !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface input,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface textarea,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white input,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white textarea,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .career-apply-input,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .career-apply-input {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface input::placeholder,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface textarea::placeholder,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white input::placeholder,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white textarea::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .phone-input__row,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .phone-input__row {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .phone-input__country-btn,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .phone-input__country-btn {
+  background: #f8fafc !important;
+  border-right-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .phone-input__number,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .phone-input__number {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .phone-input__chevron,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .phone-input__chevron {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .text-red-500,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .text-red-500,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.light-surface .text-red-600,
+html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-card--apply.bg-white .text-red-600 {
+  color: #dc2626 !important;
+}
+
+/* Franchise enquiry form — white light island (readable dark text in dark mode) */
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.bg-white {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  color-scheme: light;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__kicker {
+  color: #7c3aed !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title-text,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-title {
+  color: #000000 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface legend.franchise-inquiry-modal__label {
+  color: #000000 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__subtitle,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-desc,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__textarea {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input::placeholder,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__textarea::placeholder {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  opacity: 1 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .text-slate-400,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .text-slate-600 {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .fd-copy {
+  color: #0f172a !important;
 }

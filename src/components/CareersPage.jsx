@@ -215,6 +215,9 @@ function CareersPage() {
                 title="Careers at iFranchise"
                 className="w-full h-auto object-cover"
                 loading="eager"
+                decoding="async"
+                width={1200}
+                height={675}
               />
             </div>
             <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-b from-violet-600/25 to-transparent blur-2xl" />

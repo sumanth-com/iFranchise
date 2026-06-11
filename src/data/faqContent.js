@@ -2,6 +2,48 @@
  * Shared FAQ copy for visible on-page FAQs (schema + FAQ page).
  */
 
+/** GEO-friendly: what iFranchise is (for AI retrieval + home schema) */
+export const IFRANCHISE_OVERVIEW_FAQS = [
+  {
+    question: 'What is iFranchise?',
+    answer:
+      'iFranchise is an India-based franchise consulting and marketplace platform. We help investors discover verified franchise business opportunities and help brands expand through investor matching, franchise development, and growth advisory.',
+  },
+  {
+    question: 'How does iFranchise help franchise investors?',
+    answer:
+      'Investors can browse verified franchise listings, compare investment range, business model (FOFO, FOCO, FICO), payback, and expansion cities, then enquire directly for franchise consulting support and brand introductions.',
+  },
+  {
+    question: 'How does iFranchise help brand owners?',
+    answer:
+      'Brands can list on iFranchise to reach qualified investors, generate franchise leads, prepare franchise documentation, and plan multi-city expansion across India with structured onboarding support.',
+  },
+];
+
+export const SERVICES_FAQS = [
+  {
+    question: 'What franchise consulting services does iFranchise offer?',
+    answer:
+      'iFranchise offers franchise opportunity discovery, expansion strategy, investor matching, lead generation, franchise documentation, territory planning, and ongoing growth advisory for brands and investors in India.',
+  },
+  {
+    question: 'Does iFranchise work with first-time franchise investors?',
+    answer:
+      'Yes. Many partners are first-time operators. iFranchise helps compare models, understand unit economics, and connect with brands that provide structured onboarding, SOPs, and operational support.',
+  },
+  {
+    question: 'Can iFranchise help my brand become franchise-ready?',
+    answer:
+      'Yes. We support franchise model design, legal documentation, investor materials, lead generation, and post-launch advisory so brands can scale beyond their first few units.',
+  },
+  {
+    question: 'Which industries does iFranchise cover?',
+    answer:
+      'Food and beverage, retail, fashion, wellness, education, hospitality, and service franchises — with opportunities ranging from low-investment QSR formats to premium retail and hospitality concepts.',
+  },
+];
+
 export const HOME_FAQS = [
   {
     number: '01',
@@ -121,7 +163,9 @@ export const LIST_YOUR_BRAND_FAQS = [
 
 /** All FAQs visible on /faq */
 export const FAQ_PAGE_ALL_FAQS = [
+  ...IFRANCHISE_OVERVIEW_FAQS,
   ...HOME_FAQS,
+  ...SERVICES_FAQS,
   ...CONTACT_FAQS,
   ...LIST_YOUR_BRAND_FAQS,
   ...CAREERS_FAQS,

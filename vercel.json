@@ -72,6 +72,16 @@
       "source": "/location/new-delhi",
       "destination": "/location/delhi-ncr",
       "permanent": true
+    },
+    {
+      "source": "/franchise-details",
+      "destination": "/franchise-opportunities",
+      "permanent": true
+    },
+    {
+      "source": "/franchise",
+      "destination": "/franchise-opportunities",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -104,6 +114,19 @@
         {
           "key": "Content-Type",
           "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
         }
       ]
     },

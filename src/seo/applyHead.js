@@ -15,7 +15,10 @@ export function applyPageHead(seo, options = {}) {
 
   setMeta('name', 'description', seo.description);
   setMeta('name', 'keywords', seo.keywords);
-  setMeta('name', 'robots', seo.robots);
+  setMeta('name', 'robots', seo.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+  setMeta('name', 'author', 'iFranchise');
+  setMeta('name', 'geo.region', 'IN-KA');
+  setMeta('name', 'geo.placename', 'Bengaluru, Karnataka, India');
 
   if (options.themeColor) {
     setMeta('name', 'theme-color', options.themeColor);

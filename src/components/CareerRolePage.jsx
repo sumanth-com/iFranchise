@@ -119,8 +119,8 @@ function RoleSidebarExtras({ role }) {
 function ApplyPanel({ role }) {
   return (
     <aside className="career-detail-form w-full lg:col-span-1 lg:max-w-[400px] lg:justify-self-end lg:self-stretch">
-      <div className="career-detail-form-sticky career-detail-form-sticky--range lg:pt-4">
-        <div className="career-detail-form-card career-detail-form-card--apply fd-dual-panel rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="career-detail-form-sticky career-detail-form-sticky--range">
+        <div className="career-detail-form-card career-detail-form-card--apply light-surface rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 lg:p-4">
           <CareerApplyForm role={role} />
         </div>
       </div>

@@ -6,7 +6,9 @@ import {
   CONTACT_FAQS,
   FAQ_PAGE_ALL_FAQS,
   HOME_FAQS,
+  IFRANCHISE_OVERVIEW_FAQS,
   LIST_YOUR_BRAND_FAQS,
+  SERVICES_FAQS,
 } from '../../data/faqContent.js';
 import {
   buildAboutPageSchema,
@@ -69,7 +71,7 @@ export function buildSchemasForRoute(seo, context = {}) {
 
   if (logicalPathname === '/') {
     addBreadcrumbs(schemas, seo);
-    const homeFaq = buildFaqPageSchema(HOME_FAQS);
+    const homeFaq = buildFaqPageSchema([...IFRANCHISE_OVERVIEW_FAQS, ...HOME_FAQS]);
     if (homeFaq) pushSchema(schemas, 'faq', homeFaq);
     return schemas;
   }
@@ -98,15 +100,15 @@ export function buildSchemasForRoute(seo, context = {}) {
     buildServicesPageSchemas(canonicalUrl).forEach((service, index) => {
       pushSchema(schemas, `service-${index}`, service);
     });
-    const investorFaq = buildFaqPageSchema(HOME_FAQS);
-    if (investorFaq) pushSchema(schemas, 'faq-investor', investorFaq);
+    const servicesFaq = buildFaqPageSchema(SERVICES_FAQS);
+    if (servicesFaq) pushSchema(schemas, 'faq-services', servicesFaq);
     addBreadcrumbs(schemas, seo);
     return schemas;
   }
 
   if (logicalPathname === '/franchise-opportunities') {
     const locationCity = parseLocationPathname(seo.canonicalPath || '');
-    const { collection, itemList } = buildFranchiseOpportunitiesListSchemas(canonicalUrl);
+    const { collection, itemList } = buildFranchiseOpportunitiesListSchemas(canonicalUrl, locationCity);
     pushSchema(schemas, 'collection', collection);
     pushSchema(schemas, 'itemlist', itemList);
     if (locationCity) {

@@ -1,8 +1,30 @@
 # iFranchise — production robots.txt
+# AI / LLM context: https://www.ifranchise.in/llms.txt
+
 User-agent: *
 Allow: /
-
-# Non-public utility page only
 Disallow: /404
+
+# Generative AI & search crawlers — allow indexing for GEO visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://www.ifranchise.in/sitemap.xml

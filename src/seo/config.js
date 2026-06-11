@@ -30,7 +30,7 @@ export const ORGANIZATION = {
   url: SITE_URL,
   logo: `${SITE_URL}/android-chrome-512x512.png?v=${ICON_VERSION}`,
   description:
-    "India's trusted franchise growth platform connecting brands, investors, and expansion leaders.",
+    "India's trusted franchise consulting and marketplace platform connecting brands, investors, and expansion leaders with verified franchise business opportunities.",
   email: SITE_CONTACT_EMAIL,
   telephone: SITE_CONTACT_PHONE_TEL,
   address: {

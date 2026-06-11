@@ -3775,6 +3775,38 @@ html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill--animated .
 .bg-white .text-slate-400,
 .light-surface .text-slate-400 { color: #94a3b8 !important; }
 
+/* True white panels only (.light-surface) — not .bg-white on dark-themed cards */
+html[data-theme='dark'] #main-content .light-surface .text-slate-900 {
+  color: #0f172a !important;
+}
+html[data-theme='dark'] #main-content .light-surface .text-slate-800 {
+  color: #1e293b !important;
+}
+html[data-theme='dark'] #main-content .light-surface .text-slate-700,
+html[data-theme='dark'] #main-content .light-surface label {
+  color: #334155 !important;
+}
+html[data-theme='dark'] #main-content .light-surface .text-slate-600,
+html[data-theme='dark'] #main-content .light-surface .text-slate-500 {
+  color: #64748b !important;
+}
+html[data-theme='dark'] #main-content .light-surface .text-violet-700 {
+  color: #6d28d9 !important;
+}
+html[data-theme='dark'] #main-content .light-surface input,
+html[data-theme='dark'] #main-content .light-surface textarea {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  caret-color: #0f172a !important;
+}
+html[data-theme='dark'] #main-content .light-surface input::placeholder,
+html[data-theme='dark'] #main-content .light-surface textarea::placeholder {
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+  opacity: 1 !important;
+}
+
 /* Navbar white dropdowns - readable subtext (not forced to white) */
 .navbar-dropdown-panel .text-slate-600,
 .navbar-dropdown-panel .text-slate-700,

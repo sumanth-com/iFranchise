@@ -25,7 +25,7 @@ export const STATIC_PAGE_SEO = {
   '/': {
     title: 'iFranchise | Franchise Consulting & Opportunities India',
     description:
-      'Discover verified franchise business opportunities in India. iFranchise connects investors and brands with franchise consulting, expansion services, and growth advisory.',
+      'Find verified franchise business opportunities in India. iFranchise offers franchise consulting, investor matching, and brand expansion services for food, retail, and service sectors.',
     keywords: K,
     canonicalPath: '/',
     ogTitle: 'iFranchise | Franchise Growth Platform India',
@@ -34,13 +34,14 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/about-us': {
-    title: 'About iFranchise | Franchise Development Company',
+    title: 'About iFranchise | Franchise Development Experts',
     description:
-      'Learn how iFranchise supports franchise advisory services, expansion strategy, and investor matching for food, retail, and service brands scaling across India.',
-    keywords: `about ifranchise, franchise development company, ${K}`,
+      'iFranchise is a franchise development company helping investors find the right franchise investment and helping brands scale with expansion strategy, documentation, and investor matching in India.',
+    keywords: `about ifranchise, franchise development company india, franchise consulting experts, ${K}`,
     canonicalPath: '/about-us',
-    ogTitle: 'About iFranchise',
-    ogDescription: 'Franchise growth experts helping brands and investors build scalable networks in India.',
+    ogTitle: 'About iFranchise | Franchise Experts India',
+    ogDescription:
+      'Franchise growth experts helping brands and investors build scalable, profitable networks across India.',
     ogType: 'website',
   },
   '/team': {
@@ -54,33 +55,35 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/services': {
-    title: 'Franchise Expansion & Advisory Services | iFranchise',
+    title: 'Franchise Consulting & Expansion Services | iFranchise',
     description:
-      'Franchise consulting, investor matching, lead generation, documentation, and brand expansion services. End-to-end franchise growth support for brands and investors in India.',
-    keywords: `franchise expansion services, franchise advisory services, franchise consultants, ${K}`,
+      'End-to-end franchise consulting for brands and investors: expansion strategy, investor matching, lead generation, franchise documentation, and business growth advisory across India.',
+    keywords: `franchise consulting services, franchise expansion services, brand expansion india, franchise development, ${K}`,
     canonicalPath: '/services',
-    ogTitle: 'Franchise Services | iFranchise',
-    ogDescription: 'Discovery, expansion consulting, investor onboarding, and franchise marketing support.',
+    ogTitle: 'Franchise Consulting Services | iFranchise India',
+    ogDescription:
+      'Franchise discovery, expansion consulting, investor onboarding, and marketing support for brands scaling in India.',
     ogType: 'website',
   },
   '/franchise-opportunities': {
     title: 'Franchise Business Opportunities in India | iFranchise',
     description:
-      'Browse verified franchise investment opportunities across food, retail, wellness, and services. Compare investment, ROI, payback, and expansion markets on iFranchise.',
-    keywords: `franchise business opportunities india, franchise investment opportunities, best franchise opportunities, ${K}`,
+      'Browse verified franchise investment opportunities in food, retail, wellness, and services. Compare investment range, business model, payback, and expansion cities on iFranchise.',
+    keywords: `franchise business opportunities india, franchise investment, retail franchise, startup investment india, ${K}`,
     canonicalPath: '/franchise-opportunities',
     ogTitle: 'Franchise Opportunities India | iFranchise',
-    ogDescription: 'Curated franchise listings with investment bands, models, and brand details.',
+    ogDescription:
+      'Curated franchise listings with investment bands, FOFO/FICO models, and verified brand details.',
     ogType: 'website',
   },
   '/list-your-brand': {
-    title: 'List Your Brand | Franchise Growth & Investors',
+    title: 'List Your Brand | Franchise Expansion & Investors',
     description:
-      'Scale your franchise across India. List on iFranchise for investor matching, franchise marketing, lead generation, and structured expansion support for growing brands.',
-    keywords: `list franchise brand, franchise marketing, investor franchise network, ${K}`,
+      'Expand your brand across India. List on iFranchise for qualified investor matching, franchise lead generation, franchise development support, and structured multi-city growth.',
+    keywords: `list franchise brand india, brand expansion, franchise development, investor matching, ${K}`,
     canonicalPath: '/list-your-brand',
     ogTitle: 'List Your Brand on iFranchise',
-    ogDescription: 'Reach qualified franchise investors and accelerate nationwide expansion.',
+    ogDescription: 'Reach serious franchise investors and accelerate nationwide brand expansion in India.',
     ogType: 'website',
   },
   '/blogs': {
@@ -106,21 +109,23 @@ export const STATIC_PAGE_SEO = {
   '/contact-us': {
     title: 'Contact iFranchise | Franchise Consultants India',
     description:
-      'Speak with iFranchise franchise consultants about investment, brand listing, partnerships, and support. We respond within 24 hours for inquiries across India.',
-    keywords: `contact franchise consultants, franchise consulting company india, ${K}`,
+      'Connect with franchise experts at iFranchise for investment guidance, brand listing, partnerships, and expansion support. We respond within 24 hours to inquiries across India.',
+    keywords: `contact franchise consultants india, franchise consulting company, connect franchise experts, ${K}`,
     canonicalPath: '/contact-us',
-    ogTitle: 'Contact iFranchise',
-    ogDescription: 'Get expert guidance on franchise opportunities and brand expansion.',
+    ogTitle: 'Contact iFranchise | Franchise Experts',
+    ogDescription:
+      'Get expert guidance on franchise investment opportunities and brand expansion across India.',
     ogType: 'website',
   },
   '/faq': {
-    title: 'Franchise FAQs | Investment & Expansion Answers',
+    title: 'Franchise FAQs | Investment & Business Answers',
     description:
-      'Answers on franchise investment, FOFO and FICO models, profitability, legal documents, launch timelines, brand listing, and careers at iFranchise — for investors and founders.',
-    keywords: `franchise faq, franchise investment faq, franchise expansion faq, ${K}`,
+      'Expert answers on franchise investment in India, FOFO FOCO FICO models, profitability, legal documents, launch timelines, brand listing, and how iFranchise helps investors and founders.',
+    keywords: `franchise faq india, franchise investment questions, franchise business models, ${K}`,
     canonicalPath: '/faq',
-    ogTitle: 'Franchise FAQs | iFranchise',
-    ogDescription: 'Clear answers for investors, brand owners, and future team members.',
+    ogTitle: 'Franchise FAQs | iFranchise India',
+    ogDescription:
+      'Clear, direct answers for investors, brand owners, and entrepreneurs exploring franchise business in India.',
     ogType: 'website',
   },
   '/privacy-policy': {

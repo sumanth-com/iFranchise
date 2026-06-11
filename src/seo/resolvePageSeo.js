@@ -154,7 +154,7 @@ export function resolvePageSeo(logicalPathname, location = {}) {
       canonicalPath = getLocationPath(locationCity);
       const cityLower = locationCity.toLowerCase();
       const description = formatDescription(
-        `Browse verified franchise opportunities in ${locationCity}. Compare investment in INR, business models, ROI, payback, and expansion-ready brands across food, retail, and services on iFranchise.`,
+        `Browse verified franchise business opportunities in ${locationCity}, India. Compare franchise investment range, FOFO and FICO models, payback, and expansion-ready brands across food, retail, and services on iFranchise.`,
       );
       entry = normalizeSeoEntry({
         title: formatTitle(`Franchise Opportunities in ${locationCity} | iFranchise`),

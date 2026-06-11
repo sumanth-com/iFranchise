@@ -176,7 +176,7 @@ function ContactLeftPanel({ isLight }) {
       <h1
         className={`contact-hero-left__title mb-1.5 ${TYPE.pageHero} ${isLight ? 'text-violet-900' : 'text-white'}`}
       >
-        Get in touch
+        Connect With Franchise Experts
       </h1>
       <p
         className={`contact-hero-left__subtitle mb-4 max-w-md text-[13px] leading-relaxed sm:text-sm lg:mb-5 ${

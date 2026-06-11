@@ -21,6 +21,7 @@ import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, HOME_INDUSTRIES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
 import { SITE_CONTACT_ITEMS } from '../data/siteContact';
+import { HOME_FAQS, IFRANCHISE_OVERVIEW_FAQS } from '../data/faqContent.js';
 import ResponsiveImg from './ui/ResponsiveImg.jsx';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
@@ -2762,13 +2763,13 @@ function Hero() {
 
             <div className="hero-cta-row mx-auto mt-4 flex w-full max-w-[900px] shrink-0 flex-row flex-wrap items-stretch justify-center gap-2.5 px-1 sm:mt-5 sm:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
               <HeroCtaButton
-                label="Explore Opportunities"
+                label="Explore Franchise Opportunities"
                 path="/franchise-opportunities"
                 className="min-w-0 xl:w-full"
                 animDelay="220ms"
               />
               <HeroCtaButton
-                label="List Your Brand"
+                label="Expand Your Brand Across India"
                 path="/list-your-brand"
                 className="min-w-0 xl:w-full"
                 animDelay="300ms"
@@ -2810,7 +2811,7 @@ function Hero() {
               type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             >
-              View All Opportunities
+              Explore All Franchise Opportunities
             </CtaButton>
           </div>
         </div>
@@ -2831,7 +2832,7 @@ function Hero() {
             <SectionPill className="mb-4">Who We Serve</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>Built for Investors and Growing Brands</h2>
             <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
-              Whether investing in franchise businesses or expanding your brand ? iFranchise provides the infrastructure for long-term growth.
+              Whether investing in franchise businesses or expanding your brand, iFranchise provides the infrastructure for long-term growth.
             </p>
           </div>
 
@@ -2842,7 +2843,7 @@ function Hero() {
                 img: WHO_WE_SERVE_IMAGES.investors,
                 heading: 'Invest in Businesses Built for Long-Term Growth',
                 points: ['Explore verified franchise opportunities', 'Compare business models & investment requirements', 'Discover opportunities across multiple industries', 'Connect directly with franchise brands'],
-                cta: 'Explore Opportunities',
+                cta: 'Find the Right Franchise Investment',
                 path: '/franchise-opportunities',
                 delay: '0.1s',
               },
@@ -2851,7 +2852,7 @@ function Hero() {
                 img: WHO_WE_SERVE_IMAGES.brands,
                 heading: 'Turn Your Brand Into a Scalable Franchise Network',
                 points: ['Reach serious investors actively looking for opportunities', 'Expand into new markets and cities', 'Generate qualified franchise leads', 'Build a stronger brand presence'],
-                cta: 'List Your Brand',
+                cta: 'Expand Your Brand Across India',
                 path: '/list-your-brand',
                 delay: '0.18s',
               },
@@ -2975,7 +2976,7 @@ function Hero() {
 
           <div className="text-center mt-10">
             <CtaButton type="button" onClick={() => window.open('https://cal.com/ifranchise.in/30min', '_blank')}>
-              Start Your Expansion Journey
+              Schedule a Growth Consultation
             </CtaButton>
           </div>
         </div>
@@ -3327,36 +3328,13 @@ function Hero() {
             }}
           >
               <div className="space-y-3">
-                {[
-                  {
-                    number: "01",
-                    question: "How much does it cost to start a franchise?",
-                    answer: "Franchise investment varies by industry. Low-cost franchises (?2-10 lakhs), mid-range (?10-50 lakhs), premium (?50 lakhs+). FOCO models require 30-40% less capital than FOFO models."
-                  },
-                  {
-                    number: "02", 
-                    question: "What's the difference between FOCO, FOFO & COCO?",
-                    answer: "FOCO: You invest, company operates. FOFO: You own and operate. COCO: Company owned and operated. Each offers different risk-reward profiles and involvement levels."
-                  },
-                  {
-                    number: "03",
-                    question: "Is franchise business profitable in India?",
-                    answer: "Successful franchises achieve 15-25% net margins after stabilization. F&B shows 18-30% gross margins, retail 25-40%, services 35-50%. Success depends on brand strength and execution."
-                  },
-                  {
-                    number: "04",
-                    question: "What legal documents are required?",
-                    answer: "Essential documents: FDD, Franchise Agreement, Trademark License, Operations Manual, Territory Rights. Plus GST registration, FSSAI license, and local permits."
-                  },
-                  {
-                    number: "05",
-                    question: "How long does it take to launch a franchise?",
-                    answer: "Typically 3-6 months from agreement to opening. Includes due diligence, documentation, site selection, setup, training, and soft launch preparation."
-                  }
-                ].map((faq, index) => (
-                  <PremiumFAQItem 
-                    key={faq.number}
-                    faq={faq}
+                {[...IFRANCHISE_OVERVIEW_FAQS, ...HOME_FAQS].map((faq, index) => (
+                  <PremiumFAQItem
+                    key={faq.question}
+                    faq={{
+                      ...faq,
+                      number: faq.number || String(index + 1).padStart(2, '0'),
+                    }}
                     index={index}
                   />
                 ))}

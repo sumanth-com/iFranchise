@@ -49,7 +49,7 @@ const FOOTER_COLS = [
     heading: 'For Investors',
     links: [
       { label: 'Opportunities', path: '/franchise-opportunities', dot: 'none' },
-      { label: 'Industries', path: '/franchise-opportunities', dot: 'none' },
+      { label: 'Franchise Services', path: '/services', dot: 'none' },
     ],
   },
   {
@@ -77,9 +77,9 @@ const CTA_CONTENT = {
     heading: 'Ready to Build, Invest, or Expand?',
     description:
       'Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.',
-    trust: 'Trusted by 1,200+ founders.',
-    primary: { label: 'Explore Opportunities', action: () => navigateTo('/franchise-opportunities') },
-    secondary: { label: 'Book Strategic Call', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
+    trust: 'Trusted by franchise brands and investors across India.',
+    primary: { label: 'Explore Franchise Opportunities', action: () => navigateTo('/franchise-opportunities') },
+    secondary: { label: 'Schedule a Growth Consultation', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
   },
   careers: {
     heading: 'Join the iFranchise team',

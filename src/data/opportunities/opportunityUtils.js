@@ -447,7 +447,8 @@ export function parsePaybackMonths(raw) {
   return null;
 }
 
-export function extractCities(...texts) {
+/** Named cities only — no tier-1/tier-2 inference (used on listing cards). */
+export function extractNamedCities(...texts) {
   const cities = new Set();
   const combined = texts.filter(Boolean).join(' ').toLowerCase();
 
@@ -456,10 +457,26 @@ export function extractCities(...texts) {
     if (re.test(combined)) cities.add(canonical);
   });
 
-  const metroList =
-    /mumbai|delhi|bengaluru|bangalore|hyderabad|chennai|pune|kolkata|ahmedabad|jaipur|lucknow|surat|indore|chandigarh|goa|kochi|tier\s*1|tier\s*2|pan\s*india/gi;
+  const cityList =
+    /mumbai|delhi|bengaluru|bangalore|hyderabad|chennai|pune|kolkata|ahmedabad|jaipur|lucknow|surat|indore|chandigarh|goa|kochi|guwahati/gi;
   let m;
-  while ((m = metroList.exec(combined)) !== null) {
+  while ((m = cityList.exec(combined)) !== null) {
+    const token = m[0].toLowerCase();
+    const mapped = INDIAN_CITY_ALIASES[token] || token.charAt(0).toUpperCase() + token.slice(1);
+    cities.add(mapped);
+  }
+
+  return [...cities];
+}
+
+/** Named cities plus tier/pan-India expansion (used for search filters). */
+export function extractCities(...texts) {
+  const cities = new Set(extractNamedCities(...texts));
+  const combined = texts.filter(Boolean).join(' ').toLowerCase();
+
+  const tierPanList = /tier\s*1|tier\s*2|pan\s*india/gi;
+  let m;
+  while ((m = tierPanList.exec(combined)) !== null) {
     const token = m[0].toLowerCase();
     if (token.includes('tier 1')) {
       ['Mumbai', 'Delhi NCR', 'Bengaluru', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata'].forEach((c) =>
@@ -468,10 +485,7 @@ export function extractCities(...texts) {
     } else if (token.includes('tier 2')) {
       ['Jaipur', 'Lucknow', 'Chandigarh', 'Indore', 'Ahmedabad'].forEach((c) => cities.add(c));
     } else if (token.includes('pan india')) {
-      ['Pan India'].forEach((c) => cities.add(c));
-    } else {
-      const mapped = INDIAN_CITY_ALIASES[token] || token.charAt(0).toUpperCase() + token.slice(1);
-      cities.add(mapped);
+      cities.add('Pan India');
     }
   }
 
@@ -480,6 +494,51 @@ export function extractCities(...texts) {
 
 export function deriveLocationsLabel(targetAreas, locationType, cities) {
   return formatExpansionHeroLabel({ cities, targetAreas, locationType });
+}
+
+function formatCityList(cities = []) {
+  const list = [...new Set(cities.map((c) => cleanText(c)).filter(Boolean))];
+  if (list.length === 1) return list[0];
+  if (list.length <= 3) return list.join(' · ');
+  return `${list.slice(0, 3).join(' · ')} · +${list.length - 3} cities`;
+}
+
+/** User-facing India label when data only has tier jargon, not named cities. */
+function formatTierFallback(target = '') {
+  const t = cleanText(target).toLowerCase();
+  if (/pan\s*india/i.test(t)) return 'Pan India';
+  if (/^all\s+cities$/i.test(t) || /cities?\s+across\s+india/i.test(t)) return 'Cities across India';
+  if (/^india$/i.test(t)) return 'India';
+  if (/tier\s*1/i.test(t) && /tier\s*2/i.test(t)) return 'Major cities across India';
+  if (/tier\s*1/i.test(t)) return 'Metro cities in India';
+  if (/tier\s*2/i.test(t)) return 'Growing cities in India';
+  if (/tier\s*3/i.test(t)) return 'Cities across India';
+  if (/metro/i.test(t)) return 'Metro cities in India';
+  return 'Expansion across India';
+}
+
+function isTierOnlyToken(text = '') {
+  const t = cleanText(text).toLowerCase();
+  if (!t) return true;
+  return (
+    /^tier\s*(?:i{1,3}|\d+)\b/.test(t) ||
+    /\btier\s*\d\b/.test(t) ||
+    /cities?\s+across\s+india/i.test(t) ||
+    /^pan\s*india/i.test(t) ||
+    /^all\s+cities$/i.test(t) ||
+    /^premium$/i.test(t) ||
+    /^brew\s*house$/i.test(t)
+  );
+}
+
+function stripTierJargonFromLocationType(text = '') {
+  const cleaned = cleanText(text)
+    .replace(/\btier\s*(?:i{1,3}|\d+)\s*cities?\b/gi, '')
+    .replace(/\s*\/\s*/g, ' · ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+    .replace(/^(?:·\s*)+|(?:\s*·)+$/g, '');
+  return cleaned;
 }
 
 /**
@@ -498,34 +557,37 @@ export function formatExpansionHeroLabel({
 
   const target = cleanText(targetAreas);
   if (/pan\s*india/i.test(target) || cities.some((c) => /pan india/i.test(c))) return 'Pan India';
-  if (/tier\s*1/i.test(target) && /tier\s*2/i.test(target)) return 'Tier 1 & Tier 2';
-  if (/tier\s*1/i.test(target)) return 'Tier 1 cities';
-  if (/tier\s*2/i.test(target)) return 'Tier 2 cities';
 
-  const list = [...new Set(cities.map((c) => cleanText(c)).filter(Boolean))];
-  if (list.length === 1) return list[0];
-  if (list.length === 2) return list.join(' · ');
-  if (list.length === 3) return list.join(' · ');
-  if (list.length > 3) {
-    return `${list.slice(0, 3).join(' · ')} · +${list.length - 3} cities`;
-  }
+  const namedCities = cities
+    .map((c) => cleanText(c))
+    .filter((c) => c && !/pan india/i.test(c));
+  if (namedCities.length) return formatCityList(namedCities);
 
   if (target) {
-    if (/and other metro|other metro cities/i.test(target)) return 'Major metro cities';
+    if (/^all\s+cities$/i.test(target)) return 'Cities across India';
+    if (/and other metro|other metro cities/i.test(target)) return 'Major metro cities in India';
     const parts = target
       .split(/[,;|]/)
       .map((p) => cleanText(p))
-      .filter((p) => p && p.length < 48 && !/and other/i.test(p));
+      .filter((p) => p && p.length < 48 && !/and other/i.test(p) && !isTierOnlyToken(p));
     if (parts.length > 3) {
       return `${parts.slice(0, 3).join(' · ')} · +${parts.length - 3} cities`;
     }
     if (parts.length) return parts.join(' · ');
+    if (/tier/i.test(target)) return formatTierFallback(target);
     if (target.length <= 44) return target.replace(/,\s*/g, ' · ');
-    return 'Multi-city expansion';
+    return 'Multi-city expansion in India';
   }
 
   const loc = cleanText(locationType);
-  if (loc) return loc.length > 44 ? 'Select markets' : loc;
+  if (loc) {
+    const withoutTier = stripTierJargonFromLocationType(loc);
+    if (withoutTier && withoutTier.length <= 44) return withoutTier;
+    if (withoutTier) return 'Select markets in India';
+    if (/tier/i.test(loc)) return formatTierFallback(loc);
+    return loc.length > 44 ? 'Select markets in India' : loc;
+  }
+
   return 'India';
 }
 

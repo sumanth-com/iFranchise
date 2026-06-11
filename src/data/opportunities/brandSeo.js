@@ -90,7 +90,7 @@ const BRAND_SEO_BY_SLUG = {
   'kasturi-creations': {
     title: 'Kasturi Creations Franchise India | Ethnic Wear FICO | iFranchise',
     description:
-      'Kasturi Creations franchise in India from ₹75 Lakhs. Womens Indian ethnic wear — FICO model, 28% ROI, 15+ stores, malls and high streets. Apply on iFranchise.',
+      'Kasturi Creations franchise in India from ₹75 Lakhs onwards. Womens Indian ethnic wear — FICO model, 15+ stores, malls and high streets. Minimum guarantee returns. Apply on iFranchise.',
     keywords:
       'kasturi creations franchise, kasturi creations franchise india, kasturi franchise cost, ethnic wear franchise india, saree franchise india, FICO retail franchise',
     ogTitle: 'Kasturi Creations Franchise | iFranchise',

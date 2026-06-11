@@ -35,7 +35,7 @@ function ClosedToggle({ onOpen, franchiseName }) {
             type="button"
             onClick={onOpen}
             className="franchise-inquiry-rail__toggle"
-            aria-label={`Enquire now about ${franchiseName}`}
+            aria-label={`Connect with franchise experts about ${franchiseName}`}
             aria-expanded={false}
           >
             <FiChevronLeft aria-hidden />

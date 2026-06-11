@@ -173,7 +173,7 @@ export default function FranchiseInquiryModal({
 
   const panel = (
     <div
-      className={`franchise-inquiry-modal relative z-10${
+      className={`franchise-inquiry-modal light-surface bg-white relative z-10${
         isPanel ? ' franchise-inquiry-modal--drawer franchise-inquiry-modal--compact' : ''
       }${showWhatsAppAction ? ' franchise-inquiry-modal--mobile-actions' : ''}`}
     >
@@ -367,7 +367,7 @@ export default function FranchiseInquiryModal({
                     disabled={isSubmitting}
                     className="franchise-inquiry-modal__submit"
                   >
-                    {isSubmitting ? 'Sending…' : 'Send interest'}
+                    {isSubmitting ? 'Sending…' : 'Submit Franchise Enquiry'}
                   </button>
                   {showWhatsAppAction ? (
                     <a

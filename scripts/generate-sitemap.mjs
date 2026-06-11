@@ -76,31 +76,38 @@ function escapeXml(value) {
     .replace(/'/g, '&apos;');
 }
 
+const LASTMOD = new Date().toISOString().split('T')[0];
+
 const entries = [
   ...MAIN_PAGES.map(({ path, changefreq, priority }) => ({
     loc: `${siteUrl}${path}`,
     changefreq,
     priority,
+    lastmod: LASTMOD,
   })),
   ...FRANCHISE_PAGES.map(({ path }) => ({
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.85',
+    lastmod: LASTMOD,
   })),
   ...LOCATION_PAGES.map(({ path }) => ({
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.9',
+    lastmod: LASTMOD,
   })),
   ...BLOG_PAGES.map(({ path }) => ({
     loc: `${siteUrl}${path}`,
     changefreq: 'monthly',
     priority: '0.75',
+    lastmod: LASTMOD,
   })),
   ...CAREER_PAGES.map(({ path }) => ({
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.7',
+    lastmod: LASTMOD,
   })),
 ];
 
@@ -108,6 +115,7 @@ const urls = entries
   .map(
     (entry) => `  <url>
     <loc>${escapeXml(entry.loc)}</loc>
+    <lastmod>${entry.lastmod}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority}</priority>
   </url>`,

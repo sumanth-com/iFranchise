@@ -3,7 +3,9 @@ import {
   CAREERS_FAQS,
   CONTACT_FAQS,
   HOME_FAQS,
+  IFRANCHISE_OVERVIEW_FAQS,
   LIST_YOUR_BRAND_FAQS,
+  SERVICES_FAQS,
 } from '../data/faqContent.js';
 
 const KICKER_CLASS = 'text-xs font-semibold uppercase tracking-[0.25em] text-violet-400';
@@ -52,6 +54,20 @@ export default function FAQPage() {
 
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <section className="flex flex-col gap-10">
+            <FaqGroup
+              idPrefix="overview"
+              kicker="About iFranchise"
+              title="Platform & services"
+              description="What iFranchise is, how we help investors and brand owners, and the franchise consulting services we provide across India."
+              faqs={IFRANCHISE_OVERVIEW_FAQS}
+            />
+            <FaqGroup
+              idPrefix="services"
+              kicker="Franchise consulting"
+              title="Services & industries"
+              description="Franchise consulting scope, support for first-time investors, franchise-readiness for brands, and industries covered on the platform."
+              faqs={SERVICES_FAQS}
+            />
             <FaqGroup
               idPrefix="home"
               kicker="For investors"
