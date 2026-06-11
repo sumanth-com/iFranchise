@@ -1,22 +1,8 @@
 <!doctype html>
 <html lang="en-IN">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-P6Z67GFD');
-      window.__IFR_GTM_CONTAINER__ = 'GTM-P6Z67GFD';
-    </script>
-    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <!-- Favicons: BrandNav → scripts/generate-favicons.mjs (Google prefers ≥48×48) -->
     <link rel="icon" type="image/png" href="/favicon-48x48.png?v=20260603-1" sizes="48x48" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260603-1" sizes="any" />
@@ -27,17 +13,12 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png?v=20260603-1" />
     <link rel="manifest" href="/manifest.webmanifest?v=20260603-1" />
     <link rel="manifest" href="/manifest.json?v=20260603-1" />
-    <link rel="manifest" href="/manifest.json?v=20260603-1" />
-    <link rel="manifest" href="/manifest.json?v=20260603-1" />
-    <link rel="manifest" href="/manifest.json?v=20260603-1" />
-    <link rel="manifest" href="/manifest.json?v=20260603-1" />
     <meta name="apple-mobile-web-app-title" content="iFranchise" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="application-name" content="iFranchise" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <!-- Per-route SEO (brands, blogs, careers, pages) — applied before React for Google/social crawlers -->
-    <script src="/route-seo-boot.js"></script>
+    <!-- Per-route SEO — deferred so LCP hero is not blocked -->
+    <script src="/route-seo-boot.js" defer></script>
     <meta
       name="description"
       content="Discover verified franchise business opportunities in India. iFranchise connects investors and brands with franchise consulting, expansion services, and growth advisory."
@@ -74,21 +55,24 @@
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
     <link rel="alternate" type="text/plain" title="LLM site summary" href="/llms.txt" />
     <script>
-      (function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();
+      (function(){try{var k='ifranchise-theme-preference',sk='ifranchise-theme-source',s=localStorage.getItem(k),src=localStorage.getItem(sk),t;if(src==='manual'&&(s==='dark'||s==='light'))t=s;else if(!src&&(s==='dark'||s==='light')){t=s;try{localStorage.setItem(sk,'manual')}catch(e){}}else t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0a0618':'#f8f9fc');window.__IFR_THEME__=t;}catch(e){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';window.__IFR_THEME__='dark';}})();
     </script>
+    <link
+      rel="preload"
+      href="/hero/lcp-dark.webp"
+      as="image"
+      type="image/webp"
+      fetchpriority="high"
+      id="ifr-hero-preload"
+    />
     <script>
       (function () {
         var p = location.pathname;
         if (p !== '/' && p !== '') return;
-        var light = document.documentElement.getAttribute('data-theme') === 'light';
-        var href = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
-        var link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.type = 'image/webp';
-        link.href = href;
-        link.setAttribute('fetchpriority', 'high');
-        document.head.appendChild(link);
+        if (window.__IFR_THEME__ === 'light') {
+          var link = document.getElementById('ifr-hero-preload');
+          if (link) link.href = '/hero/lcp-light.webp';
+        }
       })();
     </script>
   <!-- Critical CSS: paint correct background + hide skip link before the JS bundle loads -->
@@ -219,7 +203,11 @@
       #ifr-static-hero.ifr-static-hero--hidden {
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.25s ease, visibility 0.25s ease;
+        pointer-events: none;
+      }
+      .site-navbar {
+        height: 4rem;
+        min-height: 4rem;
       }
     </style>
     <title>iFranchise | Franchise Consulting &amp; Opportunities India</title>
@@ -316,7 +304,19 @@
       aria-hidden="true"
       data-route="home"
     >
-      <div class="hero-cinematic-media-wrap" id="ifr-static-hero-media"></div>
+      <div class="hero-cinematic-media-wrap" id="ifr-static-hero-media">
+        <img
+          id="ifr-static-hero-img"
+          class="hero-static-img"
+          src="/hero/lcp-dark.webp"
+          alt=""
+          width="640"
+          height="427"
+          decoding="sync"
+          fetchpriority="high"
+          loading="eager"
+        />
+      </div>
     </div>
     <script>
       (function () {
@@ -329,20 +329,46 @@
         }
         var light = document.documentElement.getAttribute('data-theme') === 'light';
         el.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
-        var wrap = document.getElementById('ifr-static-hero-media');
-        if (!wrap || wrap.querySelector('img')) return;
-        var img = document.createElement('img');
-        img.className = 'hero-static-img';
-        img.src = light ? '/hero/lcp-light.webp' : '/hero/lcp-dark.webp';
-        img.alt = '';
-        img.width = 640;
-        img.height = 427;
-        img.decoding = 'async';
-        img.setAttribute('fetchpriority', 'high');
-        wrap.appendChild(img);
+        var img = document.getElementById('ifr-static-hero-img');
+        if (img && light) img.src = '/hero/lcp-light.webp';
       })();
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Google Tag Manager — after app shell so LCP is not delayed -->
+    <script>
+      window.__IFR_GTM_CONTAINER__ = 'GTM-P6Z67GFD';
+      function ifrLoadGtm() {
+        if (window.__IFR_GTM_LOADED__) return;
+        window.__IFR_GTM_LOADED__ = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-P6Z67GFD');
+      }
+      if ('requestIdleCallback' in window) {
+        window.addEventListener(
+          'load',
+          function () {
+            requestIdleCallback(ifrLoadGtm, { timeout: 4000 });
+          },
+          { once: true },
+        );
+      } else {
+        window.addEventListener(
+          'load',
+          function () {
+            setTimeout(ifrLoadGtm, 2500);
+          },
+          { once: true },
+        );
+      }
+    </script>
   </body>
 </html>

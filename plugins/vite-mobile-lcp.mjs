@@ -2,6 +2,7 @@
  * Production HTML tweaks for mobile LCP:
  * - All CSS non-render-blocking (critical CSS is inline in index.html)
  * - Strip modulepreload / prefetch chains that compete with hero image
+ * - Dedupe manifest links
  */
 export function viteMobileLcp() {
   return {
@@ -17,6 +18,25 @@ export function viteMobileLcp() {
       );
 
       out = out.replace(/\s*<link rel="modulepreload"[^>]*>\n?/g, '');
+
+      out = out.replace(/<link rel="manifest" href="\/manifest\.json[^"]*"[^>]*>\n?/g, '');
+
+      const manifestCount = (out.match(/rel="manifest"/g) || []).length;
+      if (manifestCount > 1) {
+        let kept = false;
+        out = out.replace(/<link rel="manifest"[^>]*>\n?/g, (tag) => {
+          if (kept) return '';
+          kept = true;
+          return tag;
+        });
+      }
+
+      if (!out.includes('route-seo-boot.js" defer')) {
+        out = out.replace(
+          /<script src="\/route-seo-boot\.js"><\/script>/,
+          '<script src="/route-seo-boot.js" defer></script>',
+        );
+      }
 
       return out;
     },

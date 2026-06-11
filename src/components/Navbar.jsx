@@ -706,7 +706,7 @@ function Navbar() {
               height={40}
               loading="eager"
               decoding="async"
-              fetchPriority="high"
+              fetchPriority="auto"
               onError={(e) => {
                 const img = e.currentTarget;
                 if (img.dataset.fallbackTried === '1') return;

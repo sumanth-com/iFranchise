@@ -1,6 +1,5 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './styles/themes.css'
 import './index.css'
 import './styles/performance.css'
 import { initScrollRestoration } from './lib/navigation.js'
@@ -9,11 +8,20 @@ import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import { logger } from './lib/logger.js'
 import { bootstrapFormPipeline } from './lib/forms/formBootstrap.js'
+
 const isHome =
   typeof window !== 'undefined' &&
   (window.location.pathname === '/' || window.location.pathname === '')
 const isMobile =
   typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+
+if (isHome && isMobile) {
+  requestAnimationFrame(() => {
+    import('./styles/themes.css')
+  })
+} else {
+  import('./styles/themes.css')
+}
 
 function runWhenIdle(fn, timeout = 4000) {
   if ('requestIdleCallback' in window) {

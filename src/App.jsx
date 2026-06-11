@@ -66,7 +66,7 @@ function App() {
   const [pathname, setPathname] = useState(getLogicalPathname);
   const [pagePhase, setPagePhase] = useState('idle');
   const isHomeRoute = pathname === '/';
-  const [showBackdrop, setShowBackdrop] = useState(!lowPowerDevice && !isHomeRoute);
+  const [showBackdrop, setShowBackdrop] = useState(false);
   const transitionTimerRef = useRef(null);
 
   const assistantEligible = pathname !== '/404';
@@ -313,15 +313,16 @@ function App() {
     }
     if (isHomeRoute) {
       let idleId;
+      let timeoutId;
       const show = () => setShowBackdrop(true);
       if ('requestIdleCallback' in window) {
-        idleId = window.requestIdleCallback(show, { timeout: 1800 });
+        idleId = window.requestIdleCallback(show, { timeout: 4500 });
       } else {
-        idleId = window.setTimeout(show, 600);
+        timeoutId = window.setTimeout(show, 2500);
       }
       return () => {
-        if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
-        else window.clearTimeout(idleId);
+        if (idleId != null && 'requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+        if (timeoutId) window.clearTimeout(timeoutId);
       };
     }
     setShowBackdrop(true);
