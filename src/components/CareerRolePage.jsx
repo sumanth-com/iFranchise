@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { navigateTo } from '../lib/navigation';
+import { getLogicalPathname, navigateTo } from '../lib/navigation';
 import CareerApplyForm from './careers/CareerApplyForm';
 import {
   HIRING_STEPS,
@@ -129,15 +129,18 @@ function ApplyPanel({ role }) {
 }
 
 export default function CareerRolePage() {
-  const roleId = getRoleIdFromPathname(
-    typeof window !== 'undefined' ? window.location.pathname : '',
-  );
+  const isCareerDetailRoute =
+    typeof window !== 'undefined' && getLogicalPathname() === '/career-detail';
+  const roleId = isCareerDetailRoute
+    ? getRoleIdFromPathname(window.location.pathname)
+    : '';
   const role = useMemo(() => getRoleById(roleId), [roleId]);
 
   useEffect(() => {
-    if (!role) {
-      navigateTo('/careers#open-roles', { replace: true });
-    }
+    if (role) return;
+    // URL can change before React unmounts this page; only redirect on a real invalid role URL.
+    if (getLogicalPathname() !== '/career-detail') return;
+    navigateTo('/careers#open-roles', { replace: true });
   }, [role]);
 
   const qualifications = useMemo(() => {
