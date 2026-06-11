@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png?v=20260603-1" />
     <link rel="manifest" href="/manifest.webmanifest?v=20260603-1" />
     <link rel="manifest" href="/manifest.json?v=20260603-1" />
+    <link rel="manifest" href="/manifest.json?v=20260603-1" />
     <meta name="apple-mobile-web-app-title" content="iFranchise" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="application-name" content="iFranchise" />
@@ -208,6 +209,43 @@
       .site-navbar {
         height: 4rem;
         min-height: 4rem;
+      }
+      .site-navbar-logo-mark-wrap {
+        width: 2.5rem;
+        height: 2.5rem;
+        flex-shrink: 0;
+      }
+      @media (min-width: 640px) {
+        .site-navbar-logo-mark-wrap {
+          width: 2.75rem;
+          height: 2.75rem;
+        }
+      }
+      @media (min-width: 768px) and (max-width: 1279px) {
+        .site-navbar {
+          height: 5rem;
+          min-height: 5rem;
+        }
+        .site-navbar-logo-mark-wrap {
+          width: 3.5rem;
+          height: 3.5rem;
+        }
+      }
+      /* Reserve hero copy space before React hydrates (reduces CLS) */
+      #main-content .hero-cinematic-layout {
+        min-height: calc(100dvh - 4rem);
+        padding-top: 6.5rem;
+      }
+      #main-content .hero-cinematic-content {
+        min-height: 17rem;
+      }
+      @media (min-width: 640px) {
+        #main-content .hero-cinematic-layout {
+          padding-top: 4rem;
+        }
+        #main-content .hero-cinematic-content {
+          min-height: 14rem;
+        }
       }
     </style>
     <title>iFranchise | Franchise Consulting &amp; Opportunities India</title>

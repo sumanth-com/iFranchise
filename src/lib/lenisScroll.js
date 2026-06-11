@@ -107,8 +107,8 @@ export function scheduleLenisInit() {
   };
 
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(run, { timeout: 1200 });
+    requestIdleCallback(run, { timeout: 8000 });
   } else {
-    setTimeout(run, 80);
+    setTimeout(run, 4000);
   }
 }

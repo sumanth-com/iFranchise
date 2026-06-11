@@ -71,7 +71,7 @@ function App() {
 
   const assistantEligible = pathname !== '/404';
   const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
-  const [assistantMounted, setAssistantMounted] = useState(() => !lowPowerDevice);
+  const [assistantMounted, setAssistantMounted] = useState(false);
   const [showPreFooter, setShowPreFooter] = useState(false);
 
   useEffect(() => {
@@ -79,8 +79,18 @@ function App() {
       setAssistantMounted(false);
       return undefined;
     }
-    setAssistantMounted(true);
-    return undefined;
+    let idleId;
+    let timeoutId;
+    const mount = () => setAssistantMounted(true);
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(mount, { timeout: 3500 });
+    } else {
+      timeoutId = window.setTimeout(mount, 1500);
+    }
+    return () => {
+      if (idleId != null) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, [assistantEligible, scrolledPastHero, pathname]);
 
   const showExpansionAssistant = assistantEligible && scrolledPastHero && assistantMounted;
@@ -227,16 +237,17 @@ function App() {
     };
 
     let idleId;
+    let timeoutId;
     if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(setup, { timeout: 400 });
+      idleId = window.requestIdleCallback(setup, { timeout: 2500 });
     } else {
-      idleId = window.setTimeout(setup, 0);
+      timeoutId = window.setTimeout(setup, 800);
     }
 
     return () => {
       cancelled = true;
-      if ('requestIdleCallback' in window) window.cancelIdleCallback(idleId);
-      else window.clearTimeout(idleId);
+      if (idleId != null && 'requestIdleCallback' in window) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
       observer?.disconnect();
     };
   }, [pathname]);
@@ -291,6 +302,12 @@ function App() {
   const isListYourBrandPage       = pathname === '/list-your-brand';
   const isFAQPage                 = pathname === '/faq';
   const isHomePage                = pathname === '/';
+
+  useEffect(() => {
+    const staticHero = document.getElementById('ifr-static-hero');
+    if (!staticHero) return;
+    if (pathname !== '/') staticHero.remove();
+  }, [pathname]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('low-power-device', lowPowerDevice);

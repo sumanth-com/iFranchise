@@ -15,13 +15,7 @@ const isHome =
 const isMobile =
   typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
 
-if (isHome && isMobile) {
-  requestAnimationFrame(() => {
-    import('./styles/themes.css')
-  })
-} else {
-  import('./styles/themes.css')
-}
+import './styles/themes.css'
 
 function runWhenIdle(fn, timeout = 4000) {
   if ('requestIdleCallback' in window) {
@@ -31,28 +25,31 @@ function runWhenIdle(fn, timeout = 4000) {
   }
 }
 
-if (!isHome) {
-  import('./styles/mobile-responsive.css')
+import('./styles/mobile-responsive.css')
+
+function bootLenisOnInteraction() {
+  if (isMobile) return
+  let started = false
+  const start = () => {
+    if (started) return
+    started = true
+    window.removeEventListener('scroll', start, true)
+    window.removeEventListener('wheel', start, true)
+    window.removeEventListener('pointerdown', start, true)
+    import('./lib/lenisScroll.js').then(({ scheduleLenisInit }) => scheduleLenisInit())
+  }
+  window.addEventListener('scroll', start, { passive: true, capture: true })
+  window.addEventListener('wheel', start, { passive: true, capture: true })
+  window.addEventListener('pointerdown', start, { once: true, capture: true })
+  runWhenIdle(start, 12000)
 }
 
 runWhenIdle(() => {
-  if (isHome) import('./styles/mobile-responsive.css')
   import('./lib/routePrefetch.js').then(({ initRoutePrefetch }) => initRoutePrefetch())
   import('./lib/deferStyles.js').then(({ deferNonCriticalStyles }) => deferNonCriticalStyles())
   import('./lib/scheduleAnalytics.js').then(({ scheduleAnalytics }) => scheduleAnalytics())
-  if (!isMobile) {
-    import('./lib/lenisScroll.js').then(({ scheduleLenisInit }) => {
-      if (document.readyState === 'complete') scheduleLenisInit()
-      else window.addEventListener('load', scheduleLenisInit, { once: true })
-    })
-  }
-}, isMobile ? 5000 : 2500)
-
-if (isHome) {
-  runWhenIdle(() => {
-    import('./components/Hero.jsx')
-  }, isMobile ? 1200 : 400)
-}
+  bootLenisOnInteraction()
+}, isMobile ? 4000 : 2000)
 
 initScrollRestoration()
 

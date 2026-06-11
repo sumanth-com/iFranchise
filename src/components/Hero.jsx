@@ -2475,19 +2475,21 @@ function Hero() {
   }, [isLight, theme]);
 
   useEffect(() => {
-    if (heroImageReady) removeStaticHero();
-  }, [heroImageReady]);
+    if (!heroImageReady || isMobileViewport) return;
+    removeStaticHero();
+  }, [heroImageReady, isMobileViewport]);
 
   useEffect(() => {
+    if (isMobileViewport) return;
     preloadHomeHeroForTheme(theme);
-  }, [theme]);
+  }, [theme, isMobileViewport]);
 
   useEffect(() => {
     let cancelled = false;
     const show = () => {
       if (!cancelled) startTransition(() => setBelowFoldReady(true));
     };
-    const idleMs = isMobileViewport ? 1400 : 900;
+    const idleMs = isMobileViewport ? 2800 : 2200;
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(show, { timeout: idleMs });
       return () => {
@@ -2639,7 +2641,7 @@ function Hero() {
         }`}
       >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
-          {!isLight ? (
+          {!isMobileViewport && !isLight ? (
             <div
               ref={darkHeroRef}
               className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
@@ -2662,7 +2664,8 @@ function Hero() {
                 pictureClassName="block h-full w-full"
               />
             </div>
-          ) : (
+          ) : null}
+          {!isMobileViewport && isLight ? (
             <div
               ref={lightHeroRef}
               className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
@@ -2685,7 +2688,7 @@ function Hero() {
                 pictureClassName="block h-full w-full"
               />
             </div>
-          )}
+          ) : null}
         </div>
         <div
           className={`hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 ${
