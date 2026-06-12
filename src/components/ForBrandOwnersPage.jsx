@@ -27,10 +27,9 @@ import {
   getBrandCaseStudies,
 } from '../data/franchiseData';
 import { FiArrowRight } from 'react-icons/fi';
-import { BRAND_OWNERS_INDUSTRIES } from '../data/sectionImages';
-import IndustryCard from './IndustryCard';
 import TrustLogoMarquee from './ui/TrustLogoMarquee.jsx';
 import LybExpansionVisualPanel from './LybExpansionVisualPanel';
+import ReadinessAssessmentCTA from './ecosystem/ReadinessAssessmentCTA';
 
 /** Shared layout - continuous page, tight vertical rhythm */
 const LYB_SECTION = 'relative overflow-hidden bg-transparent py-7 lg:py-9';
@@ -296,13 +295,13 @@ export default function ForBrandOwnersPage() {
 
       {/* -- separator -- */}
       
-      {/* â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-
-          SECTION 8 - INDUSTRIES WE SUPPORT
-          â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â-â- */}
-      <ServicesStyleIndustriesSection />
-
       <RoadmapTimelineSection />
       <CaseStudiesSection />
+
+      <div className={`${LYB_SECTION} mx-auto max-w-4xl px-4 pb-8 sm:px-6`}>
+        <ReadinessAssessmentCTA />
+      </div>
+
       <ListYourBrandFAQSection />
 
     </main>
@@ -1020,55 +1019,6 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry', fitViewport = false }
         </div>
       </motion.div>
     </motion.div>
-  );
-}
-
-/* ServicesStyleIndustriesSection.jsx */
-function ServicesStyleIndustriesSection() {
-  return (
-    <section className="lyb-industries-section relative z-10 overflow-hidden">
-      <motion.div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8">
-        <motion.div className="lyb-dark-heading mb-6 text-center lg:mb-7">
-          <div className="mb-4 flex justify-center">
-            <span className="lyb-section-badge inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-widest">
-              <span className="h-1.5 w-1.5 rounded-full bg-violet-500" />
-              Industries
-            </span>
-          </div>
-          <h2 className={`lyb-section-heading-on-dark mb-3 ${sectionTitleClass(false)}`}>
-            Industries We Help Scale Through Franchising
-          </h2>
-          <p className="lyb-section-subtext mx-auto max-w-xl text-sm leading-relaxed sm:text-base">
-            Franchise services built for brands across sectors ready to expand through scalable models.
-          </p>
-        </motion.div>
-
-        <motion.div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {BRAND_OWNERS_INDUSTRIES.map((ind, i) => (
-            <div key={ind.label} className="h-full">
-              <IndustryCard
-                className="lyb-industry-card h-full"
-                label={ind.label}
-                desc={ind.desc}
-                img={ind.img}
-                accent={ind.accent}
-                priority={i < 3}
-                onExplore={() => navigateTo('/franchise-opportunities')}
-              />
-            </div>
-          ))}
-        </motion.div>
-
-        <motion.div className="mt-8 text-center lg:mt-9">
-          <p className="lyb-section-subtext mb-5 text-sm">
-            Don&apos;t see your industry? We work with businesses across all sectors.
-          </p>
-          <CtaButton type="button" size="lg" onClick={() => navigateTo('/contact-us')}>
-            Discuss Your Industry
-          </CtaButton>
-        </motion.div>
-      </motion.div>
-    </section>
   );
 }
 

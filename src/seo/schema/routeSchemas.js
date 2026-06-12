@@ -28,6 +28,14 @@ import {
   buildWebSiteSchema,
 } from './builders.js';
 import { pushSchema } from './helpers.js';
+import {
+  getEcosystemBreadcrumbs,
+  getEcosystemFaqsForPath,
+} from '../ecosystemSeo.js';
+import {
+  getEcosystemLogicalRoute,
+  isEcosystemPath,
+} from '../../data/ecosystem/ecosystemRoutes.js';
 const BREADCRUMB_MAP = {
   '/': [{ name: 'Home', path: '/' }],
   '/about-us': [{ name: 'Home', path: '/' }, { name: 'About Us', path: '/about-us' }],
@@ -228,6 +236,31 @@ export function buildSchemasForRoute(seo, context = {}) {
       }),
     );
     addBreadcrumbs(schemas, seo);
+    return schemas;
+  }
+
+  const pathname = seo.canonicalPath || '';
+  if (isEcosystemPath(pathname) || getEcosystemLogicalRoute(pathname)) {
+    pushSchema(
+      schemas,
+      'webpage',
+      buildWebPageSchema({
+        canonicalUrl,
+        name: seo.title,
+        description: seo.description,
+      }),
+    );
+    const faqs = getEcosystemFaqsForPath(pathname);
+    if (faqs.length) {
+      const faqSchema = buildFaqPageSchema(faqs);
+      if (faqSchema) pushSchema(schemas, 'faq-ecosystem', faqSchema);
+    }
+    const crumbs = getEcosystemBreadcrumbs(pathname);
+    if (crumbs.length > 1) {
+      addBreadcrumbs(schemas, seo, crumbs);
+    } else {
+      addBreadcrumbs(schemas, seo);
+    }
     return schemas;
   }
 

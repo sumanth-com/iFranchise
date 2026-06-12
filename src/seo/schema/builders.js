@@ -2,6 +2,7 @@ import { SOCIAL_LINKS } from '../../constants/socialLinks.js';
 import { OUR_SERVICES_ITEMS } from '../../data/ourServices.js';
 import { franchiseOpportunities } from '../../data/franchiseData.js';
 import { blogPosts } from '../../components/blogData.js';
+import { citationsToSchema, getBlogCitations } from '../../data/citations/index.js';
 import { ORGANIZATION, SITE_NAME, SITE_URL, absoluteUrl } from '../config';
 import {
   buildBreadcrumbSchema,
@@ -292,6 +293,7 @@ export function buildBlogSchema(canonicalUrl) {
 export function buildBlogPostingSchema(post, canonicalUrl) {
   const imageUrl = toAbsoluteImageUrl(post.image || post.thumbnail);
   const authorName = post.author?.name || SITE_NAME;
+  const schemaCitations = citationsToSchema(getBlogCitations(post.slug));
 
   return {
     '@context': 'https://schema.org',
@@ -322,6 +324,7 @@ export function buildBlogPostingSchema(post, canonicalUrl) {
     },
     url: canonicalUrl,
     articleSection: post.category,
+    ...(schemaCitations ? { citation: schemaCitations } : {}),
   };
 }
 

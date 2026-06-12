@@ -11,6 +11,7 @@ import {
   parseLocationPathname,
 } from '../data/opportunityLocations.js';
 import { LEGACY_PATH_REDIRECTS, ROUTES } from './routes.js';
+import { getAllEcosystemPaths, getEcosystemLogicalRoute, isKnowledgeTopicPath } from '../data/ecosystem/ecosystemRoutes.js';
 
 export const NAVIGATE_EVENT = 'ifr:navigate';
 
@@ -86,6 +87,10 @@ export function getLogicalPathname() {
     const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
     return franchiseSlugToId[slug] ? '/franchise-details' : '/404';
   }
+
+  const ecosystemLogical = getEcosystemLogicalRoute(pathname);
+  if (ecosystemLogical) return ecosystemLogical;
+
   const knownPaths = [
     '/',
     ROUTES.ABOUT,
@@ -101,8 +106,9 @@ export function getLogicalPathname() {
     '/careers',
     '/list-your-brand',
     '/faq',
+    ...getAllEcosystemPaths(),
   ];
-  if (!knownPaths.includes(pathname)) return '/404';
+  if (!knownPaths.includes(pathname) && !isKnowledgeTopicPath(pathname)) return '/404';
   return pathname;
 }
 

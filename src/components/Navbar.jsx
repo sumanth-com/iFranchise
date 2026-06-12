@@ -574,16 +574,58 @@ const SERVICES_ITEMS = [
   { title: 'Lead Generation', description: 'Quality leads for your brand', Icon: LeadGenIcon, path: '/services' },
 ];
 
-// Blogs nav (Resources renamed) - active items only
-const BLOGS_NAV_ITEMS = [
-  { title: 'Blogs', description: 'Latest insights and updates', Icon: BlogIcon, path: '/blogs' },
+function CalculatorIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 stroke-slate-500 group-hover:stroke-[#0b0f19]" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z" />
+      <path d="M8 9h2m-2 4h2m4-4h2m-2 4h2" />
+    </svg>
+  );
+}
+
+function KnowledgeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 stroke-slate-500 group-hover:stroke-[#0b0f19]" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg>
+  );
+}
+
+function StoriesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5 stroke-slate-500 group-hover:stroke-[#0b0f19]" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+    </svg>
+  );
+}
+
+const RESOURCES_NAV_ITEMS = [
+  { title: 'Blog', Icon: BlogIcon, path: '/blogs' },
+  { title: 'Knowledge Hub', Icon: KnowledgeIcon, path: '/resources/knowledge-hub' },
+  { title: 'Readiness Assessment', Icon: ProcessIcon, path: '/franchise-readiness-assessment' },
 ];
 
-/** @deprecated Hidden - restore when re-enabling Resources dropdown extras */
-const RESOURCES_ITEMS_HIDDEN = [
-  { title: 'FAQs', description: 'Common questions answered', Icon: FAQIcon, path: '/faq' },
-  { title: 'Industry Reports', description: 'Market analysis and trends', Icon: ReportIcon, path: '/blogs' },
-];
+function NavbarResourcesPanel({ onNavigate }) {
+  return (
+    <motion.div className={`${NAV_DROPDOWN_PANEL_CLASS} w-[min(15.5rem,calc(100vw-32px))]`}>
+      <div className="p-2" data-lenis-prevent>
+        {RESOURCES_NAV_ITEMS.map((item) => (
+          <button
+            key={item.path}
+            type="button"
+            onClick={() => onNavigate(item.path)}
+            className="group flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors hover:bg-violet-50"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-violet-600 transition-colors group-hover:bg-violet-100">
+              <item.Icon />
+            </span>
+            <span className="text-sm font-semibold text-slate-900">{item.title}</span>
+          </button>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
 
 function Navbar() {
   const navFranchiseFilters = useFranchiseOpportunityNavbarFilters();
@@ -595,6 +637,7 @@ function Navbar() {
   const savedScrollRef = useRef(0);
 
   const franchiseRef = useRef(null);
+  const resourcesRef = useRef(null);
   useEffect(() => {
     function onScroll() {
       setIsScrolled(window.scrollY > 8);
@@ -652,13 +695,14 @@ function Navbar() {
     setActiveDropdown((prev) => (prev === key ? null : key));
   };
 
-  // Franchise filters: close when clicking outside (opened via hover on desktop)
+  // Dropdown panels: close when clicking outside (opened via hover on desktop)
   useEffect(() => {
-    if (activeDropdown !== 'franchiseFilters') return undefined;
+    if (activeDropdown !== 'franchiseFilters' && activeDropdown !== 'resources') return undefined;
 
     const onPointerDown = (e) => {
       const target = e.target;
       if (franchiseRef.current?.contains(target)) return;
+      if (resourcesRef.current?.contains(target)) return;
       setActiveDropdown(null);
     };
 
@@ -805,15 +849,43 @@ function Navbar() {
             </AnimatePresence>
           </li>
 
-          {/* Blogs - direct link */}
-          <li>
-            <a
-              href="/blogs"
-              onClick={(e) => { e.preventDefault(); navigateTo('/blogs'); }}
-              className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
+          {/* Resources dropdown */}
+          <li
+            className="relative"
+            ref={resourcesRef}
+            onMouseEnter={() => setActiveDropdown('resources')}
+            onMouseLeave={() => setActiveDropdown(null)}
+          >
+            <button
+              type="button"
+              onClick={() => toggleNavDropdown('resources')}
+              className={`${NAV_LINK_BASE} ${
+                activeDropdown === 'resources' ? NAV_LINK_ACTIVE : NAV_LINK_IDLE
+              }`}
+              aria-expanded={activeDropdown === 'resources'}
+              aria-haspopup="true"
             >
-              Blogs
-            </a>
+              Resources
+              <ChevronIcon className={activeDropdown === 'resources' ? 'rotate-180' : ''} />
+            </button>
+            <AnimatePresence>
+              {activeDropdown === 'resources' && (
+                <motion.div
+                  key="resources-panel"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Resources navigation"
+                  initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.99 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute -left-8 top-full z-[10001] mt-2"
+                  onMouseDown={(e) => e.stopPropagation()}
+                >
+                  <NavbarResourcesPanel onNavigate={navigateTo} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </li>
 
           {/* Careers */}
@@ -965,14 +1037,24 @@ function Navbar() {
                     Franchise Opportunities
                   </motion.a>
 
-                  <motion.a
+                  <motion.div
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
-                    href="/blogs"
-                    onClick={(e) => { e.preventDefault(); navigateTo('/blogs'); }}
-                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
+                    className="navbar-mobile-nav-item rounded-xl border px-4 py-3"
                   >
-                    Blogs
-                  </motion.a>
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-violet-400">Resources</p>
+                    <div className="flex flex-col gap-1">
+                      {RESOURCES_NAV_ITEMS.map((item) => (
+                        <a
+                          key={item.path}
+                          href={item.path}
+                          onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
+                          className="mobile-nav-link rounded-lg px-2 py-2 text-sm font-semibold"
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                    </div>
+                  </motion.div>
 
                   <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}

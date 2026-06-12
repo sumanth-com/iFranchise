@@ -53,9 +53,9 @@ export const HOME_FAQS = [
   },
   {
     number: '02',
-    question: "What's the difference between FOCO, FOFO & COCO?",
+    question: "What's the difference between FOCO, FOFO & FICO?",
     answer:
-      'FOCO: You invest, company operates. FOFO: You own and operate. COCO: Company owned and operated. Each offers different risk-reward profiles and involvement levels.',
+      'FOCO: You invest, company operates. FOFO: You own and operate. FICO: Capital-focused with company-led operations. Each offers different risk-reward profiles and involvement levels.',
   },
   {
     number: '03',

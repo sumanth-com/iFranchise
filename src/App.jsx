@@ -19,6 +19,7 @@ import {
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
 import { prefetchRoute } from './lib/routePrefetch.js';
+import { getEcosystemLogicalRoute } from './data/ecosystem/ecosystemRoutes.js';
 import { trackPageView } from './lib/analytics/ga4.js';
 
 const ExpansionAssistant = lazy(() => import('./components/ExpansionAssistant'));
@@ -42,6 +43,7 @@ const CareersPage             = lazy(() => import('./components/CareersPage'));
 const CareerRolePage          = lazy(() => import('./components/CareerRolePage'));
 const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPage'));
 const FAQPage                 = lazy(() => import('./components/FAQPage'));
+const EcosystemRouter         = lazy(() => import('./components/ecosystem/EcosystemRouter'));
 
 // -- Minimal page-level skeleton -----------------------------------------------
 function PageSkeleton() {
@@ -301,6 +303,9 @@ function App() {
   const isBlogDetailPage          = pathname === '/blog-detail';
   const isListYourBrandPage       = pathname === '/list-your-brand';
   const isFAQPage                 = pathname === '/faq';
+  const isEcosystemPage           = Boolean(getEcosystemLogicalRoute(
+    typeof window !== 'undefined' ? window.location.pathname : '/',
+  ));
   const isHomePage                = pathname === '/';
 
   useEffect(() => {
@@ -392,6 +397,7 @@ function App() {
             : isBlogDetailPage ? <BlogDetailPage />
             : isListYourBrandPage ? <ForBrandOwnersPage />
             : isFAQPage ? <FAQPage />
+            : isEcosystemPage ? <EcosystemRouter />
             : <NotFoundPage />}
           </Suspense>
         )}

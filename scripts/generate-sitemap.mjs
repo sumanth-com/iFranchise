@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RAW_BRANDS } from '../src/data/opportunities/rawBrands.js';
 import { getAllLocationPaths } from '../src/data/opportunityLocations.js';
+import { getAllKnowledgeTopicPaths } from '../src/data/ecosystem/knowledgeHub.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -44,6 +45,18 @@ const MAIN_PAGES = [
   { path: '/careers', changefreq: 'weekly', priority: '0.75' },
   { path: '/contact-us', changefreq: 'monthly', priority: '0.8' },
   { path: '/faq', changefreq: 'monthly', priority: '0.7' },
+  { path: '/fofo-model', changefreq: 'monthly', priority: '0.85' },
+  { path: '/foco-model', changefreq: 'monthly', priority: '0.85' },
+  { path: '/fico-model', changefreq: 'monthly', priority: '0.85' },
+  { path: '/investment-under-25-lakhs', changefreq: 'weekly', priority: '0.88' },
+  { path: '/investment-under-50-lakhs', changefreq: 'weekly', priority: '0.88' },
+  { path: '/investment-under-1-crore', changefreq: 'weekly', priority: '0.88' },
+  { path: '/premium-franchise-opportunities', changefreq: 'weekly', priority: '0.88' },
+  { path: '/high-roi-franchise-opportunities', changefreq: 'weekly', priority: '0.9' },
+  { path: '/franchise-readiness-assessment', changefreq: 'monthly', priority: '0.82' },
+  { path: '/resources/knowledge-hub', changefreq: 'weekly', priority: '0.88' },
+  { path: '/resources/knowledge-hub/investor', changefreq: 'weekly', priority: '0.9' },
+  { path: '/resources/knowledge-hub/brand', changefreq: 'weekly', priority: '0.9' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
   { path: '/terms-and-conditions', changefreq: 'yearly', priority: '0.3' },
   { path: '/licenses', changefreq: 'yearly', priority: '0.3' },
@@ -107,6 +120,12 @@ const entries = [
     loc: `${siteUrl}${path}`,
     changefreq: 'weekly',
     priority: '0.7',
+    lastmod: LASTMOD,
+  })),
+  ...getAllKnowledgeTopicPaths().map((path) => ({
+    loc: `${siteUrl}${path}`,
+    changefreq: 'monthly',
+    priority: '0.78',
     lastmod: LASTMOD,
   })),
 ];

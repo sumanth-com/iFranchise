@@ -3,6 +3,7 @@ import { getBlogBySlug } from '../components/blogData';
 import { getRoleById, getRoleIdFromPathname } from '../components/careersData';
 import { getLocationPath, parseLocationPathname } from '../data/opportunityLocations.js';
 import { STATIC_PAGE_SEO } from './staticPages';
+import { resolveEcosystemSeo } from './ecosystemSeo.js';
 import { absoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
 import { DEFAULT_META_KEYWORDS } from './keywords.js';
 import { formatDescription, formatTitle, normalizeSeoEntry } from './metaUtils.js';
@@ -166,6 +167,14 @@ export function resolvePageSeo(logicalPathname, location = {}) {
         ogType: 'website',
         robots: 'index, follow',
       });
+    }
+  }
+
+  if (!entry) {
+    const ecosystemEntry = resolveEcosystemSeo(pathname, logicalPathname);
+    if (ecosystemEntry) {
+      entry = ecosystemEntry;
+      canonicalPath = ecosystemEntry.canonicalPath || pathname;
     }
   }
 

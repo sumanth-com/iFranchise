@@ -1,4 +1,5 @@
 import { ROUTES } from './routes.js';
+import { getEcosystemLogicalRoute } from '../data/ecosystem/ecosystemRoutes.js';
 import { franchiseSlugToId } from '../data/franchiseData';
 import { parseLocationPathname } from '../data/opportunityLocations.js';
 
@@ -19,6 +20,14 @@ const ROUTE_LOADERS = {
   '/careers': () => import('../components/CareersPage'),
   '/career-detail': () => import('../components/CareerRolePage'),
   '/list-your-brand': () => import('../components/ForBrandOwnersPage'),
+  '/faq': () => import('../components/FAQPage'),
+  '/franchise-model': () => import('../components/ecosystem/EcosystemRouter'),
+  '/investment-landing': () => import('../components/ecosystem/EcosystemRouter'),
+  '/knowledge-hub': () => import('../components/ecosystem/EcosystemRouter'),
+  '/knowledge-hub-audience': () => import('../components/ecosystem/EcosystemRouter'),
+  '/knowledge-topic': () => import('../components/ecosystem/EcosystemRouter'),
+  '/legacy-resource-redirect': () => import('../components/ecosystem/EcosystemRouter'),
+  '/franchise-readiness-assessment': () => import('../components/ecosystem/EcosystemRouter'),
 };
 
 const prefetched = new Set();
@@ -57,6 +66,8 @@ export function logicalPathFromPathname(pathname) {
     const slug = pathname.replace('/franchise/', '').trim().toLowerCase();
     return franchiseSlugToId[slug] ? '/franchise-details' : '/404';
   }
+  const ecosystemLogical = getEcosystemLogicalRoute(pathname);
+  if (ecosystemLogical) return ecosystemLogical;
   const knownPaths = [
     '/',
     ROUTES.ABOUT,

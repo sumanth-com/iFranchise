@@ -1509,6 +1509,16 @@ html[data-theme='light'] #main-content .theme-dark-surface .market-intel-sector-
   color: #cbd5e1 !important;
 }
 
+html[data-theme='light'] .market-intel-section--light,
+html[data-theme='light'] #main-content .market-intel-section--light :is(p, h2, span, label):not(.is-active) {
+  color: #000000;
+}
+
+html[data-theme='light'] .market-intel-section--light .market-intel-sector-pct,
+html[data-theme='light'] #main-content .market-intel-section--light .market-intel-sector-pct {
+  color: #000000 !important;
+}
+
 /* Who We Serve - image corner tag: white + purple text in light */
 html[data-theme='light'] .who-serve-image-tag {
   background: #ffffff !important;
@@ -2359,13 +2369,69 @@ html[data-theme='light'] #main-content .home-faq-item {
 }
 
 html[data-theme='dark'] #main-content .home-faq-item h3,
-html[data-theme='light'] #main-content .home-faq-item h3 {
+html[data-theme='dark'] #main-content .home-faq-item .home-faq-item__question,
+html[data-theme='light'] #main-content .home-faq-item h3,
+html[data-theme='light'] #main-content .home-faq-item .home-faq-item__question {
   color: #0b0f19 !important;
+  -webkit-text-fill-color: #0b0f19 !important;
 }
 
 html[data-theme='dark'] #main-content .home-faq-item p,
-html[data-theme='light'] #main-content .home-faq-item p {
+html[data-theme='dark'] #main-content .home-faq-item .home-faq-item__answer,
+html[data-theme='light'] #main-content .home-faq-item p,
+html[data-theme='light'] #main-content .home-faq-item .home-faq-item__answer {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+}
+
+html[data-theme='dark'] #main-content .home-faq-item .home-faq-item__icon,
+html[data-theme='light'] #main-content .home-faq-item .home-faq-item__icon {
   color: #475569 !important;
+}
+
+html[data-theme='dark'] #main-content .home-faq-item .internal-content-link,
+html[data-theme='light'] #main-content .home-faq-item .internal-content-link {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+html[data-theme='dark'] #main-content .home-faq-item .internal-content-link:hover,
+html[data-theme='light'] #main-content .home-faq-item .internal-content-link:hover {
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] #main-content .internal-content-link,
+html[data-theme='light'] #main-content .internal-content-link {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+html[data-theme='dark'] #main-content .internal-content-link:hover,
+html[data-theme='light'] #main-content .internal-content-link:hover {
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] #main-content aside .internal-content-link {
+  color: #ddd6fe !important;
+  -webkit-text-fill-color: #ddd6fe !important;
+}
+
+html[data-theme='dark'] #main-content aside .internal-content-link:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 /* Home FAQ number badges — white digits on dark tile (light mode override) */
@@ -7740,6 +7806,97 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-hero-gallery {
   touch-action: manipulation;
 }
 
+/* Brand header CTAs — match navbar "List Your Brand" (clean violet pill) */
+.franchise-details-page .fd-brand-header-cta {
+  background: #7c3aed !important;
+  background-image: none !important;
+  border: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35) !important;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease !important;
+}
+
+.franchise-details-page .fd-brand-header-cta span,
+.franchise-details-page .fd-brand-header-cta svg {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+.franchise-details-page .fd-brand-header-cta:hover {
+  background: #6d28d9 !important;
+  background-image: none !important;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.4) !important;
+  transform: scale(1.02);
+}
+
+.franchise-details-page .fd-brand-header-cta:active {
+  transform: scale(0.98);
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-cta,
+html[data-theme='dark'] .franchise-details-page .fd-brand-header-cta {
+  background: #7c3aed !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-cta:hover,
+html[data-theme='dark'] .franchise-details-page .fd-brand-header-cta:hover {
+  background: #6d28d9 !important;
+  background-image: none !important;
+  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.4) !important;
+}
+
+/* Gallery prev/next — clear on image in light & dark theme */
+.ic-gallery-nav-btn {
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #0b1220 !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.35) inset !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ic-gallery-nav-btn svg {
+  color: #0b1220 !important;
+}
+
+.ic-gallery-nav-btn:hover {
+  background: #ffffff !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .ic-gallery-nav-btn,
+html[data-theme='dark'] .franchise-details-page .ic-gallery-nav-btn {
+  background: rgba(11, 18, 32, 0.78) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .ic-gallery-nav-btn svg,
+html[data-theme='dark'] .franchise-details-page .ic-gallery-nav-btn svg {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .ic-gallery-nav-btn:hover,
+html[data-theme='dark'] .franchise-details-page .ic-gallery-nav-btn:hover {
+  background: rgba(11, 18, 32, 0.92) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
 html[data-theme='light'] .franchise-details-page .fd-hero-gallery {
   background-color: #f1f5f9 !important;
 }
@@ -8137,6 +8294,31 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-investment-ove
   color: #ffffff !important;
 }
 
+/* White detail cards stay dark-on-light in dark site theme */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-section-heading,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-about-heading {
+  color: #0b0f19 !important;
+  -webkit-text-fill-color: #0b0f19 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-investment-overview__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-label {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-investment-overview__value,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-text,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-title {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-desc {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+}
+
 .franchise-details-page .fd-about-panel-body {
   max-width: 100%;
 }
@@ -8218,8 +8400,8 @@ html[data-theme='light'] .franchise-details-page .fd-about-highlight {
 }
 
 /* Body copy — pure white (no dim/muted grays) */
-html[data-theme='dark'] #main-content .franchise-details-page .text-slate-900,
-html[data-theme='dark'] #main-content .franchise-details-page .text-slate-800,
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-900:not(.ic-gallery-nav-btn),
+html[data-theme='dark'] #main-content .franchise-details-page .text-slate-800:not(.ic-gallery-nav-btn),
 html[data-theme='dark'] #main-content .franchise-details-page .text-slate-700,
 html[data-theme='dark'] #main-content .franchise-details-page .text-slate-600,
 html[data-theme='dark'] #main-content .franchise-details-page .text-slate-500,
@@ -8298,13 +8480,14 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-copy {
   color: #ffffff !important;
 }
 
-/* Franchise details — purple CTAs in light; dark main CTAs use white pill (index.css) */
+/* Franchise details — purple solid CTAs in light and dark (not white pills) */
 html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid,
 html[data-theme='light'] #main-content .franchise-details-page .btn-purple-solid *,
 .franchise-details-page .btn-purple-solid,
 .franchise-details-page .btn-purple-solid span,
 .franchise-details-page .btn-purple-solid svg {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-theme='light'] .franchise-details-page .btn-purple-solid,
@@ -8315,6 +8498,35 @@ html[data-theme='light'] .franchise-details-page .btn-purple-solid,
 html[data-theme='light'] .franchise-details-page .btn-purple-solid:hover,
 .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):hover {
   background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+}
+
+/* Dark mode — bright purple solid CTAs with clear contrast on dark surfaces */
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta),
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta) span,
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta) svg {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 48%, #6d28d9 100%) !important;
+  background-image: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 48%, #6d28d9 100%) !important;
+  border: 1px solid rgba(196, 181, 253, 0.55) !important;
+  box-shadow:
+    0 4px 22px rgba(124, 58, 237, 0.55),
+    0 0 0 1px rgba(139, 92, 246, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):hover {
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 48%, #7c3aed 100%) !important;
+  background-image: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 48%, #7c3aed 100%) !important;
+  border-color: rgba(221, 214, 254, 0.7) !important;
+  box-shadow:
+    0 8px 32px rgba(124, 58, 237, 0.72),
+    0 0 0 1px rgba(196, 181, 253, 0.42) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active) svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 /* Tab filters - inactive: dark text on white; active: purple + white */

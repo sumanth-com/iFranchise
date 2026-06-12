@@ -243,7 +243,7 @@ export default function ImageCarousel({
                 e.stopPropagation();
                 goPrev();
               }}
-              className="absolute left-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/75 p-1 text-slate-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/90 pointer-events-auto sm:left-2.5 sm:p-1.5 lg:left-6 lg:bg-white/95 lg:p-4 lg:text-slate-900 lg:shadow-lg lg:hover:scale-110 lg:hover:bg-white lg:hover:shadow-xl"
+              className="ic-gallery-nav-btn absolute left-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full p-1.5 pointer-events-auto transition-all duration-300 sm:left-2.5 sm:p-2 lg:left-6 lg:p-4 lg:hover:scale-110"
               aria-label="Previous image"
             >
               <Chevron direction="left" />
@@ -254,7 +254,7 @@ export default function ImageCarousel({
                 e.stopPropagation();
                 goNext();
               }}
-              className="absolute right-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full bg-white/75 p-1 text-slate-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/90 pointer-events-auto sm:right-2.5 sm:p-1.5 lg:right-6 lg:bg-white/95 lg:p-4 lg:text-slate-900 lg:shadow-lg lg:hover:scale-110 lg:hover:bg-white lg:hover:shadow-xl"
+              className="ic-gallery-nav-btn absolute right-1.5 top-1/2 z-20 -translate-y-1/2 cursor-pointer rounded-full p-1.5 pointer-events-auto transition-all duration-300 sm:right-2.5 sm:p-2 lg:right-6 lg:p-4 lg:hover:scale-110"
               aria-label="Next image"
             >
               <Chevron direction="right" />

@@ -4,6 +4,7 @@ import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import ImageCarousel from './ImageCarousel';
 import BrochureDownloadButton from './BrochureDownloadButton';
+import CtaButton from './ui/CtaButton';
 import FranchiseInquiryLauncher from './FranchiseInquiryLauncher';
 import FranchiseInquiryStickyPanel from './FranchiseInquiryStickyPanel';
 import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
@@ -20,6 +21,13 @@ import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportu
 import { formatReturnsDisplay } from '../data/opportunities/opportunityUtils.js';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 import { franchiseBrandAlt } from '../seo/imageAlt.js';
+import { linkifyContent } from '../lib/linkifyContent.jsx';
+
+const FRANCHISE_MODEL_PATHS = {
+  FOFO: '/fofo-model',
+  FOCO: '/foco-model',
+  FICO: '/fico-model',
+};
 
 const getSelectedFranchiseId = () =>
   resolveFranchiseIdFromLocation(window.location.pathname, window.location.search);
@@ -337,6 +345,137 @@ function InvestmentOverviewList({
   );
 }
 
+function buildEligibilityCriteria(franchise) {
+  const items = [];
+  const investment = franchise.keyInfo?.investment;
+  const franchiseFee =
+    franchise.financialHighlights?.franchiseFee ||
+    franchise.investorInvestment?.find((row) => /franchise fee/i.test(row.label))?.value;
+  const space = franchise.keyInfo?.space;
+  const targets =
+    franchise.requirements?.find((row) => row.label === 'Target Markets')?.value ||
+    franchise.expansionDisplay ||
+    franchise.locationsSummary;
+  const locationProfile = franchise.requirements?.find((row) => row.label === 'Location Profile')?.value;
+  const models = franchise.franchiseModels?.map((model) => model.name).filter(Boolean) || [];
+
+  if (investment) {
+    items.push({
+      title: 'Investment capacity',
+      description: `Able to allocate ${investment} for franchise setup, fees, and working capital.`,
+    });
+  }
+  if (franchiseFee) {
+    items.push({
+      title: 'Franchise fee readiness',
+      description: `Comfortable with an upfront franchise fee of ${franchiseFee}.`,
+    });
+  }
+  if (space) {
+    items.push({
+      title: 'Minimum retail space',
+      description: `Can secure at least ${space} in a format suited to ${franchise.name}.`,
+    });
+  }
+  if (locationProfile) {
+    items.push({
+      title: 'Location profile',
+      description: `Planning a site aligned with ${locationProfile.toLowerCase()}.`,
+    });
+  }
+  if (targets) {
+    items.push({
+      title: 'Target markets',
+      description: `Interested in opening in ${targets} across India.`,
+    });
+  }
+  if (models.length) {
+    const modelList = models.join(', ');
+    items.push({
+      title: 'Franchise model fit',
+      description: `Aligned with a ${modelList} partnership and the involvement level each model requires.`,
+      models,
+    });
+  }
+  if (franchise.idealInvestorProfile) {
+    items.push({
+      title: 'Investor profile',
+      description: franchise.idealInvestorProfile,
+    });
+  }
+
+  return items;
+}
+
+function FranchiseEligibilitySection({ franchise }) {
+  const criteria = buildEligibilityCriteria(franchise);
+  if (!criteria.length) return null;
+
+  const sectionId = `fd-eligibility-${franchise.slug || franchise.id}-heading`;
+
+  return (
+    <section
+      className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
+      aria-labelledby={sectionId}
+    >
+      <h2 id={sectionId} className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}>
+        Are you eligible for this brand?
+      </h2>
+      <p className="fd-eligibility-desc fd-copy mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-slate-600">
+        Review these practical requirements before you submit a franchise enquiry for {franchise.name}.
+      </p>
+
+      <ul className="mt-6 space-y-4">
+        {criteria.map((item) => (
+          <li
+            key={item.title}
+            className="fd-eligibility-item flex gap-3 rounded-xl border border-slate-100 bg-slate-50/80 px-4 py-3.5 sm:gap-4 sm:px-5"
+          >
+            <span
+              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
+              aria-hidden
+            >
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <div className="min-w-0 text-left">
+              <p className="fd-eligibility-title fd-copy text-sm font-bold text-slate-900">{item.title}</p>
+              <p className="fd-eligibility-text fd-copy mt-1 text-sm leading-relaxed text-slate-700">
+                {linkifyContent(item.description)}
+              </p>
+              {item.models?.length ? (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {item.models.map((model) => {
+                    const path = FRANCHISE_MODEL_PATHS[model];
+                    if (!path) return null;
+                    return (
+                      <button
+                        key={model}
+                        type="button"
+                        className="internal-content-link rounded-full border border-violet-200 bg-white px-2.5 py-1 text-xs font-semibold text-violet-700"
+                        onClick={() => navigateTo(path)}
+                      >
+                        {model} guide
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-6 flex justify-center">
+        <CtaButton type="button" onClick={() => navigateTo('/franchise-readiness-assessment')}>
+          Check your readiness
+        </CtaButton>
+      </div>
+    </section>
+  );
+}
+
 function AgreementDetailCard({ label, value, className = '' }) {
   return (
     <article
@@ -550,7 +689,7 @@ function FranchiseDetailsPage() {
                 <button
                   type="button"
                   onClick={scrollToInquiryForm}
-                  className="btn-purple-solid inline-flex w-full items-center justify-center whitespace-nowrap rounded-lg px-2 py-2.5 text-[0.625rem] font-semibold leading-none tracking-tight text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:w-auto sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-sm lg:px-5 lg:py-2.5 lg:text-sm"
+                  className="fd-brand-header-cta inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-full px-4 text-xs font-bold text-white sm:w-auto sm:px-6 sm:text-sm"
                 >
                   Connect With Franchise Experts
                 </button>
@@ -562,7 +701,7 @@ function FranchiseDetailsPage() {
                       slug: selectedFranchise.slug,
                     }}
                     brochureUrl={selectedFranchise.brochureUrl}
-                    className="btn-purple-solid group inline-flex w-full items-center justify-center whitespace-nowrap rounded-lg px-2 py-2.5 text-[0.625rem] font-semibold leading-none tracking-tight text-white transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98] sm:w-auto sm:gap-2 sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-sm lg:px-5 lg:py-2.5 lg:text-sm"
+                    className="fd-brand-header-cta group inline-flex h-10 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 text-xs font-bold text-white sm:w-auto sm:px-6 sm:text-sm"
                   />
                 ) : null}
               </div>
@@ -655,6 +794,8 @@ function FranchiseDetailsPage() {
                     />
                   </div>
                 </section>
+
+                <FranchiseEligibilitySection franchise={selectedFranchise} />
 
                 <section
                   className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"

@@ -59,8 +59,9 @@ const FOOTER_COLS = [
   {
     heading: 'Resources',
     links: [
-      { label: 'Blogs', path: '/blogs', dot: 'none' },
-      { label: 'FAQs', path: '/faq', dot: 'none' },
+      { label: 'Blog', path: '/blogs', dot: 'none' },
+      { label: 'Knowledge Hub', path: '/resources/knowledge-hub', dot: 'none' },
+      { label: 'Franchise Readiness Assessment', path: '/franchise-readiness-assessment', dot: 'none' },
     ],
   },
 ];

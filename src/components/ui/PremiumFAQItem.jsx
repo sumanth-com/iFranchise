@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { linkifyContent } from '../../lib/linkifyContent';
 
 /**
  * Home-style FAQ accordion card - white surface, dark text (both themes).
@@ -23,21 +24,25 @@ export default function PremiumFAQItem({ faq, index = 0 }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between p-4 text-left transition-colors duration-200 hover:bg-slate-50/50"
+        className="home-faq-item__trigger flex w-full items-center justify-between p-4 text-left transition-colors duration-200 hover:bg-slate-50/50"
       >
         <div className="flex flex-1 items-center gap-3">
           <div className="home-faq-item__badge flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#0b0f19] to-slate-700 text-sm font-bold text-white shadow-sm">
             {number}
           </div>
-          <h3 className="pr-2 text-sm font-semibold leading-tight text-[#0b0f19]">{question}</h3>
+          <h3 className="home-faq-item__question pr-2 text-sm font-semibold leading-tight text-[#0b0f19]">
+            {linkifyContent(question)}
+          </h3>
         </div>
         <div className="flex h-6 w-6 shrink-0 items-center justify-center">
           <svg
-            className={`h-4 w-4 text-slate-600 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+            className="home-faq-item__icon h-4 w-4 text-slate-600 transition-transform duration-300"
+            style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
             strokeWidth={2.5}
+            aria-hidden
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
@@ -45,12 +50,14 @@ export default function PremiumFAQItem({ faq, index = 0 }) {
       </button>
       <div
         className={`overflow-hidden transition-all duration-200 ease-out ${
-          isOpen ? 'max-h-48 pb-4' : 'max-h-0'
+          isOpen ? 'max-h-96 pb-4' : 'max-h-0'
         }`}
       >
         <div className="px-4">
-          <div className="pl-11 pr-2">
-            <p className="text-xs leading-relaxed text-slate-600">{answer}</p>
+          <div className="home-faq-item__answer-wrap pl-11 pr-2">
+            <p className="home-faq-item__answer text-sm leading-relaxed text-slate-700">
+              {linkifyContent(answer)}
+            </p>
           </div>
         </div>
       </div>

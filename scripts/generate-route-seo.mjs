@@ -6,6 +6,8 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { STATIC_PAGE_SEO } from '../src/seo/staticPages.js';
+import { ECOSYSTEM_PAGE_SEO, resolveEcosystemSeo } from '../src/seo/ecosystemSeo.js';
+import { getAllKnowledgeTopicPaths } from '../src/data/ecosystem/knowledgeHub.js';
 import { formatDescription, formatTitle, normalizeSeoEntry } from '../src/seo/metaUtils.js';
 import { DEFAULT_META_KEYWORDS } from '../src/seo/keywords.js';
 
@@ -196,6 +198,14 @@ function collectPaths() {
     paths.add(`/careers/${role.id}`);
   }
 
+  for (const path of Object.keys(ECOSYSTEM_PAGE_SEO)) {
+    paths.add(path);
+  }
+
+  for (const path of getAllKnowledgeTopicPaths()) {
+    paths.add(path);
+  }
+
   return [...paths].sort();
 }
 
@@ -210,7 +220,29 @@ function buildSeoMap() {
     else if (pathname.startsWith('/location/')) entry = locationRoute(pathname);
     else if (pathname.startsWith('/blogs/')) entry = blogRoute(pathname);
     else if (pathname.startsWith('/careers/')) entry = careerRoute(pathname);
-    else entry = staticRoute(pathname);
+    else if (ECOSYSTEM_PAGE_SEO[pathname]) {
+      const page = ECOSYSTEM_PAGE_SEO[pathname];
+      entry = toSeoEntry({
+        title: page.title,
+        description: page.description,
+        keywords: page.keywords,
+        canonicalPath: page.canonicalPath || pathname,
+        ogTitle: page.ogTitle,
+        ogDescription: page.ogDescription,
+      });
+    } else if (pathname.startsWith('/resources/knowledge-hub/')) {
+      const resolved = resolveEcosystemSeo(pathname, '/knowledge-topic');
+      if (resolved) {
+        entry = toSeoEntry({
+          title: resolved.title,
+          description: resolved.description,
+          keywords: resolved.keywords,
+          canonicalPath: resolved.canonicalPath || pathname,
+          ogTitle: resolved.ogTitle,
+          ogDescription: resolved.ogDescription,
+        });
+      }
+    } else entry = staticRoute(pathname);
 
     if (entry?.description) map[pathname] = entry;
   }

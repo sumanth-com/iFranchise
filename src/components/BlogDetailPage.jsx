@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './blog/BlogImage';
 import ShareIcons from './blog/ShareIcons';
 import BlogCard from './blog/BlogCard';
+import { getBlogCitations } from '../data/citations';
+import CitationsSection from './ecosystem/CitationsSection';
 import { blogPosts, formatDisplayDate, getBlogBySlug } from './blogData';
 import { navigateTo, NAVIGATE_EVENT } from '@/lib/navigation';
 import { TYPE } from '../lib/typography.js';
@@ -436,6 +438,7 @@ function BlogDetailPage() {
 
   const article = useMemo(() => (slug ? getBlogBySlug(slug) : null), [slug]);
   const sections = article?.sections ?? [];
+  const citations = useMemo(() => (article ? getBlogCitations(article.slug) : []), [article]);
   useEffect(() => {
     const timer = setTimeout(() => {
       const allH2 = Array.from(document.querySelectorAll('h2[id]'))
@@ -504,6 +507,10 @@ function BlogDetailPage() {
           {sections.map((section, i) => (
             <ArticleSection key={section.id} section={section} index={i} />
           ))}
+
+          {citations.length ? (
+            <CitationsSection citations={citations} className="blog-detail-citations pt-4 md:pt-6" />
+          ) : null}
         </div>
 
         <ExploreMoreSection currentSlug={article.slug} />

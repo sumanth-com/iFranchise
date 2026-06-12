@@ -13,14 +13,12 @@ import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import { useTheme } from '../context/ThemeContext';
 import { SITE_IMAGES } from '../data/siteImageManifest.js';
-import { SERVICES_INDUSTRIES } from '../data/sectionImages';
 import {
   franchiseOpportunities,
   getFeaturedOpportunities,
   toInvestorDashboardOpportunity,
 } from '../data/franchiseData';
 import { navigateTo as spaNavigate, scrollToHashSection } from '@/lib/navigation';
-import IndustryCard from './IndustryCard';
 import OurServicesSection from './OurServicesSection';
 import { heroDisplayClass, sectionTitleClass, sectionSubtitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
@@ -1281,59 +1279,6 @@ export default function ServicesPage() {
             </div>
 
           </div>
-
-        </div>
-      </div>
-
-      {/* INDUSTRIES WE SUPPORT */}
-      <div className="relative z-10 overflow-hidden py-10 sm:py-12">
-        <div className="page-section-inner">
-          
-
-          {/* Section Header */}
-          <div className="theme-section-on-light text-center mb-16">
-            <Reveal>
-              <SectionPill className="mb-5">Industries</SectionPill>
-              <h2 className={`${sectionTitleClass(false)} mb-5`}>
-                Industries We Help Scale Through Franchising
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mx-auto max-w-2xl text-base text-white leading-relaxed">
-                Our franchise services are designed to support businesses across industries looking to expand through scalable franchise models.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES_INDUSTRIES.map((ind, i) => (
-              <Reveal key={ind.label} delay={i * 0.05} className="h-full">
-                <IndustryCard
-                  label={ind.label}
-                  desc={ind.desc}
-                  img={ind.img}
-                  accent={ind.accent}
-                  priority={i < 3}
-                  onExplore={() => navigateTo('/franchise-opportunities')}
-                />
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <Reveal delay={0.6} className="text-center mt-16">
-            <p className="text-sm text-white mb-4">
-              Don't see your industry? We work with businesses across all sectors.
-            </p>
-            <CtaButton
-              type="button"
-              size="lg"
-              className="services-page-cta-btn"
-              onClick={() => navigateTo('/contact-us')}
-            >
-              Discuss Your Industry
-            </CtaButton>
-          </Reveal>
 
         </div>
       </div>
