@@ -1,5 +1,9 @@
 import { franchiseDetailsById, getFranchiseDetailById } from './index.js';
 
+/** Always shown 2nd in "Explore Similar Opportunities" (after the top match). */
+const PRIORITY_SIMILAR_SLUG = 'original-burger-co';
+const PRIORITY_SIMILAR_INDEX = 1;
+
 function normalizeIndustry(industry = '') {
   const t = String(industry).toLowerCase();
   if (t.includes('food') || t.includes('beverage') || t.includes('f&b') || t.includes('qsr')) {
@@ -46,16 +50,41 @@ export function getSimilarFranchiseDetails(currentId, limit = 3) {
   const current = getFranchiseDetailById(currentId);
   if (!current) return [];
 
+  const currentIdStr = String(currentId);
+  const viewingPriorityBrand = current.slug === PRIORITY_SIMILAR_SLUG;
+
   const candidates = Object.entries(franchiseDetailsById)
     .map(([id, detail]) => ({ id: String(id), ...detail }))
-    .filter((item) => item.id !== String(currentId));
+    .filter((item) => item.id !== currentIdStr);
 
-  return candidates
+  const ranked = candidates
     .map((item) => ({ item, score: scoreSimilarity(current, item) }))
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
       return a.item.name.localeCompare(b.item.name);
     })
-    .slice(0, limit)
     .map(({ item }) => item);
+
+  if (viewingPriorityBrand) {
+    return ranked.slice(0, limit);
+  }
+
+  const priorityBrand = ranked.find((item) => item.slug === PRIORITY_SIMILAR_SLUG);
+  if (!priorityBrand) {
+    return ranked.slice(0, limit);
+  }
+
+  const rest = ranked.filter((item) => item.slug !== PRIORITY_SIMILAR_SLUG);
+  const result = [];
+
+  for (let i = 0; i < limit; i += 1) {
+    if (i === PRIORITY_SIMILAR_INDEX) {
+      result.push(priorityBrand);
+    } else {
+      const next = rest.shift();
+      if (next) result.push(next);
+    }
+  }
+
+  return result;
 }
