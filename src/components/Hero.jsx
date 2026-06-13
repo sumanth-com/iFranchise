@@ -21,7 +21,7 @@ import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { WHO_WE_SERVE_IMAGES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
 import { SITE_CONTACT_ITEMS } from '../data/siteContact';
-import { HOME_FAQS, IFRANCHISE_OVERVIEW_FAQS } from '../data/faqContent.js';
+import { HOME_PAGE_FAQS } from '../data/faqContent.js';
 import ResponsiveImg from './ui/ResponsiveImg.jsx';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
@@ -1842,13 +1842,10 @@ function Hero() {
             }}
           >
               <div className="space-y-3">
-                {[...IFRANCHISE_OVERVIEW_FAQS, ...HOME_FAQS].map((faq, index) => (
+                {HOME_PAGE_FAQS.map((faq, index) => (
                   <PremiumFAQItem
                     key={faq.question}
-                    faq={{
-                      ...faq,
-                      number: faq.number || String(index + 1).padStart(2, '0'),
-                    }}
+                    faq={faq}
                     index={index}
                   />
                 ))}

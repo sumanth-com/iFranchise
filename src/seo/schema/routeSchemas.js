@@ -5,8 +5,7 @@ import {
   CAREERS_FAQS,
   CONTACT_FAQS,
   FAQ_PAGE_ALL_FAQS,
-  HOME_FAQS,
-  IFRANCHISE_OVERVIEW_FAQS,
+  HOME_PAGE_FAQS,
   LIST_YOUR_BRAND_FAQS,
   SERVICES_FAQS,
 } from '../../data/faqContent.js';
@@ -79,7 +78,7 @@ export function buildSchemasForRoute(seo, context = {}) {
 
   if (logicalPathname === '/') {
     addBreadcrumbs(schemas, seo);
-    const homeFaq = buildFaqPageSchema([...IFRANCHISE_OVERVIEW_FAQS, ...HOME_FAQS]);
+    const homeFaq = buildFaqPageSchema(HOME_PAGE_FAQS);
     if (homeFaq) pushSchema(schemas, 'faq', homeFaq);
     return schemas;
   }

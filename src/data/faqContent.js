@@ -46,35 +46,37 @@ export const SERVICES_FAQS = [
 
 export const HOME_FAQS = [
   {
-    number: '01',
     question: 'How much does it cost to start a franchise?',
     answer:
       'Franchise investment varies by industry. Low-cost franchises (₹2–10 lakhs), mid-range (₹10–50 lakhs), premium (₹50 lakhs+). FOCO models often require 30–40% less capital than FOFO models.',
   },
   {
-    number: '02',
     question: "What's the difference between FOCO, FOFO & FICO?",
     answer:
       'FOCO: You invest, company operates. FOFO: You own and operate. FICO: Capital-focused with company-led operations. Each offers different risk-reward profiles and involvement levels.',
   },
   {
-    number: '03',
     question: 'Is franchise business profitable in India?',
     answer:
       'Successful franchises typically achieve 15–25% net margins after stabilization. F&B shows ~18–30% gross margins, retail 25–40%, services 35–50% depending on brand strength and execution.',
   },
   {
-    number: '04',
     question: 'What legal documents are required?',
     answer:
       'Core documents include FDD, Franchise Agreement, Trademark License, Operations Manual, and Territory Rights, along with GST registration, FSSAI license (for F&B), and local permits.',
   },
   {
-    number: '05',
     question: 'How long does it take to launch a franchise?',
     answer:
       'Most brands go from agreement to launch in 3–6 months, including due diligence, documentation, site selection, fit-out, training, and soft launch preparation.',
   },
+];
+
+/** Five FAQs on the home page — overview + top investor questions. */
+export const HOME_PAGE_FAQS = [
+  ...IFRANCHISE_OVERVIEW_FAQS,
+  HOME_FAQS[0],
+  HOME_FAQS[1],
 ];
 
 export const CONTACT_FAQS = [

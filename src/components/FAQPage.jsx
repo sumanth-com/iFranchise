@@ -27,7 +27,6 @@ function FaqGroup({ kicker, title, description, faqs, idPrefix }) {
             faq={{
               question: faq.question,
               answer: faq.answer,
-              number: faq.number || String(index + 1).padStart(2, '0'),
             }}
             index={index}
           />

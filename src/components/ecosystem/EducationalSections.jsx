@@ -84,7 +84,6 @@ export function FaqSection({ faqs, title = 'Frequently Asked Questions' }) {
             faq={{
               question: faq.question,
               answer: faq.answer,
-              number: String(index + 1).padStart(2, '0'),
             }}
             index={index}
           />

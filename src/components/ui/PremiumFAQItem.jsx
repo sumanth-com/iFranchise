@@ -7,7 +7,6 @@ import { linkifyContent } from '../../lib/linkifyContent';
  */
 export default function PremiumFAQItem({ faq, index = 0 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const number = faq.number ?? String(index + 1).padStart(2, '0');
   const question = faq.question ?? faq.q;
   const answer = faq.answer ?? faq.a;
 
@@ -26,14 +25,9 @@ export default function PremiumFAQItem({ faq, index = 0 }) {
         onClick={() => setIsOpen(!isOpen)}
         className="home-faq-item__trigger flex w-full items-center justify-between p-4 text-left transition-colors duration-200 hover:bg-slate-50/50"
       >
-        <div className="flex flex-1 items-center gap-3">
-          <div className="home-faq-item__badge flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#0b0f19] to-slate-700 text-sm font-bold text-white shadow-sm">
-            {number}
-          </div>
-          <h3 className="home-faq-item__question pr-2 text-sm font-semibold leading-tight text-[#0b0f19]">
-            {linkifyContent(question)}
-          </h3>
-        </div>
+        <h3 className="home-faq-item__question flex-1 pr-2 text-sm font-semibold leading-tight text-[#0b0f19]">
+          {linkifyContent(question)}
+        </h3>
         <div className="flex h-6 w-6 shrink-0 items-center justify-center">
           <svg
             className="home-faq-item__icon h-4 w-4 text-slate-600 transition-transform duration-300"
@@ -54,7 +48,7 @@ export default function PremiumFAQItem({ faq, index = 0 }) {
         }`}
       >
         <div className="px-4">
-          <div className="home-faq-item__answer-wrap pl-11 pr-2">
+          <div className="home-faq-item__answer-wrap pr-2">
             <p className="home-faq-item__answer text-sm leading-relaxed text-slate-700">
               {linkifyContent(answer)}
             </p>
