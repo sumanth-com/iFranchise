@@ -77,7 +77,7 @@ export function FaqSection({ faqs, title = 'Frequently Asked Questions' }) {
   return (
     <section className="scroll-mt-24">
       <h2 className={`${sectionTitleClass(isLight, { tight: true })} mb-6 text-center`}>{title}</h2>
-      <div className="mx-auto max-w-3xl space-y-3">
+      <div className="services-faq-list mx-auto max-w-3xl space-y-4">
         {faqs.map((faq, index) => (
           <PremiumFAQItem
             key={faq.question}

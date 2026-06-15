@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { scrollToHashSection } from '../lib/navigation';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import PremiumFAQItem from './ui/PremiumFAQItem';
+import { motion, useInView } from 'framer-motion';
 import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import { useTheme } from '../context/ThemeContext';
 import CultureScrollGallery from './careers/CultureScrollGallery';
@@ -113,45 +114,6 @@ function BenefitCard({ icon, title, desc, delay }) {
         <h3 className="text-sm font-bold text-slate-900 mb-1">{title}</h3>
         <p className="text-xs text-slate-600 leading-relaxed">{desc}</p>
       </div>
-    </motion.div>
-  );
-}
-
-function FaqItem({ q, a }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <motion.div className={`careers-faq-item rounded-2xl border transition-all duration-300 ${open ? 'is-open border-violet-300 bg-violet-50' : 'border-slate-200 bg-white hover:border-violet-200'}`}>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left group"
-        aria-expanded={open}
-      >
-        <span className="careers-faq-question text-[15px] font-semibold leading-snug text-slate-800 transition-colors duration-200">
-          {q}
-        </span>
-        <span
-          className={`careers-faq-toggle shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open ? 'is-open' : ''}`}
-          aria-hidden
-        >
-          <span className={`careers-faq-toggle-icon block text-[1.35rem] font-bold leading-none transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>
-            +
-          </span>
-        </span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="answer"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <p className="careers-faq-answer text-sm text-slate-600 leading-relaxed px-6 pb-5">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
@@ -272,9 +234,9 @@ function CareersPage() {
             </p>
           </RevealSection>
 
-          <RevealSection delay={0.08} className="space-y-2">
+          <RevealSection delay={0.08} className="services-faq-list space-y-4">
             {FAQS.map((faq, i) => (
-              <FaqItem key={i} q={faq.q} a={faq.a} />
+              <PremiumFAQItem key={faq.q} faq={faq} index={i} />
             ))}
           </RevealSection>
         </div>

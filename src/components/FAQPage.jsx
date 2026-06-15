@@ -20,7 +20,7 @@ function FaqGroup({ kicker, title, description, faqs, idPrefix }) {
         <h2 className={GROUP_TITLE_CLASS}>{title}</h2>
         <p className={GROUP_DESC_CLASS}>{description}</p>
       </div>
-      <div className="space-y-3">
+      <div className="services-faq-list space-y-4">
         {faqs.map((faq, index) => (
           <PremiumFAQItem
             key={`${idPrefix}-${faq.question}`}

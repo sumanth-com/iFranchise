@@ -1219,7 +1219,7 @@ html[data-theme='dark'] #main-content :is(
   [class*='text-violet-200'],
   [class*='text-violet-300'],
   [class*='text-white/']
-):not(.careers-faq-toggle):not(.careers-faq-toggle-icon):not(.services-faq-toggle):not(.services-faq-toggle-icon):not(.services-dashboard-panel):not(.services-dashboard-panel *),
+):not(.careers-faq-toggle):not(.careers-faq-toggle-icon):not(.services-faq-toggle):not(.services-faq-toggle-icon):not(.home-faq-item__icon):not(.services-dashboard-panel):not(.services-dashboard-panel *),
 html[data-theme='dark'] .card-premium-dark :is(
   [class*='text-slate-100'],
   [class*='text-slate-200'],
@@ -2385,8 +2385,13 @@ html[data-theme='light'] #main-content .home-faq-item .home-faq-item__answer {
 }
 
 html[data-theme='dark'] #main-content .home-faq-item .home-faq-item__icon,
-html[data-theme='light'] #main-content .home-faq-item .home-faq-item__icon {
+html[data-theme='dark'] #main-content .home-faq-item .home-faq-item__icon path,
+html[data-theme='light'] #main-content .home-faq-item .home-faq-item__icon,
+html[data-theme='light'] #main-content .home-faq-item .home-faq-item__icon path {
   color: #475569 !important;
+  stroke: #475569 !important;
+  -webkit-text-fill-color: #475569 !important;
+  opacity: 1 !important;
 }
 
 html[data-theme='dark'] #main-content .home-faq-item .internal-content-link,
@@ -5466,87 +5471,90 @@ html[data-theme='dark'] .careers-page .careers-faq-item.is-open .careers-faq-ans
   color: #ffffff !important;
 }
 
-/* Services page FAQ - dark mode: white copy + visible chevron toggles */
-html[data-theme='dark'] #main-content .services-page .services-faq-section .services-faq-section__badge,
-html[data-theme='dark'] #main-content .services-page .services-faq-section .services-faq-section__title,
-html[data-theme='dark'] .services-page .services-faq-section .services-faq-section__badge,
-html[data-theme='dark'] .services-page .services-faq-section .services-faq-section__title {
+/* Site-wide FAQ cards — Contact / Services dark premium style */
+html[data-theme='light'] #main-content .services-faq-item,
+html[data-theme='dark'] #main-content .services-faq-item {
+  background: linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%) !important;
+  border-color: rgba(139, 92, 246, 0.2) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
   color: #ffffff !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-question,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-question {
+html[data-theme='light'] #main-content .services-faq-section .services-faq-section__badge,
+html[data-theme='light'] #main-content .services-faq-section .services-faq-section__title,
+html[data-theme='dark'] #main-content .services-faq-section .services-faq-section__badge,
+html[data-theme='dark'] #main-content .services-faq-section .services-faq-section__title {
   color: #ffffff !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-answer,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-answer {
+html[data-theme='light'] #main-content .services-faq-item .services-faq-question,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-question {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .services-faq-item .services-faq-answer,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-answer {
   color: rgba(255, 255, 255, 0.9) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-toggle,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-toggle {
+html[data-theme='light'] #main-content .services-faq-item .internal-content-link,
+html[data-theme='dark'] #main-content .services-faq-item .internal-content-link {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+html[data-theme='light'] #main-content .services-faq-item .internal-content-link:hover,
+html[data-theme='dark'] #main-content .services-faq-item .internal-content-link:hover {
+  color: #e9d5ff !important;
+  -webkit-text-fill-color: #e9d5ff !important;
+}
+
+html[data-theme='light'] #main-content .services-faq-item .services-faq-toggle,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-toggle {
   background: #ffffff !important;
   color: #0f0618 !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28) !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-toggle .services-faq-toggle-icon,
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-toggle svg,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-toggle .services-faq-toggle-icon,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-toggle svg {
+html[data-theme='light'] #main-content .services-faq-item .services-faq-toggle .services-faq-toggle-icon,
+html[data-theme='light'] #main-content .services-faq-item .services-faq-toggle svg,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-toggle .services-faq-toggle-icon,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-toggle svg {
   color: #0f0618 !important;
   stroke: #0f0618 !important;
   opacity: 1 !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .group:hover .services-faq-toggle,
-html[data-theme='dark'] .services-page .services-faq-item .group:hover .services-faq-toggle {
+html[data-theme='light'] #main-content .services-faq-item .group:hover .services-faq-toggle,
+html[data-theme='dark'] #main-content .services-faq-item .group:hover .services-faq-toggle {
   background: #ffffff !important;
   color: #5b21b6 !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item .group:hover .services-faq-toggle svg,
-html[data-theme='dark'] .services-page .services-faq-item .group:hover .services-faq-toggle svg {
+html[data-theme='light'] #main-content .services-faq-item .group:hover .services-faq-toggle svg,
+html[data-theme='dark'] #main-content .services-faq-item .group:hover .services-faq-toggle svg {
   color: #5b21b6 !important;
   stroke: #5b21b6 !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item.is-open .services-faq-toggle,
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-toggle.is-open,
-html[data-theme='dark'] .services-page .services-faq-item.is-open .services-faq-toggle,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-toggle.is-open {
+html[data-theme='light'] #main-content .services-faq-item.is-open .services-faq-toggle,
+html[data-theme='light'] #main-content .services-faq-item .services-faq-toggle.is-open,
+html[data-theme='dark'] #main-content .services-faq-item.is-open .services-faq-toggle,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-toggle.is-open {
   background: #7c3aed !important;
   color: #ffffff !important;
   box-shadow: 0 2px 12px rgba(124, 58, 237, 0.45) !important;
 }
 
-html[data-theme='dark'] #main-content .services-page .services-faq-item.is-open .services-faq-toggle svg,
-html[data-theme='dark'] #main-content .services-page .services-faq-item .services-faq-toggle.is-open svg,
-html[data-theme='dark'] .services-page .services-faq-item.is-open .services-faq-toggle svg,
-html[data-theme='dark'] .services-page .services-faq-item .services-faq-toggle.is-open svg {
-  color: #ffffff !important;
-  stroke: #ffffff !important;
-}
-
-html[data-theme='light'] .services-page .services-faq-item .services-faq-toggle {
-  background: #f1f5f9 !important;
-  color: #334155 !important;
-}
-
-html[data-theme='light'] .services-page .services-faq-item .services-faq-toggle svg {
-  color: #334155 !important;
-  stroke: #334155 !important;
-}
-
-html[data-theme='light'] .services-page .services-faq-item.is-open .services-faq-toggle,
-html[data-theme='light'] .services-page .services-faq-item .services-faq-toggle.is-open {
-  background: #0f172a !important;
-  color: #ffffff !important;
-}
-
-html[data-theme='light'] .services-page .services-faq-item.is-open .services-faq-toggle svg,
-html[data-theme='light'] .services-page .services-faq-item .services-faq-toggle.is-open svg {
+html[data-theme='light'] #main-content .services-faq-item.is-open .services-faq-toggle svg,
+html[data-theme='light'] #main-content .services-faq-item .services-faq-toggle.is-open svg,
+html[data-theme='dark'] #main-content .services-faq-item.is-open .services-faq-toggle svg,
+html[data-theme='dark'] #main-content .services-faq-item .services-faq-toggle.is-open svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
 }

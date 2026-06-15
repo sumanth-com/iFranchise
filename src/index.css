@@ -3791,6 +3791,14 @@ html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill--animated .
 .light-surface .text-slate-700 { color: #334155 !important; }
 .bg-white .text-slate-600,
 .light-surface .text-slate-600 { color: #475569 !important; }
+.bg-white .home-faq-item__icon,
+.bg-white .home-faq-item__icon path,
+.light-surface .home-faq-item__icon,
+.light-surface .home-faq-item__icon path {
+  color: #475569 !important;
+  stroke: #475569 !important;
+  opacity: 1 !important;
+}
 .bg-white .text-slate-500,
 .light-surface .text-slate-500 { color: #64748b !important; }
 .bg-white .text-slate-400,

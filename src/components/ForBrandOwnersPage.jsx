@@ -1528,7 +1528,7 @@ function ListYourBrandFAQSection() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col gap-3"
+            className="services-faq-list flex flex-col gap-4"
           >
             {FAQ_ITEMS.map((item, index) => (
               <PremiumFAQItem key={item.question} faq={item} index={index} />

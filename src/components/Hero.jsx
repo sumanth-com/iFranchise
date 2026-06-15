@@ -1841,7 +1841,7 @@ function Hero() {
               animationDelay: '0.15s',
             }}
           >
-              <div className="space-y-3">
+              <div className="services-faq-list space-y-4">
                 {HOME_PAGE_FAQS.map((faq, index) => (
                   <PremiumFAQItem
                     key={faq.question}
