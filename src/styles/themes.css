@@ -8302,29 +8302,138 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-investment-ove
   color: #ffffff !important;
 }
 
-/* White detail cards stay dark-on-light in dark site theme */
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-section-heading,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-about-heading {
-  color: #0b0f19 !important;
-  -webkit-text-fill-color: #0b0f19 !important;
+/* About / investment / eligibility panels — light copy on dark surfaces */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white :is(
+  .fd-section-heading,
+  .fd-about-heading,
+  .fd-about-tagline,
+  .fd-about-description,
+  .fd-about-expansion-title,
+  .fd-about-expansion-text,
+  .fd-investment-overview__label,
+  .fd-investment-overview__value,
+  .fd-eligibility-title,
+  .fd-eligibility-text
+) {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-investment-overview__label,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-label {
-  color: #64748b !important;
-  -webkit-text-fill-color: #64748b !important;
-}
-
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-investment-overview__value,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-text,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-title {
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
-}
-
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-desc {
-  color: #475569 !important;
-  -webkit-text-fill-color: #475569 !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.88) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item .bg-emerald-100 {
+  background: rgba(16, 185, 129, 0.22) !important;
+  color: #6ee7b7 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item .bg-emerald-100 svg {
+  color: #6ee7b7 !important;
+  stroke: #6ee7b7 !important;
+}
+
+/* Inline text links — underline only, no pill box */
+html[data-theme='dark'] #main-content .franchise-details-page .internal-content-link--inline {
+  display: inline !important;
+  vertical-align: baseline !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+  font-weight: 600 !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: rgba(196, 181, 253, 0.55) !important;
+  border-radius: 0 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .internal-content-link--inline:hover {
+  background: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration-color: #e9d5ff !important;
+}
+
+html[data-theme='light'] #main-content .franchise-details-page .internal-content-link--inline {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+
+/* Model guide pills — FICO guide, FOFO guide, etc. */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-model-guide-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-top: 0 !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(196, 181, 253, 0.38) !important;
+  background: rgba(124, 58, 237, 0.22) !important;
+  box-shadow: 0 1px 8px rgba(109, 40, 217, 0.22) !important;
+  color: #f5f3ff !important;
+  -webkit-text-fill-color: #f5f3ff !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-model-guide-link:hover {
+  background: rgba(124, 58, 237, 0.38) !important;
+  border-color: rgba(221, 214, 254, 0.55) !important;
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.32) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='light'] #main-content .franchise-details-page .fd-model-guide-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 0.3rem 0.7rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid #ddd6fe !important;
+  background: #f5f3ff !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+
+html[data-theme='light'] #main-content .franchise-details-page .fd-model-guide-link:hover {
+  background: #ede9fe !important;
+  border-color: #c4b5fd !important;
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-support-card,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-support-card .fd-body-text,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-invest-card .fd-body-text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 .franchise-details-page .fd-about-panel-body {

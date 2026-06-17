@@ -442,7 +442,9 @@ function FranchiseEligibilitySection({ franchise }) {
             <div className="min-w-0 text-left">
               <p className="fd-eligibility-title fd-copy text-sm font-bold text-slate-900">{item.title}</p>
               <p className="fd-eligibility-text fd-copy mt-1 text-sm leading-relaxed text-slate-700">
-                {linkifyContent(item.description)}
+                {linkifyContent(item.description, {
+                  skip: item.models?.length ? item.models : [],
+                })}
               </p>
               {item.models?.length ? (
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -453,7 +455,7 @@ function FranchiseEligibilitySection({ franchise }) {
                       <button
                         key={model}
                         type="button"
-                        className="internal-content-link rounded-full border border-violet-200 bg-white px-2.5 py-1 text-xs font-semibold text-violet-700"
+                        className="fd-model-guide-link internal-content-link"
                         onClick={() => navigateTo(path)}
                       >
                         {model} guide

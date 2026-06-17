@@ -42,7 +42,7 @@ function applyRule(parts, pattern, path) {
         <button
           key={`ifr-link-${linkKey++}`}
           type="button"
-          className="internal-content-link"
+          className="internal-content-link internal-content-link--inline"
           onClick={(e) => {
             e.stopPropagation();
             navigateTo(path);
@@ -64,12 +64,21 @@ function applyRule(parts, pattern, path) {
   return next;
 }
 
-/** @param {string} text */
-export function linkifyContent(text) {
+/** @param {string} text @param {{ skip?: string[] }} [options] */
+export function linkifyContent(text, options = {}) {
   if (!text || typeof text !== 'string') return text;
 
+  const skip = new Set((options.skip || []).map((token) => token.toUpperCase()));
+  const rules = INTERNAL_LINK_RULES.filter(({ pattern }) => {
+    if (!skip.size) return true;
+    for (const token of skip) {
+      if (pattern.source.includes(token)) return false;
+    }
+    return true;
+  });
+
   let parts = [text];
-  for (const { pattern, path } of INTERNAL_LINK_RULES) {
+  for (const { pattern, path } of rules) {
     parts = applyRule(parts, pattern, path);
   }
 
