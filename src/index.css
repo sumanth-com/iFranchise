@@ -1415,6 +1415,8 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
   align-items: center;
   gap: 10px;
   color: #ffffff;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 .prefooter-cta-btn__arrow {
@@ -1618,6 +1620,16 @@ html[data-theme='dark'] .prefooter-unified-card .footer-brand-address__link:hove
   .prefooter-cta-row {
     margin-bottom: 1.25rem;
     gap: 0.625rem;
+    align-items: center;
+  }
+
+  .prefooter-cta-btn {
+    width: auto;
+    max-width: min(100%, 22rem);
+    margin-inline: auto;
+    padding: 0.75rem 1.125rem;
+    font-size: clamp(0.75rem, 3.25vw, 0.875rem);
+    white-space: nowrap;
   }
 
   .prefooter-brand-names {

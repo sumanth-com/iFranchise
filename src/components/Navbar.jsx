@@ -659,6 +659,7 @@ function Navbar() {
     document.body.style.top = `-${currentScroll}px`;
     document.body.style.width = '100%';
     document.documentElement.style.overflow = 'hidden';
+    document.body.classList.add('navbar-mobile-menu-open');
 
     if (window.__lenis) window.__lenis.stop();
 
@@ -670,6 +671,7 @@ function Navbar() {
       document.body.style.top = '';
       document.body.style.width = '';
       document.documentElement.style.overflow = '';
+      document.body.classList.remove('navbar-mobile-menu-open');
 
       window.scrollTo(0, scrollY);
 
@@ -1037,32 +1039,25 @@ function Navbar() {
                     Franchise Opportunities
                   </motion.a>
 
-                  <motion.div
-                    variants={reduceMotion ? undefined : mobileMenuNavItem}
-                    className="navbar-mobile-nav-item rounded-xl border px-4 py-3"
-                  >
-                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-violet-400">Resources</p>
-                    <div className="flex flex-col gap-1">
-                      {RESOURCES_NAV_ITEMS.map((item) => (
-                        <a
-                          key={item.path}
-                          href={item.path}
-                          onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
-                          className="mobile-nav-link rounded-lg px-2 py-2 text-sm font-semibold"
-                        >
-                          {item.title}
-                        </a>
-                      ))}
-                    </div>
-                  </motion.div>
+                  {RESOURCES_NAV_ITEMS.map((item) => (
+                    <motion.a
+                      key={item.path}
+                      variants={reduceMotion ? undefined : mobileMenuNavItem}
+                      href={item.path}
+                      onClick={(e) => { e.preventDefault(); navigateTo(item.path); }}
+                      className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
+                    >
+                      {item.title}
+                    </motion.a>
+                  ))}
 
                   <motion.a
                     variants={reduceMotion ? undefined : mobileMenuNavItem}
                     href="/careers"
                     onClick={(e) => { e.preventDefault(); navigateTo('/careers'); }}
-                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center rounded-xl border px-4 py-3.5 text-base font-bold"
+                    className="navbar-mobile-nav-item mobile-nav-link flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3.5 text-base font-bold"
                   >
-                    Careers
+                    <span>Careers</span>
                     <NavbarCareersOpenPill count={CAREERS_OPEN_COUNT} reduceMotion={reduceMotion} />
                   </motion.a>
 
@@ -1087,9 +1082,9 @@ function Navbar() {
                 <button
                   type="button"
                   onClick={() => navigateTo('/list-your-brand')}
-                  className="site-navbar-mobile-cta group flex w-full min-h-[48px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-bold transition-all active:scale-[0.98]"
+                  className="site-navbar-mobile-cta group flex w-full min-h-[48px] items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-3 text-[0.9375rem] font-bold transition-all active:scale-[0.98] sm:text-base"
                 >
-                  List Your Brand
+                  <span className="truncate">List Your Brand</span>
                   <motion.div
                     className="inline-flex"
                     whileHover={{ x: 3 }}

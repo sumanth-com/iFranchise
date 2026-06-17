@@ -7,6 +7,7 @@ import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
 import { navigateTo } from '@/lib/navigation';
+import { useTheme } from '../context/ThemeContext';
 import { TYPE } from '../lib/typography.js';
 import SectionPill from './ui/SectionPill';
 import { FiArrowRight } from 'react-icons/fi';
@@ -228,6 +229,7 @@ function Field({ label, required, children, className = '' }) {
 }
 
 function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
+  const { theme } = useTheme();
   const {
     values: form,
     setField: set,
@@ -279,7 +281,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
               title="Application received"
               description="We'll contact you within 24 hours."
               onReset={resetForm}
-              variant="dark"
+              variant={theme === 'light' ? 'default' : 'dark'}
               className="py-4"
             />
           ) : (

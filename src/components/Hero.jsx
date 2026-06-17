@@ -1243,8 +1243,8 @@ function Hero() {
   const [belowFoldReady, setBelowFoldReady] = useState(false);
   const isMobileViewport = useIsMobileViewport();
   const heroImageReady = isLight ? lightHeroReady : darkHeroReady;
-  const heroSrcSetDark = isMobileViewport ? undefined : HOME_HERO_DARK.srcSetMap;
-  const heroSrcSetLight = isMobileViewport ? undefined : HOME_HERO_LIGHT.srcSetMap;
+  const heroSrcSetDark = HOME_HERO_DARK.srcSetMap;
+  const heroSrcSetLight = HOME_HERO_LIGHT.srcSetMap;
 
   useLayoutEffect(() => {
     const staticImg = document.querySelector('#ifr-static-hero img');
@@ -1258,14 +1258,13 @@ function Hero() {
   }, [isLight, theme]);
 
   useEffect(() => {
-    if (!heroImageReady || isMobileViewport) return;
+    if (!heroImageReady) return;
     removeStaticHero();
-  }, [heroImageReady, isMobileViewport]);
+  }, [heroImageReady]);
 
   useEffect(() => {
-    if (isMobileViewport) return;
     preloadHomeHeroForTheme(theme);
-  }, [theme, isMobileViewport]);
+  }, [theme]);
 
   useEffect(() => {
     let cancelled = false;
@@ -1352,15 +1351,19 @@ function Hero() {
       {/* -- HERO SECTION ? cinematic entry -- */}
       <section
         className={`cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden ${
-          heroImageReady
+          isMobileViewport
             ? isLight
-              ? 'cinematic-hero--light bg-[#f0f4fa]'
-              : 'cinematic-hero--dark bg-[#0a0618]'
-            : 'bg-transparent'
+              ? 'cinematic-hero--light cinematic-hero--mobile'
+              : 'cinematic-hero--dark cinematic-hero--mobile'
+            : heroImageReady
+              ? isLight
+                ? 'cinematic-hero--light bg-[#f0f4fa]'
+                : 'cinematic-hero--dark bg-[#0a0618]'
+              : 'bg-transparent'
         }`}
       >
         <div className="hero-cinematic-media-wrap pointer-events-none absolute inset-0">
-          {!isMobileViewport && !isLight ? (
+          {!isLight ? (
             <div
               ref={darkHeroRef}
               className={`hero-cinematic-media hero-cinematic-media--dark pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
@@ -1384,7 +1387,7 @@ function Hero() {
               />
             </div>
           ) : null}
-          {!isMobileViewport && isLight ? (
+          {isLight ? (
             <div
               ref={lightHeroRef}
               className={`hero-cinematic-media hero-cinematic-media--light pointer-events-none absolute inset-0 transition-opacity duration-300 ease-out ${
@@ -1416,7 +1419,7 @@ function Hero() {
           aria-hidden
         />
         <div
-          className={`pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-44 bg-gradient-to-t sm:hidden ${
+          className={`pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-36 bg-gradient-to-t max-md:h-44 sm:hidden ${
             isLight
               ? 'from-white/95 via-white/50 to-transparent'
               : 'from-[#0a0618]/90 via-[#0a0618]/40 to-transparent'
@@ -1424,11 +1427,11 @@ function Hero() {
           aria-hidden
         />
 
-        <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-8 sm:max-xl:justify-center sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
+        <div className="hero-cinematic-layout relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-6 sm:max-xl:justify-center sm:px-8 max-xl:pb-10 xl:justify-center xl:pb-20">
           <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] sm:max-xl:justify-center xl:flex-none xl:justify-center">
-            <div className="flex w-full flex-none flex-col items-center justify-start sm:max-xl:justify-center xl:justify-center">
+            <div className="hero-cinematic-copy-stack flex w-full flex-none flex-col items-center justify-start max-md:mx-auto max-md:max-w-[19.75rem] sm:max-xl:justify-center xl:justify-center">
             <div
-              className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 backdrop-blur-[10px] max-sm:mb-3.5 sm:mb-6 sm:gap-3 sm:px-6 sm:py-2.5"
+              className="hero-cinematic-pill cinematic-enter-pill hero-cinematic-pill--animated mb-4 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 backdrop-blur-[10px] max-sm:mb-2.5 sm:mb-6 sm:gap-3 sm:px-6 sm:py-2.5"
               style={
                 isLight
                   ? undefined
@@ -1449,7 +1452,7 @@ function Hero() {
             </div>
 
             <h1
-              className={`${TYPE.heroCinematic} mb-3.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-3 sm:mb-5 xl:mb-3 xl:whitespace-nowrap ${
+              className={`${TYPE.heroCinematic} mb-3.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-2 sm:mb-5 xl:mb-3 xl:max-w-none xl:whitespace-nowrap ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
               style={
@@ -1462,14 +1465,22 @@ function Hero() {
                     }
               }
             >
-              Where Brands Expand
-              <br className="hidden xl:block" />
-              <span className="xl:hidden"> </span>
-              and Investors Discover What&apos;s Next
+              <span className="hero-cinematic-title__lines xl:hidden">
+                Where Brands Expand
+                <br />
+                and Investors Discover
+                <br />
+                <span className="hero-cinematic-title__accent whitespace-nowrap">What&apos;s Next</span>
+              </span>
+              <span className="hidden xl:inline">
+                Where Brands Expand
+                <br />
+                and Investors Discover What&apos;s Next
+              </span>
             </h1>
 
             <p
-              className={`${TYPE.heroCinematicLead} mx-auto max-w-[min(100%,28rem)] font-normal sm:max-w-[34rem] ${
+              className={`${TYPE.heroCinematicLead} mx-auto max-w-[min(100%,28rem)] font-normal max-sm:max-w-[18.5rem] sm:max-w-[34rem] ${
                 isLight ? 'text-slate-600' : 'text-white/95'
               }`}
               style={
@@ -1483,7 +1494,7 @@ function Hero() {
               iFranchise connects growing businesses with serious investors through a smarter ecosystem built for long-term growth.
             </p>
 
-            <div className="hero-cta-row mx-auto mt-4 flex w-full max-w-[900px] shrink-0 flex-row flex-wrap items-stretch justify-center gap-2.5 px-1 sm:mt-5 sm:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
+            <div className="hero-cta-row mx-auto mt-4 flex w-full max-w-[900px] shrink-0 flex-col items-stretch justify-center gap-2.5 px-1 max-md:mt-3 max-md:max-w-[19.75rem] max-md:gap-2 max-md:px-0 sm:mt-5 md:flex-row md:flex-wrap md:gap-3 xl:mt-1.5 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 xl:px-0 2xl:max-w-[36rem] 2xl:gap-5 2xl:mt-2.5">
               <HeroCtaButton
                 label="Explore Franchise Opportunities"
                 path="/franchise-opportunities"
