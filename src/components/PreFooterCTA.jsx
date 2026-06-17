@@ -3,13 +3,9 @@ import { SITE_IMAGES } from '../data/siteImageManifest.js';
 import FooterJumpLink from './footer/FooterJumpLink';
 import SocialFollowBlock from './footer/SocialFollowBlock';
 import { getPartnerBrandLogos } from '../data/franchiseData';
-import { navigateTo } from '../lib/navigation';
 import { TYPE } from '../lib/typography.js';
 import { SITE_CONTACT_ADDRESS, SITE_CONTACT_MAPS_URL } from '../data/siteContact';
-import { SOCIAL_LINKS } from '../constants/socialLinks';
-import { CAREERS_APPLY_EMAIL } from './careersData';
-
-const LINKEDIN_HREF = SOCIAL_LINKS.find((s) => s.id === 'linkedin')?.href || '#';
+import { PREFOOTER_CTA_CONTENT } from '../lib/preFooterCta';
 
 const PARTNER_BRAND_NAMES = getPartnerBrandLogos(12).map((p) => p.name);
 const BRAND_NAME_TRACK =
@@ -73,38 +69,11 @@ const FOOTER_LOCATION_ICON = (
   </svg>
 );
 
-const CTA_CONTENT = {
-  default: {
-    heading: 'Ready to Build, Invest, or Expand?',
-    description:
-      'Whether you are exploring franchise investment opportunities or planning to scale your business, iFranchise helps you move forward with clarity, confidence, and the right connections.',
-    trust: 'Trusted by franchise brands and investors across India.',
-    primary: { label: 'Explore Franchise Opportunities', action: () => navigateTo('/franchise-opportunities') },
-    secondary: { label: 'Schedule a Growth Consultation', action: () => window.open('https://cal.com/ifranchise.in/30min', '_blank') },
-  },
-  careers: {
-    heading: 'Join the iFranchise team',
-    description:
-      'We are building a franchise growth platform with ambitious people. View open roles, apply with your portfolio, or follow us for future openings.',
-    primary: { label: 'View open roles', action: () => navigateTo('/careers#open-roles') },
-    secondary: {
-      label: 'Apply via email',
-      action: () => {
-        window.location.href = `mailto:${CAREERS_APPLY_EMAIL}?subject=${encodeURIComponent('Application — iFranchise Careers')}`;
-      },
-    },
-    tertiary: {
-      label: 'Follow on LinkedIn',
-      action: () => window.open(LINKEDIN_HREF, '_blank', 'noopener,noreferrer'),
-    },
-  },
-};
-
 // -- Main component ------------------------------------------------------------
 export default function PreFooterCTA({ variant = 'default', shellClassName = '' }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
-  const cta = CTA_CONTENT[variant] || CTA_CONTENT.default;
+  const cta = PREFOOTER_CTA_CONTENT[variant] || PREFOOTER_CTA_CONTENT.default;
 
   useEffect(() => {
     const el = ref.current;

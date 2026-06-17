@@ -149,14 +149,14 @@ export function buildSchemasForRoute(seo, context = {}) {
   }
 
   if (logicalPathname === '/list-your-brand') {
-    pushSchema(
+        pushSchema(
       schemas,
       'service',
       buildServiceSchemaFromItem(
         {
           id: 'list-your-brand',
           title: 'List Your Brand on iFranchise',
-          desc: 'Scale your franchise brand across India with investor matching, lead generation, and nationwide expansion support.',
+          desc: 'Franchise listing platform for franchise development, franchise consulting, franchise investors, franchise lead generation, and brand expansion across India.',
           points: [],
         },
         canonicalUrl,

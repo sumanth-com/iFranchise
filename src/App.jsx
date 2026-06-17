@@ -18,6 +18,7 @@ import {
   scrollToHashSection,
 } from './lib/navigation';
 import { FRANCHISE_DETAILS_SHELL, FRANCHISE_OPPORTUNITIES_SHELL } from './lib/franchiseOpportunitiesShell.js';
+import { resolvePreFooterVariant } from './lib/preFooterCta';
 import { prefetchRoute } from './lib/routePrefetch.js';
 import { getEcosystemLogicalRoute } from './data/ecosystem/ecosystemRoutes.js';
 import { trackPageView } from './lib/analytics/ga4.js';
@@ -407,7 +408,7 @@ function App() {
       {showPreFooter ? (
         <Suspense fallback={null}>
           <PreFooterCTA
-            variant={isCareersPage || isCareerDetailPage ? 'careers' : 'default'}
+            variant={resolvePreFooterVariant(pathname)}
             shellClassName={
               isFranchiseOpportunitiesPage
                 ? FRANCHISE_OPPORTUNITIES_SHELL

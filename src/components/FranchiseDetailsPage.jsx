@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { navigateTo, NAVIGATE_EVENT, restoreScrollWithRetry } from '@/lib/navigation';
 import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
@@ -371,7 +371,7 @@ function buildEligibilityCriteria(franchise) {
       description: `Comfortable with an upfront franchise fee of ${franchiseFee}.`,
     });
   }
-  if (space) {
+  if (space && franchise.slug !== 'odette') {
     items.push({
       title: 'Minimum retail space',
       description: `Can secure at least ${space} in a format suited to ${franchise.name}.`,
@@ -527,7 +527,7 @@ function FranchiseDetailsPage() {
   );
 
   const franchiseOpportunityTitle = useMemo(
-    () => `${selectedFranchise?.name ?? ''} FRANCHISE OPPORTUNITY`.trim(),
+    () => `${selectedFranchise?.name?.toUpperCase() ?? ''} FRANCHISE OPPORTUNITY`.trim(),
     [selectedFranchise?.name],
   );
 

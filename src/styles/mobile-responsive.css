@@ -2484,19 +2484,29 @@
   }
 
   .list-your-brand-page .lyb-hero-title {
-    font-size: clamp(1.375rem, 5.5vw, 1.875rem) !important;
-    line-height: 1.2 !important;
+    font-size: clamp(1.3125rem, 5.2vw, 1.75rem) !important;
+    line-height: 1.22 !important;
     text-align: center !important;
     width: 100% !important;
-    max-width: 22rem !important;
+    max-width: 100% !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
+    text-wrap: balance;
   }
 
   .list-your-brand-page .lyb-hero-subtext {
     font-size: 0.8125rem !important;
-    line-height: 1.55 !important;
+    line-height: 1.45 !important;
     text-align: center !important;
     width: 100% !important;
-    max-width: 20rem !important;
+    max-width: 100% !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
+    text-wrap: balance;
   }
 
   .list-your-brand-page .lyb-hero-copy ul {
@@ -2881,7 +2891,7 @@
   .site-cta:not(.services-page-cta-btn):not(.why-section-cta),
   .why-section-cta,
   .section-primary-cta,
-  .btn-purple-solid:not(.lyb-hero-cta),
+  .btn-purple-solid:not(.lyb-hero-cta):not(.lyb-mobile-sticky-cta-btn),
   .hero-cta {
     min-height: 2.5rem;
     max-width: min(100%, 18rem);
@@ -2889,7 +2899,7 @@
   }
 
   .site-cta:not(.services-page-cta-btn):not(.why-section-cta),
-  .btn-purple-solid:not(.lyb-hero-cta),
+  .btn-purple-solid:not(.lyb-hero-cta):not(.lyb-mobile-sticky-cta-btn),
   .hero-cta {
     padding-left: 1.125rem;
     padding-right: 1.125rem;

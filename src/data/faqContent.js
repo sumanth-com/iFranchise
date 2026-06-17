@@ -135,33 +135,9 @@ export const CAREERS_FAQS = [
   },
 ];
 
-export const LIST_YOUR_BRAND_FAQS = [
-  {
-    question: 'What types of brands can list on iFranchise?',
-    answer:
-      'Brands with a proven model and at least one operational unit – across F&B, wellness, education, retail, tech, and more.',
-  },
-  {
-    question: 'How long does it take to become franchise-ready?',
-    answer:
-      'Most brands are franchise-ready within ~30 days including model design, legal documents, SOPs, and investor materials.',
-  },
-  {
-    question: 'How does investor matching work?',
-    answer:
-      'We match your opportunity to 1,800+ pre-screened investors filtered by sector, ticket size, geography, and intent.',
-  },
-  {
-    question: 'What franchise models do you support?',
-    answer:
-      'We support FOFO, FOCO, and FICO models and help you choose based on operations complexity, capital requirements, and investor profile.',
-  },
-  {
-    question: 'Is there support after launch?',
-    answer:
-      'Yes – 90-day post-launch support plus ongoing advisory for multi-city expansion and performance tracking.',
-  },
-];
+import { LIST_YOUR_BRAND_PAGE_FAQS } from './listYourBrandPageContent.js';
+
+export const LIST_YOUR_BRAND_FAQS = LIST_YOUR_BRAND_PAGE_FAQS;
 
 /** All FAQs visible on /faq */
 export const FAQ_PAGE_ALL_FAQS = [

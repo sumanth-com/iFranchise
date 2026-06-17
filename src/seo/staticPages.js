@@ -77,13 +77,14 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/list-your-brand': {
-    title: 'List Your Brand | Franchise Expansion & Investors',
+    title: 'List Your Brand | Franchise Development India',
     description:
-      'Expand your brand across India. List on iFranchise for qualified investor matching, franchise lead generation, franchise development support, and structured multi-city growth.',
-    keywords: `list franchise brand india, brand expansion, franchise development, investor matching, ${K}`,
+      'List your brand on iFranchise — franchise listing platform for franchise development, franchise consulting, franchise investors, franchise lead generation, and brand expansion across India.',
+    keywords: `list franchise brand india, franchise development, franchise consulting, franchise expansion, franchise investors, franchise opportunities, brand expansion, franchise partner acquisition, franchise lead generation, franchise growth, franchise listing platform, franchise marketplace, franchise ecosystem, ${K}`,
     canonicalPath: '/list-your-brand',
-    ogTitle: 'List Your Brand on iFranchise',
-    ogDescription: 'Reach serious franchise investors and accelerate nationwide brand expansion in India.',
+    ogTitle: 'List Your Brand on iFranchise | Franchise Growth Platform',
+    ogDescription:
+      'Connect with franchise investors through India\'s franchise marketplace. Franchise development, consulting, and nationwide brand expansion support.',
     ogType: 'website',
   },
   '/blogs': {
