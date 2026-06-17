@@ -3,18 +3,19 @@ import { navigateTo } from '../../lib/navigation';
 import { FRANCHISE_MODELS } from '../../data/ecosystem/franchiseModelsContent';
 import { sectionTitleClass, sectionSubtitleClass } from '../../lib/cardThemeStyles';
 import { useTheme } from '../../context/ThemeContext';
+import FranchiseModelCardHeader from './FranchiseModelCardHeader';
 
 const MODEL_ORDER = ['fofo-model', 'foco-model', 'fico-model'];
 
-const PURPLE_ACCENT = '#7c3aed';
+function cardTitleWithoutCode(fullTitle, code) {
+  return fullTitle.replace(new RegExp(`\\s*\\(${code}\\)\\s*$`, 'i'), '').trim();
+}
 
-const MODEL_HEADER = { headerBg: '#ffffff', headerText: PURPLE_ACCENT };
-
-function MetaIcon({ children }) {
+function MetaIcon({ accent, children }) {
   return (
     <svg
       className="mr-2.5 h-4 w-4 shrink-0"
-      style={{ color: PURPLE_ACCENT }}
+      style={{ color: accent }}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -31,7 +32,6 @@ function MetaIcon({ children }) {
 export default function HomeFranchiseModelsSection() {
   const { theme } = useTheme();
   const isLight = theme === 'light';
-  const header = MODEL_HEADER;
 
   return (
     <section className="section-reveal relative w-full overflow-hidden bg-transparent">
@@ -47,6 +47,7 @@ export default function HomeFranchiseModelsSection() {
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {MODEL_ORDER.map((key, i) => {
             const model = FRANCHISE_MODELS[key];
+            const accent = model.accentColor;
             const comparison = model.comparison.find((row) => row.model === model.code);
             const handleLearnMore = () => navigateTo(model.path);
 
@@ -60,33 +61,24 @@ export default function HomeFranchiseModelsSection() {
                   onClick={handleLearnMore}
                   className="fo-opportunity-card card-premium-dark group flex h-full cursor-pointer flex-col overflow-hidden rounded-xl"
                   style={{
-                    '--fo-card-bg': header.headerBg,
-                    '--fo-card-accent': PURPLE_ACCENT,
+                    '--fo-card-bg': accent,
+                    '--fo-card-accent': accent,
                   }}
                 >
-                  <div
-                    className="fo-opportunity-card__media relative aspect-[3/2] w-full shrink-0 overflow-hidden sm:aspect-[5/3] lg:aspect-auto lg:h-52"
-                    style={{ backgroundColor: header.headerBg }}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span
-                        className="text-3xl font-extrabold tracking-tight sm:text-4xl"
-                        style={{ color: header.headerText }}
-                      >
-                        {model.code}
-                      </span>
-                    </div>
-                    <div className="fo-opportunity-card__sheen pointer-events-none" aria-hidden="true" />
-                  </div>
+                  <FranchiseModelCardHeader
+                    modelKey={key}
+                    code={model.code}
+                    accentColor={accent}
+                  />
 
                   <div className="fo-opportunity-card__body flex flex-1 flex-col p-4 sm:p-5">
                     <h3 className="fo-card-title mb-4 line-clamp-2 text-lg font-bold leading-snug">
-                      {model.fullTitle}
+                      {cardTitleWithoutCode(model.fullTitle, model.code)}
                     </h3>
 
                     <div className="fo-card-meta mb-4 flex-1 space-y-3">
                       <div className="fo-card-meta__row flex items-center text-sm">
-                        <MetaIcon>
+                        <MetaIcon accent={accent}>
                           <path d="M8 11V7a4 4 0 118 0v4" />
                           <rect x="6" y="11" width="12" height="10" rx="2" />
                           <circle cx="12" cy="16" r="1.25" fill="currentColor" stroke="none" />
@@ -95,7 +87,7 @@ export default function HomeFranchiseModelsSection() {
                         <span className="fo-card-meta__value ml-2 font-semibold">{comparison?.ownership}</span>
                       </div>
                       <div className="fo-card-meta__row flex items-center text-sm">
-                        <MetaIcon>
+                        <MetaIcon accent={accent}>
                           <path d="M4 10l2-6h12l2 6" />
                           <path d="M4 10h16v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9z" />
                           <path d="M10 20v-4h4v4" />
@@ -104,7 +96,7 @@ export default function HomeFranchiseModelsSection() {
                         <span className="fo-card-meta__value ml-2 font-semibold">{comparison?.operations}</span>
                       </div>
                       <div className="fo-card-meta__row flex items-center text-sm">
-                        <MetaIcon>
+                        <MetaIcon accent={accent}>
                           <path d="M6 17V9M10 17V6M14 17v-4M18 17V4" />
                         </MetaIcon>
                         <span className="fo-card-meta__label shrink-0">Involvement:</span>
