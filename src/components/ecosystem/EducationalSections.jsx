@@ -70,7 +70,7 @@ export function ComparisonTable({ rows, columns }) {
   );
 }
 
-export function FaqSection({ faqs, title = 'Frequently Asked Questions' }) {
+export function FaqSection({ faqs, title = 'Frequently Asked Questions', skipLinks = [] }) {
   const { theme } = useTheme();
   const isLight = theme === 'light';
   if (!faqs?.length) return null;
@@ -86,6 +86,7 @@ export function FaqSection({ faqs, title = 'Frequently Asked Questions' }) {
               answer: faq.answer,
             }}
             index={index}
+            skipLinks={skipLinks}
           />
         ))}
       </div>

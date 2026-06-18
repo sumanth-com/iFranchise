@@ -31,7 +31,7 @@ export default function FranchiseModelPage() {
           subtitle={model.subtitle}
         />
 
-        <GeoAnswerBlock answer={model.geoAnswer} />
+        <GeoAnswerBlock answer={model.geoAnswer} skipLinks={[model.code]} />
 
         <div className="space-y-10">
           <ContentSection title="Model explanation">
@@ -74,7 +74,7 @@ export default function FranchiseModelPage() {
         </div>
 
         <div className="mt-14">
-          <FaqSection faqs={faqs} />
+          <FaqSection faqs={faqs} skipLinks={[model.code]} />
         </div>
 
         <InternalLinksSection links={relatedLinks} />

@@ -6,7 +6,7 @@ import { linkifyContent } from '../../lib/linkifyContent';
 /**
  * Site-wide FAQ accordion — matches Contact / Services dark premium card style.
  */
-export default function PremiumFAQItem({ faq, question: questionProp, answer: answerProp, index = 0 }) {
+export default function PremiumFAQItem({ faq, question: questionProp, answer: answerProp, index = 0, skipLinks = [] }) {
   const [isOpen, setIsOpen] = useState(false);
   const question = questionProp ?? faq?.question ?? faq?.q;
   const answer = answerProp ?? faq?.answer ?? faq?.a;
@@ -36,7 +36,7 @@ export default function PremiumFAQItem({ faq, question: questionProp, answer: an
         className="relative flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors duration-300 sm:px-6 sm:py-5"
       >
         <span className="services-faq-question text-sm font-bold text-white transition-colors duration-300 sm:text-base">
-          {linkifyContent(question)}
+          {linkifyContent(question, { skip: skipLinks })}
         </span>
         <span
           className={`services-faq-toggle flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
@@ -76,7 +76,7 @@ export default function PremiumFAQItem({ faq, question: questionProp, answer: an
             <div className="px-5 pb-5 sm:px-6 sm:pb-6">
               <div className="border-t border-violet-500/20 pt-2">
                 <p className="services-faq-answer mt-3 text-sm leading-relaxed text-white sm:text-[15px]">
-                  {linkifyContent(answer)}
+                  {linkifyContent(answer, { skip: skipLinks })}
                 </p>
               </div>
             </div>

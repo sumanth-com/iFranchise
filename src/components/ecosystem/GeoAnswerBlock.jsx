@@ -2,7 +2,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { linkifyContent } from '../../lib/linkifyContent';
 
 /** AI-search-friendly direct answer block for GEO optimization. */
-export default function GeoAnswerBlock({ answer, label = 'Quick answer', variant = 'default' }) {
+export default function GeoAnswerBlock({ answer, label = 'Quick answer', variant = 'default', skipLinks = [] }) {
   const { theme } = useTheme();
   const isLight = theme === 'light';
 
@@ -31,7 +31,7 @@ export default function GeoAnswerBlock({ answer, label = 'Quick answer', variant
         {label}
       </p>
       <p className={`text-sm leading-relaxed sm:text-base ${isLight ? 'text-black' : 'text-white'}`}>
-        {linkifyContent(answer)}
+        {linkifyContent(answer, { skip: skipLinks })}
       </p>
     </aside>
   );
