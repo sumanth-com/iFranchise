@@ -7,6 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import StateLocationFields from './forms/StateLocationFields';
 import SocialFollowBlock from './footer/SocialFollowBlock';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
@@ -22,6 +23,8 @@ const CONTACT_FORM_INITIAL = withHoneypot({
   contactNumber: createEmptyPhoneValue(),
   email: '',
   company: '',
+  state: '',
+  city: '',
   message: '',
 });
 
@@ -76,10 +79,10 @@ function ArrowUpRightIcon() {
 }
 
 const CONTACT_INPUT_DARK =
-  'contact-hero-form__input w-full rounded-lg border px-3 py-2.5 text-sm transition focus:outline-none focus:ring-2';
+  'contact-hero-form__input site-form-field site-form-field--on-dark w-full rounded-lg border px-3 py-2.5 text-sm transition';
 
 const CONTACT_INPUT_LIGHT =
-  'contact-hero-form__input w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/15';
+  'contact-hero-form__input site-form-field site-form-field--lift w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400';
 
 function ContactField({ label, required, className = '', children }) {
   return (
@@ -163,6 +166,7 @@ function ContactHeroForm({
   isSubmitting,
   isSuccess,
   submitError,
+  fieldErrors,
   onResetSuccess,
   isLight,
 }) {
@@ -240,6 +244,20 @@ function ContactHeroForm({
               />
             </ContactField>
 
+            <StateLocationFields
+              layout="row"
+              variant={isLight ? 'light' : 'dark'}
+              stateValue={formData.state}
+              cityValue={formData.city}
+              onStateChange={(v) => handleInputChange('state', v)}
+              onCityChange={(v) => handleInputChange('city', v)}
+              stateError={fieldErrors?.state}
+              cityError={fieldErrors?.city}
+              stateClassName={inputClass}
+              cityClassName={inputClass}
+              labelClassName="contact-hero-form__label mb-1 block text-xs font-medium"
+            />
+
             <ContactField label="Message" required>
               <textarea
                 rows={2}
@@ -286,6 +304,7 @@ function ContactPage() {
     isSubmitting,
     isSuccess,
     submitError,
+    fieldErrors,
     handleSubmit,
     resetForm,
   } = useFormSubmission({
@@ -348,6 +367,7 @@ function ContactPage() {
                 isSubmitting={isSubmitting}
                 isSuccess={isSuccess}
                 submitError={submitError}
+                fieldErrors={fieldErrors}
                 onResetSuccess={resetForm}
                 isLight={isLight}
               />

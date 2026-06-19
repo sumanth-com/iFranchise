@@ -17,6 +17,8 @@ export function transformCareerApplicationData(formData, sourcePage = 'careers_r
       ...spreadPhoneFields(formData),
       resume_link: formData.resumeLink,
       portfolio_link: formData.portfolioLink || '',
+      state: formData.state || '',
+      city: formData.city || '',
       message: formData.message,
     },
   };

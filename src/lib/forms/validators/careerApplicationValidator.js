@@ -1,6 +1,7 @@
 import { isValidContactEmail } from '../../contactForm.js';
 import { sanitizeObjectStrings } from '../../sanitize.js';
 import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
+import { validateStateCityOnData } from '../utils/stateCityValidation.js';
 
 function isValidHttpsUrl(value) {
   try {
@@ -74,6 +75,8 @@ export function validateCareerApplicationForm(formData) {
   } else {
     data.roleTitle = data.roleTitle.trim();
   }
+
+  validateStateCityOnData(data, errors);
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };

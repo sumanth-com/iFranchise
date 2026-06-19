@@ -7,7 +7,7 @@
  * 
  * Deployment: Deploy as Web App with "Anyone" access
  * 
- * @version 1.0.0
+ * @version 1.1.0 — State/City columns; merges new headers without moving existing rows
  */
 
 // ============================================================================
@@ -41,6 +41,8 @@ const SHEET_HEADERS = {
     'Phone',
     'Company',
     'Message',
+    'State',
+    'City',
     'Submitted At'
   ],
   Brand_Applications: [
@@ -49,6 +51,8 @@ const SHEET_HEADERS = {
     'Brand Name',
     'Industry',
     'Locations',
+    'State',
+    'City',
     'Contact Name',
     'Contact Email',
     'Contact Phone',
@@ -97,6 +101,8 @@ const SHEET_HEADERS = {
     'Phone',
     'Franchise ID',
     'Franchise Name',
+    'State',
+    'City',
     'Message',
     'Submitted At'
   ],
@@ -110,6 +116,7 @@ const SHEET_HEADERS = {
     'Email',
     'Phone',
     'Preferred City',
+    'State',
     'Message',
     'Submitted At'
   ],
@@ -123,6 +130,8 @@ const SHEET_HEADERS = {
     'Phone',
     'Resume Link',
     'Portfolio Link',
+    'State',
+    'City',
     'Message',
     'Submitted At'
   ]
@@ -284,13 +293,14 @@ function processSubmission(payload) {
     // Get or create sheet
     const sheet = getOrCreateSheet(resolvedTab);
     
-    // Ensure headers exist
+    // Ensure headers exist (adds new columns to the right — never deletes or shifts old rows)
     ensureHeaders(sheet, headerKeyForSheet(resolvedTab));
-    
-    // Prepare row data
-    const rowData = prepareRowData(form_type, data, source_page, submitted_at);
-    
-    // Append row to sheet
+
+    const headerRow = getSheetHeaderRow(sheet);
+    const rowValues = prepareRowValues(form_type, data, source_page, submitted_at);
+    const rowData = buildRowArray(headerRow, rowValues);
+
+    // Append row to sheet (unlimited submissions — no per-user caps)
     sheet.appendRow(rowData);
     
     // Log successful submission
@@ -338,149 +348,226 @@ function getOrCreateSheet(sheetName) {
 }
 
 /**
- * Ensure sheet has proper headers
+ * Style header cells (new sheets or newly appended columns).
+ */
+function styleHeaderRange(sheet, row, startCol, colCount) {
+  const headerRange = sheet.getRange(row, startCol, 1, colCount);
+  headerRange.setFontWeight('bold');
+  headerRange.setBackground('#4285F4');
+  headerRange.setFontColor('#FFFFFF');
+}
+
+/**
+ * Ensure sheet has headers. Existing data is never removed.
+ * Missing columns from SHEET_HEADERS are appended to the right of row 1.
  */
 function ensureHeaders(sheet, sheetName) {
-  const headers = SHEET_HEADERS[sheetName];
-  if (!headers) {
-    throw new Error(`No headers defined for sheet: ${sheetName}`);
+  const targetHeaders = SHEET_HEADERS[sheetName];
+  if (!targetHeaders) {
+    throw new Error('No headers defined for sheet: ' + sheetName);
   }
-  
+
   const lastRow = sheet.getLastRow();
-  
-  // Add headers if sheet is empty
+
   if (lastRow === 0) {
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-    // Freeze header row
+    sheet.getRange(1, 1, 1, targetHeaders.length).setValues([targetHeaders]);
     sheet.setFrozenRows(1);
-    // Style header row
-    const headerRange = sheet.getRange(1, 1, 1, headers.length);
-    headerRange.setFontWeight('bold');
-    headerRange.setBackground('#4285F4');
-    headerRange.setFontColor('#FFFFFF');
+    styleHeaderRange(sheet, 1, 1, targetHeaders.length);
+    return;
+  }
+
+  const lastCol = Math.max(sheet.getLastColumn(), 1);
+  const existingRow = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  const existingHeaders = existingRow.map(function (cell) {
+    return String(cell || '').trim();
+  });
+
+  const missing = [];
+  targetHeaders.forEach(function (header) {
+    if (existingHeaders.indexOf(header) === -1) {
+      missing.push(header);
+    }
+  });
+
+  if (missing.length === 0) {
+    return;
+  }
+
+  const startCol = lastCol + 1;
+  sheet.getRange(1, startCol, 1, missing.length).setValues([missing]);
+  styleHeaderRange(sheet, 1, startCol, missing.length);
+  console.log('Added columns on ' + sheetName + ': ' + missing.join(', '));
+}
+
+/**
+ * Read current header row (column order as stored in the sheet).
+ */
+function getSheetHeaderRow(sheet) {
+  const lastCol = sheet.getLastColumn();
+  if (lastCol === 0) {
+    return [];
+  }
+  return sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(function (cell) {
+    return String(cell || '').trim();
+  });
+}
+
+/**
+ * Build append row aligned to the sheet's header row (safe when columns were added later).
+ */
+function buildRowArray(headerRow, valuesByHeader) {
+  return headerRow.map(function (header) {
+    if (!header) {
+      return '';
+    }
+    if (Object.prototype.hasOwnProperty.call(valuesByHeader, header)) {
+      var value = valuesByHeader[header];
+      return value === null || value === undefined ? '' : value;
+    }
+    return '';
+  });
+}
+
+function normalizePhone(phone) {
+  if (phone === null || phone === undefined || phone === '') {
+    return '';
+  }
+  if (typeof phone === 'string') {
+    return phone;
+  }
+  if (typeof phone === 'object') {
+    if (phone.phone) {
+      return String(phone.phone);
+    }
+    if (phone.phoneDialCode && phone.phoneLocal) {
+      return '+' + String(phone.phoneDialCode).replace(/^\+/, '') + String(phone.phoneLocal);
+    }
+  }
+  return String(phone);
+}
+
+/**
+ * Prepare row values keyed by header name (form-type specific).
+ */
+function prepareRowValues(formType, data, sourcePage, submittedAt) {
+  const timestamp = new Date().toISOString();
+  const submittedAtTime = submittedAt || timestamp;
+  const base = {
+    'Timestamp': timestamp,
+    'Source Page': sourcePage || 'unknown',
+    'Submitted At': submittedAtTime,
+  };
+
+  switch (formType) {
+    case 'contact':
+      return Object.assign({}, base, {
+        'Name': data.name || '',
+        'Email': data.email || '',
+        'Phone': normalizePhone(data.phone),
+        'Company': data.company || '',
+        'Message': data.message || '',
+        'State': data.state || '',
+        'City': data.city || '',
+      });
+
+    case 'brand_application':
+      return Object.assign({}, base, {
+        'Brand Name': data.brandName || '',
+        'Industry': data.industry || '',
+        'Locations': data.locations || '',
+        'State': data.state || '',
+        'City': data.city || '',
+        'Contact Name': data.contactName || '',
+        'Contact Email': data.contactEmail || '',
+        'Contact Phone': normalizePhone(data.contactPhone),
+        'Description': data.description || '',
+      });
+
+    case 'chatbot_brand':
+      return Object.assign({}, base, {
+        'Brand Name': data.brand_name || '',
+        'Industry': data.industry || '',
+        'Locations': data.locations || '',
+        'Cities': data.cities || '',
+        'Investment': data.investment || '',
+        'Contact Name': data.contact_name || '',
+        'Contact Phone': normalizePhone(data.contact_phone),
+      });
+
+    case 'chatbot_investor':
+      return Object.assign({}, base, {
+        'Industries': data.industries || '',
+        'Budget': data.budget || '',
+        'Cities': data.cities || '',
+        'Timeline': data.timeline || '',
+        'Contact Name': data.contact_name || '',
+        'Contact Phone': normalizePhone(data.contact_phone),
+      });
+
+    case 'chatbot_strategy':
+      return Object.assign({}, base, {
+        'Name': data.name || '',
+        'Phone': normalizePhone(data.phone),
+        'Email': data.email || '',
+        'Preferred Date': data.preferred_date || '',
+        'Preferred Time': data.preferred_time || '',
+        'Message': data.message || '',
+      });
+
+    case 'brochure_download':
+      return Object.assign({}, base, {
+        'Name': data.name || '',
+        'Email': data.email || '',
+        'Phone': normalizePhone(data.phone),
+        'Franchise ID': data.franchise_id || '',
+        'Franchise Name': data.franchise_name || '',
+        'State': data.state || '',
+        'City': data.city || '',
+        'Message': data.message || '',
+      });
+
+    case 'franchise_inquiry':
+      return Object.assign({}, base, {
+        'Franchise ID': data.franchise_id || '',
+        'Franchise Name': data.franchise_name || '',
+        'Franchise Type': data.franchise_type || '',
+        'Full Name': data.full_name || '',
+        'Email': data.email || '',
+        'Phone': normalizePhone(data.phone),
+        'Preferred City': data.city || '',
+        'State': data.state || '',
+        'Message': data.message || '',
+      });
+
+    case 'career_application':
+      return Object.assign({}, base, {
+        'Role ID': data.role_id || '',
+        'Role Title': data.role_title || '',
+        'Name': data.name || '',
+        'Email': data.email || '',
+        'Phone': normalizePhone(data.phone),
+        'Resume Link': data.resume_link || '',
+        'Portfolio Link': data.portfolio_link || '',
+        'State': data.state || '',
+        'City': data.city || '',
+        'Message': data.message || '',
+      });
+
+    default:
+      throw new Error('Unknown form type: ' + formType);
   }
 }
 
 /**
- * Prepare row data based on form type
+ * @deprecated Use prepareRowValues + buildRowArray
  */
 function prepareRowData(formType, data, sourcePage, submittedAt) {
-  const timestamp = new Date().toISOString();
-  const submittedAtTime = submittedAt || timestamp;
-  
-  switch (formType) {
-    case 'contact':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.name || '',
-        data.email || '',
-        data.phone || '',
-        data.company || '',
-        data.message || '',
-        submittedAtTime
-      ];
-      
-    case 'brand_application':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.brandName || '',
-        data.industry || '',
-        data.locations || '',
-        data.contactName || '',
-        data.contactEmail || '',
-        data.contactPhone || '',
-        data.description || '',
-        submittedAtTime
-      ];
-      
-    case 'chatbot_brand':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.brand_name || '',
-        data.industry || '',
-        data.locations || '',
-        data.cities || '',
-        data.investment || '',
-        data.contact_name || '',
-        data.contact_phone || '',
-        submittedAtTime
-      ];
-      
-    case 'chatbot_investor':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.industries || '',
-        data.budget || '',
-        data.cities || '',
-        data.timeline || '',
-        data.contact_name || '',
-        data.contact_phone || '',
-        submittedAtTime
-      ];
-
-    case 'chatbot_strategy':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.name || '',
-        data.phone || '',
-        data.email || '',
-        data.preferred_date || '',
-        data.preferred_time || '',
-        data.message || '',
-        submittedAtTime
-      ];
-
-    case 'brochure_download':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.name || '',
-        data.email || '',
-        data.phone || '',
-        data.franchise_id || '',
-        data.franchise_name || '',
-        data.message || '',
-        submittedAtTime
-      ];
-
-    case 'franchise_inquiry':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.franchise_id || '',
-        data.franchise_name || '',
-        data.franchise_type || '',
-        data.full_name || '',
-        data.email || '',
-        data.phone || '',
-        data.city || '',
-        data.message || '',
-        submittedAtTime
-      ];
-
-    case 'career_application':
-      return [
-        timestamp,
-        sourcePage || 'unknown',
-        data.role_id || '',
-        data.role_title || '',
-        data.name || '',
-        data.email || '',
-        data.phone || '',
-        data.resume_link || '',
-        data.portfolio_link || '',
-        data.message || '',
-        submittedAtTime
-      ];
-      
-    default:
-      throw new Error(`Unknown form type: ${formType}`);
+  const values = prepareRowValues(formType, data, sourcePage, submittedAt);
+  const headers = SHEET_HEADERS[SHEET_TABS[formType]];
+  if (!headers) {
+    throw new Error('Unknown form type: ' + formType);
   }
+  return buildRowArray(headers, values);
 }
 
 // ============================================================================
@@ -516,6 +603,8 @@ function testSubmission() {
       email: 'test@example.com',
       phone: '1234567890',
       company: 'Test Company',
+      state: 'Karnataka',
+      city: 'Bengaluru',
       message: 'This is a test submission'
     }
   };
@@ -542,6 +631,8 @@ function testCareerSubmission() {
       phone: '9876543210',
       resume_link: 'https://drive.google.com/example',
       portfolio_link: '',
+      state: 'Maharashtra',
+      city: 'Mumbai',
       message: 'Career apply test row'
     }
   };
@@ -552,20 +643,18 @@ function testCareerSubmission() {
 }
 
 /**
- * Setup function to create all sheets with headers
- * Run this once after deploying to a new spreadsheet
+ * Setup / migrate all sheets: creates tabs if missing and appends any new header columns.
+ * Safe to run on a live spreadsheet — existing rows are not deleted or modified.
  */
 function setupSheets() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  
-  Object.keys(SHEET_TABS).forEach(formType => {
+  Object.keys(SHEET_TABS).forEach(function (formType) {
     const sheetName = SHEET_TABS[formType];
     const sheet = getOrCreateSheet(sheetName);
-    ensureHeaders(sheet, sheetName);
-    console.log(`Setup complete for: ${sheetName}`);
+    ensureHeaders(sheet, headerKeyForSheet(sheetName));
+    console.log('Headers OK for: ' + sheetName);
   });
-  
-  console.log('All sheets setup complete!');
+
+  console.log('All sheets ready. Existing data preserved; new columns added where needed.');
 }
 
 /**

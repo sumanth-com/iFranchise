@@ -503,9 +503,10 @@
   transition: background-color 99999s ease-out 0s;
 }
 
-.franchise-inquiry-modal__input:focus {
+.franchise-inquiry-modal__input:focus,
+.franchise-inquiry-modal__input:focus-visible {
   border-color: #a78bfa;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
 }
 
 .franchise-inquiry-modal__input--error {

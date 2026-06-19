@@ -19,6 +19,9 @@ function buildDescription(formData) {
 
 function buildLocations(formData) {
   const parts = [];
+  if (formData.state || formData.city) {
+    parts.push(`Location: ${[formData.city, formData.state].filter(Boolean).join(', ')}`);
+  }
   if (formData.outlets) parts.push(`Outlets: ${formData.outlets}`);
   if (formData.cityGoal) parts.push(`Expansion goal: ${formData.cityGoal}`);
   return parts.join(' | ') || '';
@@ -34,6 +37,8 @@ export function transformApplicationData(formData, sourcePage = 'brand_owners_pa
       brandName: formData.brandName,
       industry: formData.industry,
       locations: buildLocations(formData),
+      state: formData.state || '',
+      city: formData.city || '',
       contactName: formData.name,
       contactEmail: formData.email,
       contactPhone: formData.phone,

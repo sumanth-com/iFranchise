@@ -2,17 +2,18 @@ import { HONEYPOT_FIELD } from '@/lib/forms';
 import { submitCareerApplication } from '@/lib/forms/submitters/careerApplicationSubmitter';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
 import PhoneInput from '../forms/PhoneInput';
+import StateLocationFields from '../forms/StateLocationFields';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from '../forms/HoneypotField';
 import FormSuccessState from '../forms/FormSuccessState';
 
 const inputBase =
-  'career-apply-input w-full rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:ring-2';
+  'career-apply-input site-form-field w-full rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none transition';
 
 function fieldClass(hasError) {
   return hasError
-    ? `${inputBase} border-red-400 focus:border-red-400 focus:ring-red-500/25`
-    : `${inputBase} border-slate-200 focus:border-violet-400 focus:ring-violet-500/25`;
+    ? `${inputBase} site-form-field--error border-red-400`
+    : `${inputBase} border-slate-200`;
 }
 
 function Label({ htmlFor, children, required = false }) {
@@ -28,20 +29,13 @@ function Label({ htmlFor, children, required = false }) {
   );
 }
 
-function CareerApplyFormDisclaimer({ roleTitle }) {
-  const title = String(roleTitle || 'this role').trim();
-
+function CareerApplyFormDisclaimer() {
   return (
-    <div className="career-apply-legal-wrap">
-      <p className="career-apply-legal">
-        By submitting this form, you agree to our{' '}
-        <a href="/privacy-policy">Privacy Policy</a> and{' '}
-        <a href="/terms-and-conditions">Terms of Service</a>.
-      </p>
-      <p className="career-apply-legal">
-        iFranchise will review your application for the <strong>{title}</strong> role in India.
-      </p>
-    </div>
+    <p className="career-apply-legal">
+      By submitting this form, you agree to our{' '}
+      <a href="/privacy-policy">Privacy Policy</a> and{' '}
+      <a href="/terms-and-conditions">Terms of Service</a>.
+    </p>
   );
 }
 
@@ -53,6 +47,8 @@ function buildInitial(role) {
     resumeLink: '',
     portfolioLink: '',
     message: '',
+    state: '',
+    city: '',
     roleId: role?.id || '',
     roleTitle: role?.title || '',
   });
@@ -157,6 +153,25 @@ export default function CareerApplyForm({ role }) {
             {fieldErrors.email ? <p className="mt-0.5 text-[11px] text-red-600">{fieldErrors.email}</p> : null}
           </div>
 
+          <div className="career-apply-field w-full min-w-0">
+            <StateLocationFields
+              layout="row"
+              className="w-full gap-2 sm:gap-3"
+              variant="light"
+              stateValue={values.state}
+              cityValue={values.city}
+              onStateChange={(v) => setField('state', v)}
+              onCityChange={(v) => setField('city', v)}
+              stateError={fieldErrors.state}
+              cityError={fieldErrors.city}
+              stateId={`career-state-${role.id}`}
+              cityId={`career-city-${role.id}`}
+              stateClassName={fieldClass(fieldErrors.state)}
+              cityClassName={fieldClass(fieldErrors.city)}
+              labelClassName="career-apply-label mb-1 block text-sm font-semibold text-slate-700"
+            />
+          </div>
+
           <div className="career-apply-field">
             <Label htmlFor={`career-resume-${role.id}`} required>
               Resume (Google Drive)
@@ -173,7 +188,7 @@ export default function CareerApplyForm({ role }) {
               inputMode="url"
             />
             {!fieldErrors.resumeLink ? (
-              <p className="career-apply-resume-hint mt-0.5 text-[10px] text-slate-500 leading-tight">
+              <p className="career-apply-resume-hint mt-1 text-[10px] leading-snug text-slate-500">
                 Use a viewable Drive link (Anyone with the link).
               </p>
             ) : (
@@ -203,11 +218,11 @@ export default function CareerApplyForm({ role }) {
             </Label>
             <textarea
               id={`career-message-${role.id}`}
-              rows={2}
+              rows={1}
               required
               value={values.message}
               onChange={(e) => setField('message', e.target.value)}
-              className={`${fieldClass(fieldErrors.message)} resize-none`}
+              className={`${fieldClass(fieldErrors.message)} min-h-[2.5rem] resize-none py-2`}
               placeholder="Short intro or why you are a fit"
             />
             {fieldErrors.message ? (
@@ -224,7 +239,7 @@ export default function CareerApplyForm({ role }) {
               {isSubmitting ? 'Sending…' : 'Send application'}
             </button>
 
-            <CareerApplyFormDisclaimer roleTitle={role.title} />
+            <CareerApplyFormDisclaimer />
 
             {submitError ? <p className="mt-2 text-center text-xs text-red-600">{submitError}</p> : null}
           </div>

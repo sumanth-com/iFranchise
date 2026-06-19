@@ -2,6 +2,7 @@
 
 import { sanitizeObjectStrings } from '../../sanitize.js';
 import { validatePhoneFieldOnData } from '../utils/fieldValidators.js';
+import { validateStateCityOnData } from '../utils/stateCityValidation.js';
 
 /**
  * Validate brand application form data
@@ -172,6 +173,8 @@ export function validateApplicationForm(formData) {
   }
 
   validatePhoneFieldOnData(data, errors, 'phone');
+
+  validateStateCityOnData(data, errors);
 
   // Company validation (optional)
   if (data.company && data.company.trim()) {

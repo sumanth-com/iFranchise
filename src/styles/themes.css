@@ -973,10 +973,22 @@ html[data-theme='dark'] .contact-page .contact-hero-form__input::placeholder {
   -webkit-text-fill-color: rgba(255, 255, 255, 0.38) !important;
 }
 
-html[data-theme='dark'] .contact-page .contact-hero-form__input:focus {
-  border-color: rgba(167, 139, 250, 0.55) !important;
-  background: rgba(139, 92, 246, 0.12) !important;
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) !important;
+/* Native select dropdown — readable options in dark mode */
+html[data-theme='dark'] .contact-page select.contact-hero-form__input,
+html[data-theme='dark'] .contact-page .state-location-fields__select.contact-hero-form__input {
+  color-scheme: dark;
+}
+
+html[data-theme='dark'] .contact-page select.contact-hero-form__input option,
+html[data-theme='dark'] .contact-page .state-location-fields__select.contact-hero-form__input option {
+  color: #f8fafc !important;
+  background-color: #1a0f3d !important;
+}
+
+html[data-theme='dark'] .contact-page select.contact-hero-form__input option:checked,
+html[data-theme='dark'] .contact-page .state-location-fields__select.contact-hero-form__input option:checked {
+  color: #ffffff !important;
+  background-color: #5b21b6 !important;
 }
 
 html[data-theme='dark'] .contact-page .contact-send-btn.contact-send-btn--ready,
@@ -5112,18 +5124,11 @@ html[data-theme='dark'] #main-content .career-detail-page .career-detail-form-ca
   flex-shrink: 0;
 }
 
-.career-apply-legal-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  margin-top: 0.625rem;
-}
-
 .career-apply-legal {
-  margin: 0;
+  margin: 0.5rem 0 0;
   padding: 0 0.125rem;
-  font-size: 0.75rem;
-  line-height: 1.55;
+  font-size: 0.6875rem;
+  line-height: 1.45;
   color: #475569;
   text-align: center;
   text-wrap: pretty;
@@ -6320,12 +6325,6 @@ html[data-theme='light'] .list-your-brand-page .lyb-form-select-chevron {
   color: #6d28d9 !important;
 }
 
-.list-your-brand-page .lyb-hero-form .lyb-form-field:focus-visible {
-  outline: none;
-  border-color: #8b5cf6 !important;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.22) !important;
-}
-
 /* Hero - smooth GPU-friendly motion */
 .list-your-brand-page .lyb-hero-copy {
   text-align: left;
@@ -6352,19 +6351,37 @@ html[data-theme='light'] .list-your-brand-page .lyb-form-select-chevron {
   }
 }
 
-/* Hero form - internal scroll only (viewport-locked hero) */
+/* Hero form - internal scroll only (viewport-locked hero); hide visible scrollbar */
 .list-your-brand-page .lyb-hero-form-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.45) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 1024px) {
+  .list-your-brand-page .lyb-hero-section {
+    overflow: hidden;
+  }
+
+  .list-your-brand-page .lyb-hero-form-slot,
+  .list-your-brand-page .lyb-hero-form,
+  .list-your-brand-page .lyb-form-panel {
+    min-height: 0;
+  }
+
+  .list-your-brand-page .lyb-form-panel {
+    max-height: calc(100dvh - 7rem);
+  }
 }
 
 .list-your-brand-page .lyb-hero-form-scroll::-webkit-scrollbar {
-  width: 5px;
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .list-your-brand-page .lyb-hero-form-scroll::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.4);
-  border-radius: 999px;
+  display: none;
 }
 
 html[data-theme='dark'] .list-your-brand-page .lyb-hero-form label,

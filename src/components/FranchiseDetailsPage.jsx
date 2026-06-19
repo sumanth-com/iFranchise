@@ -691,9 +691,10 @@ function FranchiseDetailsPage() {
                 <button
                   type="button"
                   onClick={scrollToInquiryForm}
-                  className="fd-brand-header-cta inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-full px-4 text-xs font-bold text-white sm:w-auto sm:px-6 sm:text-sm"
+                  className="fd-brand-header-cta inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-full px-3 text-[11px] font-bold leading-none text-white sm:w-auto sm:px-6 sm:text-sm"
                 >
-                  Connect With Franchise Experts
+                  <span className="sm:hidden">Talk to Experts</span>
+                  <span className="hidden sm:inline">Connect With Franchise Experts</span>
                 </button>
                 {selectedFranchise.brochureUrl ? (
                   <BrochureDownloadButton
@@ -703,7 +704,7 @@ function FranchiseDetailsPage() {
                       slug: selectedFranchise.slug,
                     }}
                     brochureUrl={selectedFranchise.brochureUrl}
-                    className="fd-brand-header-cta group inline-flex h-10 w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 text-xs font-bold text-white sm:w-auto sm:px-6 sm:text-sm"
+                    className="fd-brand-header-cta group inline-flex h-10 w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[11px] font-bold leading-none text-white sm:w-auto sm:gap-2 sm:px-6 sm:text-sm"
                   />
                 ) : null}
               </div>

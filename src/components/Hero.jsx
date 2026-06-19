@@ -15,6 +15,7 @@ import { submitContactForm } from '../lib/forms';
 import { isContactFormReady } from '@/lib/contactForm';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
 import PhoneInput from './forms/PhoneInput';
+import StateLocationFields from './forms/StateLocationFields';
 import { navigateTo } from '@/lib/navigation';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
@@ -906,6 +907,8 @@ const HOMEPAGE_CONTACT_INITIAL = withHoneypot({
   email: '',
   website: '',
   contactNumber: createEmptyPhoneValue(),
+  state: '',
+  city: '',
   message: '',
   company: '',
 });
@@ -1002,7 +1005,7 @@ function ContactSection() {
                 value={formData.fullName}
                 onChange={(e) => handleInputChange('fullName', e.target.value)}
                 required
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="site-form-field site-form-field--on-dark w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200"
               />
               <input
                 type="email"
@@ -1010,14 +1013,14 @@ function ContactSection() {
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 required
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="site-form-field site-form-field--on-dark w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200"
               />
               <input
                 type="url"
                 placeholder="Website"
                 value={formData.website}
                 onChange={(e) => handleInputChange('website', e.target.value)}
-                className="w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="site-form-field site-form-field--on-dark w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200"
               />
               <PhoneInput
                 id="homepage-contact-phone"
@@ -1026,13 +1029,25 @@ function ContactSection() {
                 value={formData.contactNumber}
                 onChange={(value) => handleInputChange('contactNumber', value)}
               />
+              <StateLocationFields
+                layout="stack"
+                variant="emerald"
+                className="gap-3 sm:gap-4"
+                stateValue={formData.state}
+                cityValue={formData.city}
+                onStateChange={(v) => handleInputChange('state', v)}
+                onCityChange={(v) => handleInputChange('city', v)}
+                stateClassName="site-form-field site-form-field--on-dark w-full appearance-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white outline-none transition duration-200"
+                cityClassName="site-form-field site-form-field--on-dark w-full rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white/45 outline-none transition duration-200"
+                labelClassName="text-xs font-medium text-emerald-50/80"
+              />
               <textarea
                 placeholder="Message"
                 rows={5}
                 value={formData.message}
                 onChange={(e) => handleInputChange('message', e.target.value)}
                 required
-                className="w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200 focus:border-emerald-200/40 focus:shadow-[0_0_0_3px_rgba(16,185,129,0.14)]"
+                className="site-form-field site-form-field--on-dark w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200"
               />
               <button
                 type="submit"

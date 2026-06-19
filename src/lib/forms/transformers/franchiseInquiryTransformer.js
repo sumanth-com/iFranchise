@@ -17,6 +17,7 @@ export function transformFranchiseInquiryData(formData, sourcePage = 'franchise_
       phone: formData.contactNumber,
       ...spreadPhoneFields(formData),
       city: formData.city || '',
+      state: formData.state || '',
       message: formData.message || '',
     },
   };

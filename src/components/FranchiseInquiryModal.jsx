@@ -8,6 +8,7 @@ import { validateFranchiseInquiryForm } from '@/lib/forms/validators/franchiseIn
 import { checkHoneypot, stripHoneypot } from '@/lib/forms/utils/honeypot';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
 import PhoneInput from './forms/PhoneInput';
+import StateLocationFields from './forms/StateLocationFields';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from './forms/HoneypotField';
@@ -32,6 +33,7 @@ const INITIAL = withHoneypot({
   fullName: '',
   email: '',
   contactNumber: createEmptyPhoneValue(),
+  state: '',
   city: '',
   message: '',
 });
@@ -134,6 +136,7 @@ export default function FranchiseInquiryModal({
       Boolean(values.franchiseType) ||
       Boolean(values.fullName?.trim()) ||
       Boolean(values.email?.trim()) ||
+      Boolean(values.state?.trim()) ||
       Boolean(values.city?.trim()) ||
       Boolean(values.message?.trim()) ||
       Boolean(values.contactNumber?.local?.trim?.());
@@ -167,7 +170,7 @@ export default function FranchiseInquiryModal({
   if (!franchise) return null;
 
   const inputClass = (hasError) =>
-    `franchise-inquiry-modal__input${hasError ? ' franchise-inquiry-modal__input--error' : ''}`;
+    `franchise-inquiry-modal__input site-form-field${hasError ? ' franchise-inquiry-modal__input--error site-form-field--error' : ''}`;
 
   const isPanel = variant === 'panel' || variant === 'drawer';
 
@@ -322,21 +325,24 @@ export default function FranchiseInquiryModal({
                 />
               </div>
 
-              <div>
-                <label htmlFor="fi-city" className="franchise-inquiry-modal__label">
-                  Preferred city / location
-                </label>
-                <input
-                  id="fi-city"
-                  type="text"
-                  value={values.city}
-                  onChange={(e) => setField('city', e.target.value)}
-                  className={inputClass(fieldErrors.city)}
-                  placeholder="e.g. Bengaluru or preferred area"
-                  autoComplete="address-level2"
-                />
-                <FieldError message={fieldErrors.city} />
-              </div>
+              <StateLocationFields
+                className="contents"
+                layout="grid"
+                variant="light"
+                dropdownZIndex={10100}
+                listPortalClassName="state-location-fields__list--modal"
+                stateValue={values.state}
+                cityValue={values.city}
+                onStateChange={(v) => setField('state', v)}
+                onCityChange={(v) => setField('city', v)}
+                stateError={fieldErrors.state}
+                cityError={fieldErrors.city}
+                stateId="fi-state"
+                cityId="fi-city"
+                stateClassName={inputClass(fieldErrors.state)}
+                cityClassName={inputClass(fieldErrors.city)}
+                labelClassName="franchise-inquiry-modal__label"
+              />
 
               <div>
                 <label htmlFor="fi-message" className="franchise-inquiry-modal__label">
@@ -405,7 +411,7 @@ export default function FranchiseInquiryModal({
         if (e.target === e.currentTarget && !isSubmitting && !isSuccess) onClose();
       }}
     >
-      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" aria-hidden />
+      <div className="franchise-inquiry-overlay-backdrop absolute inset-0 bg-slate-900/78 sm:bg-slate-900/60 sm:backdrop-blur-sm" aria-hidden />
       {panel}
     </div>,
     document.body,

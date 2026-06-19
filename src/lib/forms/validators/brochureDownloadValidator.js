@@ -1,5 +1,6 @@
 import { sanitizeObjectStrings } from '../../sanitize.js';
 import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
+import { validateStateCityOnData } from '../utils/stateCityValidation.js';
 
 export function validateBrochureDownloadForm(formData) {
   const errors = {};
@@ -17,6 +18,8 @@ export function validateBrochureDownloadForm(formData) {
   }
 
   validatePhoneFieldOnData(data, errors, 'contactNumber');
+
+  validateStateCityOnData(data, errors);
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };

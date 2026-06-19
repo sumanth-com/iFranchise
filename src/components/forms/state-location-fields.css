@@ -1,0 +1,175 @@
+.state-location-fields__wrap,
+.state-location-fields__state-wrap {
+  position: relative;
+}
+
+.state-location-fields__state-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.state-location-fields.grid > *,
+.state-location-fields[class*='grid-cols'] > * {
+  min-width: 0;
+}
+
+.state-location-fields__state-placeholder {
+  opacity: 0.55;
+}
+
+.state-location-fields__chevron {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  opacity: 0.55;
+}
+
+.state-location-fields__list {
+  margin-top: 0;
+  max-height: 11rem;
+  width: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #fff;
+  padding: 0.25rem;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed rgba(237, 233, 254, 0.95);
+}
+
+.state-location-fields__list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.state-location-fields__list::-webkit-scrollbar-track {
+  margin: 0.2rem 0;
+  border-radius: 999px;
+  background: rgba(237, 233, 254, 0.95);
+}
+
+.state-location-fields__list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #c4b5fd 0%, #7c3aed 100%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.state-location-fields__list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a78bfa 0%, #6d28d9 100%);
+}
+
+.state-location-fields__list--portal {
+  position: fixed;
+}
+
+.state-location-fields__list--modal {
+  border-color: rgba(167, 139, 250, 0.32) !important;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.2) !important;
+}
+
+.state-location-fields__option {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  padding: 0.5rem 0.625rem;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.state-location-fields__option:hover,
+.state-location-fields__option--active {
+  background: rgba(124, 58, 237, 0.1);
+  color: #5b21b6;
+}
+
+.state-location-fields__hint {
+  margin-top: 0.25rem;
+  font-size: 0.6875rem;
+  color: rgba(100, 116, 139, 0.95);
+}
+
+.state-location-fields__list.state-location-fields--dark,
+.state-location-fields--dark .state-location-fields__list {
+  border-color: rgba(167, 139, 250, 0.28);
+  background: #1a0f3d;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  scrollbar-color: #c4b5fd rgba(255, 255, 255, 0.1);
+}
+
+.state-location-fields__list.state-location-fields--dark::-webkit-scrollbar-track,
+.state-location-fields--dark .state-location-fields__list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.state-location-fields__list.state-location-fields--dark::-webkit-scrollbar-thumb,
+.state-location-fields--dark .state-location-fields__list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ede9fe 0%, #8b5cf6 55%, #7c3aed 100%);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.state-location-fields__list.state-location-fields--dark::-webkit-scrollbar-thumb:hover,
+.state-location-fields--dark .state-location-fields__list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #a78bfa 50%, #6d28d9 100%);
+}
+
+.state-location-fields__list.state-location-fields--dark .state-location-fields__option,
+.state-location-fields--dark .state-location-fields__option {
+  color: #f8fafc;
+}
+
+.state-location-fields--dark .state-location-fields__option:hover,
+.state-location-fields--dark .state-location-fields__option--active {
+  background: rgba(167, 139, 250, 0.18);
+  color: #ede9fe;
+}
+
+.state-location-fields--dark .state-location-fields__hint {
+  color: rgba(226, 232, 240, 0.55);
+}
+
+/* Dark-theme native select options (contact + franchise forms) */
+html[data-theme='dark'] .state-location-fields--dark .state-location-fields__select {
+  color-scheme: dark;
+}
+
+html[data-theme='dark'] .state-location-fields--dark .state-location-fields__select option {
+  color: #f8fafc;
+  background-color: #1a0f3d;
+}
+
+html[data-theme='dark'] .state-location-fields--dark .state-location-fields__select option:checked {
+  color: #ffffff;
+  background-color: #5b21b6;
+}
+
+.state-location-fields__list.state-location-fields--emerald,
+.state-location-fields--emerald .state-location-fields__list {
+  border-color: rgba(167, 243, 208, 0.25);
+  background: #051414;
+  scrollbar-color: #6ee7b7 rgba(255, 255, 255, 0.08);
+}
+
+.state-location-fields__list.state-location-fields--emerald .state-location-fields__option,
+.state-location-fields--emerald .state-location-fields__option {
+  color: #ecfdf5;
+}
+
+.state-location-fields--emerald .state-location-fields__option:hover,
+.state-location-fields--emerald .state-location-fields__option--active {
+  background: rgba(16, 185, 129, 0.18);
+  color: #a7f3d0;
+}

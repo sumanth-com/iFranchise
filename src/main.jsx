@@ -16,6 +16,7 @@ const isMobile =
   typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
 
 import './styles/themes.css'
+import './components/forms/form-field-focus.css'
 
 function runWhenIdle(fn, timeout = 4000) {
   if ('requestIdleCallback' in window) {

@@ -15,7 +15,9 @@ export function transformBrochureDownloadData(formData, sourcePage = 'franchise_
       ...spreadPhoneFields(formData),
       franchise_id: formData.franchiseId,
       franchise_name: formData.franchiseName,
-      message: `Brochure download: ${formData.franchiseName} (ID ${formData.franchiseId})`,
+      state: formData.state || '',
+      city: formData.city || '',
+      message: `Brochure download: ${formData.franchiseName} (ID ${formData.franchiseId}) — ${[formData.city, formData.state].filter(Boolean).join(', ')}`,
     },
   };
 }

@@ -1,0 +1,33 @@
+/* Unified form field focus — matches Contact page purple border + soft ring */
+.site-form-field {
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.site-form-field:focus,
+.site-form-field:focus-visible {
+  outline: none;
+  border-color: #a78bfa !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15) !important;
+}
+
+.site-form-field--lift:focus,
+.site-form-field--lift:focus-visible {
+  background: #fff !important;
+}
+
+.site-form-field--on-dark:focus,
+.site-form-field--on-dark:focus-visible {
+  border-color: rgba(167, 139, 250, 0.55) !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2) !important;
+}
+
+.site-form-field--error:focus,
+.site-form-field--error:focus-visible {
+  border-color: #f87171 !important;
+  box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.2) !important;
+}

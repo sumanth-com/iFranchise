@@ -220,6 +220,7 @@
 
 .phone-input--dark .phone-input__row:focus-within {
   border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(139, 92, 246, 0.12);
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
@@ -245,8 +246,9 @@
 }
 
 .phone-input--emerald .phone-input__row:focus-within {
-  border-color: rgba(167, 243, 208, 0.45);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.14);
+  border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(139, 92, 246, 0.12);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
 .phone-input--emerald .phone-input__error,

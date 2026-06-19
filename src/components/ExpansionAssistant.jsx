@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiBarChart2, FiCalendar, FiLayers, FiMessageCircle } from 'react-icons/fi';
 import { submitChatbotLead, submitStrategyCall } from '../lib/forms';
 import { useAsyncFormAction } from '../hooks/useAsyncFormAction';
 import {
@@ -375,51 +376,13 @@ const ArrowLeft = () => (
   </svg>
 );
 
-// -- Home row icons - white on unified purple tiles -----------------------------
-const HOME_ICON = 17;
+// -- Home row icons (Feather — clean, familiar strokes) -----------------------
+const HOME_ICON_SIZE = 18;
 
-/** Franchise network - connected hubs */
-const BrandIcon = () => (
-  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="6" cy="9" r="2.25" />
-    <circle cx="18" cy="9" r="2.25" />
-    <circle cx="12" cy="18" r="2.25" />
-    <path d="M7.5 10.2 10.5 16M16.5 10.2 13.5 16M8 9h8" />
-    <path d="M12 4.5v2.5" />
-    <path d="M10.5 4.5h3" strokeWidth="2.2" />
-  </svg>
-);
-
-/** Portfolio - briefcase + growth sparkline */
-const InvestorIcon = () => (
-  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 10h16v9H4z" />
-    <path d="M8 10V8a2 2 0 012-2h4a2 2 0 012 2v2" />
-    <path d="M7 16l2.5-3 2.5 1.5 3.5-4.5" />
-    <circle cx="18" cy="6" r="2.25" />
-    <path d="M18 4.2v3.6M16.2 6h3.6" strokeWidth="2" />
-  </svg>
-);
-
-/** Strategy session - calendar + confirmed slot */
-const CalendarIcon = () => (
-  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="6" width="13" height="13" rx="2.25" />
-    <path d="M7 4v3M12 4v3M3 11h13" />
-    <path d="M7 14.5h2M11 14.5h2" />
-    <circle cx="18.5" cy="16.5" r="3.25" />
-    <path d="M17.2 16.5l1 1 2.6-2.6" strokeWidth="2" />
-  </svg>
-);
-
-/** Support - dual chat with check */
-const SupportIcon = () => (
-  <svg width={HOME_ICON} height={HOME_ICON} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 17l-2 2v-4.5a5.5 5.5 0 019.2-4" />
-    <path d="M13 7.5a5.5 5.5 0 015.5 5.5c0 1.2-.4 2.3-1 3.2L19 19l-2.8-1.2" />
-    <path d="M11.5 9.5 13 11l3-3" strokeWidth="2.1" />
-  </svg>
-);
+const BrandIcon = () => <FiLayers size={HOME_ICON_SIZE} strokeWidth={2} aria-hidden />;
+const InvestorIcon = () => <FiBarChart2 size={HOME_ICON_SIZE} strokeWidth={2} aria-hidden />;
+const CalendarIcon = () => <FiCalendar size={HOME_ICON_SIZE} strokeWidth={2} aria-hidden />;
+const SupportIcon = () => <FiMessageCircle size={HOME_ICON_SIZE} strokeWidth={2} aria-hidden />;
 
 function PremiumRowIcon({ children, hovered }) {
   return (
@@ -428,18 +391,16 @@ function PremiumRowIcon({ children, hovered }) {
       style={{
         width: 38,
         height: 38,
-        borderRadius: 11,
-        background: PURPLE_ICON_GRADIENT,
-        boxShadow: hovered
-          ? `${PURPLE_ICON_SHADOW}, inset 0 1px 0 rgba(255,255,255,0.28)`
-          : `${PURPLE_ICON_SHADOW}, inset 0 1px 0 rgba(255,255,255,0.22)`,
+        borderRadius: 10,
+        background: hovered ? 'rgba(124, 58, 237, 0.14)' : 'rgba(124, 58, 237, 0.09)',
+        border: '1px solid rgba(124, 58, 237, 0.14)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        color: '#fff',
-        transition: 'transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s ease',
-        transform: hovered ? 'scale(1.06)' : 'scale(1)',
+        color: '#7c3aed',
+        transition: 'background 0.2s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1)',
+        transform: hovered ? 'scale(1.04)' : 'scale(1)',
       }}
     >
       {children}
@@ -600,7 +561,7 @@ function ConsultationScheduleFields({ schedule, setSchedule }) {
           min={today}
           value={schedule.preferredDate || ''}
           onChange={(e) => setSchedule(s => ({ ...s, preferredDate: e.target.value }))}
-          className="ea-text-input w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none"
+          className="ea-text-input site-form-field w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none"
           style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
         />
       </div>
@@ -637,7 +598,7 @@ function TextInput({ placeholder, value, onChange, type = 'text' }) {
       placeholder={placeholder}
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
-      className="ea-text-input mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none transition-all duration-150"
+      className="ea-text-input site-form-field mt-3.5 w-full box-border rounded-[10px] px-[14px] py-2.5 text-[13px] outline-none transition-all duration-150"
       style={{ border: `1px solid ${p.inputBorder}`, background: p.inputBg, color: p.text }}
       onFocus={(e) => { e.target.style.border = `1px solid ${p.inputFocusBorder}`; e.target.style.background = p.inputFocusBg; }}
       onBlur={(e) => { e.target.style.border = `1px solid ${p.inputBorder}`; e.target.style.background = p.inputBg; }}
@@ -758,6 +719,11 @@ const SUPPORT_ROW = {
   icon: <SupportIcon />,
 };
 
+const HOME_ROWS = [
+  ...PRIMARY_ROWS,
+  SUPPORT_ROW,
+];
+
 function ActionRow({ row, onClick, index, secondary = false }) {
   const p = useAssistantPalette();
   const [hovered, setHovered] = useState(false);
@@ -858,18 +824,9 @@ function HomeView({ setView, setIsOpen }) {
 
       {/* Action rows */}
       <div className="assistant-home-list">
-        {PRIMARY_ROWS.map((row, i) => (
+        {HOME_ROWS.map((row, i) => (
           <ActionRow key={row.id} row={row} onClick={() => setView(row.id)} index={i} />
         ))}
-
-        <motion.div className="assistant-home-divider" style={{ background: `linear-gradient(90deg, transparent, ${p.divider}, transparent)` }} />
-
-        <ActionRow
-          row={SUPPORT_ROW}
-          onClick={() => setView('support')}
-          index={PRIMARY_ROWS.length}
-          secondary
-        />
       </div>
     </motion.div>
   );
@@ -1742,6 +1699,7 @@ export default function ExpansionAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState('home');
   const [isMobile, setIsMobile] = useState(false);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -1756,6 +1714,20 @@ export default function ExpansionAssistant() {
   }, []);
 
   const handleOpen = useCallback(() => setIsOpen(true), []);
+
+  useEffect(() => {
+    if (!isOpen || isMobile) return undefined;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+      if (panelRef.current?.contains(target)) return;
+      if (target.closest?.('.assistant-fab-wrap')) return;
+      handleClose();
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [isOpen, isMobile, handleClose]);
 
   const panelBase = {
     zIndex: 10000,
@@ -1812,6 +1784,7 @@ export default function ExpansionAssistant() {
         {isOpen && (
           <motion.div
             key="panel"
+            ref={panelRef}
             className="assistant-panel"
             data-assistant-theme={palette.mode}
             initial={

@@ -1,5 +1,6 @@
 import { sanitizeObjectStrings } from '../../sanitize.js';
 import { validatePhoneFieldOnData, validateRequiredString } from '../utils/fieldValidators.js';
+import { validateStateCityOnData } from '../utils/stateCityValidation.js';
 
 export function validateFranchiseInquiryForm(formData) {
   const errors = {};
@@ -24,11 +25,7 @@ export function validateFranchiseInquiryForm(formData) {
 
   validatePhoneFieldOnData(data, errors, 'contactNumber');
 
-  if (data.city && data.city.trim().length > 100) {
-    errors.city = 'City name is too long';
-  } else {
-    data.city = data.city?.trim() || '';
-  }
+  validateStateCityOnData(data, errors);
 
   if (data.message && data.message.trim().length > 2000) {
     errors.message = 'Message must be under 2000 characters';

@@ -4,6 +4,9 @@ import { spreadPhoneFields } from '../utils/phoneSubmission.js';
 
 function buildMessage(formData) {
   const parts = [];
+  if (formData.state || formData.city) {
+    parts.push(`Location: ${[formData.city, formData.state].filter(Boolean).join(', ')}`);
+  }
   parts.push(formData.message);
   return parts.join('\n\n');
 }
@@ -20,6 +23,8 @@ export function transformContactData(formData, sourcePage = 'contact_page') {
       phone: formData.contactNumber,
       ...spreadPhoneFields(formData),
       company: formData.company || '',
+      state: formData.state || '',
+      city: formData.city || '',
       message: buildMessage(formData),
     },
   };

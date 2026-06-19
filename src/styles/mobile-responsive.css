@@ -3199,3 +3199,48 @@
   }
 }
 
+/* ── Brochure modal + state dropdown (mobile) ─────────────────────────────── */
+@media (max-width: 767px) {
+  .brochure-modal-root {
+    padding: 0 !important;
+  }
+
+  .brochure-modal-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .brochure-download-modal {
+    width: 100% !important;
+    max-width: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  .franchise-inquiry-overlay-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .career-detail-page .career-apply-resume-hint {
+    margin-top: 0.375rem !important;
+    margin-bottom: 0 !important;
+    padding: 0 0.125rem;
+    font-size: 0.625rem !important;
+    line-height: 1.45 !important;
+    color: #64748b !important;
+    text-wrap: pretty;
+  }
+
+  .career-detail-page .career-detail-form-card--apply .career-apply-field:has(.career-apply-resume-hint) {
+    margin-bottom: 0.125rem;
+  }
+
+  .franchise-details-page .fd-brand-header-cta {
+    min-height: 2.5rem;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
