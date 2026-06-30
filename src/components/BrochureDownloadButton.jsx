@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import BrochureDownloadModal from './BrochureDownloadModal';
 
-export default function BrochureDownloadButton({ franchise, brochureUrl, className = '' }) {
+export default function BrochureDownloadButton({ franchise, brochureUrl, className = '', label }) {
   const [open, setOpen] = useState(false);
   const hasBrochure = Boolean(brochureUrl);
 
@@ -20,12 +20,18 @@ export default function BrochureDownloadButton({ franchise, brochureUrl, classNa
         title="Download brand brochure"
       >
         <FiDownload
-          className="hidden h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-y-0.5 sm:block"
+          className={`h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-y-0.5 ${label ? '' : 'hidden sm:block'}`}
           aria-hidden
         />
         <span className="shrink-0 whitespace-nowrap leading-none tracking-tight">
-          <span className="sm:hidden">Get Brochure</span>
-          <span className="hidden sm:inline">Download Brochure</span>
+          {label ? (
+            label
+          ) : (
+            <>
+              <span className="sm:hidden">Get Brochure</span>
+              <span className="hidden sm:inline">Download Brochure</span>
+            </>
+          )}
         </span>
       </button>
 

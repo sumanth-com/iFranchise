@@ -1,12 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { navigateTo, NAVIGATE_EVENT, restoreScrollWithRetry } from '@/lib/navigation';
-import { heroDisplayClass } from '../lib/cardThemeStyles';
 import { TYPE } from '../lib/typography.js';
 import ImageCarousel from './ImageCarousel';
-import BrochureDownloadButton from './BrochureDownloadButton';
 import CtaButton from './ui/CtaButton';
 import FranchiseInquiryLauncher from './FranchiseInquiryLauncher';
 import FranchiseInquiryStickyPanel from './FranchiseInquiryStickyPanel';
+import FranchiseWhatsAppFab from './FranchiseWhatsAppFab';
 import FranchiseSimilarCardImage from './FranchiseSimilarCardImage';
 import {
   getFranchiseDetailById,
@@ -18,6 +17,7 @@ import {
   canonicalizeFranchiseUrl,
 } from '../lib/franchisePaths';
 import { getCarouselCategory, resolveDetailGalleryImages } from '../data/opportunities/brandImages';
+import { buildFranchiseWhatsAppUrl } from '../data/siteContact';
 import { formatReturnsDisplay } from '../data/opportunities/opportunityUtils.js';
 import { FRANCHISE_DETAILS_SHELL } from '../lib/franchiseOpportunitiesShell.js';
 import { franchiseBrandAlt } from '../seo/imageAlt.js';
@@ -84,7 +84,7 @@ function HeroStatCard({ label, value, note, multiline = false, title, className 
 }
 
 /** Same stat cards as About section (right column on detail page). */
-function FranchiseStatGrid({ franchise, className = '' }) {
+function FranchiseStatGrid({ franchise, className = '', hideExpansion = false }) {
   const agreementItems = franchise?.agreementDetails || [];
   const agreementTermValue = agreementItems.find((item) => item.label === 'Agreement Term')?.value || '';
   const modelValue = franchise.franchiseModels?.map((m) => m.name).join(' · ') || '';
@@ -107,7 +107,7 @@ function FranchiseStatGrid({ franchise, className = '' }) {
         );
       })}
       {modelValue ? <HeroStatCard key="model" label="Model" value={modelValue} /> : null}
-      {expansionValue ? (
+      {!hideExpansion && expansionValue ? (
         <HeroStatCard
           key="expansion"
           label="Expansion"
@@ -120,112 +120,130 @@ function FranchiseStatGrid({ franchise, className = '' }) {
   );
 }
 
-function getExpansionPlanLocations(franchise) {
-  const candidates = [
-    franchise.expansionDetail,
-    franchise.locationsSummary,
-    franchise.expansionDisplay,
-    franchise.locations?.length ? franchise.locations.join(' · ') : '',
-    franchise.expansionPlans?.length ? franchise.expansionPlans.join(' · ') : '',
-  ];
-  return candidates.map((value) => String(value || '').trim()).find(Boolean) || '';
-}
-
-function withIndiaGeoHint(text) {
-  const cleaned = String(text || '').trim();
-  if (!cleaned) return '';
-  return /\bindia\b/i.test(cleaned) ? cleaned : `${cleaned} in India`;
-}
-
-function buildAboutParagraphs(franchise) {
-  const paragraphs = [];
-  const overview = String(franchise.overview || '').trim();
-  if (overview) paragraphs.push(overview);
-
-  const investment = franchise.keyInfo?.investment;
-  const models =
-    franchise.businessModelDisplay ||
-    franchise.franchiseModels?.map((model) => model.name).filter(Boolean).join(' and ') ||
-    '';
-  const profile = String(franchise.idealInvestorProfile || '').trim();
-  let investorLine = '';
-  if (investment && models) {
-    investorLine = franchise.businessModelDisplay
-      ? `Franchise investment starts at ${investment} under ${models}.`
-      : `Franchise investment starts at ${investment} on a ${models} model.`;
-  } else if (investment) {
-    investorLine = `Franchise investment starts at ${investment}.`;
-  } else if (models) {
-    investorLine = `This opportunity is offered on a ${models} franchise model.`;
-  }
-  if (investorLine && profile) {
-    paragraphs.push(`${investorLine} ${profile}`);
-  } else if (investorLine || profile) {
-    paragraphs.push(investorLine || profile);
+function parseSimilarStatValue(kind, raw) {
+  const text = String(raw || '').trim();
+  if (!text || /^on request$/i.test(text)) {
+    return { primary: '—', unit: '' };
   }
 
-  const outlets = franchise.keyInfo?.outlets;
-  if (outlets) {
-    paragraphs.push(
-      `${franchise.name} already operates ${outlets} outlets, which helps new partners enter with a recognised brand in the ${franchise.industry || 'Indian'} market.`,
-    );
+  if (kind === 'roi') {
+    const match = text.match(/(\d+(?:\.\d+)?%)/);
+    return { primary: match ? match[1] : text, unit: '' };
   }
 
-  const locationProfile = franchise.requirements?.find((item) => item.label === 'Location Profile')?.value;
-  if (locationProfile) {
-    paragraphs.push(
-      `Units are designed for ${locationProfile.toLowerCase()}, with franchisor support from site planning through day-to-day operations.`,
-    );
-  }
-
-  if (paragraphs.length < 3 && franchise.businessModel) {
-    const businessModel = String(franchise.businessModel || '').trim();
-    if (businessModel && !paragraphs.some((line) => line.includes(businessModel.slice(0, 48)))) {
-      paragraphs.push(businessModel);
+  if (kind === 'payback') {
+    const withUnit = text.match(/^(.+?)\s+(months?|years?|yrs?\.?)$/i);
+    if (withUnit) {
+      return {
+        primary: withUnit[1].replace(/\s*-\s*/g, '–').trim(),
+        unit: withUnit[2].toLowerCase().replace(/\.$/, ''),
+      };
     }
+    return { primary: text.replace(/\s*-\s*/g, '–'), unit: '' };
   }
 
-  return paragraphs.filter(Boolean).slice(0, 4);
+  return { primary: text, unit: '' };
+}
+
+function SimilarStatCard({ label, kind, value }) {
+  const { primary, unit } = parseSimilarStatValue(kind, value);
+
+  return (
+    <div className="fd-similar-stat fd-tab-surface-card flex min-h-[4.75rem] flex-col rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <p className="fd-tab-surface-label fd-copy text-xs font-medium leading-none text-slate-500">{label}</p>
+      <div className="fd-similar-stat__value mt-auto pt-2">
+        <p className="fd-similar-stat__primary fd-copy text-lg font-semibold leading-none text-slate-900">
+          {primary}
+        </p>
+        {unit ? (
+          <p className="fd-similar-stat__unit fd-copy mt-1 text-xs font-medium leading-none text-slate-500">
+            {unit}
+          </p>
+        ) : (
+          <span className="fd-similar-stat__unit-spacer mt-1 block h-3" aria-hidden />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function truncateText(text, maxLen = 150) {
+  const cleaned = String(text || '').trim();
+  if (!cleaned || cleaned.length <= maxLen) return cleaned;
+  const slice = cleaned.slice(0, maxLen);
+  const lastPeriod = slice.lastIndexOf('.');
+  if (lastPeriod > 56) return slice.slice(0, lastPeriod + 1);
+  return `${slice.trim()}…`;
+}
+
+function isNearDuplicate(a, b) {
+  const left = String(a || '').trim().toLowerCase();
+  const right = String(b || '').trim().toLowerCase();
+  if (!left || !right) return false;
+  return left.includes(right.slice(0, 28)) || right.includes(left.slice(0, 28));
+}
+
+function getAboutBrandBody(franchise) {
+  const dedicated = String(franchise.brandAbout || '').trim();
+  if (dedicated) return dedicated;
+
+  const overview = String(franchise.overview || '').trim();
+  if (!overview) return '';
+
+  return truncateText(overview, 480);
 }
 
 function AboutBrandSection({ franchise }) {
-  const aboutParagraphs = buildAboutParagraphs(franchise);
-  const expansionLocations = withIndiaGeoHint(getExpansionPlanLocations(franchise));
   const headingId = `fd-about-${franchise.slug || franchise.id}-heading`;
-  const expansionId = `fd-about-${franchise.slug || franchise.id}-expansion`;
+  const tagline = String(franchise.tagline || '').trim();
+  const aboutBody = getAboutBrandBody(franchise);
+  const showAbout = aboutBody && !isNearDuplicate(tagline, aboutBody);
 
   return (
     <>
       <h2 id={headingId} className={`fd-about-heading fd-heading fd-copy ${TYPE.h3}`}>
         About {franchise.name}
       </h2>
-      {franchise.tagline ? (
-        <p className="fd-about-tagline fd-copy mt-3 text-sm font-semibold leading-snug sm:text-base">
-          {franchise.tagline}
-        </p>
-      ) : null}
-      {aboutParagraphs.map((paragraph, index) => (
-        <p
-          key={`about-${index}`}
-          className="fd-about-description fd-copy mt-3 text-sm leading-relaxed sm:text-[0.9375rem] sm:leading-7"
-        >
-          {paragraph}
-        </p>
-      ))}
-      {expansionLocations ? (
-        <div
-          className="fd-about-expansion mt-6 border-t border-slate-100 pt-5"
-          aria-labelledby={expansionId}
-        >
-          <h3 id={expansionId} className="fd-about-expansion-title fd-copy text-sm font-semibold sm:text-base">
-            Expansion Plan
-          </h3>
-          <p className="fd-about-expansion-text fd-copy mt-2 text-sm leading-relaxed sm:leading-7">
-            <strong className="font-semibold">Locations available:</strong> {expansionLocations}
-          </p>
-        </div>
-      ) : null}
+      <p className="fd-about-summary fd-copy mt-3 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem] sm:leading-7">
+        {tagline ? <span className="block font-semibold text-slate-900">{tagline}</span> : null}
+        {showAbout ? (
+          <span className={tagline ? 'mt-2 block' : 'block'}>{aboutBody}</span>
+        ) : !tagline ? (
+          <span className="block">{`${franchise.name} franchise opportunity in India.`}</span>
+        ) : null}
+      </p>
     </>
+  );
+}
+
+function SupportProvidedHeading({ className = '', id, headingLevel }) {
+  const Tag = headingLevel || 'div';
+
+  return (
+    <Tag
+      id={id}
+      className={`fd-support-provided-heading flex items-center gap-2.5 text-left font-bold leading-snug text-slate-900 ${className}`.trim()}
+    >
+      <span
+        className="fd-support-provided-heading__icon-wrap inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-100 text-violet-700"
+        aria-hidden
+      >
+        <svg
+          className="h-[1.125rem] w-[1.125rem]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          strokeWidth={1.75}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          />
+        </svg>
+      </span>
+      Support Provided
+    </Tag>
   );
 }
 
@@ -241,9 +259,9 @@ function BrandSupportList({ items, fallback }) {
       {items.map((item) => (
         <article
           key={item}
-          className="fd-support-card fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[6.25rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-3.5 text-center shadow-sm sm:min-h-[6.75rem] sm:px-3.5 sm:py-4"
+          className="fd-support-card fd-invest-card fd-stat-card fd-about-stat-card flex min-h-[4.5rem] flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-2.5 py-3 text-center shadow-sm sm:min-h-[5rem] sm:px-3 sm:py-3.5"
         >
-          <p className="fd-copy fd-body-text w-full text-xs font-medium leading-snug sm:text-sm">
+          <p className="fd-support-card__text fd-copy fd-body-text line-clamp-2 w-full text-[0.6875rem] font-medium leading-snug sm:text-xs">
             {item}
           </p>
         </article>
@@ -292,14 +310,41 @@ function formatInvestmentOverviewValue(item) {
   return item.value;
 }
 
-function InvestmentOverviewList({
-  items,
-  franchiseStructure = [],
-  models = [],
-  space = '',
-  payback = '',
-  lockIn = '',
-}) {
+function InvestmentOverviewValue({ item, singleLine = false }) {
+  if (item.returnsStructured) {
+    const { primary, connector, secondary, footnote } = item.returnsStructured;
+    if (singleLine) {
+      const text = [primary, connector, secondary, footnote].filter(Boolean).join(' ');
+      return <span className="whitespace-nowrap">{text}</span>;
+    }
+
+    const firstLine = [primary, connector].filter(Boolean).join(' ');
+
+    return (
+      <span className="fd-investment-overview__returns-stack">
+        {firstLine ? <span className="block">{firstLine}</span> : null}
+        {secondary ? <span className="block">{secondary}</span> : null}
+        {footnote ? (
+          <span className="mt-0.5 block text-[0.6875rem] font-semibold leading-snug opacity-80">
+            {footnote}
+          </span>
+        ) : null}
+      </span>
+    );
+  }
+
+  const value = formatInvestmentOverviewValue(item);
+  const text = String(value ?? '').replace(/\s*\n+\s*/g, ' ').trim();
+  if (singleLine && text) {
+    return <span className="whitespace-nowrap">{text}</span>;
+  }
+  if (text.includes('\n')) {
+    return <span className="whitespace-pre-line">{text}</span>;
+  }
+  return text;
+}
+
+function getFranchiseTypesLabel(franchiseStructure = [], models = []) {
   const structure = (franchiseStructure || []).map((s) => String(s).trim()).filter(Boolean);
   const hasMaster = structure.some((s) => s.toLowerCase().includes('master'));
   const hasUnit = structure.some((s) => s.toLowerCase().includes('unit'));
@@ -309,15 +354,28 @@ function InvestmentOverviewList({
     (models || []).length > 1 ? 'Multi-Model' : null,
   ].filter(Boolean);
 
-  const franchiseTypesItem = typeLabels.length
+  return typeLabels.join(' · ');
+}
+
+function getInvestmentOverviewRows({
+  items,
+  franchiseStructure = [],
+  models = [],
+  space = '',
+  payback = '',
+  lockIn = '',
+  includeFranchiseTypes = true,
+}) {
+  const franchiseTypesValue = getFranchiseTypesLabel(franchiseStructure, models);
+  const franchiseTypesItem = franchiseTypesValue
     ? {
         label: 'Franchise types',
-        value: typeLabels.join(' · '),
+        value: franchiseTypesValue,
       }
     : null;
 
   const rows = [...(items || [])];
-  if (franchiseTypesItem) {
+  if (includeFranchiseTypes && franchiseTypesItem) {
     const spaceIdx = rows.findIndex((item) => /space/i.test(item.label));
     if (spaceIdx >= 0) rows.splice(spaceIdx + 1, 0, franchiseTypesItem);
     else rows.push(franchiseTypesItem);
@@ -325,19 +383,65 @@ function InvestmentOverviewList({
   upsertOverviewRow(rows, { label: 'Space (Sq.ft)', value: space }, { after: /franchise fee/i });
   upsertOverviewRow(rows, { label: 'Payback', value: payback }, { after: /returns/i });
   upsertOverviewRow(rows, { label: 'Lock-in Period', value: lockIn }, { after: /payback/i });
+  return rows;
+}
+
+function buildDesktopHeroOverviewRows(franchise) {
+  const lockIn =
+    franchise.agreementDetails?.find((item) => item.label === 'Lock-in Period')?.value?.trim() || '';
+
+  const headerRows = [
+    franchise.keyInfo?.investment ? { label: 'Investment', value: franchise.keyInfo.investment } : null,
+  ].filter(Boolean);
+
+  const detailRows = getInvestmentOverviewRows({
+    items: franchise.investorInvestment || franchise.investmentDetails,
+    franchiseStructure: franchise.franchiseStructure,
+    models: franchise.franchiseModels,
+    space: franchise.keyInfo?.space,
+    payback: franchise.keyInfo?.payback,
+    lockIn,
+    includeFranchiseTypes: false,
+  });
+
+  return [...headerRows, ...detailRows];
+}
+
+function InvestmentOverviewList({
+  items,
+  franchiseStructure = [],
+  models = [],
+  space = '',
+  payback = '',
+  lockIn = '',
+  className = '',
+  rowClassName = '',
+}) {
+  const rows = getInvestmentOverviewRows({
+    items,
+    franchiseStructure,
+    models,
+    space,
+    payback,
+    lockIn,
+  });
 
   return (
-    <dl className="fd-investment-overview">
+    <dl className={`fd-investment-overview ${className}`.trim()}>
       {rows.map((item) => (
         <div
           key={item.label}
-          className="fd-investment-overview__row flex items-start justify-between gap-4 border-b border-slate-100 py-3.5 last:border-b-0 sm:py-4"
+          className={`fd-investment-overview__row flex items-start justify-between gap-4 border-b border-slate-100 py-3.5 last:border-b-0 sm:py-4 ${rowClassName}`.trim()}
         >
           <dt className="fd-investment-overview__label fd-copy shrink-0 text-sm text-slate-500">
             {INVESTMENT_OVERVIEW_LABELS[item.label] || item.label}:
           </dt>
           <dd className="fd-investment-overview__value fd-copy max-w-[58%] text-right text-sm font-bold leading-snug text-slate-900 sm:max-w-[62%] sm:text-base">
-            {formatInvestmentOverviewValue(item)}
+            {item.returnsStructured || item.label === 'Returns' || item.label === 'Payback' || item.label === 'Lock-in Period' ? (
+              <InvestmentOverviewValue item={item} />
+            ) : (
+              String(item.value ?? '')
+            )}
           </dd>
         </div>
       ))}
@@ -345,132 +449,119 @@ function InvestmentOverviewList({
   );
 }
 
-function buildEligibilityCriteria(franchise) {
-  const items = [];
-  const investment = franchise.keyInfo?.investment;
-  const franchiseFee =
-    franchise.financialHighlights?.franchiseFee ||
-    franchise.investorInvestment?.find((row) => /franchise fee/i.test(row.label))?.value;
-  const space = franchise.keyInfo?.space;
-  const targets =
-    franchise.requirements?.find((row) => row.label === 'Target Markets')?.value ||
-    franchise.expansionDisplay ||
-    franchise.locationsSummary;
+function buildPartnershipInsights(franchise) {
+  const insights = [];
+  const investmentItems = franchise.investorInvestment || franchise.investmentDetails || [];
+  const primaryModel = franchise.franchiseModels?.[0];
+
+  if (primaryModel?.description) {
+    insights.push({
+      title: `${primaryModel.name} partnership`,
+      body: primaryModel.description,
+    });
+  } else if (franchise.businessModelDisplay) {
+    insights.push({
+      title: 'Franchise model',
+      body: franchise.businessModelDisplay,
+    });
+  }
+
+  const returnsRow = investmentItems.find((row) => /returns/i.test(row.label));
+  if (returnsRow?.value && returnsRow.value !== 'On request') {
+    insights.push({
+      title: 'How you earn',
+      body: returnsRow.value,
+    });
+  } else if (franchise.operationsReturns?.roi) {
+    insights.push({
+      title: 'Returns profile',
+      body: franchise.operationsReturns.roi,
+    });
+  }
+
   const locationProfile = franchise.requirements?.find((row) => row.label === 'Location Profile')?.value;
-  const models = franchise.franchiseModels?.map((model) => model.name).filter(Boolean) || [];
-
-  if (investment) {
-    items.push({
-      title: 'Investment capacity',
-      description: `Able to allocate ${investment} for franchise setup, fees, and working capital.`,
-    });
-  }
-  if (franchiseFee) {
-    items.push({
-      title: 'Franchise fee readiness',
-      description: `Comfortable with an upfront franchise fee of ${franchiseFee}.`,
-    });
-  }
-  if (space && franchise.slug !== 'odette') {
-    items.push({
-      title: 'Minimum retail space',
-      description: `Can secure at least ${space} in a format suited to ${franchise.name}.`,
-    });
-  }
-  if (locationProfile) {
-    items.push({
-      title: 'Location profile',
-      description: `Planning a site aligned with ${locationProfile.toLowerCase()}.`,
-    });
-  }
-  if (targets) {
-    items.push({
-      title: 'Target markets',
-      description: `Interested in opening in ${targets} across India.`,
-    });
-  }
-  if (models.length) {
-    const modelList = models.join(', ');
-    items.push({
-      title: 'Franchise model fit',
-      description: `Aligned with a ${modelList} partnership and the involvement level each model requires.`,
-      models,
-    });
-  }
-  if (franchise.idealInvestorProfile) {
-    items.push({
-      title: 'Investor profile',
-      description: franchise.idealInvestorProfile,
+  const expansion = franchise.expansionDisplay || franchise.expansionVision;
+  if (locationProfile || expansion) {
+    const parts = [locationProfile, expansion].filter(
+      (value, index, list) => value && list.indexOf(value) === index,
+    );
+    insights.push({
+      title: 'Where stores work best',
+      body: parts.join(' — '),
     });
   }
 
-  return items;
+  const involvement = franchise.operationsReturns?.hours || franchise.idealInvestorProfile;
+  if (involvement) {
+    insights.push({
+      title: 'Best suited for',
+      body: involvement,
+    });
+  }
+
+  if (insights.length < 2 && franchise.aboutInsights?.length) {
+    franchise.aboutInsights.slice(0, 3).forEach((item) => {
+      if (item.title && item.body) {
+        insights.push({ title: item.title, body: truncateText(item.body, 180) });
+      }
+    });
+  }
+
+  return insights.slice(0, 4);
 }
 
-function FranchiseEligibilitySection({ franchise }) {
-  const criteria = buildEligibilityCriteria(franchise);
-  if (!criteria.length) return null;
+function FranchisePartnershipSection({ franchise }) {
+  const insights = buildPartnershipInsights(franchise);
+  if (!insights.length) return null;
 
-  const sectionId = `fd-eligibility-${franchise.slug || franchise.id}-heading`;
+  const sectionId = `fd-partnership-${franchise.slug || franchise.id}-heading`;
 
   return (
     <section
-      className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
+      className="fd-partnership-section fd-about-section rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
       aria-labelledby={sectionId}
     >
       <h2 id={sectionId} className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}>
-        Are you eligible for this brand?
+        Partnership at a glance
       </h2>
-      <p className="fd-eligibility-desc fd-copy mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-slate-600">
-        Review these practical requirements before you submit a franchise enquiry for {franchise.name}.
+      <p className="fd-partnership-desc fd-copy mx-auto mt-2 max-w-2xl text-center text-xs leading-snug text-slate-600 sm:mt-3 sm:text-sm">
+        What to know about partnering with {franchise.name}
       </p>
 
-      <ul className="mt-6 space-y-4">
-        {criteria.map((item) => (
+      <ul className="fd-partnership-insights mt-3 space-y-2.5 sm:mt-4 sm:space-y-3">
+        {insights.map((item) => (
           <li
             key={item.title}
-            className="fd-eligibility-item flex gap-3 rounded-xl border border-slate-100 bg-slate-50/80 px-4 py-3.5 sm:gap-4 sm:px-5"
+            className="fd-partnership-item flex gap-3 rounded-xl border border-slate-100 bg-slate-50/90 px-3.5 py-3 sm:px-4 sm:py-3.5"
           >
             <span
-              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
+              className="fd-partnership-item__icon flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 sm:h-6 sm:w-6"
               aria-hidden
             >
-              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="h-3 w-3 sm:h-3.5 sm:w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.75}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </span>
             <div className="min-w-0 text-left">
-              <p className="fd-eligibility-title fd-copy text-sm font-bold text-slate-900">{item.title}</p>
-              <p className="fd-eligibility-text fd-copy mt-1 text-sm leading-relaxed text-slate-700">
-                {linkifyContent(item.description, {
-                  skip: item.models?.length ? item.models : [],
+              <h3 className="fd-partnership-item__title fd-copy text-[0.8125rem] font-bold leading-snug text-slate-900 sm:text-sm">
+                {item.title}
+              </h3>
+              <p className="fd-partnership-item__body fd-copy mt-1 text-[0.8125rem] leading-relaxed text-slate-600 sm:text-sm">
+                {linkifyContent(item.body, {
+                  skip: franchise.franchiseModels?.map((model) => model.name) || [],
                 })}
               </p>
-              {item.models?.length ? (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {item.models.map((model) => {
-                    const path = FRANCHISE_MODEL_PATHS[model];
-                    if (!path) return null;
-                    return (
-                      <button
-                        key={model}
-                        type="button"
-                        className="fd-model-guide-link internal-content-link"
-                        onClick={() => navigateTo(path)}
-                      >
-                        {model} guide
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : null}
             </div>
           </li>
         ))}
       </ul>
 
-      <div className="mt-6 flex justify-center">
-        <CtaButton type="button" onClick={() => navigateTo('/franchise-readiness-assessment')}>
+      <div className="mt-4 flex justify-center sm:mt-5">
+        <CtaButton
+          type="button"
+          onClick={() => navigateTo('/franchise-readiness-assessment')}
+          className="!px-4 !py-2 text-sm"
+        >
           Check your readiness
         </CtaButton>
       </div>
@@ -489,7 +580,318 @@ function AgreementDetailCard({ label, value, className = '' }) {
   );
 }
 
+function formatOutletsMeta(outlets) {
+  const text = String(outlets || '').trim();
+  if (!text) return '';
+  return /outlet/i.test(text) ? text : `${text} Outlets`;
+}
+
+function getDesktopHeroModelLabel(franchise) {
+  const model = franchise.franchiseModels?.[0]?.name;
+  if (model) return `Model: ${model}`;
+  const structure = franchise.franchiseStructure?.find((entry) => /unit|master/i.test(entry));
+  return structure ? `Model: ${structure}` : '';
+}
+
+function buildDesktopHeroStatCards(franchise, location) {
+  const cards = [];
+
+  if (location) {
+    cards.push({ key: 'location', label: location });
+  }
+
+  const model = getDesktopHeroModelLabel(franchise);
+  if (model) {
+    cards.push({ key: 'model', label: model });
+  }
+
+  const agreementTerm =
+    franchise.agreementDetails?.find((item) => item.label === 'Agreement Term')?.value?.trim() || '';
+  if (agreementTerm) {
+    cards.push({ key: 'agreement', label: `Agreement Term: ${agreementTerm}` });
+  }
+
+  const outlets = formatOutletsMeta(franchise.keyInfo?.outlets);
+  if (outlets) {
+    cards.push({ key: 'outlets', label: outlets });
+  }
+
+  const franchiseTypes = getFranchiseTypesLabel(franchise.franchiseStructure, franchise.franchiseModels);
+  if (franchiseTypes) {
+    cards.push({
+      key: 'franchise-types',
+      label: `Franchise Types: ${franchiseTypes}`,
+      wide: true,
+    });
+  }
+
+  return cards;
+}
+
+function DesktopHeroMetaIcon({ type }) {
+  if (type === 'location') {
+    return (
+      <svg className="fd-desktop-hero-banner__stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+        />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    );
+  }
+  if (type === 'agreement') {
+    return (
+      <svg className="fd-desktop-hero-banner__stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    );
+  }
+  if (type === 'outlets') {
+    return (
+      <svg className="fd-desktop-hero-banner__stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    );
+  }
+  if (type === 'franchise-types') {
+    return (
+      <svg className="fd-desktop-hero-banner__stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    );
+  }
+  return (
+    <svg className="fd-desktop-hero-banner__stat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+    </svg>
+  );
+}
+
+function DesktopFranchiseHeroBanner({ franchise, onRequestInfo }) {
+  const location = getMobileHeroLocation(franchise);
+  const statCards = buildDesktopHeroStatCards(franchise, location);
+  const overviewRows = buildDesktopHeroOverviewRows(franchise);
+  const headingId = `fd-desktop-hero-${franchise.slug || franchise.id}-heading`;
+
+  return (
+    <section className="fd-desktop-hero-banner hidden lg:block" aria-labelledby={headingId}>
+      <div className="fd-desktop-hero-banner__grid">
+        <div className="fd-desktop-hero-banner__brand">
+          {franchise.industryBadge || franchise.industry ? (
+            <span className="fd-desktop-hero-banner__badge">
+              {franchise.industryBadge || franchise.industry}
+            </span>
+          ) : null}
+          <div className="fd-desktop-hero-banner__identity">
+            {franchise.logo ? (
+              <div className="fd-desktop-hero-banner__logo-wrap">
+                <img
+                  src={franchise.logo}
+                  alt=""
+                  role="presentation"
+                  className="fd-desktop-hero-banner__logo"
+                  decoding="async"
+                  loading="eager"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
+            ) : null}
+            <h1 id={headingId} className="fd-desktop-hero-banner__title fd-heading">
+              {franchise.name}
+            </h1>
+          </div>
+          {statCards.length ? (
+            <ul className="fd-desktop-hero-banner__stat-grid">
+              {statCards.map((item) => (
+                <li
+                  key={item.key}
+                  className={`fd-desktop-hero-banner__stat-card${item.wide ? ' fd-desktop-hero-banner__stat-card--wide' : ''}`}
+                >
+                  <DesktopHeroMetaIcon type={item.key} />
+                  <span className="fd-desktop-hero-banner__stat-label">{item.label}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+
+        <div className="fd-desktop-hero-banner__card">
+          <h2 className="fd-desktop-hero-banner__card-title fd-heading">Investment Overview</h2>
+          <dl className="fd-desktop-hero-banner__list">
+            {overviewRows.map((row) => (
+              <div key={row.label} className="fd-desktop-hero-banner__row">
+                <dt className="fd-desktop-hero-banner__label">
+                  {INVESTMENT_OVERVIEW_LABELS[row.label] || row.label}
+                </dt>
+                <dd className="fd-desktop-hero-banner__value">
+                  {row.returnsStructured || row.label === 'Returns' || row.label === 'Payback' || row.label === 'Lock-in Period' ? (
+                    <InvestmentOverviewValue item={row} singleLine />
+                  ) : (
+                    <span className="whitespace-nowrap">{String(row.value ?? '')}</span>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <button
+            type="button"
+            onClick={onRequestInfo}
+            className="fd-desktop-hero-banner__cta btn-purple-solid"
+          >
+            Request Information
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DesktopFranchiseGallery({
+  franchise,
+  galleryImages,
+  carouselCategory,
+  galleryImageFit,
+  galleryKey,
+  galleryAlt,
+}) {
+  return (
+    <div
+      className="fd-desktop-hero-gallery relative hidden min-h-[380px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 lg:block xl:min-h-[420px]"
+      style={franchise.cardBackground ? { backgroundColor: franchise.cardBackground } : undefined}
+    >
+      <ImageCarousel
+        key={galleryKey}
+        images={galleryImages}
+        alt={galleryAlt}
+        category={carouselCategory}
+        brandAssetsOnly
+        showThumbnails={false}
+        fillParent
+        preloadAll
+        imageFit={galleryImageFit}
+        imageSizes="(max-width: 1279px) 100vw, 48vw"
+        galleryBackground={franchise.cardBackground}
+        logoSrc={franchise.logo || null}
+        className="absolute inset-0 z-0 h-full w-full"
+        heightClassName="h-full min-h-[380px] w-full xl:min-h-[420px]"
+      />
+    </div>
+  );
+}
+
 /** Left: Agreement Term + Lock-in; right: Currency (equal column width, currency full height). */
+function getMobileHeroLocation(franchise) {
+  const candidates = [
+    franchise.locationsSummary,
+    franchise.expansionDisplay,
+    franchise.locations?.slice(0, 2).join(', '),
+    franchise.requirements?.find((item) => item.label === 'Target Markets')?.value,
+  ];
+  return candidates.map((value) => String(value || '').trim()).find(Boolean) || 'India';
+}
+
+function MobileFranchiseHero({
+  franchise,
+  onRequestInfo,
+  ctaRef,
+  galleryImages,
+  carouselCategory,
+  galleryImageFit,
+  galleryBackground,
+  galleryKey,
+  galleryAlt,
+}) {
+  const location = getMobileHeroLocation(franchise);
+
+  return (
+    <div className="fd-mobile-hero lg:hidden">
+      <div className="fd-mobile-hero__banner">
+        {franchise.industryBadge || franchise.industry ? (
+          <span className="fd-mobile-hero__badge">{franchise.industryBadge || franchise.industry}</span>
+        ) : null}
+        <h1 className="fd-mobile-hero__title">{franchise.name}</h1>
+        <p className="fd-mobile-hero__location">
+          <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          {location}
+        </p>
+      </div>
+
+      <div className="fd-mobile-hero__card">
+        <h2 className="fd-mobile-hero__card-title">Highlights</h2>
+        <FranchiseStatGrid
+          franchise={franchise}
+          hideExpansion
+          className="fd-mobile-hero__highlights fd-hero-metrics w-full"
+        />
+        <div className="fd-mobile-hero__cta-wrap" ref={ctaRef}>
+          <button type="button" onClick={onRequestInfo} className="fd-mobile-hero__cta btn-purple-solid">
+            Request Information
+          </button>
+        </div>
+      </div>
+
+      <div
+        className="fd-mobile-gallery fd-mobile-gallery--logo relative min-h-[min(60vw,400px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:min-h-[420px]"
+      >
+        <ImageCarousel
+          key={galleryKey}
+          images={galleryImages}
+          alt={galleryAlt}
+          category={carouselCategory}
+          brandAssetsOnly
+          showThumbnails={false}
+          fillParent
+          preloadAll
+          imageFit={galleryImageFit}
+          imageSizes="100vw"
+          galleryBackground={galleryBackground}
+          logoSrc={franchise.logo || null}
+          className="absolute inset-0 z-0 h-full w-full"
+          heightClassName="h-full min-h-[min(60vw,400px)] w-full sm:min-h-[420px]"
+        />
+      </div>
+    </div>
+  );
+}
+
+function MobileInvestmentOverviewSection({ franchise }) {
+  const headingId = `fd-mobile-investment-${franchise.slug || franchise.id}-heading`;
+
+  return (
+    <section
+      className="fd-mobile-investment-overview lg:hidden"
+      aria-labelledby={headingId}
+    >
+      <h2 id={headingId} className="fd-mobile-investment-overview__title fd-heading">
+        Investment Overview
+      </h2>
+      <InvestmentOverviewList
+        items={franchise.investorInvestment || franchise.investmentDetails}
+        franchiseStructure={franchise.franchiseStructure}
+        models={franchise.franchiseModels}
+        space={franchise.keyInfo?.space}
+        payback={franchise.keyInfo?.payback}
+        lockIn={
+          franchise.agreementDetails?.find((item) => item.label === 'Lock-in Period')?.value
+        }
+      />
+    </section>
+  );
+}
+
 function AgreementDetailsContent({ items }) {
   const agreementTerm = items.find((item) => item.label === 'Agreement Term');
   const lockInPeriod = items.find((item) => item.label === 'Lock-in Period');
@@ -516,22 +918,13 @@ function AgreementDetailsContent({ items }) {
 
 function FranchiseDetailsPage() {
   const [inquiryOpen, setInquiryOpen] = useState(false);
-  const [brandHeaderStuck, setBrandHeaderStuck] = useState(false);
-  const [brandHeaderHeight, setBrandHeaderHeight] = useState(0);
-  const brandHeaderRef = useRef(null);
-  const brandHeaderSentinelRef = useRef(null);
+  const [heroCtaInView, setHeroCtaInView] = useState(true);
+  const heroCtaObserverRef = useRef(null);
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
   const selectedFranchise = useMemo(
     () => getFranchiseDetailById(selectedFranchiseId),
     [selectedFranchiseId]
   );
-
-  const franchiseOpportunityTitle = useMemo(
-    () => `${selectedFranchise?.name?.toUpperCase() ?? ''} FRANCHISE OPPORTUNITY`.trim(),
-    [selectedFranchise?.name],
-  );
-
-  const franchiseTitleSingleLine = franchiseOpportunityTitle.length <= 34;
 
   const galleryImages = useMemo(
     () => resolveDetailGalleryImages(selectedFranchise),
@@ -554,6 +947,32 @@ function FranchiseDetailsPage() {
     restoreScrollWithRetry(0);
   }, [selectedFranchiseId]);
 
+  const setHeroCtaRef = useCallback((node) => {
+    heroCtaObserverRef.current?.disconnect();
+    heroCtaObserverRef.current = null;
+
+    if (!node) return;
+
+    setHeroCtaInView(true);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHeroCtaInView(entry.isIntersecting);
+      },
+      { threshold: 0, rootMargin: '0px' },
+    );
+
+    observer.observe(node);
+    heroCtaObserverRef.current = observer;
+  }, []);
+
+  useEffect(
+    () => () => {
+      heroCtaObserverRef.current?.disconnect();
+    },
+    [],
+  );
+
   useEffect(() => {
     const syncFromLocation = () => {
       canonicalizeFranchiseUrl();
@@ -567,42 +986,6 @@ function FranchiseDetailsPage() {
       window.removeEventListener(NAVIGATE_EVENT, syncFromLocation);
     };
   }, []);
-
-  useEffect(() => {
-    const sentinel = brandHeaderSentinelRef.current;
-    if (!sentinel) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const isStuck = !entry.isIntersecting;
-        if (isStuck && brandHeaderRef.current) {
-          setBrandHeaderHeight(brandHeaderRef.current.offsetHeight);
-        }
-        setBrandHeaderStuck(isStuck);
-      },
-      { root: null, rootMargin: '-64px 0px 0px 0px', threshold: 0 },
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [selectedFranchiseId]);
-
-  useEffect(() => {
-    const header = brandHeaderRef.current;
-    if (!header) return undefined;
-
-    const updateHeight = () => setBrandHeaderHeight(header.offsetHeight);
-    updateHeight();
-
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(header);
-    window.addEventListener('resize', updateHeight);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', updateHeight);
-    };
-  }, [selectedFranchiseId]);
 
   const handleRelatedDetails = (id) => {
     const nextId = String(id);
@@ -637,10 +1020,7 @@ function FranchiseDetailsPage() {
   };
 
   return (
-    <main
-      className="franchise-details-page pb-10 pt-10 sm:pb-12 sm:pt-12 lg:pb-14 lg:pt-0"
-      style={{ '--fd-brand-header-height': `${brandHeaderHeight || 76}px` }}
-    >
+    <main className="franchise-details-page pb-10 pt-0 sm:pb-12 lg:pb-14 lg:pt-0">
       <FranchiseInquiryLauncher
         franchise={{ id: selectedFranchise.id, name: selectedFranchise.name, logo: selectedFranchise.logo }}
         franchiseStructure={selectedFranchise.franchiseStructure}
@@ -648,123 +1028,41 @@ function FranchiseDetailsPage() {
         open={inquiryOpen}
         onOpenChange={setInquiryOpen}
         hideOnDesktop
-        hideSideRail
+        hideSideRail={heroCtaInView}
+        whatsappUrl={buildFranchiseWhatsAppUrl(selectedFranchise.name)}
       />
+      <FranchiseWhatsAppFab franchiseName={selectedFranchise.name} />
       <div className="fd-page-body">
-        <div ref={brandHeaderSentinelRef} className="fd-brand-header-sentinel h-px w-full" aria-hidden="true" />
-        {brandHeaderStuck ? (
-          <div
-            className="fd-brand-header-placeholder"
-            style={{ height: brandHeaderHeight }}
-            aria-hidden="true"
-          />
-        ) : null}
-        <div
-          ref={brandHeaderRef}
-          className={`fd-brand-header-bar mx-6 rounded-2xl border border-slate-200 bg-white shadow-[0_8px_22px_rgba(15,23,42,0.06)] sm:mx-10 md:mx-14 lg:mx-0 lg:w-full lg:rounded-none lg:border-x-0 lg:border-t-0${
-            brandHeaderStuck ? ' fd-brand-header-bar--stuck' : ''
-          }`}
-        >
-          <div className={`fd-brand-header-inner ${FRANCHISE_DETAILS_SHELL} py-5 lg:py-3`}>
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-3">
-              {/* Left: name + status badges */}
-              <div className="flex flex-wrap items-center gap-2 lg:gap-2.5">
-                {selectedFranchise.logo ? (
-                  <img
-                    src={selectedFranchise.logo}
-                    alt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
-                    decoding="async"
-                    loading="eager"
-                    className="h-10 w-auto max-w-[120px] shrink-0 object-contain sm:h-11 lg:h-10"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                ) : null}
-                <p className={`fd-copy fd-heading fd-brand-header-title ${heroDisplayClass(true)}`}>{selectedFranchise.name}</p>
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 lg:text-[0.8125rem]">{selectedFranchise.status}</span>
-              </div>
+        <MobileFranchiseHero
+          franchise={selectedFranchise}
+          onRequestInfo={scrollToInquiryForm}
+          ctaRef={setHeroCtaRef}
+          galleryImages={galleryImages}
+          carouselCategory={carouselCategory}
+          galleryImageFit={galleryImageFit}
+          galleryBackground={selectedFranchise.cardBackground}
+          galleryKey={`mobile-${selectedFranchiseId}`}
+          galleryAlt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
+        />
 
-              <div
-                className={`grid w-full gap-2 sm:flex sm:w-auto sm:gap-3 ${selectedFranchise.brochureUrl ? 'grid-cols-2' : 'grid-cols-1'}`}
-              >
-                <button
-                  type="button"
-                  onClick={scrollToInquiryForm}
-                  className="fd-brand-header-cta inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-full px-3 text-[11px] font-bold leading-none text-white sm:w-auto sm:px-6 sm:text-sm"
-                >
-                  <span className="sm:hidden">Talk to Experts</span>
-                  <span className="hidden sm:inline">Connect With Franchise Experts</span>
-                </button>
-                {selectedFranchise.brochureUrl ? (
-                  <BrochureDownloadButton
-                    franchise={{
-                      id: selectedFranchise.id,
-                      name: selectedFranchise.name,
-                      slug: selectedFranchise.slug,
-                    }}
-                    brochureUrl={selectedFranchise.brochureUrl}
-                    className="fd-brand-header-cta group inline-flex h-10 w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[11px] font-bold leading-none text-white sm:w-auto sm:gap-2 sm:px-6 sm:text-sm"
-                  />
-                ) : null}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={`mt-6 space-y-8 sm:mt-8 ${FRANCHISE_DETAILS_SHELL}`}>
+        <div className={`mt-0 space-y-6 sm:space-y-8 lg:mt-6 ${FRANCHISE_DETAILS_SHELL}`}>
         <section className="space-y-6">
-          {/* Key details (left) + gallery (right) */}
-          <div className="fd-hero-split overflow-hidden rounded-2xl border border-slate-200 shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
-            <div className="fd-hero-split-grid grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] xl:grid-cols-[minmax(300px,42%)_minmax(0,1fr)] lg:items-stretch">
-              <div className="fd-hero-story flex flex-col justify-center gap-3 border-b border-slate-200 p-5 sm:p-6 lg:gap-3.5 lg:border-b-0 lg:border-r lg:py-6 lg:pl-6 lg:pr-5 xl:py-7">
-                <div className="min-w-0 text-center lg:text-left">
-                  <h1
-                    className={`fd-hero-story-title fd-heading mt-0 font-bold leading-snug tracking-tight ${
-                      franchiseTitleSingleLine
-                        ? 'text-[clamp(1.1875rem,3.8vw,1.5625rem)] whitespace-nowrap'
-                        : 'text-[clamp(0.8125rem,2.4vw,1.0625rem)] text-balance break-words'
-                    }`}
-                  >
-                    {franchiseOpportunityTitle}
-                  </h1>
-                  <p className="fd-hero-story-highlights fd-heading mt-1 text-base font-bold leading-snug sm:text-lg lg:text-[1.05rem] xl:text-lg">
-                    Highlights
-                  </p>
-                </div>
-
-                <FranchiseStatGrid franchise={selectedFranchise} className="fd-hero-metrics w-full" />
-              </div>
-
-              <div
-                className="fd-hero-gallery relative min-h-[min(56vw,360px)] bg-slate-100 sm:min-h-[380px] lg:min-h-[460px] lg:h-full xl:min-h-[500px]"
-                style={
-                  selectedFranchise.cardBackground
-                    ? { backgroundColor: selectedFranchise.cardBackground }
-                    : undefined
-                }
-              >
-                <ImageCarousel
-                  key={selectedFranchiseId}
-                  images={galleryImages}
-                  alt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
-                  category={carouselCategory}
-                  brandAssetsOnly
-                  showThumbnails={false}
-                  fillParent
-                  preloadAll
-                  imageFit={galleryImageFit}
-                  imageSizes="(max-width: 1023px) 100vw, 62vw"
-                  galleryBackground={selectedFranchise.cardBackground}
-                  className="absolute inset-0 z-0 h-full w-full"
-                  heightClassName="h-full min-h-[min(56vw,360px)] w-full sm:min-h-[380px] lg:min-h-[460px] xl:min-h-[500px]"
-                />
-              </div>
-            </div>
-          </div>
+          <DesktopFranchiseHeroBanner
+            franchise={selectedFranchise}
+            onRequestInfo={scrollToInquiryForm}
+          />
 
           <div className="fd-sticky-form-region">
               <div className="fd-sticky-form-region__main space-y-6">
+                <DesktopFranchiseGallery
+                  franchise={selectedFranchise}
+                  galleryImages={galleryImages}
+                  carouselCategory={carouselCategory}
+                  galleryImageFit={galleryImageFit}
+                  galleryKey={selectedFranchiseId}
+                  galleryAlt={franchiseBrandAlt(selectedFranchise.name, selectedFranchise.industry)}
+                />
+
                 <section
                   className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
                   aria-labelledby={`fd-about-${selectedFranchise.slug || selectedFranchise.id}-heading`}
@@ -772,44 +1070,29 @@ function FranchiseDetailsPage() {
                   <AboutBrandSection franchise={selectedFranchise} />
                 </section>
 
+                <MobileInvestmentOverviewSection franchise={selectedFranchise} />
+
+                <FranchisePartnershipSection franchise={selectedFranchise} />
+
                 <section
-                  className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
-                  aria-labelledby={`fd-investment-${selectedFranchise.slug || selectedFranchise.id}-heading`}
+                  className="fd-brand-support-compact rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:hidden"
+                  aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
                 >
-                  <h2
-                    id={`fd-investment-${selectedFranchise.slug || selectedFranchise.id}-heading`}
-                    className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}
-                  >
-                    Investment Overview
-                  </h2>
-                  <div className="fd-section-body mt-5">
-                    <InvestmentOverviewList
-                      items={selectedFranchise.investorInvestment || selectedFranchise.investmentDetails}
-                      franchiseStructure={selectedFranchise.franchiseStructure}
-                      models={selectedFranchise.franchiseModels}
-                      space={selectedFranchise.keyInfo?.space}
-                      payback={selectedFranchise.keyInfo?.payback}
-                      lockIn={
-                        selectedFranchise.agreementDetails?.find(
-                          (item) => item.label === 'Lock-in Period',
-                        )?.value
-                      }
-                    />
-                  </div>
+                  <SupportProvidedHeading
+                    id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
+                    className={`fd-heading fd-copy justify-center text-base sm:text-[1.0625rem] ${TYPE.h3}`}
+                  />
                 </section>
 
-                <FranchiseEligibilitySection franchise={selectedFranchise} />
-
                 <section
-                  className="fd-about-section rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:p-7"
+                  className="fd-about-section hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:block lg:p-7"
                   aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
                 >
-                  <h2
+                  <SupportProvidedHeading
                     id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
+                    headingLevel="h2"
                     className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}
-                  >
-                    Brand & Partner Support
-                  </h2>
+                  />
                   <div className="fd-section-body mt-5">
                     <BrandSupportList
                       items={selectedFranchise.trainingSupport}
@@ -876,14 +1159,8 @@ function FranchiseDetailsPage() {
                       </span>
                     </div>
                     <div className="mt-4 grid grid-cols-2 gap-3">
-                      <div className="fd-similar-stat fd-tab-surface-card rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
-                        <p className="fd-tab-surface-label fd-copy text-xs font-medium">ROI</p>
-                        <p className="fd-copy fd-body-text text-lg">{franchise.keyInfo.roi}</p>
-                      </div>
-                      <div className="fd-similar-stat fd-tab-surface-card rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
-                        <p className="fd-tab-surface-label fd-copy text-xs font-medium">Payback</p>
-                        <p className="fd-copy fd-body-text text-lg">{franchise.keyInfo.payback}</p>
-                      </div>
+                      <SimilarStatCard label="ROI" kind="roi" value={franchise.keyInfo.roi} />
+                      <SimilarStatCard label="Payback" kind="payback" value={franchise.keyInfo.payback} />
                     </div>
                     <button
                       type="button"

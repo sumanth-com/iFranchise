@@ -16,6 +16,7 @@ import {
   inrToUsdFilterAmount,
   isPlaceholder,
   normalizeCategory,
+  formatIndustryBadge,
   parseInvestmentAmounts,
   parseModels,
   parsePaybackMonths,
@@ -249,6 +250,7 @@ export function buildOpportunityRecord(raw, id) {
   const slug = slugifyBrand(rawName);
   const brandName = formatBrandDisplayName(raw.franchiseName, slug);
   const industry = normalizeCategory(raw.category);
+  const industryBadge = formatIndustryBadge(raw.category, industry);
   const models = parseModels(raw.businessModel);
   const model = resolvePrimaryModel(slug, models);
 
@@ -291,6 +293,7 @@ export function buildOpportunityRecord(raw, id) {
     brandName,
     category: industry,
     industry,
+    industryBadge,
     logo: brandImages.logo || '',
     image: brandImages.logo || brandImages.card,
     cardFit: brandImages.cardFit || 'cover',
@@ -334,6 +337,7 @@ export function buildOpportunityRecord(raw, id) {
     slug,
     name: brandName,
     industry,
+    industryBadge,
     status: 'Verified',
     badge: badge === 'FEATURED' ? 'Premium Listing' : badge,
     tagline,
@@ -354,6 +358,7 @@ export function buildOpportunityRecord(raw, id) {
       outlets,
     },
     overview: summary,
+    brandAbout: cleanText(raw.brandAbout) || '',
     businessModel: [
       models.length
         ? `Franchise model: ${cleanText(raw.businessModelDescription) || models.join(', ')}.`

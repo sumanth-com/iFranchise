@@ -176,7 +176,8 @@
 
 .franchise-inquiry-modal--compact .franchise-inquiry-modal__brand-logo {
   height: 2.25rem;
-  max-width: 110px;
+  width: auto;
+  max-width: 10rem;
 }
 
 .franchise-inquiry-modal--compact .franchise-inquiry-modal__body {
@@ -232,7 +233,11 @@
 }
 
 .franchise-inquiry-modal--compact .franchise-inquiry-modal__textarea {
-  min-height: 2rem;
+  min-height: 2.75rem;
+}
+
+.franchise-inquiry-modal--compact .franchise-inquiry-modal__textarea--mobile {
+  min-height: 4.75rem;
 }
 
 .franchise-inquiry-modal--compact .franchise-inquiry-modal__label {
@@ -255,6 +260,15 @@
   min-height: 2.625rem;
   height: 2.625rem;
   font-size: 0.8125rem !important;
+}
+
+.franchise-inquiry-modal--mobile-actions .franchise-inquiry-modal__form-footer {
+  border-top-color: rgba(226, 232, 240, 0.85);
+  padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
+}
+
+.franchise-inquiry-modal--mobile-actions .franchise-inquiry-modal__actions {
+  padding: 0.625rem 0 0;
 }
 
 .franchise-inquiry-modal--mobile-actions .franchise-inquiry-modal__actions .franchise-inquiry-modal__submit {
@@ -366,14 +380,16 @@
 .franchise-inquiry-modal__brand-logo {
   height: 2.75rem;
   width: auto;
-  max-width: 140px;
+  max-width: 11.25rem;
   flex-shrink: 0;
   object-fit: contain;
+  object-position: left center;
 }
 
 @media (min-width: 640px) {
   .franchise-inquiry-modal__brand-logo {
     height: 3rem;
+    max-width: 12.5rem;
   }
 }
 
@@ -613,7 +629,9 @@
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__title {
   justify-content: center;
-  font-size: 1.125rem;
+  margin-top: 0.1875rem;
+  font-size: 1.0625rem;
+  line-height: 1.3;
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__subtitle {
@@ -625,20 +643,53 @@
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__body {
-  padding: 0.625rem 1rem 0;
+  padding: 0.75rem 1rem 0;
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields {
-  gap: 0.5rem;
+  gap: 0.625rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__label {
+  margin-bottom: 0.3125rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.01em;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__input,
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__textarea {
+  padding: 0.5rem 0.6875rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  border-radius: 9px;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__textarea,
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__textarea--mobile {
+  min-height: 4.75rem;
+  resize: none;
+  line-height: 1.45;
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-btn {
-  padding: 0.5rem 0.625rem;
+  padding: 0.5625rem 0.6875rem;
+  border-radius: 10px;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-title {
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-desc {
+  font-size: 0.625rem;
+  margin-top: 0.1875rem;
+  line-height: 1.35;
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields-row {
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 0.625rem;
 }
 
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__type-grid {
@@ -646,8 +697,36 @@
   gap: 0.5rem;
 }
 
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__form-footer {
+  padding-bottom: calc(0.875rem + env(safe-area-inset-bottom, 0px));
+}
+
 .franchise-inquiry-sheet--mobile .franchise-inquiry-modal__actions {
-  padding-top: 0.625rem;
+  padding: 0.625rem 0 0;
+  gap: 0.5625rem;
+}
+
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__kicker {
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+}
+
+.franchise-inquiry-sheet--mobile .phone-input--modal .phone-input__number,
+.franchise-inquiry-sheet--mobile .phone-input--modal .phone-input__country-btn,
+.franchise-inquiry-sheet--mobile .state-location-fields__state-trigger,
+.franchise-inquiry-sheet--mobile .state-location-fields__wrap .franchise-inquiry-modal__input {
+  min-height: 2.375rem;
+  font-size: 0.8125rem;
+  border-radius: 9px;
+}
+
+.franchise-inquiry-sheet--mobile .phone-input--modal .phone-input__number {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.franchise-inquiry-sheet--mobile fieldset .franchise-inquiry-modal__label {
+  margin-bottom: 0.375rem;
 }
 
 @media (max-width: 1023px) {

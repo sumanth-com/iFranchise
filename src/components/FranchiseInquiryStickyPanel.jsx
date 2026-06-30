@@ -11,6 +11,7 @@ export default function FranchiseInquiryStickyPanel({ franchise, franchiseStruct
         franchiseStructure={franchiseStructure}
         variant="panel"
         lockScroll={false}
+        showFormDisclaimer={false}
         onClose={() => {}}
       />
     </div>

@@ -109,16 +109,14 @@ export function resolveDetailGalleryImages(franchise) {
   list = list.filter((src) => src && src !== logo);
 
   const bundled = list.filter(isBundledGallerySrc);
-  if (bundled.length > 0) {
-    return [...new Set(bundled)];
-  }
+  const photos =
+    bundled.length > 0
+      ? [...new Set(bundled)]
+      : list.filter((src) => !isBundledGallerySrc(src)).length > 0
+        ? [...new Set(list.filter((src) => !isBundledGallerySrc(src)))]
+        : [];
 
-  const remote = list.filter((src) => !isBundledGallerySrc(src));
-  if (remote.length > 0) {
-    return [...new Set(remote)];
-  }
-
-  return logo ? [logo] : [];
+  return photos;
 }
 
 /** ImageCarousel `category` prop for fallback styling. */

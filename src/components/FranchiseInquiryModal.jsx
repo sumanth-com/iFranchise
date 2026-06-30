@@ -80,6 +80,7 @@ export default function FranchiseInquiryModal({
   lockScroll = true,
   onUserInput,
   showWhatsAppAction = false,
+  showFormDisclaimer = true,
   whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
 }) {
   const typeOptions = filterFranchiseTypes(franchiseStructure);
@@ -350,11 +351,13 @@ export default function FranchiseInquiryModal({
                 </label>
                 <textarea
                   id="fi-message"
-                  rows={1}
+                  rows={showWhatsAppAction || isPanel ? 3 : 2}
                   value={values.message}
                   onChange={(e) => setField('message', e.target.value)}
-                  className={`${inputClass(fieldErrors.message)} franchise-inquiry-modal__textarea`}
-                  placeholder="Timeline, budget, or questions"
+                  className={`${inputClass(fieldErrors.message)} franchise-inquiry-modal__textarea${
+                    showWhatsAppAction ? ' franchise-inquiry-modal__textarea--mobile' : ''
+                  }`}
+                  placeholder="Share your timeline, budget, preferred city, or any questions"
                 />
                 <FieldError message={fieldErrors.message} />
               </div>
@@ -387,7 +390,9 @@ export default function FranchiseInquiryModal({
                     </a>
                   ) : null}
                 </div>
-                <FranchiseInquiryFormDisclaimer franchiseName={franchise.name} />
+                {!showWhatsAppAction && showFormDisclaimer ? (
+                  <FranchiseInquiryFormDisclaimer franchiseName={franchise.name} />
+                ) : null}
               </div>
             </form>
           )}

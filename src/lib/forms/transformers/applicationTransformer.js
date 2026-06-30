@@ -10,7 +10,10 @@ function buildDescription(formData) {
   if (formData.hasSOPs) lines.push(`SOPs: ${formData.hasSOPs}`);
   if (formData.hasDocs) lines.push(`Documentation: ${formData.hasDocs}`);
   if (formData.founded) lines.push(`Founded: ${formData.founded}`);
-  if (formData.vision) lines.push(`Vision: ${formData.vision}`);
+  if (formData.vision) lines.push(`Message: ${formData.vision}`);
+  if (formData.message && formData.message !== formData.vision) {
+    lines.push(`Message: ${formData.message}`);
+  }
   if (formData.company && formData.company !== formData.brandName) {
     lines.push(`Company: ${formData.company}`);
   }
@@ -44,6 +47,7 @@ export function transformApplicationData(formData, sourcePage = 'brand_owners_pa
       contactPhone: formData.phone,
       ...spreadPhoneFields(formData),
       description: buildDescription(formData),
+      message: (formData.vision || formData.message || '').trim(),
     },
   };
 }

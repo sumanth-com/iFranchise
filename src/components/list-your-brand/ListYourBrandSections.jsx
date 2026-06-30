@@ -173,7 +173,7 @@ export function HowItWorksSection() {
 
 export function WhoCanListSection() {
   return (
-    <section className={`lyb-audience-section ${LYB_SECTION}`} aria-labelledby="lyb-audience-heading">
+    <section className={`lyb-audience-section hidden md:block ${LYB_SECTION}`} aria-labelledby="lyb-audience-heading">
       <div className={LYB_CONTAINER}>
         <SectionIntro
           pill="Who It's For"

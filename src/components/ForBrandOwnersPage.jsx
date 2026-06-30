@@ -29,12 +29,10 @@ const BRAND_APP_INITIAL = withHoneypot({
   industry: '',
   state: '',
   city: '',
-  outlets: '',
   vision: '',
 });
 
 const LYB_SECTION = 'relative overflow-hidden bg-transparent py-7 lg:py-9';
-const HERO_VIEWPORT_H = 'calc(100vh - 80px)';
 const LYB_EASE = [0.22, 1, 0.36, 1];
 const LYB_ENTER = { duration: 0.42, ease: LYB_EASE };
 const LYB_REVEAL = { duration: 0.36, ease: LYB_EASE };
@@ -56,8 +54,8 @@ function ListYourBrandMobileStickyCta() {
   const observerRef = useRef(null);
 
   useEffect(() => {
-    const formEl = document.getElementById('hero-brand-inquiry');
-    if (!formEl) return undefined;
+    const submitEl = document.getElementById('lyb-hero-submit');
+    if (!submitEl) return undefined;
 
     const mq = window.matchMedia(LYB_MOBILE_MQ);
 
@@ -67,9 +65,9 @@ function ListYourBrandMobileStickyCta() {
 
     observerRef.current = new IntersectionObserver(
       ([entry]) => updateVisibility(entry.isIntersecting),
-      { threshold: 0, rootMargin: '-64px 0px 0px 0px' },
+      { threshold: 0, rootMargin: '0px 0px -8px 0px' },
     );
-    observerRef.current.observe(formEl);
+    observerRef.current.observe(submitEl);
 
     const onMqChange = () => {
       if (!mq.matches) setVisible(false);
@@ -113,19 +111,18 @@ function ListYourBrandHeroSection() {
   return (
     <section
       id="lyb-hero-section"
-      className={`lyb-hero-section ${LYB_SECTION} flex w-full flex-col justify-center overflow-hidden py-6 sm:py-8 lg:py-6`}
-      style={{ minHeight: HERO_VIEWPORT_H, maxHeight: HERO_VIEWPORT_H }}
+      className={`lyb-hero-section lyb-hero-section--locked ${LYB_SECTION} flex w-full flex-col overflow-hidden py-6 sm:py-8 lg:py-6`}
     >
       <div className="relative z-10 flex h-full min-h-0 w-full flex-col justify-center">
         <div className="mx-auto w-full max-w-[1280px] px-6 lg:px-10 xl:max-w-[1360px]">
-          <div className="grid min-h-0 items-stretch gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(500px,600px)] lg:gap-8 xl:grid-cols-[minmax(0,0.92fr)_minmax(540px,640px)] xl:gap-10">
+          <div className="lyb-hero-layout grid min-h-0 items-stretch gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(500px,600px)] lg:gap-8 xl:grid-cols-[minmax(0,0.92fr)_minmax(540px,640px)] xl:gap-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={LYB_ENTER}
               className="lyb-hero-copy flex max-w-md flex-col gap-4 lg:max-w-lg"
             >
-              <SectionPill className="w-fit">For Brand Owners</SectionPill>
+              <SectionPill className="lyb-hero-pill hidden w-fit lg:inline-flex">For Brand Owners</SectionPill>
 
               <h1 className={`lyb-hero-title ${TYPE.pageHero} text-white lg:!text-[2.25rem] lg:!leading-[1.15]`}>
                 Expand Your Brand Across India Through Franchising
@@ -135,7 +132,7 @@ function ListYourBrandHeroSection() {
                 Reach serious franchise investors and expansion partners on India&apos;s franchise growth platform.
               </p>
 
-              <div className="flex flex-col items-start gap-2 pt-2">
+              <div className="lyb-hero-cta-block hidden flex-col items-start gap-2 pt-2 lg:flex">
                 <button
                   type="button"
                   onClick={() => navigateTo('/contact-us')}
@@ -266,13 +263,13 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
       className="lyb-hero-form relative flex min-h-0 w-full flex-1 flex-col"
       style={{ willChange: 'transform, opacity' }}
     >
-      <motion.div className="lyb-form-panel relative flex max-h-[min(100%,calc(100dvh-6.5rem))] w-full flex-col overflow-hidden rounded-3xl border border-violet-500/25 bg-gradient-to-br from-[#1a0f3d] via-[#12082a] to-[#0a0618] p-4 shadow-[0_24px_64px_rgba(0,0,0,0.45)] sm:p-5 lg:max-h-[calc(100dvh-7rem)] lg:p-5">
+      <motion.div className="lyb-form-panel relative flex max-h-[min(100%,calc(100dvh-6.5rem))] w-full min-h-0 flex-col overflow-hidden rounded-3xl border border-violet-500/25 bg-gradient-to-br from-[#1a0f3d] via-[#12082a] to-[#0a0618] p-4 shadow-[0_24px_64px_rgba(0,0,0,0.45)] sm:p-5 lg:max-h-[calc(100dvh-7rem)] lg:p-5">
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(124,58,237,0.22),transparent)]"
           aria-hidden
         />
 
-        <div className="relative mb-3 shrink-0 border-b border-white/10 pb-3">
+        <div className="relative mb-3 shrink-0 border-b border-white/10 pb-3 lyb-form-panel__header">
           <p className="lyb-form-eyebrow text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white/90">Brand inquiry</p>
           <h2 className={`lyb-form-title mt-0.5 ${TYPE.formTitle} text-white`}>Start Your Listing</h2>
         </div>
@@ -295,7 +292,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
             >
               <HoneypotField value={form._hp} onChange={set} />
               <div className="lyb-hero-form-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
-                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+                <div className="lyb-hero-form-grid grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
                 <Field label="Brand Name" required>
                   <input
                     className={inputClass}
@@ -333,7 +330,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                     onChange={(value) => set('phone', value)}
                   />
                 </Field>
-                <Field label="Category" required>
+                <Field label="Category" required className="sm:col-span-2">
                   <SelectField className={selectClass} value={form.industry} onChange={(e) => set('industry', e.target.value)} required>
                     <option value="">Select category</option>
                     {HERO_FORM_INDUSTRIES.map((o) => (
@@ -342,14 +339,6 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                       </option>
                     ))}
                   </SelectField>
-                </Field>
-                <Field label="No. of outlets">
-                  <input
-                    className={inputClass}
-                    value={form.outlets}
-                    onChange={(e) => set('outlets', e.target.value)}
-                    placeholder="e.g. 12 outlets"
-                  />
                 </Field>
                 <StateLocationFields
                   className="sm:col-span-2"
@@ -364,13 +353,13 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                   cityClassName={inputClass}
                   labelClassName="lyb-form-label mb-1.5 block text-[0.68rem] font-bold uppercase tracking-wide text-white/90"
                 />
-                <Field label="Message" className="sm:col-span-2">
+                <Field label="Message" className="lyb-form-message-field sm:col-span-2">
                   <textarea
-                    className={`${inputClass} lyb-form-message min-h-[3.75rem] resize-none py-2`}
+                    className={`${inputClass} lyb-form-message`}
                     value={form.vision}
                     onChange={(e) => set('vision', e.target.value)}
                     rows={2}
-                    placeholder="Tell us about your brand and how you want to scale…"
+                    placeholder="Brand story or goals (optional)"
                   />
                 </Field>
                 </div>
@@ -380,7 +369,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                   {submitError}
                 </p>
               )}
-              <div className="mt-3 shrink-0 border-t border-white/10 pt-3">
+              <div id="lyb-hero-submit" className="lyb-hero-form-submit-wrap mt-2 shrink-0 border-t border-white/10 pt-2 sm:mt-3 sm:pt-3">
               <button
                 type="submit"
                 disabled={submitting}

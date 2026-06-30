@@ -69,6 +69,8 @@ export default function ImageCarousel({
   /** When true, never substitute Unsplash/category stock photos on missing or failed loads */
   brandAssetsOnly = false,
   imageSizes = '(max-width: 1023px) 100vw, 42vw',
+  /** When set, this slide uses contain so the brand logo is fully visible as the first frame. */
+  logoSrc = null,
 }) {
   const safeImages = useMemo(() => {
     const list = (images || []).filter(Boolean);
@@ -87,6 +89,14 @@ export default function ImageCarousel({
   const imageRefs = useRef([]);
 
   const objectFitClass = imageFit === 'contain' ? 'object-contain' : 'object-cover';
+
+  const slideObjectFitClass = (src) => {
+    if (logoSrc && src === logoSrc) return 'object-contain p-1 sm:p-2';
+    return objectFitClass;
+  };
+
+  const activeSrc = safeImages[activeIdx];
+  const isLogoSlide = Boolean(logoSrc && activeSrc === logoSrc);
 
   useEffect(() => {
     setActiveIdx(0);
@@ -173,7 +183,13 @@ export default function ImageCarousel({
       <div
         ref={containerRef}
         className={`group relative w-full overflow-hidden ${fillParent ? 'min-h-0 flex-1 rounded-none' : 'rounded-2xl lg:rounded-3xl'} ${heightClassName}`}
-        style={galleryBackground ? { backgroundColor: galleryBackground } : undefined}
+        style={
+          isLogoSlide
+            ? { backgroundColor: '#ffffff' }
+            : galleryBackground
+              ? { backgroundColor: galleryBackground }
+              : undefined
+        }
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -200,7 +216,7 @@ export default function ImageCarousel({
             fetchPriority={idx === activeIdx ? 'high' : 'low'}
             sizes={imageSizes}
             draggable={false}
-            className={`absolute inset-0 h-full w-full ${objectFitClass} transition-opacity duration-300 ${
+            className={`absolute inset-0 h-full w-full ${slideObjectFitClass(src)} transition-opacity duration-300 ${
               idx === activeIdx
                 ? `z-[2] ${loaded[idx] ? 'opacity-100' : 'opacity-90'}`
                 : 'z-0 opacity-0 pointer-events-none'

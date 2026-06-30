@@ -127,6 +127,37 @@ export function normalizeCategory(raw = '') {
   return 'Food & Beverage';
 }
 
+/** Short, brand-specific label for hero badges (more specific than normalizeCategory). */
+export function formatIndustryBadge(rawCategory = '', normalizedIndustry = '') {
+  const raw = cleanText(rawCategory);
+  if (!raw) return normalizedIndustry || 'Franchise';
+
+  const parts = raw.split(/\s*\/\s*/).map((part) => cleanText(part)).filter(Boolean);
+  const genericLead = /^(retail|f&b|f\s*&\s*b|qsr)$/i;
+
+  if (parts.length > 1) {
+    const lead = parts[0].replace(/\s+/g, ' ').trim();
+    const specific = parts[parts.length - 1];
+    if (genericLead.test(lead) || /^retail$/i.test(lead)) return specific;
+    if (/^qsr$/i.test(lead)) return specific;
+    return specific.length <= 32 ? specific : parts.join(' · ');
+  }
+
+  const lower = raw.toLowerCase();
+  if (lower.includes('ethnic wear')) return raw;
+  if (lower.includes('men') && lower.includes('fashion')) return "Men's Fashion";
+  if (lower.includes('pub') || lower.includes('nightlife')) return 'Pub & Nightlife';
+  if (lower.includes('pizza') && lower.includes('burger')) return 'Pizza & Burgers';
+  if (lower.includes('fried chicken')) return 'Fried Chicken';
+  if (lower.includes('burger') && lower.includes('qsr')) return 'Burgers & QSR';
+  if (lower.includes('burger')) return 'Burgers & QSR';
+  if (lower.includes('apparel') || lower.includes('lifestyle')) return 'Apparel & Lifestyle';
+  if (lower.includes('beverage')) return 'Beverages';
+  if (/^f&b$/i.test(raw) || /^f\s*&\s*b$/i.test(raw)) return 'Food & Beverage';
+
+  return normalizedIndustry || raw;
+}
+
 const MODEL_TOKENS = ['FOFO', 'FICO', 'FOCO', 'COFO', 'COCO', 'FIFO'];
 
 function detectModels(text) {

@@ -7,7 +7,7 @@
  * 
  * Deployment: Deploy as Web App with "Anyone" access
  * 
- * @version 1.1.0 — State/City columns; merges new headers without moving existing rows
+ * @version 1.2.0 — Backward-compatible headers; brochure + all 8 form types; safe setupSheets()
  */
 
 // ============================================================================
@@ -15,7 +15,8 @@
 // ============================================================================
 
 /**
- * Sheet tab names - must match exactly with your Google Sheet tabs
+ * Sheet tab names — each form_type writes only to its own tab (never merged).
+ * franchise_inquiry → Franchise_Inquiries (Request Information on franchise detail pages).
  */
 const SHEET_TABS = {
   contact: 'Contact_Leads',
@@ -57,6 +58,7 @@ const SHEET_HEADERS = {
     'Contact Email',
     'Contact Phone',
     'Description',
+    'Message',
     'Submitted At'
   ],
   Chatbot_Brands: [
@@ -481,6 +483,7 @@ function prepareRowValues(formType, data, sourcePage, submittedAt) {
         'Contact Email': data.contactEmail || '',
         'Contact Phone': normalizePhone(data.contactPhone),
         'Description': data.description || '',
+        'Message': data.message || '',
       });
 
     case 'chatbot_brand':
@@ -639,6 +642,88 @@ function testCareerSubmission() {
 
   const result = processSubmission(testPayload);
   console.log('Career test result:', JSON.stringify(result, null, 2));
+  return result;
+}
+
+/**
+ * Test brochure download form routing (run from Apps Script editor).
+ */
+function testBrochureSubmission() {
+  const testPayload = {
+    form_type: 'brochure_download',
+    sheet_tab: 'Brochure_Downloads',
+    source_page: 'franchise_details_brochure',
+    submitted_at: new Date().toISOString(),
+    data: {
+      name: 'Test Investor',
+      email: 'test@example.com',
+      phone: '9876543210',
+      franchise_id: 'odette',
+      franchise_name: 'Odette',
+      state: 'Karnataka',
+      city: 'Bengaluru',
+      message: 'Brochure download test row',
+    }
+  };
+
+  const result = processSubmission(testPayload);
+  console.log('Brochure test result:', JSON.stringify(result, null, 2));
+  return result;
+}
+
+/**
+ * Test List Your Brand / brand application form (run from Apps Script editor).
+ */
+function testBrandApplicationSubmission() {
+  const testPayload = {
+    form_type: 'brand_application',
+    sheet_tab: 'Brand_Applications',
+    source_page: 'list_your_brand_hero',
+    submitted_at: new Date().toISOString(),
+    data: {
+      brandName: 'Chai & Co',
+      industry: 'Food & Beverage',
+      locations: 'Location: Bengaluru, Karnataka',
+      state: 'Karnataka',
+      city: 'Bengaluru',
+      contactName: 'Priya Sharma',
+      contactEmail: 'priya@chai.co',
+      contactPhone: '9876543210',
+      description: 'Timeline: 3-6 months',
+      message: 'Looking to expand across South India.',
+    }
+  };
+
+  const result = processSubmission(testPayload);
+  console.log('Brand application test result:', JSON.stringify(result, null, 2));
+  return result;
+}
+
+/**
+ * Test franchise inquiry form routing (run from Apps Script editor).
+ * Request Information modal on franchise detail pages → Franchise_Inquiries tab.
+ */
+function testFranchiseInquirySubmission() {
+  const testPayload = {
+    form_type: 'franchise_inquiry',
+    sheet_tab: 'Franchise_Inquiries',
+    source_page: 'franchise_details_inquiry',
+    submitted_at: new Date().toISOString(),
+    data: {
+      franchise_id: 'odette',
+      franchise_name: 'Odette',
+      franchise_type: 'Unit Franchise',
+      full_name: 'Test Investor',
+      email: 'test@example.com',
+      phone: '9876543210',
+      city: 'Bengaluru',
+      state: 'Karnataka',
+      message: 'Interested in franchise opportunities in South India.',
+    }
+  };
+
+  const result = processSubmission(testPayload);
+  console.log('Franchise inquiry test result:', JSON.stringify(result, null, 2));
   return result;
 }
 

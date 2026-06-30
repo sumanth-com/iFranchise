@@ -2946,6 +2946,13 @@ body.navbar-mobile-menu-open .assistant-fab-wrap {
   pointer-events: none !important;
 }
 
+/* Franchise detail uses WhatsApp FAB — never show site chatbot there */
+body.page-franchise-details .assistant-fab-wrap {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .navbar-mobile-panel .navbar-mobile-nav-item.mobile-nav-link {
   -webkit-tap-highlight-color: transparent;
 }
@@ -6286,6 +6293,36 @@ html[data-theme='dark'] #main-content .list-your-brand-page .lyb-hero-form texta
   -webkit-text-fill-color: #94a3b8 !important;
 }
 
+.list-your-brand-page .lyb-hero-form textarea.lyb-form-message {
+  display: block;
+  width: 100%;
+  min-height: 5rem;
+  max-height: 7.5rem;
+  padding: 0.625rem 0.75rem;
+  line-height: 1.5;
+  resize: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+
+.list-your-brand-page .lyb-hero-form textarea.lyb-form-message::-webkit-scrollbar {
+  width: 4px;
+}
+
+.list-your-brand-page .lyb-hero-form textarea.lyb-form-message::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}
+
+.list-your-brand-page .lyb-hero-form textarea.lyb-form-message:focus {
+  outline: none;
+  border-color: #c4b5fd !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12) !important;
+}
+
 .list-your-brand-page .lyb-hero-form input:-webkit-autofill,
 .list-your-brand-page .lyb-hero-form select:-webkit-autofill,
 .list-your-brand-page .lyb-hero-form textarea:-webkit-autofill {
@@ -6356,6 +6393,12 @@ html[data-theme='light'] .list-your-brand-page .lyb-form-select-chevron {
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior: contain;
+}
+
+/* Hero - viewport-locked section (desktop + mobile) */
+.list-your-brand-page .lyb-hero-section--locked {
+  min-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
 }
 
 @media (min-width: 1024px) {
@@ -7770,7 +7813,350 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
   min-height: 0;
 }
 
-/* ═══ Franchise details — hero story + gallery split ═══ */
+/* ═══ Franchise details — desktop hero banner + gallery ═══ */
+.franchise-details-page .fd-desktop-hero-banner {
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  padding: 2rem 2.25rem;
+  box-shadow: 0 10px 28px rgba(109, 40, 217, 0.35);
+}
+
+.franchise-details-page .fd-desktop-hero-banner__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 520px);
+  gap: 2rem;
+  align-items: start;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__badge {
+  display: inline-flex;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #7c3aed;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__title {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: clamp(1.875rem, 3.6vw, 2.625rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__identity {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.875rem;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+  width: min(100%, 440px);
+  margin: 0.875rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.625rem;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+  color: #4c1d95;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-card--wide {
+  grid-column: 1 / -1;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-card--wide .fd-desktop-hero-banner__stat-label {
+  white-space: normal;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: #7c3aed;
+  stroke: currentColor;
+  opacity: 0.95;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__stat-label {
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #312e81;
+  white-space: nowrap;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: fit-content;
+  min-width: 4.5rem;
+  max-width: min(15rem, 42vw);
+  height: 4.5rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+.franchise-details-page .fd-desktop-hero-banner__logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(13.5rem, 40vw);
+  max-height: 3.25rem;
+  object-fit: contain;
+  object-position: center;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__card {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.125rem 1.75rem 1rem;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  min-width: 0;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__card-title {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__list {
+  margin: 0;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__label {
+  margin: 0;
+  flex: 0 0 auto;
+  color: #64748b;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__value {
+  margin: 0;
+  flex: 0 1 auto;
+  min-width: 0;
+  text-align: right;
+  color: #0f172a;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__cta {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+  padding: 0.6875rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.franchise-details-page .fd-desktop-hero-banner__cta:hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+}
+
+.franchise-details-page .fd-desktop-hero-banner__cta:active {
+  transform: scale(0.99);
+}
+
+.franchise-details-page .fd-desktop-hero-gallery {
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.franchise-whatsapp-fab-wrap {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10000;
+  width: 56px;
+  height: 56px;
+  animation: franchise-whatsapp-fab-bob 2.6s ease-in-out infinite;
+}
+
+.franchise-whatsapp-fab__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: rgba(37, 211, 102, 0.42);
+  pointer-events: none;
+  animation: franchise-whatsapp-fab-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.franchise-whatsapp-fab__pulse--delayed {
+  animation-delay: 1.2s;
+}
+
+.franchise-whatsapp-fab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.32);
+  transition: box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.franchise-whatsapp-fab__icon {
+  width: 1.625rem;
+  height: 1.625rem;
+  flex-shrink: 0;
+  animation: franchise-whatsapp-fab-icon-live 2.2s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+.franchise-whatsapp-fab-wrap:hover {
+  animation-play-state: paused;
+}
+
+.franchise-whatsapp-fab-wrap:hover .franchise-whatsapp-fab__pulse {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+.franchise-whatsapp-fab-wrap:hover .franchise-whatsapp-fab__icon {
+  animation-play-state: paused;
+  transform: scale(1.12);
+}
+
+.franchise-whatsapp-fab:hover {
+  box-shadow: 0 10px 26px rgba(37, 211, 102, 0.42);
+  filter: brightness(1.05);
+  color: #ffffff;
+}
+
+.franchise-whatsapp-fab:active .franchise-whatsapp-fab__icon {
+  transform: scale(0.94);
+}
+
+@keyframes franchise-whatsapp-fab-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes franchise-whatsapp-fab-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  75%,
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+@keyframes franchise-whatsapp-fab-icon-live {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.08);
+  }
+  65% {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .franchise-whatsapp-fab-wrap,
+  .franchise-whatsapp-fab__pulse,
+  .franchise-whatsapp-fab__icon {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .franchise-whatsapp-fab-wrap {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1280px) {
+  .franchise-details-page .fd-desktop-hero-banner__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(480px, 560px);
+    gap: 2.5rem;
+  }
+
+  .franchise-details-page .fd-desktop-hero-banner__card {
+    padding: 1.25rem 2rem 1.125rem;
+  }
+
+  .franchise-details-page .fd-desktop-hero-banner__row {
+    gap: 2.5rem;
+  }
+}
+
+/* ═══ Franchise details — hero story + gallery split (legacy) ═══ */
 html[data-theme='light'] .franchise-details-page .fd-hero-split {
   background: #ffffff !important;
   border-color: #e2e8f0 !important;
@@ -7879,8 +8265,8 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-b
 
   .franchise-details-page .fd-sticky-inquiry-form {
     position: sticky;
-    top: calc(4rem + var(--fd-brand-header-height, 4.75rem) + 0.75rem);
-    max-height: calc(100vh - 4rem - var(--fd-brand-header-height, 4.75rem) - 1.25rem);
+    top: calc(4rem + 0.75rem);
+    max-height: calc(100vh - 4rem - 1.25rem);
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -7927,16 +8313,145 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-b
   }
 
   .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal__fields {
-    max-height: calc(100vh - 4rem - var(--fd-brand-header-height, 4.75rem) - 12rem);
+    max-height: calc(100vh - 4rem - 12rem);
   }
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal {
-  border-color: rgba(226, 232, 240, 0.95) !important;
-  background: #ffffff !important;
-  box-shadow:
-    0 12px 32px rgba(15, 23, 42, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.bg-white {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__kicker {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__title-text,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal legend.franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .fd-copy {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-desc,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__subtitle,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .text-slate-400,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .text-slate-600 {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__input,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__input::placeholder,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-btn--selected {
+  background: rgba(124, 58, 237, 0.28) !important;
+  border-color: rgba(167, 139, 250, 0.55) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  border-radius: 1rem;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__card-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__value,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__title {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__label {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__row {
+  border-bottom-color: rgba(139, 92, 246, 0.18) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__stat-card {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  border-radius: 0.75rem;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__stat-label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__stat-icon {
+  color: #c4b5fd !important;
+  stroke: #c4b5fd !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__badge {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  color: #e9d5ff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__cta.btn-purple-solid {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  background-image: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.28) !important;
+  text-decoration: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__cta.btn-purple-solid span,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__cta.btn-purple-solid svg {
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-desktop-hero-banner__cta.btn-purple-solid:hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+  background-image: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+  box-shadow: 0 6px 18px rgba(109, 40, 217, 0.34) !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-header-bar .fd-brand-header-title,
@@ -8535,24 +9050,34 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-investment-overview__label,
-html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-eligibility-desc {
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section.bg-white .fd-partnership-desc {
   color: rgba(255, 255, 255, 0.88) !important;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.88) !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item {
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-item {
   background: rgba(255, 255, 255, 0.06) !important;
   border-color: rgba(167, 139, 250, 0.28) !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item .bg-emerald-100 {
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-item__icon {
   background: rgba(16, 185, 129, 0.22) !important;
   color: #6ee7b7 !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .fd-eligibility-item .bg-emerald-100 svg {
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-item__icon svg {
   color: #6ee7b7 !important;
   stroke: #6ee7b7 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-item__title {
+  color: #f8fafc !important;
+  -webkit-text-fill-color: #f8fafc !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-item__body {
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.82) !important;
 }
 
 /* Inline text links — underline only, no pill box */
@@ -8808,6 +9333,17 @@ html[data-theme='light'] #main-content .franchise-details-page .fd-copy {
   color: #000000 !important;
 }
 
+html[data-theme='light'] .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-card,
+html[data-theme='light'] #main-content .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-card,
+html[data-theme='light'] .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-label,
+html[data-theme='light'] #main-content .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-label,
+html[data-theme='light'] .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-icon,
+html[data-theme='light'] #main-content .franchise-details-page .fd-desktop-hero-banner .fd-desktop-hero-banner__stat-icon {
+  color: #312e81 !important;
+  -webkit-text-fill-color: #312e81 !important;
+  stroke: #7c3aed !important;
+}
+
 html[data-theme='dark'] #main-content .franchise-details-page .fd-copy {
   color: #ffffff !important;
 }
@@ -8832,28 +9368,32 @@ html[data-theme='light'] .franchise-details-page .btn-purple-solid:hover,
   background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
 }
 
-/* Dark mode — bright purple solid CTAs with clear contrast on dark surfaces */
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta),
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta) span,
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta) svg {
+/* Dark mode — purple solid CTAs with clear contrast on dark surfaces */
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):not(.fd-desktop-hero-banner__cta):not(.fd-mobile-hero__cta) {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 48%, #6d28d9 100%) !important;
-  background-image: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 48%, #6d28d9 100%) !important;
-  border: 1px solid rgba(196, 181, 253, 0.55) !important;
-  box-shadow:
-    0 4px 22px rgba(124, 58, 237, 0.55),
-    0 0 0 1px rgba(139, 92, 246, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  background-image: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.3) !important;
+  text-decoration: none !important;
 }
 
-html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):hover {
-  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 48%, #7c3aed 100%) !important;
-  background-image: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 48%, #7c3aed 100%) !important;
-  border-color: rgba(221, 214, 254, 0.7) !important;
-  box-shadow:
-    0 8px 32px rgba(124, 58, 237, 0.72),
-    0 0 0 1px rgba(196, 181, 253, 0.42) !important;
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):not(.fd-desktop-hero-banner__cta):not(.fd-mobile-hero__cta) span,
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):not(.fd-desktop-hero-banner__cta):not(.fd-mobile-hero__cta) svg {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active):not(.fd-brand-header-cta):not(.fd-desktop-hero-banner__cta):not(.fd-mobile-hero__cta):hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+  background-image: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%) !important;
+  box-shadow: 0 6px 20px rgba(109, 40, 217, 0.38) !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .btn-purple-solid:not(.fd-tab-btn--active) svg {
@@ -10177,4 +10717,236 @@ html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry
 
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .fd-copy {
   color: #0f172a !important;
+}
+
+/* Desktop sticky enquiry — dark About-style card (overrides light island above) */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.bg-white {
+  background: linear-gradient(145deg, #1a0f3d 0%, #140a2e 55%, #100820 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__kicker {
+  color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title-text,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface legend.franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .fd-copy {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__subtitle,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-desc,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .text-slate-400,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .text-slate-600 {
+  color: rgba(255, 255, 255, 0.78) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.78) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input::placeholder,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected {
+  background: rgba(124, 58, 237, 0.28) !important;
+  border-color: rgba(167, 139, 250, 0.55) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal a {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__row {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__country-btn {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-right-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__number {
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__number::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__chevron {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .state-location-fields__state-trigger {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .state-location-fields__state-placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .state-location-fields__chevron {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Sticky form — seamless dark card (header/footer + light-surface input overrides) */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__header {
+  background: transparent !important;
+  border-bottom-color: rgba(167, 139, 250, 0.22) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__header::before {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa, #6d28d9) !important;
+  opacity: 0.85;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__body,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__form-footer,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__actions {
+  background: transparent !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__form-footer {
+  border-top-color: rgba(167, 139, 250, 0.22) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title-text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__label,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface legend.franchise-inquiry-modal__label {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .text-slate-400,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal strong {
+  color: rgba(255, 255, 255, 0.72) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.72) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal a {
+  color: #c4b5fd !important;
+  -webkit-text-fill-color: #c4b5fd !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface input:not([type='hidden']),
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface textarea {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface input:not([type='hidden'])::placeholder,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__row,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal input.phone-input__number {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal .phone-input__country-btn {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-right-color: rgba(167, 139, 250, 0.28) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal input.phone-input__number {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input--modal input.phone-input__number::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .phone-input__error {
+  color: #fca5a5 !important;
+}
+
+/* Partnership + support cards — match About section copy in dark mode */
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-section .fd-section-heading,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-partnership-section .fd-partnership-desc,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-brand-support-compact .fd-heading,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-support-provided-heading {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section .fd-about-summary {
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-about-section .fd-about-summary .font-semibold {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input:-webkit-autofill,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__textarea:-webkit-autofill,
+html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry-form .franchise-inquiry-modal.light-surface input.phone-input__number:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 1000px #1a0f3d inset !important;
+  box-shadow: 0 0 0 1000px #1a0f3d inset !important;
+  caret-color: #ffffff !important;
 }

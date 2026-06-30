@@ -35,13 +35,15 @@ This guide will walk you through deploying the Google Apps Script backend to han
 1. In the Apps Script editor, select the function `setupSheets` from the toolbar dropdown
 2. Click **Run**
 3. Grant permissions when prompted (see Permissions section below)
-4. This will create all sheet tabs with proper headers:
+4. This will create all sheet tabs with proper headers (or add missing columns on existing tabs — **old rows are never deleted**):
    - Contact_Leads
    - Brand_Applications
-   - Job_Applications
    - Chatbot_Brands
    - Chatbot_Investors
    - Chatbot_Strategy
+   - Brochure_Downloads
+   - Franchise_Inquiries
+   - Career_Applications
 
 ## Step 5: Test the Script
 

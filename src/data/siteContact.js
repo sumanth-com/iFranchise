@@ -20,6 +20,13 @@ export const SITE_CONTACT_PHONE_TEL = `+91${SITE_CONTACT_PHONE}`;
 /** WhatsApp chat (India country code, no +) */
 export const SITE_CONTACT_WHATSAPP_URL = `https://wa.me/91${SITE_CONTACT_PHONE}`;
 
+/** Pre-filled WhatsApp link for a specific franchise enquiry. */
+export function buildFranchiseWhatsAppUrl(franchiseName) {
+  const brand = String(franchiseName || 'this franchise').trim();
+  const message = `Hi iFranchise, I'm interested in the ${brand} franchise opportunity. Please share more details.`;
+  return `${SITE_CONTACT_WHATSAPP_URL}?text=${encodeURIComponent(message)}`;
+}
+
 export const SITE_CONTACT_PHONE_DISPLAY = `+91 ${SITE_CONTACT_PHONE.slice(0, 5)} ${SITE_CONTACT_PHONE.slice(5)}`;
 
 export const SITE_CONTACT_MAILTO = `mailto:${SITE_CONTACT_EMAIL}`;

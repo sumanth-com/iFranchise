@@ -239,6 +239,11 @@
   border-radius: inherit;
 }
 
+.assistant-glyph-tile .assistant-bot-icon--fill .assistant-bot-icon__robot {
+  transform: scale(0.92);
+  transform-origin: center center;
+}
+
 .assistant-bot-icon--fill .assistant-bot-icon__frame {
   border-radius: inherit;
   box-shadow: none;

@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LOGO } from '../lib/uiAssets.js';
 import ThemeToggle from './ThemeToggle';
-import { useFranchiseOpportunityNavbarFilters } from '../context/FranchiseOpportunityNavbarFiltersContext';
-import { buildNavbarFranchiseFilterOptions } from '../lib/franchiseNavbarFilters';
 import { navigateTo as spaNavigate } from '../lib/navigation';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { getOpenRoles, HIRING_ACTIVE } from './careersData';
@@ -66,142 +64,8 @@ const mobileMenuFooter = {
   },
 };
 
-const FRANCHISE_NAVBAR_OPTIONS = buildNavbarFranchiseFilterOptions();
-
-function NavbarFilterCheckIcon() {
-  return (
-    <svg className="navbar-filter-check-icon h-3 w-3 shrink-0" viewBox="0 0 12 12" fill="none" aria-hidden>
-      <path
-        d="M2.5 6.2L5 8.7L9.5 3.8"
-        stroke="#ffffff"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function NavbarFilterChevron({ isOpen = false }) {
-  return (
-    <svg
-      className={`navbar-filter-chevron h-4 w-4 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-    >
-      <path
-        d="M6 9l6 6 6-6"
-        stroke="#6d28d9"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function NavbarFranchiseFilterCheckbox({ checked, label, onChange }) {
-  return (
-    <label className="group flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition-all duration-200 hover:border-violet-100/90 hover:bg-violet-50/70">
-      <span
-        className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border-2 transition-all duration-200 ${
-          checked
-            ? 'border-violet-600 bg-violet-600 shadow-[0_2px_8px_rgba(124,58,237,0.35)]'
-            : 'border-slate-300 bg-white group-hover:border-violet-400/80'
-        }`}
-        aria-hidden
-      >
-        {checked && <NavbarFilterCheckIcon />}
-      </span>
-      <span
-        className={`text-[13px] leading-snug transition-colors duration-200 ${
-          checked ? 'font-semibold text-slate-900' : 'font-medium text-slate-700 group-hover:text-slate-900'
-        }`}
-      >
-        {label}
-      </span>
-      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
-    </label>
-  );
-}
-
-function FranchiseFilterSection({ title, children }) {
-  return (
-    <div className="min-h-0">
-      <h4 className="mb-2.5 px-1 text-[11px] font-bold uppercase tracking-[0.1em] text-violet-800">
-        {title}
-      </h4>
-      <div className="space-y-0.5">{children}</div>
-    </div>
-  );
-}
-
-function FranchiseFilterPanelBody({ navFranchiseFilters, embedded = false, compact = false }) {
-  const panelClass = embedded
-    ? 'grid grid-cols-1 gap-5 px-1 py-1'
-    : compact
-      ? 'franchise-filter-scroll grid max-h-[min(360px,calc(100vh-220px))] grid-cols-1 gap-4 overflow-y-auto overscroll-contain px-4 py-4 touch-pan-y'
-      : 'franchise-filter-scroll grid max-h-[min(420px,calc(100vh-220px))] grid-cols-1 gap-6 overflow-y-auto overscroll-contain px-6 py-5 touch-pan-y sm:grid-cols-2 sm:gap-x-8 sm:gap-y-6';
-
-  const scrollHandlers = embedded
-    ? {}
-    : {
-        onWheel: (e) => e.stopPropagation(),
-        onTouchMove: (e) => e.stopPropagation(),
-      };
-
-  return (
-    <div data-lenis-prevent className={panelClass} {...scrollHandlers}>
-      <FranchiseFilterSection title="Brand">
-        {FRANCHISE_NAVBAR_OPTIONS.brands.map((name) => (
-          <NavbarFranchiseFilterCheckbox
-            key={name}
-            label={name}
-            checked={navFranchiseFilters.brands.includes(name)}
-            onChange={() => navFranchiseFilters.toggleBrand(name)}
-          />
-        ))}
-      </FranchiseFilterSection>
-      <FranchiseFilterSection title="Investment range">
-        {FRANCHISE_NAVBAR_OPTIONS.investmentBuckets.map((b) => (
-          <NavbarFranchiseFilterCheckbox
-            key={b.key}
-            label={b.label}
-            checked={navFranchiseFilters.investmentBucketKeys.includes(b.key)}
-            onChange={() => navFranchiseFilters.toggleInvestmentBucket(b.key)}
-          />
-        ))}
-      </FranchiseFilterSection>
-      <FranchiseFilterSection title="Location">
-        {FRANCHISE_NAVBAR_OPTIONS.locations.map((loc) => (
-          <NavbarFranchiseFilterCheckbox
-            key={loc}
-            label={loc}
-            checked={navFranchiseFilters.locations.includes(loc)}
-            onChange={() => navFranchiseFilters.toggleLocation(loc)}
-          />
-        ))}
-      </FranchiseFilterSection>
-      <FranchiseFilterSection title="Franchise model">
-        {FRANCHISE_NAVBAR_OPTIONS.franchiseModels.map((m) => (
-          <NavbarFranchiseFilterCheckbox
-            key={m}
-            label={m}
-            checked={navFranchiseFilters.franchiseModels.includes(m)}
-            onChange={() => navFranchiseFilters.toggleFranchiseModel(m)}
-          />
-        ))}
-      </FranchiseFilterSection>
-    </div>
-  );
-}
-
-const NAV_FRANCHISE_PANEL_CLASS = 'w-[min(440px,calc(100vw-32px))]';
 const NAV_DROPDOWN_PANEL_CLASS =
   'navbar-dropdown-panel rounded-2xl border border-slate-200/60 bg-white shadow-2xl';
-const NAV_SUBMENU_CLASS =
-  'navbar-dropdown-panel min-w-[15.5rem] w-max max-w-[min(18rem,calc(100vw-40px))] max-h-52 overflow-y-auto overflow-x-hidden overscroll-contain rounded-2xl border border-slate-200/60 bg-white p-2.5 shadow-2xl';
 
 const NAV_LINK_BASE =
   'inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-bold transition-all duration-200';
@@ -224,226 +88,6 @@ function NavbarCareersOpenPill({ count, reduceMotion = false }) {
   );
 }
 
-function NavbarFranchiseFilterMenuCheckbox({ checked, label, onChange }) {
-  return (
-    <label className="group flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-violet-50/90">
-      <span
-        className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] border-2 transition-all ${
-          checked
-            ? 'border-violet-600 bg-violet-600 shadow-[0_2px_8px_rgba(124,58,237,0.35)]'
-            : 'border-slate-300 bg-white group-hover:border-violet-400'
-        }`}
-      >
-        {checked && <NavbarFilterCheckIcon />}
-      </span>
-      <span
-        className={`whitespace-nowrap text-xs leading-snug ${
-          checked ? 'font-semibold text-slate-900' : 'text-slate-700'
-        }`}
-      >
-        {label}
-      </span>
-      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
-    </label>
-  );
-}
-
-function NavbarFranchiseFilterColumn({
-  label,
-  count,
-  isOpen,
-  onToggle,
-  children,
-  align = 'start',
-}) {
-  const menuAlignClass = align === 'end' ? 'right-0 left-auto' : 'left-0';
-
-  return (
-    <motion.div className="relative min-w-0 flex-1">
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-label={label}
-        className={`flex w-full flex-col items-center gap-1 rounded-xl border px-2 py-2.5 text-center transition-all duration-200 ${
-          isOpen || count > 0
-            ? 'border-violet-300 bg-violet-50 shadow-sm'
-            : 'border-slate-200 bg-white hover:border-violet-200 hover:bg-violet-50/60'
-        }`}
-      >
-        <span className="flex w-full items-center justify-center gap-1 px-0.5">
-          <span className="text-center text-xs font-semibold leading-tight text-slate-800">{label}</span>
-          <NavbarFilterChevron isOpen={isOpen} />
-        </span>
-        {count > 0 && (
-          <span className="rounded-full bg-violet-600 px-1.5 py-0.5 text-[9px] font-bold leading-none text-white">
-            {count}
-          </span>
-        )}
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.18 }}
-            className={`absolute top-[calc(100%+8px)] z-50 ${menuAlignClass} ${NAV_SUBMENU_CLASS}`}
-            data-lenis-prevent
-            onMouseDown={(e) => e.stopPropagation()}
-            onWheel={(e) => e.stopPropagation()}
-          >
-            {children}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
-function NavbarFranchisePremiumPanel({ navFranchiseFilters, onOpenListings, onClear }) {
-  const [openMenu, setOpenMenu] = useState(null);
-
-  const toggleMenu = (key) => {
-    setOpenMenu((prev) => (prev === key ? null : key));
-  };
-
-  return (
-    <motion.div className={`overflow-visible ${NAV_DROPDOWN_PANEL_CLASS}`}>
-      <div className="border-b border-slate-100 px-4 py-3">
-        <h3 className="text-sm font-semibold text-slate-900">Browse franchises</h3>
-        <p className="mt-0.5 text-xs font-medium text-slate-600">Select filters, then view matching opportunities</p>
-      </div>
-
-      <div className="relative px-3 pb-4 pt-3">
-        <div className="grid grid-cols-4 gap-2">
-          <NavbarFranchiseFilterColumn
-            label="Brand"
-            count={navFranchiseFilters.brands.length}
-            isOpen={openMenu === 'brand'}
-            onToggle={() => toggleMenu('brand')}
-          >
-            {FRANCHISE_NAVBAR_OPTIONS.brands.map((name) => (
-              <NavbarFranchiseFilterMenuCheckbox
-                key={name}
-                label={name}
-                checked={navFranchiseFilters.brands.includes(name)}
-                onChange={() => navFranchiseFilters.toggleBrand(name)}
-              />
-            ))}
-          </NavbarFranchiseFilterColumn>
-
-          <NavbarFranchiseFilterColumn
-            label="Budget"
-            count={navFranchiseFilters.investmentBucketKeys.length}
-            isOpen={openMenu === 'investment'}
-            onToggle={() => toggleMenu('investment')}
-          >
-            {FRANCHISE_NAVBAR_OPTIONS.investmentBuckets.map((b) => (
-              <NavbarFranchiseFilterMenuCheckbox
-                key={b.key}
-                label={b.label}
-                checked={navFranchiseFilters.investmentBucketKeys.includes(b.key)}
-                onChange={() => navFranchiseFilters.toggleInvestmentBucket(b.key)}
-              />
-            ))}
-          </NavbarFranchiseFilterColumn>
-
-          <NavbarFranchiseFilterColumn
-            label="Location"
-            count={navFranchiseFilters.locations.length}
-            isOpen={openMenu === 'location'}
-            onToggle={() => toggleMenu('location')}
-            align="end"
-          >
-            {FRANCHISE_NAVBAR_OPTIONS.locations.map((loc) => (
-              <NavbarFranchiseFilterMenuCheckbox
-                key={loc}
-                label={loc}
-                checked={navFranchiseFilters.locations.includes(loc)}
-                onChange={() => navFranchiseFilters.toggleLocation(loc)}
-              />
-            ))}
-          </NavbarFranchiseFilterColumn>
-
-          <NavbarFranchiseFilterColumn
-            label="Model"
-            count={navFranchiseFilters.franchiseModels.length}
-            isOpen={openMenu === 'model'}
-            onToggle={() => toggleMenu('model')}
-            align="end"
-          >
-            {FRANCHISE_NAVBAR_OPTIONS.franchiseModels.map((m) => (
-              <NavbarFranchiseFilterMenuCheckbox
-                key={m}
-                label={m}
-                checked={navFranchiseFilters.franchiseModels.includes(m)}
-                onChange={() => navFranchiseFilters.toggleFranchiseModel(m)}
-              />
-            ))}
-          </NavbarFranchiseFilterColumn>
-        </div>
-      </div>
-
-      <FranchiseFilterPanelFooter compact onClear={onClear} onOpenListings={onOpenListings} />
-    </motion.div>
-  );
-}
-
-function FranchiseFilterPanelFooter({ onClear, onOpenListings, compact = false }) {
-  if (compact) {
-    return (
-      <div className="flex items-stretch gap-2 border-t border-slate-100 px-3 py-2.5">
-        <button
-          type="button"
-          onClick={onClear}
-          className="flex flex-1 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800"
-        >
-          Reset
-        </button>
-        <button
-          type="button"
-          onClick={onOpenListings}
-          className="group flex flex-1 items-center justify-center gap-1 rounded-lg bg-violet-600 px-2 py-2 text-xs font-semibold text-white transition-colors hover:bg-violet-700"
-        >
-          View listings
-          <span className="inline-flex transition-transform duration-200 group-hover:translate-x-0.5">
-            <ArrowRightIcon />
-          </span>
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-2.5 border-t border-slate-100 bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-xs leading-relaxed text-slate-600">
-        Combinations narrow results together.
-      </p>
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
-        <button
-          type="button"
-          onClick={onClear}
-          className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-violet-200 hover:bg-violet-50/80 hover:text-violet-800 hover:shadow-md active:scale-[0.98]"
-        >
-          Clear filters
-        </button>
-        <button
-          type="button"
-          onClick={onOpenListings}
-          className="group inline-flex items-center justify-center gap-2 rounded-xl bg-[#0B1220] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(11,18,32,0.25)] transition-all duration-200 hover:bg-[#1a2332] hover:shadow-[0_8px_28px_rgba(124,58,237,0.22)] hover:-translate-y-0.5 active:scale-[0.98]"
-        >
-          Open listings page
-          <span className="inline-flex transition-transform duration-200 group-hover:translate-x-0.5">
-            <ArrowRightIcon />
-          </span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// Premium Icon Components
 function ChevronIcon({ className = '' }) {
   return (
     <svg className={`w-4 h-4 transition-transform duration-200 ${className}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -628,7 +272,6 @@ function NavbarResourcesPanel({ onNavigate }) {
 }
 
 function Navbar() {
-  const navFranchiseFilters = useFranchiseOpportunityNavbarFilters();
   const reduceMotion = usePrefersReducedMotion();
 
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -636,7 +279,6 @@ function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const savedScrollRef = useRef(0);
 
-  const franchiseRef = useRef(null);
   const resourcesRef = useRef(null);
   useEffect(() => {
     function onScroll() {
@@ -699,11 +341,10 @@ function Navbar() {
 
   // Dropdown panels: close when clicking outside (opened via hover on desktop)
   useEffect(() => {
-    if (activeDropdown !== 'franchiseFilters' && activeDropdown !== 'resources') return undefined;
+    if (activeDropdown !== 'resources') return undefined;
 
     const onPointerDown = (e) => {
       const target = e.target;
-      if (franchiseRef.current?.contains(target)) return;
       if (resourcesRef.current?.contains(target)) return;
       setActiveDropdown(null);
     };
@@ -804,51 +445,15 @@ function Navbar() {
             </a>
           </li>
 
-          {/* Franchise Opportunities - hover shows filter panel; click goes to listings */}
-          <li
-            className="relative"
-            ref={franchiseRef}
-            onMouseEnter={() => setActiveDropdown('franchiseFilters')}
-            onMouseLeave={() => setActiveDropdown(null)}
-          >
-            <button
-              type="button"
-              onClick={() => navigateTo('/franchise-opportunities')}
-              className={`${NAV_LINK_BASE} ${
-                activeDropdown === 'franchiseFilters' ? NAV_LINK_ACTIVE : NAV_LINK_IDLE
-              }`}
-              aria-expanded={activeDropdown === 'franchiseFilters'}
-              aria-haspopup="true"
+          {/* Franchise Opportunities */}
+          <li>
+            <a
+              href="/franchise-opportunities"
+              onClick={(e) => { e.preventDefault(); navigateTo('/franchise-opportunities'); }}
+              className={`${NAV_LINK_BASE} ${NAV_LINK_IDLE}`}
             >
               Franchise Opportunities
-              <ChevronIcon className={activeDropdown === 'franchiseFilters' ? 'rotate-180' : ''} />
-            </button>
-
-            <AnimatePresence>
-              {activeDropdown === 'franchiseFilters' && (
-                <motion.div
-                  key="franchise-filter-panel"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="Filter franchise opportunities"
-                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.99 }}
-                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className={`absolute -left-20 top-full z-[10001] mt-2 ${NAV_FRANCHISE_PANEL_CLASS}`}
-                    onMouseDown={(e) => e.stopPropagation()}
-                  >
-                  <NavbarFranchisePremiumPanel
-                    navFranchiseFilters={navFranchiseFilters}
-                    onClear={() => navFranchiseFilters.clearNavbarFilters()}
-                    onOpenListings={() => {
-                      navigateTo('/franchise-opportunities');
-                      setActiveDropdown(null);
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            </a>
           </li>
 
           {/* Resources dropdown */}

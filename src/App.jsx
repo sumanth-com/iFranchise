@@ -46,7 +46,6 @@ const ForBrandOwnersPage      = lazy(() => import('./components/ForBrandOwnersPa
 const FAQPage                 = lazy(() => import('./components/FAQPage'));
 const EcosystemRouter         = lazy(() => import('./components/ecosystem/EcosystemRouter'));
 
-// -- Minimal page-level skeleton -----------------------------------------------
 function PageSkeleton() {
   return (
     <div
@@ -64,6 +63,11 @@ function PageSkeleton() {
   );
 }
 
+/** Site chatbot on all pages except franchise detail (WhatsApp FAB there) and 404. */
+function isExpansionAssistantRoute(pathname) {
+  return pathname !== '/404' && pathname !== '/franchise-details';
+}
+
 function App() {
   const lowPowerDevice = useLowPowerDevice();
   const [pathname, setPathname] = useState(getLogicalPathname);
@@ -72,7 +76,7 @@ function App() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const transitionTimerRef = useRef(null);
 
-  const assistantEligible = pathname !== '/404';
+  const assistantEligible = isExpansionAssistantRoute(pathname);
   const scrolledPastHero = useScrollPastHero(pathname, assistantEligible);
   const [assistantMounted, setAssistantMounted] = useState(false);
   const [showPreFooter, setShowPreFooter] = useState(false);
@@ -85,10 +89,9 @@ function App() {
     let idleId;
     let timeoutId;
     const mount = () => setAssistantMounted(true);
+    timeoutId = window.setTimeout(mount, 320);
     if ('requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(mount, { timeout: 3500 });
-    } else {
-      timeoutId = window.setTimeout(mount, 1500);
+      idleId = window.requestIdleCallback(mount, { timeout: 1200 });
     }
     return () => {
       if (idleId != null) window.cancelIdleCallback(idleId);
@@ -313,6 +316,11 @@ function App() {
     const staticHero = document.getElementById('ifr-static-hero');
     if (!staticHero) return;
     if (pathname !== '/') staticHero.remove();
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.classList.toggle('page-franchise-details', pathname === '/franchise-details');
+    return () => document.body.classList.remove('page-franchise-details');
   }, [pathname]);
 
   useEffect(() => {

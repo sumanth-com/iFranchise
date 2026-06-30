@@ -38,8 +38,82 @@ function ClosedToggle({ onOpen, franchiseName }) {
             aria-label={`Connect with franchise experts about ${franchiseName}`}
             aria-expanded={false}
           >
-            <FiChevronLeft aria-hidden />
+            <FiChevronLeft aria-hidden size={18} strokeWidth={2.75} />
           </button>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function MobileInquiryRail({
+  expanded,
+  franchiseName,
+  onExpand,
+  onCollapse,
+  onOpenForm,
+  whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
+}) {
+  const handleExpand = (e) => {
+    e?.stopPropagation?.();
+    onExpand();
+  };
+
+  return (
+    <div
+      className={`franchise-inquiry-rail franchise-inquiry-rail--mobile-tab${
+        expanded ? ' franchise-inquiry-rail--mobile-tab--expanded' : ' franchise-inquiry-rail--mobile-tab--collapsed'
+      }`}
+      onMouseEnter={!expanded ? handleExpand : undefined}
+    >
+      <aside className="franchise-inquiry-rail__strip" aria-label="Franchise enquiry">
+        <div
+          className={`franchise-inquiry-rail__mobile-unit${
+            expanded ? ' franchise-inquiry-rail__mobile-unit--expanded' : ''
+          }`}
+        >
+          <div className="franchise-inquiry-rail__toggle-wrap">
+            <button
+              type="button"
+              onClick={expanded ? onCollapse : handleExpand}
+              className="franchise-inquiry-rail__toggle"
+              aria-label={
+                expanded
+                  ? `Close enquiry options for ${franchiseName}`
+                  : `Open enquiry options for ${franchiseName}`
+              }
+              aria-expanded={expanded}
+            >
+              {expanded ? (
+                <FiChevronRight aria-hidden size={18} strokeWidth={2.75} />
+              ) : (
+                <FiChevronLeft aria-hidden size={18} strokeWidth={2.75} />
+              )}
+            </button>
+          </div>
+          {expanded ? (
+            <>
+              <button
+                type="button"
+                onClick={onOpenForm}
+                className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--cta franchise-inquiry-rail__chip--mobile-expert"
+                aria-label={`Talk to experts about ${franchiseName}`}
+              >
+                <FiClipboard className="franchise-inquiry-rail__chip-icon" aria-hidden />
+                <span className="franchise-inquiry-rail__chip-label">Talk to Experts</span>
+              </button>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--whatsapp franchise-inquiry-rail__chip--mobile-whatsapp"
+                aria-label="Chat on WhatsApp"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <FaWhatsapp aria-hidden />
+              </a>
+            </>
+          ) : null}
         </div>
       </aside>
     </div>
@@ -86,6 +160,7 @@ export default function FranchiseInquiryLauncher({
   onOpenChange,
   hideOnDesktop = false,
   hideSideRail = false,
+  whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
 }) {
   const [phase, setPhase] = useState('closed');
   const [pinned, setPinned] = useState(false);
@@ -132,6 +207,12 @@ export default function FranchiseInquiryLauncher({
     [],
   );
 
+  useEffect(() => {
+    if (hideSideRail && phase === 'rail') {
+      goClosed();
+    }
+  }, [hideSideRail, phase, goClosed]);
+
   const showForm = phase === 'form';
 
   useEffect(() => {
@@ -140,17 +221,21 @@ export default function FranchiseInquiryLauncher({
       document.body.classList.remove('franchise-inquiry-open--blur');
       return undefined;
     }
-    document.body.classList.add('franchise-inquiry-open');
     if (showForm) {
+      document.body.classList.add('franchise-inquiry-open');
       document.body.classList.add('franchise-inquiry-open--blur');
+    } else if (!isCompactSheet) {
+      document.body.classList.add('franchise-inquiry-open');
+      document.body.classList.remove('franchise-inquiry-open--blur');
     } else {
+      document.body.classList.remove('franchise-inquiry-open');
       document.body.classList.remove('franchise-inquiry-open--blur');
     }
     return () => {
       document.body.classList.remove('franchise-inquiry-open');
       document.body.classList.remove('franchise-inquiry-open--blur');
     };
-  }, [phase, showForm]);
+  }, [phase, showForm, isCompactSheet]);
 
   if (!franchise?.id || !franchise?.name) return null;
 
@@ -179,23 +264,31 @@ export default function FranchiseInquiryLauncher({
 
   if (isCompactSheet) {
     const mobileOpen = phase === 'form';
+    const mobileRailExpanded = phase === 'rail';
 
-    const closedToggle = (
-      <div className={className}>
-        <ClosedToggle
-          onOpen={() => {
-            setPhase('form');
-            setPinned(true);
-            notifyOpen(true);
-          }}
-          franchiseName={franchise.name}
-        />
-      </div>
-    );
+    const openForm = () => {
+      setPhase('form');
+      setPinned(true);
+      notifyOpen(true);
+    };
 
     return (
       <>
-        {phase === 'closed' && !hideSideRail ? createPortal(closedToggle, document.body) : null}
+        {(phase === 'closed' || phase === 'rail') && !hideSideRail
+          ? createPortal(
+              <div className={className}>
+                <MobileInquiryRail
+                  expanded={mobileRailExpanded}
+                  franchiseName={franchise.name}
+                  onExpand={goRail}
+                  onCollapse={goClosed}
+                  onOpenForm={openForm}
+                  whatsappUrl={whatsappUrl}
+                />
+              </div>,
+              document.body,
+            )
+          : null}
 
         {mobileOpen
           ? createPortal(
@@ -218,6 +311,7 @@ export default function FranchiseInquiryLauncher({
                     variant="panel"
                     lockScroll
                     showWhatsAppAction
+                    whatsappUrl={whatsappUrl}
                     onClose={goClosed}
                     onUserInput={handleUserInput}
                   />
@@ -277,7 +371,7 @@ export default function FranchiseInquiryLauncher({
                 />
               </div>
 
-              <InquiryRailTab onClose={goClosed} franchiseName={franchise.name} />
+              <InquiryRailTab onClose={goClosed} franchiseName={franchise.name} whatsappUrl={whatsappUrl} />
             </div>,
             document.body,
           )
