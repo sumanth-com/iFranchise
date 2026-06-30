@@ -10679,7 +10679,7 @@ html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry
 
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title,
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__title-text,
-html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-title {
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn:not(.franchise-inquiry-modal__type-btn--selected) .franchise-inquiry-modal__type-title {
   color: #000000 !important;
 }
 
@@ -10689,9 +10689,20 @@ html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__subtitle,
-html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-desc,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn:not(.franchise-inquiry-modal__type-btn--selected) .franchise-inquiry-modal__type-desc,
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__legal {
   color: #64748b !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title,
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
+  color: rgba(255, 255, 255, 0.9) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 html[data-theme='dark'] #main-content .franchise-details-page .franchise-inquiry-modal.light-surface .franchise-inquiry-modal__input,

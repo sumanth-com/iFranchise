@@ -445,11 +445,13 @@
 }
 
 .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title {
-  color: #ffffff;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-desc {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .franchise-inquiry-modal__type-title {

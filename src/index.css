@@ -3761,7 +3761,7 @@ html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill--animated .
 
 .bg-white :is(p, span, li, h3, h4):not([class*='text-[#']):not([class*='text-emerald']):not([class*='text-amber']):not([class*='text-purple']):not([class*='text-violet']):not([class*='text-red']):not([class*='text-white'][class*='bg-']),
 .bg-slate-50 :is(p, span, li):not([class*='text-[#']):not([class*='text-emerald']):not([class*='text-amber']),
-.light-surface :is(p, span, li) {
+.light-surface :is(p, span, li):not(.franchise-inquiry-modal__type-btn--selected *):not(.franchise-inquiry-modal__type-btn--selected) {
   color: #475569;
 }
 
