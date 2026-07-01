@@ -8134,6 +8134,13 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
   }
 }
 
+/* Mobile/tablet: WhatsApp lives in the side inquiry rail — hide duplicate FAB */
+@media (max-width: 1023px) {
+  .franchise-details-page .franchise-whatsapp-fab-wrap {
+    display: none !important;
+  }
+}
+
 @media (max-width: 767px) {
   .franchise-whatsapp-fab-wrap {
     right: max(1rem, env(safe-area-inset-right));
