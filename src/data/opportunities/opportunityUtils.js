@@ -340,26 +340,8 @@ export function formatReturnsDisplay(raw = '') {
   const revenueSharePct = text.match(
     /(\d+(?:\.\d+)?)\s*%\s*(?:revenue\s*share|rev\.?\s*share|margin(?:\s+of\s+the\s+sales)?|of\s*(?:sale|sales))/i,
   );
-  const minGuaranteeInr = text.match(
-    /(?:minimum\s*guarantee|min(?:imum)?\s*guarantee|mg\b)[^₹\d]*₹\s*([\d,]+(?:\.\d+)?)/i,
-  );
-  if (minGuaranteeInr && revenueSharePct && /whichever|higher/i.test(text)) {
-    const inrNum = minGuaranteeInr[1].replace(/,/g, '');
-    const pct = parseFloat(revenueSharePct[1]);
-    const pctLabel = pct % 1 === 0 ? String(Math.round(pct)) : String(pct);
-    const primary = `₹${Number(inrNum).toLocaleString('en-IN')} / Month`;
-    return {
-      display: `${primary} or ${pctLabel}% Revenue Share`,
-      full,
-      structured: {
-        primary,
-        connector: 'or',
-        secondary: `${pctLabel}% Revenue Share`,
-        footnote: '(Whichever Is Higher)',
-      },
-    };
-  }
 
+  // Prefer lakh amounts first — otherwise "₹1.25 Lakhs" is misread as ₹1.25 only.
   const minGuaranteeLakh = text.match(
     /(?:min(?:imum)?\s*guarantee|min\s*guaran)[^₹\d]*₹?\s*(\d+(?:\.\d+)?)\s*(?:lakhs?|lac)/i,
   );
@@ -372,6 +354,26 @@ export function formatReturnsDisplay(raw = '') {
       full,
       structured: {
         primary: `₹${lakhLabel} Lakhs / Month`,
+        connector: 'or',
+        secondary: `${pctLabel}% Revenue Share`,
+        footnote: '(Whichever Is Higher)',
+      },
+    };
+  }
+
+  const minGuaranteeInr = text.match(
+    /(?:minimum\s*guarantee|min(?:imum)?\s*guarantee|mg\b)[^₹\d]*₹\s*([\d,]+(?:\.\d+)?)(?!\s*(?:lakhs?|lac))/i,
+  );
+  if (minGuaranteeInr && revenueSharePct && /whichever|higher/i.test(text)) {
+    const inrNum = minGuaranteeInr[1].replace(/,/g, '');
+    const pct = parseFloat(revenueSharePct[1]);
+    const pctLabel = pct % 1 === 0 ? String(Math.round(pct)) : String(pct);
+    const primary = `₹${Number(inrNum).toLocaleString('en-IN')} / Month`;
+    return {
+      display: `${primary} or ${pctLabel}% Revenue Share`,
+      full,
+      structured: {
+        primary,
         connector: 'or',
         secondary: `${pctLabel}% Revenue Share`,
         footnote: '(Whichever Is Higher)',
