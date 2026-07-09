@@ -10,7 +10,7 @@ const BRAND_SEO_BY_SLUG = {
   odette: {
     title: 'Odette Franchise India | Investment & FICO Model | iFranchise',
     description:
-      'Odette franchise in India from ₹45 Lakhs. Premium womens fashion and lifestyle retail — FICO model, 20% ROI, 40+ stores. Apply on iFranchise.',
+      'Odette franchise in India from ₹45 Lakhs. Premium womens fashion and lifestyle retail — FICO model, 20% ROI, 45+ stores. Apply on iFranchise.',
     keywords:
       'odette franchise, odette franchise india, odette franchise cost, odette fashion franchise, women fashion franchise india, FICO franchise retail',
     ogTitle: 'Odette Franchise Opportunity | iFranchise',

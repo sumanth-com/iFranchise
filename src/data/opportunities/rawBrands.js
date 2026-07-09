@@ -18,7 +18,7 @@ export const RAW_BRANDS = [
     shortDescription:
       'Premium women’s fashion and accessories brand offering modern apparel, handbags, footwear, perfumes, and lifestyle collections through omnichannel retail stores across India.',
     brandAbout:
-      'Odette is a fast-growing Indian women’s fashion brand co-founded in 2020, built as a one-stop destination for western wear, ethnic apparel, handbags, footwear, jewellery, perfumes, and lifestyle accessories. The label focuses on trend-led, everyday styles—from dresses and co-ord sets to bags and skin essentials—at accessible price points for modern shoppers. With 40+ stores across malls and high streets in Tier 1 and Tier 2 cities, Odette serves markets including Karnataka, Delhi NCR, Maharashtra, Tamil Nadu, and other key states. Rooted in a Victorian-inspired design sensibility, the brand helps women build complete wardrobes with pieces that feel current, comfortable, and effortlessly wearable. Odette continues to expand nationally, strengthening its reputation as a scalable omnichannel fashion retail brand.',
+      'Odette is a fast-growing Indian women’s fashion brand co-founded in 2020, built as a one-stop destination for western wear, ethnic apparel, handbags, footwear, jewellery, perfumes, and lifestyle accessories. The label focuses on trend-led, everyday styles—from dresses and co-ord sets to bags and skin essentials—at accessible price points for modern shoppers. With 45+ stores across malls and high streets in Tier 1 and Tier 2 cities, Odette serves markets including Karnataka, Delhi NCR, Maharashtra, Tamil Nadu, and other key states. Rooted in a Victorian-inspired design sensibility, the brand helps women build complete wardrobes with pieces that feel current, comfortable, and effortlessly wearable. Odette continues to expand nationally, strengthening its reputation as a scalable omnichannel fashion retail brand.',
     investmentMin: 'Units Franchise- 45L, Master Franchise - 1',
     investmentMax: '',
     investmentDisplay: '₹45 Lakhs onwards',
@@ -28,7 +28,7 @@ export const RAW_BRANDS = [
     locationType: 'malls & high streets',
     roiPercentage: '20% per annum',
     paybackPeriod: '24 - 28 months',
-    totalOutlets: '40+',
+    totalOutlets: '45+',
     franchiseFee: '₹7 Lakhs + GST',
     returns: 'Minimum Guarantee ₹1.25 Lakhs per month or 12% Revenue Share (whichever is higher)',
     targetAreas: 'Tier 1, Tier 2',
