@@ -20,10 +20,10 @@
 }
 
 .franchise-inquiry-modal--drawer {
-  width: min(420px, calc(100vw - 56px));
+  width: min(420px, calc(100% - 56px));
   max-width: 420px;
   height: auto;
-  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   border-radius: 14px 0 0 14px;
   display: flex;
   flex-direction: column;
@@ -35,10 +35,10 @@
 
 @media (min-width: 1024px) {
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-modal--drawer {
-    width: min(440px, calc(100vw - 96px));
+    width: min(440px, calc(100% - 96px));
     max-width: 440px;
     height: auto;
-    max-height: min(720px, calc(100vh - 24px));
+    max-height: min(720px, calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
     flex: 1 1 auto;
     align-self: stretch;
     min-height: 0;
@@ -212,7 +212,7 @@
 }
 
 .franchise-inquiry-modal--compact.franchise-inquiry-modal--drawer {
-  max-height: min(600px, calc(100vh - 32px));
+  max-height: min(600px, calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
   height: auto;
 }
 
@@ -290,24 +290,27 @@
   margin: 0 !important;
   padding: 0 !important;
   border: none;
-  border-radius: 12px;
+  border-radius: 50%;
   color: #fff;
   text-decoration: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #34d399 0%, #25d366 55%, #16a34a 100%);
-  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.28);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: #6d28d9;
+  box-shadow: 0 6px 18px rgba(109, 40, 217, 0.32);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .franchise-inquiry-modal__whatsapp-cta svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.35rem;
+  height: 1.35rem;
   flex-shrink: 0;
+  color: #fff;
+  fill: currentColor;
 }
 
 .franchise-inquiry-modal__whatsapp-cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.34);
+  background: #5b21b6;
+  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.4);
 }
 
 .franchise-inquiry-modal--mobile-actions.franchise-inquiry-modal--compact
@@ -319,7 +322,7 @@
   width: 2.625rem !important;
   min-width: 2.625rem;
   max-width: 2.625rem !important;
-  border-radius: 10px;
+  border-radius: 50%;
 }
 
 @keyframes franchise-inquiry-drawer-in {

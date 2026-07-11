@@ -798,7 +798,7 @@ function getMobileHeroLocation(franchise) {
 function MobileFranchiseHero({
   franchise,
   onRequestInfo,
-  ctaRef,
+  heroRef,
   galleryImages,
   carouselCategory,
   galleryImageFit,
@@ -809,7 +809,7 @@ function MobileFranchiseHero({
   const location = getMobileHeroLocation(franchise);
 
   return (
-    <div className="fd-mobile-hero lg:hidden">
+    <div className="fd-mobile-hero lg:hidden" ref={heroRef}>
       <div className="fd-mobile-hero__banner">
         {franchise.industryBadge || franchise.industry ? (
           <span className="fd-mobile-hero__badge">{franchise.industryBadge || franchise.industry}</span>
@@ -836,7 +836,7 @@ function MobileFranchiseHero({
           hideExpansion
           className="fd-mobile-hero__highlights fd-hero-metrics w-full"
         />
-        <div className="fd-mobile-hero__cta-wrap" ref={ctaRef}>
+        <div className="fd-mobile-hero__cta-wrap">
           <button type="button" onClick={onRequestInfo} className="fd-mobile-hero__cta btn-purple-solid">
             Request Information
           </button>
@@ -918,8 +918,8 @@ function AgreementDetailsContent({ items }) {
 
 function FranchiseDetailsPage() {
   const [inquiryOpen, setInquiryOpen] = useState(false);
-  const [heroCtaInView, setHeroCtaInView] = useState(true);
-  const heroCtaObserverRef = useRef(null);
+  const [heroInView, setHeroInView] = useState(true);
+  const heroObserverRef = useRef(null);
   const [selectedFranchiseId, setSelectedFranchiseId] = useState(getSelectedFranchiseId);
   const selectedFranchise = useMemo(
     () => getFranchiseDetailById(selectedFranchiseId),
@@ -947,28 +947,28 @@ function FranchiseDetailsPage() {
     restoreScrollWithRetry(0);
   }, [selectedFranchiseId]);
 
-  const setHeroCtaRef = useCallback((node) => {
-    heroCtaObserverRef.current?.disconnect();
-    heroCtaObserverRef.current = null;
+  const setHeroRef = useCallback((node) => {
+    heroObserverRef.current?.disconnect();
+    heroObserverRef.current = null;
 
     if (!node) return;
 
-    setHeroCtaInView(true);
+    setHeroInView(true);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setHeroCtaInView(entry.isIntersecting);
+        setHeroInView(entry.isIntersecting);
       },
       { threshold: 0, rootMargin: '0px' },
     );
 
     observer.observe(node);
-    heroCtaObserverRef.current = observer;
+    heroObserverRef.current = observer;
   }, []);
 
   useEffect(
     () => () => {
-      heroCtaObserverRef.current?.disconnect();
+      heroObserverRef.current?.disconnect();
     },
     [],
   );
@@ -1028,7 +1028,7 @@ function FranchiseDetailsPage() {
         open={inquiryOpen}
         onOpenChange={setInquiryOpen}
         hideOnDesktop
-        hideSideRail={heroCtaInView}
+        hideSideRail={heroInView}
         whatsappUrl={buildFranchiseWhatsAppUrl(selectedFranchise.name)}
       />
       <FranchiseWhatsAppFab franchiseName={selectedFranchise.name} />
@@ -1036,7 +1036,7 @@ function FranchiseDetailsPage() {
         <MobileFranchiseHero
           franchise={selectedFranchise}
           onRequestInfo={scrollToInquiryForm}
-          ctaRef={setHeroCtaRef}
+          heroRef={setHeroRef}
           galleryImages={galleryImages}
           carouselCategory={carouselCategory}
           galleryImageFit={galleryImageFit}

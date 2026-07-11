@@ -88,6 +88,15 @@ img {
   image-rendering: auto;
 }
 
+svg {
+  max-width: 100%;
+}
+
+video,
+iframe {
+  max-width: 100%;
+}
+
 /* Fill containers (object-cover cards) — avoid global height:auto override */
 img.h-full,
 img[class*='h-full'],

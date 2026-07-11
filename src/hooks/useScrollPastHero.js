@@ -31,8 +31,8 @@ export function useScrollPastHero(pathname, enabled = true) {
   const [showAssistant, setShowAssistant] = useState(() => {
     if (!enabled) return false;
     if (typeof window === 'undefined') return false;
+    if (pathname === '/list-your-brand') return false;
     if (showsAssistantImmediately(pathname)) return true;
-    if (isMobileViewport() && pathname === '/list-your-brand') return false;
     if (isMobileViewport()) return true;
     return true;
   });
@@ -43,14 +43,7 @@ export function useScrollPastHero(pathname, enabled = true) {
   useEffect(() => {
     if (!enabled || pathname !== '/list-your-brand') return undefined;
 
-    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
-
     const attachObserver = () => {
-      if (!mq.matches) {
-        setShowAssistant(true);
-        return null;
-      }
-
       const hero = document.getElementById(LYB_HERO_ID);
       if (!hero) return null;
 
@@ -64,7 +57,7 @@ export function useScrollPastHero(pathname, enabled = true) {
       const onScroll = () => {
         if (whySection) {
           const { top } = whySection.getBoundingClientRect();
-          setShowAssistant(top < window.innerHeight);
+          setShowAssistant(top < window.innerHeight * 0.85);
         } else {
           updateFromHero();
         }
@@ -83,7 +76,7 @@ export function useScrollPastHero(pathname, enabled = true) {
       if (whySection) {
         const whyObserver = new IntersectionObserver(
           ([entry]) => {
-            setShowAssistant(entry.isIntersecting);
+            setShowAssistant(entry.isIntersecting || entry.boundingClientRect.top < window.innerHeight * 0.85);
           },
           { threshold: 0, rootMargin: '0px' },
         );
@@ -108,13 +101,13 @@ export function useScrollPastHero(pathname, enabled = true) {
     const tryAttach = () => {
       if (detach) return;
       detach = attachObserver();
-      if (!detach && mq.matches && attempts < 50) {
+      if (!detach && attempts < 50) {
         attempts += 1;
         retryId = window.setTimeout(tryAttach, 120);
       }
     };
 
-    if (!detach && mq.matches) {
+    if (!detach) {
       tryAttach();
     }
 
@@ -124,8 +117,9 @@ export function useScrollPastHero(pathname, enabled = true) {
       attempts = 0;
       if (retryId) window.clearTimeout(retryId);
       detach = attachObserver();
-      if (!detach && mq.matches) tryAttach();
+      if (!detach) tryAttach();
     };
+    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
     mq.addEventListener('change', onMqChange);
 
     return () => {

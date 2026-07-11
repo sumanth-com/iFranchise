@@ -251,7 +251,7 @@ const RESOURCES_NAV_ITEMS = [
 
 function NavbarResourcesPanel({ onNavigate }) {
   return (
-    <motion.div className={`${NAV_DROPDOWN_PANEL_CLASS} w-[min(15.5rem,calc(100vw-32px))]`}>
+    <motion.div className={`${NAV_DROPDOWN_PANEL_CLASS} w-[min(15.5rem,calc(100dvw-2rem))]`}>
       <div className="p-2" data-lenis-prevent>
         {RESOURCES_NAV_ITEMS.map((item) => (
           <button

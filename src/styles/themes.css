@@ -6397,8 +6397,8 @@ html[data-theme='light'] .list-your-brand-page .lyb-form-select-chevron {
 
 /* Hero - viewport-locked section (desktop + mobile) */
 .list-your-brand-page .lyb-hero-section--locked {
-  min-height: calc(100vh - 80px);
-  max-height: calc(100vh - 80px);
+  min-height: calc(100dvh - 80px);
+  max-height: calc(100dvh - 80px);
 }
 
 @media (min-width: 1024px) {
@@ -8024,16 +8024,16 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
   right: 24px;
   bottom: 24px;
   z-index: 10000;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   animation: franchise-whatsapp-fab-bob 2.6s ease-in-out infinite;
 }
 
 .franchise-whatsapp-fab__pulse {
   position: absolute;
   inset: 0;
-  border-radius: 16px;
-  background: rgba(37, 211, 102, 0.42);
+  border-radius: 50%;
+  background: rgba(109, 40, 217, 0.38);
   pointer-events: none;
   animation: franchise-whatsapp-fab-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
@@ -8048,21 +8048,23 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   padding: 0;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border-radius: 50%;
+  background: #6d28d9;
   color: #ffffff;
   text-decoration: none;
-  box-shadow: 0 8px 22px rgba(37, 211, 102, 0.32);
-  transition: box-shadow 0.18s ease, filter 0.18s ease;
+  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.36);
+  transition: box-shadow 0.18s ease, filter 0.18s ease, background 0.18s ease;
 }
 
 .franchise-whatsapp-fab__icon {
-  width: 1.625rem;
-  height: 1.625rem;
+  width: 1.5rem;
+  height: 1.5rem;
   flex-shrink: 0;
+  color: #ffffff;
+  fill: currentColor;
   animation: franchise-whatsapp-fab-icon-live 2.2s ease-in-out infinite;
   transform-origin: center center;
 }
@@ -8082,7 +8084,8 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
 }
 
 .franchise-whatsapp-fab:hover {
-  box-shadow: 0 10px 26px rgba(37, 211, 102, 0.42);
+  background: #5b21b6;
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.45);
   filter: brightness(1.05);
   color: #ffffff;
 }
@@ -8131,13 +8134,6 @@ html[data-theme='light'] #main-content .services-audience-copy .site-cta .site-c
   .franchise-whatsapp-fab__pulse,
   .franchise-whatsapp-fab__icon {
     animation: none !important;
-  }
-}
-
-/* Mobile/tablet: WhatsApp lives in the side inquiry rail — hide duplicate FAB */
-@media (max-width: 1023px) {
-  .franchise-details-page .franchise-whatsapp-fab-wrap {
-    display: none !important;
   }
 }
 

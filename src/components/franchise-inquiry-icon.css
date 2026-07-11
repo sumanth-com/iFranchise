@@ -329,18 +329,24 @@ html:not([data-theme='light']) .franchise-inquiry-rail__toggle:hover {
 
 .franchise-inquiry-rail__chip--whatsapp {
   height: 36px;
-  background: #25d366;
+  width: 36px;
+  border-radius: 50%;
+  align-self: center;
+  margin-right: 0;
+  background: #6d28d9;
   color: #fff;
-  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.28);
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.32);
 }
 
 .franchise-inquiry-rail__chip--whatsapp svg {
   width: 20px;
   height: 20px;
+  color: #fff;
+  fill: currentColor;
 }
 
 .franchise-inquiry-rail__chip--whatsapp:hover {
-  background: #20bd5a;
+  background: #5b21b6;
 }
 
 html:not([data-theme='light']) .franchise-inquiry-rail__chip--close {
@@ -390,18 +396,18 @@ html:not([data-theme='light']) .franchise-inquiry-rail__chip--cta {
 
 .franchise-inquiry-dock--form .franchise-inquiry-dock__form,
 .franchise-inquiry-dock--pinned .franchise-inquiry-dock__form {
-  width: min(400px, calc(100vw - 72px));
-  max-width: min(400px, calc(100vw - 72px));
+  width: min(400px, calc(100% - 72px));
+  max-width: min(400px, calc(100% - 72px));
   height: auto;
-  max-height: min(600px, calc(100vh - 32px));
+  max-height: min(600px, calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
   opacity: 1;
   pointer-events: auto;
 }
 
 .franchise-inquiry-dock__form .franchise-inquiry-modal--drawer {
-  width: min(400px, calc(100vw - 72px));
-  max-width: min(400px, calc(100vw - 72px));
-  max-height: min(600px, calc(100vh - 32px));
+  width: min(400px, calc(100% - 72px));
+  max-width: min(400px, calc(100% - 72px));
+  max-height: min(600px, calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
   border-radius: 14px 0 0 14px;
   border: none;
   box-shadow: 0 16px 48px rgba(15, 23, 42, 0.18);
@@ -411,8 +417,8 @@ html:not([data-theme='light']) .franchise-inquiry-rail__chip--cta {
   position: fixed;
   inset: 0;
   z-index: -1;
-  width: 100vw;
-  height: 100dvh;
+  width: 100%;
+  height: 100%;
   border: none;
   padding: 0;
   margin: 0;
@@ -434,6 +440,11 @@ html:not([data-theme='light']) .franchise-inquiry-rail__chip--cta {
   .franchise-inquiry-rail__chip--close,
   .franchise-inquiry-rail__chip--whatsapp {
     height: 38px;
+    width: 38px;
+  }
+
+  .franchise-inquiry-rail__chip--whatsapp {
+    border-radius: 50%;
   }
 
   .franchise-inquiry-rail__chip--cta {
@@ -593,8 +604,8 @@ html:not([data-theme='light']) .franchise-inquiry-rail__toggle:focus-visible {
 .franchise-inquiry-sheet__backdrop {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100dvh;
+  width: 100%;
+  height: 100%;
   border: none;
   padding: 0;
   margin: 0;
@@ -625,7 +636,7 @@ body.franchise-inquiry-open--blur::before {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   margin-right: 0;
   pointer-events: auto;
   animation: franchise-inquiry-sheet-in 300ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -639,7 +650,7 @@ body.franchise-inquiry-open--blur::before {
   .franchise-inquiry-sheet:not(.franchise-inquiry-sheet--mobile) .franchise-inquiry-sheet__inner {
     align-items: stretch;
     height: auto;
-    max-height: min(720px, calc(100vh - 24px));
+    max-height: min(720px, calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)));
     border-radius: 18px 0 0 18px;
     overflow: hidden;
     background: #ffffff;
@@ -763,11 +774,18 @@ body.franchise-inquiry-open--blur .assistant-fab-wrap {
   .franchise-inquiry-rail--mobile-tab {
     position: fixed;
     top: 50%;
-    right: 0;
+    right: max(0px, env(safe-area-inset-right, 0px));
     bottom: auto;
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(0);
     z-index: 10001;
     overflow: visible;
+    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .franchise-inquiry-rail--mobile-tab.franchise-inquiry-rail--hero-hidden {
+    transform: translateY(-50%) translateX(calc(100% + 8px));
+    pointer-events: none;
   }
 
   .franchise-inquiry-rail--closed {
@@ -855,28 +873,31 @@ body.franchise-inquiry-open--blur .assistant-fab-wrap {
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp {
-    width: 100%;
-    height: 40px;
-    margin: 0;
-    border-radius: 0;
-    background: #25d366;
+    width: 36px;
+    height: 36px;
+    margin: 4px auto 0;
+    border-radius: 50%;
+    background: #6d28d9;
     color: #fff;
-    box-shadow: none;
+    box-shadow: 0 2px 10px rgba(109, 40, 217, 0.32);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     transition: background 0.15s ease;
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    fill: currentColor;
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp:hover,
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp:focus-visible {
-    background: #20bd5a;
-    box-shadow: none;
+    background: #5b21b6;
+    box-shadow: 0 2px 10px rgba(109, 40, 217, 0.32);
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert .franchise-inquiry-rail__chip-label {

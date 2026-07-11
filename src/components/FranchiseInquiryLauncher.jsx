@@ -52,7 +52,7 @@ function MobileInquiryRail({
   onExpand,
   onCollapse,
   onOpenForm,
-  whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
+  heroHidden = false,
 }) {
   const handleExpand = (e) => {
     e?.stopPropagation?.();
@@ -63,8 +63,9 @@ function MobileInquiryRail({
     <div
       className={`franchise-inquiry-rail franchise-inquiry-rail--mobile-tab${
         expanded ? ' franchise-inquiry-rail--mobile-tab--expanded' : ' franchise-inquiry-rail--mobile-tab--collapsed'
-      }`}
+      }${heroHidden ? ' franchise-inquiry-rail--hero-hidden' : ''}`}
       onMouseEnter={!expanded ? handleExpand : undefined}
+      aria-hidden={heroHidden || undefined}
     >
       <aside className="franchise-inquiry-rail__strip" aria-label="Franchise enquiry">
         <div
@@ -83,6 +84,7 @@ function MobileInquiryRail({
                   : `Open enquiry options for ${franchiseName}`
               }
               aria-expanded={expanded}
+              tabIndex={heroHidden ? -1 : undefined}
             >
               {expanded ? (
                 <FiChevronRight aria-hidden size={18} strokeWidth={2.75} />
@@ -92,27 +94,16 @@ function MobileInquiryRail({
             </button>
           </div>
           {expanded ? (
-            <>
-              <button
-                type="button"
-                onClick={onOpenForm}
-                className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--cta franchise-inquiry-rail__chip--mobile-expert"
-                aria-label={`Talk to experts about ${franchiseName}`}
-              >
-                <FiClipboard className="franchise-inquiry-rail__chip-icon" aria-hidden />
-                <span className="franchise-inquiry-rail__chip-label">Talk to Experts</span>
-              </button>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--whatsapp franchise-inquiry-rail__chip--mobile-whatsapp"
-                aria-label="Chat on WhatsApp"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <FaWhatsapp aria-hidden />
-              </a>
-            </>
+            <button
+              type="button"
+              onClick={onOpenForm}
+              className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--cta franchise-inquiry-rail__chip--mobile-expert"
+              aria-label={`Talk to experts about ${franchiseName}`}
+              tabIndex={heroHidden ? -1 : undefined}
+            >
+              <FiClipboard className="franchise-inquiry-rail__chip-icon" aria-hidden />
+              <span className="franchise-inquiry-rail__chip-label">Talk to Experts</span>
+            </button>
           ) : null}
         </div>
       </aside>
@@ -162,11 +153,12 @@ export default function FranchiseInquiryLauncher({
   hideSideRail = false,
   whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
 }) {
-  const [phase, setPhase] = useState('closed');
+  const [phase, setPhase] = useState('rail');
   const [pinned, setPinned] = useState(false);
   const leaveTimerRef = useRef(null);
   const isCompactSheet = useCompactInquirySheet();
   const isControlled = typeof controlledOpen === 'boolean' && typeof onOpenChange === 'function';
+  const franchiseKey = franchise?.id || franchise?.name || '';
 
   const notifyOpen = useCallback(
     (isOpen) => {
@@ -195,6 +187,13 @@ export default function FranchiseInquiryLauncher({
   }, [notifyOpen]);
 
   useEffect(() => {
+    if (!franchiseKey) return;
+    clearTimeout(leaveTimerRef.current);
+    setPhase('rail');
+    setPinned(false);
+  }, [franchiseKey]);
+
+  useEffect(() => {
     if (!isControlled || !controlledOpen) return;
     setPhase('form');
     setPinned(true);
@@ -206,12 +205,6 @@ export default function FranchiseInquiryLauncher({
     },
     [],
   );
-
-  useEffect(() => {
-    if (hideSideRail && phase === 'rail') {
-      goClosed();
-    }
-  }, [hideSideRail, phase, goClosed]);
 
   const showForm = phase === 'form';
 
@@ -274,7 +267,7 @@ export default function FranchiseInquiryLauncher({
 
     return (
       <>
-        {(phase === 'closed' || phase === 'rail') && !hideSideRail
+        {phase === 'closed' || phase === 'rail'
           ? createPortal(
               <div className={className}>
                 <MobileInquiryRail
@@ -283,7 +276,7 @@ export default function FranchiseInquiryLauncher({
                   onExpand={goRail}
                   onCollapse={goClosed}
                   onOpenForm={openForm}
-                  whatsappUrl={whatsappUrl}
+                  heroHidden={hideSideRail}
                 />
               </div>,
               document.body,
