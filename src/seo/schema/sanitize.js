@@ -26,7 +26,8 @@ export function sanitizeSchemaNode(node) {
     if (value === undefined || value === null) continue;
 
     if (key === '@type' && Array.isArray(value)) {
-      out[key] = value[0] || 'Thing';
+      const types = value.map((t) => String(t || '').trim()).filter(Boolean);
+      out[key] = types.length > 1 ? types : types[0] || 'Thing';
       continue;
     }
 

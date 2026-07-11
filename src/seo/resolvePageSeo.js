@@ -4,7 +4,7 @@ import { getRoleById, getRoleIdFromPathname } from '../components/careersData';
 import { getLocationPath, parseLocationPathname } from '../data/opportunityLocations.js';
 import { STATIC_PAGE_SEO } from './staticPages';
 import { resolveEcosystemSeo } from './ecosystemSeo.js';
-import { absoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE_PATH } from './config';
+import { absoluteUrl, SITE_NAME, DEFAULT_OG_IMAGE_PATH, DEFAULT_OG_IMAGE_WIDTH, DEFAULT_OG_IMAGE_HEIGHT, DEFAULT_OG_IMAGE_ALT } from './config';
 import { DEFAULT_META_KEYWORDS } from './keywords.js';
 import { formatDescription, formatTitle, normalizeSeoEntry } from './metaUtils.js';
 
@@ -190,6 +190,11 @@ export function resolvePageSeo(logicalPathname, location = {}) {
   const canonicalUrl = absoluteUrl(canonicalPath);
   const ogTitle = entry.ogTitle || entry.title;
   const ogDescription = entry.ogDescription || entry.description;
+  const imageAlt =
+    entry.ogImageAlt ||
+    (logicalPathname === '/franchise-details'
+      ? `${entry.title} — franchise opportunity on iFranchise`
+      : DEFAULT_OG_IMAGE_ALT);
 
   return {
     title: entry.title,
@@ -204,6 +209,9 @@ export function resolvePageSeo(logicalPathname, location = {}) {
       type: ogType,
       url: canonicalUrl,
       image: ogImage,
+      imageWidth: entry.ogImageWidth || DEFAULT_OG_IMAGE_WIDTH,
+      imageHeight: entry.ogImageHeight || DEFAULT_OG_IMAGE_HEIGHT,
+      imageAlt,
       siteName: SITE_NAME,
     },
     twitter: {

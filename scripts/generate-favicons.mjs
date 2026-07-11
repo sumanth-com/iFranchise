@@ -195,21 +195,21 @@ function patchIndexHtml() {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=${v}" />
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png?v=${v}" />
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png?v=${v}" />
-    <link rel="manifest" href="/manifest.webmanifest?v=${v}" />
-    <link rel="manifest" href="/manifest.json?v=${v}" />`;
+    <link rel="manifest" href="/manifest.webmanifest?v=${v}" />`;
 
+  // Replace the entire favicon + manifest block (including any accidental duplicate manifests)
   html = html.replace(
-    /    <!-- Favicons: BrandNav[\s\S]*?(?:<link rel="manifest" href="\/manifest\.json\?v=[^"]+" \/>\s*)?<link rel="manifest" href="\/manifest\.webmanifest\?v=[^"]+" \/>/,
+    /    <!-- Favicons: BrandNav[\s\S]*?<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>(?:\s*<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>)*/,
     faviconBlock,
   );
 
   html = html.replace(
-    /content="https:\/\/www\.ifranchise\.in\/apple-touch-icon\.png\?v=[^"]+"/g,
-    `content="${site}/apple-touch-icon.png?v=${v}"`,
-  );
-  html = html.replace(
     /"url": "https:\/\/www\.ifranchise\.in\/android-chrome-512x512\.png\?v=[^"]+"/,
     `"url": "${site}/android-chrome-512x512.png?v=${v}"`,
+  );
+  html = html.replace(
+    /"image": "https:\/\/www\.ifranchise\.in\/android-chrome-512x512\.png\?v=[^"]+"/,
+    `"image": "${site}/android-chrome-512x512.png?v=${v}"`,
   );
 
   writeFileSync(indexPath, html);

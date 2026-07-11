@@ -130,7 +130,17 @@ const entries = [
   })),
 ];
 
-const urls = entries
+/** Prefer higher priority when the same loc appears more than once. */
+const dedupedByLoc = new Map();
+for (const entry of entries) {
+  const prev = dedupedByLoc.get(entry.loc);
+  if (!prev || Number(entry.priority) > Number(prev.priority)) {
+    dedupedByLoc.set(entry.loc, entry);
+  }
+}
+const uniqueEntries = [...dedupedByLoc.values()];
+
+const urls = uniqueEntries
   .map(
     (entry) => `  <url>
     <loc>${escapeXml(entry.loc)}</loc>
@@ -152,5 +162,5 @@ mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, xml, 'utf8');
 
 console.log(
-  `[seo] Wrote ${entries.length} URLs (${MAIN_PAGES.length} main + ${FRANCHISE_PAGES.length} franchise + ${LOCATION_PAGES.length} location + ${BLOG_PAGES.length} blog + ${CAREER_PAGES.length} careers) to public/sitemap.xml (${siteUrl})`,
+  `[seo] Wrote ${uniqueEntries.length} unique URLs (${entries.length - uniqueEntries.length} duplicates removed) to public/sitemap.xml (${siteUrl})`,
 );

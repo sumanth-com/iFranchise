@@ -20,7 +20,7 @@ export function buildOrganizationSchema() {
   const sameAs = SOCIAL_LINKS.map((link) => link.href).filter(Boolean);
   return {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'ProfessionalService'],
+    '@type': ['Organization', 'ProfessionalService', 'LocalBusiness'],
     '@id': ORG_ID,
     name: ORGANIZATION.name,
     legalName: ORGANIZATION.legalName,
@@ -34,7 +34,13 @@ export function buildOrganizationSchema() {
     email: ORGANIZATION.email,
     telephone: ORGANIZATION.telephone,
     address: ORGANIZATION.address,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 12.9255,
+      longitude: 77.6763,
+    },
     areaServed: { '@type': 'Country', name: 'India' },
+    priceRange: '$$',
     knowsAbout: [
       'Franchise consulting',
       'Franchise investment',
@@ -65,18 +71,7 @@ export function buildWebSiteSchema() {
     url: SITE_URL,
     description: ORGANIZATION.description,
     publisher: { '@id': ORG_ID },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/franchise-opportunities?q={search_term_string}`,
-      },
-      'query-input': {
-        '@type': 'PropertyValueSpecification',
-        valueRequired: true,
-        valueName: 'search_term_string',
-      },
-    },
+    inLanguage: 'en-IN',
   };
 }
 

@@ -20,7 +20,10 @@ export const SITE_TAGLINE = "India's Trusted Franchise Growth Platform";
 
 export { ICON_VERSION };
 
-export const DEFAULT_OG_IMAGE_PATH = `/apple-touch-icon.png?v=${ICON_VERSION}`;
+export const DEFAULT_OG_IMAGE_PATH = `/images/hero/home-hero-1280w.webp`;
+export const DEFAULT_OG_IMAGE_WIDTH = 1280;
+export const DEFAULT_OG_IMAGE_HEIGHT = 720;
+export const DEFAULT_OG_IMAGE_ALT = 'iFranchise — franchise consulting and opportunities across India';
 
 export const TWITTER_HANDLE = '@ifranchise';
 

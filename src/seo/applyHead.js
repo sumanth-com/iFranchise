@@ -1,4 +1,4 @@
-import { TWITTER_HANDLE } from './config.js';
+import { TWITTER_HANDLE, DEFAULT_OG_IMAGE_WIDTH, DEFAULT_OG_IMAGE_HEIGHT, DEFAULT_OG_IMAGE_ALT } from './config.js';
 import { buildSchemaGraphDocument } from './schema/sanitize.js';
 
 const MANAGED = 'data-seo-managed';
@@ -24,6 +24,11 @@ export function applyPageHead(seo, options = {}) {
     setMeta('name', 'theme-color', options.themeColor);
   }
 
+  const verification = typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_SITE_VERIFICATION;
+  if (verification) {
+    setMeta('name', 'google-site-verification', verification);
+  }
+
   setLink('canonical', seo.canonicalUrl);
 
   setMeta('property', 'og:title', seo.og.title);
@@ -31,6 +36,10 @@ export function applyPageHead(seo, options = {}) {
   setMeta('property', 'og:type', seo.og.type);
   setMeta('property', 'og:url', seo.og.url);
   setMeta('property', 'og:image', seo.og.image);
+  setMeta('property', 'og:image:secure_url', seo.og.image);
+  setMeta('property', 'og:image:width', String(seo.og.imageWidth || DEFAULT_OG_IMAGE_WIDTH));
+  setMeta('property', 'og:image:height', String(seo.og.imageHeight || DEFAULT_OG_IMAGE_HEIGHT));
+  setMeta('property', 'og:image:alt', seo.og.imageAlt || DEFAULT_OG_IMAGE_ALT);
   setMeta('property', 'og:site_name', seo.og.siteName);
   setMeta('property', 'og:locale', 'en_IN');
 
@@ -41,6 +50,7 @@ export function applyPageHead(seo, options = {}) {
   setMeta('name', 'twitter:title', seo.twitter.title);
   setMeta('name', 'twitter:description', seo.twitter.description);
   setMeta('name', 'twitter:image', seo.twitter.image);
+  setMeta('name', 'twitter:image:alt', seo.og.imageAlt || DEFAULT_OG_IMAGE_ALT);
 }
 
 /**
