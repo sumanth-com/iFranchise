@@ -81,8 +81,9 @@ function MobileInquiryRail({
               aria-label={
                 expanded
                   ? `Close enquiry options for ${franchiseName}`
-                  : `Open enquiry options for ${franchiseName}`
+                  : `Tap for help — talk to experts about ${franchiseName}`
               }
+              title={expanded ? 'Close' : 'Tap for help'}
               aria-expanded={expanded}
               tabIndex={heroHidden ? -1 : undefined}
             >
@@ -98,11 +99,13 @@ function MobileInquiryRail({
               type="button"
               onClick={onOpenForm}
               className="franchise-inquiry-rail__chip franchise-inquiry-rail__chip--cta franchise-inquiry-rail__chip--mobile-expert"
-              aria-label={`Talk to experts about ${franchiseName}`}
+              aria-label={`Tap to talk to experts about ${franchiseName}`}
               tabIndex={heroHidden ? -1 : undefined}
             >
-              <FiClipboard className="franchise-inquiry-rail__chip-icon" aria-hidden />
               <span className="franchise-inquiry-rail__chip-label">Talk to Experts</span>
+              <span className="franchise-inquiry-rail__tap-cue" aria-hidden>
+                <span className="franchise-inquiry-rail__tap-cue-text">Tap</span>
+              </span>
             </button>
           ) : null}
         </div>

@@ -584,7 +584,10 @@ html:not([data-theme='light']) .franchise-inquiry-rail__toggle:focus-visible {
   .franchise-inquiry-rail--mobile-tab--collapsed .franchise-inquiry-rail__toggle,
   .franchise-inquiry-rail--mobile-tab--collapsed .franchise-inquiry-rail__toggle svg,
   .franchise-inquiry-rail--mobile-tab--collapsed .franchise-inquiry-rail__toggle-wrap::before,
-  .franchise-inquiry-rail--mobile-tab--collapsed .franchise-inquiry-rail__toggle-wrap::after {
+  .franchise-inquiry-rail--mobile-tab--collapsed .franchise-inquiry-rail__toggle-wrap::after,
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert,
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue,
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue::before {
     animation: none !important;
   }
 }
@@ -853,65 +856,181 @@ body.franchise-inquiry-open--blur .assistant-fab-wrap {
     display: inline-flex;
     width: 100%;
     flex-direction: column;
-    gap: 8px;
-    min-height: 112px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    min-height: 132px;
     margin: 0;
-    padding: 10px 5px 12px;
+    padding: 10px 4px 12px;
     border-radius: 0;
     cursor: pointer;
-    background: #6d28d9;
+    background: linear-gradient(180deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%);
     color: #fff;
     box-shadow: none;
-    animation: none;
-    transition: background 0.15s ease;
+    animation: franchise-inquiry-expert-glow 2.6s ease-in-out infinite;
+    transition: background 0.15s ease, filter 0.15s ease;
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert:hover,
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert:focus-visible {
-    background: #5b21b6;
+    background: linear-gradient(180deg, #6d28d9 0%, #5b21b6 55%, #4c1d95 100%);
     box-shadow: none;
+    filter: brightness(1.05);
+    animation-play-state: paused;
   }
 
-  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp {
-    width: 36px;
-    height: 36px;
-    margin: 4px auto 0;
-    border-radius: 50%;
-    background: #6d28d9;
-    color: #fff;
-    box-shadow: 0 2px 10px rgba(109, 40, 217, 0.32);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    transition: background 0.15s ease;
-  }
-
-  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp svg {
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    fill: currentColor;
-  }
-
-  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp:hover,
-  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-whatsapp:focus-visible {
-    background: #5b21b6;
-    box-shadow: 0 2px 10px rgba(109, 40, 217, 0.32);
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert:active {
+    filter: brightness(0.96);
+    transform: translateX(1px);
   }
 
   .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert .franchise-inquiry-rail__chip-label {
     font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.15;
+  }
+
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-top: 0;
+    padding: 0;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+    animation: franchise-inquiry-tap-attention 2.2s ease-in-out infinite;
+  }
+
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    animation: franchise-inquiry-tap-ring 2.2s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue-text {
+    position: relative;
+    z-index: 1;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 8px;
+    font-weight: 800;
     letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: #fff;
+  }
+
+  @keyframes franchise-inquiry-expert-glow {
+    0%,
+    100% {
+      box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+    50% {
+      box-shadow: inset 0 0 14px rgba(255, 255, 255, 0.16);
+    }
+  }
+
+  @keyframes franchise-inquiry-tap-attention {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.16);
+    }
+    50% {
+      transform: scale(1.08);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
+    }
+  }
+
+  @keyframes franchise-inquiry-tap-ring {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.85;
+    }
+    70% {
+      transform: scale(1.45);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.45);
+      opacity: 0;
+    }
+  }
+
+  /* Dark mode: white strip + purple text; Tap stays a round attention pill */
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__mobile-unit {
+    background: #ffffff;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__toggle {
+    background: #ffffff;
+    color: #6d28d9;
+    box-shadow: none;
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__toggle svg {
+    color: #6d28d9;
+    stroke: #6d28d9;
   }
 
   html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert {
-    background: #7c3aed;
+    background: #ffffff;
+    color: #6d28d9;
+    animation: none;
   }
 
   html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert:hover,
   html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert:focus-visible {
+    background: #f5f3ff;
+    filter: none;
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__chip--mobile-expert .franchise-inquiry-rail__chip-label {
+    color: #6d28d9;
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue {
     background: #6d28d9;
+    border: 1px solid rgba(109, 40, 217, 0.9);
+    box-shadow: 0 2px 10px rgba(109, 40, 217, 0.45);
+    animation: franchise-inquiry-tap-attention-dark 2.2s ease-in-out infinite;
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue::before {
+    border-color: rgba(167, 139, 250, 0.75);
+  }
+
+  html:not([data-theme='light']) .franchise-inquiry-rail--mobile-tab--expanded .franchise-inquiry-rail__tap-cue-text {
+    color: #ffffff;
+  }
+
+  @keyframes franchise-inquiry-tap-attention-dark {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow:
+        0 2px 10px rgba(109, 40, 217, 0.4),
+        0 0 0 0 rgba(167, 139, 250, 0.35);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow:
+        0 4px 16px rgba(109, 40, 217, 0.55),
+        0 0 0 4px rgba(167, 139, 250, 0.2);
+    }
   }
 
   .franchise-inquiry-rail--closed:not(.franchise-inquiry-rail--mobile-tab) .franchise-inquiry-rail__toggle {

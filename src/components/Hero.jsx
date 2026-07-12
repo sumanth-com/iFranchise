@@ -1,4 +1,4 @@
-﻿import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition } from 'react';
 import { useIsMobileViewport } from '../hooks/useIsMobileViewport';
 import { createPortal } from 'react-dom';
 import Button from './Button';
@@ -1213,7 +1213,7 @@ function FAQAccordionItem({ faq, index }) {
   );
 }
 
-// -- Hero CTA. white pill, purple text (excluded from site-wide violet CTAs) --
+// -- Hero CTA. purple pill, centered label --
 function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
   return (
     <button
@@ -1223,11 +1223,6 @@ function HeroCtaButton({ label, path, className = '', animDelay = '300ms' }) {
       style={{ animationDelay: animDelay }}
     >
       <span className="hero-cta__label">{label}</span>
-      <span className="hero-cta__icon" aria-hidden>
-        <svg className="hero-cta__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5-5 5M6 12h12" />
-        </svg>
-      </span>
     </button>
   );
 }
@@ -1361,7 +1356,7 @@ function Hero() {
     <main className="relative isolate overflow-x-hidden bg-transparent">
       {/* -- HERO SECTION ? cinematic entry -- */}
       <section
-        className={`cinematic-hero relative flex h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden ${
+        className={`cinematic-hero relative flex min-h-[100lvh] w-full flex-col overflow-hidden ${
           isMobileViewport
             ? isLight
               ? 'cinematic-hero--light cinematic-hero--mobile'
@@ -1441,35 +1436,32 @@ function Hero() {
         ) : null}
 
         <div className="hero-cinematic-layout relative z-10 mx-auto flex min-h-0 w-full max-w-[1400px] flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-6 sm:px-6 xl:box-border xl:justify-start xl:px-8 xl:pb-12 xl:pt-[11.75rem]">
-          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,28rem)] xl:mx-0 xl:max-w-[40rem] xl:flex-none xl:items-start xl:justify-start xl:text-left">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,36rem)] xl:mx-0 xl:max-w-[40rem] xl:flex-none xl:items-start xl:justify-start xl:text-left">
             <div
-              className={`hero-cinematic-glass hero-cinematic-copy-stack flex w-full flex-none flex-col items-center justify-start max-md:mx-auto max-md:max-w-[19.75rem] max-xl:mx-auto max-xl:max-w-[26rem] xl:mx-0 xl:max-w-none xl:items-start ${
+              className={`hero-cinematic-glass hero-cinematic-copy-stack flex w-full flex-none flex-col items-center justify-start max-md:mx-auto max-md:max-w-[22.5rem] max-xl:mx-auto max-xl:max-w-[34rem] xl:mx-0 xl:max-w-none xl:items-start ${
                 isLight ? 'hero-cinematic-glass--light' : 'hero-cinematic-glass--dark'
               }`}
             >
             <h1
-              className={`${TYPE.heroCinematic} hero-cinematic-title mb-2.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-2 sm:mb-3 xl:mb-2.5 xl:ml-0 xl:mr-0 ${
+              className={`${TYPE.heroCinematic} hero-cinematic-title mb-2.5 max-w-full px-1 font-semibold tracking-tight max-sm:mb-2 sm:mb-3 xl:mb-2.5 xl:ml-0 xl:mr-0 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
-              style={{ letterSpacing: '-0.025em' }}
+              style={{ letterSpacing: '-0.022em' }}
             >
-              India&apos;s Franchise Growth Platform for Brands &amp; Investors
+              <span className="hero-cinematic-title__line">
+                India&apos;s Trusted Franchise Consulting Platform
+              </span>{' '}
+              <span className="hero-cinematic-title__line">
+                for Brand Expansion, Franchise Opportunities &amp; Business Investors
+              </span>
             </h1>
 
             <p
-              className={`${TYPE.heroCinematicLead} hero-cinematic-lead mx-auto mb-2 max-w-[min(100%,28rem)] font-medium max-sm:max-w-[18.5rem] sm:max-w-[34rem] xl:mx-0 xl:mb-2 xl:max-w-none ${
+              className={`${TYPE.heroCinematicLead} hero-cinematic-lead mx-auto mb-3.5 max-w-[min(100%,34rem)] font-medium max-sm:max-w-[22rem] sm:max-w-[34rem] sm:mb-4 xl:mx-0 xl:mb-4 xl:max-w-none ${
                 isLight ? 'text-slate-700' : 'text-white'
               }`}
             >
-              Grow your business through franchising or discover verified franchise opportunities across India.
-            </p>
-
-            <p
-              className={`hero-cinematic-body mx-auto mb-3.5 max-w-[min(100%,28rem)] text-[0.875rem] leading-relaxed max-sm:max-w-[18.5rem] sm:max-w-[34rem] sm:text-[0.9375rem] xl:mx-0 xl:mb-4 xl:max-w-none ${
-                isLight ? 'text-slate-600' : 'text-white'
-              }`}
-            >
-              Expert franchise consulting for brand expansion and verified opportunities across India.
+              Grow your business with expert franchise consulting, verified franchise opportunities, investor connections, franchise expansion strategy, and end-to-end business growth services across India.
             </p>
 
             <div className="hero-cinematic-why mx-auto mb-4 hidden w-full max-w-[min(100%,28rem)] text-left max-sm:max-w-[18.5rem] sm:max-w-[34rem] xl:mx-0 xl:mb-5 xl:block xl:max-w-none">
@@ -1503,17 +1495,17 @@ function Hero() {
               </ul>
             </div>
 
-            <div className="hero-cta-row mx-auto mt-0.5 flex w-full max-w-[900px] shrink-0 flex-col items-stretch justify-center gap-2.5 px-0 max-md:mt-2 max-md:max-w-[19.75rem] max-md:gap-2 sm:mt-1 max-xl:mx-auto max-xl:max-w-[26rem] xl:mx-0 xl:mt-0 xl:max-w-none xl:flex-row xl:flex-wrap xl:justify-start xl:gap-3 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 2xl:max-w-[36rem] 2xl:gap-5">
+            <div className="hero-cta-row mx-auto mt-3 flex w-full shrink-0 flex-col items-stretch justify-center gap-2.5 px-0 max-md:mt-3 max-md:gap-2.5 sm:mt-3 max-xl:mx-auto xl:mx-0 xl:mt-0 xl:max-w-none xl:flex-row xl:flex-wrap xl:justify-start xl:gap-3 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 2xl:max-w-[36rem] 2xl:gap-5">
               <HeroCtaButton
                 label="Explore Franchise Opportunities"
                 path="/franchise-opportunities"
-                className="min-w-0 xl:w-full"
+                className="w-full min-w-0"
                 animDelay="220ms"
               />
               <HeroCtaButton
                 label="Expand Your Brand"
                 path="/list-your-brand"
-                className="min-w-0 xl:w-full"
+                className="w-full min-w-0"
                 animDelay="300ms"
               />
             </div>

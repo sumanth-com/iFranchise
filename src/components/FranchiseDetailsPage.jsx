@@ -798,7 +798,7 @@ function MobileFranchiseHero({
   const location = getMobileHeroLocation(franchise);
 
   return (
-    <div className="fd-mobile-hero lg:hidden" ref={heroRef}>
+    <div className="fd-mobile-hero lg:hidden">
       <div className="fd-mobile-hero__banner">
         {franchise.industryBadge || franchise.industry ? (
           <span className="fd-mobile-hero__badge">{franchise.industryBadge || franchise.industry}</span>
@@ -825,7 +825,8 @@ function MobileFranchiseHero({
           hideExpansion
           className="fd-mobile-hero__highlights fd-hero-metrics w-full"
         />
-        <div className="fd-mobile-hero__cta-wrap">
+        {/* Observe only the Request Information CTA — show side arrow once this scrolls away */}
+        <div className="fd-mobile-hero__cta-wrap" ref={heroRef}>
           <button type="button" onClick={onRequestInfo} className="fd-mobile-hero__cta btn-purple-solid">
             Request Information
           </button>
@@ -946,9 +947,14 @@ function FranchiseDetailsPage() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Side arrow shows only after Request Information CTA leaves the viewport
         setHeroInView(entry.isIntersecting);
       },
-      { threshold: 0, rootMargin: '0px' },
+      {
+        threshold: 0,
+        // Hide arrow a bit before CTA fully leaves, show once CTA is clearly gone
+        rootMargin: '-8px 0px -8px 0px',
+      },
     );
 
     observer.observe(node);

@@ -2920,9 +2920,13 @@ html.lenis {
 /* --- Cinematic homepage hero ------------------------------------------------- */
 .cinematic-hero {
   contain: layout style;
-  height: 100dvh;
-  max-height: 100dvh;
+  /* Grow with content; never clip CTAs. Use lvh so the next section cannot peek under mobile browser chrome. */
+  min-height: 100vh;
   min-height: 100dvh;
+  min-height: 100lvh;
+  height: auto;
+  max-height: none;
+  overflow: hidden;
 }
 
 .hero-cinematic-media-wrap {
@@ -2983,7 +2987,7 @@ html.lenis {
   isolation: isolate;
   width: 100%;
   border-radius: 1.5rem;
-  padding: 1.15rem 1.15rem 1.25rem;
+  padding: 1.15rem 1.15rem 1.35rem;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background:
     linear-gradient(
@@ -3095,7 +3099,7 @@ html.lenis {
 
 @media (max-width: 639px) {
   .hero-cinematic-glass {
-    padding: 1rem 0.95rem 1.1rem;
+    padding: 1.1rem 1.15rem 1.25rem;
     border-radius: 1.25rem;
   }
 
@@ -3225,13 +3229,13 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
   }
 }
 
-/* Hero primary CTAs - white pill, purple text */
+/* Hero primary CTAs - centered label pills */
 .hero-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
+  gap: 0;
+  padding: 0.6875rem 1.35rem;
   border: none;
   border-radius: 9999px;
   background-color: #ffffff !important;
@@ -3252,6 +3256,7 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
 
 .hero-cta__label {
   color: #6d28d9 !important;
+  text-align: center;
 }
 
 .hero-cta__icon {
