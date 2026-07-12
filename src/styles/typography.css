@@ -190,10 +190,29 @@
   }
 }
 
+@media (min-width: 768px) {
+  .hero-cinematic-title,
+  .type-hero-cinematic {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
+    text-align: left;
+    text-wrap: pretty;
+    font-size: clamp(1.85rem, 2.8vw, 2.45rem);
+    line-height: 1.15;
+  }
+
+  .hero-cinematic-lead,
+  .type-hero-cinematic-lead {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+}
+
 @media (min-width: 1024px) {
   .hero-cinematic-title,
   .type-hero-cinematic {
-    font-size: clamp(2.125rem, 3.25vw, 2.75rem);
+    font-size: clamp(2rem, 2.6vw, 2.55rem);
     line-height: 1.14;
   }
 }
@@ -201,7 +220,7 @@
 @media (min-width: 1280px) {
   .hero-cinematic-title,
   .type-hero-cinematic {
-    font-size: clamp(2.05rem, 2.85vw, 2.65rem);
+    font-size: clamp(2.15rem, 2.5vw, 2.65rem);
     line-height: 1.14;
   }
 
@@ -215,7 +234,7 @@
 @media (min-width: 1536px) {
   .hero-cinematic-title,
   .type-hero-cinematic {
-    font-size: clamp(2.15rem, 2.4vw, 2.75rem);
+    font-size: clamp(2.25rem, 2.3vw, 2.75rem);
   }
 }
 

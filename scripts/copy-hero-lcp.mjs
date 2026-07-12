@@ -4,8 +4,19 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'public', 'hero');
+const ASSETS = join(ROOT, 'src', 'assets');
 
 await mkdir(OUT, { recursive: true });
-await copyFile(join(ROOT, 'src/assets/HomeHero-640w.webp'), join(OUT, 'lcp-dark.webp'));
-await copyFile(join(ROOT, 'src/assets/HomeHero2-640w.webp'), join(OUT, 'lcp-light.webp'));
-console.log('Copied mobile LCP hero images to public/hero/');
+
+const copies = [
+  ['HerodarkM.png', 'lcp-dark-m.png'],
+  ['HerolightM.png', 'lcp-light-m.png'],
+  ['HerodarkD.png', 'lcp-dark-d.png'],
+  ['HerolightD.png', 'lcp-light-d.png'],
+];
+
+for (const [src, dest] of copies) {
+  await copyFile(join(ASSETS, src), join(OUT, dest));
+}
+
+console.log('Copied mobile + desktop LCP hero images to public/hero/');

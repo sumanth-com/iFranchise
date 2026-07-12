@@ -6,14 +6,13 @@ import {
   cardHoverHandlers,
   serviceIconStyle,
   sectionTitleClass,
-  sectionSubtitleClass,
   cardTitleClass,
   cardBodyClass,
   cardListClass,
 } from '../lib/cardThemeStyles';
 
 const SERVICE_ICONS = {
-  onboarding: (
+  development: (
     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.7} aria-hidden>
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
     </svg>
@@ -87,24 +86,20 @@ export default function OurServicesSection({
       <div className="mb-10 text-center sm:mb-14">
         <SectionPill className="mb-5">Our Services</SectionPill>
         <h2 className={sectionTitleClass(isLight)}>
-          Complete Franchise Growth &amp; Expansion Services
+          Everything You Need to Build and Grow a Franchise
         </h2>
-        <p className={sectionSubtitleClass(isLight)}>
-          End-to-end franchise services — from strategy and documentation to investor onboarding and brand positioning.
-        </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
         {OUR_SERVICES_ITEMS.map((s, i) => (
           <div
             key={s.title}
             id={s.anchorId}
-            className={`group relative overflow-hidden rounded-2xl flex flex-col theme-light-card ${s.anchorId ? 'scroll-mt-28' : ''}`}
+            className={`group relative overflow-hidden rounded-2xl theme-light-card ${s.anchorId ? 'scroll-mt-28' : ''}`}
             style={getCardBaseStyle(isLight, {
               opacity: 0,
               transform: 'translateY(24px)',
               animation: `cardReveal 0.45s cubic-bezier(0.22,1,0.36,1) ${i * 0.07 + 0.1}s forwards`,
-              minHeight: '260px',
             })}
             {...cardHoverHandlers(isLight, -6)}
           >
@@ -119,9 +114,9 @@ export default function OurServicesSection({
                 transition: 'transform 0.7s ease',
               }}
             />
-            <div className="relative z-10 p-7 flex flex-col h-full">
+            <div className="relative z-10 p-5 sm:p-6">
               <div
-                className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl"
+                className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl"
                 style={{
                   ...serviceIconStyle(isLight),
                   transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.3s ease, box-shadow 0.3s ease',
@@ -134,15 +129,17 @@ export default function OurServicesSection({
               <h3 className={`text-[1rem] font-bold mb-2 leading-snug tracking-[-0.01em] ${cardTitleClass(isLight)}`}>
                 {s.title}
               </h3>
-              <p className={`text-[0.78rem] leading-relaxed mb-5 ${cardBodyClass(isLight)}`}>{s.desc}</p>
-              <ul className="space-y-2 flex-1 mt-auto">
-                {s.points.map((p) => (
-                  <li key={p} className={`flex items-center gap-2.5 text-[0.76rem] font-medium leading-snug ${cardListClass(isLight)}`}>
-                    <span className="flex-shrink-0 w-1 h-1 rounded-full bg-violet-400/60" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
+              <p className={`text-[0.875rem] leading-relaxed ${cardBodyClass(isLight)}`}>{s.desc}</p>
+              {s.points?.length ? (
+                <ul className="mt-5 space-y-2 flex-1">
+                  {s.points.map((p) => (
+                    <li key={p} className={`flex items-center gap-2.5 text-[0.76rem] font-medium leading-snug ${cardListClass(isLight)}`}>
+                      <span className="flex-shrink-0 w-1 h-1 rounded-full bg-violet-400/60" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
           </div>
         ))}

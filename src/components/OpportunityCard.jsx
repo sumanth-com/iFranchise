@@ -2,25 +2,13 @@ import { navigateTo } from '@/lib/navigation';
 import { getFranchiseDetailPath } from '@/lib/franchisePaths';
 import { unsplashSrcSet } from '@/lib/unsplashResponsive';
 
-function getModelPill(model) {
-  if (model === 'FOCO') {
-    return { label: 'Fully Managed', variant: 'passive' };
-  }
-  if (model === 'FOFO') {
-    return { label: 'Owner-Op', variant: 'owner' };
-  }
-  if (model === 'FICO') {
-    return { label: 'On Demand', variant: 'hybrid' };
-  }
-  return { label: 'Managed', variant: 'hybrid' };
-}
-
 export default function OpportunityCard({ opportunity }) {
   const handleViewDetails = () => {
     navigateTo(getFranchiseDetailPath(opportunity));
   };
 
-  const modelPill = getModelPill(opportunity.model);
+  const seoPill = opportunity.seoLabel || 'Franchise Opportunity';
+  const metricPill = opportunity.paybackPill || 'Payback On Request';
   const brandBg = opportunity.cardBackground || '#12082a';
   const brandAccent = opportunity.cardAccent || brandBg;
   const cardFit = opportunity.cardFit || 'fill';
@@ -92,23 +80,18 @@ export default function OpportunityCard({ opportunity }) {
           </div>
           <div className="fo-card-meta__row flex items-start text-sm">
             <svg className="fo-card-meta__icon mr-2 mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            <span className="fo-card-meta__label shrink-0">Locations:</span>
-            <span className="fo-card-meta__value ml-2 min-h-[2.5rem] flex-1 font-semibold leading-snug line-clamp-2">
-              {opportunity.locations}
+            <span className="fo-card-meta__label shrink-0">Returns:</span>
+            <span className="fo-card-meta__value ml-2 min-h-0 flex-1 font-semibold leading-snug line-clamp-2">
+              {opportunity.returns || 'On request'}
             </span>
           </div>
         </div>
 
         <div className="fo-card-pills mb-4 flex min-h-[1.75rem] flex-wrap items-center gap-2">
-          <span className={`fo-card-pill fo-card-pill--${modelPill.variant}`}>
-            {modelPill.label}
-          </span>
-          <span className="fo-card-pill fo-card-pill--roi">
-            {opportunity.roi} ROI
-          </span>
+          <span className="fo-card-pill fo-card-pill--hybrid">{seoPill}</span>
+          <span className="fo-card-pill fo-card-pill--roi">{metricPill}</span>
         </div>
 
         <button

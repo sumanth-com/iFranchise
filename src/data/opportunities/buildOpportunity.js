@@ -27,6 +27,7 @@ import {
 import { getBrandImages } from './brandImages.js';
 import { getBrochureUrlByFranchiseSlug } from './brochurePdfs.js';
 import { resolveBrandSeo } from './brandSeo.js';
+import { formatPaybackPill, getCardSeoLabel } from './cardHighlights.js';
 import { getBrandGoogleReviews } from './brandGoogleReviews.js';
 import {
   flattenLocationLabels,
@@ -274,6 +275,10 @@ export function buildOpportunityRecord(raw, id) {
       raw.locationType,
       displayCities,
     );
+  const returnsDisplay = formatReturnsDisplay(raw.returns).display;
+  const paybackLabel = cleanText(raw.paybackPeriod) || (paybackMonths ? `${paybackMonths} months` : 'On request');
+  const paybackPill = formatPaybackPill(paybackLabel);
+  const seoLabel = getCardSeoLabel(slug, industry);
   const badge = deriveBadge({
     roi: roiValue,
     paybackMonths,
@@ -304,6 +309,10 @@ export function buildOpportunityRecord(raw, id) {
     model,
     models,
     locations,
+    returns: returnsDisplay,
+    payback: paybackLabel,
+    paybackPill,
+    seoLabel,
     cities: groupedCities.length ? groupedCities : cities.length ? cities : namedCities,
     roi,
     roiValue,
@@ -328,7 +337,6 @@ export function buildOpportunityRecord(raw, id) {
       .toLowerCase(),
   };
 
-  const paybackLabel = cleanText(raw.paybackPeriod) || (paybackMonths ? `${paybackMonths} months` : 'On request');
   const outlets = formatOutletsDisplay(raw.totalOutlets) || 'Growing network';
   const googleReviews = getBrandGoogleReviews(slug);
 

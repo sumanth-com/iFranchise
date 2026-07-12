@@ -65,9 +65,9 @@
     </script>
     <link
       rel="preload"
-      href="/hero/lcp-dark.webp"
+      href="/hero/lcp-dark-d.png"
       as="image"
-      type="image/webp"
+      type="image/png"
       fetchpriority="high"
       id="ifr-hero-preload"
     />
@@ -75,9 +75,14 @@
       (function () {
         var p = location.pathname;
         if (p !== '/' && p !== '') return;
-        if (window.__IFR_THEME__ === 'light') {
-          var link = document.getElementById('ifr-hero-preload');
-          if (link) link.href = '/hero/lcp-light.webp';
+        var link = document.getElementById('ifr-hero-preload');
+        if (!link) return;
+        var light = window.__IFR_THEME__ === 'light';
+        var mobile = window.matchMedia('(max-width: 767px)').matches;
+        if (mobile) {
+          link.href = light ? '/hero/lcp-light-m.png' : '/hero/lcp-dark-m.png';
+        } else {
+          link.href = light ? '/hero/lcp-light-d.png' : '/hero/lcp-dark-d.png';
         }
       })();
     </script>
@@ -244,12 +249,33 @@
       #main-content .hero-cinematic-content {
         min-height: 17rem;
       }
-      @media (min-width: 640px) {
+      @media (min-width: 768px) {
         #main-content .hero-cinematic-layout {
-          padding-top: 4rem;
+          padding-top: calc(5rem + 5.75rem);
+          padding-left: 2rem;
+          padding-right: 2rem;
         }
         #main-content .hero-cinematic-content {
-          min-height: 14rem;
+          min-height: 0;
+          max-width: 38rem;
+          margin-left: 0;
+          margin-right: auto;
+          align-items: flex-start;
+          text-align: left;
+        }
+      }
+      @media (min-width: 1280px) {
+        #main-content .hero-cinematic-layout {
+          padding-top: calc(4rem + 7.75rem);
+          padding-left: 2rem;
+          padding-right: 2rem;
+          max-width: 1400px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        }
+        #main-content .hero-cinematic-content {
+          max-width: 40rem;
         }
       }
     </style>
@@ -344,17 +370,24 @@
       data-route="home"
     >
       <div class="hero-cinematic-media-wrap" id="ifr-static-hero-media">
-        <img
-          id="ifr-static-hero-img"
-          class="hero-static-img"
-          src="/hero/lcp-dark.webp"
-          alt=""
-          width="640"
-          height="427"
-          decoding="sync"
-          fetchpriority="high"
-          loading="eager"
-        />
+        <picture>
+          <source
+            id="ifr-static-hero-src-m"
+            media="(max-width: 767px)"
+            srcset="/hero/lcp-dark-m.png"
+          />
+          <img
+            id="ifr-static-hero-img"
+            class="hero-static-img"
+            src="/hero/lcp-dark-d.png"
+            alt=""
+            width="1536"
+            height="1024"
+            decoding="sync"
+            fetchpriority="high"
+            loading="eager"
+          />
+        </picture>
       </div>
     </div>
     <script>
@@ -369,7 +402,11 @@
         var light = document.documentElement.getAttribute('data-theme') === 'light';
         el.className = 'cinematic-hero ' + (light ? 'cinematic-hero--light' : 'cinematic-hero--dark');
         var img = document.getElementById('ifr-static-hero-img');
-        if (img && light) img.src = '/hero/lcp-light.webp';
+        var srcM = document.getElementById('ifr-static-hero-src-m');
+        if (light) {
+          if (img) img.src = '/hero/lcp-light-d.png';
+          if (srcM) srcM.srcset = '/hero/lcp-light-m.png';
+        }
       })();
     </script>
     <div id="root"></div>

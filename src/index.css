@@ -2977,22 +2977,236 @@ html.lenis {
   color: #6d28d9;
 }
 
+/* Hero glass panel + benefit pills ------------------------------------------- */
+.hero-cinematic-glass {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  border-radius: 1.5rem;
+  padding: 1.15rem 1.15rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.06) 48%,
+      rgba(124, 58, 237, 0.08) 100%
+    );
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+  backdrop-filter: blur(18px) saturate(1.35);
+  box-shadow:
+    0 18px 50px rgba(10, 6, 24, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hero-cinematic-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 12% 0%,
+    rgba(255, 255, 255, 0.22) 0%,
+    transparent 55%
+  );
+  z-index: 0;
+}
+
+.hero-cinematic-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-cinematic-glass--light {
+  border-color: rgba(109, 40, 217, 0.14);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(248, 250, 252, 0.58) 55%,
+      rgba(237, 233, 254, 0.5) 100%
+    );
+  box-shadow:
+    0 16px 40px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.hero-cinematic-glass--dark .hero-cinematic-title,
+.hero-cinematic-glass--dark .hero-cinematic-lead,
+.hero-cinematic-glass--dark .hero-cinematic-body,
+.hero-cinematic-glass--dark .hero-cinematic-why > p {
+  text-shadow: none;
+}
+
+.hero-benefit-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  padding: 0.45rem 0.85rem 0.45rem 0.65rem;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #6d28d9;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  box-shadow:
+    0 4px 14px rgba(109, 40, 217, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease;
+}
+
+.hero-benefit-pill__icon {
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: #7c3aed;
+}
+
+.hero-benefit-pill:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 20px rgba(109, 40, 217, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+}
+
+@media (min-width: 640px) {
+  .hero-cinematic-glass {
+    padding: 1.35rem 1.5rem 1.5rem;
+    border-radius: 1.75rem;
+  }
+
+  .hero-benefit-pill {
+    font-size: 0.8125rem;
+    padding: 0.5rem 0.95rem 0.5rem 0.7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-cinematic-glass {
+    padding: 1.5rem 1.65rem 1.65rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-cinematic-glass {
+    padding: 1rem 0.95rem 1.1rem;
+    border-radius: 1.25rem;
+  }
+
+  .hero-benefit-pill {
+    font-size: 0.6875rem;
+    padding: 0.4rem 0.7rem 0.4rem 0.55rem;
+  }
+}
+
+/* Soften heavy dark-mode text shadows once glass is behind copy */
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-title,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-lead,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-body,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-why,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-why p,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits li,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits span,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits svg {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill {
+  background: #ffffff;
+  color: #6d28d9;
+}
+
 /* Hero CTAs - directly under subtitle */
 .hero-cta-row {
   width: 100%;
   max-width: 36rem;
 }
 
-/* Desktop: CTAs grouped under headline block (not pinned to viewport bottom) */
-@media (min-width: 1280px) {
+/* Desktop: left-aligned copy with clear clearance under fixed navbar */
+@media (min-width: 768px) {
+  #main-content .hero-cinematic-layout,
+  .hero-cinematic-layout {
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    /* Clear taller tablet navbar (5rem) + breathing room */
+    padding-top: calc(5rem + 5.75rem + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    box-sizing: border-box;
+  }
+
+  #main-content .hero-cinematic-layout .hero-cinematic-content,
   .hero-cinematic-layout .hero-cinematic-content {
     flex: none;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+    text-align: left;
+    width: min(100%, 38rem);
+    max-width: 38rem;
+    margin-left: 0;
+    margin-right: auto;
+    padding-top: 0;
+    min-height: 0;
+  }
+
+  .hero-cinematic-layout .hero-cinematic-copy-stack {
+    align-items: flex-start;
+  }
+
+  .hero-cinematic-layout .hero-cinematic-title,
+  .hero-cinematic-layout .hero-cinematic-lead,
+  .hero-cinematic-layout .hero-cinematic-body {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
   }
 
   .hero-cinematic-layout .hero-cta-row {
-    margin-top: 0.25rem;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1280px) {
+  #main-content .hero-cinematic-layout,
+  .hero-cinematic-layout {
+    /* navbar is 4rem on xl+ — clear it, then sit copy a bit lower */
+    justify-content: flex-start;
+    padding-top: calc(4rem + 7.75rem + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 2.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  #main-content .hero-cinematic-layout .hero-cinematic-content,
+  .hero-cinematic-layout .hero-cinematic-content {
+    width: min(100%, 40rem);
+    max-width: 40rem;
+  }
+
+  .hero-cinematic-layout .hero-cinematic-copy-stack {
+    align-items: flex-start;
+  }
+
+  .hero-cinematic-layout .hero-cta-row {
+    margin-top: 0.75rem;
     max-width: 36rem;
+    justify-content: flex-start;
   }
 
   .hero-cinematic-layout .hero-cta-row .hero-cta {
@@ -3000,10 +3214,8 @@ html.lenis {
     min-height: 2.5rem;
     padding: 0.625rem 1.125rem;
     justify-content: center;
-    border: 1px solid rgba(109, 40, 217, 0.1);
-    box-shadow:
-      0 4px 18px rgba(0, 0, 0, 0.18),
-      0 0 0 1px rgba(255, 255, 255, 0.65) inset;
+    border: none;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
   }
 
   .hero-cinematic-layout .hero-cta-row .hero-cta__label {
@@ -3031,8 +3243,13 @@ html.lenis {
 
   html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-lead {
     color: rgba(255, 255, 255, 0.94) !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-body,
+  html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-why {
+    color: rgba(255, 255, 255, 0.9) !important;
   }
 }
 

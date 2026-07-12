@@ -4,13 +4,6 @@ import { HOME_INVESTMENT_CARDS } from '../../data/ecosystem/investmentPages';
 import { getCardBaseStyle, cardHoverHandlers, sectionTitleClass, sectionSubtitleClass } from '../../lib/cardThemeStyles';
 import { useTheme } from '../../context/ThemeContext';
 
-const INVESTMENT_PILLS = [
-  ['Entry Level', 'Lean Formats'],
-  ['Growth Ready', 'Proven Systems'],
-  ['Mid-Scale', 'Multi-Unit'],
-  ['Premium', 'Master Franchise'],
-];
-
 function getCardPurple(isLight) {
   return isLight ? '#7c3aed' : '#c4b5fd';
 }
@@ -23,17 +16,18 @@ export default function HomeBrowseInvestmentSection() {
     <section className="section-reveal relative w-full overflow-hidden bg-transparent">
       <div className="relative z-10 mx-auto max-w-[1280px] px-5 py-14 sm:px-6 lg:px-8">
         <div className="reveal-child mb-10 text-center">
-          <SectionPill className="mb-4">Investment</SectionPill>
-          <h2 className={sectionTitleClass(isLight, { tight: true })}>Browse By Investment</h2>
+          <SectionPill className="mb-4">Explore By Investment</SectionPill>
+          <h2 className={sectionTitleClass(isLight, { tight: true })}>
+            Find a Franchise That Matches Your Budget
+          </h2>
           <p className={sectionSubtitleClass(isLight, 'max-w-xl')}>
-            Find franchise opportunities aligned with your capital allocation and growth objectives.
+            Explore franchise opportunities based on the amount you&apos;re planning to invest.
           </p>
         </div>
 
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {HOME_INVESTMENT_CARDS.map((card, i) => {
             const accent = getCardPurple(isLight);
-            const pills = INVESTMENT_PILLS[i];
             const handleView = () => navigateTo(card.path);
 
             return (
@@ -51,25 +45,9 @@ export default function HomeBrowseInvestmentSection() {
                   {card.label}
                 </span>
 
-                <p className={`mt-2 line-clamp-2 flex-1 text-sm leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
+                <p className={`mt-2 line-clamp-3 flex-1 text-sm leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-300/90'}`}>
                   {card.description}
                 </p>
-
-                <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                  {pills.map((label) => (
-                    <span
-                      key={label}
-                      className="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold"
-                      style={{
-                        background: `color-mix(in srgb, ${accent} 14%, transparent)`,
-                        border: `1px solid color-mix(in srgb, ${accent} 30%, transparent)`,
-                        color: accent,
-                      }}
-                    >
-                      {label}
-                    </span>
-                  ))}
-                </div>
 
                 <button
                   type="button"

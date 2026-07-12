@@ -284,10 +284,26 @@ export const INVESTMENT_PAGES = {
 };
 
 export const HOME_INVESTMENT_CARDS = [
-  { label: '₹10L–₹15L', path: '/investment-under-25-lakhs', description: 'Lean formats and first-time investor entry points' },
-  { label: '₹25L–₹50L', path: '/investment-under-50-lakhs', description: 'Growth-ready brands with proven systems' },
-  { label: '₹50L–₹1Cr', path: '/investment-under-1-crore', description: 'Mid-scale flagship and multi-unit potential' },
-  { label: '₹1Cr+', path: '/premium-franchise-opportunities', description: 'Premium and master franchise opportunities' },
+  {
+    label: 'Under ₹15 Lakhs',
+    path: '/investment-under-25-lakhs',
+    description: 'Ideal for first-time franchise investors.',
+  },
+  {
+    label: 'Under ₹50 Lakhs',
+    path: '/investment-under-50-lakhs',
+    description: 'Established franchise opportunities for growing businesses.',
+  },
+  {
+    label: 'Under ₹1 Crore',
+    path: '/investment-under-1-crore',
+    description: 'Premium businesses with long-term growth potential.',
+  },
+  {
+    label: 'Above ₹1 Crore',
+    path: '/premium-franchise-opportunities',
+    description: 'Large-format franchise opportunities for experienced investors.',
+  },
 ];
 
 export function getInvestmentPageByPath(pathname) {
