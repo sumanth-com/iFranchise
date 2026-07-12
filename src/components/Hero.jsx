@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition } from 'react';
+﻿import { useEffect, useLayoutEffect, useRef, useState, useCallback, lazy, Suspense, startTransition } from 'react';
 import { useIsMobileViewport } from '../hooks/useIsMobileViewport';
 import { createPortal } from 'react-dom';
 import Button from './Button';
@@ -9,6 +9,7 @@ import PremiumFAQItem from './ui/PremiumFAQItem';
 import { preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
 import { removeStaticHero } from '../lib/removeStaticHero.js';
 import { HOME_HERO_DARK, HOME_HERO_LIGHT, HERO_MOBILE_MQ } from '../lib/heroAssets.js';
+import HeroNationwidePins from './HeroNationwidePins';
 import { submitContactForm } from '../lib/forms';
 import { isContactFormReady } from '@/lib/contactForm';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
@@ -24,7 +25,7 @@ import { HOME_PAGE_FAQS } from '../data/faqContent.js';
 import ResponsiveImg from './ui/ResponsiveImg.jsx';
 import {
   FiUserCheck, FiBookOpen, FiUserPlus, FiTarget, FiMap, FiCompass,
-  FiCheck, FiArrowRight,
+  FiCheck, FiArrowRight, FiGlobe,
 } from 'react-icons/fi';
 import { 
   franchiseOpportunities, 
@@ -1056,7 +1057,7 @@ function ContactSection() {
                     : 'bg-white/20 text-white/45 shadow-none'
                 }`}
               >
-                {isSubmitting ? 'Submittingâ€¦' : 'Submit'}
+                {isSubmitting ? 'Submitting...' : 'Submit'}
               </button>
               {submitError && (
                 <p className="text-center text-sm text-red-300" role="alert">
@@ -1292,7 +1293,7 @@ function Hero() {
     };
   }, [isMobileViewport]);
 
-  // Section reveal â€” attach after below-fold sections mount
+  // Section reveal — attach after below-fold sections mount
   useEffect(() => {
     if (!belowFoldReady) return undefined;
 
@@ -1418,6 +1419,7 @@ function Hero() {
             </div>
           ) : null}
         </div>
+        <HeroNationwidePins isLight={isLight} />
         <div
           className={`hero-cinematic-media-shadow pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-48 ${
             isLight ? 'hero-cinematic-media-shadow--light' : ''
@@ -1509,6 +1511,19 @@ function Hero() {
                 animDelay="300ms"
               />
             </div>
+            </div>
+
+            <div
+              className={`hero-card-rule mx-auto mt-5 hidden w-full max-w-[min(100%,36rem)] items-center gap-3 md:flex max-xl:max-w-[34rem] xl:mx-0 xl:max-w-none ${
+                isLight ? 'hero-card-rule--light' : 'hero-card-rule--dark'
+              }`}
+              aria-hidden
+            >
+              <span className="hero-card-rule__line" />
+              <span className="hero-card-rule__icon">
+                <FiGlobe aria-hidden />
+              </span>
+              <span className="hero-card-rule__line" />
             </div>
           </div>
         </div>
@@ -1814,7 +1829,7 @@ function Hero() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {[
                 { label: '100+ franchise brands', color: '#a78bfa' },
-                { label: 'â‚¹800Cr+ ecosystem influenced', color: '#34d399' },
+                { label: 'Rs.800Cr+ ecosystem influenced', color: '#34d399' },
                 { label: '72% investor preference', color: '#60a5fa' },
                 { label: '30% CAGR aligned', color: '#fb923c' },
               ].map((item) => (

@@ -596,12 +596,28 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-cta:hover .h
 html[data-theme='dark'] #main-content .cinematic-hero--dark .text-white,
 html[data-theme='dark'] #main-content .cinematic-hero--dark h1,
 html[data-theme='dark'] #main-content .cinematic-hero--dark p,
+html[data-theme='dark'] #main-content .cinematic-hero--dark li,
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-pill-text {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-accent {
   color: #c084fc !important;
+  -webkit-text-fill-color: #c084fc !important;
+}
+
+/* Dark hero CTAs: white pill + purple label (beat any white-text fills) */
+html[data-theme='dark'] #main-content .cinematic-hero--dark button.hero-cta,
+html[data-theme='dark'] #main-content .cinematic-hero--dark button.hero-cta .hero-cta__label,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass button.hero-cta,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass button.hero-cta .hero-cta__label {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
 }
 
 /* --- Premium cards ----------------------------------------------------------- */
@@ -10961,4 +10977,15 @@ html[data-theme='dark'] #main-content .franchise-details-page .fd-sticky-inquiry
   -webkit-box-shadow: 0 0 0 1000px #1a0f3d inset !important;
   box-shadow: 0 0 0 1000px #1a0f3d inset !important;
   caret-color: #ffffff !important;
+}
+
+/* Home hero dark — final CTA contrast (white pill, purple label) */
+html[data-theme='dark'] #main-content .cinematic-hero--dark button.hero-cta,
+html[data-theme='dark'] #main-content .cinematic-hero--dark button.hero-cta .hero-cta__label {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
 }

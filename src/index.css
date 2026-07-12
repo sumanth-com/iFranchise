@@ -2953,6 +2953,320 @@ html.lenis {
     radial-gradient(ellipse 55% 35% at 50% 55%, transparent 40%, rgba(15, 23, 42, 0.06) 100%);
 }
 
+/* Divider under left hero glass card: —— globe —— */
+.hero-card-rule {
+  flex: none;
+}
+
+.hero-card-rule__line {
+  flex: 1 1 0;
+  height: 1.5px;
+  min-width: 0;
+  border-radius: 9999px;
+}
+
+.hero-card-rule--dark .hero-card-rule__line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 12%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.35) 88%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+.hero-card-rule--light .hero-card-rule__line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(124, 58, 237, 0.28) 18%,
+    rgba(109, 40, 217, 0.55) 50%,
+    rgba(124, 58, 237, 0.28) 82%,
+    transparent 100%
+  );
+}
+
+.hero-card-rule__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+}
+
+.hero-card-rule__icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.hero-card-rule--dark .hero-card-rule__icon {
+  color: #6d28d9 !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow:
+    0 0 0 1px rgba(167, 139, 250, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(196, 181, 253, 0.45);
+}
+
+.hero-card-rule--dark .hero-card-rule__icon svg {
+  color: #6d28d9 !important;
+  stroke: #6d28d9 !important;
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-card-rule--dark .hero-card-rule__line {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.65) 8%,
+    #ffffff 50%,
+    rgba(255, 255, 255, 0.65) 92%,
+    transparent 100%
+  ) !important;
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.55),
+    0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-card-rule--dark .hero-card-rule__icon {
+  color: #6d28d9 !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 1) !important;
+  box-shadow:
+    0 0 0 1px rgba(196, 181, 253, 0.5),
+    0 4px 18px rgba(0, 0, 0, 0.4),
+    0 0 22px rgba(255, 255, 255, 0.35);
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-card-rule--dark .hero-card-rule__icon svg {
+  color: #6d28d9 !important;
+  stroke: #6d28d9 !important;
+}
+
+.hero-card-rule--light .hero-card-rule__icon {
+  color: #ffffff;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  border: 1px solid rgba(109, 40, 217, 0.85);
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.28);
+}
+
+/* Desktop-only nationwide pins over the hero globe (above the shop) */
+.hero-nation-pins {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .hero-nation-pins {
+    display: block;
+  }
+
+  .hero-nation-pins__stage {
+    position: absolute;
+    top: clamp(7.75rem, 17vh, 11rem);
+    right: clamp(9rem, 18vw, 16rem);
+    width: min(32vw, 380px);
+    height: min(34vh, 300px);
+    max-width: 380px;
+  }
+
+  .hero-nation-pins__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .hero-nation-pins__line {
+    fill: none;
+    stroke: url(#hero-nation-line-grad);
+    stroke-width: 0.4;
+    stroke-linecap: round;
+    filter: url(#hero-nation-glow);
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+    animation: hero-nation-line-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+      hero-nation-line-flow 3.6s linear 1.4s infinite;
+  }
+
+  .hero-nation-pins--dark .hero-nation-pins__line {
+    stroke: rgba(255, 255, 255, 0.92);
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.75))
+      drop-shadow(0 0 6px rgba(196, 181, 253, 0.55));
+  }
+
+  .hero-nation-pins--light .hero-nation-pins__line {
+    stroke: rgba(109, 40, 217, 0.72);
+    opacity: 0.9;
+  }
+
+  .hero-nation-pins__city {
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: hero-nation-pin-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hero-nation-pins__label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.05rem 0.28rem;
+    border-radius: 9999px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.15;
+    white-space: nowrap;
+    color: #ffffff;
+    background: #6d28d9;
+    border: 1px solid rgba(109, 40, 217, 0.9);
+    box-shadow: 0 1px 6px rgba(109, 40, 217, 0.28);
+  }
+
+  .hero-nation-pins--dark .hero-nation-pins__label {
+    color: #6d28d9;
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.22);
+  }
+
+  .hero-nation-pins__float {
+    position: absolute;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: #ffffff;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%);
+    border: 1px solid rgba(109, 40, 217, 0.85);
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.32);
+    opacity: 0;
+    animation:
+      hero-nation-float-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+      hero-nation-float-bob 4.2s ease-in-out 0.8s infinite;
+  }
+
+  .hero-nation-pins--dark .hero-nation-pins__float {
+    color: #6d28d9;
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow:
+      0 6px 22px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(109, 40, 217, 0.12) inset;
+  }
+
+  .hero-nation-pins--light .hero-nation-pins__float {
+    color: #ffffff;
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 55%, #5b21b6 100%);
+    border-color: rgba(109, 40, 217, 0.85);
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.32);
+  }
+
+  .hero-nation-pins__float--top {
+    top: clamp(5.5rem, 12vh, 8rem);
+    right: clamp(14rem, 28vw, 26rem);
+  }
+
+  .hero-nation-pins__float--top-mid {
+    top: clamp(5.25rem, 11.5vh, 7.75rem);
+    right: clamp(7.5rem, 16vw, 15rem);
+  }
+
+  .hero-nation-pins__float--top-right {
+    top: clamp(8rem, 18vh, 12rem);
+    right: clamp(2rem, 5vw, 5rem);
+  }
+
+  .hero-nation-pins__float--right {
+    top: clamp(16rem, 38vh, 24rem);
+    right: clamp(1.25rem, 3.5vw, 3.5rem);
+  }
+
+  .hero-nation-pins__float--bottom-right {
+    top: clamp(24rem, 54vh, 34rem);
+    right: clamp(5rem, 12vw, 12rem);
+  }
+}
+
+@keyframes hero-nation-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes hero-nation-line-flow {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+@keyframes hero-nation-pin-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes hero-nation-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-nation-float-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-nation-pins__line,
+  .hero-nation-pins__city,
+  .hero-nation-pins__float {
+    animation: none !important;
+  }
+
+  .hero-nation-pins__line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+
+  .hero-nation-pins__city,
+  .hero-nation-pins__float {
+    opacity: 1;
+  }
+}
+
 /* Hero copy - sit slightly above vertical center (desktop only) */
 .hero-cinematic-content {
   transform: translateY(0);
@@ -3037,6 +3351,30 @@ html.lenis {
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
+/* Dark glass: deeper purple so white copy stays readable */
+.hero-cinematic-glass--dark {
+  border-color: rgba(255, 255, 255, 0.28);
+  background:
+    linear-gradient(
+      155deg,
+      rgba(46, 16, 101, 0.78) 0%,
+      rgba(76, 29, 149, 0.72) 42%,
+      rgba(91, 33, 182, 0.68) 100%
+    );
+  box-shadow:
+    0 22px 56px rgba(10, 6, 24, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hero-cinematic-glass--dark::before {
+  background: radial-gradient(
+    120% 80% at 12% 0%,
+    rgba(255, 255, 255, 0.14) 0%,
+    transparent 55%
+  );
+}
+
 .hero-cinematic-glass--dark .hero-cinematic-title,
 .hero-cinematic-glass--dark .hero-cinematic-lead,
 .hero-cinematic-glass--dark .hero-cinematic-body,
@@ -3109,8 +3447,9 @@ html.lenis {
   }
 }
 
-/* Soften heavy dark-mode text shadows once glass is behind copy */
+/* Dark glass copy: solid white (exclude CTA pills — those stay purple labels) */
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-title,
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-title span,
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-lead,
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-body,
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-why,
@@ -3120,6 +3459,27 @@ html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glas
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits span,
 html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits svg {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cinematic-benefits li {
+  font-weight: 500;
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cta {
+  background-color: #ffffff !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-cinematic-glass .hero-cta__label {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+  opacity: 1 !important;
   text-shadow: none !important;
 }
 
