@@ -249,19 +249,19 @@
       #main-content .hero-cinematic-content {
         min-height: 17rem;
       }
-      @media (min-width: 768px) {
+      @media (min-width: 768px) and (max-width: 1279px) {
         #main-content .hero-cinematic-layout {
-          padding-top: calc(5rem + 5.75rem);
-          padding-left: 2rem;
-          padding-right: 2rem;
+          padding-top: calc(5rem + 2.5rem);
+          padding-left: clamp(1.25rem, 4vw, 2rem);
+          padding-right: clamp(1.25rem, 4vw, 2rem);
         }
         #main-content .hero-cinematic-content {
           min-height: 0;
-          max-width: 38rem;
-          margin-left: 0;
+          max-width: 26rem;
+          margin-left: auto;
           margin-right: auto;
-          align-items: flex-start;
-          text-align: left;
+          align-items: center;
+          text-align: center;
         }
       }
       @media (min-width: 1280px) {
@@ -275,7 +275,12 @@
           width: 100%;
         }
         #main-content .hero-cinematic-content {
+          min-height: 0;
           max-width: 40rem;
+          margin-left: 0;
+          margin-right: auto;
+          align-items: flex-start;
+          text-align: left;
         }
       }
     </style>

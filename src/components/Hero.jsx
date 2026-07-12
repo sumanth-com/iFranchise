@@ -1440,15 +1440,15 @@ function Hero() {
           />
         ) : null}
 
-        <div className="hero-cinematic-layout relative z-10 mx-auto flex min-h-0 w-full max-w-[1400px] flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-6 sm:px-6 md:box-border md:justify-start md:px-8 md:pb-10 md:pt-[11.5rem] xl:px-8 xl:pb-12 xl:pt-[11.75rem]">
-          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,52rem)] md:mx-0 md:max-w-[38rem] md:items-start md:justify-start md:text-left xl:max-w-[40rem] xl:flex-none">
+        <div className="hero-cinematic-layout relative z-10 mx-auto flex min-h-0 w-full max-w-[1400px] flex-1 flex-col px-4 pb-6 pt-16 max-sm:pt-[6.5rem] max-sm:pb-6 sm:px-6 xl:box-border xl:justify-start xl:px-8 xl:pb-12 xl:pt-[11.75rem]">
+          <div className="hero-cinematic-content mx-auto flex w-full max-w-[900px] flex-col items-center justify-start text-center max-xl:max-w-[min(100%,28rem)] xl:mx-0 xl:max-w-[40rem] xl:flex-none xl:items-start xl:justify-start xl:text-left">
             <div
-              className={`hero-cinematic-glass hero-cinematic-copy-stack flex w-full flex-none flex-col items-center justify-start max-md:mx-auto max-md:max-w-[19.75rem] md:items-start ${
+              className={`hero-cinematic-glass hero-cinematic-copy-stack flex w-full flex-none flex-col items-center justify-start max-md:mx-auto max-md:max-w-[19.75rem] max-xl:mx-auto max-xl:max-w-[26rem] xl:mx-0 xl:max-w-none xl:items-start ${
                 isLight ? 'hero-cinematic-glass--light' : 'hero-cinematic-glass--dark'
               }`}
             >
             <h1
-              className={`${TYPE.heroCinematic} hero-cinematic-title mb-2.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-2 sm:mb-3 md:mb-2.5 md:ml-0 md:mr-0 ${
+              className={`${TYPE.heroCinematic} hero-cinematic-title mb-2.5 max-w-full px-0.5 font-semibold tracking-tight max-sm:mb-2 sm:mb-3 xl:mb-2.5 xl:ml-0 xl:mr-0 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
               style={{ letterSpacing: '-0.025em' }}
@@ -1457,7 +1457,7 @@ function Hero() {
             </h1>
 
             <p
-              className={`${TYPE.heroCinematicLead} hero-cinematic-lead mx-auto mb-2 max-w-[min(100%,28rem)] font-medium max-sm:max-w-[18.5rem] sm:max-w-[34rem] md:mx-0 md:mb-2 md:max-w-none ${
+              className={`${TYPE.heroCinematicLead} hero-cinematic-lead mx-auto mb-2 max-w-[min(100%,28rem)] font-medium max-sm:max-w-[18.5rem] sm:max-w-[34rem] xl:mx-0 xl:mb-2 xl:max-w-none ${
                 isLight ? 'text-slate-700' : 'text-white'
               }`}
             >
@@ -1465,14 +1465,14 @@ function Hero() {
             </p>
 
             <p
-              className={`hero-cinematic-body mx-auto mb-3.5 max-w-[min(100%,28rem)] text-[0.875rem] leading-relaxed max-sm:max-w-[18.5rem] sm:max-w-[34rem] sm:text-[0.9375rem] md:mx-0 md:mb-4 md:max-w-none ${
+              className={`hero-cinematic-body mx-auto mb-3.5 max-w-[min(100%,28rem)] text-[0.875rem] leading-relaxed max-sm:max-w-[18.5rem] sm:max-w-[34rem] sm:text-[0.9375rem] xl:mx-0 xl:mb-4 xl:max-w-none ${
                 isLight ? 'text-slate-600' : 'text-white'
               }`}
             >
               Expert franchise consulting for brand expansion and verified opportunities across India.
             </p>
 
-            <div className="hero-cinematic-why mx-auto mb-4 hidden w-full max-w-[min(100%,28rem)] text-left max-sm:max-w-[18.5rem] sm:max-w-[34rem] md:mx-0 md:mb-5 md:block md:max-w-none">
+            <div className="hero-cinematic-why mx-auto mb-4 hidden w-full max-w-[min(100%,28rem)] text-left max-sm:max-w-[18.5rem] sm:max-w-[34rem] xl:mx-0 xl:mb-5 xl:block xl:max-w-none">
               <p
                 className={`mb-2.5 text-sm font-semibold tracking-wide sm:text-[0.9375rem] ${
                   isLight ? 'text-slate-900' : 'text-white'
@@ -1503,7 +1503,7 @@ function Hero() {
               </ul>
             </div>
 
-            <div className="hero-cta-row mx-auto mt-0.5 flex w-full max-w-[900px] shrink-0 flex-col items-stretch justify-center gap-2.5 px-0 max-md:mt-2 max-md:max-w-[19.75rem] max-md:gap-2 sm:mt-1 md:mx-0 md:mt-0 md:max-w-none md:flex-row md:flex-wrap md:justify-start md:gap-3 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 2xl:max-w-[36rem] 2xl:gap-5">
+            <div className="hero-cta-row mx-auto mt-0.5 flex w-full max-w-[900px] shrink-0 flex-col items-stretch justify-center gap-2.5 px-0 max-md:mt-2 max-md:max-w-[19.75rem] max-md:gap-2 sm:mt-1 max-xl:mx-auto max-xl:max-w-[26rem] xl:mx-0 xl:mt-0 xl:max-w-none xl:flex-row xl:flex-wrap xl:justify-start xl:gap-3 xl:grid xl:max-w-[34rem] xl:grid-cols-2 xl:gap-4 2xl:max-w-[36rem] 2xl:gap-5">
               <HeroCtaButton
                 label="Explore Franchise Opportunities"
                 path="/franchise-opportunities"
@@ -1585,7 +1585,7 @@ function Hero() {
       <div className="relative w-full overflow-hidden bg-transparent">
 
         {/* -- WHO WE HELP -- */}
-        <div className="relative z-10 mx-auto max-w-[1280px] px-5 sm:px-6 lg:px-8 py-14">
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-14">
           <div className="text-center mb-12">
             <SectionPill className="mb-4">Who We Help</SectionPill>
             <h2 className={sectionTitleClass(isLight, { tight: true })}>
@@ -1596,7 +1596,7 @@ function Hero() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 lg:grid-cols-2">
             {[
               {
                 tag: 'For Brands',
@@ -1639,13 +1639,13 @@ function Hero() {
                 <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.8), transparent)' }} />
 
-                {/* Image ? full card width, natural height */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                {/* Image — contained card media */}
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
                   <ResponsiveImg
                     src={card.img}
                     alt={card.tag}
                     remote
-                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 560px"
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 48vw, 420px"
                     className="block h-full w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                     loading="lazy"
                     decoding="async"
@@ -1866,11 +1866,8 @@ function Hero() {
             }}
           >
             <h2 className="home-faq-section__title section-title text-white mb-4">
-              Helpful Franchise Questions & Answers
+              Frequently Asked Questions
             </h2>
-            <p className="home-faq-section__subtitle text-base text-white/70 leading-relaxed max-w-2xl mx-auto">
-              Everything founders, investors, and franchise buyers need to know before making expansion decisions.
-            </p>
           </div>
 
           {/* FAQ accordion. home page only */}

@@ -3130,8 +3130,8 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
   max-width: 36rem;
 }
 
-/* Desktop: left-aligned copy with clear clearance under fixed navbar */
-@media (min-width: 768px) {
+/* Desktop xl+ only - left-aligned copy (tablets use mobile-responsive.css) */
+@media (min-width: 1280px) {
   #main-content .hero-cinematic-layout,
   .hero-cinematic-layout {
     justify-content: flex-start;
@@ -3140,9 +3140,9 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
-    /* Clear taller tablet navbar (5rem) + breathing room */
-    padding-top: calc(5rem + 5.75rem + env(safe-area-inset-top, 0px)) !important;
-    padding-bottom: 2rem;
+    /* navbar is 4rem on xl+ - clear it, then sit copy a bit lower */
+    padding-top: calc(4rem + 7.75rem + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 2.5rem;
     padding-left: 2rem;
     padding-right: 2rem;
     box-sizing: border-box;
@@ -3155,16 +3155,12 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
     align-items: flex-start;
     align-self: flex-start;
     text-align: left;
-    width: min(100%, 38rem);
-    max-width: 38rem;
+    width: min(100%, 40rem);
+    max-width: 40rem;
     margin-left: 0;
     margin-right: auto;
     padding-top: 0;
     min-height: 0;
-  }
-
-  .hero-cinematic-layout .hero-cinematic-copy-stack {
-    align-items: flex-start;
   }
 
   .hero-cinematic-layout .hero-cinematic-title,
@@ -3173,30 +3169,6 @@ html[data-theme='light'] #main-content .cinematic-hero--light .hero-benefit-pill
     margin-left: 0;
     margin-right: 0;
     text-align: left;
-  }
-
-  .hero-cinematic-layout .hero-cta-row {
-    margin-left: 0;
-    margin-right: 0;
-    justify-content: flex-start;
-  }
-}
-
-@media (min-width: 1280px) {
-  #main-content .hero-cinematic-layout,
-  .hero-cinematic-layout {
-    /* navbar is 4rem on xl+ — clear it, then sit copy a bit lower */
-    justify-content: flex-start;
-    padding-top: calc(4rem + 7.75rem + env(safe-area-inset-top, 0px)) !important;
-    padding-bottom: 2.5rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  #main-content .hero-cinematic-layout .hero-cinematic-content,
-  .hero-cinematic-layout .hero-cinematic-content {
-    width: min(100%, 40rem);
-    max-width: 40rem;
   }
 
   .hero-cinematic-layout .hero-cinematic-copy-stack {

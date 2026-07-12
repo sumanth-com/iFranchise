@@ -72,11 +72,33 @@ export const HOME_FAQS = [
   },
 ];
 
-/** Five FAQs on the home page — overview + top investor questions. */
+/** Home page FAQs — visible accordion + FAQPage schema */
 export const HOME_PAGE_FAQS = [
-  ...IFRANCHISE_OVERVIEW_FAQS,
-  HOME_FAQS[0],
-  HOME_FAQS[1],
+  {
+    question: 'How long does it take to franchise a business?',
+    answer:
+      'Most businesses can be franchise-ready within 3 to 6 months, depending on their business model and documentation.',
+  },
+  {
+    question: 'How do I choose the right franchise?',
+    answer:
+      'We help you evaluate opportunities based on your investment, preferred industry and long-term business goals.',
+  },
+  {
+    question: 'How do I know if my business is ready for franchising?',
+    answer:
+      "Our team evaluates your business and helps you understand whether it's ready to expand through franchising.",
+  },
+  {
+    question: 'What industries does iFranchise work with?',
+    answer:
+      'We work with businesses across fashion, food & beverage, retail, education, wellness, healthcare and many other industries.',
+  },
+  {
+    question: 'Why should I choose iFranchise?',
+    answer:
+      'We combine franchise consulting, franchise development and verified franchise opportunities to help brands expand and investors make informed decisions.',
+  },
 ];
 
 export const CONTACT_FAQS = [

@@ -51,10 +51,9 @@ export const FRANCHISE_MODELS = {
       'FOFO means Franchise Owned, Franchise Operated: you own the unit and run daily operations using the franchisor brand and systems. It suits hands-on entrepreneurs in India who want control, higher margins, and direct customer engagement.',
     relatedPaths: ['/foco-model', '/fico-model', '/franchise-opportunities'],
     homeCard: {
+      nameLine: 'Franchise Owned • Franchise Operated',
       shortExplanation:
-        'You own and operate the franchise with full day-to-day control while the brand provides systems, training, and support.',
-      benefits: ['Highest operational control', 'Stronger profit margins', 'Direct customer connection'],
-      investorType: 'Hands-on entrepreneurs and active operators',
+        'Best for investors who want complete control over operations.',
     },
   },
   'foco-model': {
@@ -107,10 +106,9 @@ export const FRANCHISE_MODELS = {
       'FOCO means Franchise Owned, Company Operated: you own the franchise unit while the company runs operations. In India, it suits investors who want brand-backed returns without managing staff, inventory, or daily outlet operations.',
     relatedPaths: ['/fofo-model', '/fico-model', '/franchise-readiness-assessment'],
     homeCard: {
+      nameLine: 'Franchise Owned • Company Operated',
       shortExplanation:
-        'You own the franchise while the company manages operations, staffing, and quality delivery on your behalf.',
-      benefits: ['Semi-passive returns', 'Professional operations', 'Multi-unit scalability'],
-      investorType: 'Working professionals and passive investors',
+        'Own the business while the company manages operations.',
     },
   },
   'fico-model': {
@@ -163,10 +161,9 @@ export const FRANCHISE_MODELS = {
       'FICO means Franchise Invested, Company Operated: you invest capital and the company runs the business. In India, FICO suits investors who want franchise-linked returns without owning or operating outlets themselves.',
     relatedPaths: ['/fofo-model', '/foco-model', '/resources/knowledge-hub/investor/franchise-roi-guide'],
     homeCard: {
+      nameLine: 'Franchise Invested • Company Operated',
       shortExplanation:
-        'You invest capital while the company owns and operates the unit, delivering structured returns with full operational accountability.',
-      benefits: ['No daily operations', 'Structured returns', 'Lower involvement entry'],
-      investorType: 'Financial investors and first-time franchise backers',
+        'Invest in the business while the company manages day-to-day operations.',
     },
   },
 };
