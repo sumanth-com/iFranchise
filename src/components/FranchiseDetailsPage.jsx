@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { navigateTo, NAVIGATE_EVENT, restoreScrollWithRetry } from '@/lib/navigation';
 import { TYPE } from '../lib/typography.js';
 import ImageCarousel from './ImageCarousel';
-import CtaButton from './ui/CtaButton';
 import FranchiseInquiryLauncher from './FranchiseInquiryLauncher';
 import FranchiseInquiryStickyPanel from './FranchiseInquiryStickyPanel';
 import FranchiseWhatsAppFab from './FranchiseWhatsAppFab';
@@ -555,16 +554,6 @@ function FranchisePartnershipSection({ franchise }) {
           </li>
         ))}
       </ul>
-
-      <div className="mt-4 flex justify-center sm:mt-5">
-        <CtaButton
-          type="button"
-          onClick={() => navigateTo('/franchise-readiness-assessment')}
-          className="!px-4 !py-2 text-sm"
-        >
-          Check your readiness
-        </CtaButton>
-      </div>
     </section>
   );
 }

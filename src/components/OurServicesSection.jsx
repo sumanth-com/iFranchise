@@ -90,12 +90,12 @@ export default function OurServicesSection({
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:auto-rows-fr lg:grid-cols-3">
         {OUR_SERVICES_ITEMS.map((s, i) => (
           <div
             key={s.title}
             id={s.anchorId}
-            className={`group relative overflow-hidden rounded-2xl theme-light-card ${s.anchorId ? 'scroll-mt-28' : ''}`}
+            className={`group relative flex h-full flex-col overflow-hidden rounded-2xl theme-light-card ${s.anchorId ? 'scroll-mt-28' : ''}`}
             style={getCardBaseStyle(isLight, {
               opacity: 0,
               transform: 'translateY(24px)',
@@ -114,9 +114,9 @@ export default function OurServicesSection({
                 transition: 'transform 0.7s ease',
               }}
             />
-            <div className="relative z-10 p-5 sm:p-6">
+            <div className="relative z-10 flex h-full flex-col p-5 sm:p-6">
               <div
-                className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl"
+                className="mb-3 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
                 style={{
                   ...serviceIconStyle(isLight),
                   transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), background 0.3s ease, box-shadow 0.3s ease',
@@ -126,12 +126,12 @@ export default function OurServicesSection({
               >
                 {SERVICE_ICONS[s.id]}
               </div>
-              <h3 className={`text-[1rem] font-bold mb-2 leading-snug tracking-[-0.01em] ${cardTitleClass(isLight)}`}>
+              <h3 className={`mb-2 shrink-0 text-[1rem] font-bold leading-snug tracking-[-0.01em] ${cardTitleClass(isLight)}`}>
                 {s.title}
               </h3>
-              <p className={`text-[0.875rem] leading-relaxed ${cardBodyClass(isLight)}`}>{s.desc}</p>
+              <p className={`flex-1 text-[0.875rem] leading-relaxed ${cardBodyClass(isLight)}`}>{s.desc}</p>
               {s.points?.length ? (
-                <ul className="mt-5 space-y-2 flex-1">
+                <ul className="mt-5 space-y-2">
                   {s.points.map((p) => (
                     <li key={p} className={`flex items-center gap-2.5 text-[0.76rem] font-medium leading-snug ${cardListClass(isLight)}`}>
                       <span className="flex-shrink-0 w-1 h-1 rounded-full bg-violet-400/60" />
