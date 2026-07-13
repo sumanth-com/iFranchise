@@ -535,6 +535,20 @@ html[data-theme='light'] #main-content .cinematic-hero--light p.hero-cinematic-l
   text-shadow: 0 1px 8px rgba(255, 255, 255, 0.75) !important;
 }
 
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-glass--light .hero-cinematic-title,
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-glass--light .hero-cinematic-title span {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+html[data-theme='light'] #main-content .cinematic-hero--light .hero-cinematic-glass--light .hero-cinematic-lead {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
 html[data-theme='light'] .cinematic-hero--light .hero-cinematic-pill-text {
   color: #0f172a !important;
 }
