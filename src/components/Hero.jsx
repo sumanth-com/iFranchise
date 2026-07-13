@@ -1451,10 +1451,10 @@ function Hero() {
               style={{ letterSpacing: '-0.022em' }}
             >
               <span className="hero-cinematic-title__line">
-                India&apos;s Trusted Franchise Consulting Platform
+                India&apos;s Franchise Growth Platform
               </span>{' '}
               <span className="hero-cinematic-title__line">
-                for Brand Expansion, Franchise Opportunities &amp; Business Investors
+                for Brands &amp; Investors
               </span>
             </h1>
 
@@ -1463,7 +1463,7 @@ function Hero() {
                 isLight ? 'text-slate-700' : 'text-white'
               }`}
             >
-              Grow your business with expert franchise consulting, verified franchise opportunities, investor connections, franchise expansion strategy, and end-to-end business growth services across India.
+              Grow your business through franchising or discover verified franchise opportunities across India.
             </p>
 
             <div className="hero-cinematic-why mx-auto mb-4 hidden w-full max-w-[min(100%,28rem)] text-left max-sm:max-w-[18.5rem] sm:max-w-[34rem] xl:mx-0 xl:mb-5 xl:block xl:max-w-none">

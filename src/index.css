@@ -3338,32 +3338,58 @@ html[data-theme='dark'] #main-content .cinematic-hero--dark .hero-card-rule--dar
 }
 
 .hero-cinematic-glass--light {
-  border-color: rgba(109, 40, 217, 0.14);
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.72) 0%,
-      rgba(248, 250, 252, 0.58) 55%,
-      rgba(237, 233, 254, 0.5) 100%
-    );
-  box-shadow:
-    0 16px 40px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
-
-/* Dark glass: deeper purple so white copy stays readable */
-.hero-cinematic-glass--dark {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.3);
   background:
     linear-gradient(
       155deg,
-      rgba(46, 16, 101, 0.78) 0%,
-      rgba(76, 29, 149, 0.72) 42%,
-      rgba(91, 33, 182, 0.68) 100%
+      rgba(8, 8, 12, 0.44) 0%,
+      rgba(12, 9, 20, 0.38) 52%,
+      rgba(24, 13, 42, 0.34) 100%
     );
+  -webkit-backdrop-filter: blur(9px) saturate(1.1);
+  backdrop-filter: blur(9px) saturate(1.1);
   box-shadow:
-    0 22px 56px rgba(10, 6, 24, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 16px 38px rgba(5, 3, 12, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.hero-cinematic-glass--light::before {
+  background: radial-gradient(
+    120% 80% at 12% 0%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 55%
+  );
+}
+
+.hero-cinematic-glass--light .hero-cinematic-title,
+.hero-cinematic-glass--light .hero-cinematic-title span,
+.hero-cinematic-glass--light .hero-cinematic-lead,
+.hero-cinematic-glass--light .hero-cinematic-why,
+.hero-cinematic-glass--light .hero-cinematic-why p,
+.hero-cinematic-glass--light .hero-cinematic-benefits,
+.hero-cinematic-glass--light .hero-cinematic-benefits li,
+.hero-cinematic-glass--light .hero-cinematic-benefits span,
+.hero-cinematic-glass--light .hero-cinematic-benefits svg {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Dark glass: transparent black tint keeps the background artwork visible */
+.hero-cinematic-glass--dark {
+  border-color: rgba(255, 255, 255, 0.24);
+  background:
+    linear-gradient(
+      155deg,
+      rgba(5, 5, 10, 0.48) 0%,
+      rgba(10, 7, 18, 0.42) 52%,
+      rgba(22, 11, 38, 0.38) 100%
+    );
+  -webkit-backdrop-filter: blur(9px) saturate(1.1);
+  backdrop-filter: blur(9px) saturate(1.1);
+  box-shadow:
+    0 16px 38px rgba(5, 3, 12, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
     inset 0 -1px 0 rgba(255, 255, 255, 0.06);
 }
 
