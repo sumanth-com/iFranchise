@@ -2,7 +2,6 @@
 import { useIsMobileViewport } from '../hooks/useIsMobileViewport';
 import { createPortal } from 'react-dom';
 import Button from './Button';
-import CtaButton from './ui/CtaButton';
 import SectionPill from './ui/SectionPill';
 import TestimonialCard from './TestimonialCard';
 import PremiumFAQItem from './ui/PremiumFAQItem';
@@ -1569,12 +1568,33 @@ function Hero() {
           </div>
 
           <div className="text-center mt-8">
-            <CtaButton
+            <button
               type="button"
               onClick={() => { window.history.pushState({}, '', '/franchise-opportunities'); window.dispatchEvent(new PopStateEvent('popstate')); }}
+              className="section-primary-cta group/btn relative overflow-hidden inline-flex items-center text-white"
+              style={{
+                background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
+                boxShadow: '0 4px 24px rgba(109,40,217,0.4)',
+                transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 12px 40px rgba(109,40,217,0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 24px rgba(109,40,217,0.4)';
+              }}
             >
-              Explore All Franchise Opportunities
-            </CtaButton>
+              <div
+                className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
+              />
+              <span className="relative z-10">Explore All Franchise Opportunities</span>
+              <span className="relative z-10 inline-flex items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover/btn:translate-x-1">
+                <FiArrowRight className="h-3 w-3" />
+              </span>
+            </button>
           </div>
         </div>
 
