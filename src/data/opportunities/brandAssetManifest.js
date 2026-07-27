@@ -25,7 +25,8 @@ function publicExtFromPath(assetPath) {
 }
 
 /**
- * @typedef {{ slug: string, logoSrc: string, gallerySrc: string[], cardBackground?: string, cardAccent?: string, cardFit?: 'fill' | 'contain', card?: string }} BrandAssetEntry
+ * @typedef {{ id: string, label: string, gallerySrc: string[] }} BrandGalleryGroup
+ * @typedef {{ slug: string, logoSrc: string, gallerySrc: string[], galleryGroups?: BrandGalleryGroup[], cardBackground?: string, cardAccent?: string, cardFit?: 'fill' | 'contain', card?: string }} BrandAssetEntry
  */
 
 /** @type {BrandAssetEntry[]} */
@@ -163,6 +164,54 @@ export const BRAND_ASSET_MANIFEST = [
     cardAccent: '#2563eb',
     cardFit: 'fill',
   },
+  {
+    slug: 'emori',
+    logoSrc: 'Emori/Logo.png',
+    gallerySrc: [],
+    galleryGroups: [
+      {
+        id: 'gurgaon',
+        label: 'Gurgaon',
+        gallerySrc: [
+          'Emori/Gurgaon Store pics/GGN.jpeg',
+          'Emori/Gurgaon Store pics/GGN 1.jpeg',
+          'Emori/Gurgaon Store pics/GGN 2.jpeg',
+          'Emori/Gurgaon Store pics/GGN 3.jpeg',
+          'Emori/Gurgaon Store pics/GGN 4.jpeg',
+          'Emori/Gurgaon Store pics/GGN 5.jpeg',
+          'Emori/Gurgaon Store pics/GGN 6.jpeg',
+        ],
+      },
+      {
+        id: 'noida',
+        label: 'Noida',
+        gallerySrc: [
+          'Emori/Noida Store pics/NOIDA Front Facade.jpeg',
+          'Emori/Noida Store pics/NOIDA 1.jpeg',
+          'Emori/Noida Store pics/Noida 2.jpeg',
+          'Emori/Noida Store pics/Noida 3.jpeg',
+          'Emori/Noida Store pics/Noida 4.jpeg',
+          'Emori/Noida Store pics/Noida 5.jpeg',
+          'Emori/Noida Store pics/NOIDA - Back facade.jpeg',
+          'Emori/Noida Store pics/Noida front.jpeg',
+        ],
+      },
+      {
+        id: 'dwarka',
+        label: 'Dwarka',
+        gallerySrc: [
+          'Emori/Dwarka store pics/Dwarka 1.jpeg',
+          'Emori/Dwarka store pics/Dwarka 2.jpeg',
+          'Emori/Dwarka store pics/Dwarka 3.jpeg',
+          'Emori/Dwarka store pics/Dwarka 4.jpeg',
+          'Emori/Dwarka store pics/Dwarka 5.jpeg',
+        ],
+      },
+    ],
+    cardBackground: '#000000',
+    cardAccent: '#ffffff',
+    cardFit: 'fill',
+  },
 ];
 
 /**
@@ -173,15 +222,27 @@ export function resolveBrandPublicPaths(entry) {
   const { slug } = entry;
   const logoExt = publicExtFromPath(entry.logoSrc);
   const logo = brandPublicImage(slug, fileName(slug, 'franchise-logo', logoExt));
-  const gallery = entry.gallerySrc.map((src, index) => {
+  const flatGallery = entry.gallerySrc.map((src, index) => {
     const ext = publicExtFromPath(src);
     return brandPublicImage(slug, fileName(slug, `franchise-gallery-${index + 1}`, ext));
   });
+  const galleryGroups = (entry.galleryGroups || []).map((group) => ({
+    id: group.id,
+    label: group.label,
+    images: group.gallerySrc.map((src, index) => {
+      const ext = publicExtFromPath(src);
+      return brandPublicImage(
+        slug,
+        fileName(slug, `franchise-gallery-${group.id}-${index + 1}`, ext),
+      );
+    }),
+  }));
+  const gallery = [...flatGallery, ...galleryGroups.flatMap((group) => group.images)];
   const cardSrc = entry.card || entry.logoSrc;
   const card =
     cardSrc === entry.logoSrc
       ? logo
       : brandPublicImage(slug, fileName(slug, 'franchise-card', publicExtFromPath(cardSrc)));
 
-  return { logo, card, gallery };
+  return { logo, card, gallery, galleryGroups };
 }

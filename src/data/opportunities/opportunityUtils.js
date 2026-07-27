@@ -36,6 +36,7 @@ export function formatBrandDisplayName(name, slug = '') {
   const key = slug?.toLowerCase?.() || '';
   if (key === 'original-burger-co') return 'Original Burger Co';
   if (key === 'fusion-pizza-big-burger') return 'Fusion Pizza & Big Burger Co';
+  if (key === 'emori') return 'EMORI';
 
   const cleaned = cleanText(name).replace(/\(2\)/i, '').trim();
   if (!cleaned) return '';

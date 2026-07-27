@@ -83,12 +83,12 @@ function rankFeaturedOpportunities() {
 /** Curated featured brands — home row + opportunities page default order. */
 export const FEATURED_BRAND_SLUGS = [
   'odette',
+  'emori',
   'kasturi-creations',
-  'original-burger-co',
   'bigguys',
   'biggies-burger',
-  'franco',
   '10-downing-street',
+  'franco',
 ];
 
 /** Second-row curated brands on homepage. */

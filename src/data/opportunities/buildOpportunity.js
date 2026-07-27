@@ -85,7 +85,7 @@ function buildInvestorInvestmentSummary(raw, _investmentLabel, franchiseFee, ret
     slot('Franchise fee', !isPlaceholder(franchiseFee) ? formatMoneyDisplay(franchiseFee) : '', 'On request'),
     slot('Space (Sq.ft)', !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : '', 'As per format'),
     {
-      ...slot('Returns', returnsInfo.display, 'On request', returnsInfo.full),
+      ...slot(cleanText(raw.returnsLabel) || 'Returns', returnsInfo.display, 'On request', returnsInfo.full),
       ...(returnsInfo.structured ? { returnsStructured: returnsInfo.structured } : {}),
     },
     slot('Payback', paybackLabel || '', 'On request'),
@@ -354,6 +354,7 @@ export function buildOpportunityRecord(raw, id) {
     banner: brandImages.banner,
     gallery: brandImages.gallery,
     slideshow: brandImages.slideshow ?? brandImages.gallery,
+    galleryGroups: brandImages.galleryGroups,
     cardBackground: brandImages.cardBackground,
     cardFit: brandImages.cardFit || 'fill',
     brochureUrl: getBrochureUrlByFranchiseSlug(slug) || cleanText(raw.websiteBrochureLink) || '',
@@ -377,6 +378,9 @@ export function buildOpportunityRecord(raw, id) {
       .filter(Boolean)
       .join(' '),
     businessModelDisplay: cleanText(raw.businessModelDescription) || '',
+    partnershipModel: cleanText(raw.partnershipModel) || '',
+    partnershipReturns: cleanText(raw.partnershipReturns) || '',
+    hideSupportProvided: Boolean(raw.hideSupportProvided),
     investorInvestment: buildInvestorInvestmentSummary(
       raw,
       investment,

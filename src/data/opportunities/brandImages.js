@@ -23,10 +23,14 @@ function industryGallery(industry = 'Food & Beverage') {
 /**
  * @param {string} logo
  * @param {string[]} photos
- * @param {{ card?: string, cardFit?: 'fill' | 'contain', cardBackground?: string, cardAccent?: string }} [opts]
+ * @param {{ card?: string, cardFit?: 'fill' | 'contain', cardBackground?: string, cardAccent?: string, galleryGroups?: { id: string, label: string, images: string[] }[] }} [opts]
  */
 function packBrandAssets(logo, photos = [], opts = {}) {
   const slideshow = photos.filter(Boolean);
+  const galleryGroups = (opts.galleryGroups || []).map((group) => ({
+    ...group,
+    images: group.images.filter(Boolean),
+  }));
   const banner = slideshow[0] || logo;
   const cardBackground = opts.cardBackground ?? '#12082a';
   return {
@@ -39,6 +43,7 @@ function packBrandAssets(logo, photos = [], opts = {}) {
     cardBackground,
     cardAccent: opts.cardAccent ?? cardBackground,
     hasLocalGallery: slideshow.length > 0,
+    galleryGroups,
   };
 }
 
@@ -53,6 +58,7 @@ const BRAND_IMAGES_BY_SLUG = Object.fromEntries(
         cardBackground: entry.cardBackground,
         cardAccent: entry.cardAccent,
         cardFit: entry.cardFit,
+        galleryGroups: paths.galleryGroups,
       }),
     ];
   }),
@@ -78,6 +84,10 @@ export function getBrandImages(slug, industry = 'Food & Beverage') {
       cardBackground: keyed.cardBackground,
       cardAccent: keyed.cardAccent || keyed.cardBackground,
       hasLocalGallery: Boolean(keyed.hasLocalGallery),
+      galleryGroups: keyed.galleryGroups.map((group) => ({
+        ...group,
+        images: [...group.images],
+      })),
     };
   }
 
@@ -93,17 +103,25 @@ export function getBrandImages(slug, industry = 'Food & Beverage') {
     cardBackground: undefined,
     cardAccent: undefined,
     hasLocalGallery: false,
+    galleryGroups: [],
   };
 }
 
 /**
  * Detail-page hero gallery: brand assets under /brands/{slug}/ only (no Unsplash).
  */
-export function resolveDetailGalleryImages(franchise) {
+export function resolveDetailGalleryImages(franchise, groupId = '') {
   if (!franchise) return [];
 
   const logo = franchise.logo;
-  const raw = franchise.slideshow?.length ? franchise.slideshow : franchise.gallery ?? [];
+  const galleryGroups = Array.isArray(franchise.galleryGroups) ? franchise.galleryGroups : [];
+  const selectedGroup =
+    galleryGroups.find((group) => group.id === groupId) || galleryGroups[0];
+  const raw = selectedGroup?.images?.length
+    ? selectedGroup.images
+    : franchise.slideshow?.length
+      ? franchise.slideshow
+      : franchise.gallery ?? [];
   let list = Array.isArray(raw) ? raw.filter(Boolean) : [];
 
   list = list.filter((src) => src && src !== logo);

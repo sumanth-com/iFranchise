@@ -16,6 +16,7 @@ export const CARD_SEO_LABEL_BY_SLUG = {
   'fusion-pizza-big-burger': 'Dual Brand F&B',
   '10-downing-street': 'Pub Franchise India',
   'freshco-goli-soda': 'Beverage Franchise',
+  emori: 'Lab-Grown Diamond Franchise',
 };
 
 /**

@@ -179,7 +179,7 @@ function isNearDuplicate(a, b) {
   const left = String(a || '').trim().toLowerCase();
   const right = String(b || '').trim().toLowerCase();
   if (!left || !right) return false;
-  return left.includes(right.slice(0, 28)) || right.includes(left.slice(0, 28));
+  return left.startsWith(right.slice(0, 28)) || right.startsWith(left.slice(0, 28));
 }
 
 function getAboutBrandBody(franchise) {
@@ -456,7 +456,7 @@ function buildPartnershipInsights(franchise) {
   if (primaryModel?.description) {
     insights.push({
       title: `${primaryModel.name} partnership`,
-      body: primaryModel.description,
+      body: franchise.partnershipModel || primaryModel.description,
     });
   } else if (franchise.businessModelDisplay) {
     insights.push({
@@ -465,11 +465,11 @@ function buildPartnershipInsights(franchise) {
     });
   }
 
-  const returnsRow = investmentItems.find((row) => /returns/i.test(row.label));
+  const returnsRow = investmentItems.find((row) => /returns|minimum guarantee/i.test(row.label));
   if (returnsRow?.value && returnsRow.value !== 'On request') {
     insights.push({
       title: 'How you earn',
-      body: returnsRow.value,
+      body: franchise.partnershipReturns || returnsRow.value,
     });
   } else if (franchise.operationsReturns?.roi) {
     insights.push({
@@ -740,6 +740,76 @@ function DesktopFranchiseHeroBanner({ franchise, onRequestInfo }) {
   );
 }
 
+function FranchiseGalleryCarousel({
+  franchise,
+  galleryImages,
+  carouselCategory,
+  galleryImageFit,
+  galleryBackground,
+  galleryKey,
+  galleryAlt,
+  imageSizes,
+  heightClassName,
+}) {
+  const galleryGroups = Array.isArray(franchise.galleryGroups) ? franchise.galleryGroups : [];
+  const defaultGroupId = galleryGroups[0]?.id || '';
+  const [selectedGroupId, setSelectedGroupId] = useState(defaultGroupId);
+
+  useEffect(() => {
+    setSelectedGroupId(defaultGroupId);
+  }, [defaultGroupId, galleryKey]);
+
+  const activeImages = galleryGroups.length
+    ? resolveDetailGalleryImages(franchise, selectedGroupId)
+    : galleryImages;
+
+  return (
+    <>
+      {galleryGroups.length > 1 ? (
+        <div className="absolute left-3 top-3 z-30 sm:left-4 sm:top-4 lg:left-5 lg:top-5">
+          <select
+            value={selectedGroupId}
+            onChange={(event) => setSelectedGroupId(event.target.value)}
+            aria-label="Choose store location gallery"
+            className="min-h-10 cursor-pointer appearance-none rounded-full border border-white/80 bg-white/95 py-2 pl-4 pr-10 text-sm font-semibold !text-slate-900 shadow-lg shadow-slate-900/20 outline-none backdrop-blur-md transition hover:bg-white focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
+          >
+            {galleryGroups.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.label}
+              </option>
+            ))}
+          </select>
+          <svg
+            className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-700"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path d="m6 8 4 4 4-4" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      ) : null}
+      <ImageCarousel
+        key={`${galleryKey}-${selectedGroupId || 'all'}`}
+        images={activeImages}
+        alt={galleryAlt}
+        category={carouselCategory}
+        brandAssetsOnly
+        showThumbnails={false}
+        fillParent
+        preloadAll
+        imageFit={galleryImageFit}
+        imageSizes={imageSizes}
+        galleryBackground={galleryBackground}
+        logoSrc={franchise.logo || null}
+        className="absolute inset-0 z-0 h-full w-full"
+        heightClassName={heightClassName}
+      />
+    </>
+  );
+}
+
 function DesktopFranchiseGallery({
   franchise,
   galleryImages,
@@ -750,24 +820,19 @@ function DesktopFranchiseGallery({
 }) {
   return (
     <div
-      className="fd-desktop-hero-gallery relative hidden min-h-[380px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 lg:block xl:min-h-[420px]"
+      className="fd-desktop-hero-gallery relative hidden min-h-[440px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 lg:block xl:min-h-[480px]"
       style={franchise.cardBackground ? { backgroundColor: franchise.cardBackground } : undefined}
     >
-      <ImageCarousel
-        key={galleryKey}
-        images={galleryImages}
-        alt={galleryAlt}
-        category={carouselCategory}
-        brandAssetsOnly
-        showThumbnails={false}
-        fillParent
-        preloadAll
-        imageFit={galleryImageFit}
-        imageSizes="(max-width: 1279px) 100vw, 48vw"
+      <FranchiseGalleryCarousel
+        franchise={franchise}
+        galleryImages={galleryImages}
+        carouselCategory={carouselCategory}
+        galleryImageFit={galleryImageFit}
         galleryBackground={franchise.cardBackground}
-        logoSrc={franchise.logo || null}
-        className="absolute inset-0 z-0 h-full w-full"
-        heightClassName="h-full min-h-[380px] w-full xl:min-h-[420px]"
+        galleryKey={galleryKey}
+        galleryAlt={galleryAlt}
+        imageSizes="(max-width: 1279px) 100vw, 48vw"
+        heightClassName="h-full min-h-[440px] w-full xl:min-h-[480px]"
       />
     </div>
   );
@@ -836,20 +901,15 @@ function MobileFranchiseHero({
       <div
         className="fd-mobile-gallery fd-mobile-gallery--logo relative min-h-[min(60vw,400px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:min-h-[420px]"
       >
-        <ImageCarousel
-          key={galleryKey}
-          images={galleryImages}
-          alt={galleryAlt}
-          category={carouselCategory}
-          brandAssetsOnly
-          showThumbnails={false}
-          fillParent
-          preloadAll
-          imageFit={galleryImageFit}
-          imageSizes="100vw"
+        <FranchiseGalleryCarousel
+          franchise={franchise}
+          galleryImages={galleryImages}
+          carouselCategory={carouselCategory}
+          galleryImageFit={galleryImageFit}
           galleryBackground={galleryBackground}
-          logoSrc={franchise.logo || null}
-          className="absolute inset-0 z-0 h-full w-full"
+          galleryKey={galleryKey}
+          galleryAlt={galleryAlt}
+          imageSizes="100vw"
           heightClassName="h-full min-h-[min(60vw,400px)] w-full sm:min-h-[420px]"
         />
       </div>
@@ -1069,32 +1129,36 @@ function FranchiseDetailsPage() {
 
                 <FranchisePartnershipSection franchise={selectedFranchise} />
 
-                <section
-                  className="fd-brand-support-compact rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:hidden"
-                  aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
-                >
-                  <SupportProvidedHeading
-                    id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
-                    className={`fd-heading fd-copy justify-center text-base sm:text-[1.0625rem] ${TYPE.h3}`}
-                  />
-                </section>
+                {!selectedFranchise.hideSupportProvided ? (
+                  <>
+                    <section
+                      className="fd-brand-support-compact rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-[0_8px_20px_rgba(15,23,42,0.05)] lg:hidden"
+                      aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
+                    >
+                      <SupportProvidedHeading
+                        id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-mobile-heading`}
+                        className={`fd-heading fd-copy justify-center text-base sm:text-[1.0625rem] ${TYPE.h3}`}
+                      />
+                    </section>
 
-                <section
-                  className="fd-about-section hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:block lg:p-7"
-                  aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
-                >
-                  <SupportProvidedHeading
-                    id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
-                    headingLevel="h2"
-                    className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}
-                  />
-                  <div className="fd-section-body mt-5">
-                    <BrandSupportList
-                      items={selectedFranchise.trainingSupport}
-                      fallback={selectedFranchise.idealInvestorProfile}
-                    />
-                  </div>
-                </section>
+                    <section
+                      className="fd-about-section hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_20px_rgba(15,23,42,0.05)] sm:p-6 lg:block lg:p-7"
+                      aria-labelledby={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
+                    >
+                      <SupportProvidedHeading
+                        id={`fd-support-${selectedFranchise.slug || selectedFranchise.id}-heading`}
+                        headingLevel="h2"
+                        className={`fd-section-heading fd-heading fd-copy ${TYPE.h3}`}
+                      />
+                      <div className="fd-section-body mt-5">
+                        <BrandSupportList
+                          items={selectedFranchise.trainingSupport}
+                          fallback={selectedFranchise.idealInvestorProfile}
+                        />
+                      </div>
+                    </section>
+                  </>
+                ) : null}
               </div>
 
               <aside className="fd-sticky-form-region__aside hidden lg:block" aria-label="Franchise enquiry form">

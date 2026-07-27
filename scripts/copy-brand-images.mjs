@@ -139,6 +139,19 @@ for (const entry of BRAND_ASSET_MANIFEST) {
     copied += 1;
   }
 
+  for (let groupIndex = 0; groupIndex < (entry.galleryGroups || []).length; groupIndex += 1) {
+    const group = entry.galleryGroups[groupIndex];
+    const outputGroup = paths.galleryGroups[groupIndex];
+    for (let imageIndex = 0; imageIndex < group.gallerySrc.length; imageIndex += 1) {
+      const destFile = outputGroup.images[imageIndex].split('/').pop();
+      const destPath = join(outDir, destFile);
+      await writeBrandImage(sharp, group.gallerySrc[imageIndex], destPath);
+      await assertValidOutput(destPath);
+      written.push(destFile);
+      copied += 1;
+    }
+  }
+
   await cleanupStaleBrandOutputs(outDir, written);
 }
 
