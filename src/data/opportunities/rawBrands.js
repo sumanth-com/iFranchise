@@ -279,16 +279,17 @@ export const RAW_BRANDS = [
       'Lab-grown diamond jewellery brand offering a premium retail experience through high-street and mall stores under a structured FICO franchise model.',
     brandAbout:
       'Founded in September 2023 and headquartered in Gurugram, EMORI started as an online-first D2C brand. EMORI offers lab-grown diamond jewellery in 14 and 18 karat gold for the modern consumer, balancing design, accessibility, and everyday wearability. After establishing a strong online presence, EMORI expanded into high-traction offline markets through strategically located stores. Its omnichannel approach has strengthened brand trust and visibility, with three physical stores consistently delivering strong performance and curated in-store experiences alongside growing consumer demand.',
-    investmentMin: '₹2.5 Crores',
+    investmentMin: '₹2.25 Crores',
     investmentMax: '',
-    investmentDisplay: '₹2.5 Crores',
-    investmentNote: 'Includes ₹2 Crores security deposit covering inventory and rental deposit',
+    investmentDisplay: '₹2.25 Crores',
+    investmentNote: 'Includes a total security deposit of ₹1.70 Crores',
     sqFt: '500–1000 Sq.ft',
     currency: 'INR',
     businessModel: 'FICO',
     businessModelDescription: 'FICO (Franchise Invested Company Operated)',
     partnershipModel: 'Franchise Invested, Company Operated',
-    partnershipReturns: 'Minimum Guarantee (MG): 15% per annum applicable on ₹2.5 Cr',
+    partnershipReturns:
+      'Minimum Guarantee (MG): 15% per annum on the total investment excluding the franchise fee, or sales margins of 12% up to ₹30 Lakhs, 10% above ₹30 Lakhs and below ₹50 Lakhs, and 8% above ₹50 Lakhs—whichever is higher.',
     hideSupportProvided: true,
     locationType: 'High Street / Premium Malls',
     expansionDisplay: 'High Street / Premium Malls',
@@ -296,7 +297,9 @@ export const RAW_BRANDS = [
     paybackPeriod: '',
     totalOutlets: '3',
     franchiseFee: '₹10 Lakhs + GST',
-    returns: 'Minimum Guarantee of 15% per annum on ₹2.5 Crores',
+    returns:
+      '12% margin on sales up to ₹30 Lakhs; 10% margin on sales above ₹30 Lakhs and below ₹50 Lakhs; 8% margin on sales above ₹50 Lakhs; or 15% annual minimum guarantee on the total investment excluding the franchise fee, whichever is higher',
+    returnsDisplay: '15% p.a. MG or tiered margins',
     returnsLabel: 'Minimum Guarantee',
     targetAreas:
       'Bangalore, Mumbai, Hyderabad, Chennai, Delhi, Noida, Jaipur, Chandigarh, Gurgaon',
@@ -306,8 +309,8 @@ export const RAW_BRANDS = [
     investorHighlights: [
       {
         label: 'Security Deposit',
-        value: '₹2 Crores',
-        detail: 'Includes inventory and rental deposit',
+        value: '₹1.70 Crores',
+        detail: 'Total security deposit',
       },
     ],
   },

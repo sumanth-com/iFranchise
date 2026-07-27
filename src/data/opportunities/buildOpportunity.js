@@ -81,6 +81,9 @@ function buildInvestorInvestmentSummary(raw, _investmentLabel, franchiseFee, ret
   const returnsInfo = !isPlaceholder(returns)
     ? formatReturnsDisplay(returns)
     : { display: 'On request', full: '' };
+  if (!isPlaceholder(raw.returnsDisplay)) {
+    returnsInfo.display = cleanText(raw.returnsDisplay);
+  }
   const base = [
     slot('Franchise fee', !isPlaceholder(franchiseFee) ? formatMoneyDisplay(franchiseFee) : '', 'On request'),
     slot('Space (Sq.ft)', !isPlaceholder(raw.sqFt) ? formatSpaceDisplay(raw.sqFt) : '', 'As per format'),
@@ -275,7 +278,8 @@ export function buildOpportunityRecord(raw, id) {
       raw.locationType,
       displayCities,
     );
-  const returnsDisplay = formatReturnsDisplay(raw.returns).display;
+  const returnsDisplay =
+    cleanText(raw.returnsDisplay) || formatReturnsDisplay(raw.returns).display;
   const paybackLabel = cleanText(raw.paybackPeriod) || (paybackMonths ? `${paybackMonths} months` : 'On request');
   const paybackPill = formatPaybackPill(paybackLabel);
   const seoLabel = getCardSeoLabel(slug, industry);

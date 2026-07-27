@@ -120,7 +120,7 @@ const BRAND_SEO_BY_SLUG = {
   emori: {
     title: 'EMORI Franchise India | Lab-Grown Diamond FICO | iFranchise',
     description:
-      'EMORI franchise in India at ₹2.5 Crores. Lab-grown diamond jewellery with a FICO model, 15% annual minimum guarantee, and premium retail locations.',
+      'EMORI franchise in India at ₹2.25 Crores. Lab-grown diamond jewellery with a FICO model, annual minimum guarantee or tiered sales margins, and premium retail locations.',
     keywords:
       'EMORI franchise, EMORI franchise India, lab grown diamond franchise, jewellery franchise India, diamond retail franchise, FICO jewellery franchise',
     ogTitle: 'EMORI Franchise Opportunity | iFranchise',
