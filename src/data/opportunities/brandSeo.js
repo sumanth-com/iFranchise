@@ -120,12 +120,12 @@ const BRAND_SEO_BY_SLUG = {
   emori: {
     title: 'EMORI Franchise Cost & Investment India | iFranchise',
     description:
-      'EMORI franchise in India: ₹2.25 Cr investment, FICO model, 15% annual minimum guarantee or tiered margins, and 500–1,000 sq. ft. premium stores.',
+      'EMORI franchise India: ₹2.25 Cr FICO investment with 15% annual guarantee or tiered margins. Expanding in Bengaluru, Mumbai, Hyderabad and Delhi.',
     keywords:
-      'EMORI franchise, EMORI franchise India, EMORI franchise cost, EMORI franchise investment, EMORI Shark Tank India, lab grown diamond franchise India, lab grown diamond jewellery franchise, jewellery franchise opportunity India, diamond jewellery franchise, FICO jewellery franchise, premium retail franchise India',
+      'EMORI franchise, EMORI franchise India, EMORI franchise cost, EMORI franchise investment, EMORI Shark Tank India, EMORI franchise Bangalore, EMORI franchise Bengaluru, EMORI franchise Mumbai, EMORI franchise Hyderabad, EMORI franchise Chennai, EMORI franchise Delhi, EMORI franchise Noida, EMORI franchise Jaipur, EMORI franchise Chandigarh, EMORI franchise Gurgaon, lab grown diamond franchise India, lab grown diamond jewellery franchise, jewellery franchise opportunity India, diamond jewellery franchise, FICO jewellery franchise, premium retail franchise India',
     ogTitle: 'EMORI Franchise Cost, Investment & Returns | iFranchise',
     ogDescription:
-      'Explore EMORI’s ₹2.25 Crores lab-grown diamond jewellery franchise, FICO model, annual minimum guarantee, tiered margins, store format, and expansion opportunity.',
+      'Explore EMORI’s ₹2.25 Crores lab-grown diamond jewellery franchise, FICO model, returns, store format, and expansion across major Indian cities.',
   },
 };
 

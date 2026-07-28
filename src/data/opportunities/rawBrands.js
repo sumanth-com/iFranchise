@@ -278,7 +278,7 @@ export const RAW_BRANDS = [
     shortDescription:
       'Lab-grown diamond jewellery brand offering a premium retail experience through high-street and mall stores under a structured FICO franchise model.',
     brandAbout:
-      'Founded in September 2023 and headquartered in Gurugram, EMORI started as an online-first D2C brand. EMORI offers lab-grown diamond jewellery in 14 and 18 karat gold for the modern consumer, balancing design, accessibility, and everyday wearability. After establishing a strong online presence, EMORI expanded into high-traction offline markets through strategically located stores. Its omnichannel approach has strengthened brand trust and visibility, with three physical stores consistently delivering strong performance and curated in-store experiences alongside growing consumer demand. Following its appearance on Shark Tank India, EMORI secured ₹3 crore in funding from four sharks: Anupam Mittal, Ritesh Agarwal, Namita Thapar, and Amit Jain.',
+      'Founded in September 2023 and headquartered in Gurugram, EMORI started as an online-first D2C brand. EMORI offers lab-grown diamond jewellery in 14 and 18 karat gold for the modern consumer, balancing design, accessibility, and everyday wearability. After establishing a strong online presence, EMORI expanded into high-traction offline markets through strategically located stores. Its omnichannel approach has strengthened brand trust and visibility, with three physical stores consistently delivering strong performance and curated in-store experiences alongside growing consumer demand. Following its appearance on Shark Tank India, EMORI secured ₹3 crore in funding from four sharks: Anupam Mittal, Ritesh Agarwal, Namita Thapar, and Amit Jain. EMORI is targeting franchise expansion across Bengaluru (Bangalore), Mumbai, Hyderabad, Chennai, Delhi, Noida, Jaipur, Chandigarh, and Gurugram (Gurgaon).',
     brandAboutHighlights: [
       'Founded in September 2023',
       'online-first D2C brand',
@@ -287,6 +287,7 @@ export const RAW_BRANDS = [
       'Shark Tank India',
       '₹3 crore in funding',
       'Anupam Mittal, Ritesh Agarwal, Namita Thapar, and Amit Jain',
+      'Bengaluru (Bangalore), Mumbai, Hyderabad, Chennai, Delhi, Noida, Jaipur, Chandigarh, and Gurugram (Gurgaon)',
     ],
     investmentMin: '₹2.25 Crores',
     investmentMax: '',
