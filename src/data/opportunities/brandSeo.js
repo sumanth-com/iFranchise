@@ -118,14 +118,14 @@ const BRAND_SEO_BY_SLUG = {
       'Freshco Goli Soda beverage manufacturing franchise investment, unit economics, payback, and pan-India expansion on iFranchise.',
   },
   emori: {
-    title: 'EMORI Franchise India | Lab-Grown Diamond FICO | iFranchise',
+    title: 'EMORI Franchise Cost & Investment India | iFranchise',
     description:
-      'EMORI franchise in India at ₹2.25 Crores. Lab-grown diamond jewellery with a FICO model, annual minimum guarantee or tiered sales margins, and premium retail locations.',
+      'EMORI franchise in India: ₹2.25 Cr investment, FICO model, 15% annual minimum guarantee or tiered margins, and 500–1,000 sq. ft. premium stores.',
     keywords:
-      'EMORI franchise, EMORI franchise India, lab grown diamond franchise, jewellery franchise India, diamond retail franchise, FICO jewellery franchise',
-    ogTitle: 'EMORI Franchise Opportunity | iFranchise',
+      'EMORI franchise, EMORI franchise India, EMORI franchise cost, EMORI franchise investment, EMORI Shark Tank India, lab grown diamond franchise India, lab grown diamond jewellery franchise, jewellery franchise opportunity India, diamond jewellery franchise, FICO jewellery franchise, premium retail franchise India',
+    ogTitle: 'EMORI Franchise Cost, Investment & Returns | iFranchise',
     ogDescription:
-      'Explore the EMORI lab-grown diamond jewellery franchise investment, FICO model, minimum guarantee, store requirements, and expansion cities.',
+      'Explore EMORI’s ₹2.25 Crores lab-grown diamond jewellery franchise, FICO model, annual minimum guarantee, tiered margins, store format, and expansion opportunity.',
   },
 };
 
