@@ -192,6 +192,28 @@ function getAboutBrandBody(franchise) {
   return truncateText(overview, 480);
 }
 
+function renderHighlightedAbout(text, highlights = []) {
+  const phrases = highlights
+    .map((item) => String(item || '').trim())
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+  if (!phrases.length) return text;
+
+  const highlighted = new Set(phrases.map((phrase) => phrase.toLowerCase()));
+  const escaped = phrases.map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const parts = text.split(new RegExp(`(${escaped.join('|')})`, 'gi'));
+
+  return parts.map((part, index) =>
+    highlighted.has(part.toLowerCase()) ? (
+      <strong key={`${part}-${index}`} className="font-semibold text-slate-900">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 function AboutBrandSection({ franchise }) {
   const headingId = `fd-about-${franchise.slug || franchise.id}-heading`;
   const tagline = String(franchise.tagline || '').trim();
@@ -206,7 +228,9 @@ function AboutBrandSection({ franchise }) {
       <p className="fd-about-summary fd-copy mt-3 text-sm leading-relaxed text-slate-600 sm:text-[0.9375rem] sm:leading-7">
         {tagline ? <span className="block font-semibold text-slate-900">{tagline}</span> : null}
         {showAbout ? (
-          <span className={tagline ? 'mt-2 block' : 'block'}>{aboutBody}</span>
+          <span className={tagline ? 'mt-2 block' : 'block'}>
+            {renderHighlightedAbout(aboutBody, franchise.brandAboutHighlights)}
+          </span>
         ) : !tagline ? (
           <span className="block">{`${franchise.name} franchise opportunity in India.`}</span>
         ) : null}

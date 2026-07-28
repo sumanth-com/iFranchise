@@ -372,6 +372,9 @@ export function buildOpportunityRecord(raw, id) {
     },
     overview: summary,
     brandAbout: cleanText(raw.brandAbout) || '',
+    brandAboutHighlights: Array.isArray(raw.brandAboutHighlights)
+      ? raw.brandAboutHighlights.map((item) => cleanText(item)).filter(Boolean)
+      : [],
     businessModel: [
       models.length
         ? `Franchise model: ${cleanText(raw.businessModelDescription) || models.join(', ')}.`
