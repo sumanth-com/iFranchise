@@ -308,7 +308,7 @@ export const RAW_BRANDS = [
     franchiseFee: '₹10 Lakhs + GST',
     returns:
       '12% margin on sales up to ₹30 Lakhs; 10% margin on sales above ₹30 Lakhs and below ₹50 Lakhs; 8% margin on sales above ₹50 Lakhs; or 15% annual minimum guarantee on the total investment excluding the franchise fee, whichever is higher',
-    returnsDisplay: '15% p.a. MG or tiered margins',
+    returnsDisplay: '15% per annum MG or tiered margins',
     returnsLabel: 'Minimum Guarantee',
     targetAreas:
       'Bangalore, Mumbai, Hyderabad, Chennai, Delhi, Noida, Jaipur, Chandigarh, Gurgaon',
