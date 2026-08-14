@@ -46,8 +46,11 @@ async function postToAppsScript(scriptUrl, payload, signal) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     body: formBody,
     signal,
-    timeout: 18_000,
-    retries: 1,
+    // Apps Script cold starts can exceed 30 seconds in production. Do not retry
+    // this non-idempotent POST because the first request may already have
+    // appended the row even when its response is delayed.
+    timeout: 90_000,
+    retries: 0,
   });
 
   const durationMs = typeof performance !== 'undefined' ? Math.round(performance.now() - started) : undefined;
