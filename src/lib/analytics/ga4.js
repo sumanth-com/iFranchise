@@ -10,6 +10,7 @@ import {
   trackEvent as trackGtmEvent,
   trackPageView as pushGtmPageView,
 } from './gtm.js';
+import { hasAnalyticsConsent } from './analyticsConsent.js';
 
 export { GA4_MEASUREMENT_ID };
 
@@ -28,7 +29,7 @@ function ensureGtagStub() {
 }
 
 function loadFallbackGtag() {
-  if (fallbackReady || typeof document === 'undefined') return;
+  if (fallbackReady || typeof document === 'undefined' || !hasAnalyticsConsent()) return;
   if (document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
     fallbackReady = true;
     return;
@@ -47,7 +48,7 @@ function loadFallbackGtag() {
 }
 
 function scheduleFallbackGtag() {
-  if (fallbackScheduled || typeof window === 'undefined') return;
+  if (fallbackScheduled || typeof window === 'undefined' || !hasAnalyticsConsent()) return;
   fallbackScheduled = true;
   ensureGtagStub();
 
@@ -101,7 +102,9 @@ function sendFallbackPageView(logicalRoute) {
 
 /** SPA page view — GTM dataLayer only when GTM is installed. */
 export function trackPageView({ logicalRoute } = {}) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined' || !hasAnalyticsConsent()) return;
+
+  scheduleGtmAnalytics();
 
   if (isGtmInstalled()) {
     pushGtmPageView({ logicalRoute });
@@ -114,7 +117,9 @@ export function trackPageView({ logicalRoute } = {}) {
 
 /** Custom events — dataLayer (GTM) or gtag fallback. */
 export function trackEvent(eventName, params = {}) {
-  if (typeof window === 'undefined' || !eventName) return;
+  if (typeof window === 'undefined' || !eventName || !hasAnalyticsConsent()) return;
+
+  scheduleGtmAnalytics();
 
   if (isGtmInstalled()) {
     trackGtmEvent(eventName, params);
@@ -130,11 +135,8 @@ export function trackEvent(eventName, params = {}) {
 }
 
 export function scheduleAnalytics() {
-  if (isGtmInstalled()) {
-    scheduleGtmAnalytics();
-  } else {
-    scheduleFallbackGtag();
-  }
+  if (!hasAnalyticsConsent()) return;
+  scheduleGtmAnalytics();
 
   import('./conversionClickTracking.js').then(({ initConversionClickTracking }) => {
     initConversionClickTracking();

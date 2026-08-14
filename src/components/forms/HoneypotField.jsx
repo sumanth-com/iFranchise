@@ -12,7 +12,6 @@ export default function HoneypotField({ value, onChange }) {
       value={value ?? ''}
       onChange={(e) => onChange?.(HONEYPOT_FIELD, e.target.value)}
       tabIndex={-1}
-      readOnly
       autoComplete="off"
       aria-hidden="true"
       data-lpignore="true"

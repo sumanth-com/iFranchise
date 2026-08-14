@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { HONEYPOT_FIELD } from '@/lib/forms';
 import { clearSubmissionGuard } from '@/lib/forms/utils/submissionGuard';
 import { mapRequestError } from '@/lib/forms/utils/requestClient';
+import { PRIVACY_CONSENT_FIELD } from '@/lib/forms/privacyConsent';
 
 const DEFAULT_MESSAGES = {
   title: 'Thank you!',
@@ -144,5 +145,9 @@ export function useFormSubmission({
 }
 
 export function withHoneypot(initialValues) {
-  return { ...initialValues, [HONEYPOT_FIELD]: '' };
+  return {
+    ...initialValues,
+    [HONEYPOT_FIELD]: '',
+    [PRIVACY_CONSENT_FIELD]: false,
+  };
 }

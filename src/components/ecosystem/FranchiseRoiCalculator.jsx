@@ -5,8 +5,12 @@ import { PageCtaSection } from './EducationalSections';
 import CtaButton from '../ui/CtaButton';
 import HoneypotField from '../forms/HoneypotField';
 import FormSuccessState from '../forms/FormSuccessState';
+import ProcessingConsentField from '../forms/ProcessingConsentField';
 import { useFormSubmission, withHoneypot } from '../../hooks/useFormSubmission';
-import { submitContactForm } from '@/lib/forms';
+import { HONEYPOT_FIELD, submitContactForm } from '@/lib/forms';
+import { createEmptyPhoneValue } from '@/lib/phoneInput';
+import PhoneInput from '../forms/PhoneInput';
+import StateLocationFields from '../forms/StateLocationFields';
 import { getCardBaseStyle } from '../../lib/cardThemeStyles';
 import { useTheme } from '../../context/ThemeContext';
 import { navigateTo } from '../../lib/navigation';
@@ -59,12 +63,16 @@ function LeadCaptureForm({ resultsSummary }) {
   const { values, setField, handleSubmit, isSubmitting, isSuccess, submitError, fieldErrors } =
     useFormSubmission({
       initialValues: withHoneypot({
-        name: '',
+        fullName: '',
         email: '',
-        phone: '',
+        contactNumber: createEmptyPhoneValue(),
+        company: '',
+        state: '',
+        city: '',
         message: `Franchise ROI Calculator results: ${resultsSummary}`,
       }),
-      onSubmit: (vals) => submitContactForm({ ...vals, sourcePage: 'franchise_roi_calculator' }),
+      onSubmit: (vals, { signal }) =>
+        submitContactForm(vals, 'franchise_roi_calculator', { signal }),
       formKey: 'franchise_roi_calculator',
     });
 
@@ -80,23 +88,23 @@ function LeadCaptureForm({ resultsSummary }) {
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-4 rounded-2xl border border-violet-400/20 p-6 card-premium-dark">
       <h3 className="text-base font-extrabold text-white">Get expert validation on your projection</h3>
-      <HoneypotField value={values._honeypot} onChange={setField} />
+      <HoneypotField value={values[HONEYPOT_FIELD]} onChange={setField} />
       <div className="grid gap-4 sm:grid-cols-2">
         <input
           type="text"
           placeholder="Name"
-          value={values.name}
-          onChange={(e) => setField('name', e.target.value)}
+          value={values.fullName}
+          onChange={(e) => setField('fullName', e.target.value)}
           className="rounded-xl border border-violet-500/20 bg-white/5 px-4 py-2.5 text-sm text-white"
           required
         />
-        <input
-          type="tel"
-          placeholder="Phone"
-          value={values.phone}
-          onChange={(e) => setField('phone', e.target.value)}
-          className="rounded-xl border border-violet-500/20 bg-white/5 px-4 py-2.5 text-sm text-white"
+        <PhoneInput
+          id="roi-calculator-phone"
           required
+          variant="dark"
+          value={values.contactNumber}
+          onChange={(value) => setField('contactNumber', value)}
+          error={fieldErrors.contactNumber}
         />
       </div>
       <input
@@ -107,10 +115,30 @@ function LeadCaptureForm({ resultsSummary }) {
         className="w-full rounded-xl border border-violet-500/20 bg-white/5 px-4 py-2.5 text-sm text-white"
         required
       />
+      <StateLocationFields
+        layout="row"
+        variant="dark"
+        stateValue={values.state}
+        cityValue={values.city}
+        onStateChange={(value) => setField('state', value)}
+        onCityChange={(value) => setField('city', value)}
+        stateError={fieldErrors.state}
+        cityError={fieldErrors.city}
+        stateId="roi-calculator-state"
+        cityId="roi-calculator-city"
+      />
       {submitError ? <p className="text-sm text-red-400">{submitError}</p> : null}
-      {fieldErrors.name || fieldErrors.email || fieldErrors.phone ? (
+      {fieldErrors.fullName || fieldErrors.email || fieldErrors.contactNumber ? (
         <p className="text-sm text-red-400">Please complete all fields correctly.</p>
       ) : null}
+      <ProcessingConsentField
+        value={values.privacyConsent}
+        onChange={setField}
+        purpose="respond about this ROI projection and related franchise advisory enquiry"
+        error={fieldErrors.privacyConsent}
+        variant="dark"
+        id="roi-calculator-privacy-consent"
+      />
       <CtaButton type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Submitting…' : 'Connect With Franchise Experts'}
       </CtaButton>

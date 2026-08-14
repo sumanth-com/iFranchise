@@ -26,7 +26,37 @@ const SHEET_TABS = {
   chatbot_strategy: 'Chatbot_Strategy',
   brochure_download: 'Brochure_Downloads',
   franchise_inquiry: 'Franchise_Inquiries',
-  career_application: 'Career_Applications'
+  career_application: 'Career_Applications',
+  data_rights_request: 'Data_Rights_Requests'
+};
+
+const REQUIRED_DATA_FIELDS = {
+  contact: ['name', 'email', 'phone', 'message', 'state', 'city'],
+  brand_application: ['brandName', 'industry', 'contactName', 'contactEmail', 'contactPhone'],
+  chatbot_brand: ['brand_name', 'contact_name', 'contact_phone'],
+  chatbot_investor: ['industries', 'contact_name', 'contact_phone'],
+  chatbot_strategy: ['name', 'phone', 'preferred_date', 'preferred_time'],
+  brochure_download: ['name', 'email', 'phone', 'franchise_id', 'franchise_name', 'state', 'city'],
+  franchise_inquiry: ['franchise_id', 'franchise_name', 'franchise_type', 'full_name', 'email', 'phone', 'state', 'city'],
+  career_application: ['role_id', 'role_title', 'name', 'email', 'phone', 'resume_link', 'state', 'city', 'message'],
+  data_rights_request: ['request_type', 'name', 'email', 'details']
+};
+
+const CONSENT_REQUIRED_TYPES = {
+  contact: true,
+  brand_application: true,
+  brochure_download: true,
+  franchise_inquiry: true,
+  career_application: true,
+  data_rights_request: true
+};
+
+const DATA_RIGHTS_REQUEST_TYPES = {
+  access_information: true,
+  correction: true,
+  erasure: true,
+  consent_withdrawal: true,
+  grievance: true
 };
 
 /**
@@ -136,8 +166,27 @@ const SHEET_HEADERS = {
     'City',
     'Message',
     'Submitted At'
+  ],
+  Data_Rights_Requests: [
+    'Timestamp',
+    'Source Page',
+    'Request Type',
+    'Full Name',
+    'Email',
+    'Request Details',
+    'Verification Acknowledgment',
+    'Workflow Status',
+    'Submitted At'
   ]
 };
+
+const CONSENT_HEADERS = [
+  'Consent Purpose',
+  'Consent Status',
+  'Consent Timestamp',
+  'Privacy Notice Version',
+  'Consent Source'
+];
 
 // ============================================================================
 // MAIN HANDLER
@@ -152,7 +201,10 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return handleRequest(e);
+  return createResponse({
+    success: false,
+    error: 'Method not allowed. Submit forms using POST.'
+  }, 405);
 }
 
 /**
@@ -180,6 +232,98 @@ function parseRequestPayload(e) {
   return null;
 }
 
+function isPlainObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isValidEmail(value) {
+  const email = String(value || '').trim();
+  return email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateSubmissionPayload(payload) {
+  if (!isPlainObject(payload)) {
+    return { ok: false, reason: 'payload_not_object' };
+  }
+
+  const formType = payload.form_type;
+  if (!SHEET_TABS[formType]) {
+    return { ok: false, reason: 'invalid_form_type' };
+  }
+  if (payload.sheet_tab !== SHEET_TABS[formType]) {
+    return { ok: false, reason: 'invalid_sheet_tab' };
+  }
+  if (!isPlainObject(payload.data)) {
+    return { ok: false, reason: 'invalid_data' };
+  }
+  if (Object.keys(payload.data).length > 40) {
+    return { ok: false, reason: 'too_many_fields' };
+  }
+
+  const sourcePage = String(payload.source_page || '');
+  if (!sourcePage || sourcePage.length > 160) {
+    return { ok: false, reason: 'invalid_source_page' };
+  }
+
+  const keys = Object.keys(payload.data);
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i];
+    const value = payload.data[key];
+    if (!/^[a-zA-Z][a-zA-Z0-9_]*$/.test(key)) {
+      return { ok: false, reason: 'invalid_field_name' };
+    }
+    if (typeof value === 'string') {
+      const maxLength = key === 'message' || key === 'details' || key === 'description' ? 4000 : 1000;
+      if (value.length > maxLength) {
+        return { ok: false, reason: 'field_too_long' };
+      }
+    } else if (typeof value !== 'boolean' && typeof value !== 'number') {
+      return { ok: false, reason: 'invalid_field_value' };
+    }
+  }
+
+  const requiredFields = REQUIRED_DATA_FIELDS[formType] || [];
+  for (let i = 0; i < requiredFields.length; i += 1) {
+    const requiredValue = payload.data[requiredFields[i]];
+    if (requiredValue === null || requiredValue === undefined || String(requiredValue).trim() === '') {
+      return { ok: false, reason: 'missing_required_field' };
+    }
+  }
+
+  const emailValue =
+    payload.data.email ||
+    payload.data.contactEmail ||
+    payload.data.consultation_email ||
+    '';
+  if (emailValue && !isValidEmail(emailValue)) {
+    return { ok: false, reason: 'invalid_email' };
+  }
+
+  if (
+    formType === 'data_rights_request' &&
+    (!DATA_RIGHTS_REQUEST_TYPES[payload.data.request_type] ||
+      payload.data.verification_acknowledgment !== true)
+  ) {
+    return { ok: false, reason: 'invalid_rights_request' };
+  }
+
+  if (CONSENT_REQUIRED_TYPES[formType]) {
+    const consent = payload.consent;
+    if (
+      !isPlainObject(consent) ||
+      consent.status !== 'granted' ||
+      !consent.purpose ||
+      !consent.timestamp ||
+      !consent.notice_version ||
+      consent.source !== sourcePage
+    ) {
+      return { ok: false, reason: 'invalid_consent_record' };
+    }
+  }
+
+  return { ok: true };
+}
+
 /**
  * Central request handler
  * Processes incoming requests and returns appropriate response
@@ -193,7 +337,11 @@ function handleRequest(e) {
       lock.waitLock(10000);
       lockHeld = true;
     } catch (lockError) {
-      console.warn('Lock not acquired, continuing submission:', lockError);
+      console.error('Lock not acquired:', lockError);
+      return createResponse({
+        success: false,
+        error: 'Form service is busy. Please try again.'
+      }, 503);
     }
 
     if (!e) {
@@ -217,11 +365,12 @@ function handleRequest(e) {
         error: 'Empty or invalid payload. Please send valid JSON data.',
       }, 400);
     }
-    // Validate required fields
-    if (!payload.form_type || !payload.sheet_tab || !payload.data) {
+    const payloadValidation = validateSubmissionPayload(payload);
+    if (!payloadValidation.ok) {
+      console.warn('Rejected invalid submission:', payloadValidation.reason);
       return createResponse({
         success: false,
-        error: 'Missing required fields: form_type, sheet_tab, or data',
+        error: 'Invalid submission. Please review the form and try again.',
       }, 400);
     }
 
@@ -232,7 +381,7 @@ function handleRequest(e) {
     console.error('Error in handleRequest:', error);
     return createResponse({
       success: false,
-      error: 'Internal server error: ' + error.toString(),
+      error: 'Internal server error. Please try again later.',
     }, 500);
   } finally {
     if (lockHeld) {
@@ -260,14 +409,8 @@ function resolveSheetTab(formType, requestedTab) {
   const expectedTab = SHEET_TABS[formType];
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  if (requestedTab === expectedTab && ss.getSheetByName(expectedTab)) {
-    return expectedTab;
-  }
   if (ss.getSheetByName(expectedTab)) {
     return expectedTab;
-  }
-  if (requestedTab && ss.getSheetByName(requestedTab)) {
-    return requestedTab;
   }
   if (formType === 'contact' && ss.getSheetByName('Contact Leads')) {
     return 'Contact Leads';
@@ -280,13 +423,20 @@ function resolveSheetTab(formType, requestedTab) {
  */
 function processSubmission(payload) {
   try {
-    const { form_type, sheet_tab, data, source_page, submitted_at } = payload;
+    const { form_type, sheet_tab, data, source_page, submitted_at, consent } = payload;
     
     // Validate form_type
     if (!SHEET_TABS[form_type]) {
       return {
         success: false,
         error: `Invalid form_type: ${form_type}. Valid types: ${Object.keys(SHEET_TABS).join(', ')}`
+      };
+    }
+
+    if (sheet_tab !== SHEET_TABS[form_type]) {
+      return {
+        success: false,
+        error: 'Invalid submission destination'
       };
     }
     
@@ -299,7 +449,7 @@ function processSubmission(payload) {
     ensureHeaders(sheet, headerKeyForSheet(resolvedTab));
 
     const headerRow = getSheetHeaderRow(sheet);
-    const rowValues = prepareRowValues(form_type, data, source_page, submitted_at);
+    const rowValues = prepareRowValues(form_type, data, source_page, submitted_at, consent);
     const rowData = buildRowArray(headerRow, rowValues);
 
     // Append row to sheet (unlimited submissions — no per-user caps)
@@ -322,7 +472,7 @@ function processSubmission(payload) {
     console.error('Error in processSubmission:', error);
     return {
       success: false,
-      error: 'Failed to process submission: ' + error.toString()
+      error: 'Failed to process submission. Please try again.'
     };
   }
 }
@@ -364,10 +514,11 @@ function styleHeaderRange(sheet, row, startCol, colCount) {
  * Missing columns from SHEET_HEADERS are appended to the right of row 1.
  */
 function ensureHeaders(sheet, sheetName) {
-  const targetHeaders = SHEET_HEADERS[sheetName];
-  if (!targetHeaders) {
+  const formHeaders = SHEET_HEADERS[sheetName];
+  if (!formHeaders) {
     throw new Error('No headers defined for sheet: ' + sheetName);
   }
+  const targetHeaders = formHeaders.concat(CONSENT_HEADERS);
 
   const lastRow = sheet.getLastRow();
 
@@ -414,6 +565,14 @@ function getSheetHeaderRow(sheet) {
   });
 }
 
+function neutralizeSpreadsheetFormula(value) {
+  if (typeof value !== 'string') return value;
+  if (/^[\s]*[=+\-@]/.test(value)) {
+    return "'" + value;
+  }
+  return value;
+}
+
 /**
  * Build append row aligned to the sheet's header row (safe when columns were added later).
  */
@@ -424,7 +583,7 @@ function buildRowArray(headerRow, valuesByHeader) {
     }
     if (Object.prototype.hasOwnProperty.call(valuesByHeader, header)) {
       var value = valuesByHeader[header];
-      return value === null || value === undefined ? '' : value;
+      return value === null || value === undefined ? '' : neutralizeSpreadsheetFormula(value);
     }
     return '';
   });
@@ -451,13 +610,19 @@ function normalizePhone(phone) {
 /**
  * Prepare row values keyed by header name (form-type specific).
  */
-function prepareRowValues(formType, data, sourcePage, submittedAt) {
+function prepareRowValues(formType, data, sourcePage, submittedAt, consent) {
   const timestamp = new Date().toISOString();
   const submittedAtTime = submittedAt || timestamp;
+  const consentRecord = consent && typeof consent === 'object' ? consent : {};
   const base = {
     'Timestamp': timestamp,
     'Source Page': sourcePage || 'unknown',
     'Submitted At': submittedAtTime,
+    'Consent Purpose': consentRecord.purpose || '',
+    'Consent Status': consentRecord.status || '',
+    'Consent Timestamp': consentRecord.timestamp || '',
+    'Privacy Notice Version': consentRecord.notice_version || '',
+    'Consent Source': consentRecord.source || sourcePage || 'unknown',
   };
 
   switch (formType) {
@@ -556,6 +721,16 @@ function prepareRowValues(formType, data, sourcePage, submittedAt) {
         'Message': data.message || '',
       });
 
+    case 'data_rights_request':
+      return Object.assign({}, base, {
+        'Request Type': data.request_type || '',
+        'Full Name': data.name || '',
+        'Email': data.email || '',
+        'Request Details': data.details || '',
+        'Verification Acknowledgment': data.verification_acknowledgment === true ? 'Yes' : 'No',
+        'Workflow Status': 'New',
+      });
+
     default:
       throw new Error('Unknown form type: ' + formType);
   }
@@ -564,9 +739,10 @@ function prepareRowValues(formType, data, sourcePage, submittedAt) {
 /**
  * @deprecated Use prepareRowValues + buildRowArray
  */
-function prepareRowData(formType, data, sourcePage, submittedAt) {
-  const values = prepareRowValues(formType, data, sourcePage, submittedAt);
-  const headers = SHEET_HEADERS[SHEET_TABS[formType]];
+function prepareRowData(formType, data, sourcePage, submittedAt, consent) {
+  const values = prepareRowValues(formType, data, sourcePage, submittedAt, consent);
+  const formHeaders = SHEET_HEADERS[SHEET_TABS[formType]];
+  const headers = formHeaders ? formHeaders.concat(CONSENT_HEADERS) : null;
   if (!headers) {
     throw new Error('Unknown form type: ' + formType);
   }

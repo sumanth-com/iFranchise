@@ -356,16 +356,6 @@
     <!-- Inter loads after first paint (system font in critical CSS above) -->
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-P6Z67GFD"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- LCP hero: outside #root so React mount does not remove it -->
     <div
@@ -416,40 +406,5 @@
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <!-- Google Tag Manager — after app shell so LCP is not delayed -->
-    <script>
-      window.__IFR_GTM_CONTAINER__ = 'GTM-P6Z67GFD';
-      function ifrLoadGtm() {
-        if (window.__IFR_GTM_LOADED__) return;
-        window.__IFR_GTM_LOADED__ = true;
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : '';
-          j.async = true;
-          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-          f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-P6Z67GFD');
-      }
-      if ('requestIdleCallback' in window) {
-        window.addEventListener(
-          'load',
-          function () {
-            requestIdleCallback(ifrLoadGtm, { timeout: 4000 });
-          },
-          { once: true },
-        );
-      } else {
-        window.addEventListener(
-          'load',
-          function () {
-            setTimeout(ifrLoadGtm, 2500);
-          },
-          { once: true },
-        );
-      }
-    </script>
   </body>
 </html>

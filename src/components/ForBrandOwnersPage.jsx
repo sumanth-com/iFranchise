@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { submitBrandApplication } from '../lib/forms';
+import { HONEYPOT_FIELD, submitBrandApplication } from '../lib/forms';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
 import PhoneInput from './forms/PhoneInput';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import ProcessingConsentField from './forms/ProcessingConsentField';
 import StateLocationFields from './forms/StateLocationFields';
 import { navigateTo } from '@/lib/navigation';
 import { useTheme } from '../context/ThemeContext';
@@ -236,6 +237,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
     isSubmitting: submitting,
     isSuccess: submitted,
     submitError,
+    fieldErrors,
     handleSubmit,
     resetForm,
   } = useFormSubmission({
@@ -290,7 +292,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
               onSubmit={handleSubmit}
               className="relative flex min-h-0 flex-1 flex-col"
             >
-              <HoneypotField value={form._hp} onChange={set} />
+              <HoneypotField value={form[HONEYPOT_FIELD]} onChange={set} />
               <div className="lyb-hero-form-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
                 <div className="lyb-hero-form-grid grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
                 <Field label="Brand Name" required>
@@ -362,6 +364,16 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
                     placeholder="Brand story or goals (optional)"
                   />
                 </Field>
+                </div>
+                <div className="mt-3">
+                  <ProcessingConsentField
+                    value={form.privacyConsent}
+                    onChange={set}
+                    purpose="evaluate this brand application and respond about listing or expansion services"
+                    error={fieldErrors.privacyConsent}
+                    variant="dark"
+                    id="brand-application-privacy-consent"
+                  />
                 </div>
               </div>
               {submitError && (

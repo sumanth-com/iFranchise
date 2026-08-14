@@ -12,6 +12,7 @@ import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from './forms/HoneypotField';
 import FormSuccessState from './forms/FormSuccessState';
+import ProcessingConsentField from './forms/ProcessingConsentField';
 
 const INITIAL = withHoneypot({
   fullName: '',
@@ -76,18 +77,9 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
         signal,
       });
 
+      if (!result?.success) return result;
       await triggerBrochureDownload(brochureUrl, franchise.slug);
-
-      if (result?.success) {
-        return result;
-      }
-
-      return {
-        success: true,
-        data: {
-          message: 'Brochure download started',
-        },
-      };
+      return result;
     },
   });
 
@@ -242,6 +234,14 @@ export default function BrochureDownloadModal({ franchise, brochureUrl, onClose 
                 stateClassName={fieldClass(fieldErrors.state)}
                 cityClassName={fieldClass(fieldErrors.city)}
                 labelClassName="brochure-modal-label mb-1 block text-xs font-semibold text-slate-700"
+              />
+
+              <ProcessingConsentField
+                value={values.privacyConsent}
+                onChange={setField}
+                purpose={`provide the requested ${franchise.name} brochure and respond to this franchise interest`}
+                error={fieldErrors.privacyConsent}
+                id="brochure-download-privacy-consent"
               />
 
               {submitError ? (

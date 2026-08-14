@@ -28,6 +28,9 @@ function resolveNotifyUrl() {
 export function notifyLeadSubmission(payload) {
   if (!isNotifyEnabled()) return;
   if (!payload?.form_type || !payload?.data) return;
+  // Rights requests remain in the dedicated Sheet workflow until an approved
+  // compliance recipient and secure notification process are confirmed.
+  if (payload.form_type === 'data_rights_request') return;
 
   const secret = import.meta.env.VITE_LEAD_NOTIFY_SECRET;
   if (!secret) {

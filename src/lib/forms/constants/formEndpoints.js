@@ -35,6 +35,7 @@ export const SHEET_TABS = {
   [FORM_TYPES.BROCHURE_DOWNLOAD]: 'Brochure_Downloads',
   [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise_Inquiries',
   [FORM_TYPES.CAREER_APPLICATION]: 'Career_Applications',
+  [FORM_TYPES.DATA_RIGHTS_REQUEST]: 'Data_Rights_Requests',
 };
 
 /**
@@ -48,5 +49,6 @@ export const SOURCE_PAGES = {
   CHATBOT: 'chatbot',
   FRANCHISE_DETAILS: 'franchise_details_brochure',
   FRANCHISE_DETAILS_INQUIRY: 'franchise_details_inquiry',
+  DATA_RIGHTS_REQUEST: 'data_rights_request',
 };
 

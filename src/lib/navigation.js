@@ -65,6 +65,7 @@ export function getLogicalPathname() {
     return parseLocationPathname(pathname) ? '/franchise-opportunities' : '/404';
   }
   if (pathname === '/privacy-policy') return '/privacy-policy';
+  if (pathname === ROUTES.DATA_RIGHTS) return ROUTES.DATA_RIGHTS;
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
   if (pathname === ROUTES.BLOG || pathname === '/blog') return ROUTES.BLOG;
@@ -98,6 +99,7 @@ export function getLogicalPathname() {
     '/franchise-details',
     '/franchise-opportunities',
     '/privacy-policy',
+    ROUTES.DATA_RIGHTS,
     '/terms-and-conditions',
     '/licenses',
     ROUTES.CONTACT,

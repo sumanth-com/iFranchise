@@ -6,6 +6,7 @@ import StateLocationFields from '../forms/StateLocationFields';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from '../forms/HoneypotField';
 import FormSuccessState from '../forms/FormSuccessState';
+import ProcessingConsentField from '../forms/ProcessingConsentField';
 
 const inputBase =
   'career-apply-input site-form-field w-full rounded-lg border bg-white px-3 py-2 text-sm text-slate-900 outline-none transition';
@@ -26,16 +27,6 @@ function Label({ htmlFor, children, required = false }) {
         </span>
       ) : null}
     </label>
-  );
-}
-
-function CareerApplyFormDisclaimer() {
-  return (
-    <p className="career-apply-legal">
-      By submitting this form, you agree to our{' '}
-      <a href="/privacy-policy">Privacy Policy</a> and{' '}
-      <a href="/terms-and-conditions">Terms of Service</a>.
-    </p>
   );
 }
 
@@ -231,6 +222,13 @@ export default function CareerApplyForm({ role }) {
           </div>
 
           <div className="career-apply-form-footer pt-1 lg:pt-1.5">
+            <ProcessingConsentField
+              value={values.privacyConsent}
+              onChange={setField}
+              purpose={`evaluate this application for the ${role.title} role and respond`}
+              error={fieldErrors.privacyConsent}
+              id={`career-privacy-consent-${role.id}`}
+            />
             <button
               type="submit"
               disabled={isSubmitting}
@@ -238,8 +236,6 @@ export default function CareerApplyForm({ role }) {
             >
               {isSubmitting ? 'Sending…' : 'Send application'}
             </button>
-
-            <CareerApplyFormDisclaimer />
 
             {submitError ? <p className="mt-2 text-center text-xs text-red-600">{submitError}</p> : null}
           </div>

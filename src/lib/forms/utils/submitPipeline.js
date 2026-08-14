@@ -11,6 +11,11 @@ import { prepareOutboundPayload } from './sanitizePayload.js';
 import { logFormInfo, logFormError } from './formLogger.js';
 import { notifyLeadSubmission } from './leadNotification.js';
 import { trackFormConversion } from '../../analytics/conversionEvents.js';
+import {
+  createProcessingConsentRecord,
+  hasProcessingConsent,
+  requiresProcessingConsent,
+} from '../privacyConsent.js';
 
 function buildMetadata(sourcePage) {
   if (typeof window === 'undefined') {
@@ -28,6 +33,14 @@ function attachMetadata(payload, sourcePage) {
   return {
     ...payload,
     metadata: buildMetadata(sourcePage),
+  };
+}
+
+function attachConsent(payload, formType, sourcePage) {
+  if (!requiresProcessingConsent(formType)) return payload;
+  return {
+    ...payload,
+    consent: createProcessingConsentRecord(formType, sourcePage),
   };
 }
 
@@ -65,17 +78,27 @@ export async function runFormSubmission({
 
     const cleaned = stripHoneypot(rawData);
     const validation = validate(cleaned);
+    const validationErrors = { ...(validation.errors || {}) };
+    if (requiresProcessingConsent(formType) && !hasProcessingConsent(rawData)) {
+      validationErrors.privacyConsent =
+        'Please confirm the specific use of your submitted details.';
+    }
 
-    if (!validation.success) {
+    if (!validation.success || Object.keys(validationErrors).length > 0) {
       logFormInfo('pipeline_validation_failed', { formType, sourcePage, code: 'VALIDATION_ERROR' });
-      return createValidationErrorResponse(validation.errors);
+      return createValidationErrorResponse(validationErrors);
     }
 
     if (signal?.aborted) {
       return { success: false, error: 'Submission cancelled.', code: 'ABORTED' };
     }
 
-    const rawPayload = attachMetadata(transform(validation.data, sourcePage), sourcePage);
+    const transformed = transform(validation.data, sourcePage);
+    const rawPayload = attachConsent(
+      attachMetadata(transformed, sourcePage),
+      formType,
+      sourcePage,
+    );
     const prepared = prepareOutboundPayload(rawPayload);
     if (!prepared.ok) {
       logFormError('pipeline_payload_invalid', { formType, sourcePage, code: prepared.code });

@@ -9,7 +9,7 @@ import {
 const sections = [
   {
     title: 'Introduction',
-    body: 'These Terms & Conditions ("Terms") govern your access to and use of the iFranchise platform, including franchise opportunity discovery, brand engagement workflows, advisory services, and all related digital tools and content made available through our website and applications. Please read these Terms carefully before using our services.',
+    body: 'REQUIRES LEGAL REVIEW. These Terms & Conditions govern access to and use of the iFranchise website, franchise opportunity discovery, brand enquiry workflows, advisory content, and related website tools. The registered legal entity operating under the iFranchise name must be confirmed before this wording is approved.',
   },
   {
     title: 'Acceptance of Terms',
@@ -21,11 +21,11 @@ const sections = [
   },
   {
     title: 'User Responsibilities',
-    body: `You agree to provide accurate, current, and complete information during registration and throughout your use of the platform. You are responsible for maintaining the confidentiality of your account credentials and for all activities conducted under your account. Any unauthorized access or suspected security breach must be reported to us immediately at ${SITE_CONTACT_EMAIL}.`,
+    body: `REQUIRES LEGAL REVIEW. You should provide accurate and current information when submitting a website form and must not submit another person’s personal data without authority. The current website does not provide user registration or account credentials. Suspected misuse or security issues may be reported to ${SITE_CONTACT_EMAIL}.`,
   },
   {
     title: 'Prohibited Conduct',
-    body: 'You agree not to misuse platform content, submit fraudulent or misleading franchise applications, reverse-engineer any part of the platform, scrape or harvest data without authorization, interfere with system security or availability, impersonate any person or entity, or use the platform for any unlawful purpose. Violations may result in immediate account suspension and legal action.',
+    body: 'REQUIRES LEGAL REVIEW. You must not submit fraudulent or misleading information, impersonate another person, harvest personal data without authority, interfere with website security or availability, send automated abuse, introduce malicious content, or use the website for an unlawful purpose. Access may be restricted and appropriate action considered where misuse is detected.',
   },
   {
     title: 'Franchise Information Disclaimer',
@@ -33,7 +33,25 @@ const sections = [
   },
   {
     title: 'Payments and Transactions',
-    body: 'Certain advisory services, premium listings, or platform features may involve fees. All pricing, applicable taxes, refund eligibility, and payment timelines are governed by the specific service agreement presented at the point of purchase or onboarding. iFranchise uses third-party payment processors and does not store full payment card details on its servers.',
+    body: 'REQUIRES LEGAL REVIEW. No payment-card collection or checkout provider is implemented in the current website code. If a paid service is offered through a separate agreement or external process, the responsible entity, pricing, taxes, refund terms, payment provider and related privacy disclosures must be confirmed at that time.',
+  },
+  {
+    title: 'Personal Data and Privacy',
+    body: (
+      <>
+        REQUIRES LEGAL REVIEW. Personal data submitted through the website is handled as described in the{' '}
+        <a className="font-semibold underline" href="/privacy-policy">
+          Privacy Notice
+        </a>
+        . A person submitting information must have authority to provide it and should use the available{' '}
+        <a className="font-semibold underline" href="/data-rights-request">
+          Data Rights Request form
+        </a>{' '}
+        for applicable access-related information, correction, erasure, consent-withdrawal or grievance
+        requests. iFranchise may need to verify identity or authority before acting on a request and will
+        not automatically disclose stored personal data through the website.
+      </>
+    ),
   },
   {
     title: 'Intellectual Property',
@@ -49,7 +67,7 @@ const sections = [
   },
   {
     title: 'Termination',
-    body: 'iFranchise reserves the right to suspend or permanently terminate your access to the platform at any time, with or without notice, for violations of these Terms, security concerns, legal requirements, or conduct deemed harmful to the platform or its users. You may discontinue use of the platform at any time, subject to any outstanding obligations.',
+    body: 'REQUIRES LEGAL REVIEW. iFranchise may restrict access to public website functionality where necessary to address misuse, security concerns, legal requirements, or conduct harmful to the website or its users. The website currently has no user-account termination function.',
   },
   {
     title: 'Governing Law',
@@ -65,14 +83,14 @@ const sections = [
   },
   {
     title: 'Contact Information',
-    body: `For legal notices, compliance inquiries, or questions about these Terms, please contact us at ${SITE_CONTACT_EMAIL} or ${SITE_CONTACT_PHONE_DISPLAY}. Please include your account information and a clear description of your inquiry for prompt resolution.`,
+    body: `REQUIRES LEGAL REVIEW. For questions about these Terms, contact ${SITE_CONTACT_EMAIL} or ${SITE_CONTACT_PHONE_DISPLAY}. [BUSINESS/LEGAL TO CONFIRM: registered legal entity, formal notice address, and authorised legal contact.] Do not include unnecessary personal or confidential information.`,
   },
 ];
 
 function TermsConditionsPage() {
   return (
     <LegalPageLayout
-      badge="Legal"
+      badge="REQUIRES LEGAL REVIEW"
       title="Terms & Conditions"
       subtitle="The rules, rights, and responsibilities that govern your use of the iFranchise platform, services, and franchise marketplace ecosystem."
       sections={sections}
@@ -112,7 +130,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
     <div className="legal-page relative z-10 min-h-screen overflow-x-hidden text-white">
       {/* Page Header */}
       <div className="border-b border-violet-500/20 card-premium-dark-inner rounded-none border-x-0 border-t-0">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+        <div className="mx-auto max-w-5xl px-5 py-14 text-center sm:px-8 sm:py-20">
           {badge && (
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-white/80 mb-5">
               {badge}
@@ -121,7 +139,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
           <h1 className={`${pageHeroClass(false)} mb-5`}>
             {title}
           </h1>
-          <p className="text-base sm:text-lg text-white leading-relaxed max-w-2xl mb-6">
+          <p className="mx-auto mb-6 max-w-2xl text-base leading-relaxed text-white sm:text-lg">
             {subtitle}
           </p>
           <p className="text-sm text-white">
@@ -131,8 +149,8 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
       </div>
 
       {/* Document Body */}
-      <div className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-        <div className="card-premium-dark overflow-hidden rounded-3xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:p-8 md:p-10">
+      <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
+        <div className="card-premium-dark overflow-hidden rounded-3xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:p-8 md:p-10 lg:p-12">
           {sections.map((section, i) => (
             <LegalSection
               key={i}

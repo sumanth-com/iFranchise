@@ -6,6 +6,7 @@ import { getPartnerBrandLogos } from '../data/franchiseData';
 import { TYPE } from '../lib/typography.js';
 import { SITE_CONTACT_ADDRESS, SITE_CONTACT_MAPS_URL } from '../data/siteContact';
 import { PREFOOTER_CTA_CONTENT } from '../lib/preFooterCta';
+import { openPrivacyChoices } from '../lib/analytics/analyticsConsent';
 
 const PARTNER_BRAND_NAMES = getPartnerBrandLogos(12).map((p) => p.name);
 const BRAND_NAME_TRACK =
@@ -296,8 +297,9 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
               <SocialFollowBlock />
               <div className="footer-legal-links">
                 {[
-                  { label: 'Privacy Policy', path: '/privacy-policy' },
+                  { label: 'Privacy Notice', path: '/privacy-policy' },
                   { label: 'Terms of Service', path: '/terms-and-conditions' },
+                  { label: 'Data Rights', path: '/data-rights-request' },
                 ].map((item) => (
                   <FooterJumpLink
                     key={item.label}
@@ -307,6 +309,13 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
                     {item.label}
                   </FooterJumpLink>
                 ))}
+                <button
+                  type="button"
+                  onClick={openPrivacyChoices}
+                  className="footer-jump-link footer-jump-link--legal touch-manipulation cursor-pointer border-0 bg-transparent p-0"
+                >
+                  Privacy choices
+                </button>
               </div>
             </div>
           </div>

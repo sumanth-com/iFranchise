@@ -19,14 +19,18 @@ export function createConfigErrorResponse(message = 'Server configuration error.
 
 export function parseSubmissionResponse(body) {
   if (!body || typeof body !== 'object') {
-    return { success: true, data: { message: 'Form submitted successfully' } };
+    return {
+      success: false,
+      error: 'The form service returned an invalid response. Please try again.',
+      code: 'INVALID_RESPONSE',
+    };
   }
 
-  if (body.success === false) {
+  if (body.success !== true) {
     return {
       success: false,
       error: body.error || body.message || 'Submission failed. Please try again.',
-      code: 'SERVER_ERROR',
+      code: body.code || 'SERVER_ERROR',
     };
   }
 

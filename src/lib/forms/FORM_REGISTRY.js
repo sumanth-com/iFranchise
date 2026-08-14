@@ -87,6 +87,15 @@ export const FORM_REGISTRY = [
     sourcePage: 'careers_role_detail',
     hook: 'CareerApplyForm',
   },
+  {
+    id: 'data_rights_request',
+    label: 'Data Rights Request',
+    formType: FORM_TYPES.DATA_RIGHTS_REQUEST,
+    sheetTab: SHEET_TABS[FORM_TYPES.DATA_RIGHTS_REQUEST],
+    submitter: 'submitDataRightsRequest',
+    sourcePage: 'data_rights_request',
+    hook: 'useFormSubmission',
+  },
 ];
 
 export const FORM_REGISTRY_NOTES = {

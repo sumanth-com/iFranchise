@@ -9,7 +9,7 @@ import { preloadHomeHeroForTheme } from '../lib/preloadHomeHero.js';
 import { removeStaticHero } from '../lib/removeStaticHero.js';
 import { HOME_HERO_DARK, HOME_HERO_LIGHT, HERO_MOBILE_MQ } from '../lib/heroAssets.js';
 import HeroNationwidePins from './HeroNationwidePins';
-import { submitContactForm } from '../lib/forms';
+import { HONEYPOT_FIELD, submitContactForm } from '../lib/forms';
 import { isContactFormReady } from '@/lib/contactForm';
 import { createEmptyPhoneValue } from '@/lib/phoneInput';
 import PhoneInput from './forms/PhoneInput';
@@ -18,6 +18,7 @@ import { navigateTo } from '@/lib/navigation';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import ProcessingConsentField from './forms/ProcessingConsentField';
 import { WHO_WE_SERVE_IMAGES, IMAGE_FALLBACK, FRANCHISE_CATEGORY_IMAGES } from '../data/sectionImages';
 import { SITE_CONTACT_ITEMS } from '../data/siteContact';
 import { HOME_PAGE_FAQS } from '../data/faqContent.js';
@@ -926,7 +927,7 @@ function ContactSection() {
     onSubmit: (data, { signal }) => submitContactForm(data, 'homepage_contact', { signal }),
   });
 
-  const canSend = isContactFormReady(formData);
+  const canSend = isContactFormReady(formData) && formData.privacyConsent === true;
 
   return (
     <section className="relative mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -996,7 +997,7 @@ function ContactSection() {
               />
             ) : (
             <form className="relative space-y-3 sm:space-y-4" onSubmit={handleSubmit}>
-              <HoneypotField value={formData._hp} onChange={handleInputChange} />
+              <HoneypotField value={formData[HONEYPOT_FIELD]} onChange={handleInputChange} />
               <input
                 type="text"
                 placeholder="Full Name"
@@ -1046,6 +1047,13 @@ function ContactSection() {
                 onChange={(e) => handleInputChange('message', e.target.value)}
                 required
                 className="site-form-field site-form-field--on-dark w-full resize-none rounded-lg sm:rounded-xl border border-white/15 bg-black/25 px-3 sm:px-4 py-2.5 sm:py-3 text-sm text-white placeholder:text-white outline-none transition duration-200"
+              />
+              <ProcessingConsentField
+                value={formData.privacyConsent}
+                onChange={handleInputChange}
+                purpose="respond to this homepage franchise or advisory enquiry"
+                variant="dark"
+                id="homepage-contact-privacy-consent"
               />
               <button
                 type="submit"

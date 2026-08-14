@@ -15,6 +15,7 @@ export const FORM_TYPES = {
   BROCHURE_DOWNLOAD: 'brochure_download',
   FRANCHISE_INQUIRY: 'franchise_inquiry',
   CAREER_APPLICATION: 'career_application',
+  DATA_RIGHTS_REQUEST: 'data_rights_request',
 };
 
 export const FORM_LABELS = {
@@ -26,4 +27,5 @@ export const FORM_LABELS = {
   [FORM_TYPES.BROCHURE_DOWNLOAD]: 'Brochure Download Lead',
   [FORM_TYPES.FRANCHISE_INQUIRY]: 'Franchise Interest Inquiry',
   [FORM_TYPES.CAREER_APPLICATION]: 'Career Application',
+  [FORM_TYPES.DATA_RIGHTS_REQUEST]: 'Data Rights Request',
 };

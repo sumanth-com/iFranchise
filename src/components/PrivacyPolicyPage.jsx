@@ -9,61 +9,93 @@ import {
 
 const sections = [
   {
-    title: 'Introduction',
-    body: 'This Privacy Policy describes how iFranchise ("we", "our", or "us") collects, uses, discloses, and safeguards information when you access our franchise marketplace platform, submit enquiries, engage with advisory services, or interact with any feature of our digital ecosystem. By using iFranchise, you acknowledge the practices described in this document.',
+    title: 'Status of this notice',
+    body:
+      'REQUIRES LEGAL REVIEW. This notice is a technical draft based on processing visible in the website code. It is not a legal certification. The registered legal entity operating under the iFranchise name, the applicable processing grounds, retention schedule, grievance contact, processor contracts, cross-border processing details, and the commencement of applicable DPDP Act and Rules provisions require confirmation.',
   },
   {
-    title: 'Information We Collect',
-    body: 'We collect information you provide directly - including your name, email address, phone number, business details, and franchise preferences - as well as information generated through your use of the platform such as browsing activity, search queries, device identifiers, IP address, browser type, and interaction patterns. We may also receive information from third-party partners, franchise brands, and referral sources.',
+    title: 'Where this notice applies',
+    body:
+      'This notice describes personal-data handling visible on the iFranchise website when a person submits an enquiry, requests a franchise brochure, expresses interest in a franchise, applies to list a brand, applies for a role, requests data-principal assistance, or chooses to use analytics preferences and external contact links.',
   },
   {
-    title: 'How We Use Your Information',
-    body: 'We use collected information to operate and improve the platform, match users with relevant franchise opportunities, process enquiries and applications, deliver advisory communications, personalize your experience, prevent fraud and abuse, fulfill legal obligations under applicable Indian law, and send service-related notifications. We do not sell personal data to third parties for their independent marketing purposes.',
+    title: 'Personal data collected',
+    body:
+      'Depending on the form, the website may collect a name, email address, telephone number, company or brand details, state, city, preferred location, franchise or investment interests, enquiry message, job role, resume link, portfolio link, and request details. The form pipeline also attaches the source page, page URL, path, referrer, and submission timestamp. The website does not currently provide user accounts, collect passwords, accept direct resume uploads, or implement a payment-card form.',
   },
   {
-    title: 'Sharing of Information',
-    body: 'Information may be shared with franchise brands you express interest in, verified service partners, payment processors, cloud infrastructure providers, analytics vendors, and legal or regulatory authorities when required by law. All third-party data processors are contractually bound to handle your information in accordance with applicable data protection standards.',
+    title: 'Purposes visible in the implementation',
+    body:
+      'The collected information is used to receive and respond to contact and advisory enquiries, evaluate brand applications, handle interest in a named franchise, provide requested brochures, evaluate job applications, receive data-rights requests, prevent basic form abuse, operate the website, and measure website and form performance when analytics is permitted. Any additional use, including promotional email, SMS, telephone or WhatsApp marketing, requires business and legal confirmation and an appropriate separate choice where required.',
   },
   {
-    title: 'Cookies and Tracking Technologies',
-    body: 'We use cookies, pixel tags, and similar technologies to maintain session state, remember your preferences, measure platform performance, and deliver relevant content. You may manage cookie preferences through your browser settings. Disabling certain cookies may affect the availability or functionality of specific platform features.',
+    title: 'How form data is handled',
+    body:
+      'Submitted form information is validated and sanitised in the browser and sent over HTTPS to a Google Apps Script endpoint that appends it to a form-specific Google Sheets tab. When lead notifications are enabled in the deployment configuration, a Vercel serverless endpoint and Resend may also process a copy for an internal notification email. Google Sheet ownership, authorised users, email recipients, access-review procedures, backup practices, and storage regions are not established by this code and require business confirmation.',
   },
   {
-    title: 'Data Security',
-    body: 'We implement administrative, technical, and physical safeguards designed to protect your information from unauthorized access, disclosure, alteration, or destruction. These include encrypted data transmission, access controls, regular security assessments, and internal data handling policies. No system is completely secure, and we encourage users to maintain strong account credentials.',
+    title: 'Franchise enquiries and other recipients',
+    body:
+      'A franchise enquiry identifies the franchise in which the person expressed interest. The code stores that context with the enquiry. Whether identifiable enquiry data is subsequently shared with the relevant franchise brand, and under what controls, is an operational fact requiring business and legal confirmation. The code also contains user-initiated links to WhatsApp/Meta, Cal.com, Google Maps, telephone, email and social-sharing services; information entered after leaving the website is handled under the selected service’s own terms and privacy practices.',
   },
   {
-    title: 'Your Rights and Choices',
-    body: `Subject to applicable law, you have the right to access, correct, or request deletion of your personal data. You may also object to certain processing activities, request data portability, or withdraw consent where processing is consent-based. To exercise these rights, contact our compliance team at ${SITE_CONTACT_EMAIL}. We may require identity verification before processing sensitive requests.`,
+    title: 'Analytics, cookies and device storage',
+    body:
+      'The website uses first-party local or session storage for theme preference, scroll restoration, knowledge-hub progress, and the analytics-consent choice. Google Tag Manager and Google Analytics are intended to receive page and conversion events only after analytics consent. The exact tags in the live GTM container, GA4 settings, cookie names, retention settings, advertising features, and any additional pixels require a live configuration review. Analytics consent can be changed using the “Privacy choices” control in the website footer.',
   },
   {
-    title: 'Data Retention',
-    body: 'We retain personal information for as long as necessary to provide services, comply with legal obligations, resolve disputes, enforce agreements, and maintain platform security records. When data is no longer required, it is securely deleted or anonymized in accordance with our internal retention schedules.',
+    title: 'Retention',
+    body:
+      'REQUIRES LEGAL REVIEW. The code does not define or enforce a retention period for Google Sheets rows, internal notification emails, data-rights requests, analytics data, or third-party services. No automated deletion or anonymisation job exists. The business must approve a purpose-specific retention schedule and operational deletion procedure before a definite period can be stated here.',
   },
   {
-    title: 'Third-Party Links and Integrations',
-    body: 'Our platform may contain links to external websites, franchise brand portals, and partner services. iFranchise is not responsible for the privacy practices or content of third-party destinations. We encourage you to review the privacy policies of any external services you access through our platform.',
+    title: 'Security controls and limitations',
+    body:
+      'The implementation uses HTTPS endpoint validation, client-side field validation, payload sanitisation, honeypot fields, size limits, duplicate in-flight submission controls, and selected HTTP security headers. Access controls for Google Sheets and vendor systems are operational rather than defined in this repository. No internet service can be represented as completely secure, and this draft does not claim that security assessments, encryption at rest, or processor controls have been independently verified.',
   },
   {
-    title: 'Children\'s Privacy',
-    body: 'iFranchise is not directed at individuals under the age of 18. We do not knowingly collect personal information from minors. If we become aware that a minor has submitted personal data without appropriate consent, we will take steps to delete that information promptly.',
+    title: 'Data-principal requests',
+    body: (
+      <>
+        REQUIRES LEGAL REVIEW. Subject to applicable and commenced law, a person may request information
+        about processing, access-related information, correction, completion or updating, erasure,
+        withdrawal of consent where consent applies, and grievance handling. Submit a request through the{' '}
+        <a className="font-semibold underline" href="/data-rights-request">
+          Data Rights Request form
+        </a>{' '}
+        or contact {SITE_CONTACT_EMAIL}. Identity and request authority may need to be verified before any
+        personal data is disclosed, changed or erased. The website does not automatically expose stored
+        personal data.
+      </>
+    ),
   },
   {
-    title: 'Updates to This Policy',
-    body: 'We may revise this Privacy Policy periodically to reflect changes in our practices, legal requirements, or platform features. Material updates will be communicated through the platform interface or via registered contact details. Continued use of iFranchise after any update constitutes acceptance of the revised policy.',
+    title: 'Withdrawing consent',
+    body:
+      'REQUIRES LEGAL REVIEW. Analytics consent can be rejected or withdrawn through the website privacy choices. For a previously submitted form, use the Data Rights Request form or the contact details below and identify the form or enquiry involved. Withdrawal does not itself determine whether information must be retained for another confirmed legal requirement; that assessment requires an internal verified process.',
   },
   {
-    title: 'Contact Us',
-    body: `For privacy-related inquiries, data access requests, or compliance concerns, please contact us at ${SITE_CONTACT_EMAIL} or call ${SITE_CONTACT_PHONE_DISPLAY}. Our office is located at ${SITE_CONTACT_ADDRESS}, Bengaluru, Karnataka, India.`,
+    title: 'Children',
+    body:
+      'REQUIRES LEGAL REVIEW. The website and franchise investment services are presented for adults, and the Terms state an age threshold of 18. The forms do not currently perform age or parental-authority verification. The business and counsel must confirm whether any child-data processing is possible and what prevention or verifiable-consent controls are required.',
+  },
+  {
+    title: 'Grievance and privacy contact',
+    body: `REQUIRES LEGAL REVIEW. The website currently provides ${SITE_CONTACT_EMAIL}, ${SITE_CONTACT_PHONE_DISPLAY}, and ${SITE_CONTACT_ADDRESS}, Bengaluru, Karnataka, India as general contact details. [BUSINESS/LEGAL TO CONFIRM: name or role of the person responsible for personal-data queries and grievances, approved contact channel, and response process.] Until confirmed, the general contact channel may receive privacy queries but must not be represented as an appointed Grievance Officer or Data Protection Officer.`,
+  },
+  {
+    title: 'Changes to this notice',
+    body:
+      'REQUIRES LEGAL REVIEW. This notice should be versioned when processing or legal requirements change. Material changes affecting consent should be presented for a fresh choice where required. A legal effective date must be approved rather than inferred solely from the website deployment date.',
   },
 ];
 
 function PrivacyPolicyPage() {
   return (
     <LegalPageLayout
-      badge="Legal"
-      title="Privacy Policy"
-      subtitle="How iFranchise collects, uses, shares, and protects your information across our franchise marketplace and advisory platform."
+      badge="REQUIRES LEGAL REVIEW"
+      title="Privacy Notice"
+      subtitle="A technical draft describing personal-data handling currently visible in the iFranchise website implementation."
       sections={sections}
     />
   );
@@ -101,7 +133,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
     <div className="legal-page relative z-10 min-h-screen overflow-x-hidden text-white">
       {/* Page Header */}
       <div className="border-b border-violet-500/20 card-premium-dark-inner rounded-none border-x-0 border-t-0">
-        <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+        <div className="mx-auto max-w-5xl px-5 py-14 text-center sm:px-8 sm:py-20">
           {badge && (
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-white/80 mb-5">
               {badge}
@@ -110,7 +142,7 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
           <h1 className={`${pageHeroClass(false)} mb-5`}>
             {title}
           </h1>
-          <p className="text-base sm:text-lg text-white leading-relaxed max-w-2xl mb-6">
+          <p className="mx-auto mb-6 max-w-2xl text-base leading-relaxed text-white sm:text-lg">
             {subtitle}
           </p>
           <p className="text-sm text-white">
@@ -120,8 +152,8 @@ function LegalPageLayout({ title, subtitle, sections, badge }) {
       </div>
 
       {/* Document Body */}
-      <div className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-        <div className="card-premium-dark overflow-hidden rounded-3xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:p-8 md:p-10">
+      <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
+        <div className="card-premium-dark overflow-hidden rounded-3xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:p-8 md:p-10 lg:p-12">
           {sections.map((section, i) => (
             <LegalSection
               key={i}

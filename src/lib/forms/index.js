@@ -28,3 +28,7 @@ export * from './submitters/franchiseInquirySubmitter.js';
 export * from './submitters/careerApplicationSubmitter.js';
 export * from './validators/careerApplicationValidator.js';
 export * from './transformers/careerApplicationTransformer.js';
+export * from './validators/dataRightsRequestValidator.js';
+export * from './transformers/dataRightsRequestTransformer.js';
+export * from './submitters/dataRightsRequestSubmitter.js';
+export * from './privacyConsent.js';

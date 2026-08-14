@@ -22,3 +22,4 @@ export {
 export { submitBrochureDownload } from './submitters/brochureDownloadSubmitter.js';
 export { submitFranchiseInquiry } from './submitters/franchiseInquirySubmitter.js';
 export { submitCareerApplication } from './submitters/careerApplicationSubmitter.js';
+export { submitDataRightsRequest } from './submitters/dataRightsRequestSubmitter.js';

@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import PremiumFAQItem from './ui/PremiumFAQItem';
-import { submitContactForm } from '@/lib/forms';
+import { HONEYPOT_FIELD, submitContactForm } from '@/lib/forms';
 import { createEmptyPhoneValue, isContactFormReady } from '@/lib/contactForm';
 import PhoneInput from './forms/PhoneInput';
 import { useTheme } from '../context/ThemeContext';
 import { useFormSubmission, withHoneypot } from '../hooks/useFormSubmission';
 import FormSuccessState from './forms/FormSuccessState';
 import HoneypotField from './forms/HoneypotField';
+import ProcessingConsentField from './forms/ProcessingConsentField';
 import StateLocationFields from './forms/StateLocationFields';
 import SocialFollowBlock from './footer/SocialFollowBlock';
 import { sectionTitleClass } from '../lib/cardThemeStyles';
@@ -171,7 +172,7 @@ function ContactHeroForm({
   isLight,
 }) {
   const inputClass = isLight ? CONTACT_INPUT_LIGHT : CONTACT_INPUT_DARK;
-  const canSend = isContactFormReady(formData);
+  const canSend = isContactFormReady(formData) && formData.privacyConsent === true;
 
   return (
     <div
@@ -200,7 +201,7 @@ function ContactHeroForm({
           />
         ) : (
           <form onSubmit={handleSubmit} className="relative flex flex-col gap-3">
-            <HoneypotField value={formData._hp} onChange={handleInputChange} />
+            <HoneypotField value={formData[HONEYPOT_FIELD]} onChange={handleInputChange} />
             <div className="grid shrink-0 grid-cols-1 items-start gap-3 sm:grid-cols-2">
               <ContactField label="Full Name" required>
                 <input
@@ -268,6 +269,15 @@ function ContactHeroForm({
                 placeholder="Tell us about your project..."
               />
             </ContactField>
+
+            <ProcessingConsentField
+              value={formData.privacyConsent}
+              onChange={handleInputChange}
+              purpose="respond to this contact or advisory enquiry"
+              error={fieldErrors?.privacyConsent}
+              variant={isLight ? 'light' : 'dark'}
+              id="contact-page-privacy-consent"
+            />
 
             <motion.button
               type="submit"

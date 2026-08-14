@@ -68,6 +68,7 @@ export function prepareOutboundPayload(payload) {
     source_page: sanitizeString(payload.source_page, 120),
     data: sanitizeValue(data),
     metadata: payload.metadata ? sanitizeValue(payload.metadata) : undefined,
+    consent: payload.consent ? sanitizeValue(payload.consent) : undefined,
   };
 
   let json;

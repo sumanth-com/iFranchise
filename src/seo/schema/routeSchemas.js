@@ -50,6 +50,10 @@ const BREADCRUMB_MAP = {
   '/contact-us': [{ name: 'Home', path: '/' }, { name: 'Contact Us', path: '/contact-us' }],
   '/faq': [{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq' }],
   '/privacy-policy': [{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/privacy-policy' }],
+  '/data-rights-request': [
+    { name: 'Home', path: '/' },
+    { name: 'Data Rights Request', path: '/data-rights-request' },
+  ],
   '/terms-and-conditions': [
     { name: 'Home', path: '/' },
     { name: 'Terms & Conditions', path: '/terms-and-conditions' },
@@ -224,7 +228,12 @@ export function buildSchemasForRoute(seo, context = {}) {
     return schemas;
   }
 
-  if (logicalPathname === '/privacy-policy' || logicalPathname === '/terms-and-conditions' || logicalPathname === '/licenses') {
+  if (
+    logicalPathname === '/privacy-policy' ||
+    logicalPathname === '/data-rights-request' ||
+    logicalPathname === '/terms-and-conditions' ||
+    logicalPathname === '/licenses'
+  ) {
     pushSchema(
       schemas,
       'webpage',

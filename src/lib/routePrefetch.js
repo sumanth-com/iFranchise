@@ -10,6 +10,7 @@ const ROUTE_LOADERS = {
   '/franchise-details': () => import('../components/FranchiseDetailsPage'),
   '/franchise-opportunities': () => import('../components/FranchiseOpportunitiesPage'),
   '/privacy-policy': () => import('../components/PrivacyPolicyPage'),
+  [ROUTES.DATA_RIGHTS]: () => import('../components/DataRightsRequestPage'),
   '/terms-and-conditions': () => import('../components/TermsConditionsPage'),
   '/404': () => import('../components/NotFoundPage'),
   [ROUTES.CONTACT]: () => import('../components/ContactPage'),
@@ -44,6 +45,7 @@ export function logicalPathFromPathname(pathname) {
     return parseLocationPathname(pathname) ? '/franchise-opportunities' : '/404';
   }
   if (pathname === '/privacy-policy') return '/privacy-policy';
+  if (pathname === ROUTES.DATA_RIGHTS) return ROUTES.DATA_RIGHTS;
   if (pathname === '/terms-and-conditions' || pathname === '/terms') return '/terms-and-conditions';
   if (pathname === '/licenses') return '/licenses';
   if (pathname === '/contact' || pathname === ROUTES.CONTACT) return ROUTES.CONTACT;
@@ -75,6 +77,7 @@ export function logicalPathFromPathname(pathname) {
     '/franchise-details',
     '/franchise-opportunities',
     '/privacy-policy',
+    ROUTES.DATA_RIGHTS,
     '/terms-and-conditions',
     '/licenses',
     ROUTES.CONTACT,

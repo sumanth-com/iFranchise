@@ -13,6 +13,7 @@ import { HONEYPOT_FIELD } from '@/lib/forms';
 import { useFormSubmission, withHoneypot } from '@/hooks/useFormSubmission';
 import HoneypotField from './forms/HoneypotField';
 import FormSuccessState from './forms/FormSuccessState';
+import ProcessingConsentField from './forms/ProcessingConsentField';
 import './franchise-inquiry-modal.css';
 
 const FRANCHISE_TYPE_OPTIONS = [
@@ -59,19 +60,6 @@ function FieldError({ id, message }) {
   );
 }
 
-function FranchiseInquiryFormDisclaimer({ franchiseName }) {
-  const brand = String(franchiseName || 'this brand').trim();
-
-  return (
-    <p className="franchise-inquiry-modal__legal">
-      By submitting this form, you agree to our{' '}
-      <a href="/privacy-policy">Privacy Policy</a> and{' '}
-      <a href="/terms-and-conditions">Terms of Service</a>. iFranchise will review your enquiry for{' '}
-      <strong>{brand}</strong> franchise opportunities in India, including your preferred city or region.
-    </p>
-  );
-}
-
 export default function FranchiseInquiryModal({
   franchise,
   franchiseStructure,
@@ -80,7 +68,6 @@ export default function FranchiseInquiryModal({
   lockScroll = true,
   onUserInput,
   showWhatsAppAction = false,
-  showFormDisclaimer = true,
   whatsappUrl = SITE_CONTACT_WHATSAPP_URL,
 }) {
   const typeOptions = filterFranchiseTypes(franchiseStructure);
@@ -370,6 +357,13 @@ export default function FranchiseInquiryModal({
               </div>
 
               <div className="franchise-inquiry-modal__form-footer">
+                <ProcessingConsentField
+                  value={values.privacyConsent}
+                  onChange={setField}
+                  purpose={`respond to this ${franchise.name} franchise enquiry`}
+                  error={fieldErrors.privacyConsent}
+                  id={`franchise-inquiry-privacy-consent-${variant}`}
+                />
                 <div className="franchise-inquiry-modal__actions">
                   <button
                     type="submit"
@@ -390,9 +384,6 @@ export default function FranchiseInquiryModal({
                     </a>
                   ) : null}
                 </div>
-                {!showWhatsAppAction && showFormDisclaimer ? (
-                  <FranchiseInquiryFormDisclaimer franchiseName={franchise.name} />
-                ) : null}
               </div>
             </form>
           )}

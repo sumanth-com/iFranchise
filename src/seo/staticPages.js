@@ -130,15 +130,26 @@ export const STATIC_PAGE_SEO = {
     ogType: 'website',
   },
   '/privacy-policy': {
-    title: 'Privacy Policy | iFranchise',
+    title: 'Privacy Notice | iFranchise',
     description:
       'Read how iFranchise collects, uses, stores, and protects personal information when you browse franchise opportunities, submit forms, or contact our team.',
     keywords: 'privacy policy, data protection, ifranchise',
     canonicalPath: '/privacy-policy',
-    ogTitle: 'Privacy Policy | iFranchise',
+    ogTitle: 'Privacy Notice | iFranchise',
     ogDescription: 'How we handle your data on the iFranchise platform.',
     ogType: 'website',
     robots: 'index, follow',
+  },
+  '/data-rights-request': {
+    title: 'Data Rights Request | iFranchise',
+    description:
+      'Submit a request concerning access-related information, correction, erasure, consent withdrawal, or a privacy grievance to iFranchise.',
+    keywords: 'data rights request, privacy request, ifranchise',
+    canonicalPath: '/data-rights-request',
+    ogTitle: 'Data Rights Request | iFranchise',
+    ogDescription: 'Submit a privacy or personal-data request for internal verification and review.',
+    ogType: 'website',
+    robots: 'noindex, follow',
   },
   '/terms-and-conditions': {
     title: 'Terms & Conditions | iFranchise',

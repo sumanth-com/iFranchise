@@ -1,6 +1,7 @@
 import { useEffect, useState, lazy, Suspense, useRef, useCallback, startTransition } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AnalyticsConsentBanner from './components/AnalyticsConsentBanner';
 
 const AnimatedSiteBackdrop = lazy(() => import('./components/AnimatedSiteBackdrop'));
 import { FranchiseOpportunityNavbarFiltersProvider } from './context/FranchiseOpportunityNavbarFiltersContext';
@@ -33,6 +34,7 @@ const TeamPage                = lazy(() => import('./components/TeamPage'));
 const FranchiseDetailsPage    = lazy(() => import('./components/FranchiseDetailsPage'));
 const FranchiseOpportunitiesPage = lazy(() => import('./components/FranchiseOpportunitiesPage'));
 const PrivacyPolicyPage       = lazy(() => import('./components/PrivacyPolicyPage'));
+const DataRightsRequestPage   = lazy(() => import('./components/DataRightsRequestPage'));
 const TermsConditionsPage     = lazy(() => import('./components/TermsConditionsPage'));
 const NotFoundPage            = lazy(() => import('./components/NotFoundPage'));
 const ContactPage             = lazy(() => import('./components/ContactPage'));
@@ -296,6 +298,7 @@ function App() {
   const isFranchiseDetailsPage    = pathname === '/franchise-details';
   const isFranchiseOpportunitiesPage = pathname === '/franchise-opportunities';
   const isPrivacyPolicyPage       = pathname === '/privacy-policy';
+  const isDataRightsRequestPage   = pathname === '/data-rights-request';
   const isTermsPage               = pathname === '/terms-and-conditions';
   const isContactPage             = pathname === '/contact-us';
   const isLicensesPage            = pathname === '/licenses';
@@ -394,6 +397,7 @@ function App() {
             : isTermsPage ? <TermsConditionsPage />
             : isLicensesPage ? <LicensesPage />
             : isPrivacyPolicyPage ? <PrivacyPolicyPage />
+            : isDataRightsRequestPage ? <DataRightsRequestPage />
             : isServicesPage ? <ServicesPage />
             : isCareerDetailPage ? <CareerRolePage />
             : isCareersPage ? <CareersPage />
@@ -428,6 +432,7 @@ function App() {
         </Suspense>
       ) : null}
       <Footer />
+      <AnalyticsConsentBanner />
 
         {showExpansionAssistant && (
           <ErrorBoundary resetKey={pathname} label="Expansion assistant">

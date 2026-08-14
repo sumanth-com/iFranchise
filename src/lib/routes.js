@@ -18,6 +18,7 @@ export const ROUTES = {
   READINESS_ASSESSMENT: '/franchise-readiness-assessment',
   ROI_CALCULATOR: '/franchise-roi-calculator',
   PRIVACY: '/privacy-policy',
+  DATA_RIGHTS: '/data-rights-request',
   TERMS: '/terms-and-conditions',
   LICENSES: '/licenses',
 };
