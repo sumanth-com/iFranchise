@@ -59,7 +59,7 @@ const FAQS = [
   },
   {
     q: 'What roles are open right now?',
-    a: 'We are hiring for Social Media & Content Creator Intern, Business Development Trainee (6-month internship), and Asst. Business Development Manager (Franchise Expansion). View each role on our careers page and apply with your resume.',
+    a: 'We are hiring for UI/UX Designer, Full-Stack Developer, Business Development Trainee (6-month internship), and Asst. Business Development Manager (Franchise Expansion). View each role on our careers page and apply with your resume.',
   },
   {
     q: 'How do I apply?',

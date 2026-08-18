@@ -4019,7 +4019,7 @@ html[data-theme='light'] .careers-page .careers-open-roles {
 
 @media (min-width: 1024px) {
   .careers-role-list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.375rem;
   }
 }
@@ -4194,7 +4194,9 @@ html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card_
 
 .careers-role-card--v2 .careers-role-card__pills {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
   align-content: flex-start;
   gap: 0.375rem;
   margin-top: auto;
@@ -4296,6 +4298,147 @@ html[data-theme='light'] .careers-page .careers-role-card--v2 .careers-role-card
 
 html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__comp-value {
   color: #f8fafc !important;
+}
+
+/* Enterprise job-board card layout */
+.careers-role-card--v2 .careers-role-card__head {
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.careers-role-card--v2 .careers-role-card__head .careers-role-card__title {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.careers-role-card--v2 .careers-role-card__head .careers-role-card__title-link {
+  min-height: 0;
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.careers-role-card--v2 .careers-role-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.careers-role-card--v2 .careers-role-card__meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.careers-role-card--v2 .careers-role-card__meta svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+html[data-theme='light'] .careers-page .careers-role-card--v2 .careers-role-card__meta {
+  color: #64748b !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__meta {
+  color: #cbd5e1 !important;
+  border-bottom-color: rgba(139, 92, 246, 0.18);
+}
+
+.careers-role-card--v2 .careers-role-card__employment {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.25rem;
+}
+
+.careers-role-card--v2 .careers-role-card__body {
+  padding-top: 1rem;
+}
+
+.careers-role-card--v2 .careers-role-card__qualifications-title {
+  margin: 0 0 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.careers-role-card--v2 .careers-role-card__qualifications {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.125rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.careers-role-card--v2 .careers-role-card__qualifications-empty {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+html[data-theme='light'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications-title {
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications,
+html[data-theme='light'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications-empty {
+  color: #475569 !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications-title {
+  color: #f8fafc !important;
+}
+
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications,
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__qualifications-empty {
+  color: #cbd5e1 !important;
+}
+
+.careers-role-card--v2 .careers-role-card__footer--enterprise {
+  justify-content: flex-start;
+  margin-top: auto;
+}
+
+.careers-role-card--v2 .careers-role-card__learn-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.375rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #7c3aed;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #6d28d9;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.careers-role-card--v2 .careers-role-card__learn-more:hover {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__learn-more {
+  border-color: #a78bfa;
+  color: #ddd6fe;
+}
+
+html[data-theme='dark'] .careers-page .careers-role-card--v2 .careers-role-card__learn-more:hover {
+  background: #7c3aed;
+  color: #ffffff;
 }
 
 /* Shared careers CTAs */
@@ -5851,8 +5994,8 @@ html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero la
   html[data-theme='light'] .career-detail-page .career-detail-form-card--apply {
     width: 100%;
     max-width: 400px;
-    max-height: calc(100dvh - 8.5rem) !important;
-    overflow: visible !important;
+    max-height: none !important;
+    overflow: hidden !important;
   }
 
   .career-detail-page .career-detail-form-card--apply .career-apply-label {
@@ -5909,7 +6052,6 @@ html[data-theme='dark'] #main-content .career-detail-page .career-detail-hero la
 
   .career-detail-page .career-detail-form-card--apply {
     padding: 0.75rem 0.875rem !important;
-    max-height: calc(100dvh - 7.5rem) !important;
   }
 
   .career-detail-page .career-detail-form-card--apply .career-apply-title {

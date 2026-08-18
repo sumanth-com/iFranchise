@@ -9,10 +9,7 @@ import {
   DEPT_COLORS_DARK,
   getOpenRoles,
   HIRING_ACTIVE,
-  MODE_COLORS,
-  MODE_COLORS_DARK,
 } from '../careersData';
-import { CAREERS_LISTING_ICONS } from './careersListingIcons';
 
 const LINKEDIN = SOCIAL_LINKS.find((s) => s.id === 'linkedin');
 
@@ -34,6 +31,22 @@ function MapPinIcon() {
         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
       />
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  );
+}
+
+function BuildingIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden>
+      <path d="M4 21V5l8-3 8 3v16M8 9h2m4 0h2M8 13h2m4 0h2M8 17h2m4 0h2M2 21h20" />
+    </svg>
+  );
+}
+
+function BriefcaseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden>
+      <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-12 4h18m-16-4h14a2 2 0 0 1 2 2v10H3V9a2 2 0 0 1 2-2Z" />
     </svg>
   );
 }
@@ -76,9 +89,15 @@ function roleLocationLabel(location = '') {
 
 function RoleListingCard({ role, index, inView, isDark }) {
   const deptClass = (isDark ? DEPT_COLORS_DARK : DEPT_COLORS)[role.dept] || DEPT_COLORS.Sales;
-  const modeClass = (isDark ? MODE_COLORS_DARK : MODE_COLORS)[role.mode] || MODE_COLORS.Remote;
   const locationLabel = roleLocationLabel(role.location);
-  const listingIcon = CAREERS_LISTING_ICONS[role.dept] || CAREERS_LISTING_ICONS.Sales;
+  const experienceLabel =
+    role.experience && role.experience.toLowerCase() !== role.type?.toLowerCase()
+      ? role.experience
+      : '';
+  const minimumQualifications = [
+    ...(role.keySkills || []),
+    ...(role.requirements || []).filter((item) => !/\(preferred\)/i.test(item)),
+  ].slice(0, 4);
 
   return (
     <motion.article
@@ -89,13 +108,6 @@ function RoleListingCard({ role, index, inView, isDark }) {
     >
       <div className="careers-role-card__inner">
         <div className="careers-role-card__head">
-          <div className="careers-role-card__icon-wrap" aria-hidden>
-            {listingIcon}
-          </div>
-          <span className={`careers-role-card__dept ${deptClass}`}>{role.dept}</span>
-        </div>
-
-        <div className="careers-role-card__body">
           <h3 className="careers-role-card__title">
             <button
               type="button"
@@ -105,34 +117,51 @@ function RoleListingCard({ role, index, inView, isDark }) {
               {role.title}
             </button>
           </h3>
-
-          <p className="careers-role-card__summary">{role.tagline || '\u00A0'}</p>
-
-          <div className="careers-role-card__pills">
-            {role.type ? (
-              <span className="careers-role-card__pill careers-role-card__pill--neutral">{role.type}</span>
-            ) : null}
-            {role.mode ? (
-              <span className={`careers-role-card__pill careers-role-card__pill--mode ${modeClass}`}>
-                {role.mode}
-              </span>
-            ) : null}
-            {locationLabel ? (
-              <span className="careers-role-card__pill careers-role-card__pill--neutral careers-role-card__pill--location">
-                <MapPinIcon />
-                {locationLabel}
-              </span>
-            ) : null}
-          </div>
+          <span className={`careers-role-card__dept ${deptClass}`}>{role.dept}</span>
         </div>
 
-        <div className="careers-role-card__footer careers-role-card__footer--apply-only">
+        <div className="careers-role-card__meta">
+          <span>
+            <BuildingIcon />
+            iFranchise
+          </span>
+          {locationLabel ? (
+            <span>
+              <MapPinIcon />
+              {locationLabel}
+            </span>
+          ) : null}
+          {experienceLabel ? (
+            <span>
+              <BriefcaseIcon />
+              {experienceLabel}
+            </span>
+          ) : null}
+          {role.type ? <span className="careers-role-card__employment">{role.type}</span> : null}
+        </div>
+
+        <div className="careers-role-card__body">
+          <h4 className="careers-role-card__qualifications-title">Minimum qualifications</h4>
+          {minimumQualifications.length > 0 ? (
+            <ul className="careers-role-card__qualifications">
+              {minimumQualifications.map((qualification) => (
+                <li key={qualification}>{qualification}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="careers-role-card__qualifications-empty">
+              Review the complete role details and requirements.
+            </p>
+          )}
+        </div>
+
+        <div className="careers-role-card__footer careers-role-card__footer--enterprise">
           <button
             type="button"
             onClick={() => navigateTo(`/careers/${role.id}`)}
-            className="careers-role-card__apply careers-cta-pill careers-cta-pill--primary bg-violet-600 hover:bg-violet-700 text-white"
+            className="careers-role-card__learn-more"
           >
-            Apply Now
+            View role
             <ArrowIcon />
           </button>
         </div>

@@ -221,7 +221,7 @@ export default function CareerApplyForm({ role }) {
             ) : null}
           </div>
 
-          <div className="career-apply-form-footer pt-1 lg:pt-1.5">
+          <div className="career-apply-form-footer mt-2 space-y-3 border-t border-slate-100 pt-3">
             <ProcessingConsentField
               value={values.privacyConsent}
               onChange={setField}
