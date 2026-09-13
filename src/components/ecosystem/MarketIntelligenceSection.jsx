@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   franchiseOpportunities,
   getTotalCities,
@@ -53,7 +53,7 @@ const CHART_DATASETS = {
 };
 
 const CATEGORIES = [
-  { name: 'Food & Beverage', pct: 25, color: '#7c3aed' }, // 6 out of 24 = 25%
+  { name: 'Food & Beverage', pct: 25, color: '#2F0DA3' }, // 6 out of 24 = 25%
   { name: 'Home Services',   pct: 25, color: '#3b82f6' }, // 6 out of 24 = 25%
   { name: 'Health & Wellness', pct: 21, color: '#10b981' }, // 5 out of 24 = 21%
   { name: 'Retail',          pct: 17, color: '#f97316' }, // 4 out of 24 = 17%
@@ -88,7 +88,7 @@ function DonutChart({ active, isLight }) {
     <svg viewBox="0 0 128 128" className="market-donut-chart h-full w-full" aria-hidden>
       <defs>
         <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#7c3aed" />
+          <stop offset="0%" stopColor="#2F0DA3" />
           <stop offset="100%" stopColor="#6366f1" />
         </linearGradient>
       </defs>
@@ -184,7 +184,7 @@ function BarLineChart({ dataset, active }) {
         preserveAspectRatio="none" viewBox="0 0 100 100">
         <defs>
           <linearGradient id="lg2" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#7c3aed" />
+            <stop offset="0%" stopColor="#2F0DA3" />
             <stop offset="100%" stopColor="#a78bfa" />
           </linearGradient>
         </defs>
@@ -197,7 +197,7 @@ function BarLineChart({ dataset, active }) {
         />
         {line.map((v, i) => (
           <circle key={i} cx={(i / (line.length - 1)) * 100} cy={100 - v} r="1.4"
-            fill="#8b5cf6" opacity={active ? 1 : 0}
+            fill="#2F0DA3" opacity={active ? 1 : 0}
             style={{ transition: `opacity 0.25s ease ${0.25 + i * 0.08}s` }} />
         ))}
       </svg>
@@ -234,13 +234,13 @@ function NodeGraph({ active }) {
         {edges.map(([a, b], i) => (
           <line key={i}
             x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y}
-            stroke="#7c3aed" strokeWidth="0.5" strokeOpacity="0.25"
+            stroke="#2F0DA3" strokeWidth="0.5" strokeOpacity="0.25"
           />
         ))}
         {/* Nodes */}
         {nodes.map((n, i) => (
           <g key={i}>
-            <circle cx={n.x} cy={n.y} r={n.r + 3} fill="#7c3aed" fillOpacity="0.08">
+            <circle cx={n.x} cy={n.y} r={n.r + 3} fill="#2F0DA3" fillOpacity="0.08">
               {active && (
                 <animate attributeName="r" values={`${n.r+3};${n.r+6};${n.r+3}`}
                   dur="2.4s" begin={`${n.delay}s`} repeatCount="indefinite" />
@@ -258,7 +258,7 @@ function NodeGraph({ active }) {
         <defs>
           <radialGradient id="ng" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#a78bfa" />
-            <stop offset="100%" stopColor="#7c3aed" />
+            <stop offset="100%" stopColor="#2F0DA3" />
           </radialGradient>
         </defs>
       </svg>
@@ -324,8 +324,8 @@ function OpportunityGauge({ active }) {
           fill="none" stroke="url(#gaugeGrad)" strokeWidth="6" strokeLinecap="round" />
         {/* Needle */}
         <line x1={cx} y1={cy} x2={nx} y2={ny}
-          stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r="3" fill="#7c3aed" />
+          stroke="#2F0DA3" strokeWidth="2" strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r="3" fill="#2F0DA3" />
         <defs>
           <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#f43f5e" />
@@ -350,7 +350,7 @@ function OpportunityGauge({ active }) {
 /* Card 3 ? Benchmark Speedometer bars */
 function BenchmarkBars({ active }) {
   const segments = [
-    { label: 'Food & Bev',  score: 88, color: '#7c3aed' },
+    { label: 'Food & Bev',  score: 88, color: '#2F0DA3' },
     { label: 'Retail',      score: 72, color: '#3b82f6' },
     { label: 'Education',   score: 65, color: '#10b981' },
     { label: 'Wellness',    score: 58, color: '#f97316' },
@@ -513,7 +513,7 @@ function MarketIntelligenceSection() {
   }, []);
 
   const kpis = [
-    { label: 'Total Franchises',     value: `${marketSize}`, sub: 'Verified opportunities',   dotColor: '#7c3aed' },
+    { label: 'Total Franchises',     value: `${marketSize}`, sub: 'Verified opportunities',   dotColor: '#2F0DA3' },
     { label: 'Average ROI',     value: `${cagr}%`,             sub: 'Across all brands',   dotColor: '#10b981' },
     { label: 'Active Cities', value: `${cities}`,            sub: 'Pan India coverage', dotColor: '#3b82f6' },
     { label: 'Recent Growth',  value: `${investors}%`,         sub: 'Last 3 months',  dotColor: '#f97316' },
@@ -844,7 +844,7 @@ function MarketIntelligenceSection() {
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5">
-                      <div className="h-3 w-3 rounded-sm" style={{ background: 'linear-gradient(to top, #7c3aed, #a78bfa)' }} />
+                      <div className="h-3 w-3 rounded-sm" style={{ background: 'linear-gradient(to top, #2F0DA3, #a78bfa)' }} />
                       <span className={`text-[10px] font-medium ${ink}`}>Market Growth</span>
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -879,7 +879,7 @@ function MarketIntelligenceSection() {
                   </div>
                   <div className="flex flex-col gap-2">
                     {[
-                      { label: 'Franchise Model', pct: '72%', color: '#7c3aed' },
+                      { label: 'Franchise Model', pct: '72%', color: '#2F0DA3' },
                       { label: 'Independent', pct: '28%', color: isLight ? '#94a3b8' : '#e2e8f0' },
                     ].map((s) => (
                       <div key={s.label} className="flex items-center gap-1.5">

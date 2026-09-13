@@ -7,8 +7,8 @@ import { navigateTo as spaNavigate, getLogicalPathname, NAVIGATE_EVENT } from '@
 
 const STRATEGY_CAL_URL = 'https://cal.com/ifranchise.in/30min';
 
-const PURPLE_ICON_GRADIENT = 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 52%, #6366f1 100%)';
-const PURPLE_ICON_SHADOW = '0 6px 16px rgba(124, 58, 237, 0.32)';
+const PURPLE_ICON_GRADIENT = 'linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 52%, #6366f1 100%)';
+const PURPLE_ICON_SHADOW = '0 6px 16px rgba(47, 13, 163, 0.32)';
 import { useTheme } from '../context/ThemeContext';
 import AssistantBotIcon from './AssistantBotIcon';
 import './assistant-panel.css';
@@ -19,7 +19,7 @@ function getAssistantPalette() {
   return {
     mode: 'light',
     panel: '#ffffff',
-    header: '#ffffff',
+    header: '#2F0DA3',
     text: '#0f172a',
     textMuted: '#475569',
     mutedText: 'rgba(100,116,139,0.85)',
@@ -27,29 +27,29 @@ function getAssistantPalette() {
     divider: 'rgba(226,232,240,1)',
     inputBg: '#f8fafc',
     inputBorder: 'rgba(0,0,0,0.14)',
-    inputFocusBorder: 'rgba(124,58,237,0.5)',
-    inputFocusBg: 'rgba(124,58,237,0.06)',
+    inputFocusBorder: 'rgba(47,13,163,0.5)',
+    inputFocusBg: 'rgba(47,13,163,0.06)',
     chipBg: 'rgba(0,0,0,0.04)',
     chipHoverBg: 'rgba(0,0,0,0.07)',
     chipBorder: 'rgba(0,0,0,0.12)',
-    chipSelectedBg: 'rgba(124,58,237,0.12)',
-    chipSelectedBorder: 'rgba(124,58,237,0.45)',
+    chipSelectedBg: 'rgba(47,13,163,0.12)',
+    chipSelectedBorder: 'rgba(47,13,163,0.45)',
     chipText: '#475569',
-    chipSelectedText: '#5b21b6',
+    chipSelectedText: '#2F0DA3',
     progressTrack: 'rgba(0,0,0,0.08)',
-    btnDisabledBg: '#8b5cf6',
+    btnDisabledBg: '#2F0DA3',
     btnDisabledText: '#ffffff',
-    btnEnabledBg: 'linear-gradient(135deg,#7c3aed,#6366f1)',
+    btnEnabledBg: 'linear-gradient(135deg,#2F0DA3,#6366f1)',
     btnEnabledText: '#fff',
-      liveLabel: '#6d28d9',
-      livePillBg: '#ffffff',
-      livePillBorder: 'rgba(124,58,237,0.35)',
-    dateColor: '#64748b',
-    timeColor: '#5b21b6',
-    timePillBg: 'rgba(124,58,237,0.1)',
-    timePillBorder: 'rgba(124,58,237,0.25)',
+      liveLabel: '#ffffff',
+      livePillBg: 'rgba(255,255,255,0.14)',
+      livePillBorder: 'rgba(255,255,255,0.35)',
+    dateColor: 'rgba(255,255,255,0.72)',
+    timeColor: '#ffffff',
+    timePillBg: 'rgba(255,255,255,0.14)',
+    timePillBorder: 'rgba(255,255,255,0.28)',
     globeTileBg: '#fff',
-    globeTileBorder: 'rgba(124,58,237,0.38)',
+    globeTileBorder: 'rgba(47,13,163,0.38)',
     flowHeaderBg: 'rgba(248,249,252,1)',
     flowTitle: 'rgba(15,23,42,0.92)',
     flowStepBg: 'rgba(0,0,0,0.05)',
@@ -57,41 +57,41 @@ function getAssistantPalette() {
     flowBackBg: 'rgba(0,0,0,0.04)',
     flowBackBorder: 'rgba(0,0,0,0.1)',
     flowBackColor: 'rgba(71,85,105,0.75)',
-    summaryBg: 'rgba(124,58,237,0.06)',
-    summaryBorder: 'rgba(124,58,237,0.18)',
+    summaryBg: 'rgba(47,13,163,0.06)',
+    summaryBorder: 'rgba(47,13,163,0.18)',
     summaryLabel: 'rgba(100,116,139,0.9)',
     summaryValue: 'rgba(15,23,42,0.92)',
     summaryRowBorder: 'rgba(0,0,0,0.07)',
     questionColor: 'rgba(15,23,42,0.92)',
     rowBg: 'rgba(255,255,255,0.94)',
-      rowBgHover: 'rgba(124,58,237,0.07)',
+      rowBgHover: 'rgba(47,13,163,0.07)',
       rowBorder: 'rgba(226,232,240,0.95)',
       rowBorderHover: 'rgba(167,139,250,0.45)',
-    rowLabel: 'rgba(124,58,237,0.88)',
+    rowLabel: 'rgba(47,13,163,0.88)',
     rowTitle: 'rgba(15,23,42,0.92)',
     rowSecondaryBg: 'rgba(249,250,251,0.95)',
     rowSecondaryTitle: 'rgba(71,85,105,0.9)',
     welcomeTitle: '#0f172a',
     welcomeBody: 'rgba(71,85,105,0.9)',
     linkBg: '#fff',
-      linkBgHover: 'rgba(124,58,237,0.06)',
+      linkBgHover: 'rgba(47,13,163,0.06)',
     linkBorder: 'rgba(226,232,240,0.98)',
     linkBorderHover: 'rgba(196,181,253,0.55)',
     linkTitle: 'rgba(15,23,42,0.9)',
     linkIconBg: 'rgba(249,250,251,1)',
     linkIconBorder: 'rgba(226,232,240,1)',
     linkIconColor: 'rgba(100,116,139,0.8)',
-    closeBg: '#fff',
-    closeBorder: 'rgba(0,0,0,0.1)',
-    closeColor: '#64748b',
+    closeBg: 'rgba(255,255,255,0.14)',
+    closeBorder: 'rgba(255,255,255,0.28)',
+    closeColor: '#ffffff',
     panelShadow: '0 0 0 1px rgba(0,0,0,0.04), 0 20px 60px rgba(15,23,42,0.14), 0 4px 16px rgba(15,23,42,0.08)',
     strategyHeroBg: 'linear-gradient(165deg, #f5f3ff 0%, #ede9fe 46%, #e0e7ff 100%)',
-    strategyHeroBorder: 'rgba(139, 92, 246, 0.2)',
-    strategyHeroShadow: '0 4px 18px rgba(124, 58, 237, 0.1)',
+    strategyHeroBorder: 'rgba(47, 13, 163, 0.2)',
+    strategyHeroShadow: '0 4px 18px rgba(47, 13, 163, 0.1)',
     strategyHeroTitle: '#0f172a',
     strategyBadgeBg: 'rgba(255, 255, 255, 0.95)',
-    strategyBadgeText: '#6d28d9',
-    strategyBadgeBorder: 'rgba(139, 92, 246, 0.18)',
+    strategyBadgeText: '#2F0DA3',
+    strategyBadgeBorder: 'rgba(47, 13, 163, 0.18)',
     strategyCardBg: '#ffffff',
     strategyCardBorder: 'rgba(226, 232, 240, 0.98)',
     strategyPerkTitle: '#1e1b4b',
@@ -111,8 +111,8 @@ const navTo = (path, setIsOpen) => {
   setIsOpen(false);
 };
 
-const PURPLE_BRAND = '#6d28d9';
-const PURPLE_BRIGHT = '#7c3aed';
+const PURPLE_BRAND = '#2F0DA3';
+const PURPLE_BRIGHT = '#2F0DA3';
 
 function formatDeskDate(date) {
   const pad = (n) => String(n).padStart(2, '0');
@@ -160,7 +160,6 @@ function AssistantDateTime() {
 
 /** Panel header - line 1 title */
 function AssistantDeskTitle() {
-  const p = useAssistantPalette();
   return (
     <motion.div
       className="assistant-desk-title"
@@ -172,12 +171,12 @@ function AssistantDeskTitle() {
         fontWeight: 700,
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
-        color: PURPLE_BRAND,
+        color: '#ffffff',
         minWidth: 0,
       }}
     >
       <span className="assistant-home-welcome-dot" aria-hidden />
-      <span style={{ color: p.text }}>iFranchise assistant</span>
+      <span style={{ color: '#ffffff' }}>iFranchise assistant</span>
     </motion.div>
   );
 }
@@ -187,17 +186,17 @@ function getAssistantFabTheme(isLight) {
     return {
       background: 'transparent',
       border: 'none',
-      boxShadow: '0 12px 32px rgba(49, 46, 129, 0.22), 0 0 20px rgba(56, 189, 248, 0.14)',
+      boxShadow: '0 12px 32px rgba(47, 13, 163, 0.28), 0 0 20px rgba(47, 13, 163, 0.16)',
       hoverBorder: 'none',
-      hoverShadow: '0 16px 40px rgba(49, 46, 129, 0.28), 0 0 28px rgba(56, 189, 248, 0.22)',
+      hoverShadow: '0 16px 40px rgba(47, 13, 163, 0.34), 0 0 28px rgba(47, 13, 163, 0.22)',
     };
   }
   return {
     background: 'transparent',
     border: 'none',
-    boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45), 0 0 22px rgba(56, 189, 248, 0.18)',
+    boxShadow: '0 12px 36px rgba(0, 0, 0, 0.45), 0 0 22px rgba(47, 13, 163, 0.28)',
     hoverBorder: 'none',
-    hoverShadow: '0 16px 44px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.28)',
+    hoverShadow: '0 16px 44px rgba(0, 0, 0, 0.5), 0 0 30px rgba(47, 13, 163, 0.35)',
   };
 }
 
@@ -291,13 +290,13 @@ function PremiumRowIcon({ children, hovered }) {
         width: 38,
         height: 38,
         borderRadius: 10,
-        background: hovered ? 'rgba(124, 58, 237, 0.14)' : 'rgba(124, 58, 237, 0.09)',
-        border: '1px solid rgba(124, 58, 237, 0.14)',
+        background: hovered ? 'rgba(47, 13, 163, 0.14)' : 'rgba(47, 13, 163, 0.09)',
+        border: '1px solid rgba(47, 13, 163, 0.14)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        color: '#7c3aed',
+        color: '#2F0DA3',
         transition: 'background 0.2s ease, transform 0.2s cubic-bezier(0.22,1,0.36,1)',
         transform: hovered ? 'scale(1.04)' : 'scale(1)',
       }}
@@ -426,7 +425,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
         textAlign: 'left',
         transform: hovered ? 'translateX(3px)' : 'translateX(0)',
         transition: 'all 0.18s cubic-bezier(0.22,1,0.36,1)',
-        boxShadow: hovered && !secondary ? '0 2px 12px rgba(124,58,237,0.1)' : 'none',
+        boxShadow: hovered && !secondary ? '0 2px 12px rgba(47,13,163,0.1)' : 'none',
       }}
     >
       <PremiumRowIcon hovered={hovered}>
@@ -458,7 +457,7 @@ function ActionRow({ row, onClick, index, secondary = false }) {
 
       {/* Arrow */}
       <div style={{
-        color: hovered ? 'rgba(124,58,237,0.65)' : 'rgba(148,163,184,0.65)',
+        color: hovered ? 'rgba(47,13,163,0.65)' : 'rgba(148,163,184,0.65)',
         flexShrink: 0,
         transition: 'color 0.15s ease, transform 0.18s ease',
         transform: hovered ? 'translateX(2px)' : 'translateX(0)',
@@ -546,7 +545,7 @@ function AssistantFabLauncher({ isLight, onOpen }) {
           className="assistant-fab"
           style={{
             padding: 0,
-            background: 'linear-gradient(165deg, #4f9cf9 0%, #3b82f6 42%, #2563eb 100%)',
+            background: '#2F0DA3',
             border: 'none',
           boxShadow: fab.boxShadow,
             display: 'flex',
@@ -689,7 +688,7 @@ export default function ExpansionAssistant() {
               className="assistant-panel-header"
               style={{
                 background: palette.header,
-                borderBottom: `1px solid ${palette.border}`,
+                borderBottom: '1px solid rgba(255,255,255,0.16)',
               }}
             >
               <div className="assistant-header-actions">

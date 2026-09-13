@@ -15,6 +15,37 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      colors: {
+        /* Brand purple — exact base #32159A; scale keeps contrast for tints/shades */
+        violet: {
+          50: '#f3f0fb',
+          100: '#e8e2f7',
+          200: '#d1c6ef',
+          300: '#b19ae3',
+          400: '#8a6ad2',
+          500: '#5c35b8',
+          600: '#2F0DA3',
+          700: '#280bb0',
+          800: '#21098c',
+          900: '#1a0770',
+          950: '#12054f',
+          DEFAULT: '#2F0DA3',
+        },
+        purple: {
+          50: '#f3f0fb',
+          100: '#e8e2f7',
+          200: '#d1c6ef',
+          300: '#b19ae3',
+          400: '#8a6ad2',
+          500: '#5c35b8',
+          600: '#2F0DA3',
+          700: '#280bb0',
+          800: '#21098c',
+          900: '#1a0770',
+          950: '#12054f',
+          DEFAULT: '#2F0DA3',
+        },
+      },
       boxShadow: {
         soft: '0 8px 24px rgba(15, 23, 42, 0.08)',
       },

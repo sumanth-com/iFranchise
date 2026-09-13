@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NAV_LOGO } from '../lib/uiAssets.js';
+import { SITE_TAGLINE } from '../seo/config.js';
 import ThemeToggle from './ThemeToggle';
 import { navigateTo as spaNavigate } from '../lib/navigation';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
@@ -383,7 +384,7 @@ function Navbar() {
         {/* Logo */}
         <div className="site-navbar-brand flex min-w-0 flex-1 flex-col xl:mr-auto xl:flex-none">
           <a href="/" onClick={handleLogoClick} className="inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-3">
-            <span className="site-navbar-logo-mark-wrap inline-flex h-10 w-10 shrink-0 overflow-hidden rounded-xl sm:h-11 sm:w-11">
+            <span className="site-navbar-logo-mark-wrap inline-flex h-10 w-10 shrink-0 sm:h-11 sm:w-11">
               <img
                 src={NAV_LOGO.src}
                 srcSet={NAV_LOGO.srcSet}
@@ -410,11 +411,11 @@ function Navbar() {
                 iFranchise
               </span>
               <p
-                className={`site-navbar-logo-tagline hidden text-[10px] font-semibold leading-tight text-violet-800 transition-[opacity,max-height] duration-300 sm:block sm:text-xs ${
+                className={`site-navbar-logo-tagline hidden text-[10px] font-semibold uppercase leading-tight tracking-[0.14em] text-violet-800 transition-[opacity,max-height] duration-300 sm:block sm:text-[11px] ${
                   isScrolled ? 'max-h-0 opacity-0' : 'max-h-6 opacity-100'
                 }`}
               >
-                India&apos;s Trusted Franchise Growth Platform
+                {SITE_TAGLINE}
               </p>
             </div>
           </a>
@@ -537,7 +538,7 @@ function Navbar() {
           <button
             type="button"
             onClick={() => navigateTo('/list-your-brand')}
-            className="site-navbar-cta group !hidden h-10 items-center gap-2 rounded-full bg-violet-600 px-6 py-0 text-sm font-bold text-white shadow-[0_4px_20px_rgba(124,58,237,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(124,58,237,0.4)] hover:scale-[1.02] xl:!inline-flex"
+            className="site-navbar-cta group !hidden h-10 items-center gap-2 rounded-full bg-violet-600 px-6 py-0 text-sm font-bold text-white shadow-[0_4px_20px_rgba(47,13,163,0.35)] transition-all duration-300 hover:bg-violet-700 hover:shadow-[0_8px_28px_rgba(47,13,163,0.4)] hover:scale-[1.02] xl:!inline-flex"
           >
           List Your Brand
           <motion.div
@@ -587,7 +588,7 @@ function Navbar() {
                     srcSet={NAV_LOGO.srcSet}
                     sizes={NAV_LOGO.sizes}
                     alt="iFranchise India franchise consulting company"
-                    className="h-9 w-9 rounded-xl"
+                    className="site-navbar-logo-mark h-9 w-9 shrink-0"
                     width={36}
                     height={36}
                     loading="eager"

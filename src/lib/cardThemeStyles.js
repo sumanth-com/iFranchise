@@ -2,17 +2,17 @@
 
 const DARK = {
   bg: 'linear-gradient(145deg, #12082a 0%, #0e0620 50%, #0a0618 100%)',
-  border: 'rgba(139,92,246,0.18)',
+  border: 'rgba(47,13,163,0.18)',
   shadow: '0 4px 24px rgba(0,0,0,0.4)',
-  shadowHover: '0 20px 50px rgba(109,40,217,0.3)',
-  borderHover: 'rgba(139,92,246,0.45)',
+  shadowHover: '0 20px 50px rgba(47,13,163,0.3)',
+  borderHover: 'rgba(47,13,163,0.45)',
 };
 
 const LIGHT = {
   bg: '#ffffff',
   border: '#e2e8f0',
   shadow: '0 8px 24px rgba(15, 23, 42, 0.08)',
-  shadowHover: '0 12px 32px rgba(124, 58, 237, 0.14)',
+  shadowHover: '0 12px 32px rgba(47, 13, 163, 0.14)',
   borderHover: '#c4b5fd',
 };
 
@@ -56,8 +56,8 @@ export function metricBoxStyle(isLight) {
 
 export function tagVioletStyle(isLight) {
   return isLight
-    ? { background: '#f5f3ff', border: '1px solid #ddd6fe', color: '#5b21b6' }
-    : { background: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.3)', color: '#ffffff' };
+    ? { background: '#f5f3ff', border: '1px solid #ddd6fe', color: '#2F0DA3' }
+    : { background: 'rgba(47,13,163,0.2)', border: '1px solid rgba(47,13,163,0.3)', color: '#ffffff' };
 }
 
 export function tagNeutralStyle(isLight) {
@@ -68,8 +68,8 @@ export function tagNeutralStyle(isLight) {
 
 export function serviceIconStyle(isLight) {
   return isLight
-    ? { background: '#f5f3ff', border: '1px solid #ddd6fe', color: '#7c3aed' }
-    : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd' };
+    ? { background: '#f5f3ff', border: '1px solid #ddd6fe', color: '#2F0DA3' }
+    : { background: 'rgba(47,13,163,0.15)', border: '1px solid rgba(47,13,163,0.3)', color: '#c4b5fd' };
 }
 
 export function pillBadgeStyle(isLight) {
@@ -92,12 +92,12 @@ export function imageCornerTagStyle(isLight) {
     ? {
         background: '#ffffff',
         border: '1px solid #e2e8f0',
-        color: '#6d28d9',
+        color: '#2F0DA3',
         boxShadow: '0 2px 10px rgba(15, 23, 42, 0.08)',
         backdropFilter: 'none',
       }
     : {
-        background: 'rgba(109, 40, 217, 0.75)',
+        background: 'rgba(47, 13, 163, 0.75)',
         border: '1px solid rgba(167, 139, 250, 0.3)',
         color: '#ffffff',
         backdropFilter: 'blur(10px)',

@@ -16,7 +16,7 @@
 
 .phone-input__row:focus-within {
   border-color: rgb(167 139 250);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 0 2px rgba(47, 13, 163, 0.15);
 }
 
 .phone-input__row--error {
@@ -195,7 +195,7 @@
 .phone-input--light .phone-input__row:focus-within {
   border-color: rgb(167 139 250);
   background: #fff;
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 0 2px rgba(47, 13, 163, 0.15);
 }
 
 /* Dark — contact page dark theme */
@@ -220,8 +220,8 @@
 
 .phone-input--dark .phone-input__row:focus-within {
   border-color: rgba(167, 139, 250, 0.55);
-  background: rgba(139, 92, 246, 0.12);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  background: rgba(47, 13, 163, 0.12);
+  box-shadow: 0 0 0 2px rgba(47, 13, 163, 0.2);
 }
 
 /* Emerald — homepage contact */
@@ -247,8 +247,8 @@
 
 .phone-input--emerald .phone-input__row:focus-within {
   border-color: rgba(167, 139, 250, 0.55);
-  background: rgba(139, 92, 246, 0.12);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+  background: rgba(47, 13, 163, 0.12);
+  box-shadow: 0 0 0 2px rgba(47, 13, 163, 0.2);
 }
 
 .phone-input--emerald .phone-input__error,

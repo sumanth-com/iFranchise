@@ -232,7 +232,7 @@ export default function PreFooterCTA({ variant = 'default', shellClassName = '' 
         <div
           className="footer-content-area"
           style={{
-            borderTop: '1px solid rgba(139,92,246,0.2)',
+            borderTop: '1px solid rgba(47,13,163,0.2)',
             padding: 'clamp(36px, 5vw, 52px) clamp(24px, 6vw, 80px) 0',
             position: 'relative',
             zIndex: 1,

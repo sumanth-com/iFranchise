@@ -5,7 +5,7 @@ import { getCardBaseStyle, cardHoverHandlers, sectionTitleClass, sectionSubtitle
 import { useTheme } from '../../context/ThemeContext';
 
 function getCardPurple(isLight) {
-  return isLight ? '#7c3aed' : '#c4b5fd';
+  return isLight ? '#2F0DA3' : '#c4b5fd';
 }
 
 export default function HomeBrowseInvestmentSection() {

@@ -144,7 +144,7 @@ function StepBadge({ number, color }) {
   const colors = {
     blue:   { bg: 'from-blue-500 via-indigo-600 to-blue-700',   ring: 'rgba(59,130,246,0.3)',  glow: 'rgba(99,102,241,0.15)' },
     green:  { bg: 'from-emerald-500 via-teal-600 to-emerald-700', ring: 'rgba(16,185,129,0.3)', glow: 'rgba(20,184,166,0.15)' },
-    violet: { bg: 'from-violet-500 via-purple-600 to-violet-700', ring: 'rgba(139,92,246,0.3)', glow: 'rgba(168,85,247,0.15)' },
+    violet: { bg: 'from-violet-500 via-purple-600 to-violet-700', ring: 'rgba(47,13,163,0.3)', glow: 'rgba(168,85,247,0.15)' },
     orange: { bg: 'from-orange-500 via-amber-600 to-orange-700',  ring: 'rgba(249,115,22,0.3)', glow: 'rgba(245,158,11,0.15)' },
   };
   const c = colors[color] || colors.blue;
@@ -1187,7 +1187,7 @@ export default function ServicesPage() {
               <div className="services-dashboard-wrap relative mx-auto w-full min-w-0 max-w-md lg:mx-0">
                 
                 {/* Main dashboard container */}
-                <div className="services-dashboard-panel theme-dark-surface relative w-full min-w-0 overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl sm:p-4" style={{ boxShadow: '0 8px 40px rgba(139,92,246,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
+                <div className="services-dashboard-panel theme-dark-surface relative w-full min-w-0 overflow-hidden rounded-2xl border border-violet-500/25 bg-[#12082a]/85 backdrop-blur-xl p-4 shadow-2xl sm:p-4" style={{ boxShadow: '0 8px 40px rgba(47,13,163,0.12), 0 2px 8px rgba(0,0,0,0.06)' }}>
 
                   {/* Dashboard Content */}
                   <div className="relative space-y-2.5">
@@ -1326,10 +1326,10 @@ export default function ServicesPage() {
             {/* Center orbit graphic - refined size for better balance */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ width: 300, height: 300 }}>
               <svg viewBox="0 0 300 300" width="300" height="300">
-                <circle cx="150" cy="150" r="140" stroke="rgba(139,92,246,0.2)" strokeWidth="1.5" fill="none" />
-                <circle cx="150" cy="150" r="100" stroke="rgba(139,92,246,0.16)" strokeWidth="1.5" fill="none" strokeDasharray="5 8" />
-                <circle cx="150" cy="150" r="65" stroke="rgba(139,92,246,0.12)" strokeWidth="1.5" fill="none" />
-                <circle cx="150" cy="150" r="32" stroke="rgba(139,92,246,0.1)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="140" stroke="rgba(47,13,163,0.2)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="100" stroke="rgba(47,13,163,0.16)" strokeWidth="1.5" fill="none" strokeDasharray="5 8" />
+                <circle cx="150" cy="150" r="65" stroke="rgba(47,13,163,0.12)" strokeWidth="1.5" fill="none" />
+                <circle cx="150" cy="150" r="32" stroke="rgba(47,13,163,0.1)" strokeWidth="1.5" fill="none" />
               </svg>
               
               {/* Animated glow rings behind logo */}
@@ -1337,7 +1337,7 @@ export default function ServicesPage() {
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-gradient-to-br from-purple-300/40 via-violet-300/30 to-indigo-300/40 blur-xl animate-pulse-glow" />
               
               {/* Center logo with purple background and animations */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 shadow-[0_0_40px_rgba(139,92,246,0.4),0_8px_32px_rgba(124,58,237,0.3)] flex items-center justify-center p-5 animate-logo-float">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 shadow-[0_0_40px_rgba(47,13,163,0.4),0_8px_32px_rgba(47,13,163,0.3)] flex items-center justify-center p-5 animate-logo-float">
                 <img 
                   src={SITE_IMAGES.brandLogo} 
                   alt="iFranchise Logo" 
@@ -1350,7 +1350,7 @@ export default function ServicesPage() {
               
               {/* Orbit dots */}
               <div className="benefits-orbit-ring absolute left-1/2 top-1/2 h-[180px] w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full">
-                <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(124,58,237,0.6)]" />
+                <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(47,13,163,0.6)]" />
               </div>
               <div className="benefits-orbit-ring-reverse absolute left-1/2 top-1/2 h-[135px] w-[135px] -translate-x-1/2 -translate-y-1/2 rounded-full">
                 <span className="absolute right-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.55)]" />
@@ -1363,7 +1363,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[6%] left-[40%]"
               initial={{ opacity: 0, y: -12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.2 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiCheckCircle} colorKey="emerald" size="sm" />
                   <p className="text-sm font-medium text-white">Verified Franchise Listings</p>
@@ -1375,7 +1375,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.25 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiBarChart2} colorKey="indigo" size="sm" />
                   <p className="text-sm font-medium text-white">Data-Driven Insights</p>
@@ -1387,7 +1387,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 right-[6%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.3 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiTarget} colorKey="violet" size="sm" />
                   <p className="text-sm font-medium text-white">Smart Investment Decisions</p>
@@ -1399,7 +1399,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] right-[12%]"
               initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.35 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiAward} colorKey="amber" size="sm" />
                   <p className="text-sm font-medium text-white">Expert Guidance & Support</p>
@@ -1411,7 +1411,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[6%] left-[37%]"
               initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.4 }}>
               <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiRefreshCw} colorKey="blue" size="sm" />
                   <p className="text-sm font-medium text-white">Real-Time Opportunity Updates</p>
@@ -1423,7 +1423,7 @@ export default function ServicesPage() {
             <motion.div className="absolute bottom-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.45 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiFileText} colorKey="slate" size="sm" />
                   <p className="text-sm font-medium text-white">Transparent Deal Information</p>
@@ -1435,7 +1435,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[50%] -translate-y-1/2 left-[6%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.5 }}>
               <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.9, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiUsers} colorKey="rose" size="sm" />
                   <p className="text-sm font-medium text-white">Investor-Centric Platform</p>
@@ -1447,7 +1447,7 @@ export default function ServicesPage() {
             <motion.div className="absolute top-[16%] left-[12%]"
               initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25, delay: 0.55 }}>
               <motion.div animate={{ y: [0, -7, 0] }} transition={{ duration: 4.3, repeat: Infinity, ease: 'easeInOut', delay: 3.5 }}
-                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]">
+                className="whitespace-nowrap rounded-full theme-light-pill border border-slate-200 bg-white px-5 py-2.5 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]">
                 <div className="flex items-center gap-2.5">
                   <ServicesBenefitPillIcon Icon={FiTarget} colorKey="purple" size="sm" />
                   <p className="text-sm font-medium text-white">Strategic Planning</p>
@@ -1463,7 +1463,7 @@ export default function ServicesPage() {
               <motion.div key={item.title}
                 initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.25, delay: i * 0.02 }}
-                className="theme-light-pill rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(124,58,237,0.12)]"
+                className="theme-light-pill rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_4px_20px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-violet-200 hover:shadow-[0_8px_28px_rgba(47,13,163,0.12)]"
               >
                 <div className="flex items-center gap-3">
                   <ServicesBenefitPillIcon Icon={item.Icon} colorKey={item.color} />
@@ -1556,8 +1556,8 @@ function WhyIReveal({ children, delay = 0, className = '' }) {
 
 function WhyIFranchiseCard({ card, isLight }) {
   const iconBase = isLight
-    ? { background: 'linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%)', border: '1px solid #5b21b6', color: '#ffffff', boxShadow: '0 8px 24px rgba(109,40,217,0.25)' }
-    : { background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.3)', color: '#c4b5fd', boxShadow: 'none' };
+    ? { background: 'linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%)', border: '1px solid #2F0DA3', color: '#ffffff', boxShadow: '0 8px 24px rgba(47,13,163,0.25)' }
+    : { background: 'rgba(47,13,163,0.15)', border: '1px solid rgba(47,13,163,0.3)', color: '#c4b5fd', boxShadow: 'none' };
 
   return (
     <WhyIReveal delay={card.delay} className="h-full">
@@ -1566,18 +1566,18 @@ function WhyIFranchiseCard({ card, isLight }) {
         style={{ transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease' }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-6px)';
-          e.currentTarget.style.boxShadow = '0 20px 50px rgba(109,40,217,0.3)';
-          e.currentTarget.style.borderColor = 'rgba(139,92,246,0.45)';
+          e.currentTarget.style.boxShadow = '0 20px 50px rgba(47,13,163,0.3)';
+          e.currentTarget.style.borderColor = 'rgba(47,13,163,0.45)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-          e.currentTarget.style.borderColor = 'rgba(139,92,246,0.18)';
+          e.currentTarget.style.borderColor = 'rgba(47,13,163,0.18)';
         }}
       >
         <div
           className="pointer-events-none absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)' }}
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(47,13,163,0.7), transparent)' }}
         />
         <div
           className="pointer-events-none absolute inset-0 -translate-x-full rounded-2xl transition-transform duration-700 group-hover:translate-x-full"
@@ -1587,7 +1587,7 @@ function WhyIFranchiseCard({ card, isLight }) {
         <div className="relative flex h-44 items-center justify-center overflow-hidden">
           <div
             className="pointer-events-none absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(139,92,246,0.18) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(47,13,163,0.18) 0%, transparent 70%)' }}
           />
           <div
             className="why-feature-icon relative z-10 flex h-20 w-20 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 [&_svg]:text-current"
@@ -1635,7 +1635,7 @@ function WhyIFranchiseSection({ className = '' }) {
               spaNavigate('/franchise-opportunities');
             }}
             className="why-section-cta group inline-flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5"
-            style={{ background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(109,40,217,0.35)' }}
+            style={{ background: 'linear-gradient(135deg, #2F0DA3 0%, #4f46e5 100%)', boxShadow: '0 4px 20px rgba(47,13,163,0.35)' }}
           >
             Explore Franchise Opportunities
             <svg className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>

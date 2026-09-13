@@ -16,7 +16,6 @@ import { FiArrowRight } from 'react-icons/fi';
 import {
   HowItWorksSection,
   ListYourBrandFAQSection,
-  ReadinessBannerSection,
   WhoCanListSection,
   WhyListSection,
   WhyTrustSection,
@@ -172,7 +171,6 @@ export default function ForBrandOwnersPage() {
       <HowItWorksSection />
       <WhoCanListSection />
       <WhyTrustSection />
-      <ReadinessBannerSection />
       <ListYourBrandFAQSection />
     </main>
   );
@@ -267,7 +265,7 @@ function HeroBrandInquiryForm({ id = 'hero-brand-inquiry' }) {
     >
       <motion.div className="lyb-form-panel relative flex max-h-[min(100%,calc(100dvh-6.5rem))] w-full min-h-0 flex-col overflow-hidden rounded-3xl border border-violet-500/25 bg-gradient-to-br from-[#1a0f3d] via-[#12082a] to-[#0a0618] p-4 shadow-[0_24px_64px_rgba(0,0,0,0.45)] sm:p-5 lg:max-h-[calc(100dvh-7rem)] lg:p-5">
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(124,58,237,0.22),transparent)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(47,13,163,0.22),transparent)]"
           aria-hidden
         />
 

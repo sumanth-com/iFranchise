@@ -16,7 +16,7 @@ export const SITE_URL = (
   import.meta.env.VITE_SITE_URL || 'https://www.ifranchise.in'
 ).replace(/\/$/, '');
 
-export const SITE_TAGLINE = "India's Trusted Franchise Growth Platform";
+export const SITE_TAGLINE = 'Connect. Expand. Grow';
 
 export { ICON_VERSION };
 

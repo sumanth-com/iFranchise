@@ -64,7 +64,7 @@ export const FRANCHISE_MODELS = {
     subtitle:
       'Invest in and own the franchise unit while the franchisor manages operations, staffing, and quality — ideal for semi-passive investors.',
     heroEyebrow: 'Franchise Model Guide',
-    accentColor: '#7c3aed',
+    accentColor: '#2F0DA3',
     badgeColor: 'bg-violet-100 text-violet-700 border-violet-200',
     explanation:
       'In the FOCO (Franchise Owned, Company Operated) model, you provide capital and own the franchise asset, but the franchisor runs day-to-day operations. This structure balances ownership benefits with professional management — popular among working professionals and investors seeking franchise returns without daily involvement.',

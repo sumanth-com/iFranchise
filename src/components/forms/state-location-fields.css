@@ -45,7 +45,7 @@
   padding: 0.25rem;
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
   scrollbar-width: thin;
-  scrollbar-color: #7c3aed rgba(237, 233, 254, 0.95);
+  scrollbar-color: #2F0DA3 rgba(237, 233, 254, 0.95);
 }
 
 .state-location-fields__list::-webkit-scrollbar {
@@ -60,12 +60,12 @@
 
 .state-location-fields__list::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: linear-gradient(180deg, #c4b5fd 0%, #7c3aed 100%);
+  background: linear-gradient(180deg, #c4b5fd 0%, #2F0DA3 100%);
   border: 1px solid rgba(255, 255, 255, 0.65);
 }
 
 .state-location-fields__list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #a78bfa 0%, #6d28d9 100%);
+  background: linear-gradient(180deg, #a78bfa 0%, #2F0DA3 100%);
 }
 
 .state-location-fields__list--portal {
@@ -92,8 +92,8 @@
 
 .state-location-fields__option:hover,
 .state-location-fields__option--active {
-  background: rgba(124, 58, 237, 0.1);
-  color: #5b21b6;
+  background: rgba(47, 13, 163, 0.1);
+  color: #2F0DA3;
 }
 
 .state-location-fields__hint {
@@ -117,13 +117,13 @@
 
 .state-location-fields__list.state-location-fields--dark::-webkit-scrollbar-thumb,
 .state-location-fields--dark .state-location-fields__list::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ede9fe 0%, #8b5cf6 55%, #7c3aed 100%);
+  background: linear-gradient(180deg, #ede9fe 0%, #2F0DA3 55%, #2F0DA3 100%);
   border-color: rgba(255, 255, 255, 0.28);
 }
 
 .state-location-fields__list.state-location-fields--dark::-webkit-scrollbar-thumb:hover,
 .state-location-fields--dark .state-location-fields__list::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #a78bfa 50%, #6d28d9 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #a78bfa 50%, #2F0DA3 100%);
 }
 
 .state-location-fields__list.state-location-fields--dark .state-location-fields__option,
@@ -153,7 +153,7 @@ html[data-theme='dark'] .state-location-fields--dark .state-location-fields__sel
 
 html[data-theme='dark'] .state-location-fields--dark .state-location-fields__select option:checked {
   color: #ffffff;
-  background-color: #5b21b6;
+  background-color: #2F0DA3;
 }
 
 .state-location-fields__list.state-location-fields--emerald,

@@ -260,7 +260,7 @@ export default function FranchiseInquiryModal({
                 <FieldError message={fieldErrors.franchiseType} />
               </fieldset>
 
-              <div className={isPanel ? 'franchise-inquiry-modal__fields-row' : undefined}>
+              <div className="franchise-inquiry-modal__fields-row">
                 <div>
                   <label htmlFor="fi-full-name" className="franchise-inquiry-modal__label">
                     Full name <span className="text-red-500">*</span>
@@ -314,8 +314,8 @@ export default function FranchiseInquiryModal({
               </div>
 
               <StateLocationFields
-                className="contents"
-                layout="grid"
+                className="franchise-inquiry-modal__location-row"
+                layout="row"
                 variant="light"
                 dropdownZIndex={10100}
                 listPortalClassName="state-location-fields__list--modal"

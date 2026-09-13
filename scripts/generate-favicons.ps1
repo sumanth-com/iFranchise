@@ -1,4 +1,4 @@
-# Delegates to generate-favicons.mjs (BrandNav → optimized public favicons).
+# Delegates to generate-favicons.mjs (iF-Logo → optimized public favicons).
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $nodeScript = Join-Path $root "scripts\generate-favicons.mjs"

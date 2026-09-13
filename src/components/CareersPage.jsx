@@ -105,7 +105,7 @@ function BenefitCard({ icon, title, desc, delay }) {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
-      className="careers-benefit-card group rounded-2xl border border-slate-200 bg-white p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:shadow-[0_16px_40px_rgba(109,40,217,0.12)] hover:-translate-y-1 hover:border-violet-200 transition-all duration-300"
+      className="careers-benefit-card group rounded-2xl border border-slate-200 bg-white p-6 flex flex-col items-center text-center gap-3 shadow-[0_8px_24px_rgba(15,23,42,0.06)] hover:shadow-[0_16px_40px_rgba(47,13,163,0.12)] hover:-translate-y-1 hover:border-violet-200 transition-all duration-300"
     >
       <div className="w-12 h-12 rounded-xl bg-violet-100 border border-violet-200 flex items-center justify-center text-violet-700 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
         {icon}

@@ -78,7 +78,7 @@ function GrowthOrb({ isDark, reducedMotion }) {
         </>
       )}
       <div
-        className={`relative z-[1] flex h-[72%] w-[72%] flex-col items-center justify-center rounded-full border px-4 text-center shadow-[0_20px_60px_rgba(109,40,217,0.2)] ${
+        className={`relative z-[1] flex h-[72%] w-[72%] flex-col items-center justify-center rounded-full border px-4 text-center shadow-[0_20px_60px_rgba(47,13,163,0.2)] ${
           isDark
             ? 'border-violet-400/40 bg-gradient-to-br from-[#1a0f3d] via-[#140a2e] to-[#0f0618]'
             : 'border-violet-200 bg-gradient-to-br from-white via-violet-50/90 to-indigo-50/80'
@@ -188,7 +188,7 @@ export default function CareersGrowthSection({ isDark }) {
           className={`careers-growth-panel relative overflow-hidden rounded-3xl border p-6 sm:p-8 lg:p-10 ${
             isDark
               ? 'border-violet-500/25 bg-gradient-to-br from-[#1a0f3d]/90 via-[#140a2e]/80 to-[#0f0618]/90'
-              : 'border-slate-200 bg-gradient-to-br from-white via-violet-50/40 to-indigo-50/30 shadow-[0_20px_60px_rgba(109,40,217,0.08)]'
+              : 'border-slate-200 bg-gradient-to-br from-white via-violet-50/40 to-indigo-50/30 shadow-[0_20px_60px_rgba(47,13,163,0.08)]'
           }`}
         >
           <div

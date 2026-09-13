@@ -115,7 +115,7 @@ function PremiumTeamCard({ member }) {
 
   // DEFAULT VIEW - Normal card
   return (
-    <div className={`group relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border border-violet-500/25 card-premium-dark shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.35)] flex flex-col`}>
+    <div className={`group relative ${CARD_HEIGHT} w-full overflow-hidden rounded-3xl border border-violet-500/25 card-premium-dark shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(47,13,163,0.35)] flex flex-col`}>
       <div className="relative h-[320px] w-full flex-shrink-0 overflow-hidden">
         <img
           src={member.image}
@@ -330,7 +330,7 @@ function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.25, delay: idx * 0.05 }}
-                className="group relative overflow-hidden rounded-2xl card-premium-dark border border-violet-500/20 p-6 transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.35)] hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-2xl card-premium-dark border border-violet-500/20 p-6 transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(47,13,163,0.35)] hover:-translate-y-1"
               >
                 <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${card.bgColor} text-lg font-bold ${card.textColor}`}>
                   {card.num}
@@ -440,7 +440,7 @@ function AboutPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.25, delay: idx * 0.05 }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative overflow-hidden rounded-3xl card-premium-dark border border-violet-500/20 p-8 shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_24px_60px_rgba(109,40,217,0.35)]"
+                className="group relative overflow-hidden rounded-3xl card-premium-dark border border-violet-500/20 p-8 shadow-lg transition-all duration-300 hover:border-violet-400/45 hover:shadow-[0_24px_60px_rgba(47,13,163,0.35)]"
               >
                 <div className="relative z-10">
                   <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/20 text-white shadow-inner border border-violet-400/25">

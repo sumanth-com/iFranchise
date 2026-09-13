@@ -95,7 +95,7 @@ function AudiencePicker({ isLight, onSelect }) {
           onClick={() => onSelect(card.id)}
           className={`group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300 ${
             isLight
-              ? 'border-slate-200 bg-white !text-black shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-violet-400 hover:shadow-[0_16px_40px_rgba(124,58,237,0.12)]'
+              ? 'border-slate-200 bg-white !text-black shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:border-violet-400 hover:shadow-[0_16px_40px_rgba(47,13,163,0.12)]'
               : 'border-violet-500/25 card-premium-dark hover:-translate-y-1 hover:border-violet-400/40 hover:shadow-xl hover:shadow-violet-900/20'
           }`}
         >
@@ -208,7 +208,7 @@ function ScoreRing({ score, isLight, compact = false }) {
           cy="60"
           r="54"
           fill="none"
-          stroke={isLight ? 'rgba(124,58,237,0.12)' : 'rgba(139,92,246,0.15)'}
+          stroke={isLight ? 'rgba(47,13,163,0.12)' : 'rgba(47,13,163,0.15)'}
           strokeWidth="8"
         />
         <circle
@@ -225,7 +225,7 @@ function ScoreRing({ score, isLight, compact = false }) {
         />
         <defs>
           <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#8b5cf6" />
+            <stop offset="0%" stopColor="#2F0DA3" />
             <stop offset="100%" stopColor="#6366f1" />
           </linearGradient>
         </defs>

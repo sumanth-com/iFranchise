@@ -1,5 +1,5 @@
 /**
- * Render square favicons from BrandNav: trim, center, solid brand background, size-tuned fill.
+ * Render square favicons from brand mark: trim, center, solid brand background, size-tuned fill.
  */
 
 /** @param {import('sharp')} sharp */

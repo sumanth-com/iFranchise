@@ -50,11 +50,11 @@ function bindServiceIconHover(el, isLight) {
   const card = el.closest('.group');
   if (!card) return;
   const base = serviceIconStyle(isLight);
-  const hoverBg = isLight ? 'rgba(124,58,237,0.18)' : 'rgba(139,92,246,0.35)';
+  const hoverBg = isLight ? 'rgba(47,13,163,0.18)' : 'rgba(47,13,163,0.35)';
   const onEnter = () => {
     el.style.transform = 'scale(1.15) rotate(6deg)';
     el.style.background = hoverBg;
-    el.style.boxShadow = '0 0 20px rgba(139,92,246,0.4)';
+    el.style.boxShadow = '0 0 20px rgba(47,13,163,0.4)';
   };
   const onLeave = () => {
     el.style.transform = 'scale(1) rotate(0deg)';
@@ -105,7 +105,7 @@ export default function OurServicesSection({
           >
             <div
               className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.7), transparent)' }}
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(47,13,163,0.7), transparent)' }}
             />
             <div
               className="absolute inset-0 -translate-x-full group-hover:translate-x-full pointer-events-none rounded-2xl"
@@ -152,17 +152,17 @@ export default function OurServicesSection({
             onClick={onViewAllServices}
             className="section-primary-cta group/btn relative overflow-hidden inline-flex items-center text-white"
             style={{
-              background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
-              boxShadow: '0 4px 24px rgba(109,40,217,0.4)',
+              background: 'linear-gradient(135deg, #2F0DA3 0%, #4f46e5 100%)',
+              boxShadow: '0 4px 24px rgba(47,13,163,0.4)',
               transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 12px 40px rgba(109,40,217,0.6)';
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(47,13,163,0.6)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 24px rgba(109,40,217,0.4)';
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(47,13,163,0.4)';
             }}
           >
             <div
@@ -184,17 +184,17 @@ export default function OurServicesSection({
             onClick={onContact}
             className="section-primary-cta group/btn relative overflow-hidden inline-flex items-center text-white"
             style={{
-              background: 'linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%)',
-              boxShadow: '0 4px 24px rgba(109,40,217,0.4)',
+              background: 'linear-gradient(135deg, #2F0DA3 0%, #4f46e5 100%)',
+              boxShadow: '0 4px 24px rgba(47,13,163,0.4)',
               transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 12px 40px rgba(109,40,217,0.6)';
+              e.currentTarget.style.boxShadow = '0 12px 40px rgba(47,13,163,0.6)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 24px rgba(109,40,217,0.4)';
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(47,13,163,0.4)';
             }}
           >
             <div

@@ -9,12 +9,12 @@
   --ah-highlight: #a78bfa;
   --ah-card-bg: rgba(255, 255, 255, 0.05);
   --ah-card-border: rgba(167, 139, 250, 0.28);
-  --ah-card-hover: rgba(139, 92, 246, 0.18);
-  --ah-icon-bg: rgba(139, 92, 246, 0.22);
+  --ah-card-hover: rgba(47, 13, 163, 0.18);
+  --ah-icon-bg: rgba(47, 13, 163, 0.22);
   --ah-icon-color: #e9d5ff;
   --ah-stat-border: rgba(255, 255, 255, 0.1);
   --ah-grid: rgba(167, 139, 250, 0.06);
-  --ah-glow-1: rgba(109, 40, 217, 0.35);
+  --ah-glow-1: rgba(47, 13, 163, 0.35);
   --ah-glow-2: rgba(212, 165, 116, 0.12);
 
   position: relative;
@@ -28,16 +28,16 @@
   --ah-title-highlight: #000000;
   --ah-body: #475569;
   --ah-muted: #64748b;
-  --ah-accent: #6d28d9;
-  --ah-highlight: #7c3aed;
+  --ah-accent: #2F0DA3;
+  --ah-highlight: #2F0DA3;
   --ah-card-bg: #ffffff;
   --ah-card-border: #e2e8f0;
   --ah-card-hover: #f5f3ff;
   --ah-icon-bg: #ede9fe;
-  --ah-icon-color: #6d28d9;
+  --ah-icon-color: #2F0DA3;
   --ah-stat-border: #e2e8f0;
-  --ah-grid: rgba(124, 58, 237, 0.06);
-  --ah-glow-1: rgba(124, 58, 237, 0.12);
+  --ah-grid: rgba(47, 13, 163, 0.06);
+  --ah-glow-1: rgba(47, 13, 163, 0.12);
   --ah-glow-2: rgba(251, 191, 36, 0.08);
 }
 
@@ -179,7 +179,7 @@
 }
 
 .about-hero--light .about-hero__pathway:hover {
-  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 12px 32px rgba(47, 13, 163, 0.12);
 }
 
 .about-hero__pathway-icon {
@@ -268,13 +268,13 @@
 }
 
 html[data-theme='light'] .about-hero__cta.site-cta {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.35);
+  background: linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%);
+  box-shadow: 0 4px 20px rgba(47, 13, 163, 0.35);
 }
 
 html[data-theme='light'] .about-hero__cta.site-cta:hover:not(:disabled) {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  box-shadow: 0 8px 28px rgba(124, 58, 237, 0.45);
+  background: linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%);
+  box-shadow: 0 8px 28px rgba(47, 13, 163, 0.45);
 }
 
 .about-hero__cta .site-cta__icon--down {

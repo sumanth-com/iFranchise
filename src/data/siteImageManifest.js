@@ -3,9 +3,17 @@
  * Run via scripts/copy-site-images.mjs on dev/build.
  */
 
+/** Bump when BrandNav / BrandLogo assets are regenerated (browser cache bust). */
+export const BRAND_LOGO_VERSION = '20260913-7';
+
 /** @param {string} filename */
 export function siteImageUrl(filename) {
   return `/images/${filename}`;
+}
+
+/** @param {string} filename */
+function brandLogoUrl(filename) {
+  return `/images/${filename}?v=${BRAND_LOGO_VERSION}`;
 }
 
 /** @typedef {{ dest: string, src: string }} SiteImageEntry */
@@ -37,7 +45,16 @@ export const SITE_IMAGE_MANIFEST = [
   { dest: 'franchise-unit-economics-checklist.webp', src: 'Blog3.webp' },
   { dest: 'franchise-demand-india-2026.webp', src: 'Blog4.webp' },
 
-  // Logos (navbar / header)
+  // Logos (navbar / header) — if-mark-* names bust stale BrandNav caches
+  { dest: 'if-mark-nav.webp', src: 'if-mark-nav.webp' },
+  { dest: 'if-mark-nav-96w.webp', src: 'if-mark-nav-96w.webp' },
+  { dest: 'if-mark-nav-192w.webp', src: 'if-mark-nav-192w.webp' },
+  { dest: 'if-mark-nav-384w.webp', src: 'if-mark-nav-384w.webp' },
+  { dest: 'if-mark-logo.webp', src: 'if-mark-logo.webp' },
+  { dest: 'if-mark-logo-96w.webp', src: 'if-mark-logo-96w.webp' },
+  { dest: 'if-mark-logo-192w.webp', src: 'if-mark-logo-192w.webp' },
+
+  // Keep legacy BrandNav/BrandLogo copies in sync for any hard-coded paths
   { dest: 'BrandNav.webp', src: 'BrandNav.webp' },
   { dest: 'BrandNav-96w.webp', src: 'BrandNav-96w.webp' },
   { dest: 'BrandNav-192w.webp', src: 'BrandNav-192w.webp' },
@@ -84,13 +101,13 @@ export const SITE_IMAGES = {
   blogFallback: siteImageUrl('blog-fallback.webp'),
   blogHero: siteImageUrl('blog-hero.webp'),
 
-  brandNav: siteImageUrl('BrandNav.webp'),
-  brandNav96: siteImageUrl('BrandNav-96w.webp'),
-  brandNav192: siteImageUrl('BrandNav-192w.webp'),
-  brandNav384: siteImageUrl('BrandNav-384w.webp'),
-  brandLogo: siteImageUrl('BrandLogo.webp'),
-  brandLogo96: siteImageUrl('BrandLogo-96w.webp'),
-  brandLogo192: siteImageUrl('BrandLogo-192w.webp'),
+  brandNav: brandLogoUrl('if-mark-nav.webp'),
+  brandNav96: brandLogoUrl('if-mark-nav-96w.webp'),
+  brandNav192: brandLogoUrl('if-mark-nav-192w.webp'),
+  brandNav384: brandLogoUrl('if-mark-nav-384w.webp'),
+  brandLogo: brandLogoUrl('if-mark-logo.webp'),
+  brandLogo96: brandLogoUrl('if-mark-logo-96w.webp'),
+  brandLogo192: brandLogoUrl('if-mark-logo-192w.webp'),
 
   review1: siteImageUrl('review-1.webp'),
   review2: siteImageUrl('review-2.webp'),

@@ -72,7 +72,7 @@ function PathCard({ index, id, title, subtitle, description, path, modules, acce
       onClick={() => navigateTo(path)}
       className={`group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border text-left ${
         isLight
-          ? 'border-slate-200 bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:border-violet-400 hover:shadow-[0_20px_40px_rgba(124,58,237,0.12)]'
+          ? 'border-slate-200 bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:border-violet-400 hover:shadow-[0_20px_40px_rgba(47,13,163,0.12)]'
           : 'border-violet-500/20 bg-[#0e0620] shadow-lg hover:border-violet-400/40'
       }`}
     >

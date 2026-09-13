@@ -1,18 +1,18 @@
 /* IFRANCHISE acronym — static letter grid (About Us) */
 
 .ifranchise-acronym {
-  --ifa-box-deep: #4c1d95;
-  --ifa-box-bright: #7c3aed;
+  --ifa-box-deep: #2a1182;
+  --ifa-box-bright: #2F0DA3;
   --ifa-shadow-deep: #2e1065;
-  --ifa-shadow-bright: #5b21b6;
-  --ifa-connector: #7c3aed;
+  --ifa-shadow-bright: #2F0DA3;
+  --ifa-connector: #2F0DA3;
 }
 
 html[data-theme='dark'] .ifranchise-acronym {
-  --ifa-box-deep: #5b21b6;
-  --ifa-box-bright: #8b5cf6;
+  --ifa-box-deep: #2F0DA3;
+  --ifa-box-bright: #2F0DA3;
   --ifa-shadow-deep: #3b0764;
-  --ifa-shadow-bright: #6d28d9;
+  --ifa-shadow-bright: #2F0DA3;
   --ifa-connector: #a78bfa;
 }
 
@@ -203,7 +203,7 @@ html[data-theme='dark'] .ifranchise-acronym__box {
     -webkit-overflow-scrolling: touch;
     padding-bottom: 0.75rem;
     scrollbar-width: thin;
-    scrollbar-color: rgba(124, 58, 237, 0.35) transparent;
+    scrollbar-color: rgba(47, 13, 163, 0.35) transparent;
   }
 
   .ifranchise-acronym__item {
@@ -237,13 +237,13 @@ html[data-theme='dark'] .ifranchise-acronym__box {
     max-width: none;
     padding: 0.75rem 1rem;
     border-radius: 0.75rem;
-    background: rgba(124, 58, 237, 0.1);
-    border: 1px solid rgba(124, 58, 237, 0.2);
+    background: rgba(47, 13, 163, 0.1);
+    border: 1px solid rgba(47, 13, 163, 0.2);
     text-align: left;
   }
 
   html[data-theme='dark'] .ifranchise-acronym__item {
-    background: rgba(139, 92, 246, 0.12);
+    background: rgba(47, 13, 163, 0.12);
     border-color: rgba(167, 139, 250, 0.22);
   }
 

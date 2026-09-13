@@ -1,7 +1,7 @@
 /**
  * Unified section label pill (matches Testimonials style).
  * Light: white bg, slate border, static violet dot, dark text.
- * Dark: frosted panel, white text + static violet dot.
+ * Dark: frosted panel, white text + white dot.
  */
 export default function SectionPill({ children, className = '' }) {
   return (

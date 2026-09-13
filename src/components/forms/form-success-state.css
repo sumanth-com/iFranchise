@@ -59,11 +59,11 @@
 
 .form-success-state--default .form-success-state__confetti,
 .form-success-state--download .form-success-state__confetti {
-  background: linear-gradient(180deg, #8b5cf6, #10b981);
+  background: linear-gradient(180deg, #2F0DA3, #10b981);
 }
 
 .form-success-state--download .form-success-state__confetti {
-  background: linear-gradient(180deg, #a78bfa, #7c3aed);
+  background: linear-gradient(180deg, #a78bfa, #2F0DA3);
   width: 6px;
   height: 10px;
 }
@@ -202,22 +202,22 @@
 }
 
 .form-success-state--default .form-success-state__burst-line {
-  background: linear-gradient(to top, transparent, rgba(109, 40, 217, 0.35));
+  background: linear-gradient(to top, transparent, rgba(47, 13, 163, 0.35));
 }
 
 .form-success-state--default .form-success-state__card,
 .form-success-state--download .form-success-state__card {
   background: linear-gradient(165deg, #ffffff 0%, #f8f5ff 48%, #f0fdf4 100%);
-  border: 1px solid rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(47, 13, 163, 0.18);
   box-shadow:
-    0 4px 24px rgba(109, 40, 217, 0.08),
+    0 4px 24px rgba(47, 13, 163, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
 .form-success-state--download .form-success-state__card {
   background: linear-gradient(165deg, #ffffff 0%, #f5f3ff 42%, #ede9fe 100%);
   box-shadow:
-    0 8px 32px rgba(109, 40, 217, 0.12),
+    0 8px 32px rgba(47, 13, 163, 0.12),
     0 1px 0 rgba(255, 255, 255, 0.95) inset;
 }
 
@@ -240,7 +240,7 @@
 }
 
 .form-success-state--default .form-success-state__glow {
-  background: radial-gradient(ellipse 55% 50% at 50% 0%, rgba(139, 92, 246, 0.14), transparent 72%);
+  background: radial-gradient(ellipse 55% 50% at 50% 0%, rgba(47, 13, 163, 0.14), transparent 72%);
 }
 
 .form-success-state__spark {
@@ -255,8 +255,8 @@
 }
 
 .form-success-state--default .form-success-state__spark {
-  background: rgba(109, 40, 217, 0.75);
-  box-shadow: 0 0 10px rgba(109, 40, 217, 0.45);
+  background: rgba(47, 13, 163, 0.75);
+  box-shadow: 0 0 10px rgba(47, 13, 163, 0.45);
 }
 
 .form-success-state__spark--1 {
@@ -375,8 +375,8 @@
 
 .form-success-state--download .form-success-state__complete-note {
   background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(245, 243, 255, 0.9));
-  border-color: rgba(124, 58, 237, 0.14);
-  box-shadow: 0 2px 14px rgba(109, 40, 217, 0.06);
+  border-color: rgba(47, 13, 163, 0.14);
+  box-shadow: 0 2px 14px rgba(47, 13, 163, 0.06);
 }
 
 .form-success-state__complete-note-icon {
@@ -387,8 +387,8 @@
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 0.65rem;
-  background: rgba(124, 58, 237, 0.1);
-  color: #6d28d9;
+  background: rgba(47, 13, 163, 0.1);
+  color: #2F0DA3;
 }
 
 .form-success-state__complete-note-icon svg {
@@ -431,16 +431,16 @@
 }
 
 .form-success-state--download .form-success-state__reset {
-  border: 1px solid rgba(124, 58, 237, 0.22);
+  border: 1px solid rgba(47, 13, 163, 0.22);
   background: #ffffff;
-  color: #6d28d9;
-  box-shadow: 0 2px 14px rgba(124, 58, 237, 0.12);
+  color: #2F0DA3;
+  box-shadow: 0 2px 14px rgba(47, 13, 163, 0.12);
 }
 
 .form-success-state--download .form-success-state__reset:hover {
-  border-color: rgba(124, 58, 237, 0.4);
+  border-color: rgba(47, 13, 163, 0.4);
   background: #f5f3ff;
-  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.18);
+  box-shadow: 0 4px 18px rgba(47, 13, 163, 0.18);
 }
 
 .form-success-state__check {
@@ -469,9 +469,9 @@
 }
 
 .form-success-state--default .form-success-state__badge {
-  background: rgba(109, 40, 217, 0.08);
-  color: #6d28d9;
-  border: 1px solid rgba(109, 40, 217, 0.15);
+  background: rgba(47, 13, 163, 0.08);
+  color: #2F0DA3;
+  border: 1px solid rgba(47, 13, 163, 0.15);
 }
 
 .form-success-state--dark .form-success-state__badge,
@@ -599,16 +599,16 @@
 }
 
 .form-success-state--default .form-success-state__reset {
-  border: 1px solid rgba(109, 40, 217, 0.2);
+  border: 1px solid rgba(47, 13, 163, 0.2);
   background: #ffffff;
-  color: #5b21b6;
-  box-shadow: 0 2px 12px rgba(109, 40, 217, 0.1);
+  color: #2F0DA3;
+  box-shadow: 0 2px 12px rgba(47, 13, 163, 0.1);
 }
 
 .form-success-state--default .form-success-state__reset:hover {
-  border-color: rgba(109, 40, 217, 0.35);
+  border-color: rgba(47, 13, 163, 0.35);
   background: #faf5ff;
-  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.14);
+  box-shadow: 0 4px 16px rgba(47, 13, 163, 0.14);
 }
 
 .form-success-state--dark .form-success-state__reset,

@@ -9,11 +9,11 @@ export const SITE_CONTACT_EMAIL = 'contact@ifranchise.in';
 export const SITE_CONTACT_PHONE = '9129130303';
 
 export const SITE_CONTACT_ADDRESS =
-  'Innov8 Coworking Space Mantri Bellandur Outer Ring Road';
+  'Innov 8 Mantri Commercio, Tower A, No 51, 5th floor, Bellandur, Bangalore South, Bangalore - 560103, Karnataka';
 
 /** Shorter single-line label for compact legal / footer rows */
 export const SITE_CONTACT_ADDRESS_COMPACT =
-  'Innov8, Mantri Bellandur ORR';
+  'Innov 8 Mantri Commercio, Bellandur, Bangalore';
 
 export const SITE_CONTACT_PHONE_TEL = `+91${SITE_CONTACT_PHONE}`;
 
@@ -31,7 +31,7 @@ export const SITE_CONTACT_PHONE_DISPLAY = `+91 ${SITE_CONTACT_PHONE.slice(0, 5)}
 
 export const SITE_CONTACT_MAILTO = `mailto:${SITE_CONTACT_EMAIL}`;
 
-export const SITE_CONTACT_MAPS_QUERY = `${SITE_CONTACT_ADDRESS}, Bengaluru, Karnataka, India`;
+export const SITE_CONTACT_MAPS_QUERY = `${SITE_CONTACT_ADDRESS}, India`;
 
 export const SITE_CONTACT_MAPS_URL = `https://maps.google.com/?q=${encodeURIComponent(SITE_CONTACT_MAPS_QUERY)}`;
 

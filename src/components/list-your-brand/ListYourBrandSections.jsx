@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { FiArrowRight, FiCheck } from 'react-icons/fi';
 import SectionPill from '../ui/SectionPill';
 import PremiumFAQItem from '../ui/PremiumFAQItem';
-import CtaButton from '../ui/CtaButton';
 import { navigateTo } from '../../lib/navigation';
 import { sectionTitleClass } from '../../lib/cardThemeStyles';
 import {
@@ -24,7 +23,7 @@ function LybPremiumCard({ children, className = '' }) {
   return (
     <div className={`${LYB_PREMIUM_CARD} ${className}`}>
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(124,58,237,0.22),transparent)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(47,13,163,0.22),transparent)]"
         aria-hidden
       />
       <div className="relative">{children}</div>
@@ -102,7 +101,7 @@ export function WhyListSection() {
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.42, delay: i * 0.06, ease: LYB_EASE }}
               whileHover={{ y: -4 }}
-              className="lyb-benefit-card card-premium-dark group rounded-2xl border border-violet-500/15 p-6 transition-shadow duration-300 hover:border-violet-400/35 hover:shadow-[0_20px_48px_rgba(124,58,237,0.12)]"
+              className="lyb-benefit-card card-premium-dark group rounded-2xl border border-violet-500/15 p-6 transition-shadow duration-300 hover:border-violet-400/35 hover:shadow-[0_20px_48px_rgba(47,13,163,0.12)]"
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-violet-400/25 bg-violet-500/15 text-violet-200 transition-colors group-hover:border-violet-300/40 group-hover:bg-violet-500/25">
                 <WhyIcon type={card.icon} />
@@ -279,39 +278,6 @@ export function WhyTrustSection() {
   );
 }
 
-export function ReadinessBannerSection() {
-  return (
-    <section className={`lyb-readiness-section ${LYB_SECTION} py-8 lg:py-10`}>
-      <div className={LYB_CONTAINER}>
-        <motion.aside
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="lyb-readiness-banner card-premium-dark relative overflow-hidden rounded-2xl border border-violet-500/20 p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-violet-600/10 via-transparent to-indigo-600/10" aria-hidden />
-          <div className="relative max-w-xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-violet-300">Franchise Readiness</p>
-            <h2 className="mt-2 text-xl font-extrabold text-white sm:text-2xl">
-              Not Sure If Your Business Is Ready For Franchising?
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-violet-100/80">
-              Assess your business, identify growth gaps, and discover your franchise expansion potential before you list.
-            </p>
-          </div>
-          <CtaButton
-            type="button"
-            className="relative mt-5 shrink-0 sm:mt-0"
-            onClick={() => navigateTo('/franchise-readiness-assessment')}
-          >
-            Check Readiness
-          </CtaButton>
-        </motion.aside>
-      </div>
-    </section>
-  );
-}
-
 export function ListYourBrandFAQSection() {
   return (
     <section className="lyb-faq-section w-full py-12 lg:py-16" aria-labelledby="lyb-faq-heading">
@@ -355,7 +321,7 @@ export function FinalCTASection({ onListBrand }) {
           viewport={{ once: true }}
           className="lyb-final-cta relative overflow-hidden rounded-3xl border border-violet-500/25 bg-gradient-to-br from-[#1a0f3d] via-[#12082a] to-[#0a0618] px-6 py-12 text-center sm:px-10 sm:py-14"
         >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(124,58,237,0.22),transparent)]" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(47,13,163,0.22),transparent)]" aria-hidden />
           <h2 className="relative text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl">
             Ready To Scale Your Brand Across India?
           </h2>

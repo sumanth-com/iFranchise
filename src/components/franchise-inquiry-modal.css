@@ -112,7 +112,8 @@
   flex-shrink: 0;
   background: #fff;
   border-top: 1px solid rgba(226, 232, 240, 0.9);
-  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.625rem 0 calc(0.875rem + env(safe-area-inset-bottom, 0px));
+  margin-top: auto;
 }
 
 .franchise-inquiry-modal__actions {
@@ -136,14 +137,14 @@
 }
 
 .franchise-inquiry-modal__legal a {
-  color: #6d28d9;
+  color: #2F0DA3;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .franchise-inquiry-modal__legal a:hover {
-  color: #5b21b6;
+  color: #2F0DA3;
 }
 
 .franchise-inquiry-modal__legal strong {
@@ -188,7 +189,8 @@
   gap: 0.5rem;
 }
 
-.franchise-inquiry-modal--compact .franchise-inquiry-modal__fields-row {
+.franchise-inquiry-modal--compact .franchise-inquiry-modal__fields-row,
+.franchise-inquiry-modal--compact .franchise-inquiry-modal__location-row {
   gap: 0.5rem;
 }
 
@@ -294,8 +296,8 @@
   color: #fff;
   text-decoration: none;
   cursor: pointer;
-  background: #6d28d9;
-  box-shadow: 0 6px 18px rgba(109, 40, 217, 0.32);
+  background: #2F0DA3;
+  box-shadow: 0 6px 18px rgba(47, 13, 163, 0.32);
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
@@ -309,8 +311,8 @@
 
 .franchise-inquiry-modal__whatsapp-cta:hover {
   transform: translateY(-1px);
-  background: #5b21b6;
-  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.4);
+  background: #2F0DA3;
+  box-shadow: 0 8px 22px rgba(47, 13, 163, 0.4);
 }
 
 .franchise-inquiry-modal--mobile-actions.franchise-inquiry-modal--compact
@@ -356,7 +358,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #7c3aed, #a78bfa, #38bdf8);
+  background: linear-gradient(90deg, #2F0DA3, #a78bfa, #38bdf8);
 }
 
 .franchise-inquiry-modal__kicker {
@@ -364,7 +366,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #7c3aed;
+  color: #2F0DA3;
 }
 
 .franchise-inquiry-modal__title {
@@ -437,14 +439,14 @@
 }
 
 .franchise-inquiry-modal__type-btn--selected {
-  border-color: #7c3aed;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.32);
+  border-color: #2F0DA3;
+  background: linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%);
+  box-shadow: 0 4px 16px rgba(47, 13, 163, 0.32);
 }
 
 .franchise-inquiry-modal__type-btn--selected:hover {
-  border-color: #6d28d9;
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  border-color: #2F0DA3;
+  background: linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%);
 }
 
 .franchise-inquiry-modal__type-btn--selected .franchise-inquiry-modal__type-title {
@@ -476,6 +478,18 @@
   display: grid;
   gap: 0.75rem;
   grid-template-columns: 1fr 1fr;
+  min-width: 0;
+}
+
+.franchise-inquiry-modal__location-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.franchise-inquiry-modal__location-row > * {
+  min-width: 0;
 }
 
 .franchise-inquiry-modal__label {
@@ -527,7 +541,7 @@
 .franchise-inquiry-modal__input:focus,
 .franchise-inquiry-modal__input:focus-visible {
   border-color: #a78bfa;
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 0 2px rgba(47, 13, 163, 0.15);
 }
 
 .franchise-inquiry-modal__input--error {
@@ -574,8 +588,8 @@
   margin-top: 0.25rem;
   color: #fff;
   cursor: pointer;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  box-shadow: 0 8px 22px rgba(109, 40, 217, 0.32);
+  background: linear-gradient(135deg, #2F0DA3 0%, #2F0DA3 100%);
+  box-shadow: 0 8px 22px rgba(47, 13, 163, 0.32);
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
@@ -584,7 +598,7 @@
 
 .franchise-inquiry-modal__submit:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px rgba(109, 40, 217, 0.38);
+  box-shadow: 0 12px 28px rgba(47, 13, 163, 0.38);
 }
 
 .franchise-inquiry-modal__submit:disabled {
@@ -692,7 +706,8 @@
   line-height: 1.35;
 }
 
-.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields-row {
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__fields-row,
+.franchise-inquiry-sheet--mobile .franchise-inquiry-modal__location-row {
   grid-template-columns: 1fr 1fr;
   gap: 0.625rem;
 }

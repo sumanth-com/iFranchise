@@ -32,7 +32,7 @@ function FounderLetterCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: 'easeOut', delay: cardDelay }}
-      className="leadership-founder-card group relative mx-auto mb-6 w-full max-w-[40rem] overflow-hidden rounded-2xl border border-violet-500/20 bg-transparent shadow-[0_6px_32px_rgba(0,0,0,0.35)] transition-all duration-500 last:mb-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(109,40,217,0.22)] card-premium-dark lg:max-w-none"
+      className="leadership-founder-card group relative mx-auto mb-6 w-full max-w-[40rem] overflow-hidden rounded-2xl border border-violet-500/20 bg-transparent shadow-[0_6px_32px_rgba(0,0,0,0.35)] transition-all duration-500 last:mb-0 hover:-translate-y-0.5 hover:shadow-[0_12px_48px_rgba(47,13,163,0.22)] card-premium-dark lg:max-w-none"
     >
       <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         <div className={`absolute inset-0 bg-gradient-to-br ${hoverGradientClass}`} />

@@ -12,7 +12,7 @@ function BlogCard({ post, priority = false }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
       transition={{ duration: 0.24, ease: 'easeOut' }}
-      className="group overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(109,40,217,0.28)]"
+      className="group overflow-hidden rounded-2xl border border-violet-500/25 card-premium-dark shadow-[0_12px_40px_rgba(0,0,0,0.45)] transition duration-300 hover:-translate-y-1.5 hover:border-violet-400/45 hover:shadow-[0_20px_50px_rgba(47,13,163,0.28)]"
     >
       <a
         href={`/blogs/${post.slug}`}

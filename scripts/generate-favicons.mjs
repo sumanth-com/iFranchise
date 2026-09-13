@@ -1,6 +1,6 @@
 /**
- * Generate favicons from src/assets/BrandNav.webp for Google Search visibility.
- * - Solid #0a0618 background, trimmed & centered logo, larger fill at small sizes
+ * Generate favicons from src/assets/iF-Logo.png for Google Search visibility.
+ * - Solid brand background, trimmed & centered logo, larger fill at small sizes
  * - favicon.ico (16+32+48), PNG sizes, Apple/Android PWA icons
  * - Updates index.html, manifest.webmanifest, manifest.json
  */
@@ -18,19 +18,20 @@ const outDir = join(root, 'public');
 const vQuery = `?v=${ICON_VERSION}`;
 
 const SOURCE_CANDIDATES = [
+  join(root, 'src', 'assets', 'iF-Logo.png'),
   join(root, 'src', 'assets', 'BrandNav.webp'),
   join(root, 'src', 'assets', 'BrandNav-384w.webp'),
   join(root, 'src', 'assets', 'BrandNav-192w.webp'),
 ];
 
 const OUTPUTS = [
-  { name: 'favicon-16x16.png', size: 16, fill: 0.9, sharpen: true },
-  { name: 'favicon-32x32.png', size: 32, fill: 0.9, sharpen: true },
-  { name: 'favicon-48x48.png', size: 48, fill: 0.88, sharpen: true },
-  { name: 'apple-touch-icon.png', size: 180, fill: 0.86, sharpen: false },
-  { name: 'android-chrome-192x192.png', size: 192, fill: 0.86, sharpen: false },
-  { name: 'android-chrome-512x512.png', size: 512, fill: 0.86, sharpen: false },
-  { name: 'favicon.png', size: 512, fill: 0.86, sharpen: false },
+  { name: 'favicon-16x16.png', size: 16, fill: 1, sharpen: true },
+  { name: 'favicon-32x32.png', size: 32, fill: 1, sharpen: true },
+  { name: 'favicon-48x48.png', size: 48, fill: 1, sharpen: true },
+  { name: 'apple-touch-icon.png', size: 180, fill: 1, sharpen: false },
+  { name: 'android-chrome-192x192.png', size: 192, fill: 1, sharpen: false },
+  { name: 'android-chrome-512x512.png', size: 512, fill: 1, sharpen: false },
+  { name: 'favicon.png', size: 512, fill: 1, sharpen: false },
 ];
 
 const REQUIRED_PUBLIC = [
@@ -82,7 +83,7 @@ function resolveSharp() {
 
 const sourcePath = SOURCE_CANDIDATES.find((p) => existsSync(p));
 if (!sourcePath) {
-  console.error('[favicon] BrandNav source missing in src/assets');
+  console.error('[favicon] iF-Logo / BrandNav source missing in src/assets');
   process.exit(1);
 }
 
@@ -101,15 +102,69 @@ if (!sharp) {
   );
   process.exit(1);
 }
-const logoSharp = await loadTrimmedLogo(sharp, sourcePath);
+
+const useFullSquare = /iF-Logo\.png$/i.test(sourcePath);
+let logoSharp;
+let markPng = null;
+
+if (useFullSquare) {
+  // Extract white mark once; favicons get the same safe inset as BrandNav (~48%).
+  const { data, info } = await sharp(sourcePath)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  for (let i = 0; i < data.length; i += 4) {
+    const isMark = data[i] > 200 && data[i + 1] > 200 && data[i + 2] > 200;
+    if (!isMark) data[i + 3] = 0;
+  }
+
+  markPng = await sharp(data, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  })
+    .trim({ threshold: 0 })
+    .png()
+    .toBuffer();
+  logoSharp = sharp(markPng);
+} else {
+  logoSharp = await loadTrimmedLogo(sharp, sourcePath);
+}
 
 const buffers = new Map();
 for (const { name, size, fill, sharpen } of OUTPUTS) {
-  const buf = await renderFaviconSquare(sharp, logoSharp, size, {
-    fill,
-    sharpen,
-    bg: FAVICON_BG,
-  });
+  let buf;
+  if (useFullSquare && markPng) {
+    const insetFill = Math.min(fill, 0.48);
+    const inner = Math.max(8, Math.round(size * insetFill));
+    const logoPng = await sharp(markPng)
+      .resize(inner, inner, {
+        fit: 'contain',
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+        kernel: size <= 32 ? 'lanczos3' : 'lanczos2',
+      })
+      .png()
+      .toBuffer();
+
+    let pipeline = sharp({
+      create: {
+        width: size,
+        height: size,
+        channels: 4,
+        background: FAVICON_BG,
+      },
+    }).composite([{ input: logoPng, gravity: 'center' }]);
+
+    if (sharpen && size <= 48) {
+      pipeline = pipeline.sharpen({ sigma: 0.8, m1: 0.5, m2: 0.25 });
+    }
+    buf = await pipeline.png({ compressionLevel: 9, effort: 10 }).toBuffer();
+  } else {
+    buf = await renderFaviconSquare(sharp, logoSharp, size, {
+      fill,
+      sharpen,
+      bg: FAVICON_BG,
+    });
+  }
   writeFileSync(join(outDir, name), buf);
   buffers.set(name, buf);
 }
@@ -124,12 +179,12 @@ writeFileSync(join(outDir, 'favicon.ico'), ico);
 const manifest = {
   name: 'iFranchise',
   short_name: 'iFranchise',
-  description: "India's Trusted Franchise Growth Platform",
+  description: 'Connect. Expand. Grow',
   start_url: '/',
   scope: '/',
   display: 'standalone',
-  background_color: '#0a0618',
-  theme_color: '#0a0618',
+  background_color: '#2F0DA3',
+  theme_color: '#2F0DA3',
   lang: 'en-IN',
   icons: [
     {
@@ -187,7 +242,7 @@ function patchIndexHtml() {
   const v = ICON_VERSION;
   const site = 'https://www.ifranchise.in';
 
-  const faviconBlock = `    <!-- Favicons: BrandNav → scripts/generate-favicons.mjs (Google prefers ≥48×48) -->
+  const faviconBlock = `    <!-- Favicons: iF-Logo → scripts/generate-favicons.mjs (Google prefers ≥48×48) -->
     <link rel="icon" type="image/png" href="/favicon-48x48.png?v=${v}" sizes="48x48" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=${v}" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png?v=${v}" sizes="32x32" />
@@ -199,7 +254,7 @@ function patchIndexHtml() {
 
   // Replace the entire favicon + manifest block (including any accidental duplicate manifests)
   html = html.replace(
-    /    <!-- Favicons: BrandNav[\s\S]*?<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>(?:\s*<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>)*/,
+    /    <!-- Favicons: (?:iF-Logo|BrandNav)[\s\S]*?<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>(?:\s*<link rel="manifest" href="\/manifest\.(?:webmanifest|json)\?v=[^"]+" \/>)*/,
     faviconBlock,
   );
 
