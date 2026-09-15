@@ -411,7 +411,7 @@ function Navbar() {
                 iFranchise
               </span>
               <p
-                className={`site-navbar-logo-tagline hidden font-normal uppercase text-violet-800 transition-[opacity,max-height] duration-300 sm:block ${
+                className={`site-navbar-logo-tagline block font-normal uppercase text-violet-800 transition-[opacity,max-height] duration-300 ${
                   isScrolled ? 'max-h-0 opacity-0 overflow-hidden' : 'max-h-6 opacity-100'
                 }`}
               >
