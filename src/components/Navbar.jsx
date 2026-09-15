@@ -406,12 +406,12 @@ function Navbar() {
                 }}
               />
             </span>
-            <div className="flex min-w-0 flex-col">
+            <div className="site-navbar-logo-text min-w-0">
               <span className="site-navbar-logo-title truncate text-lg font-extrabold tracking-tight leading-tight text-violet-900 sm:text-2xl">
                 iFranchise
               </span>
               <p
-                className={`site-navbar-logo-tagline hidden text-[10px] font-semibold uppercase leading-tight tracking-[0.14em] text-violet-800 transition-[opacity,max-height] duration-300 sm:block sm:text-[11px] ${
+                className={`site-navbar-logo-tagline hidden font-normal uppercase text-violet-800 transition-[opacity,max-height] duration-300 sm:block ${
                   isScrolled ? 'max-h-0 opacity-0' : 'max-h-6 opacity-100'
                 }`}
               >

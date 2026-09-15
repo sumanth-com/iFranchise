@@ -2656,6 +2656,30 @@ html[data-theme='light'] header.site-navbar .site-navbar-logo-tagline {
   color: #ffffff !important;
 }
 
+header.site-navbar .site-navbar-logo-text {
+  display: inline-grid;
+  grid-template-columns: max-content;
+  justify-items: stretch;
+  max-width: 100%;
+}
+
+header.site-navbar .site-navbar-logo-title {
+  font-weight: 800;
+}
+
+header.site-navbar .site-navbar-logo-tagline {
+  margin: 0.125rem 0 0;
+  width: 0;
+  min-width: 100%;
+  font-size: 0.5625rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
 /* Navbar logo — light white line traveling continuously around the border */
 @property --site-navbar-logo-border-angle {
   syntax: '<angle>';
