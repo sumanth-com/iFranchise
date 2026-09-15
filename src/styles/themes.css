@@ -2665,19 +2665,40 @@ header.site-navbar .site-navbar-logo-text {
 
 header.site-navbar .site-navbar-logo-title {
   font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 header.site-navbar .site-navbar-logo-tagline {
-  margin: 0.125rem 0 0;
+  margin: 0.15rem 0 0;
   width: 0;
   min-width: 100%;
-  font-size: 0.5625rem;
+  box-sizing: border-box;
+  font-size: 0.5rem;
   font-weight: 400;
-  letter-spacing: 0.04em;
-  line-height: 1.15;
+  letter-spacing: 0.015em;
+  line-height: 1.2;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
+  overflow: visible;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  header.site-navbar .site-navbar-logo-tagline {
+    font-size: 0.5625rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+@media (min-width: 1280px) {
+  header.site-navbar .site-navbar-logo-title {
+    letter-spacing: 0.05em;
+  }
+
+  header.site-navbar .site-navbar-logo-tagline {
+    font-size: 0.625rem;
+    letter-spacing: 0.045em;
+  }
 }
 
 /* Navbar logo — light white line traveling continuously around the border */
