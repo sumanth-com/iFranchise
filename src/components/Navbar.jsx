@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NAV_LOGO } from '../lib/uiAssets.js';
-import { SITE_TAGLINE } from '../seo/config.js';
+import { NAV_LOGO, NAV_WORDMARK } from '../lib/uiAssets.js';
 import ThemeToggle from './ThemeToggle';
 import { navigateTo as spaNavigate } from '../lib/navigation';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
@@ -70,8 +69,8 @@ const NAV_DROPDOWN_PANEL_CLASS =
 
 const NAV_LINK_BASE =
   'inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-bold transition-all duration-200';
-const NAV_LINK_IDLE = 'site-navbar-link text-violet-800 hover:bg-violet-50 hover:text-violet-950';
-const NAV_LINK_ACTIVE = 'site-navbar-link site-navbar-link--active bg-violet-100 text-violet-950';
+const NAV_LINK_IDLE = 'site-navbar-link text-violet-600 hover:bg-violet-50 hover:text-violet-600';
+const NAV_LINK_ACTIVE = 'site-navbar-link site-navbar-link--active bg-violet-100 text-violet-600';
 
 function NavbarCareersOpenPill({ count, reduceMotion = false }) {
   if (!count) return null;
@@ -384,15 +383,15 @@ function Navbar() {
         {/* Logo */}
         <div className="site-navbar-brand flex min-w-0 flex-1 flex-col xl:mr-auto xl:flex-none">
           <a href="/" onClick={handleLogoClick} className="inline-flex min-w-0 max-w-full items-center gap-2 sm:gap-3">
-            <span className="site-navbar-logo-mark-wrap inline-flex h-10 w-10 shrink-0 sm:h-11 sm:w-11">
+            <span className="site-navbar-logo-mark-wrap inline-flex shrink-0">
               <img
                 src={NAV_LOGO.src}
                 srcSet={NAV_LOGO.srcSet}
                 sizes={NAV_LOGO.sizes}
                 alt="iFranchise India franchise consulting company"
                 className="site-navbar-logo-mark h-full w-full"
-                width={44}
-                height={44}
+                width={36}
+                height={36}
                 loading="eager"
                 decoding="async"
                 fetchPriority="auto"
@@ -406,18 +405,16 @@ function Navbar() {
                 }}
               />
             </span>
-            <div className="site-navbar-logo-text min-w-0">
-              <span className="site-navbar-logo-title text-lg font-extrabold leading-tight text-violet-900 sm:text-2xl">
-                iFranchise
-              </span>
-              <p
-                className={`site-navbar-logo-tagline block font-normal uppercase text-violet-800 transition-[opacity,max-height] duration-300 ${
-                  isScrolled ? 'max-h-0 opacity-0 overflow-hidden' : 'max-h-6 opacity-100'
-                }`}
-              >
-                {SITE_TAGLINE}
-              </p>
-            </div>
+            <img
+              src={NAV_WORDMARK.src}
+              alt="iFranchise — Connect. Expand. Grow."
+              className="site-navbar-logo-wordmark"
+              width={NAV_WORDMARK.width}
+              height={NAV_WORDMARK.height}
+              loading="eager"
+              decoding="async"
+              fetchPriority="auto"
+            />
           </a>
         </div>
 
@@ -582,19 +579,27 @@ function Navbar() {
                 animate={reduceMotion ? undefined : 'visible'}
                 className="navbar-mobile-panel__header flex shrink-0 items-center justify-between border-b px-6 py-4"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex min-w-0 items-center gap-3">
                   <img
                     src={NAV_LOGO.src}
                     srcSet={NAV_LOGO.srcSet}
                     sizes={NAV_LOGO.sizes}
                     alt="iFranchise India franchise consulting company"
-                    className="site-navbar-logo-mark h-9 w-9 shrink-0"
+                    className="site-navbar-logo-mark shrink-0"
                     width={36}
                     height={36}
                     loading="eager"
                     decoding="async"
                   />
-                  <span className="navbar-mobile-panel__brand text-lg font-bold">iFranchise</span>
+                  <img
+                    src={NAV_WORDMARK.src}
+                    alt="iFranchise — Connect. Expand. Grow."
+                    className="site-navbar-logo-wordmark site-navbar-logo-wordmark--panel"
+                    width={NAV_WORDMARK.width}
+                    height={NAV_WORDMARK.height}
+                    loading="eager"
+                    decoding="async"
+                  />
                 </div>
                 <div className="flex items-center gap-2">
                   <ThemeToggle compact />

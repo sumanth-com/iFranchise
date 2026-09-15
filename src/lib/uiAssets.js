@@ -11,6 +11,13 @@ export const NAV_LOGO = {
   ),
 };
 
+/** Wordmark beside the navbar mark — sourced from src/assets/log.png */
+export const NAV_WORDMARK = {
+  src: SITE_IMAGES.brandWordmark,
+  width: 1935,
+  height: 464,
+};
+
 export const HEADER_BRAND_LOGO = {
   src: SITE_IMAGES.brandLogo,
   ...buildResponsiveSrc(

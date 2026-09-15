@@ -4,7 +4,7 @@
  */
 
 /** Bump when BrandNav / BrandLogo assets are regenerated (browser cache bust). */
-export const BRAND_LOGO_VERSION = '20260913-7';
+export const BRAND_LOGO_VERSION = '20260915-2';
 
 /** @param {string} filename */
 export function siteImageUrl(filename) {
@@ -53,6 +53,9 @@ export const SITE_IMAGE_MANIFEST = [
   { dest: 'if-mark-logo.webp', src: 'if-mark-logo.webp' },
   { dest: 'if-mark-logo-96w.webp', src: 'if-mark-logo-96w.webp' },
   { dest: 'if-mark-logo-192w.webp', src: 'if-mark-logo-192w.webp' },
+  // Navbar wordmark from src/assets/log.png (transparent white artwork)
+  { dest: 'brand-wordmark.png', src: 'log.png' },
+  { dest: 'if-wordmark-nav.webp', src: 'if-wordmark-nav.webp' },
 
   // Keep legacy BrandNav/BrandLogo copies in sync for any hard-coded paths
   { dest: 'BrandNav.webp', src: 'BrandNav.webp' },
@@ -108,6 +111,7 @@ export const SITE_IMAGES = {
   brandLogo: brandLogoUrl('if-mark-logo.webp'),
   brandLogo96: brandLogoUrl('if-mark-logo-96w.webp'),
   brandLogo192: brandLogoUrl('if-mark-logo-192w.webp'),
+  brandWordmark: brandLogoUrl('brand-wordmark.png'),
 
   review1: siteImageUrl('review-1.webp'),
   review2: siteImageUrl('review-2.webp'),

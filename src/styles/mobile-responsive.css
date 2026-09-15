@@ -1072,22 +1072,14 @@
     max-width: 100%;
   }
 
-  header.site-navbar .site-navbar-logo-title {
-    font-size: 1.125rem;
-    line-height: 1.2;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
+  header.site-navbar .site-navbar-logo-mark-wrap {
+    width: 1.7rem;
+    height: 1.7rem;
   }
 
-  header.site-navbar .site-navbar-logo-tagline {
-    display: block;
-    font-size: 0.4375rem;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-top: 0.1rem;
-    letter-spacing: 0.01em;
-    overflow: visible;
-    white-space: nowrap;
+  header.site-navbar .site-navbar-logo-wordmark {
+    height: 1.7rem;
+    max-width: min(7.5rem, 44vw);
   }
 
   header.site-navbar .site-navbar-actions {
@@ -1146,23 +1138,13 @@
   }
 
   header.site-navbar .site-navbar-logo-mark-wrap {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2rem;
+    height: 2rem;
   }
 
-  header.site-navbar .site-navbar-logo-title {
-    font-size: 1.5rem;
-    line-height: 1.15;
-    letter-spacing: 0.04em;
-  }
-
-  header.site-navbar .site-navbar-logo-tagline {
-    font-size: 0.5625rem;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-top: 0.15rem;
-    letter-spacing: 0.03em;
-    overflow: visible;
+  header.site-navbar .site-navbar-logo-wordmark {
+    height: 2rem;
+    max-width: 10rem;
   }
 
   header.site-navbar .site-navbar-actions {

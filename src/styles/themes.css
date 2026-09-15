@@ -188,7 +188,7 @@ html.theme-transition header.site-navbar {
 }
 
 .theme-toggle__orbit-sky.is-night {
-  background: linear-gradient(135deg, #1e0a45 0%, #312e81 45%, #2a1182 100%);
+  background: #2F0DA3;
 }
 
 .theme-toggle__orbit-sky.is-day {
@@ -243,7 +243,7 @@ html.theme-transition header.site-navbar {
   left: 4%;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(167, 139, 250, 0.55);
+  background: rgba(255, 255, 255, 0.28);
   opacity: 1;
 }
 
@@ -370,10 +370,10 @@ html[data-theme='light'] .theme-toggle__orbit-sky.is-day .theme-toggle__orbit-gh
 }
 
 .theme-toggle__orbit-knob.is-night .theme-toggle__orbit-knob-inner {
-  color: #e9d5ff;
-  background: linear-gradient(145deg, #2a1182 0%, #312e81 50%, #1e1b4b 100%);
+  color: #ffffff;
+  background: #2F0DA3;
   box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.35),
+    0 4px 14px rgba(47, 13, 163, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -445,8 +445,8 @@ html[data-theme='light'] .theme-toggle__orbit-sky.is-day .theme-toggle__orbit-gh
 }
 
 .theme-toggle--active-night.theme-toggle--orbit-compact .theme-toggle__orbit-knob-inner {
-  color: #e9d5ff;
-  background: linear-gradient(145deg, #2a1182 0%, #312e81 55%, #1e1b4b 100%);
+  color: #ffffff;
+  background: #2F0DA3;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
@@ -2651,54 +2651,74 @@ html[data-theme='light'] header.site-navbar {
   -webkit-backdrop-filter: blur(12px);
 }
 
-html[data-theme='light'] header.site-navbar .site-navbar-logo-title,
-html[data-theme='light'] header.site-navbar .site-navbar-logo-tagline {
-  color: #ffffff !important;
+/* Match mark + wordmark to the same visual height */
+header.site-navbar .site-navbar-logo-mark-wrap {
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
-header.site-navbar .site-navbar-logo-text {
-  display: inline-grid;
-  grid-template-columns: max-content;
-  justify-items: stretch;
-  max-width: 100%;
-}
-
-header.site-navbar .site-navbar-logo-title {
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-header.site-navbar .site-navbar-logo-tagline {
-  margin: 0.15rem 0 0;
-  width: 0;
-  min-width: 100%;
-  box-sizing: border-box;
-  font-size: 0.5rem;
-  font-weight: 400;
-  letter-spacing: 0.015em;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: visible;
-  text-align: left;
+header.site-navbar .site-navbar-logo-wordmark {
+  display: block;
+  height: 1.7rem;
+  width: auto;
+  max-width: min(7.75rem, 44vw);
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 1;
+  min-width: 0;
+  background: transparent;
 }
 
 @media (min-width: 640px) {
-  header.site-navbar .site-navbar-logo-tagline {
-    font-size: 0.5625rem;
-    letter-spacing: 0.03em;
+  header.site-navbar .site-navbar-logo-mark-wrap {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  header.site-navbar .site-navbar-logo-wordmark {
+    height: 2rem;
+    max-width: 9.75rem;
   }
 }
 
 @media (min-width: 1280px) {
-  header.site-navbar .site-navbar-logo-title {
-    letter-spacing: 0.05em;
+  header.site-navbar .site-navbar-logo-mark-wrap {
+    width: 2.15rem;
+    height: 2.15rem;
   }
 
-  header.site-navbar .site-navbar-logo-tagline {
-    font-size: 0.625rem;
-    letter-spacing: 0.045em;
+  header.site-navbar .site-navbar-logo-wordmark {
+    height: 2.15rem;
+    max-width: 10.75rem;
   }
+}
+
+/* Purple navbar keeps white wordmark as-is */
+html[data-theme='light'] header.site-navbar .site-navbar-logo-wordmark {
+  filter: none;
+}
+
+/* Dark / default navbar — brand purple #2F0DA3 (not black) */
+html:not([data-theme='light']) header.site-navbar .site-navbar-logo-wordmark,
+.navbar-mobile-panel__header .site-navbar-logo-wordmark {
+  filter: brightness(0) saturate(100%) invert(14%) sepia(97%) saturate(5352%) hue-rotate(254deg) brightness(72%) contrast(119%);
+}
+
+html[data-theme='dark'] .navbar-mobile-panel__header .site-navbar-logo-wordmark {
+  filter: none;
+}
+
+.navbar-mobile-panel__header .site-navbar-logo-mark {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.navbar-mobile-panel__header .site-navbar-logo-wordmark--panel {
+  height: 1.7rem;
+  width: auto;
+  max-width: 8.5rem;
+  object-fit: contain;
+  background: transparent;
 }
 
 /* Navbar logo — light white line traveling continuously around the border */
@@ -2852,6 +2872,35 @@ html[data-theme='dark'] header.site-navbar .theme-toggle--orbit-pill {
   box-shadow:
     0 2px 12px rgba(47, 13, 163, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Dark-mode navbar: one brand purple for all text (#2F0DA3, same as CTA) */
+html[data-theme='dark'] header.site-navbar .site-navbar-link,
+html[data-theme='dark'] header.site-navbar .site-navbar-link:hover,
+html[data-theme='dark'] header.site-navbar .site-navbar-link--active {
+  color: #2F0DA3 !important;
+}
+
+html[data-theme='dark'] header.site-navbar .site-navbar-link svg {
+  color: #2F0DA3 !important;
+  stroke: #2F0DA3 !important;
+}
+
+html[data-theme='dark'] header.site-navbar .site-navbar-cta {
+  background: #2F0DA3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(47, 13, 163, 0.35) !important;
+}
+
+html[data-theme='dark'] header.site-navbar .theme-toggle--orbit-pill .theme-toggle__orbit-sky.is-night,
+html[data-theme='dark'] header.site-navbar .theme-toggle--active-night.theme-toggle--orbit-pill .theme-toggle__orbit-sky {
+  background: #2F0DA3 !important;
+}
+
+html[data-theme='dark'] header.site-navbar .theme-toggle--orbit-pill .theme-toggle__orbit-knob.is-night .theme-toggle__orbit-knob-inner,
+html[data-theme='dark'] header.site-navbar .theme-toggle--active-night.theme-toggle--orbit-compact .theme-toggle__orbit-knob-inner {
+  background: #2F0DA3 !important;
+  color: #ffffff !important;
 }
 
 /* --- Mobile navigation drawer (theme-aware) ---------------------------------- */
