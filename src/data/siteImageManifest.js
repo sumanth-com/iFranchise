@@ -44,6 +44,16 @@ export const SITE_IMAGE_MANIFEST = [
   { dest: 'fofo-vs-fico-franchise-model-guide.webp', src: 'Blog2.webp' },
   { dest: 'franchise-unit-economics-checklist.webp', src: 'Blog3.webp' },
   { dest: 'franchise-demand-india-2026.webp', src: 'Blog4.webp' },
+  { dest: 'top-9-clothing-franchise-opportunities-india.webp', src: 'top-9-clothing-franchise-opportunities-india.webp' },
+  { dest: 'blog-clothing/kaira.webp', src: 'blog-clothing/kaira.webp' },
+  { dest: 'blog-clothing/zudio.webp', src: 'blog-clothing/zudio.webp' },
+  { dest: 'blog-clothing/odette.webp', src: 'blog-clothing/odette.webp' },
+  { dest: 'blog-clothing/pantaloons.webp', src: 'blog-clothing/pantaloons.webp' },
+  { dest: 'blog-clothing/being-human.webp', src: 'blog-clothing/being-human.webp' },
+  { dest: 'blog-clothing/van-heusen.webp', src: 'blog-clothing/van-heusen.webp' },
+  { dest: 'blog-clothing/manyavar.webp', src: 'blog-clothing/manyavar.webp' },
+  { dest: 'blog-clothing/aramya.webp', src: 'blog-clothing/aramya.webp' },
+  { dest: 'blog-clothing/raymond.webp', src: 'blog-clothing/raymond.webp' },
 
   // Logos (navbar / header) — if-mark-* names bust stale BrandNav caches
   { dest: 'if-mark-nav.webp', src: 'if-mark-nav.webp' },

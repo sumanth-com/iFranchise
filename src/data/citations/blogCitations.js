@@ -24,6 +24,12 @@ const BLOG_CITATION_KEYS = {
     'WORLD_BANK_INDIA',
     'INVEST_INDIA_RETAIL',
   ],
+  'top-9-clothing-franchise-opportunities-india': [
+    'IBEF_RETAIL',
+    'INVEST_INDIA_RETAIL',
+    'DPIIT_HOME',
+    'FRANCHISE_INDIA_INSIGHTS',
+  ],
 };
 
 /** @param {string} slug */
