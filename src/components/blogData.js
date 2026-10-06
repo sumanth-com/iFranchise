@@ -1,8 +1,9 @@
 /**
- * Curated franchise insights (4 articles) for investors and brand owners.
+ * Curated franchise insights for investors and brand owners.
  */
 
 import { blogPostImage, blogPhoto } from './blog/blogImages';
+import { buildClothingFranchisesPost } from './blog/clothingFranchisesIndiaPost';
 
 const authors = [
   {
@@ -278,6 +279,7 @@ const posts = [
       },
     ]),
   },
+  buildClothingFranchisesPost({ packImages, withSectionIds, authors }),
 ];
 
 export const blogPosts = posts;

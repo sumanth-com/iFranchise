@@ -7,6 +7,7 @@ export default function CitationsSection({
   citations,
   className = '',
   title = 'Sources & references',
+  cardLayout = 'stack',
 }) {
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -33,7 +34,13 @@ export default function CitationsSection({
           External references used to inform this guide. Links open in a new tab.
         </p>
       </div>
-      <ol className="space-y-4">
+      <ol
+        className={
+          cardLayout === 'grid-2x2'
+            ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5'
+            : 'space-y-4'
+        }
+      >
         {citations.map((citation, index) => (
           <li
             key={`${citation.url}-${index}`}

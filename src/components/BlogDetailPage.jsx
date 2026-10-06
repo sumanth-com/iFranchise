@@ -1,9 +1,13 @@
 import '../styles/blog-share-3d.css';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import BlogImage, { BLOG_IMAGE_FIT_CLASS, BLOG_IMAGE_FRAME_CLASS } from './blog/BlogImage';
+import BlogImage from './blog/BlogImage';
+import BlogDetailTable from './blog/BlogDetailTable';
+import BlogRichText from './blog/BlogRichText';
 import ShareIcons from './blog/ShareIcons';
 import BlogCard from './blog/BlogCard';
+import PremiumFAQItem from './ui/PremiumFAQItem';
+import { linkifyContent } from '../lib/linkifyContent';
 import { getBlogCitations } from '../data/citations';
 import CitationsSection from './ecosystem/CitationsSection';
 import { blogPosts, formatDisplayDate, getBlogBySlug } from './blogData';
@@ -89,15 +93,15 @@ function BlogDetailHero({
         </div>
       </div>
 
-      <div className="blog-detail-hero-split__media w-full shrink-0 overflow-hidden rounded-b-3xl lg:w-1/2 lg:rounded-bl-none lg:rounded-r-3xl lg:rounded-tl-none">
+      <div className="blog-detail-hero-split__media relative aspect-[1678/937] w-full shrink-0 overflow-hidden rounded-b-3xl lg:aspect-auto lg:w-1/2 lg:min-h-0 lg:flex-1 lg:self-stretch lg:rounded-bl-none lg:rounded-r-3xl lg:rounded-tl-none">
         <BlogImage
           src={image}
           alt={imageAlt || title}
           variant="hero"
           priority
-          className="h-full w-full"
-          wrapperClassName={`blog-detail-hero-image ${BLOG_IMAGE_FRAME_CLASS}`}
-          imgClassName={BLOG_IMAGE_FIT_CLASS}
+          className="absolute inset-0 h-full w-full"
+          wrapperClassName="blog-detail-hero-image absolute inset-0 h-full w-full"
+          imgClassName="h-full w-full object-cover object-center"
         />
       </div>
     </div>
@@ -143,18 +147,70 @@ function SectionHeader({ sectionNum, section }) {
   );
 }
 
-function SectionBodyContent({ section }) {
+function BlogParagraph({ text }) {
+  const linked = useMemo(() => linkifyContent(text), [text]);
+
+  if (typeof linked === 'string') {
+    return <BlogRichText text={linked} />;
+  }
+
   return (
     <>
-      <div className="mt-5 space-y-4">
-        {section.body.map((p, pi) => (
-          <p key={pi} className="blog-article-body text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
-            {p}
-          </p>
-        ))}
-      </div>
+      {linked.map((node, i) =>
+        typeof node === 'string' ? <BlogRichText key={i} text={node} /> : node,
+      )}
+    </>
+  );
+}
 
-      {section.quote ? (
+/** @param {{ section: object, part?: 'full' | 'table' | 'prose' }} props */
+function SectionBodyContent({ section, part = 'full', tableWrapClassName = '' }) {
+  const showTable = part === 'full' || part === 'table';
+  const showProse = part === 'full' || part === 'prose';
+
+  const tableEl = section.table ? (
+    <BlogDetailTable
+      headers={section.table.headers}
+      rows={section.table.rows}
+      className={tableWrapClassName}
+    />
+  ) : null;
+
+  const bodyEl = section.body?.length ? (
+    <div className="space-y-4">
+      {section.body.map((p, pi) => (
+        <p key={pi} className="blog-article-body text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
+          <BlogParagraph text={p} />
+        </p>
+      ))}
+    </div>
+  ) : null;
+
+  return (
+    <>
+      {showTable && !section.tableAfterBody ? tableEl : null}
+      {showProse ? bodyEl : null}
+      {showTable && section.tableAfterBody ? <div className={showProse ? 'mt-5' : ''}>{tableEl}</div> : null}
+
+      {showProse && section.bullets?.length ? (
+        <ul className="blog-checklist-flow mt-5 space-y-3">
+          {section.bullets.map((item, bi) => (
+            <li
+              key={bi}
+              className="blog-checklist-flow__item flex gap-3 rounded-xl border px-4 py-3 sm:px-5 sm:py-3.5"
+            >
+              <span className="blog-checklist-num mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-bold">
+                {bi + 1}
+              </span>
+              <span className="blog-checklist-text min-w-0 flex-1 text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
+                <BlogRichText text={item} />
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      {showProse && section.quote ? (
         <blockquote className="blog-pull-quote mt-6 border-l-[3px] border-violet-400/60 py-1 pl-5 text-[17px] italic leading-relaxed md:text-lg">
           &ldquo;{section.quote}&rdquo;
         </blockquote>
@@ -163,8 +219,129 @@ function SectionBodyContent({ section }) {
   );
 }
 
+function BlogFaqSection({ id, faqs }) {
+  if (!faqs?.length) return null;
+
+  return (
+    <article
+      data-reveal
+      className="blog-flow-section border-t border-violet-500/15 pt-10 md:pt-12"
+    >
+      <h2 id={id} className={`blog-article-heading blog-faq-heading scroll-mt-28 text-center ${TYPE.subsection}`}>
+        Frequently Asked Questions
+      </h2>
+      <div className="services-faq-list mx-auto mt-6 max-w-3xl space-y-4">
+        {faqs.map((faq, index) => (
+          <PremiumFAQItem
+            key={faq.question}
+            faq={{
+              question: faq.question,
+              answer: faq.answer,
+            }}
+            index={index}
+          />
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function BlogFranchiseSplit({ section, imageOnRight }) {
+  const tableColRef = useRef(null);
+  const [tableHeight, setTableHeight] = useState(null);
+  const [isMdUp, setIsMdUp] = useState(false);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const onMq = () => setIsMdUp(mq.matches);
+    onMq();
+    mq.addEventListener('change', onMq);
+    return () => mq.removeEventListener('change', onMq);
+  }, []);
+
+  useLayoutEffect(() => {
+    const table = tableColRef.current?.querySelector('.blog-data-table');
+    if (!table) {
+      setTableHeight(null);
+      return undefined;
+    }
+
+    const syncHeight = () => {
+      setTableHeight(Math.round(table.getBoundingClientRect().height));
+    };
+
+    syncHeight();
+    const observer = new ResizeObserver(syncHeight);
+    observer.observe(table);
+    window.addEventListener('resize', syncHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', syncHeight);
+    };
+  }, [section.table]);
+
+  const mediaHeightStyle = tableHeight != null && isMdUp ? { height: `${tableHeight}px` } : undefined;
+
+  return (
+    <>
+      <div className="blog-franchise-split mt-6 grid grid-cols-1 items-start gap-5 sm:gap-6 md:grid-cols-2 md:items-start md:gap-8">
+        <div
+          ref={tableColRef}
+          className={`blog-franchise-split__table-col min-w-0 order-1 ${
+            imageOnRight ? 'md:order-1' : 'md:order-2'
+          }`}
+        >
+          <SectionBodyContent section={section} part="table" tableWrapClassName="!mt-0" />
+        </div>
+        <div
+          className={`blog-franchise-split__media-col min-h-0 min-w-0 order-2 md:relative md:min-h-0 ${
+            imageOnRight ? 'md:order-2' : 'md:order-1'
+          }`}
+          style={mediaHeightStyle}
+        >
+          <BlogFranchiseSectionImage image={section.image} />
+        </div>
+      </div>
+      <div className="blog-franchise-split__prose mt-5 md:mt-6">
+        <SectionBodyContent section={section} part="prose" />
+      </div>
+    </>
+  );
+}
+
+function BlogFranchiseSectionImage({ image }) {
+  const fit = image.fit === 'contain' ? 'contain' : 'cover';
+  const toneClass =
+    image.tone === 'dark'
+      ? 'blog-franchise-split__media--dark'
+      : image.tone === 'brand'
+        ? 'blog-franchise-split__media--brand'
+        : image.tone === 'light'
+          ? 'blog-franchise-split__media--light'
+          : 'blog-franchise-split__media--neutral';
+
+  return (
+    <figure className="blog-franchise-split__figure m-0 w-full min-h-[11rem] md:absolute md:inset-0 md:min-h-0 md:h-auto">
+      <div
+        className={`blog-section-visual blog-franchise-split__media ${toneClass} flex h-full min-h-[11rem] w-full overflow-hidden rounded-2xl border border-violet-500/20 shadow-[0_16px_40px_rgba(47,13,163,0.08)] md:min-h-0`}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          className={`max-h-full min-h-0 w-full flex-1 ${fit === 'contain' ? 'object-contain object-center p-4 sm:p-5' : 'object-cover object-center'}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </figure>
+  );
+}
+
 function ArticleSection({ section, index }) {
   const sectionNum = String(index + 1).padStart(2, '0');
+  const isSplit = section.layout === 'split' && section.image?.src;
+  const imageOnRight = section.imagePosition !== 'left';
 
   return (
     <article
@@ -173,7 +350,11 @@ function ArticleSection({ section, index }) {
       className={`blog-flow-section ${index > 0 ? 'border-t border-violet-500/15 pt-10 md:pt-12' : 'mt-8 md:mt-10'}`}
     >
       <SectionHeader sectionNum={sectionNum} section={section} />
-      <SectionBodyContent section={section} />
+      {isSplit ? (
+        <BlogFranchiseSplit section={section} imageOnRight={imageOnRight} />
+      ) : (
+        <SectionBodyContent section={section} />
+      )}
     </article>
   );
 }
@@ -494,7 +675,7 @@ function BlogDetailPage() {
           dateLabel={formatDisplayDate(article.date)}
           image={article.thumbnail || article.image}
           imageAlt={article.imageAlt || article.title}
-          overviewItems={overviewItems}
+          overviewItems={article.hideOverview ? [] : overviewItems}
           onHeadingClick={handleHeadingClick}
           articleUrl={articleUrl}
           shareTitle={article.title}
@@ -508,8 +689,16 @@ function BlogDetailPage() {
             <ArticleSection key={section.id} section={section} index={i} />
           ))}
 
+          {article.faqs?.length ? (
+            <BlogFaqSection id={`${article.slug}-faqs`} faqs={article.faqs} />
+          ) : null}
+
           {citations.length ? (
-            <CitationsSection citations={citations} className="blog-detail-citations pt-4 md:pt-6" />
+            <CitationsSection
+              citations={citations}
+              cardLayout="grid-2x2"
+              className="blog-detail-citations pt-4 md:pt-6"
+            />
           ) : null}
         </div>
 
