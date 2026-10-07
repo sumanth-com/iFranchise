@@ -134,7 +134,15 @@ function QuoteCard({ quote }) {
   );
 }
 
-function SectionHeader({ sectionNum, section }) {
+function SectionHeader({ sectionNum, section, brandNumber }) {
+  if (brandNumber) {
+    return (
+      <h3 id={section.id} className={`blog-article-heading scroll-mt-28 ${TYPE.h3}`}>
+        {brandNumber}. {section.heading}
+      </h3>
+    );
+  }
+
   return (
     <div className="flex items-start gap-3">
       <span className="blog-pill blog-section-index flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-violet-600 text-sm font-bold !text-white shadow-md shadow-violet-600/25">
@@ -338,8 +346,7 @@ function BlogFranchiseSectionImage({ image }) {
   );
 }
 
-function ArticleSection({ section, index }) {
-  const sectionNum = String(index + 1).padStart(2, '0');
+function ArticleSection({ section, index, brandNumber = null, sectionNum }) {
   const isSplit = section.layout === 'split' && section.image?.src;
   const imageOnRight = section.imagePosition !== 'left';
 
@@ -349,7 +356,7 @@ function ArticleSection({ section, index }) {
       style={{ '--reveal-delay': `${index * 40}ms` }}
       className={`blog-flow-section ${index > 0 ? 'border-t border-violet-500/15 pt-10 md:pt-12' : 'mt-8 md:mt-10'}`}
     >
-      <SectionHeader sectionNum={sectionNum} section={section} />
+      <SectionHeader sectionNum={sectionNum} section={section} brandNumber={brandNumber} />
       {isSplit ? (
         <BlogFranchiseSplit section={section} imageOnRight={imageOnRight} />
       ) : (
@@ -685,9 +692,28 @@ function BlogDetailPage() {
           <IntroCallout text={article.introHighlight} />
           <QuoteCard quote={article.quote} />
 
-          {sections.map((section, i) => (
-            <ArticleSection key={section.id} section={section} index={i} />
-          ))}
+          {sections.map((section, i) => {
+            const isBrand = section.layout === 'split' && Boolean(section.image?.src);
+            const earlier = sections.slice(0, i + 1);
+            const brandNumber = isBrand
+              ? earlier.filter((item) => item.layout === 'split' && item.image?.src).length
+              : null;
+            const sectionNum = isBrand
+              ? null
+              : String(
+                  earlier.filter((item) => !(item.layout === 'split' && item.image?.src)).length,
+                ).padStart(2, '0');
+
+            return (
+              <ArticleSection
+                key={section.id}
+                section={section}
+                index={i}
+                brandNumber={brandNumber}
+                sectionNum={sectionNum}
+              />
+            );
+          })}
 
           {article.faqs?.length ? (
             <BlogFaqSection id={`${article.slug}-faqs`} faqs={article.faqs} />
