@@ -3882,6 +3882,8 @@ html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__meta-dot {
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-detail-hero-split__meta-dot {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__title {
@@ -3893,8 +3895,12 @@ html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split_
 }
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__meta,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__share {
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__meta span,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__share,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__share-label {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-share-instagram-hint {
@@ -3903,6 +3909,85 @@ html[data-theme='dark'] #main-content .blog-detail-page .blog-share-instagram-hi
 
 html[data-theme='light'] .blog-detail-page .blog-share-instagram-hint {
   color: #334155 !important;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__card {
+  background: #ffffff;
+  border-color: #e9d5ff;
+  box-shadow: 0 12px 32px rgba(47, 13, 163, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__card {
+  background: #140a2e;
+  border-color: rgba(167, 139, 250, 0.28);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.blog-detail-page .blog-overview-rail__card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.blog-detail-page .blog-overview-rail__card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.blog-detail-page .blog-overview-rail__card::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__card.is-scrolling,
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__card:hover {
+  scrollbar-color: #2F0DA3 transparent;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__card.is-scrolling,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__card:hover {
+  scrollbar-color: #c4b5fd transparent;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__card.is-scrolling::-webkit-scrollbar-thumb,
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__card:hover::-webkit-scrollbar-thumb {
+  background: #2F0DA3;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__card.is-scrolling::-webkit-scrollbar-thumb,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__card:hover::-webkit-scrollbar-thumb {
+  background: #c4b5fd;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__title {
+  color: #2F0DA3;
+  background: #f5f3ff;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__title {
+  color: #f5f3ff;
+  background: rgba(167, 139, 250, 0.2);
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__link {
+  color: #0b0f19;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__link {
+  color: #ffffff;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__link:hover,
+html[data-theme='light'] .blog-detail-page .blog-overview-rail__link.is-active {
+  background: #f5f3ff;
+  color: #2F0DA3;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__link:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-overview-rail__link.is-active {
+  background: rgba(167, 139, 250, 0.16);
+  color: #ffffff;
 }
 
 html[data-theme='light'] .blog-detail-page .blog-overview-trigger--embedded {

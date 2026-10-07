@@ -227,6 +227,82 @@ function SectionBodyContent({ section, part = 'full', tableWrapClassName = '' })
   );
 }
 
+function BlogStickyOverview({ items, activeId, onHeadingClick }) {
+  const cardRef = useRef(null);
+  const hideTimer = useRef(null);
+
+  useLayoutEffect(() => {
+    const sync = () => {
+      const logo = document.querySelector('header.site-navbar .site-navbar-brand a');
+      const rail = document.querySelector('.blog-detail-with-nav');
+      const anchor = rail?.parentElement;
+      if (!logo || !rail || !anchor) return;
+      const logoBox = logo.getBoundingClientRect();
+      const anchorLeft = anchor.getBoundingClientRect().left;
+      const delta = Math.round(logoBox.left - anchorLeft) + 36;
+      const width = Math.max(220, Math.round(logoBox.width) + 88);
+      document.documentElement.style.setProperty('--blog-overview-width', `${width}px`);
+      rail.style.marginLeft = `${delta}px`;
+      rail.style.width = `calc(100% - ${delta}px)`;
+      const hero = document.querySelector('.blog-detail-hero-split');
+      if (hero) {
+        hero.style.marginLeft = `${delta}px`;
+        hero.style.width = `calc(100% - ${delta}px)`;
+      }
+    };
+
+    sync();
+    const logo = document.querySelector('header.site-navbar .site-navbar-brand a');
+    const observer = logo ? new ResizeObserver(sync) : null;
+    if (logo) observer.observe(logo);
+    window.addEventListener('resize', sync);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', sync);
+    };
+  }, []);
+
+  const revealScrollbar = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.classList.add('is-scrolling');
+    window.clearTimeout(hideTimer.current);
+    hideTimer.current = window.setTimeout(() => card.classList.remove('is-scrolling'), 700);
+  };
+
+  if (!items.length) return null;
+
+  return (
+    <nav aria-label="Article overview" className="blog-overview-rail relative hidden w-[var(--blog-overview-width,13.5rem)] self-stretch lg:block">
+      <div
+        ref={cardRef}
+        className="blog-overview-rail__card sticky top-28 max-h-[calc(100vh-7.5rem)] overflow-y-auto overscroll-y-contain rounded-2xl border p-4"
+        data-lenis-prevent
+        onScroll={revealScrollbar}
+        onWheel={revealScrollbar}
+      >
+        <p className="blog-overview-rail__title mx-auto mb-3 w-fit rounded-full px-3.5 py-1 text-center text-xs font-bold uppercase tracking-[0.16em]">
+          Overview
+        </p>
+        <ul className="space-y-1">
+          {items.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => onHeadingClick(item.id)}
+                className={`blog-overview-rail__link w-full rounded-lg px-2.5 py-2 text-left text-sm font-medium leading-snug ${activeId === item.id ? 'is-active' : ''}`}
+                aria-current={activeId === item.id ? 'true' : undefined}
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+}
+
 function BlogFaqSection({ id, faqs }) {
   if (!faqs?.length) return null;
 
@@ -337,7 +413,7 @@ function BlogFranchiseSectionImage({ image }) {
         <img
           src={image.src}
           alt={image.alt}
-          className={`max-h-full min-h-0 w-full flex-1 ${fit === 'contain' ? 'object-contain object-center p-4 sm:p-5' : 'object-cover object-center'}`}
+          className={`h-full w-full ${fit === 'contain' ? 'object-contain object-center p-4 sm:p-5' : 'object-contain object-center'}`}
           loading="lazy"
           decoding="async"
         />
@@ -647,6 +723,54 @@ function BlogDetailPage() {
     return sections.map((s) => ({ id: s.id, label: s.heading }));
   }, [headings, sections]);
 
+  const stickyNavItems = useMemo(() => {
+    if (!article?.hideOverview) return [];
+    let brandCount = 0;
+    const items = sections.map((section) => {
+      const isBrand = section.layout === 'split' && Boolean(section.image?.src);
+      if (isBrand) {
+        brandCount += 1;
+        return { id: section.id, label: `${brandCount}. ${section.heading}` };
+      }
+      return { id: section.id, label: section.heading };
+    });
+    if (article.faqs?.length) {
+      items.push({ id: `${article.slug}-faqs`, label: 'Frequently Asked Questions' });
+    }
+    if (citations.length) {
+      items.push({ id: 'content-citations-heading', label: 'Sources & references' });
+    }
+    return items;
+  }, [article, sections, citations.length]);
+
+  const [activeNavId, setActiveNavId] = useState('');
+
+  useEffect(() => {
+    if (!stickyNavItems.length) {
+      setActiveNavId('');
+      return undefined;
+    }
+
+    const nodes = stickyNavItems
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean);
+    if (!nodes.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target?.id) setActiveNavId(visible[0].target.id);
+      },
+      { rootMargin: '-18% 0px -62% 0px', threshold: [0.15, 0.4] },
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    setActiveNavId(nodes[0].id);
+    return () => observer.disconnect();
+  }, [stickyNavItems]);
+
   const handleHeadingClick = useCallback((id) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -673,7 +797,7 @@ function BlogDetailPage() {
 
   return (
     <main className="blog-detail-page relative z-10 w-full min-h-0 bg-transparent pb-24">
-      <div className="blog-detail-shell mx-auto w-full max-w-[1240px] px-5 pt-8 sm:px-6 lg:px-8">
+      <div className={`blog-detail-shell mx-auto w-full px-5 pt-8 sm:px-6 lg:px-8 ${stickyNavItems.length ? 'max-w-[1240px] lg:max-w-[1580px]' : 'max-w-[1240px]'}`}>
         <BlogDetailHero
           category={article.category}
           title={article.title}
@@ -688,10 +812,19 @@ function BlogDetailPage() {
           shareTitle={article.title}
         />
 
-        <div className="blog-detail-content blog-article-flow mt-10 space-y-8 md:mt-12 md:space-y-10">
+        <div className="blog-detail-content blog-article-flow mt-10 md:mt-12">
+          <div className={stickyNavItems.length ? 'blog-detail-with-nav lg:grid lg:grid-cols-[var(--blog-overview-width,13.5rem)_minmax(0,1fr)] lg:items-stretch lg:gap-8 xl:gap-10' : ''}>
+            {stickyNavItems.length ? (
+              <BlogStickyOverview
+                items={stickyNavItems}
+                activeId={activeNavId}
+                onHeadingClick={handleHeadingClick}
+              />
+            ) : null}
+
+            <div className="min-w-0 space-y-8 md:space-y-10">
           <IntroCallout text={article.introHighlight} />
           <QuoteCard quote={article.quote} />
-
           {sections.map((section, i) => {
             const isBrand = section.layout === 'split' && Boolean(section.image?.src);
             const earlier = sections.slice(0, i + 1);
@@ -726,6 +859,8 @@ function BlogDetailPage() {
               className="blog-detail-citations pt-4 md:pt-6"
             />
           ) : null}
+            </div>
+          </div>
         </div>
 
         <ExploreMoreSection currentSlug={article.slug} />
