@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp, FaXTwitter } from 'react-icons/fa6';
 
 const PLATFORMS = [
@@ -52,7 +53,7 @@ function buildShareUrl(platform, url, title) {
     case 'linkedin':
       return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
     case 'instagram':
-      return 'https://www.instagram.com/';
+      return `https://www.instagram.com/?url=${encodedUrl}&text=${encode(text)}`;
     default:
       return encodedUrl;
   }
@@ -62,6 +63,19 @@ function buildShareUrl(platform, url, title) {
 function ShareIcons({ url, title, variant = 'brand', className = '' }) {
   const isBrand = variant === 'brand' || variant === 'light';
   const isDark = variant === 'dark';
+  const [instagramHint, setInstagramHint] = useState('');
+
+  async function shareOnInstagram() {
+    const text = title ? `${title}\n${url}` : url;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      setInstagramHint('Blog link copied for Instagram.');
+      window.setTimeout(() => setInstagramHint(''), 2500);
+    } catch {
+      setInstagramHint('');
+    }
+  }
 
   if (isBrand) {
     return (
@@ -72,15 +86,26 @@ function ShareIcons({ url, title, variant = 'brand', className = '' }) {
             href={buildShareUrl(platform.key, url, title)}
             target="_blank"
             rel="noreferrer"
-            aria-label={`Share on ${platform.label}`}
+            aria-label={
+              platform.key === 'instagram'
+                ? instagramHint || 'Copy link and share on Instagram'
+                : `Share on ${platform.label}`
+            }
+            title={platform.key === 'instagram' ? instagramHint || 'Copy link and share on Instagram' : undefined}
             data-share={platform.key}
             className={`blog-share-3d blog-share-3d--${platform.key}`}
             style={{ '--share-i': index }}
+            onClick={platform.key === 'instagram' ? shareOnInstagram : undefined}
           >
             <span className="blog-share-3d__glare" aria-hidden />
             <platform.Icon className={`blog-share-3d__icon ${platform.iconClass}`} aria-hidden />
           </a>
         ))}
+        {instagramHint ? (
+          <span className="blog-share-instagram-hint text-xs font-medium" role="status">
+            {instagramHint}
+          </span>
+        ) : null}
       </div>
     );
   }
@@ -97,8 +122,14 @@ function ShareIcons({ url, title, variant = 'brand', className = '' }) {
           href={buildShareUrl(platform.key, url, title)}
           target="_blank"
           rel="noreferrer"
-          aria-label={`Share on ${platform.label}`}
+          aria-label={
+            platform.key === 'instagram'
+              ? instagramHint || 'Copy link and share on Instagram'
+              : `Share on ${platform.label}`
+          }
+          title={platform.key === 'instagram' ? instagramHint || 'Copy link and share on Instagram' : undefined}
           className={`${baseBtn} text-slate-600`}
+          onClick={platform.key === 'instagram' ? shareOnInstagram : undefined}
         >
           <platform.Icon className="h-4 w-4" aria-hidden />
         </a>

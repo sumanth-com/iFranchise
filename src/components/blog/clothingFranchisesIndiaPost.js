@@ -30,8 +30,8 @@ export function buildClothingFranchisesPost({ packImages, withSectionIds, author
       {
         heading: 'Introduction',
         body: [
-          "India's apparel retail market is growing at a tremendous rate. According to the India Brand Equity Foundation (IBEF), the Indian apparel market was valued at over US$102.8 billion in 2022 and is projected to reach about US$146.3 billion by 2032, growing at a 4% CAGR.",
-          'Due to double-income households, the high influence of social media, and rising fashion demand in Tier 2 and Tier 3 cities, clothing franchises are creating strong opportunities for investors looking for scalable business models with attractive return potential.',
+          "India's apparel retail market is growing at a tremendous rate. [According to the India Brand Equity Foundation (IBEF)](https://www.ibef.org/blogs/fashion-forward-an-analysis-of-india-s-growing-apparel-market), the Indian apparel market was valued at over US$102.8 billion in 2022 and is projected to reach about US$146.3 billion by 2032, growing at a 4% CAGR.",
+          'Due to the double-income household, the high influence of social media, and the rising fashion demand in Tier 2 and Tier 3 cities. In this environment, clothing franchises are creating a strong opportunity for investors to own the safest and most scalable business models with high return on investment.',
           "By the end of this guide, you'll get to know the top 9 apparel franchise opportunities that are worth considering based on your goals, investment size, and risk-taking ability.",
           "But first, let's understand the difference between owning a clothing franchise and starting an independent clothing store.",
         ],

@@ -3778,9 +3778,19 @@ html[data-theme='light'] .blog-detail-page .blog-detail-hero-split {
   overflow: hidden !important;
 }
 
-html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__content,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content {
+html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__content {
   background: #ffffff !important;
+  border-radius: 1.5rem 1.5rem 0 0 !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split {
+  background: #12082a !important;
+  border-color: rgba(167, 139, 250, 0.28) !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content {
+  background: #140a2e !important;
+  border-color: rgba(167, 139, 250, 0.22) !important;
   border-radius: 1.5rem 1.5rem 0 0 !important;
 }
 
@@ -3789,9 +3799,9 @@ html[data-theme='light'] .blog-detail-page .blog-hero-category {
 }
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-hero-category {
-  color: #2F0DA3 !important;
-  background: #f5f3ff !important;
-  border-color: #ddd6fe !important;
+  color: #f5f3ff !important;
+  background: rgba(167, 139, 250, 0.18) !important;
+  border-color: rgba(196, 181, 253, 0.45) !important;
 }
 
 @media (min-width: 1024px) {
@@ -3858,28 +3868,41 @@ html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__share {
   color: #64748b !important;
 }
 
-html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__share-label,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-detail-hero-split__share-label {
+html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__share-label {
   color: #334155 !important;
 }
 
-html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__meta-dot,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-detail-hero-split__meta-dot {
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-detail-hero-split__share-label {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-detail-hero-split__meta-dot {
   color: #94a3b8 !important;
 }
 
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__title,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__excerpt,
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__meta {
-  color: #0b0f19 !important;
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__content .blog-detail-hero-split__meta-dot {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__title {
+  color: #ffffff !important;
 }
 
 html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__excerpt {
-  color: #475569 !important;
+  color: #ffffff !important;
 }
 
-html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__meta {
-  color: #64748b !important;
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__meta,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-hero-split__share {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-share-instagram-hint {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-share-instagram-hint {
+  color: #334155 !important;
 }
 
 html[data-theme='light'] .blog-detail-page .blog-overview-trigger--embedded {
@@ -6048,6 +6071,28 @@ html[data-theme='light'] #main-content .services-faq-item .internal-content-link
 html[data-theme='dark'] #main-content .services-faq-item .internal-content-link:hover {
   color: #e9d5ff !important;
   -webkit-text-fill-color: #e9d5ff !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .internal-content-link,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-article-body a,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-flow-section a,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-citations a,
+html[data-theme='dark'] #main-content .blog-detail-page .services-faq-answer a,
+html[data-theme='dark'] #main-content .blog-detail-page .services-faq-item .internal-content-link {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .internal-content-link:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-article-body a:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-flow-section a:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .blog-detail-citations a:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .services-faq-answer a:hover,
+html[data-theme='dark'] #main-content .blog-detail-page .services-faq-item .internal-content-link:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration-color: #ffffff !important;
 }
 
 html[data-theme='light'] #main-content .services-faq-item .border-t {
