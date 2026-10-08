@@ -17,7 +17,6 @@ export function buildClothingFranchisesPost({ packImages, withSectionIds, author
     category: 'Investor Guide',
     date: '2026-10-06',
     readTime: '18 min read',
-    hideOverview: true,
     ...packImages(slug, title),
     excerpt:
       'A data-backed guide to nine apparel franchise brands—investment bands, models, ROI timelines, and what to watch before you commit.',

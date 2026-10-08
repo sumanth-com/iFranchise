@@ -19,15 +19,6 @@ function getCurrentSlug() {
   return pieces[1] || '';
 }
 
-/** Article section h2 ids only — exclude explore-more and other non-article headings. */
-const OVERVIEW_EXCLUDED_IDS = new Set(['blog-explore-heading']);
-
-function isOverviewNavHeading(id, label = '') {
-  if (!id || OVERVIEW_EXCLUDED_IDS.has(id)) return false;
-  if (/explore more insights/i.test(label.trim())) return false;
-  return true;
-}
-
 function useReveal(dep) {
   useEffect(() => {
     const els = document.querySelectorAll('[data-reveal]');
@@ -675,7 +666,6 @@ function OverviewDropdown({ headings, onHeadingClick, embedded = false }) {
 
 function BlogDetailPage() {
   const [slug, setSlug] = useState(getCurrentSlug);
-  const [headings, setHeadings] = useState([]);
   useReveal(slug);
 
   useEffect(() => {
@@ -703,28 +693,9 @@ function BlogDetailPage() {
   const article = useMemo(() => (slug ? getBlogBySlug(slug) : null), [slug]);
   const sections = article?.sections ?? [];
   const citations = useMemo(() => (article ? getBlogCitations(article.slug) : []), [article]);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const allH2 = Array.from(document.querySelectorAll('h2[id]'))
-        .filter((h) => isOverviewNavHeading(h.id, h.textContent || ''))
-        .map((h) => ({
-          id: h.id,
-          label: h.textContent || '',
-        }));
-      setHeadings(allH2);
-    }, 150);
-    return () => clearTimeout(timer);
-  }, [article?.slug]);
-
-  const overviewItems = useMemo(() => {
-    if (headings.length > 0) {
-      return headings.filter((h) => isOverviewNavHeading(h.id, h.label));
-    }
-    return sections.map((s) => ({ id: s.id, label: s.heading }));
-  }, [headings, sections]);
 
   const stickyNavItems = useMemo(() => {
-    if (!article?.hideOverview) return [];
+    if (!article || !sections.length) return [];
     let brandCount = 0;
     const items = sections.map((section) => {
       const isBrand = section.layout === 'split' && Boolean(section.image?.src);
@@ -806,7 +777,7 @@ function BlogDetailPage() {
           dateLabel={formatDisplayDate(article.date)}
           image={article.thumbnail || article.image}
           imageAlt={article.imageAlt || article.title}
-          overviewItems={article.hideOverview ? [] : overviewItems}
+          overviewItems={[]}
           onHeadingClick={handleHeadingClick}
           articleUrl={articleUrl}
           shareTitle={article.title}
