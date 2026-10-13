@@ -2,7 +2,7 @@
  * Build-time SEO map for crawler-first meta tags (before React hydrates).
  * Writes public/route-seo-boot.js — consumed by index.html inline boot script.
  */
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { STATIC_PAGE_SEO } from '../src/seo/staticPages.js';
@@ -123,6 +123,17 @@ function parseBlogPosts() {
       category: match[3],
       excerpt: match[4],
     });
+  }
+
+  const postDir = join(root, 'src/components/blog');
+  for (const file of readdirSync(postDir).filter((name) => name.endsWith('Post.js'))) {
+    const postSource = readFileSync(join(postDir, file), 'utf8');
+    const match = postSource.match(
+      /const slug = '([^']+)';\s*\n\s*const title = '([^']+)';[\s\S]*?category:\s*'([^']+)'[\s\S]*?excerpt:\s*\n\s*'([^']+)'/,
+    );
+    if (match) {
+      posts.push({ slug: match[1], title: match[2], category: match[3], excerpt: match[4] });
+    }
   }
 
   return posts;

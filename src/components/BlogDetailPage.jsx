@@ -6,6 +6,7 @@ import BlogDetailTable from './blog/BlogDetailTable';
 import BlogRichText from './blog/BlogRichText';
 import ShareIcons from './blog/ShareIcons';
 import BlogCard from './blog/BlogCard';
+import Button from './Button';
 import PremiumFAQItem from './ui/PremiumFAQItem';
 import { linkifyContent } from '../lib/linkifyContent';
 import { getBlogCitations } from '../data/citations';
@@ -209,12 +210,113 @@ function SectionBodyContent({ section, part = 'full', tableWrapClassName = '' })
         </ul>
       ) : null}
 
+      {showProse && section.takeaways?.length ? (
+        <div className="blog-takeaways mt-6 rounded-2xl border px-5 py-5 sm:px-6 sm:py-6">
+          <p className="blog-takeaways__title text-xs font-bold uppercase tracking-[0.2em]">Key Takeaways</p>
+          <ul className="mt-3 space-y-2.5">
+            {section.takeaways.map((item, ti) => (
+              <li key={ti} className="flex gap-3">
+                <span className="blog-takeaways__dot mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full" aria-hidden />
+                <span className="blog-article-body min-w-0 flex-1 text-[16px] leading-relaxed md:text-[16.5px]">
+                  <BlogRichText text={item} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {showProse && section.figure?.src ? (
+        <figure className="blog-section-visual mt-6 overflow-hidden rounded-2xl border">
+          <img
+            src={section.figure.src}
+            alt={section.figure.alt}
+            width={section.figure.width}
+            height={section.figure.height}
+            className="block h-auto w-full"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      ) : null}
+
+      {showProse && section.subsections?.length ? (
+        <BlogSubsections section={section} />
+      ) : null}
+
+      {showProse && section.closing?.length ? (
+        <div className="mt-6 space-y-4">
+          {section.closing.map((p, ci) => (
+            <p key={ci} className="blog-article-body text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
+              <BlogParagraph text={p} />
+            </p>
+          ))}
+        </div>
+      ) : null}
+
       {showProse && section.quote ? (
         <blockquote className="blog-pull-quote mt-6 border-l-[3px] border-violet-400/60 py-1 pl-5 text-[17px] italic leading-relaxed md:text-lg">
           &ldquo;{section.quote}&rdquo;
         </blockquote>
       ) : null}
+
+      {showProse && section.cta?.href ? (
+        <div className="mt-7 flex justify-center sm:justify-start">
+          <Button
+            variant="primary"
+            icon
+            className="h-12 px-6 text-sm font-semibold"
+            onClick={() => navigateTo(section.cta.href)}
+          >
+            {section.cta.label}
+          </Button>
+        </div>
+      ) : null}
     </>
+  );
+}
+
+function BlogSubsectionBody({ body }) {
+  return (
+    <div className="mt-2 space-y-3">
+      {body.map((p, pi) => (
+        <p key={pi} className="blog-article-body text-[16px] leading-relaxed md:text-[16.5px] md:leading-[1.85]">
+          <BlogParagraph text={p} />
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function BlogSubsections({ section }) {
+  if (section.subsectionsTitle) {
+    return (
+      <div className="mt-7">
+        <h3 className={`blog-article-heading ${TYPE.h3}`}>{section.subsectionsTitle}</h3>
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {section.subsections.map((sub) => (
+            <div key={sub.heading} className="blog-checklist-flow__item rounded-2xl border px-5 py-4">
+              <h4 className="blog-article-heading text-[17px] font-bold leading-snug">{sub.heading}</h4>
+              <BlogSubsectionBody body={sub.body} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-7 space-y-6">
+      {section.subsections.map((sub, si) => (
+        <div key={sub.heading}>
+          <h3 className={`blog-article-heading ${TYPE.h3}`}>
+            {section.numberedSubsections ? `${si + 1}. ` : ''}
+            {sub.heading}
+          </h3>
+          <BlogSubsectionBody body={sub.body} />
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -294,7 +396,7 @@ function BlogStickyOverview({ items, activeId, onHeadingClick }) {
   );
 }
 
-function BlogFaqSection({ id, faqs }) {
+function BlogFaqSection({ id, faqs, heading = 'Frequently Asked Questions' }) {
   if (!faqs?.length) return null;
 
   return (
@@ -303,7 +405,7 @@ function BlogFaqSection({ id, faqs }) {
       className="blog-flow-section border-t border-violet-500/15 pt-10 md:pt-12"
     >
       <h2 id={id} className={`blog-article-heading blog-faq-heading scroll-mt-28 text-center ${TYPE.subsection}`}>
-        Frequently Asked Questions
+        {heading}
       </h2>
       <div className="services-faq-list mx-auto mt-6 max-w-3xl space-y-4">
         {faqs.map((faq, index) => (
@@ -706,7 +808,7 @@ function BlogDetailPage() {
       return { id: section.id, label: section.heading };
     });
     if (article.faqs?.length) {
-      items.push({ id: `${article.slug}-faqs`, label: 'Frequently Asked Questions' });
+      items.push({ id: `${article.slug}-faqs`, label: article.faqHeading || 'Frequently Asked Questions' });
     }
     if (citations.length) {
       items.push({ id: 'content-citations-heading', label: 'Sources & references' });
@@ -820,7 +922,7 @@ function BlogDetailPage() {
           })}
 
           {article.faqs?.length ? (
-            <BlogFaqSection id={`${article.slug}-faqs`} faqs={article.faqs} />
+            <BlogFaqSection id={`${article.slug}-faqs`} faqs={article.faqs} heading={article.faqHeading} />
           ) : null}
 
           {citations.length ? (

@@ -2,7 +2,7 @@
  * Build sitemap.xml into public/ before Vite production build.
  * Includes main marketing pages and all franchise detail URLs.
  */
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RAW_BRANDS } from '../src/data/opportunities/rawBrands.js';
@@ -71,9 +71,14 @@ const FRANCHISE_PAGES = RAW_BRANDS.map((raw) => {
 const LOCATION_PAGES = getAllLocationPaths().map((path) => ({ path }));
 
 const blogDataSource = readFileSync(join(root, 'src/components/blogData.js'), 'utf8');
-const BLOG_PAGES = [...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => ({
-  path: `/blogs/${match[1]}`,
-}));
+const blogPostDir = join(root, 'src/components/blog');
+const blogPostSources = readdirSync(blogPostDir)
+  .filter((file) => file.endsWith('Post.js'))
+  .map((file) => readFileSync(join(blogPostDir, file), 'utf8'));
+const BLOG_PAGES = [
+  ...[...blogDataSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => match[1]),
+  ...blogPostSources.flatMap((source) => [...source.matchAll(/const slug = '([^']+)'/g)].map((match) => match[1])),
+].map((slug) => ({ path: `/blogs/${slug}` }));
 
 const careersSource = readFileSync(join(root, 'src/components/careersData.jsx'), 'utf8');
 const CAREER_PAGES = [...careersSource.matchAll(/id:\s*'([^']+)',\s*\n\s*active:\s*true/g)].map((match) => ({

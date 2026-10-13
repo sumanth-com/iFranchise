@@ -1,5 +1,7 @@
-/** Render plain text with **bold** segments and [label](https://...) links. */
-const INLINE_TOKEN = /(\*\*[^*]+\*\*|\[[^\]\n]+\]\(https?:\/\/[^)\s]+\))/g;
+import { navigateTo } from '@/lib/navigation';
+
+/** Render plain text with **bold** segments, [label](https://...) and [label](/internal-path) links. */
+const INLINE_TOKEN = /(\*\*[^*]+\*\*|\[[^\]\n]+\]\((?:https?:\/\/|\/)[^)\s]*\))/g;
 
 export default function BlogRichText({ text, className = '' }) {
   if (!text) return null;
@@ -12,6 +14,23 @@ export default function BlogRichText({ text, className = '' }) {
             <strong key={i} className="font-semibold text-inherit">
               {part.slice(2, -2)}
             </strong>
+          );
+        }
+
+        const internal = part.match(/^\[([^\]\n]+)\]\((\/[^)\s]*)\)$/);
+        if (internal) {
+          return (
+            <a
+              key={i}
+              href={internal[2]}
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo(internal[2]);
+              }}
+              className="internal-content-link internal-content-link--inline"
+            >
+              {internal[1]}
+            </a>
           );
         }
 

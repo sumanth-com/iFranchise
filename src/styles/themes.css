@@ -3570,6 +3570,32 @@ html[data-theme='dark'] #main-content .blog-detail-page .blog-intro-callout .blo
   color: #ffffff !important;
 }
 
+html[data-theme='light'] .blog-detail-page .blog-takeaways {
+  background: #faf5ff;
+  border-color: #ddd6fe;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-takeaways {
+  background: rgba(47, 13, 163, 0.16);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+html[data-theme='light'] .blog-detail-page .blog-takeaways__title {
+  color: #2F0DA3;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-takeaways__title {
+  color: #c4b5fd;
+}
+
+html[data-theme='light'] .blog-detail-page .blog-takeaways__dot {
+  background: #2F0DA3;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-takeaways__dot {
+  background: #c4b5fd;
+}
+
 /* Featured quote card (all blog posts) */
 html[data-theme='light'] .blog-detail-page .blog-quote-card {
   background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%) !important;

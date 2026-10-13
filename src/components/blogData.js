@@ -4,6 +4,7 @@
 
 import { blogPostImage, blogPhoto } from './blog/blogImages';
 import { buildClothingFranchisesPost } from './blog/clothingFranchisesIndiaPost';
+import { buildStartClothingFranchisePost } from './blog/startClothingFranchisePost';
 
 const authors = [
   {
@@ -280,6 +281,7 @@ const posts = [
     ]),
   },
   buildClothingFranchisesPost({ packImages, withSectionIds, authors }),
+  buildStartClothingFranchisePost({ packImages, withSectionIds, authors }),
 ];
 
 export const blogPosts = posts;

@@ -54,6 +54,8 @@ export const SITE_IMAGE_MANIFEST = [
   { dest: 'blog-clothing/manyavar.webp', src: 'blog-clothing/manyavar.webp' },
   { dest: 'blog-clothing/aramya.webp', src: 'blog-clothing/aramya.webp' },
   { dest: 'blog-clothing/raymond.webp', src: 'blog-clothing/raymond.webp' },
+  { dest: 'how-to-start-a-clothing-franchise-in-india.webp', src: 'how-to-start-a-clothing-franchise-in-india.webp' },
+  { dest: 'blog-clothing/clothing-franchise-mistakes-to-avoid.webp', src: 'blog-clothing/clothing-franchise-mistakes-to-avoid.webp' },
 
   // Logos (navbar / header) — if-mark-* names bust stale BrandNav caches
   { dest: 'if-mark-nav.webp', src: 'if-mark-nav.webp' },
