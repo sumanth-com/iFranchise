@@ -320,9 +320,9 @@ export function buildStartClothingFranchisePost({ packImages, withSectionIds, au
         subsectionsTitle: 'Why Partner With Odette?',
         subsections: [
           {
-            heading: '45+ Stores Across Key Indian Markets',
+            heading: '50+ Stores Across Key Indian Markets',
             body: [
-              'With 45+ stores across Tier 1 and Tier 2 cities, Odette gives franchise partners the advantage of an established retail presence and a brand that is already expanding across India.',
+              'With 50+ stores across Tier 1 and Tier 2 cities, Odette gives franchise partners the advantage of an established retail presence and a brand that is already expanding across India.',
             ],
           },
           {

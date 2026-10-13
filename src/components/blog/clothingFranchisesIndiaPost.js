@@ -129,7 +129,7 @@ export function buildClothingFranchisesPost({ packImages, withSectionIds, author
         body: [
           "Odette is a women's clothing franchise opportunity that allows investors to operate a store offering everything a woman needs to complete her wardrobe, from dresses, bags, and footwear to jewelry, all in one place.",
           'It works on a FICO (Franchise Invested, Company Operated) model, so as an investor, you just have to invest in the business while the professional team runs the operations, brings in customers, and manages every part of the business without involving you in day-to-day operations.',
-          'And the best part? It is a proven business model that is spread across 45+ stores in India.',
+          'And the best part? It is a proven business model that is spread across 50+ stores in India.',
           "Plus, Odette offers a wide range of women's fashion needs, from dresses to jewelry, which creates strong business demand for investors looking to own a business that never really goes out of style.",
           'The only thing to know is that Odette operates on the FICO model, so if you have a passion for operating a fashion business and want to be hands-on with daily decisions, this may not be the right fit for you.',
         ],
@@ -277,7 +277,7 @@ export function buildClothingFranchisesPost({ packImages, withSectionIds, author
       {
         heading: 'Why Odette Stands Out Among These Franchise Opportunities',
         body: [
-          "While every brand on this list has its own strengths, Odette apparel franchise offers something most others don't: a fully passive FICO model that has already proven itself by spreading across 45+ stores in India, without the extreme entry cost of brands like Zudio or the seasonal dependency of brands like Manyavar and Mohey.",
+          "While every brand on this list has its own strengths, Odette apparel franchise offers something most others don't: a fully passive FICO model that has already proven itself by spreading across 50+ stores in India, without the extreme entry cost of brands like Zudio or the seasonal dependency of brands like Manyavar and Mohey.",
           "Unlike FOFO franchise models like Kaira or Raymond, where you're still the one hiring staff, managing inventory, and running day-to-day operations with professional support, Odette goes one step further by handing over the entire operation to its professional team. You just have to own the business while they manage everything.",
           'With investment starting from ₹45 lakhs and a guaranteed return of ₹1.25 lakh per month or a 12% revenue share, Odette can be an attractive option for investors looking for a more hands-off approach.',
           "So, if you're ready to explore the Odette franchise opportunity, visit our franchise opportunities page to know complete investment details.",
