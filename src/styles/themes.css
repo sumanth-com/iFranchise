@@ -3596,6 +3596,26 @@ html[data-theme='dark'] #main-content .blog-detail-page .blog-takeaways__dot {
   background: #c4b5fd;
 }
 
+html[data-theme='light'] .blog-detail-page .blog-feature-card {
+  background: #ffffff;
+  border-color: #e9d5ff;
+  box-shadow: 0 10px 28px rgba(47, 13, 163, 0.06);
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-feature-card {
+  background: linear-gradient(160deg, rgba(47, 13, 163, 0.26) 0%, rgba(20, 10, 46, 0.92) 100%);
+  border-color: rgba(167, 139, 250, 0.32);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-feature-card h4 {
+  color: #ffffff !important;
+}
+
+html[data-theme='dark'] #main-content .blog-detail-page .blog-feature-card p {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
 /* Featured quote card (all blog posts) */
 html[data-theme='light'] .blog-detail-page .blog-quote-card {
   background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%) !important;

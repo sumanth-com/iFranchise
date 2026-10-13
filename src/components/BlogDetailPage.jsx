@@ -261,7 +261,7 @@ function SectionBodyContent({ section, part = 'full', tableWrapClassName = '' })
       ) : null}
 
       {showProse && section.cta?.href ? (
-        <div className="mt-7 flex justify-center sm:justify-start">
+        <div className="mt-8 flex justify-center">
           <Button
             variant="primary"
             icon
@@ -295,7 +295,7 @@ function BlogSubsections({ section }) {
         <h3 className={`blog-article-heading ${TYPE.h3}`}>{section.subsectionsTitle}</h3>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {section.subsections.map((sub) => (
-            <div key={sub.heading} className="blog-checklist-flow__item rounded-2xl border px-5 py-4">
+            <div key={sub.heading} className="blog-feature-card rounded-2xl border px-5 py-5">
               <h4 className="blog-article-heading text-[17px] font-bold leading-snug">{sub.heading}</h4>
               <BlogSubsectionBody body={sub.body} />
             </div>
@@ -330,7 +330,13 @@ function BlogStickyOverview({ items, activeId, onHeadingClick }) {
       const rail = document.querySelector('.blog-detail-with-nav');
       const anchor = rail?.parentElement;
       if (!logo || !rail || !anchor) return;
-      const logoBox = logo.getBoundingClientRect();
+      let logoBox = logo.getBoundingClientRect();
+      const imgs = [...logo.querySelectorAll('img')].map((img) => img.getBoundingClientRect()).filter((r) => r.width);
+      if (imgs.length) {
+        const left = Math.min(...imgs.map((r) => r.left));
+        const right = Math.max(...imgs.map((r) => r.right));
+        if (logoBox.width > right - left + 40) logoBox = { left, width: right - left };
+      }
       const anchorLeft = anchor.getBoundingClientRect().left;
       const delta = Math.round(logoBox.left - anchorLeft) + 36;
       const width = Math.max(220, Math.round(logoBox.width) + 88);
