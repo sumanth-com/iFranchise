@@ -16,7 +16,7 @@ export function buildStartClothingFranchisePost({ packImages, withSectionIds, au
     date: '2026-10-13',
     readTime: '12 min read',
     ...packImages(slug, title),
-    imageAlt: 'How to start a clothing franchise in India — clothing rack with shirts and dresses',
+    imageAlt: 'How to start a clothing franchise in India — step-by-step retail franchise guide graphic',
     excerpt:
       'A step-by-step guide to starting a clothing franchise in India—what it is, what it costs, how to choose a brand and the mistakes to avoid.',
     introHighlight:

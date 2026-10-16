@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { BLOG_FALLBACK, BLOG_IMG_SIZES } from './blogImages';
 
-/** Shared frame + fit for blog cards and detail hero (full image, no awkward crop). */
-export const BLOG_IMAGE_FRAME_CLASS = 'aspect-[16/9] w-full overflow-hidden bg-white';
-export const BLOG_IMAGE_FIT_CLASS = 'h-full w-full object-cover object-center';
+/** Shared frame + fit for blog cards and detail hero (full designed graphic, no crop). */
+export const BLOG_IMAGE_FRAME_CLASS = 'aspect-[1672/941] w-full overflow-hidden bg-white';
+export const BLOG_IMAGE_FIT_CLASS = 'h-full w-full object-contain object-center';
 
 /**
  * Optimized blog image with skeleton and fade-in.

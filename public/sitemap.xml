@@ -313,16 +313,16 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.ifranchise.in/blogs/how-to-start-a-clothing-franchise-in-india</loc>
+    <loc>https://www.ifranchise.in/blogs/how-the-franchise-business-model-works</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.ifranchise.in/careers/ui-ux-designer</loc>
+    <loc>https://www.ifranchise.in/blogs/how-to-start-a-clothing-franchise-in-india</loc>
     <lastmod>2026-10-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.ifranchise.in/careers/business-development-trainee</loc>
@@ -332,12 +332,6 @@
   </url>
   <url>
     <loc>https://www.ifranchise.in/careers/asst-business-development-manager-franchise-expansion</loc>
-    <lastmod>2026-10-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ifranchise.in/careers/full-stack-developer</loc>
     <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

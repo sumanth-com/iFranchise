@@ -18,6 +18,8 @@ export function buildClothingFranchisesPost({ packImages, withSectionIds, author
     date: '2026-10-06',
     readTime: '18 min read',
     ...packImages(slug, title),
+    imageAlt:
+      'Top 9 clothing franchise opportunities in India that are worth your investment — retail store and franchise growth graphic',
     excerpt:
       'A data-backed guide to nine apparel franchise brands—investment bands, models, ROI timelines, and what to watch before you commit.',
     quote:

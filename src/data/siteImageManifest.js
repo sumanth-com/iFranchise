@@ -40,9 +40,9 @@ export const SITE_IMAGE_MANIFEST = [
   // Blog
   { dest: 'blog-fallback.webp', src: 'Blog.webp' },
   { dest: 'blog-hero.webp', src: 'bloghero.webp' },
-  { dest: 'how-to-evaluate-franchise-opportunity-india.webp', src: 'Blog1.webp' },
-  { dest: 'fofo-vs-fico-franchise-model-guide.webp', src: 'Blog2.webp' },
-  { dest: 'franchise-unit-economics-checklist.webp', src: 'Blog3.webp' },
+  { dest: 'how-to-evaluate-franchise-opportunity-india.webp', src: 'how-to-evaluate-franchise-opportunity-india.webp' },
+  { dest: 'fofo-vs-fico-franchise-model-guide.webp', src: 'fofo-vs-fico-franchise-model-guide.webp' },
+  { dest: 'franchise-unit-economics-checklist.webp', src: 'franchise-unit-economics-checklist.webp' },
   { dest: 'franchise-demand-india-2026.webp', src: 'Blog4.webp' },
   { dest: 'top-9-clothing-franchise-opportunities-india.webp', src: 'top-9-clothing-franchise-opportunities-india.webp' },
   { dest: 'blog-clothing/kaira.webp', src: 'blog-clothing/kaira.webp' },
@@ -56,6 +56,10 @@ export const SITE_IMAGE_MANIFEST = [
   { dest: 'blog-clothing/raymond.webp', src: 'blog-clothing/raymond.webp' },
   { dest: 'how-to-start-a-clothing-franchise-in-india.webp', src: 'how-to-start-a-clothing-franchise-in-india.webp' },
   { dest: 'blog-clothing/clothing-franchise-mistakes-to-avoid.webp', src: 'blog-clothing/clothing-franchise-mistakes-to-avoid.webp' },
+  { dest: 'how-the-franchise-business-model-works.webp', src: 'how-the-franchise-business-model-works.webp' },
+  { dest: 'franchise-business-model-flowchart.webp', src: 'franchise-business-model-flowchart.webp' },
+  { dest: 'common-franchise-mistakes-to-avoid.webp', src: 'common-franchise-mistakes-to-avoid.webp' },
+  { dest: 'franchise-opportunity-evaluation-path-india.webp', src: 'franchise-opportunity-evaluation-path-india.webp' },
 
   // Logos (navbar / header) — if-mark-* names bust stale BrandNav caches
   { dest: 'if-mark-nav.webp', src: 'if-mark-nav.webp' },

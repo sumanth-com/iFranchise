@@ -4,6 +4,7 @@
 
 import { blogPostImage, blogPhoto } from './blog/blogImages';
 import { buildClothingFranchisesPost } from './blog/clothingFranchisesIndiaPost';
+import { buildFranchiseBusinessModelPost } from './blog/franchiseBusinessModelPost';
 import { buildStartClothingFranchisePost } from './blog/startClothingFranchisePost';
 
 const authors = [
@@ -54,6 +55,7 @@ function packImages(slug, title) {
 }
 
 const posts = [
+  buildFranchiseBusinessModelPost({ packImages, withSectionIds, authors }),
   {
     slug: 'how-to-evaluate-franchise-opportunity-india',
     title: 'How to Evaluate a Franchise Opportunity in India',
@@ -61,6 +63,8 @@ const posts = [
     date: '2026-04-18',
     readTime: '9 min read',
     ...packImages('how-to-evaluate-franchise-opportunity-india', 'How to Evaluate a Franchise Opportunity in India'),
+    imageAlt:
+      'Evaluating franchise opportunities in India — checklist and investment decision graphic',
     excerpt:
       'A practical framework to compare brands, investment bands, payback, and support before you sign a franchise agreement.',
     quote:
@@ -76,6 +80,12 @@ const posts = [
           'Write three filters before you meet any brand: maximum all-in investment, target payback window, and how many hours per week you will spend on the business. Use these filters in the first call so you do not waste weeks on formats that were never right for you.',
           'When two brands pass the filter, compare them on the same spreadsheet columns: setup cost, royalty, marketing fund, expected AUV band, and support during the first twelve months. Consistency beats charisma in franchise selection.',
         ],
+        figure: {
+          src: '/images/franchise-opportunity-evaluation-path-india.webp',
+          alt: 'Franchise opportunity evaluation path in India — steps from shortlist to signing',
+          width: 1672,
+          height: 941,
+        },
       },
       {
         heading: 'What to verify in the disclosure pack',
@@ -118,6 +128,7 @@ const posts = [
     date: '2026-04-10',
     readTime: '8 min read',
     ...packImages('fofo-vs-fico-franchise-model-guide', 'FOFO vs FICO: Choosing the Right Franchise Model'),
+    imageAlt: 'FOFO vs FICO — choosing the right franchise model for owner-operated and investor-operated formats',
     excerpt:
       'Understand owner-operated vs investor-operated models so your role, risk, and returns match how you want to build wealth.',
     quote: 'Pick the model that fits how you want to spend your time—not just the headline ROI.',
@@ -174,6 +185,7 @@ const posts = [
     date: '2026-03-28',
     readTime: '7 min read',
     ...packImages('franchise-unit-economics-checklist', 'Unit Economics Checklist Before You Sign'),
+    imageAlt: 'Unit economics checklist before you sign — breakeven, contribution margin, and working capital',
     excerpt:
       'Breakeven, contribution margin, and working capital—what to model line by line before you commit to a franchise unit.',
     quote: 'If the spreadsheet only works on best-case rent and best-case sales, it is not ready for a signature.',

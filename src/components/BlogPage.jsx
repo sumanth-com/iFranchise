@@ -76,10 +76,10 @@ function BlogPage() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 gap-6 md:grid-cols-2"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {blogPosts.map((post, index) => (
-            <BlogCard key={post.slug} post={post} priority={index < 2} />
+            <BlogCard key={post.slug} post={post} priority={index < 3} />
           ))}
         </motion.div>
       </section>

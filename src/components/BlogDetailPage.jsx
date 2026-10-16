@@ -93,7 +93,7 @@ function BlogDetailHero({
           priority
           className="absolute inset-0 h-full w-full"
           wrapperClassName="blog-detail-hero-image absolute inset-0 h-full w-full"
-          imgClassName="h-full w-full object-cover object-center"
+          imgClassName="h-full w-full object-contain object-center bg-white"
         />
       </div>
     </div>
