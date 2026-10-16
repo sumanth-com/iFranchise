@@ -1,110 +1,66 @@
 # Lead email notifications
 
-Instant email alerts when any form submission succeeds and is stored in Google Sheets.
+One email after a form row is stored in Google Sheets. The browser does not send email and does not hold the Resend key or the notify secret.
 
 ## Flow
 
 ```mermaid
 sequenceDiagram
   participant User
-  participant Pipeline as submitPipeline
+  participant Site as Website
   participant Sheets as Google Apps Script
   participant Notify as /api/notify-lead
   participant Resend as Resend API
-  participant Inbox as contact@ or hr@ifranchise.in
+  participant Inbox as team inbox
 
-  User->>Pipeline: Submit form
-  Pipeline->>Pipeline: honeypot, validate, transform
-  Pipeline->>Sheets: POST payload (await)
-  Sheets-->>Pipeline: success
-  Pipeline-->>User: success UI (unchanged)
-  Pipeline->>Notify: fire-and-forget POST (non-blocking)
-  Notify->>Resend: send email
-  Resend->>Inbox: [New Lead] ...
+  User->>Site: Submit form
+  Site->>Sheets: POST payload
+  Sheets->>Sheets: append row
+  Sheets->>Notify: POST with server secret
+  Notify->>Resend: send one email
+  Resend->>Inbox: notification
+  Sheets-->>Site: success
+  Site-->>User: success UI
 ```
 
-## What is unchanged
+Sheet success does not depend on email. If the notify call fails, the row stays and the visitor still sees success.
 
-- Form UI, validation, hooks, and success states
-- Google Sheets / Apps Script payload and storage
-- Rate handling and submission guard (double-click only)
-- User-visible submission speed (notification runs after the Sheets response, in a microtask)
+Data-rights requests are stored in `Data_Rights_Requests` and are not emailed.
 
-## What was added
+## Where credentials live
 
-| Piece | Role |
-|-------|------|
-| `src/lib/forms/utils/submitPipeline.js` | Calls `notifyLeadSubmission()` only when `submitToGoogleSheets` succeeds |
-| `src/lib/forms/utils/leadNotification.js` | Client-side fire-and-forget `fetch` to the notify API |
-| `api/notify-lead.js` | Vercel serverless handler |
-| `api/lib/*` | Validation, field extraction, Resend email build/send |
+| Place | Names | Role |
+|---|---|---|
+| Vercel environment | `RESEND_API_KEY`, `LEAD_NOTIFICATION_FROM`, `LEAD_NOTIFICATION_TO`, `LEAD_NOTIFY_SECRET`, optional `LEAD_NOTIFICATION_TO_CAREERS` | Server sends the email |
+| Apps Script → Project Settings → Script properties | `LEAD_NOTIFY_URL`, `LEAD_NOTIFY_SECRET` | Script calls the notify API after `appendRow` |
 
-All forms using `runFormSubmission` / `createFormSubmitter` are covered automatically, including future forms registered in the same pipeline.
+`LEAD_NOTIFY_SECRET` must be the same in both places. Do not create a `VITE_` copy. `VITE_LEAD_NOTIFY_ENABLED`, `VITE_LEAD_NOTIFY_SECRET`, and `VITE_LEAD_NOTIFY_URL` stay empty.
 
-## Email content
+`LEAD_NOTIFY_URL` is the deployed notify endpoint, for example `https://www.ifranchise.in/api/notify-lead`.
 
-- **Subject:** `[New Lead] {Form Type} - {Name}`
-- **Body:** Form type, submission time, name, phone, email, company (if any), message/inquiry, source page, page URL, referrer, and any extra submitted fields
+## Recipients
 
-## Environment variables
+- Career applications use `LEAD_NOTIFICATION_TO_CAREERS`, or `hr@ifranchise.in` when that variable is empty.
+- Every other emailed form uses `LEAD_NOTIFICATION_TO`.
+- `LEAD_NOTIFICATION_FROM` must be a sender verified in Resend.
 
-### Client (Vite — `.env` / Vercel with `VITE_` prefix)
+## When email stays off
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `VITE_LEAD_NOTIFY_ENABLED` | Production | Set to `true` to enable notifications |
-| `VITE_LEAD_NOTIFY_SECRET` | Production | Shared secret; must match `LEAD_NOTIFY_SECRET` |
-| `VITE_LEAD_NOTIFY_URL` | No | Default: `{origin}/api/notify-lead` |
+Email is skipped when either Script Property is missing. The API returns 503 when `LEAD_NOTIFY_SECRET` is missing, and 502 when Resend settings are missing. Neither case removes the sheet row.
 
-### Server (Vercel — no `VITE_` prefix)
+## Duplicates
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `RESEND_API_KEY` | Yes | [Resend](https://resend.com) API key |
-| `LEAD_NOTIFICATION_TO` | Yes | Default recipient for all forms except careers, e.g. `contact@ifranchise.in` |
-| `LEAD_NOTIFICATION_TO_CAREERS` | No | Career apply forms only; defaults to `hr@ifranchise.in` |
-| `LEAD_NOTIFICATION_FROM` | Yes | Verified sender, e.g. `Leads <notifications@ifranchise.in>` |
-| `LEAD_NOTIFY_SECRET` | Yes | Same value as `VITE_LEAD_NOTIFY_SECRET` |
-| `LEAD_NOTIFY_ALLOWED_ORIGINS` | Recommended | Comma-separated site origins for CORS. If unset, the service will reflect the request origin (auth still enforced by `LEAD_NOTIFY_SECRET`). |
+- The browser submits the form once. A double-click is guarded before the request is sent.
+- Apps Script calls the notify API once, after that row is appended, and does not retry.
+- Resend receives an idempotency key from the form type, submission time, source page, email, and phone. A retry of the same submission does not send a second message.
+- A second genuine submission is a new row and a new email.
 
-## Production deployment (Vercel)
+## Deploy
 
-1. Add a [Resend](https://resend.com) account and verify your sending domain.
-2. In **Vercel → Project → Settings → Environment Variables**, add all server variables for **Production** (and Preview if needed).
-3. Add client variables (`VITE_LEAD_NOTIFY_*`) for Production.
-4. Deploy. Vercel serves `api/notify-lead.js` as a serverless function; `vercel.json` excludes `/api/*` from the SPA rewrite.
-5. Submit a test form on production and confirm the inbox receives one email per submission.
+1. Set the Vercel variables, then redeploy the site so `api/notify-lead.js` is live.
+2. Paste the updated `google-apps-script-backend.js` into the existing Apps Script project.
+3. Add the two Script Properties. Do not create a new Web App deployment.
+4. Publish **Deploy → Manage deployments → Edit → New version → Deploy**, keeping the same `/exec` URL.
+5. Submit one real form and confirm one new sheet row and one inbox message.
 
-## Local testing
-
-`npm run dev` (Vite) does **not** run the notify API. Use either:
-
-```bash
-npx vercel dev
-```
-
-Then set `.env` with notify variables and submit a form, or:
-
-```bash
-node scripts/verify-lead-notify.mjs
-```
-
-(requires server env vars in the shell or `.env` loaded by your shell)
-
-## Failure behavior
-
-- If Resend or the API fails, the form still succeeds; only a console warning is logged (`lead_notify_failed`).
-- If notify env vars are missing, notifications are skipped silently (dev) or skipped when `VITE_LEAD_NOTIFY_ENABLED` is not `true`.
-- No duplicate emails from double-click: the submission guard dedupes concurrent pipeline runs; one successful Sheets response triggers at most one notify call.
-
-## Security
-
-- `X-Lead-Notify-Key` must match `LEAD_NOTIFY_SECRET`.
-- CORS is restricted to configured origins.
-- `form_type` must be in the allowlist.
-- Payload size is capped.
-
-## Careers / future forms
-
-- **Careers:** `career_application` submissions go to `hr@ifranchise.in` by default (`LEAD_NOTIFICATION_TO_CAREERS`). All other forms use `LEAD_NOTIFICATION_TO` (`contact@ifranchise.in`).
-- **New forms:** Add friendly labels in `api/lib/extractLeadFields.js` if you want a clearer email subject/body.
+`npm run dev` does not serve `/api/notify-lead`.

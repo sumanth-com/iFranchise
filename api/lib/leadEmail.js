@@ -2,6 +2,7 @@
  * Build and send lead notification emails (Resend API).
  */
 
+import { createHash } from 'node:crypto';
 import { extractLeadFields } from './extractLeadFields.js';
 
 function escapeHtml(text) {
@@ -103,12 +104,24 @@ export async function sendLeadEmail(payload) {
   }
 
   const { subject, html, text } = buildLeadEmail(payload);
+  const idempotencyKey = createHash('sha256')
+    .update(
+      JSON.stringify({
+        formType,
+        submittedAt: payload?.submitted_at || '',
+        sourcePage: payload?.source_page || '',
+        email: payload?.data?.email || payload?.data?.contactEmail || '',
+        phone: payload?.data?.phone || payload?.data?.contact_phone || payload?.data?.contactPhone || '',
+      }),
+    )
+    .digest('hex');
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
+      'Idempotency-Key': idempotencyKey,
     },
     body: JSON.stringify({
       from,

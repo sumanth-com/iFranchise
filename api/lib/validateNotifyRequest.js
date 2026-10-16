@@ -1,10 +1,14 @@
 /**
  * Request validation for lead notification API.
+ * Callers authenticate with the server-only LEAD_NOTIFY_SECRET.
+ * The website bundle must not contain that secret.
  */
+
+import { timingSafeEqual } from 'node:crypto';
 
 const MAX_BODY_BYTES = 150_000;
 const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_MAX = 60;
 const rateBuckets = new Map();
 const ALLOWED_FORM_TYPES = new Set([
   'contact',
@@ -68,17 +72,14 @@ export function getCorsHeaders(origin) {
   return headers;
 }
 
+function secretsMatch(provided, expected) {
+  const left = Buffer.from(String(provided));
+  const right = Buffer.from(String(expected));
+  if (left.length === 0 || left.length !== right.length) return false;
+  return timingSafeEqual(left, right);
+}
+
 export function validateNotifyRequest(req) {
-  const allowedOrigins = parseAllowedOrigins();
-  if (allowedOrigins.length === 0) {
-    return { ok: false, status: 503, error: 'Notification origin allowlist not configured' };
-  }
-
-  const requestOrigin = normalizeOrigin(req.headers.origin || req.headers.referer || '');
-  if (!requestOrigin || !allowedOrigins.includes(requestOrigin)) {
-    return { ok: false, status: 403, error: 'Origin not allowed' };
-  }
-
   if (req.method === 'OPTIONS') {
     return { ok: true, preflight: true };
   }
@@ -87,21 +88,20 @@ export function validateNotifyRequest(req) {
     return { ok: false, status: 405, error: 'Method not allowed' };
   }
 
+  // One ceiling per source address. Apps Script uses shared Google egress,
+  // so this stays high enough for real leads and still caps a leaked key.
+  if (!consumeRateLimit(req)) {
+    return { ok: false, status: 429, error: 'Too many requests' };
+  }
+
   const secret = process.env.LEAD_NOTIFY_SECRET;
   if (!secret) {
     return { ok: false, status: 503, error: 'Notification service not configured' };
   }
 
-  const provided =
-    req.headers['x-lead-notify-key'] ||
-    req.headers['X-Lead-Notify-Key'] ||
-    '';
-  if (provided !== secret) {
+  const provided = req.headers['x-lead-notify-key'] || req.headers['X-Lead-Notify-Key'] || '';
+  if (!secretsMatch(provided, secret)) {
     return { ok: false, status: 401, error: 'Unauthorized' };
-  }
-
-  if (!consumeRateLimit(req)) {
-    return { ok: false, status: 429, error: 'Too many requests' };
   }
 
   const contentLength = Number(req.headers['content-length'] || 0);

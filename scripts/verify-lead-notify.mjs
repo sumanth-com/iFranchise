@@ -10,10 +10,10 @@
  */
 
 const base = (process.env.NOTIFY_BASE_URL || 'http://localhost:3000').replace(/\/$/, '');
-const secret = process.env.LEAD_NOTIFY_SECRET || process.env.VITE_LEAD_NOTIFY_SECRET;
+const secret = process.env.LEAD_NOTIFY_SECRET;
 
 if (!secret) {
-  console.error('Set LEAD_NOTIFY_SECRET (or VITE_LEAD_NOTIFY_SECRET) to run this script.');
+  console.error('Set LEAD_NOTIFY_SECRET in the server environment. Do not use a VITE_ secret.');
   process.exit(1);
 }
 

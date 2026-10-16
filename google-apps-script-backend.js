@@ -419,6 +419,42 @@ function resolveSheetTab(formType, requestedTab) {
 }
 
 /**
+ * Ask the Vercel notify API for one email after the row is stored.
+ * LEAD_NOTIFY_URL and LEAD_NOTIFY_SECRET belong in Script Properties.
+ * If either is missing, email stays off and the saved row is unchanged.
+ * A notification failure does not remove the row or fail the form.
+ */
+function notifyLeadEmail(payload) {
+  try {
+    if (!payload || payload.form_type === 'data_rights_request') return;
+
+    var props = PropertiesService.getScriptProperties();
+    var notifyUrl = String(props.getProperty('LEAD_NOTIFY_URL') || '').trim();
+    var notifySecret = String(props.getProperty('LEAD_NOTIFY_SECRET') || '').trim();
+    if (!notifyUrl || !notifySecret) {
+      console.log('Lead email skipped: set Script Properties LEAD_NOTIFY_URL and LEAD_NOTIFY_SECRET.');
+      return;
+    }
+
+    var response = UrlFetchApp.fetch(notifyUrl, {
+      method: 'post',
+      contentType: 'application/json',
+      headers: {
+        'X-Lead-Notify-Key': notifySecret
+      },
+      payload: JSON.stringify({ payload: payload }),
+      muteHttpExceptions: true
+    });
+    var status = response.getResponseCode();
+    if (status < 200 || status >= 300) {
+      console.error('Lead email notification was not accepted. HTTP ' + status);
+    }
+  } catch (notifyError) {
+    console.error('Lead email notification failed without changing the saved sheet row.');
+  }
+}
+
+/**
  * Process form submission and route to appropriate sheet
  */
 function processSubmission(payload) {
@@ -454,10 +490,10 @@ function processSubmission(payload) {
 
     // Append row to sheet (unlimited submissions — no per-user caps)
     sheet.appendRow(rowData);
-    
-    // Log successful submission
+
     console.log(`Successfully submitted ${form_type} to ${resolvedTab}`);
-    
+    notifyLeadEmail(payload);
+
     return {
       success: true,
       message: 'Form submitted successfully',
