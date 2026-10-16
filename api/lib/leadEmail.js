@@ -85,22 +85,18 @@ export function buildLeadEmail(payload) {
 }
 
 /**
- * @returns {Promise<{ ok: boolean, error?: string, id?: string }>}
+ * Ask Resend to accept one message.
+ * `accepted_by_resend` means Resend took the send. It does not mean the inbox has it.
+ * @returns {Promise<{ ok: boolean, stage: string, id?: string, providerStatus?: number, providerCode?: string }>}
  */
 export async function sendLeadEmail(payload) {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = String(process.env.RESEND_API_KEY || '').trim();
   const formType = payload?.form_type || '';
-  const to = resolveNotificationRecipient(formType);
-  const from = process.env.LEAD_NOTIFICATION_FROM;
+  const to = String(resolveNotificationRecipient(formType) || '').trim();
+  const from = String(process.env.LEAD_NOTIFICATION_FROM || '').trim();
 
   if (!apiKey || !to || !from) {
-    return {
-      ok: false,
-      error:
-        formType === 'career_application'
-          ? 'Email service not configured (RESEND_API_KEY, LEAD_NOTIFICATION_TO_CAREERS or hr@ifranchise.in default, LEAD_NOTIFICATION_FROM).'
-          : 'Email service not configured (RESEND_API_KEY, LEAD_NOTIFICATION_TO, LEAD_NOTIFICATION_FROM).',
-    };
+    return { ok: false, stage: 'missing_email_config' };
   }
 
   const { subject, html, text } = buildLeadEmail(payload);
@@ -134,12 +130,17 @@ export async function sendLeadEmail(payload) {
 
   const body = await response.json().catch(() => ({}));
 
+  const providerCode =
+    typeof body?.name === 'string' && /^[a-z0-9_]+$/i.test(body.name) ? body.name : '';
+
   if (!response.ok) {
     return {
       ok: false,
-      error: body?.message || `Resend API error (${response.status})`,
+      stage: 'resend_rejected',
+      providerStatus: response.status,
+      providerCode,
     };
   }
 
-  return { ok: true, id: body?.id };
+  return { ok: true, stage: 'accepted_by_resend', id: body?.id };
 }

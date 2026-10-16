@@ -32,11 +32,11 @@ Data-rights requests are stored in `Data_Rights_Requests` and are not emailed.
 | Place | Names | Role |
 |---|---|---|
 | Vercel environment | `RESEND_API_KEY`, `LEAD_NOTIFICATION_FROM`, `LEAD_NOTIFICATION_TO`, `LEAD_NOTIFY_SECRET`, optional `LEAD_NOTIFICATION_TO_CAREERS` | Server sends the email |
-| Apps Script → Project Settings → Script properties | `LEAD_NOTIFY_URL`, `LEAD_NOTIFY_SECRET` | Script calls the notify API after `appendRow` |
+| Apps Script → Project Settings → Script properties | `LEAD_NOTIFY_SECRET`, optional `LEAD_NOTIFY_URL` | Script calls the notify API after `appendRow` |
 
 `LEAD_NOTIFY_SECRET` must be the same in both places. Do not add a `VITE_` copy of that secret or of `RESEND_API_KEY`.
 
-`LEAD_NOTIFY_URL` is the deployed notify endpoint, for example `https://www.ifranchise.in/api/notify-lead`.
+`LEAD_NOTIFY_URL` overrides the notify endpoint. When it is empty, the script uses `https://www.ifranchise.in/api/notify-lead`.
 
 ## Recipients
 
@@ -46,7 +46,19 @@ Data-rights requests are stored in `Data_Rights_Requests` and are not emailed.
 
 ## When email stays off
 
-Email is skipped when either Script Property is missing. The API returns 503 when `LEAD_NOTIFY_SECRET` is missing, and 502 when Resend settings are missing. Neither case removes the sheet row.
+A saved row is never removed because email failed. Logs use a stage name and do not include the API key, the notify secret, or the lead.
+
+| Stage | Where it appears | Meaning |
+|---|---|---|
+| `missing_script_secret` | Apps Script execution | `LEAD_NOTIFY_SECRET` is not in Script Properties. The notify URL defaults to `https://www.ifranchise.in/api/notify-lead` when that property is empty. |
+| `apps_script_external_request_not_authorized` | Apps Script execution | The published script was not reauthorized for outbound requests. |
+| `missing_notify_secret` | API HTTP 503 | Vercel has no `LEAD_NOTIFY_SECRET`. |
+| `auth_failed` | API HTTP 401 | The Script Property secret and the Vercel secret differ. |
+| `missing_email_config` | API HTTP 502 | Vercel is missing `RESEND_API_KEY`, `LEAD_NOTIFICATION_TO`, or `LEAD_NOTIFICATION_FROM`. |
+| `resend_rejected` | API HTTP 502 | Resend refused the send. The log includes the provider status only. |
+| `accepted_by_resend` | API HTTP 200 | Resend accepted the send. This is not proof the inbox received it. |
+
+Data-rights requests log `data_rights_request` and are not emailed.
 
 ## Duplicates
 
@@ -58,9 +70,9 @@ Email is skipped when either Script Property is missing. The API returns 503 whe
 ## Deploy
 
 1. Set the Vercel variables, then redeploy the site so `api/notify-lead.js` is live.
-2. Paste the updated `google-apps-script-backend.js` into the existing Apps Script project.
-3. Add the two Script Properties. Do not create a new Web App deployment.
-4. Publish **Deploy → Manage deployments → Edit → New version → Deploy**, keeping the same `/exec` URL.
+2. Paste the updated `google-apps-script-backend.js` into the existing Apps Script project. Approve the external-request permission when Apps Script asks. That permission is what lets the script call the notify API.
+3. Set Script Property `LEAD_NOTIFY_SECRET` to the same value as Vercel. Set `LEAD_NOTIFY_URL` only if the endpoint is not `https://www.ifranchise.in/api/notify-lead`. Do not create a new Web App deployment.
+4. Publish **Deploy → Manage deployments → Edit → New version → Deploy**, keeping the same `/exec` URL. Leave “Execute as” and “Who has access” unchanged.
 5. Submit one real form and confirm one new sheet row and one inbox message.
 
 `npm run dev` does not serve `/api/notify-lead`.

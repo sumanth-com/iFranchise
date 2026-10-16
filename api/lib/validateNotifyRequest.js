@@ -79,72 +79,107 @@ function secretsMatch(provided, expected) {
   return timingSafeEqual(left, right);
 }
 
+function headerValue(req, name) {
+  const value = req.headers?.[name];
+  const first = Array.isArray(value) ? value[0] : value;
+  return String(first || '').trim();
+}
+
+function readJsonBody(req) {
+  let body = req.body;
+  if (Buffer.isBuffer(body)) body = body.toString('utf8');
+  if (typeof body === 'string') {
+    const trimmed = body.trim();
+    if (!trimmed) {
+      return { ok: false, status: 400, error: 'Missing request body', stage: 'missing_body' };
+    }
+    try {
+      body = JSON.parse(trimmed);
+    } catch {
+      return { ok: false, status: 400, error: 'Invalid JSON body', stage: 'invalid_json' };
+    }
+  }
+  return { ok: true, body };
+}
+
+function unwrapPayload(body) {
+  let payload = body.payload != null ? body.payload : body;
+  if (typeof payload === 'string') {
+    try {
+      payload = JSON.parse(payload);
+    } catch {
+      return null;
+    }
+  }
+  return payload;
+}
+
 export function validateNotifyRequest(req) {
   if (req.method === 'OPTIONS') {
-    return { ok: true, preflight: true };
+    return { ok: true, preflight: true, stage: 'preflight' };
   }
 
   if (req.method !== 'POST') {
-    return { ok: false, status: 405, error: 'Method not allowed' };
+    return { ok: false, status: 405, error: 'Method not allowed', stage: 'method_not_allowed' };
   }
 
   // One ceiling per source address. Apps Script uses shared Google egress,
   // so this stays high enough for real leads and still caps a leaked key.
   if (!consumeRateLimit(req)) {
-    return { ok: false, status: 429, error: 'Too many requests' };
+    return { ok: false, status: 429, error: 'Too many requests', stage: 'rate_limited' };
   }
 
-  const secret = process.env.LEAD_NOTIFY_SECRET;
+  const secret = String(process.env.LEAD_NOTIFY_SECRET || '').trim();
   if (!secret) {
-    return { ok: false, status: 503, error: 'Notification service not configured' };
+    return {
+      ok: false,
+      status: 503,
+      error: 'Notification service not configured',
+      stage: 'missing_notify_secret',
+    };
   }
 
-  const provided = req.headers['x-lead-notify-key'] || req.headers['X-Lead-Notify-Key'] || '';
+  const provided = headerValue(req, 'x-lead-notify-key');
   if (!secretsMatch(provided, secret)) {
-    return { ok: false, status: 401, error: 'Unauthorized' };
+    return { ok: false, status: 401, error: 'Unauthorized', stage: 'auth_failed' };
   }
 
   const contentLength = Number(req.headers['content-length'] || 0);
   if (contentLength > MAX_BODY_BYTES) {
-    return { ok: false, status: 413, error: 'Payload too large' };
+    return { ok: false, status: 413, error: 'Payload too large', stage: 'payload_too_large' };
   }
 
-  let body = req.body;
-  if (typeof body === 'string') {
-    try {
-      body = JSON.parse(body);
-    } catch {
-      return { ok: false, status: 400, error: 'Invalid JSON body' };
-    }
+  const parsedBody = readJsonBody(req);
+  if (!parsedBody.ok) return parsedBody;
+
+  const body = parsedBody.body;
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return { ok: false, status: 400, error: 'Missing request body', stage: 'missing_body' };
   }
 
-  if (!body || typeof body !== 'object') {
-    return { ok: false, status: 400, error: 'Missing request body' };
-  }
-
-  const payload = body.payload || body;
+  const payload = unwrapPayload(body);
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
-    return { ok: false, status: 400, error: 'Invalid payload' };
+    return { ok: false, status: 400, error: 'Invalid payload', stage: 'invalid_payload' };
   }
 
   const formType = payload.form_type;
   if (!formType || typeof formType !== 'string' || !ALLOWED_FORM_TYPES.has(formType)) {
-    return { ok: false, status: 400, error: 'Invalid or missing form_type' };
+    return { ok: false, status: 400, error: 'Invalid or missing form_type', stage: 'invalid_form_type' };
   }
 
-  if (!payload.data || typeof payload.data !== 'object') {
-    return { ok: false, status: 400, error: 'Invalid or missing data' };
+  if (!payload.data || typeof payload.data !== 'object' || Array.isArray(payload.data)) {
+    return { ok: false, status: 400, error: 'Invalid or missing data', stage: 'invalid_data' };
   }
 
   let payloadBytes;
   try {
     payloadBytes = Buffer.byteLength(JSON.stringify(payload), 'utf8');
   } catch {
-    return { ok: false, status: 400, error: 'Invalid payload' };
+    return { ok: false, status: 400, error: 'Invalid payload', stage: 'invalid_payload' };
   }
   if (payloadBytes > MAX_BODY_BYTES) {
-    return { ok: false, status: 413, error: 'Payload too large' };
+    return { ok: false, status: 413, error: 'Payload too large', stage: 'payload_too_large' };
   }
 
-  return { ok: true, payload };
+  return { ok: true, payload, stage: 'validated' };
 }

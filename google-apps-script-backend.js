@@ -426,13 +426,19 @@ function resolveSheetTab(formType, requestedTab) {
  */
 function notifyLeadEmail(payload) {
   try {
-    if (!payload || payload.form_type === 'data_rights_request') return;
+    if (!payload || payload.form_type === 'data_rights_request') {
+      console.log('Lead email skipped: stage=data_rights_request');
+      return;
+    }
 
     var props = PropertiesService.getScriptProperties();
     var notifyUrl = String(props.getProperty('LEAD_NOTIFY_URL') || '').trim();
     var notifySecret = String(props.getProperty('LEAD_NOTIFY_SECRET') || '').trim();
-    if (!notifyUrl || !notifySecret) {
-      console.log('Lead email skipped: set Script Properties LEAD_NOTIFY_URL and LEAD_NOTIFY_SECRET.');
+    if (!notifyUrl) {
+      notifyUrl = 'https://www.ifranchise.in/api/notify-lead';
+    }
+    if (!notifySecret) {
+      console.log('Lead email skipped: stage=missing_script_secret');
       return;
     }
 
@@ -443,14 +449,34 @@ function notifyLeadEmail(payload) {
         'X-Lead-Notify-Key': notifySecret
       },
       payload: JSON.stringify({ payload: payload }),
-      muteHttpExceptions: true
+      muteHttpExceptions: true,
+      followRedirects: false
     });
     var status = response.getResponseCode();
-    if (status < 200 || status >= 300) {
-      console.error('Lead email notification was not accepted. HTTP ' + status);
+    var stage = 'unknown';
+    var providerStatus = '';
+    try {
+      var parsed = JSON.parse(response.getContentText() || '{}');
+      if (parsed && typeof parsed.stage === 'string') {
+        stage = parsed.stage.replace(/[^a-z0-9_]/gi, '').slice(0, 40) || 'unknown';
+      }
+      if (parsed && typeof parsed.provider_status === 'number') {
+        providerStatus = ' provider_status=' + parsed.provider_status;
+      }
+    } catch (ignoreParse) {}
+
+    if (status >= 200 && status < 300 && stage === 'accepted_by_resend') {
+      console.log('Lead email stage=accepted_by_resend. Inbox delivery is not confirmed.');
+      return;
     }
+    console.error('Lead email stage=' + stage + ' HTTP ' + status + providerStatus);
   } catch (notifyError) {
-    console.error('Lead email notification failed without changing the saved sheet row.');
+    var message = String((notifyError && notifyError.message) || '');
+    if (message.indexOf('permission') !== -1 || message.indexOf('UrlFetchApp') !== -1) {
+      console.error('Lead email stage=apps_script_external_request_not_authorized');
+      return;
+    }
+    console.error('Lead email stage=notify_request_failed. Saved sheet row was not changed.');
   }
 }
 

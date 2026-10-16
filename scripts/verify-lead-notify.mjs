@@ -63,4 +63,5 @@ if (!res.ok) {
   process.exit(1);
 }
 
-console.log('OK — check LEAD_NOTIFICATION_TO inbox for the test email.');
+console.log('Provider acceptance stage:', json.stage || '(missing)');
+console.log('Acceptance is not inbox delivery. Confirm the message in the recipient mailbox.');

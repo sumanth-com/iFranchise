@@ -16,9 +16,11 @@ export default async function handler(req, res) {
 
   const validation = validateNotifyRequest(req);
   if (!validation.ok) {
+    console.error('[lead-notify]', validation.stage || 'rejected');
     return res.status(validation.status || 400).json({
       ok: false,
       error: validation.error,
+      stage: validation.stage || 'rejected',
     });
   }
 
@@ -30,13 +32,25 @@ export default async function handler(req, res) {
     const result = await sendLeadEmail(validation.payload);
 
     if (!result.ok) {
-      console.error('[lead-notify] send_failed');
-      return res.status(502).json({ ok: false, error: 'Failed to send notification email' });
+      console.error(
+        '[lead-notify]',
+        result.stage || 'send_failed',
+        result.providerStatus || '',
+        result.providerCode || '',
+      );
+      return res.status(502).json({
+        ok: false,
+        error: 'Failed to send notification email',
+        stage: result.stage || 'send_failed',
+        provider_status: result.providerStatus,
+        provider_code: result.providerCode || undefined,
+      });
     }
 
-    return res.status(200).json({ ok: true, id: result.id });
-  } catch (err) {
+    console.info('[lead-notify] accepted_by_resend');
+    return res.status(200).json({ ok: true, stage: 'accepted_by_resend', id: result.id });
+  } catch {
     console.error('[lead-notify] unexpected_error');
-    return res.status(500).json({ ok: false, error: 'Internal server error' });
+    return res.status(500).json({ ok: false, error: 'Internal server error', stage: 'unexpected_error' });
   }
 }
