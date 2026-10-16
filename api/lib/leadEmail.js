@@ -5,6 +5,10 @@
 import { createHash } from 'node:crypto';
 import { extractLeadFields } from './extractLeadFields.js';
 
+/** Public mark generated from src/assets/iF-Logo.png (email clients need an absolute HTTPS URL). */
+const BRAND_LOGO_URL = 'https://www.ifranchise.in/android-chrome-512x512.png';
+const BRAND_BLUE = '#3B1FE2';
+
 function escapeHtml(text) {
   return String(text ?? '')
     .replace(/&/g, '&amp;')
@@ -13,9 +17,24 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;');
 }
 
-function row(label, value) {
+function row(label, value, isLast = false) {
   if (!value) return '';
-  return `<tr><td style="padding:8px 12px;font-weight:600;color:#374151;vertical-align:top;width:160px;">${escapeHtml(label)}</td><td style="padding:8px 12px;color:#111827;">${escapeHtml(value)}</td></tr>`;
+  const border = isLast ? 'none' : '1px solid #EEF0F4';
+  return `<tr>
+  <td style="padding:14px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:0.01em;color:#6B7280;vertical-align:top;width:38%;border-bottom:${border};">
+    ${escapeHtml(label)}
+  </td>
+  <td style="padding:14px 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#111827;vertical-align:top;word-break:break-word;border-bottom:${border};">
+    ${escapeHtml(value)}
+  </td>
+</tr>`;
+}
+
+function buildDetailRows(entries) {
+  const present = entries.filter(([, value]) => Boolean(value));
+  return present
+    .map(([label, value], index) => row(label, value, index === present.length - 1))
+    .join('');
 }
 
 function resolveNotificationRecipient(formType) {
@@ -33,29 +52,73 @@ export function buildLeadEmail(payload) {
       ? `[Career Application] ${roleTitle || lead.formTypeLabel} - ${lead.name}`
       : `[New Lead] ${lead.formTypeLabel} - ${lead.name}`;
 
-  const additionalRows = Object.entries(lead.additionalFields)
-    .map(([label, value]) => row(label, value))
-    .join('');
+  const detailRows = buildDetailRows([
+    ['Form Type', lead.formTypeLabel],
+    ['Submission Time', lead.submittedAt],
+    ['Name', lead.name],
+    ['Phone Number', lead.phone],
+    ['Email Address', lead.email],
+    ['Company Name', lead.company],
+    ['Message / Inquiry', lead.message],
+    ['Source Page', lead.sourcePage],
+    ['Page URL', lead.pageUrl],
+    ['Referrer', lead.referrer],
+    ...Object.entries(lead.additionalFields),
+  ]);
 
   const html = `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family:system-ui,-apple-system,sans-serif;line-height:1.5;color:#111827;max-width:640px;margin:0 auto;padding:24px;">
-  <h2 style="margin:0 0 16px;color:#1e40af;">New website lead</h2>
-  <table style="width:100%;border-collapse:collapse;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-    ${row('Form Type', lead.formTypeLabel)}
-    ${row('Submission Time', lead.submittedAt)}
-    ${row('Name', lead.name)}
-    ${row('Phone Number', lead.phone)}
-    ${row('Email Address', lead.email)}
-    ${row('Company Name', lead.company)}
-    ${row('Message / Inquiry', lead.message)}
-    ${row('Source Page', lead.sourcePage)}
-    ${row('Page URL', lead.pageUrl)}
-    ${row('Referrer', lead.referrer)}
-    ${additionalRows}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>New website lead</title>
+  <!--[if mso]>
+  <style type="text/css">
+    table, td { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#F4F5F7;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+  <div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">
+    New website lead from ${escapeHtml(lead.name)}
+  </div>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background-color:#F4F5F7;width:100%;">
+    <tr>
+      <td align="center" style="padding:28px 16px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;width:100%;max-width:600px;margin:0 auto;">
+          <tr>
+            <td align="center" style="padding:0 0 20px;">
+              <img src="${BRAND_LOGO_URL}" width="56" height="56" alt="iFranchise" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;width:56px;height:56px;border-radius:12px;" />
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:0 0 20px;">
+              <h1 style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:22px;line-height:1.3;font-weight:700;letter-spacing:-0.02em;color:${BRAND_BLUE};text-align:center;">
+                New website lead
+              </h1>
+              <div style="width:48px;height:3px;background-color:${BRAND_BLUE};border-radius:2px;margin:12px auto 0;"></div>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(17,24,39,0.04);">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;width:100%;">
+                ${detailRows}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:24px 8px 0;">
+              <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#9CA3AF;text-align:center;">
+                Sent automatically by iFranchise form notifications.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
   </table>
-  <p style="margin-top:24px;font-size:12px;color:#6b7280;">Sent automatically by iFranchise form notifications.</p>
 </body>
 </html>`;
 

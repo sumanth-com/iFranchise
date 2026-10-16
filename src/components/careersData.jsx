@@ -55,7 +55,7 @@ export const HIRING_STEPS = [
 export const ROLES = [
   {
     id: 'ui-ux-designer',
-    active: true,
+    active: false,
     title: 'UI/UX Designer',
     dept: 'Design',
     type: 'Full-time',
@@ -343,7 +343,7 @@ export const ROLES = [
   },
   {
     id: 'full-stack-developer',
-    active: true,
+    active: false,
     title: 'Full-Stack Developer',
     dept: 'Engineering',
     type: 'Full-time',

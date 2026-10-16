@@ -39,7 +39,11 @@ export default function OpportunityCard({ opportunity }) {
           loading="lazy"
           decoding="async"
           sizes={remoteSet?.sizes ?? '(max-width: 640px) 92vw, 280px'}
-          style={{ objectFit, objectPosition: 'center' }}
+          style={{
+            objectFit,
+            objectPosition: 'center',
+            ...(cardFit === 'contain' ? { padding: '0.75rem' } : null),
+          }}
           width={280}
           height={187}
           onError={(e) => {

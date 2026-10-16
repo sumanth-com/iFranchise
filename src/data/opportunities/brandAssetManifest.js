@@ -33,10 +33,10 @@ function publicExtFromPath(assetPath) {
 export const BRAND_ASSET_MANIFEST = [
   {
     slug: 'odette',
-    logoSrc: 'ODETTE/Logo.webp',
+    logoSrc: 'ODETTE/Odette Paris.png',
     gallerySrc: ['ODETTE/1.webp', 'ODETTE/2.png', 'ODETTE/3.webp', 'ODETTE/4.webp', 'ODETTE/5.webp', 'ODETTE/6.webp'],
-    cardBackground: '#f8f6f3',
-    cardAccent: '#c4b5a0',
+    cardBackground: '#ffffff',
+    cardAccent: '#e5e7eb',
     cardFit: 'fill',
   },
   {
