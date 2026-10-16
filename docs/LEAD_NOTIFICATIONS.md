@@ -34,15 +34,15 @@ Data-rights requests are stored in `Data_Rights_Requests` and are not emailed.
 | Vercel environment | `RESEND_API_KEY`, `LEAD_NOTIFICATION_FROM`, `LEAD_NOTIFICATION_TO`, `LEAD_NOTIFY_SECRET`, optional `LEAD_NOTIFICATION_TO_CAREERS` | Server sends the email |
 | Apps Script → Project Settings → Script properties | `LEAD_NOTIFY_URL`, `LEAD_NOTIFY_SECRET` | Script calls the notify API after `appendRow` |
 
-`LEAD_NOTIFY_SECRET` must be the same in both places. Do not create a `VITE_` copy. `VITE_LEAD_NOTIFY_ENABLED`, `VITE_LEAD_NOTIFY_SECRET`, and `VITE_LEAD_NOTIFY_URL` stay empty.
+`LEAD_NOTIFY_SECRET` must be the same in both places. Do not add a `VITE_` copy of that secret or of `RESEND_API_KEY`.
 
 `LEAD_NOTIFY_URL` is the deployed notify endpoint, for example `https://www.ifranchise.in/api/notify-lead`.
 
 ## Recipients
 
 - Career applications use `LEAD_NOTIFICATION_TO_CAREERS`, or `hr@ifranchise.in` when that variable is empty.
-- Every other emailed form uses `LEAD_NOTIFICATION_TO`.
-- `LEAD_NOTIFICATION_FROM` must be a sender verified in Resend.
+- Every other emailed form uses `LEAD_NOTIFICATION_TO` (`contact@ifranchise.in`).
+- `LEAD_NOTIFICATION_FROM` is `contact@ifranchise.in`. Resend must already have verified that sender. The app passes the address through as a plain email.
 
 ## When email stays off
 
